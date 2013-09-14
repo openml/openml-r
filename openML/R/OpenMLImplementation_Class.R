@@ -36,14 +36,18 @@
 #'    \item{\code{parameter}}{[\code{list}]\cr
 #'    The parameters of the implementation. A list contatining 
 #'    \code{\link{OpenMLImplementationParameter}s}.}
+#'    \item{\code{components}}{[\code{list}]}\cr
+#'    A list contatining \code{\link{OpenMLImplementation}s}. Typically components of a workflow or 
+#'    subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.
 #'    \item{\code{source.url}}{[\code{character}]\cr
 #'    URL of the source file.}
 #'    \item{\code{binary.url}}{[\code{character}]\cr
 #'    URL of the binary file.}
-#'    \item{\code{binary.format}}{[\code{character}]\cr
-#'    Format of the binary file.}
 #'    \item{\code{source.format}}{[\code{character}]\cr
 #'    Format of the source file.}
+#'    \item{\code{binary.format}}{[\code{character}]\cr
+#'    Format of the binary file.}
+#'    
 #'    \item{\code{source.md5}}{[\code{character}]\cr
 #'    MD5 checksum to check if the source code was uploaded correctly.}
 #'    \item{\code{binary.md5}}{[\code{character}]\cr
@@ -74,9 +78,8 @@ setClass("OpenMLImplementation", representation(
   dependencies = "character",
   #FIXME add bib ref
   #bibliographical.reference = "character",
-  #FIXME add components
   parameter = "list",
-  #  components = "list",
+  components = "list",
   source.url = "character",
   binary.url = "character",
   source.format = "character",
@@ -100,29 +103,29 @@ OpenMLImplementation <- function(
   description = "",
   creator = character(),
   contributor = character(),
-  licence = "",
+  licence = character(),
   language = "English",
-  full.description = "",
+  full.description = character(),
   date = as.character(Sys.time()),
-  installation.notes = "",
+  installation.notes = character(),
   dependencies = character(),
-  source.url = "",
-  binary.url = "",
-  source.format = "",
+  source.url = character(),
+  binary.url = character(),
+  source.format = character(),
   # FIXME: why do we specify this? We can see this from the 
   # user provided file anyway?
   # actually we have to think about upload (known) and download here.
   #FIXME should all these mising values be encoded as empty strings? probably not.
-  binary.format = "",
-  source.md5 = "",
-  binary.md5 = "",
+  binary.format = character(),
+  source.md5 = character(),
+  binary.md5 = character(),
   #programming.language = "R",
   #operating.system = R.version$os,
   #bib.citation="",
   #bib.url = "",
   #implements = "",
-  parameter = list()
-  #components=list(),
+  parameter = list(),
+  components=list()
 ) {
   new("OpenMLImplementation",
     id = id,
@@ -148,8 +151,8 @@ OpenMLImplementation <- function(
 #    bib.citation = bib.citation,
 #    bib.url = bib.url,
 #    implements = implements,
-    parameter = parameter
-#    components = components,
+    parameter = parameter,
+    components = components
   )
 }
 
@@ -181,16 +184,17 @@ setMethod("show", "OpenMLImplementation", function(object) {
   
   ## Other info
   catf('\nDate :: %s', object@date)
-  catNotEmpty('Licence :: ', object@licence)
-  catNotEmpty('Language :: ', object@language)
+  #catNotEmpty('Licence :: ', object@licence)
+  #catNotEmpty('Language :: ', object@language)
   
   ## Implementation specific info
   catf('\n\nDescription of the implementation :')
   catf(object@description)
   
-  catNotEmpty('Full description :: ', object@full.description)
+  #FIXME: We need to reimplement these lines.
+  #catNotEmpty('Full description :: ', object@full.description)
   #catNotEmpty('Installation notes :: ', object@installation.notes)
-  catNotEmpty('Dependencies :: ', collapse(object@dependencies, ", "))
+  #catNotEmpty('Dependencies :: ', collapse(object@dependencies, ", "))
   #catNotEmpty('\nProgramming language :: ',object@programming.language)
   #catNotEmpty('\nOperating system :: ',object@operating.system)
   
@@ -212,19 +216,19 @@ setMethod("show", "OpenMLImplementation", function(object) {
   }
   
   ## Implementation components
-  #if (length(object@components)) {
-  #  catf('\nDescription of Implementation Components ::')
-  #  for(i in 1:length(object@components)) print(object@components[i])
-  #}
+  if (length(object@components)) {
+    catf('\nDescription of Implementation Components ::')
+    print(object@components)
+  }
   
   ## The implementation source information
-  catNotEmpty('Source URL :: ', object@source.url)
-  catNotEmpty('Binary URL :: ', object@binary.url)
-  catNotEmpty('Source format :: ', object@source.format)
-  catNotEmpty('Binary format :: ', object@binary.format)
-  catNotEmpty('Source MD5 :: ', object@source.md5)
-  catNotEmpty('Binary MD5 :: ', object@binary.md5)
-  cat('\n\n')
+  #catNotEmpty('Source URL :: ', object@source.url)
+  #catNotEmpty('Binary URL :: ', object@binary.url)
+  #catNotEmpty('Source format :: ', object@source.format)
+  #catNotEmpty('Binary format :: ', object@binary.format)
+  #catNotEmpty('Source MD5 :: ', object@source.md5)
+  #catNotEmpty('Binary MD5 :: ', object@binary.md5)
+  #cat('\n\n')
 })
   
 
