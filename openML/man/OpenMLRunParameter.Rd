@@ -1,0 +1,24 @@
+\name{OpenMLRunParameter}
+\alias{OpenMLRunParameter}
+\alias{OpenMLRunParameter-class}
+\title{OpenMLRunParameter}
+\description{
+  This class of objects contains information on the setting
+  of a single parameter of an OpenML run.
+}
+\details{
+  Objects can be created by calls of the form
+  \code{OpenMLRunParameter(...)}. The objects contain
+  information on ... .
+}
+\section{Slots}{
+  \describe{ \item{\code{name}}{[\code{character}]\cr The
+  name of the parameter.}
+  \item{\code{value}}{[\code{character}]\cr The value of
+  the parameter.}
+  \item{\code{component}}{[\code{character}]\cr The
+  implementation name of a component, if the parameter
+  belongs to this component.  This name must match a
+  component of the implementation.} }
+}
+

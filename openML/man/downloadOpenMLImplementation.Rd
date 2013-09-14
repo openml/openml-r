@@ -1,0 +1,30 @@
+\name{downloadOpenMLImplementation}
+\alias{downloadOpenMLImplementation}
+\title{Download an OpenML implementation from the OpenML server through a server API call.}
+\usage{
+  downloadOpenMLImplementation(id, dir = getwd(),
+    download.source.binary = TRUE, show.info = TRUE)
+}
+\arguments{
+  \item{id}{[\code{character(1)}]\cr The implementation
+  id.}
+
+  \item{dir}{[\code{character(1)}]\cr Directory where
+  downloaded files from the repository are stored.  Default
+  is current directory.}
+
+  \item{download.source.binary}{[\code{logical(1)}]\cr
+  Should source / binary files of the implementation also
+  be downloaded?  They will also be stored in \code{dir}.
+  Default is \code{TRUE}.}
+
+  \item{show.info}{[logical(1)]\cr Verbose output on
+  console?  Default is \code{TRUE}.}
+}
+\value{
+  [\code{\link{OpenMLImplementation}}].
+}
+\description{
+  Retrieves an implementation for a given id.
+}
+
