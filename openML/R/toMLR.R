@@ -15,7 +15,7 @@ toMLR <- function(task) {
   
   #FIXME some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
-  data <- drop.levels(data)
+  data <- droplevels(data)
   
   # FIXME: hack to convert bad feature names
   feature.ind <- which(colnames(data) %nin% target)
