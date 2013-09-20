@@ -34,7 +34,7 @@
 #'    \item{\code{dependencies}}{[\code{character}]\cr
 #'    The dependencies of the implementation.}
 #'    \item{\code{parameter}}{[\code{list}]\cr
-#'    The parameters of the implementation. A list contatining 
+#'    The parameters of the implementation. A list containing 
 #'    \code{\link{OpenMLImplementationParameter}s}.}
 #'    \item{\code{components}}{[\code{list}]}\cr
 #'    A list contatining \code{\link{OpenMLImplementation}s}. Typically components of a workflow or 

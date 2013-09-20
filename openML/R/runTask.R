@@ -20,7 +20,7 @@
 #' @seealso \code{\linkS4class{OpenMLTask}}, \code{\link[mlr]{learners}}, 
 #'   \code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
 #' @export
-runTask <- function(task, learner, return.mlr.results = TRUE) {
+runTask <- function(task, learner, return.mlr.results = FALSE) {
   checkArg(task, "OpenMLTask")
   checkArg(learner, "Learner")
   checkArg(return.mlr.results, "logical")
@@ -33,7 +33,9 @@ runTask <- function(task, learner, return.mlr.results = TRUE) {
     run.pred = res$pred$data, 
     mlr.resample.results = res
   )  
-  if(!return.mlr.results) 
+  if(!return.mlr.results) {
     results$mlr.resample.results <- NULL
+    results <- results$run.pred
+  }
   return(results)
 }

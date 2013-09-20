@@ -25,9 +25,9 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
   downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, show.info = show.info)  
   impl <- parseOpenMLImplementation(fn.impl.xml)
   if (download.source.binary) {
-    if (length(impl@source.url)) {
+    if (length(impl@source.url) > 0) {
       if (show.info)
-        messagef("Downloading implementation source file.")
+        messagef("Downloading implementation source file from URL:\n%s.", impl@source.url)
       # take 2nd from last element before "/download"
       # shoud be stored filename
       #FIXME is thsi correct?
@@ -46,7 +46,7 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
   return(impl)
 }
 
-parseOpenMLImplementation <- function(file) {
+parseOpenMLImplementation <- function(file, prePath = "") {
   checkArg(file, "character", len = 1L, na.ok = FALSE)
   doc <- parseXMLResponse(file, "Getting implementation", "implementation")
   args <- list()
@@ -57,11 +57,42 @@ parseOpenMLImplementation <- function(file) {
   args[["creator"]] <- xmlOValS(doc, "/oml:implementation/oml:creator")
   args[["contributor"]] <- xmlOValS(doc, "/oml:implementation/oml:contributor")
   args[["licence"]] <- xmlOValS(doc, "/oml:implementation/oml:licence")
-  args[["language"]] <- xmlOValS(doc, "/oml:implementation/oml:description")
+  args[["language"]] <- xmlOValS(doc, "/oml:implementation/oml:language")
   args[["full.description"]] <- xmlOValS(doc, "/oml:implementation/oml:full_description")
   args[["installation.notes"]] <- xmlOValS(doc, "/oml:implementation/oml:installation_notes")
   args[["dependencies"]] <- xmlOValS(doc, "/oml:implementation/oml:dependencies")
   #FIXME: add components and parameters and bin ref
+  
+  ## components section, should work.
+  comp_ns <- getNodeSet(doc, "/oml:implementation/oml:components/oml:implementation")
+  if(length(comp_ns) > 0) {
+    comp <- list()
+    for(i in 1:length(ns)){
+      file2 <- sprintf("%s/downloadUploadTest/comp.xml", getwd())
+      saveXML(comp_ns[[i]], file = file2)
+      comp <- c(comp, parseOpenMLImplementation(file2, 
+        prePath = sprintf("%s/oml:implementation/oml:components/", prePath)))
+      unlink(file2)
+    }
+    args[["components"]] <- comp
+  }
+  
+  ## parameter section, does not work yet
+  prePath <- sprintf("%soml:implementation/oml:parameter", prePath)
+  args[["parameter"]] <- parseOpenMLParameters(prePath)
+  
+  #par_ns <- getNodeSet(doc, "/oml:implementation/oml:parameter")
+  #if(length(par_ns) > 0) {
+  #  par <- list()
+  #  for(i in 1:length(ns)){
+  #    file2 <- sprintf("%s/downloadUploadTest/par.xml", getwd())
+  #    saveXML(par_ns[[i]], file = file2)
+  #    par <- c(par, parseOpenMLParameter(file2))
+  #    unlink(file2)
+  #  }
+  #  args[["parameter"]] <- par
+  #}
+  
   args[["collection.date"]] <- xmlOValS(doc, "/oml:implementation/oml:collection_date")
   args[["source.url"]] <- xmlOValS(doc, "/oml:implementation/oml:source_url")
   args[["binary.url"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_url")
@@ -69,11 +100,29 @@ parseOpenMLImplementation <- function(file) {
   args[["binary.format"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_format")
   args[["source.md5"]] <- xmlOValS(doc, "/oml:implementation/oml:source_md5")
   args[["binary.md5"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_md5")
-  
+
   impl <- do.call(OpenMLImplementation, args)
   convertOpenMLImplementation(impl)
 }
 
 convertOpenMLImplementation <- function(impl) {
   impl
+}
+
+parseOpenMLParameters <- function(prePath) {
+  checkArg(prePath, "character", len = 1L, na.ok = FALSE)
+  
+  ns <- getNodeSet(doc, sprintf("%s", prePath))
+  
+  par.names <- xmlValsMultNsS(doc, sprintf("%s/oml:name", prePath))
+  par.types <- xmlValsMultNsS(doc, sprintf("%s/oml:data_type", prePath))
+  par.defs <- xmlValsMultNsS(doc, sprintf("%s/oml:default_values", prePath))
+  par.descs <- xmlValsMultNsS(doc, sprintf("%s/oml:description", prePath))
+  
+  par <- list()
+  for(i in 1:length(par.names)) {
+    par <- c(par, 
+      OpenMLImplementationParameter(par.names[i], par.types[i], par.defs[i], par.descs[i]))
+  }
+  par
 }

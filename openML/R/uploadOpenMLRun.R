@@ -17,7 +17,13 @@
 
 # FIXME: Is 'description' a path to a file or the content of an XML file? 
 
-uploadOpenMLRun <- function(description, output.files, session.hash, show.info = TRUE) {
+uploadOpenMLRun <- function(run.desc, output.files, session.hash, show.info = TRUE) {
+  description <- tempfile()
+  writeOpenMLRunXML(run.desc, description)
+  
+  output <- tempfile()
+  write.arff(output.files, file = output)
+  
   file <- tempfile()
   if (show.info) {
     messagef("Uploading run to server.")
@@ -26,11 +32,14 @@ uploadOpenMLRun <- function(description, output.files, session.hash, show.info =
   
   url <- getServerFunctionURL("openml.run.upload")
   params <- list(
-    description = description,
-    output_files = output.files,
+    description = fileUpload(filename = description),
+    output_files = fileUpload(filename = output),
     session_hash = session.hash
   )
-  content <- postForm(url, .params = params, .checkParams = FALSE)
+  content <- postForm(url, 
+    .params = params
+  )
+  #content <- postForm(url, .params = params, .checkParams = FALSE)
   write(content, file = file)
   doc = parseXMLResponse(file, "Uploading run", "response")
   if (show.info) 

@@ -24,7 +24,7 @@ writeOpenMLRunXML <- function(description, file = character(0)) {
   checkArg(file, "character")
   
   doc <- newXMLDoc()
-  top <- newXMLNode("oml:run", parent = doc, namespace = c(oml = "http://www.openml.org/run"))
+  top <- newXMLNode("oml:run", parent = doc, namespace = c(oml = "http://openml.org/openml"))
   # FIXME check against carefully against schema 
   mynode <- function(name, val, parent = top) {
     if(length(val)) 

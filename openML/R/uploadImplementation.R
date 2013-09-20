@@ -1,6 +1,6 @@
 #' Upload an OpenML implementation to the server.
 #' 
-#' @param description [\code{\link{OpenMLImplementation}}]\cr 
+#' @param implementation [\code{\link{OpenMLImplementation}}]\cr 
 #'   An OpenMLImplementation object. Should at least contain a name and a description.
 #' @param sourcefile [\code{character(1)}]\cr
 #'   The source code of the implementation. If multiple files, please zip them. 
@@ -14,12 +14,19 @@
 #'   Verbose output on console?
 #'   Default is \code{TRUE}.
 #' @export
-uploadOpenMLImplementation <- function(description, sourcefile, binaryfile, session.hash, 
+uploadOpenMLImplementation <- function(implementation, sourcefile, binaryfile, session.hash, 
   show.info = TRUE) {
+  
+  # Generate a useless sourcefile, if user doesn't provide one. Just for now.
+  file <- file.path(getwd(), "sourcefile.R")
+  if(missing(sourcefile)) {
+    content <- catf(file = file, "useless sourcefile")
+    sourcefile <- file
+  }
   
   file <- tempfile()
   
-  #writeOpenMLImplementationXML(description, file)
+  writeOpenMLImplementationXML(implementation, file)
   
    if (show.info) {
      messagef("Uploading implementation to server.")
@@ -30,7 +37,7 @@ uploadOpenMLImplementation <- function(description, sourcefile, binaryfile, sess
   #FIXME: handle binary
   response <- postForm(url, 
     session_hash = session.hash,
-    description = fileUpload(filename = description),
+    description = fileUpload(filename = file),
     source = fileUpload(filename = sourcefile)
   )
   write(response, file = file)
@@ -42,7 +49,9 @@ uploadOpenMLImplementation <- function(description, sourcefile, binaryfile, sess
   if (show.info) {
     messagef("Implementation successfully uploaded. Implementation ID: %s", 
              xmlOValS(doc, "/oml:upload_implementation/oml:id"))
-  }    
+  }  
+  #FIXME: this way a by the user provided sourcefile will be deleted as well..
+  unlink(sourcefile)
 }
 
 # 
