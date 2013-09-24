@@ -28,7 +28,7 @@ writeOpenMLImplementationXML <- function(description, file = character(0)) {
     mynode("full_description", description@full.description, parent)
     mynode("installation_notes", description@installation.notes, parent)
     mynode("dependencies", description@dependencies, parent)
-    if(length(description@bibliographical_reference) > 0) {
+    if(length(description@bibliographical.reference) > 0) {
       for(i in seq_along(description@bibliographical_reference)) {
         par <- newXMLNode("bibliographical_reference", parent = parent, namespace = "oml")
         mynode("citation", description@bibliographical_reference[[i]]@citation, parent = par)

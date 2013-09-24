@@ -109,7 +109,7 @@ setClass("OpenMLImplementation", representation(
 # --------------------------------------------------------------
 # constructor function
 OpenMLImplementation <- function(
-  id = integer(),
+  id = "",
   uploader = integer(),
   name = "",
   version = "",

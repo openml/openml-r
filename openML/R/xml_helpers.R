@@ -78,6 +78,8 @@ isErrorXML <- function(doc) {
     code <- xmlRValI(doc, "/oml:error/oml:code")
     msg <- xmlRValS(doc, "/oml:error/oml:message")
     add_info <- xmlOValS(doc, "/oml:error/oml:additional_information")
+    if(is.null(add_info))
+      add_info <- "No additional information available."
     return(list(code = code, msg = msg, add_info = add_info))
   } else {
     return(NULL)    
@@ -87,7 +89,7 @@ isErrorXML <- function(doc) {
 checkAndHandleErrorXML <- function(file, doc, prefix.msg) {
   z <- isErrorXML(doc)
   if (!is.null(z)) {
-    stopf("Error in server / XML response for: %s\n%s,\n%s\nFile: %s", 
+    stopf("Error in server / XML response for: %s\n\t\t%s.\n\t\t%s\nFile: %s", 
       prefix.msg, z$msg, z$add_info, file)
   }
 }
