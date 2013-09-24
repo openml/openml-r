@@ -100,7 +100,7 @@ parseOpenMLParameters <- function(doc) {
   
   par.names <- xmlValsMultNsS(doc, sprintf("%s/oml:name", path))
   par.types <- xmlValsMultNsS(doc, sprintf("%s/oml:data_type", path))
-  par.defs <- xmlValsMultNsS(doc, sprintf("%s/oml:default_values", path))
+  par.defs <- xmlValsMultNsS(doc, sprintf("%s/oml:default_value", path))
   par.descs <- xmlValsMultNsS(doc, sprintf("%s/oml:description", path))
   
   par <- list()

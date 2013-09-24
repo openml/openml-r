@@ -14,7 +14,7 @@ writeOpenMLImplementationXML <- function(description, file = character(0)) {
   
   addNodes <- function(description, doc, parent = top) {  
     mynode <- function(name, val, parent = top){
-      if(length(val)) 
+      if(length(val) > 0) 
         newXMLNode(name, as.character(val), parent = parent, namespace = "oml")
     }
       
@@ -28,8 +28,15 @@ writeOpenMLImplementationXML <- function(description, file = character(0)) {
     mynode("full_description", description@full.description, parent)
     mynode("installation_notes", description@installation.notes, parent)
     mynode("dependencies", description@dependencies, parent)
-    #mynode("bibliographical_reference", description@bibliographical.reference)
-    if(length(description@parameter)) {
+    if(length(description@bibliographical_reference) > 0) {
+      for(i in seq_along(description@bibliographical_reference)) {
+        par <- newXMLNode("bibliographical_reference", parent = parent, namespace = "oml")
+        mynode("citation", description@bibliographical_reference[[i]]@citation, parent = par)
+        mynode("url", description@bibliographical_reference[[i]]@url, parent = par)
+      }
+    }
+    mynode("bibliographical_reference", description@bibliographical.reference)
+    if(length(description@parameter) > 0) {
       for(i in seq_along(description@parameter)) {
         par <- newXMLNode("parameter", parent = parent, namespace = "oml")
         mynode("name", description@parameter[[i]]@name, parent = par)
@@ -47,7 +54,7 @@ writeOpenMLImplementationXML <- function(description, file = character(0)) {
   
   doc <- addNodes(description, doc, top)
   
-  if(length(description@components)) {
+  if(length(description@components) > 0) {
     comp <- newXMLNode("components", parent = top, namespace = "oml")
     for(i in seq_along(description@components)) {
       sub.impl <- newXMLNode("implementation", parent = comp, namespace = "oml")
