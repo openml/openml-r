@@ -46,7 +46,7 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
   return(impl)
 }
 
-parseOpenMLImplementation <- function(file, prePath = "") {
+parseOpenMLImplementation <- function(file) {
   checkArg(file, "character", len = 1L, na.ok = FALSE)
   doc <- parseXMLResponse(file, "Getting implementation", "implementation")
   args <- list()
@@ -61,38 +61,22 @@ parseOpenMLImplementation <- function(file, prePath = "") {
   args[["full.description"]] <- xmlOValS(doc, "/oml:implementation/oml:full_description")
   args[["installation.notes"]] <- xmlOValS(doc, "/oml:implementation/oml:installation_notes")
   args[["dependencies"]] <- xmlOValS(doc, "/oml:implementation/oml:dependencies")
-  #FIXME: add components and parameters and bin ref
+  #FIXME: add bin ref
   
-  ## components section, should work.
+  ## components section
   comp_ns <- getNodeSet(doc, "/oml:implementation/oml:components/oml:implementation")
   if(length(comp_ns) > 0) {
     comp <- list()
-    for(i in 1:length(ns)){
+    for(i in 1:length(comp_ns)){
       file2 <- sprintf("%s/downloadUploadTest/comp.xml", getwd())
       saveXML(comp_ns[[i]], file = file2)
-      comp <- c(comp, parseOpenMLImplementation(file2, 
-        prePath = sprintf("%s/oml:implementation/oml:components/", prePath)))
+      comp <- c(comp, parseOpenMLImplementation(file2))
       unlink(file2)
     }
     args[["components"]] <- comp
   }
   
-  ## parameter section, does not work yet
-  prePath <- sprintf("%soml:implementation/oml:parameter", prePath)
-  args[["parameter"]] <- parseOpenMLParameters(prePath)
-  
-  #par_ns <- getNodeSet(doc, "/oml:implementation/oml:parameter")
-  #if(length(par_ns) > 0) {
-  #  par <- list()
-  #  for(i in 1:length(ns)){
-  #    file2 <- sprintf("%s/downloadUploadTest/par.xml", getwd())
-  #    saveXML(par_ns[[i]], file = file2)
-  #    par <- c(par, parseOpenMLParameter(file2))
-  #    unlink(file2)
-  #  }
-  #  args[["parameter"]] <- par
-  #}
-  
+  args[["parameter"]] <- parseOpenMLParameters(doc)  
   args[["collection.date"]] <- xmlOValS(doc, "/oml:implementation/oml:collection_date")
   args[["source.url"]] <- xmlOValS(doc, "/oml:implementation/oml:source_url")
   args[["binary.url"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_url")
@@ -109,15 +93,15 @@ convertOpenMLImplementation <- function(impl) {
   impl
 }
 
-parseOpenMLParameters <- function(prePath) {
-  checkArg(prePath, "character", len = 1L, na.ok = FALSE)
+parseOpenMLParameters <- function(doc) {  
+  path <- "/oml:implementation/oml:parameter"
   
-  ns <- getNodeSet(doc, sprintf("%s", prePath))
+  ns <- getNodeSet(doc, path)
   
-  par.names <- xmlValsMultNsS(doc, sprintf("%s/oml:name", prePath))
-  par.types <- xmlValsMultNsS(doc, sprintf("%s/oml:data_type", prePath))
-  par.defs <- xmlValsMultNsS(doc, sprintf("%s/oml:default_values", prePath))
-  par.descs <- xmlValsMultNsS(doc, sprintf("%s/oml:description", prePath))
+  par.names <- xmlValsMultNsS(doc, sprintf("%s/oml:name", path))
+  par.types <- xmlValsMultNsS(doc, sprintf("%s/oml:data_type", path))
+  par.defs <- xmlValsMultNsS(doc, sprintf("%s/oml:default_values", path))
+  par.descs <- xmlValsMultNsS(doc, sprintf("%s/oml:description", path))
   
   par <- list()
   for(i in 1:length(par.names)) {
