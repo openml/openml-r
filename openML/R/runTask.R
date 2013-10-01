@@ -20,17 +20,19 @@
 #' @seealso \code{\linkS4class{OpenMLTask}}, \code{\link[mlr]{learners}}, 
 #'   \code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
 #' @export
+# FIXME: if !return.mlr.results, the output is not a list!
 runTask <- function(task, learner, return.mlr.results = FALSE) {
   checkArg(task, "OpenMLTask")
   checkArg(learner, "Learner")
   checkArg(return.mlr.results, "logical")
-  #FIXME: add regression
-  if(task@task.type == "Supervised Classification" & learner$type != "classif")
-    stopf("Learner type does not correspond to task type.")
+  if((task@task.type == "Supervised Classification" && learner$type != "classif") ||
+    (task@task.type == "Supervised Regression" && learner$type != "regr"))
+    stopf("Learner type ('%s') does not correspond to task type ('%s').", task@task.type, learner$type)
   mlr.task <- toMLR(task)
   res <- resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures)
+  pred <- reformatPredictions(pred = res$pred$data, task = task)
   results <- list(
-    run.pred = res$pred$data, 
+    run.pred = pred, 
     mlr.resample.results = res
   )  
   if(!return.mlr.results) {
@@ -38,4 +40,34 @@ runTask <- function(task, learner, return.mlr.results = FALSE) {
     results <- results$run.pred
   }
   return(results)
+}
+
+reformatPredictions <- function(pred, task) {
+  iter <- pred$iter
+  n <- length(iter)
+  reps <- task@task.estimation.procedure@parameters$number_repeats
+  rep <- rep(1:reps, each = n/2)
+  fold <- as.integer(iter/rep)
+  rowid <- pred$id
+  
+  classes <- levels(pred$response)
+  
+  new_pred <- data.frame(rep = rep, fold = fold, rowid = rowid, prediction = pred$response)
+  
+  probs <- c()
+  if(all(sprintf("prob.%s", classes) %in% colnames(pred))) {
+    for(i in 1:length(classes)) {
+      probs <- cbind(probs, pred[, sprintf("prob.%s", classes[i])])
+    }
+  } else {
+    for(i in 1:length(classes)) {
+      probs <- cbind(probs, ifelse(pred$response == classes[i], 1, 0))
+    } 
+  }
+  colnames(probs) <- sprintf("confidence.%s", classes) 
+  
+  new_pred <- cbind(new_pred, probs)
+  colnames(new_pred)[1] <- "repeat"
+  
+  return(new_pred)
 }

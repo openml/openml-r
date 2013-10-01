@@ -5,7 +5,7 @@
 #' @param description [???]\cr 
 #'   An XML run description file. Should contain the task and implementation id
 #'   and optionally any parameter settings that are specific for this run.
-#' @param output.files [\code{character(1)}]\cr
+#' @param predictions [\code{character(1)}]\cr
 #'   A file containing the output files required by the task type used. 
 #'   For supervised classification, this will be a table with predictions.
 #' @param session.hash [\code{character(1)}]\cr
@@ -17,12 +17,12 @@
 
 # FIXME: Is 'description' a path to a file or the content of an XML file? 
 
-uploadOpenMLRun <- function(run.desc, output.files, session.hash, show.info = TRUE) {
+uploadOpenMLRun <- function(run.desc, predictions, session.hash, show.info = TRUE) {
   description <- tempfile()
   writeOpenMLRunXML(run.desc, description)
   
   output <- tempfile()
-  write.arff(output.files, file = output)
+  write.arff(predictions, file = output)
   
   file <- tempfile()
   if (show.info) {
@@ -33,7 +33,7 @@ uploadOpenMLRun <- function(run.desc, output.files, session.hash, show.info = TR
   url <- getServerFunctionURL("openml.run.upload")
   params <- list(
     description = fileUpload(filename = description),
-    output_files = fileUpload(filename = output),
+    predictions = fileUpload(filename = output),
     session_hash = session.hash
   )
   content <- postForm(url, 
@@ -45,4 +45,3 @@ uploadOpenMLRun <- function(run.desc, output.files, session.hash, show.info = TR
   if (show.info) 
     messagef("Run successfully uploaded.")
 }
-
