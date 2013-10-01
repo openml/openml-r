@@ -42,13 +42,36 @@ runTask <- function(task, learner, return.mlr.results = FALSE) {
   return(results)
 }
 
+# Reformat predictions
+#
+# Reformat an MLR predictions data.frame, so that it fits the OpenML expectencies.
+#
+# @param pred [\code{\link[mlr]{Prediction}}]\cr 
+#   MLR predictions data.frame.
+# @param task [\code{\linkS4class{OpenMLTask}}]\cr 
+#   The OpenML task to which the predictions belong.
+# @return data.frame with columns:
+#   \item{repeat}{[\code{numeric}}]\cr
+#     Current repetition of the estimation procedure.}
+#   \item{fold}{[\code{numeric}]\cr
+#     Current repetition of the estimation procedure.}  
+#   \item{row_id}{[\code{numeric}]\cr
+#     The observation's row ID.}
+#   \item{prediction}{[\code{factor}]\cr
+#     The predicted class.}  
+#   \item{confidence."classname"}{[\code{numeric}]\cr
+#     The predicted probability for class "classname". One column for each class. 
+#     If no probabilities are provided, the predicted class gets probability 1 and each other class 
+#     gets probability 0.}  
+
 reformatPredictions <- function(pred, task) {
   iter <- pred$iter
   n <- length(iter)
+  folds <- task@task.estimation.procedure@parameters$number_folds
   reps <- task@task.estimation.procedure@parameters$number_repeats
-  rep <- rep(1:reps, each = n/2)
-  fold <- iter %% 10
-  fold[fold == 0] <- 10
+  rep <- rep(1:reps, each = n/reps)
+  fold <- iter %% folds
+  fold[fold == 0] <- folds
   rowid <- pred$id
   
   classes <- levels(pred$response)
