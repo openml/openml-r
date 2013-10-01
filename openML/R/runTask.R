@@ -47,12 +47,13 @@ reformatPredictions <- function(pred, task) {
   n <- length(iter)
   reps <- task@task.estimation.procedure@parameters$number_repeats
   rep <- rep(1:reps, each = n/2)
-  fold <- as.integer(iter/rep)
+  fold <- iter %% 10
+  fold[fold == 0] <- 10
   rowid <- pred$id
   
   classes <- levels(pred$response)
   
-  new_pred <- data.frame(rep = rep, fold = fold, rowid = rowid, prediction = pred$response)
+  new_pred <- data.frame(rep = rep, fold = fold, row_id = rowid, prediction = pred$response)
   
   probs <- c()
   if(all(sprintf("prob.%s", classes) %in% colnames(pred))) {
