@@ -76,7 +76,8 @@ reformatPredictions <- function(pred, task) {
   
   classes <- levels(pred$response)
   
-  new_pred <- data.frame(rep = rep, fold = fold, row_id = rowid, prediction = pred$response)
+  # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
+  new_pred <- data.frame(rep = rep - 1, fold = fold - 1, row_id = rowid - 1, prediction = pred$response)
   
   probs <- c()
   if(all(sprintf("prob.%s", classes) %in% colnames(pred))) {
