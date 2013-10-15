@@ -12,6 +12,7 @@
 #' @param show.info [\code{logical(1)}]\cr
 #'   Verbose output on console?
 #'   Default is \code{TRUE}.
+#' @return [\code{numeric(1)} or \code{NULL}]. Run ID if the run was uploaded succesfully.
 #' @export
 
 # FIXME: Is 'description' a path to a file or the content of an XML file? 
@@ -45,8 +46,10 @@ uploadOpenMLRun <- function(run.desc, predictions, session.hash, show.info = TRU
   # if not, print the error.
   if(is.error(doc)) {
     parseXMLResponse(file, "Uploading run", "response")
-  }
+  } 
   
   if (show.info) 
     messagef("Run successfully uploaded.")
+  
+  return(if(!is.error(doc)) xmlRValI(doc, "/oml:upload_run/oml:run_id"))
 }
