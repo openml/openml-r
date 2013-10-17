@@ -29,14 +29,15 @@ parseOpenMLRunResults <- function(file) {
   # task.id <- xmlRValS(doc, "/oml:get_run/oml:task_id")
   # user.id <- xmlRValS(doc, "/oml:get_run/oml:user_id")
   implementation.id <- xmlRValS(doc, "/oml:get_run/oml:setup/oml:implementation")
-  # FIXME: parse parameters. this is the structure:
-  # <oml:get_run>
-  #   <oml:setup>
-  #     <oml:parameters>
-  #       <oml:parameter name="classif.rpart(1.0)_xval" value="0"/>
-  #     </oml:parameters>
-  # ...
-  parameters <- list()
+  
+  # FIXME: what about recursive parameters (pars of sub-components)?
+  # FIXME: should we use a list here instead of a named character vector?
+  ns.pars <- getNodeSet(doc, "/oml:get_run/oml:setup/oml:parameters/oml:parameter")
+  par.names <- unlist(lapply(ns.params, function(x) xmlGetAttr(x, "name")))
+  par.names <- unlist(lapply(str_split(par.names, "_"), function(x) x[2]))
+  parameters <- as.character(unlist(lapply(ns.params, function(x) xmlGetAttr(x, "value"))))
+  names(parameters) <- par.names 
+  
   metrics <- getMetrics("/oml:get_run/oml:output_data")
   
   results <- OpenMLRunResults(

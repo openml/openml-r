@@ -33,7 +33,7 @@ setClass("OpenMLRunResults", representation(
   task.id = "character",
   user.id = "character",
   implementation.id = "character",
-  parameters = "list",
+  parameters = "character",
   metrics = "list"
 ))
 
@@ -45,7 +45,7 @@ OpenMLRunResults <- function(
   task.id = "",
   user.id = "",
   implementation.id = "",
-  parameters = list(),
+  parameters = "",
   metrics = list()
 ) {
   new("OpenMLRunResults",

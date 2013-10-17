@@ -2,11 +2,11 @@
 \alias{uploadOpenMLImplementation}
 \title{Upload an OpenML implementation to the server.}
 \usage{
-  uploadOpenMLImplementation(description, sourcefile,
+  uploadOpenMLImplementation(implementation, sourcefile,
     binaryfile, session.hash, show.info = TRUE)
 }
 \arguments{
-  \item{description}{[\code{\link{OpenMLImplementation}}]\cr
+  \item{implementation}{[\code{\link{OpenMLImplementation}}]\cr
   An OpenMLImplementation object. Should at least contain a
   name and a description.}
 

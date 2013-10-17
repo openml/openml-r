@@ -2,7 +2,7 @@
 \alias{runTask}
 \title{Solve a task with MLR.}
 \usage{
-  runTask(task, learner, return.mlr.results = TRUE)
+  runTask(task, learner, return.mlr.results = FALSE)
 }
 \arguments{
   \item{task}{[\code{\linkS4class{OpenMLTask}}]\cr An
