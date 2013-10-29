@@ -34,7 +34,7 @@ setClass("OpenMLRunResults", representation(
   user.id = "character",
   implementation.id = "character",
   parameters = "character",
-  metrics = "list"
+  metrics = "data.frame"
 ))
 
 
@@ -46,7 +46,7 @@ OpenMLRunResults <- function(
   user.id = "",
   implementation.id = "",
   parameters = "",
-  metrics = list()
+  metrics = data.frame()
 ) {
   new("OpenMLRunResults",
       run.id = run.id,
@@ -80,13 +80,14 @@ setMethod("show", "OpenMLRunResults", function(object) {
   ## Metrics
   catf('\n** Metrics **')
   
-  if(length(object@metrics) > 0) {
-    for(i in seq_along(object@metrics)) {
-      catNotEmpty('Name              :: ', object@metrics[[i]]$name)
-      catNotEmpty('Value             :: ', object@metrics[[i]]$value)
-      catNotEmpty('Label             :: ', object@metrics[[i]]$label)
-      cat("\n")
-    }
-  }
+  #if(length(object@metrics) > 0) {
+  #  for(i in seq_along(object@metrics)) {
+  #    catNotEmpty('Name              :: ', object@metrics[[i]]$name)
+  #    catNotEmpty('Value             :: ', object@metrics[[i]]$value)
+  #    catNotEmpty('Label             :: ', object@metrics[[i]]$label)
+  #    cat("\n")
+  #  }
+  #}
+  print(object@metrics)
 })
 
