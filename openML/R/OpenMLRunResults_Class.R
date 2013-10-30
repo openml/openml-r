@@ -1,4 +1,4 @@
-#' OpenMLImplementation
+#' OpenMLRunResults
 #'
 #' This class of objects contains information on the results of an \code{\link{OpenMLRun}}.
 #' 
@@ -15,9 +15,10 @@
 #'    The uploader's OpenML user ID.}
 #'    \item{\code{implementation.id}}{[\code{character}]\cr
 #'    ID of the implementation used for this run.}
-#'    \item{\code{parameters}}{[\code{list}]\cr
-#'    A list of the parameter settings used for this run (if they differ from the default settings).}
-#'    \item{\code{metrics}}{[\code{list}]\cr
+#'    \item{\code{parameters}}{[\code{character}]\cr
+#'    A named character vector of the parameter settings used for this run (if they differ from the 
+#'    default settings).}
+#'    \item{\code{metrics}}{[\code{data.frame}]\cr
 #'    A list of the metrics that are computed by the server based on this run's predictions.}
 #'  }
 #'
