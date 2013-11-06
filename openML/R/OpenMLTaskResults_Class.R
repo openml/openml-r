@@ -28,6 +28,8 @@
 setClass("OpenMLTaskResults", representation(
   task.id = "character",
   task.name = "character",
+  task.type.id = "character",
+  input.data = "character",
   estimation.procedure = "character",
   metrics = "data.frame"
 ))
@@ -38,12 +40,16 @@ setClass("OpenMLTaskResults", representation(
 OpenMLTaskResults <- function(
   task.id = "",
   task.name = "",
+  task.type.id = "",
+  input.data = "",
   estimation.procedure = "",
   metrics = data.frame()
 ) {
   new("OpenMLTaskResults",
       task.id = task.id,
       task.name = task.name,
+      task.type.id = task.type.id,
+      input.data = input.data,
       estimation.procedure = estimation.procedure,
       metrics = metrics
   )
@@ -63,6 +69,8 @@ setMethod("show", "OpenMLTaskResults", function(object) {
    
   catNotEmpty('Task ID              :: ', object@task.id)
   catNotEmpty('Task Name            :: ', object@task.name)
+  catNotEmpty('Task Type ID         :: ', object@task.type.id)  
+  catNotEmpty('Input Data           :: ', object@input.data)
   catNotEmpty('Estimation Procedure :: ', object@estimation.procedure)
   
   ## Metrics

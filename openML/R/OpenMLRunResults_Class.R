@@ -27,40 +27,49 @@
 #' @aliases OpenMLRunResults-class
 #' @exportClass OpenMLRunResults
 
+
+# FIXME: add data.set.desc and pred.desc
 # --------------------------------------------------------------
 # class def
 setClass("OpenMLRunResults", representation(
   run.id = "character",
   task.id = "character",
-  user.id = "character",
+  uploader = "character",
   implementation.id = "character",
+  setup.id = "character",
   parameters = "character",
   metrics = "data.frame"
 ))
-
 
 # --------------------------------------------------------------
 # constructor function
 OpenMLRunResults <- function(
   run.id = "",
   task.id = "",
-  user.id = "",
+  uploader = "",
   implementation.id = "",
+  setup.id = "",
+  #data.set.desc = OpenMLDataSetDescription(),
   parameters = "",
+  #pred.desc = OpenMLDataSetDescription(),
   metrics = data.frame()
 ) {
   new("OpenMLRunResults",
       run.id = run.id,
       task.id = task.id,
-      user.id = user.id,
+      uploader = uploader,
       implementation.id = implementation.id,
+      setup.id = setup.id,
+      #data.set.desc = data.set.desc,
       parameters = parameters,
+      #pred.desc = pred.desc,
       metrics = metrics
   )
 }
 
 # ***** Methods *****
 
+# FIXME: add user.id and uploader
 # show
 setMethod("show", "OpenMLRunResults", function(object) {
   catNotEmpty <- function(s, val) {

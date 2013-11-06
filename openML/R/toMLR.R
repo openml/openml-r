@@ -43,7 +43,7 @@ createMLRResampleInstance <- function(estim.proc, mlr.task) {
   n.folds <- estim.proc@parameters[["number_folds"]]
   data.splits <- estim.proc@data.splits
   # FIXME : more resampling
-  if (type == "cross_validation") {
+  if (type == "crossvalidation") {
     #FIXME why is stratify TRUE here? does the server always prdoced stratified
     # resampling for classif? check this
     stratify <- (mlr.task$task.desc$type == "classif")

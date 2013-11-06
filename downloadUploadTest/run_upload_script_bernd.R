@@ -22,7 +22,7 @@ hash <- authenticateUser(username = "dominik.kirchhoff@tu-dortmund.de", password
 
 # upload results and info about our experiment
 # the follwoing 2 functions are only 90% finished 90% and will soon work
-impl = createOpenMLImplementationForMLRLearner(learner, version = "1.0")
+impl = createOpenMLImplementationForMLRLearner(learner)
 uploadOpenMLImplementation(impl, session.hash = hash)
 
 run.desc <- OpenMLRun(
