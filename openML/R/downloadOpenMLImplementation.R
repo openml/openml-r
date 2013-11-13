@@ -31,14 +31,22 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
       # take 2nd from last element before "/download"
       # shoud be stored filename
       #FIXME is thsi correct?
-      fn.impl.src <- rev(strsplit(impl@source.url, "/")[[1]])[2]
-      fn.impl.src <- file.path(dir, fn.impl.src)  
+      
+      # FIXME: I think the very last element of the link is the stored file name. 
+      # I changed the source/binary name to "impl.name(impl.version).format" to make it clearer.
+      # (otherwise the file name could be anything)
+      #fn.impl.src <- rev(strsplit(impl@source.url, "/")[[1]])[1]
+      
+      format <- rev(strsplit(rev(strsplit(impl@source.url, "/")[[1]])[1], "[.]")[[1]])[1]
+      fn.impl.src <- sprintf("%s(%s)_source.%s", impl@name, impl@version, format)
+      fn.impl.src <- file.path(dir, fn.impl.src) 
       downloadBinaryFile(url = impl@source.url, file = fn.impl.src, show.info = show.info)
     }
     if (length(impl@binary.url) > 0 && impl@source.url != "") {
       if (show.info)
         messagef("Downloading implementation binary file.")
-      fn.impl.bin <- rev(strsplit(impl@binary.url, "/")[[1]])[2]
+      #fn.impl.bin <- rev(strsplit(impl@binary.url, "/")[[1]])[2]
+      fn.impl.src <- sprintf("%s(%s)_binary", impl@name, impl@version)
       fn.impl.bin <- file.path(dir, fn.impl.bin)  
       downloadBinaryFile(url = impl@binary.url, file = fn.impl.bin, show.info = show.info)
     }
