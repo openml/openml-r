@@ -2,7 +2,7 @@
 #' 
 #' Share a run of an implementation on a given OpenML task.
 #' 
-#' @param description [\code{\link{OpenMLRun}}]\cr 
+#' @param run.desc [\code{\link{OpenMLRun}}]\cr 
 #'   An OpenML run description file. Should contain the task and implementation id
 #'   and optionally any parameter settings that are specific for this run.
 #' @param predictions [\code{data.frame}]\cr
@@ -15,9 +15,18 @@
 #' @return [\code{numeric(1)} or \code{NULL}]. Run ID if the run was uploaded succesfully.
 #' @export
 
-# FIXME: Is 'description' a path to a file or the content of an XML file? 
+# FIXME: Rewrite description as soon as the function's parameters are definite.
 
-uploadOpenMLRun <- function(run.desc, predictions, session.hash, show.info = TRUE) {
+uploadOpenMLRun <- function(task, mlr.lrn, oml.impl, predictions, session.hash, show.info = TRUE) {
+  
+  # FIXME: We might want to have a function(task, mlr.lrn, predictions, hash) that uploads both the
+  # implementation and the predictions. For this, we need an API call to get the ID of an already
+  # registered implementation.
+  run.desc <- OpenMLRun(
+    task.id = as.character(task@task.id), 
+    implementation.id = sprintf("%s(%s)", oml.impl@name, oml.impl@version), 
+    parameter.settings = makeRunParameterList(mlr.lrn))
+  
   description <- tempfile()
   writeOpenMLRunXML(run.desc, description)
   

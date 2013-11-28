@@ -17,10 +17,10 @@
 uploadOpenMLImplementation <- function(implementation, sourcefile, binaryfile, session.hash, 
   show.info = TRUE) {
   
-  # Generate a useless sourcefile, if user doesn't provide one. Just for now.
-  file <- file.path(getwd(), "sourcefile.R")
+  # Generate a sourcefile, if user doesn't provide one. Just for now. (?)
+  file <- file.path(getwd(), sprintf("%s_source.R", implementation@name))
   if(missing(sourcefile)) {
-    content <- catf(file = file, "useless sourcefile")
+    catf(file = file, "library(mlr) \nlrn <- makeLearner(\"%s\")", implementation@name)
     sourcefile <- file
   }
   

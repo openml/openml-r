@@ -25,12 +25,12 @@ task <- downloadOpenMLTask(4)
 
 run_preds <- runTask(task, lrn)
 
-run.desc <- OpenMLRun(
-  task.id = "4", 
-  implementation.id = "classif.JRip(0.4-18)", 
-  parameter.settings = makeRunParameterList(lrn))
+#run.desc <- OpenMLRun(
+#  task.id = "4", 
+#  implementation.id = "classif.JRip(0.4-18)", 
+#  parameter.settings = makeRunParameterList(lrn))
 
-run_ul <- uploadOpenMLRun(run.desc, run_preds, hash)
+run_ul <- uploadOpenMLRun(task, lrn, openML_impl, run_preds, hash)
 
 # RUN RESULTS: download
 

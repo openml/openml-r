@@ -63,7 +63,7 @@ parseOpenMLImplementation <- function(file) {
   args[["version"]] <- xmlRValS(doc, "/oml:implementation/oml:version")
   args[["description"]] <- xmlRValS(doc, "/oml:implementation/oml:description")
   args[["creator"]] <- xmlOValS(doc, "/oml:implementation/oml:creator")
-  args[["contributor"]] <- xmlOValS(doc, "/oml:implementation/oml:contributor")
+  args[["contributor"]] <- xmlValsMultNsS(doc, "/oml:implementation/oml:contributor")
   args[["licence"]] <- xmlOValS(doc, "/oml:implementation/oml:licence")
   args[["language"]] <- xmlOValS(doc, "/oml:implementation/oml:language")
   args[["full.description"]] <- xmlOValS(doc, "/oml:implementation/oml:full_description")
