@@ -47,9 +47,10 @@ getDataQualityNames <- function() {
   as.character(openMLSQLQuery("SELECT DISTINCT quality FROM data_quality")[, 1])
 }
 
-#' getDataQualities
+#' getMetaLearningFeatures
 #' 
-#' Retrieve data characteristics. 
+#' Retrieve meta learning features about all stored data sets. Basic data characteristics as 
+#' obtained by \code{\link{getDataCharacteristics}} are also included.
 #' 
 #' @param only [\code{character}]\cr
 #'   The data qualities that are to be retrieved. A complete list can be obtained by \code{\link{getDataQualityNames}}.
@@ -57,7 +58,7 @@ getDataQualityNames <- function() {
 #' 
 #' @return [\code{data.frame}]. A \code{data.frame} containing the data qualities.
 #' @export
-getDataQualities <- function(only = NULL) {
+getMetaLearningFeatures <- function(only = NULL) {
   if(missing(only)) {
     only <- getDataQualityNames()
   }
@@ -73,7 +74,8 @@ getDataQualities <- function(only = NULL) {
     SQL.query <- sprintf("%s, MAX(IF(dq.quality='%s', dq.value, 0)) AS %s", SQL.query, i, i)
   }
   SQL.query <- 
-    sprintf("%s FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY d.name", 
+    sprintf(
+      "%s FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY d.name", 
       SQL.query)
   qualities <- openMLSQLQuery(SQL.query)
   
@@ -83,4 +85,19 @@ getDataQualities <- function(only = NULL) {
   return(qualities)
 }
 
-
+#' Get basic data characteristics.
+#' 
+#' Retrieve the following "non-meta" data characteristics:  
+#' "NumberOfFeatures", "NumberOfInstances", "NumberOfClasses", 
+#' "NumberOfInstancesWithMissingValues", "NumberOfMissingValues", "NumberOfNumericFeatures", 
+#' "NumberOfSymbolicFeatures", "PublicationDate"
+#' 
+#' @return [\code{data.frame}]. A \code{data.frame} containing the data characteristics.
+#' @export
+getDataCharacteristics <- function() {
+  chars <- c("NumberOfFeatures", "NumberOfInstances", "NumberOfClasses", 
+    "NumberOfInstancesWithMissingValues", "NumberOfMissingValues", "NumberOfNumericFeatures", 
+    "NumberOfSymbolicFeatures", "PublicationDate")
+  data.chars <- getDataQualities(only = chars)
+  return(data.chars)
+}
