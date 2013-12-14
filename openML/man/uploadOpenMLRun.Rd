@@ -2,11 +2,11 @@
 \alias{uploadOpenMLRun}
 \title{Upload an OpenML run to the server.}
 \usage{
-  uploadOpenMLRun(run.desc, predictions, session.hash,
-    show.info = TRUE)
+  uploadOpenMLRun(task, mlr.lrn, oml.impl, predictions,
+    session.hash, show.info = TRUE)
 }
 \arguments{
-  \item{description}{[\code{\link{OpenMLRun}}]\cr An OpenML
+  \item{run.desc}{[\code{\link{OpenMLRun}}]\cr An OpenML
   run description file. Should contain the task and
   implementation id and optionally any parameter settings
   that are specific for this run.}
@@ -22,8 +22,8 @@
   console?  Default is \code{TRUE}.}
 }
 \value{
-  [\code{\numeric(1)} or \code{NULL}]. Run ID if the run
-  was succesfully uploaded.
+  [\code{numeric(1)} or \code{NULL}]. Run ID if the run was
+  uploaded succesfully.
 }
 \description{
   Share a run of an implementation on a given OpenML task.

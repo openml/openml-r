@@ -90,14 +90,14 @@ getMetaLearningFeatures <- function(only = NULL) {
 #' Retrieve the following "non-meta" data characteristics:  
 #' "NumberOfFeatures", "NumberOfInstances", "NumberOfClasses", 
 #' "NumberOfInstancesWithMissingValues", "NumberOfMissingValues", "NumberOfNumericFeatures", 
-#' "NumberOfSymbolicFeatures", "PublicationDate"
+#' "NumberOfSymbolicFeatures"
 #' 
 #' @return [\code{data.frame}]. A \code{data.frame} containing the data characteristics.
 #' @export
 getDataCharacteristics <- function() {
   chars <- c("NumberOfFeatures", "NumberOfInstances", "NumberOfClasses", 
     "NumberOfInstancesWithMissingValues", "NumberOfMissingValues", "NumberOfNumericFeatures", 
-    "NumberOfSymbolicFeatures", "PublicationDate")
-  data.chars <- getDataQualities(only = chars)
+    "NumberOfSymbolicFeatures")
+  data.chars <- getMetaLearningFeatures(only = chars)
   return(data.chars)
 }
