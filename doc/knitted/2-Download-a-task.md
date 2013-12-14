@@ -1,3 +1,6 @@
+Download a task
+===============
+
 An OpenML task is an object that contains information on the data set, the task type (classification/regression) and the estimation procedure. A user can download a task from the OpenML server, compute predictions with an algorithm and upload this algorithm as well as the predictions. The server will then calculate many different measures and add them to the data base.
 
 To download a certain task from the OpenML server, you need to know the task's ID. You can look for appropriate task IDs on  

@@ -1,3 +1,6 @@
+Upload predictions
+==================
+
 The predictions data.frame has to be in a certain form in order to be accepted by the server. These columns have to be present:
 * repeat 
 * fold 
@@ -23,7 +26,7 @@ Example: An excerpt of predictions (Iris data set, 10-fold CV, 2 repeats).
     ...    ...  ...    ...             ...                    ...                        ...                       ...  
     300      1    9     58 Iris-versicolor                      0                          1                         0  
 
-# Compute predictions of an mlr learner for an OpenML task
+### Compute predictions of an mlr learner for an OpenML task
 If you are working with [mlr](https://github.com/berndbischl/mlr), you can use the OpenML function `runTask` that returns a data.frame of predictions in the desired form:
 
 
@@ -34,7 +37,7 @@ predictions <- runTask(task, learner)
 
 If the prediction type of the learner is set to "response" instead of "prob", the confidence-columns will contain only 0s and 1s like in the example above. Else, the predicted class probabilities will be used.
 
-# Upload predictions to the server
+### Upload predictions to the server
 
 ```r
 run_ul <- uploadOpenMLRun(task, learner, openML.impl, predictions, hash)

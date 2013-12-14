@@ -1,6 +1,9 @@
+Download performance measures
+=============================
+
 The server computes several performance measures (metrics) for every run that is uploaded and stores these. This makes it possible to easily compare your results to the results of others who have worked on the same task. 
 
-# Download run results
+### Download run results
 To download the results of one of your own runs, you have to know the corresponding run id, which is returned by `uploadOpenMLRun`. With the following call, you get all stored metrics:
 
 ```{r eval = FALSE}
@@ -8,7 +11,7 @@ run_results <- downloadOpenMLRunResults(run_ul)
 run_results@metrics
 ```
 
-# Download task results
+### Download task results
 To download all the results of a task, you only have to know the task ID. 
 
 ```{r eval = FALSE}

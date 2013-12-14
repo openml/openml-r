@@ -1,6 +1,9 @@
+Upload an implementation
+========================
+
 If you want to upload predictions of an algorithm for a certain task, you have to know the algorithm's OpenML implementation ID. If the implementation is not yet registered, you need to upload it. Here, we give you some advice to help you get started.
 
-# Get a valid session hash
+### Get a valid session hash
 In order to upload anything to the server, you have to authenticate your identity first. Therefore, you need to be registered at openml.org. Use the following function to get an authentication hash that is valid for one hour:
 
 
@@ -8,7 +11,7 @@ In order to upload anything to the server, you have to authenticate your identit
 hash <- authenticateUser(username = "your@email.com", password = "your_password")
 ```
 
-# Create an mlr learner and upload it to the server
+### Create an mlr learner and upload it to the server
 There are some helper functions in case you are using the package [mlr](https://github.com/berndbischl/mlr) (Machine Learning in R). To upload an mlr learner you have to convert it into an OpenML implementation description object. This can be made by the function `createOpenMLImplementationForMLRLearner`:
 
 
