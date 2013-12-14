@@ -40,3 +40,12 @@ check: install
 	echo "Running R CMD check ..."
 	${R} CMD check openML
 
+tutorial:
+	echo "\nKnitting Rmd tutorial...\n"
+	${DELETE} doc/knitted
+	${DELETE} doc/figure
+	mkdir doc/knitted
+	${RSCRIPT} ./tools/generate-md-tutorial
+#	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/*.md
+#	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/tutorial/*.md
+#	mv doc/figure doc/knitted/figure
