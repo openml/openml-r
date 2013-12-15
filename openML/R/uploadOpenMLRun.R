@@ -17,15 +17,25 @@
 
 # FIXME: Rewrite description as soon as the function's parameters are definite.
 
-uploadOpenMLRun <- function(task, mlr.lrn, oml.impl, predictions, session.hash, show.info = TRUE) {
+uploadOpenMLRun <- function(task, mlr.lrn, oml.impl, predictions, session.hash, run.pars = NULL, show.info = TRUE) {
   
   # FIXME: We might want to have a function(task, mlr.lrn, predictions, hash) that uploads both the
   # implementation and the predictions. For this, we need an API call to get the ID of an already
   # registered implementation.
+  if(missing(mlr.lrn)) {
+    checkArg(run.pars, "list")
+  } else {
+    checkArg(mlr.lrn, "Learner")
+    run.pars <- makeRunParameterList(mlr.lrn)
+  }
+  checkArg(task, "OpenMLTask")
+  checkArg(oml.impl, "OpenMLImplementation")
+  checkArg(predictions, "data.frame")
+  
   run.desc <- OpenMLRun(
     task.id = as.character(task@task.id), 
     implementation.id = sprintf("%s(%s)", oml.impl@name, oml.impl@version), 
-    parameter.settings = makeRunParameterList(mlr.lrn))
+    parameter.settings = run.pars)
   
   description <- tempfile()
   writeOpenMLRunXML(run.desc, description)

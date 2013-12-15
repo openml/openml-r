@@ -41,7 +41,7 @@ impl.par.b <- OpenMLImplementationParameter(
   default.value = "TRUE",  
   description = "An optional description of parameter b.")  
 
-impl.par <- list(impl.par.a, impl.par.b)
+impl.pars <- list(impl.par.a, impl.par.b)
 ```
 Now we can create the whole description object. Try to find a good name for your algorithm that gives other users an idea of what is happening. 
 ```{r eval = FALSE}
@@ -50,7 +50,7 @@ openML.impl <- OpenMLImplementation(
   version = "1.0",
   description = "Please take some time and write a description of your algorithm/changes compared with the previous
   version/etc. here.",
-  parameter = impl.par)
+  parameter = impl.pars)
 ```
 Now we finally have the implementation description object, which can be uploaded as we have already seen in the section above:
 ```{r eval = FALSE}
