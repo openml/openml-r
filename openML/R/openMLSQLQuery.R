@@ -95,9 +95,11 @@ getMetaLearningFeatures <- function(only = NULL) {
 #' @return [\code{data.frame}]. A \code{data.frame} containing the data characteristics.
 #' @export
 getDataCharacteristics <- function() {
-  chars <- c("NumberOfFeatures", "NumberOfInstances", "NumberOfClasses", 
-    "NumberOfInstancesWithMissingValues", "NumberOfMissingValues", "NumberOfNumericFeatures", 
-    "NumberOfSymbolicFeatures")
+  chars <- c("NumberOfFeatures", "NumberOfInstances", "NumberOfClasses", "MajorityClassSize", 
+    "MinorityClassSize", "NumberOfInstancesWithMissingValues", "NumberOfMissingValues", 
+    "NumberOfNumericFeatures", "NumberOfSymbolicFeatures")
   data.chars <- getMetaLearningFeatures(only = chars)
+  # all features (except for the name) are integers. [check this when adding new data chars]
+  data.chars[, -1] <- apply(data.chars[, -1], 2, as.integer)
   return(data.chars)
 }
