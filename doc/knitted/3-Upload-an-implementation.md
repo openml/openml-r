@@ -8,7 +8,7 @@ In order to upload anything to the server, you have to authenticate your identit
 
 
 ```r
-hash <- authenticateUser(username = "your@email.com", password = "your_password")
+hash <- authenticateUser(email = "your@email.com", password = "your_password")
 ```
 
 ### Upload an mlr learner
@@ -71,4 +71,5 @@ Jump to:
 [2 Download a task](2-Download-a-task.md)  
 3 Upload an implementation  
 [4 Upload predictions](4-Upload-predictions.md)  
-[5 Download performance measures](5-Download-performance-measures.md)
+[5 Download performance measures](5-Download-performance-measures.md)  
+[6 Browse the database](6-Browse-the-database.md)

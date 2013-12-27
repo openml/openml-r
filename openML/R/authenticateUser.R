@@ -2,8 +2,8 @@
 #'
 #' Required if you want to upload anything. 
 #'
-#' @param username [\code{character(1)}]\cr 
-#'   Your username / email at OpenML server.
+#' @param email [\code{character(1)}]\cr 
+#'   Your E-mail address at OpenMl server.
 #' @param password [\code{character(1)}]\cr 
 #'   Your password at OpenML server.
 #' @param show.info [\code{logical(1)}]\cr 
@@ -11,18 +11,18 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{character(1)}]. Session hash for further communication.
 #' @export
-authenticateUser <- function(username, password, show.info = TRUE) {
-  checkArg(username, "character", len = 1L, na.ok = FALSE)
+authenticateUser <- function(email, password, show.info = TRUE) {
+  checkArg(email, "character", len = 1L, na.ok = FALSE)
   checkArg(password, "character", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
   file <- tempfile()
   if (show.info) {
-    messagef("Authenticating user at server: %s", username)
+    messagef("Authenticating user at server: %s", email)
     messagef("Downloading response to: %s", file)
   }
   url <- getServerFunctionURL("openml.authenticate")
   md5 <- digest(password, algo="md5", serialize=FALSE)
-  params <- list(username = username, password = md5)
+  params <- list(username = email, password = md5)
   content <- postForm(url, .params = params, .checkParams = FALSE)
   write(content, file = file)
   parseAuthenticateUserResponse(file)

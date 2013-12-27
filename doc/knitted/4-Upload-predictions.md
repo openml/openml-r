@@ -74,4 +74,5 @@ Jump to:
 [2 Download a task](2-Download-a-task.md)  
 [3 Upload an implementation](3-Upload-an-implementation.md)  
 4 Upload predictions  
-[5 Download performance measures](5-Download-performance-measures.md)
+[5 Download performance measures](5-Download-performance-measures.md)  
+[6 Browse the database](6-Browse-the-database.md)
