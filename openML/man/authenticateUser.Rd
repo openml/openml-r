@@ -2,11 +2,11 @@
 \alias{authenticateUser}
 \title{Authenticate at server.}
 \usage{
-  authenticateUser(username, password, show.info = TRUE)
+  authenticateUser(email, password, show.info = TRUE)
 }
 \arguments{
-  \item{username}{[\code{character(1)}]\cr Your username /
-  email at OpenML server.}
+  \item{email}{[\code{character(1)}]\cr Your E-mail address
+  at OpenMl server.}
 
   \item{password}{[\code{character(1)}]\cr Your password at
   OpenML server.}

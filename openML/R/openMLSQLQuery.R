@@ -15,6 +15,8 @@ library(rjson)
 openMLSQLQuery <- function(SQL, show.info = TRUE) {
   json.file <- tempfile()
   
+  SQL <- str_replace_all(SQL, " ", "%20")
+  
   OPEN_ML_SQL_QUERY_URL <- "http://www.openml.org/api_query"
   URL <- sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, SQL)
   download.file(URL, json.file, quiet = TRUE)
