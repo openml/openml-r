@@ -18,7 +18,7 @@ resample.lrn <- function(static, dynamic, lrn) {
   res <- try(runTask(dynamic, makeLearner(lrn), return.mlr.results = TRUE), silent=TRUE)
   if(is.error(res)) {
     message(res)
-    return(NA)
+    return(res[1])
   } else {
     return(res$mlr.resample.results$aggr)
   }
@@ -67,6 +67,10 @@ submitJobs(reg, resources=list(walltime=3600, memory=4*1024),
 # sum.res <- lapply(sep.res, summary)
 # names(sum.res) <- all.lrners
 
-# fractions of NAs for each learner
-# frac.NA <- data.frame(lrn = all.lrners, frac_NA = unlist(lapply(sep.res, function(x) sum(is.na(x))/length(x))))
-# frac.NA[order(frac.NA[, 2]), ]
+# rerun experiments with res = NA to get the error messages
+# all.res <- as.data.frame(all.res)
+# isna <- is.na(all.res[, 3])
+# na.ids <- findDone(reg)[isna]
+# submitJobs(reg, resources=list(walltime=7200, memory=4*1024),
+#   wait=function(retries) 100, max.retries=10, ids=na.ids)
+                  
