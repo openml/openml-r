@@ -13,27 +13,33 @@ data.chars <- getDataCharacteristics()
 ```
 
 
-### Get meta learning features
-With the function `getMetaLearningFeatures` you can obtain all data qualities of all stored data sets. This includes meta learning features as well as the basic characteristics that can be retrieved by `getDataCharacteristics`. If you only want a few of these data qualities, you can pass them in form of a character vector to the function. A list of all data quality names can be obtained by the function `getDataQualitiyNames`.
+### Get data qualities
+With the function `getDataQualities` you can obtain all data qualities of all stored data sets. By default, only basic data characteristics are retrieved:
 
 
 ```r
-ml.feats <- getMetaLearningFeatures()
+dq <- getDataQualities()
+```
 
-dq.names <- getDataQualitiyNames()
-ml.feats <- getMetaLearningFeatures(only = dq.names[1:5])
+
+If you want to retrieve not only the basic data quaities but also meta learning features, please use the argument 'set':
+
+
+```r
+dq <- getDataQualities(set = "all")
 ```
 
 
 ### Make an arbitrary SQL-query
-The most free way to browse the OpenML database is by SQL-queries. The function `openMLSQLQuery` is an interface for any arbitrary SQL-query. The query is passed as a string to the function as you can see in the following example:
+The freest way to browse the OpenML database is by SQL-queries. The function `runSQLQuery` is an interface for any arbitrary SQL-query. The query is passed as a string to the function as you can see in the following example:
 
 
 ```r
-openMLSQLQuery(SQL = "SELECT id FROM implementation WHERE name = 'classif.rpart'")
+runSQLQuery(query = "SELECT id FROM implementation WHERE name = 'classif.rpart'")
 ```
 
 
+Note, that most users should not need this function.
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:   
 [1 Introduction](1-Introduction.md)  
