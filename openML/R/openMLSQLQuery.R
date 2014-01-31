@@ -28,12 +28,8 @@ openMLSQLQuery <- function(SQL, show.info = TRUE) {
    
   unlink(json.file)
   
-  col.names <- lapply(parsed.doc$columns, function(x) x$title)
-  if(is.list(parsed.doc$data) && length(parsed.doc$data) > 1) {
-    data <- as.data.frame(t(do.call(cbind, parsed.doc$data)))
-  } else {
-    data <- as.data.frame(parsed.doc$data)
-  }
+  col.names <- sapply(parsed.doc$columns, function(x) x$title)
+  data <- as.data.frame(t(do.call(cbind, parsed.doc$data)))
   colnames(data) <- col.names
   
   return(data)
