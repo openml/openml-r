@@ -12,12 +12,12 @@ data.chars <- getDataCharacteristics()
 ```
 
 ### Get meta learning features
-With the function `getMetaLearningFeatures` you can obtain all data qualities of all stored data sets. This includes meta learning features as well as the basic characteristics that can be retrieved by `getDataCharacteristics`. If you only want a few of these data qualities, you can pass them in form of a character vector to the function. A list of all data quality names can be obtained by the function `getDataQualitiyNames`.
+With the function `getMetaLearningFeatures` you can obtain all data qualities of all stored data sets. This includes meta learning features as well as the basic characteristics that can be retrieved by `getDataCharacteristics`. If you only want a few of these data qualities, you can pass them in form of a character vector to the function. A list of all data quality names can be obtained by the function `getDataQualityNames`.
 
 ```{r eval = FALSE}
 ml.feats <- getMetaLearningFeatures()
 
-dq.names <- getDataQualitiyNames()
+dq.names <- getDataQualityNames()
 ml.feats <- getMetaLearningFeatures(only = dq.names[1:5])
 ```
 
