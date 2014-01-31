@@ -1,16 +1,16 @@
 #' Run an SQL query on the OpenML DB and retrieve results.
-#' 
+#'
 #' Most users should not need to use this, only a last
-#' measure to access all information on the server. 
-#' 
+#' measure to access all information on the server.
+#'
 #' @param query [\code{character(1)}]\cr
 #'   The SQL query.
 #' @param simplify [\code{logical(1)}]\cr
-#'   If there is only one column in the resulting table, 
-#'   directly return the corresponding vector? 
+#'   If there is only one column in the resulting table,
+#'   directly return the corresponding vector?
 #'   Default is \code{TRUE}.
 #' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console? 
+#'   Verbose output on console?
 #'   Default is \code{FALSE}.
 #' @return [\code{data.frame}]. The results as a table.
 #' @export
@@ -27,23 +27,23 @@ runSQLQuery <- function(query, simplify = TRUE, show.info = FALSE) {
   OPEN_ML_SQL_QUERY_URL <- "http://www.openml.org/api_query"
   URL <- sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, query)
   download.file(URL, json.file, quiet = TRUE)
-  parsed.doc <- fromJSON(file = json.file) 
+  parsed.doc <- fromJSON(file = json.file)
 
-  if(show.info) 
+  if(show.info)
     message(parsed.doc$status)
 
   unlink(json.file)
 
-  col.names <- extractSubList(parsed.doc$columns, "title")
-  if(is.list(parsed.doc$data) && length(parsed.doc$data) > 1) 
-    data <- as.data.frame(t(do.call(cbind, parsed.doc$data)), stringsAsFactors = FALSE)
-  else 
-    data <- as.data.frame(parsed.doc$data, stringsAsFactors = FALSE)
-  colnames(data) <- col.names
+  data <- lapply(parsed.doc$data, function(x) as.data.frame(as.list(x), stringsAsFactors = FALSE))
+  data <- do.call(rbind, data)
+  colnames(data) <- extractSubList(parsed.doc$columns, "title")
 
-  if (ncol(data) == 1L && simplify) 
+  #FIXME: for now guess types, the type is set as undefined in json, everything is encoded as strings
+  data <- as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
+
+  if (ncol(data) == 1L && simplify)
     return(data[, 1L])
-  else 
+  else
     return(data)
 }
 

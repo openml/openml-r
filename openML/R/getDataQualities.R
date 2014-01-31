@@ -28,9 +28,6 @@ getDataQualities <- function(set = "basic") {
     "FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY dataset")
 
   res <- runSQLQuery(query)
-  #FIXME: for now guess types, the type is set as undefined in json, everything is encoded as strings
-  res <- as.data.frame(lapply(res, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
-
   return(res)
 }
 
