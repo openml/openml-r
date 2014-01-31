@@ -5,3 +5,4 @@ R/openML.Rcheck
 R/openML/man
 downloadUploadTest/
 openML.Rcheck
+openML*.tar.gz
