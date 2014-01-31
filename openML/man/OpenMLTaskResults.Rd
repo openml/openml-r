@@ -1,0 +1,24 @@
+\name{OpenMLTaskResults}
+\alias{OpenMLTaskResults}
+\alias{OpenMLTaskResults-class}
+\title{OpenMLTaskResults}
+\description{
+  This class of objects contains information on all
+  \code{\link{OpenMLRunResults}} for a certain
+  \code{\link{OpenMLTask}}.
+}
+\details{
+  The objects contain information on ... .
+}
+\section{Slots}{
+  \describe{ \item{\code{task.id}}{[\code{character}]\cr ID
+  of the OpenMLTask.}
+  \item{\code{task.name}}{[\code{character}]\cr A name
+  describing the task shortly.}
+  \item{\code{estimation.procedure}}{[\code{character}]\cr
+  Information on the task's estimation procedure.}
+  \item{\code{metrics}}{[\code{data.frame}]\cr A data.frame
+  of the metrics of all runs that were uploaded for this
+  task.} }
+}
+

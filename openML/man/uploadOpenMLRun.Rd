@@ -3,7 +3,7 @@
 \title{Upload an OpenML run to the server.}
 \usage{
   uploadOpenMLRun(task, mlr.lrn, oml.impl, predictions,
-    session.hash, show.info = TRUE)
+    session.hash, run.pars = NULL, show.info = TRUE)
 }
 \arguments{
   \item{run.desc}{[\code{\link{OpenMLRun}}]\cr An OpenML
