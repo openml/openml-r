@@ -27,7 +27,7 @@ resample.lrn <- function(static, dynamic, lrn) {
 addAlgorithm(reg, id="lrn", fun=resample.lrn)
 
 # get the task IDs of all classification tasks
-classif.task.ids <- openMLSQLQuery("select task_id from task where ttid = 1")
+classif.task.ids <- runSQLQuery("select task_id from task where ttid = 1")
 classif.task.ids <- as.numeric(as.character(classif.task.ids$task_id))
 
 # get the names of all classification learners

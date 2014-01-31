@@ -38,17 +38,18 @@ rank.deficiency <- which(!is.na(str_match(error.msges, "rank deficiency")))  # o
 group.too.small <- which(!is.na(str_match(error.msges, "some group is too small")))  # only qda
 init.centers <- which(!is.na(str_match(error.msges, "initial centers")))  # only mda
 non.conformable.args <- which(!is.na(str_match(error.msges, "non-conformable arguments")))  # only rda
-
 too.many.lvls <- which(!is.na(str_match(error.msges, "predictors with more than")))  # only randomForest
 empty.classes <- which(!is.na(str_match(error.msges, "empty classes")))  # only randomForest
-
 replacement.mismatch <- which(!is.na(str_match(error.msges, "number of items to replace")))  # only mda
+
+unknown.task <- which(!is.na(str_match(error.msges, "Unknown task")))
+java.IOException <-  which(!is.na(str_match(error.msges, "keyword @relation expected")))
 
 rest <- seq_along(error.msges)[-c(multiclass, factor.inputs, missing.values, factor.mismatch, special.chars,
   pseudo.factor, missing.arg, error.code.1, ds.small.ssrate.large, scale.default, na.nan.inf,
   na.in.assignment, null.in.assignment, constant.variable, java.out.of.bounds, too.many.weights,
   replacement.mismatch, empty.classes, rank.deficiency, group.too.small, too.many.lvls,
-  init.centers, non.conformable.args)]
+  init.centers, non.conformable.args, unknown.task, java.IOException)]
 
 
 # all.res[error.inds[pseudo.factor], 1:2]
