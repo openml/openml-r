@@ -7,40 +7,13 @@ License: BSD
 Imports:
     methods,
     BBmisc,
+    digest,
     RCurl,
-    XML,
-    digest
+    rjson,
+    stringr,
+    XML
 Suggests:
     mlr
 LazyData: yes
 ByteCompile: yes
 Version: 1.0
-Collate:
-    'downloadFile.R'
-    'downloadOpenMLDataSetDescription.R'
-    'downloadOpenMLDataSet.R'
-    'downloadOpenMLDataSplits.R'
-    'downloadOpenMLTask.R'
-    'OpenMLDataSetDescription_Class.R'
-    'OpenML_DMwR.R'
-    'OpenMLEstimationProcedure_Class.R'
-    'OpenMLExpSettings_Class.R'
-    'OpenMLImplementation_Class.R'
-    'OpenMLRun_Class.R'
-    'OpenMLTask_Class.R'
-    'server_interface.R'
-    'toMLR.R'
-    'xml_helpers.R'
-    'zzz.R'
-    'authenticateUser.R'
-    'downloadOpenMLImplementation.R'
-    'ImplementationParameter_Class.R'
-    'OpenMLRunParameter_Class.R'
-    'uploadImplementation.R'
-    'uploadOpenMLRun.R'
-    'writeOpenMLRunXML.R'
-    'getMLRLearnerImplementationId.R'
-    'makeImplementationParameterList.R'
-    'OpenMLImplementationParameter_Class.R'
-    'runTask.R'
-    'writeOpenMLImplementationXML.R'

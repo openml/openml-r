@@ -3,8 +3,10 @@
 
 #' @import methods
 #' @import BBmisc
-#' @import RCurl 
-#' @import XML
 #' @import digest
+#' @import RCurl 
+#' @import rjson 
+#' @import stringr 
+#' @import XML
 NULL
 
