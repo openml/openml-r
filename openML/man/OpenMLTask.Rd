@@ -1,15 +1,16 @@
+\docType{class}
 \name{OpenMLTask}
 \alias{OpenMLTask}
 \alias{OpenMLTask-class}
 \title{OpenMLTask}
 \description{
-  This class of objects contains the information describing
-  an openML task.
+This class of objects contains the information describing
+an openML task.
 }
 \details{
-  Objects can be created by calls of the form
-  \code{OpenMLTask(...)}. The objects contain information
-  on ... .
+Objects can be created by calls of the form
+\code{OpenMLTask(...)}. The objects contain information on
+... .
 }
 \section{Slots}{
   \describe{ \item{\code{task.id}}{[\code{integer(1)}]\cr
@@ -36,6 +37,6 @@
 showClass("OpenMLTask")
 }
 \seealso{
-  \code{\linkS4class{OpenMLDataSetDescription}}
+\code{\linkS4class{OpenMLDataSetDescription}}
 }
 

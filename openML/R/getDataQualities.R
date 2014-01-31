@@ -22,7 +22,7 @@ getDataQualities <- function(set = "basic") {
       "NumberOfNumericFeatures", "NumberOfSymbolicFeatures")
 
   # we need to recode missing values in qualities a bit by applying an SQL function for each quality
-  query <- sprintf("MAX(IF(dq.quality='%s', dq.value, 0)) AS %s", dquals, dquals)
+  query <- sprintf("MAX(IF(dq.quality='%s', dq.value, NULL)) AS %s", dquals, dquals)
   query <- collapse(query)
   query <- paste("SELECT d.name AS dataset,", query,
     "FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY dataset")

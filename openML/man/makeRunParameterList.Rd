@@ -2,18 +2,18 @@
 \alias{makeRunParameterList}
 \title{Generate a list of OpenML run parameter settings for a given MLR learner.}
 \usage{
-  makeRunParameterList(learner, component = character(0))
+makeRunParameterList(learner, component = character(0))
 }
 \arguments{
   \item{learner}{[\code{\link[mlr]{Learner}}]\cr An MLR
   learner object.}
 }
 \value{
-  A list of \code{\link{OpenMLRunParameter}s}.
+A list of \code{\link{OpenMLRunParameter}s}.
 }
 \description{
-  Generate a list of \code{\link{OpenMLRunParameter}s} for
-  a given MLR learner.
+Generate a list of \code{\link{OpenMLRunParameter}s} for a
+given MLR learner.
 }
 \examples{
 library(mlr)

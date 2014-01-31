@@ -1,15 +1,16 @@
+\docType{class}
 \name{OpenMLBibRef}
 \alias{OpenMLBibRef}
 \alias{OpenMLBibRef-class}
 \title{OpenMLBibRef}
 \description{
-  This class of objects contains information on a
-  bibliographical reference for an implementation.
+This class of objects contains information on a
+bibliographical reference for an implementation.
 }
 \details{
-  Objects can be created by calls of the form
-  \code{OpenMLBibRef(...)}. The objects contain information
-  on ... .
+Objects can be created by calls of the form
+\code{OpenMLBibRef(...)}. The objects contain information
+on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{citation}}{[\code{character}]\cr

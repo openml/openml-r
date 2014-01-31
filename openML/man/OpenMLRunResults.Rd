@@ -1,13 +1,14 @@
+\docType{class}
 \name{OpenMLRunResults}
 \alias{OpenMLRunResults}
 \alias{OpenMLRunResults-class}
 \title{OpenMLRunResults}
 \description{
-  This class of objects contains information on the results
-  of an \code{\link{OpenMLRun}}.
+This class of objects contains information on the results
+of an \code{\link{OpenMLRun}}.
 }
 \details{
-  The objects contain information on ... .
+The objects contain information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{run.id}}{[\code{character}]\cr ID

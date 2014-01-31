@@ -1,15 +1,16 @@
+\docType{class}
 \name{OpenMLRunParameter}
 \alias{OpenMLRunParameter}
 \alias{OpenMLRunParameter-class}
 \title{OpenMLRunParameter}
 \description{
-  This class of objects contains information on the setting
-  of a single parameter of an OpenML run.
+This class of objects contains information on the setting
+of a single parameter of an OpenML run.
 }
 \details{
-  Objects can be created by calls of the form
-  \code{OpenMLRunParameter(...)}. The objects contain
-  information on ... .
+Objects can be created by calls of the form
+\code{OpenMLRunParameter(...)}. The objects contain
+information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{name}}{[\code{character}]\cr The

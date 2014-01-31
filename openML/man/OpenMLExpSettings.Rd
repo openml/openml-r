@@ -1,15 +1,16 @@
+\docType{class}
 \name{OpenMLExpSettings}
 \alias{OpenMLExpSettings}
 \alias{OpenMLExpSettings-class}
 \title{OpenMLExpSettings}
 \description{
-  This class of objects contains the information on an
-  experimental method.
+This class of objects contains the information on an
+experimental method.
 }
 \details{
-  Objects can be created by calls of the form
-  \code{OpenMLExpSettings(...)}. The objects contain
-  information on ... .
+Objects can be created by calls of the form
+\code{OpenMLExpSettings(...)}. The objects contain
+information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{type}}{[\code{character}]\cr The
@@ -29,6 +30,6 @@
   \code{repeat}.} }
 }
 \seealso{
-  \code{\linkS4class{OpenMLTask}}
+\code{\linkS4class{OpenMLTask}}
 }
 
