@@ -30,6 +30,7 @@ runSQLQuery(query = "SELECT id FROM implementation WHERE name = 'classif.rpart'"
 
 
 Note, that most users should not need this function.
+
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:   
 [1 Introduction](1-Introduction.md)  
