@@ -1,20 +1,10 @@
 Browse the database
 ===================
 
-Data sets have different characteristics and users might want to work on data sets that meet certain conditions. 
-
-### Get basic data characteristics
-
-The easiest way to retrieve a data.frame containing basic data characteristics like the number of features/instances/classes/missing values etc. of all stored data sets is the following:
-
-
-```r
-data.chars <- getDataCharacteristics()
-```
-
+Data sets have different data qualities and users might want to work on data sets that meet certain conditions. 
 
 ### Get data qualities
-With the function `getDataQualities` you can obtain all data qualities of all stored data sets. By default, only basic data characteristics are retrieved:
+With the function `getDataQualities` you can obtain all data qualities of all stored data sets. By default, only basic data characteristics like the number of features/instances/classes/missing values etc. are retrieved:
 
 
 ```r
@@ -22,7 +12,7 @@ dq <- getDataQualities()
 ```
 
 
-If you want to retrieve not only the basic data quaities but also meta learning features, please use the argument 'set':
+If you want to retrieve not only the basic data qualities but also meta learning features, please use the argument 'set':
 
 
 ```r
