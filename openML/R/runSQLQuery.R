@@ -33,11 +33,8 @@ runSQLQuery <- function(query, simplify = TRUE, show.info = FALSE) {
     message(parsed.doc$status)
 
   unlink(json.file)
-
-  data <- lapply(parsed.doc$data, function(x) as.data.frame(as.list(x), stringsAsFactors = FALSE))
-  data <- do.call(rbind, data)
-  colnames(data) <- extractSubList(parsed.doc$columns, "title")
-
+  data <- convertListOfRowsToDataFrame(parsed.doc$data, strings.as.factors = FALSE, 
+    col.names = extractSubList(parsed.doc$columns, "title"))
   #FIXME: for now guess types, the type is set as undefined in json, everything is encoded as strings
   data <- as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
 

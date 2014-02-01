@@ -34,7 +34,7 @@ install: roxygenize
 
 test: install
 	echo "Testing package ..."
-	${RSCRIPT} ./test_all.R
+	${RSCRIPT} openML/test_all.R
 
 check: install 
 	echo "Running R CMD check ..."

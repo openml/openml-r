@@ -1,5 +1,6 @@
 export(authenticateUser)
 export(createOpenMLImplementationForMLRLearner)
+export(downloadOpenMLDataAsMlrTask)
 export(downloadOpenMLImplementation)
 export(downloadOpenMLTask)
 export(getDataQualities)
