@@ -7,6 +7,7 @@ if (interactive()) {
   library(XML)
   library(RCurl)
   library(RWeka)
+  library(mlr)
   load_all(".")
 } else {
   library(openML)  

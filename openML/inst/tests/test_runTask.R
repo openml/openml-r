@@ -1,7 +1,7 @@
 context("runTask")
 
 test_that("runTask", {
-  # problems with id 6. 
+  # problems with id 6.
   for(id in c(1:5,7:10)) {
     print(id)
     task <- downloadOpenMLTask(id)
@@ -18,4 +18,4 @@ test_that("runTask", {
     expect_is(apply(results[, 5:(4+nr_classes)], 1, function(x) expect_equal(sum(x), 1)), "NULL")
     expect_true(all(table(results$row_id) == max(results[, 1])))
   }
-})  
+})
