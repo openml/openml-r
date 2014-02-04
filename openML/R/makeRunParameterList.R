@@ -4,6 +4,8 @@
 #' 
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   An MLR learner object.
+#' @param component [\code{character}]\cr
+#'   If the learner is a (sub-)component of an implementation, this component's name. 
 #' @return A list of \code{\link{OpenMLRunParameter}s}.
 #' @examples
 #' library(mlr)
@@ -13,7 +15,7 @@
 #' lrn.par.settings <- makeRunParameterList(lrn)
 #' lrn.par.settings
 #' 
-#' bagging.par.settings <- makeRunParameterList(bagged)
+#' bagging.par.settings <- makeRunParameterList(bagging)
 #' bagging.par.settings
 #' @export
 makeRunParameterList <- function(learner, component = character(0)) {

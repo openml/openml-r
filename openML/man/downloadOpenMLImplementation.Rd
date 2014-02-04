@@ -2,8 +2,8 @@
 \alias{downloadOpenMLImplementation}
 \title{Download an OpenML implementation from the OpenML server through a server API call.}
 \usage{
-downloadOpenMLImplementation(id, dir = getwd(),
-  download.source.binary = TRUE, show.info = TRUE)
+  downloadOpenMLImplementation(id, dir = getwd(),
+    download.source.binary = TRUE, show.info = TRUE)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr The implementation
@@ -22,9 +22,9 @@ downloadOpenMLImplementation(id, dir = getwd(),
   console?  Default is \code{TRUE}.}
 }
 \value{
-[\code{\link{OpenMLImplementation}}].
+  [\code{\link{OpenMLImplementation}}].
 }
 \description{
-Retrieves an implementation for a given id.
+  Retrieves an implementation for a given id.
 }
 
