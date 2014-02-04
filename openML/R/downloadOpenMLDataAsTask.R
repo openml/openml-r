@@ -1,3 +1,18 @@
+#' Download an OpenML data set and convert it into an mlr task.
+#'
+#'
+#' @param name [\code{character}]\cr
+#'   The name of the data set.
+#' @param dir [\code{character}]\cr
+#'   The directory where intermediate files are stored. If clean.up = TRUE, this does not matter.
+#'   Default is the session's temporary directory.
+#' @param clean.up [\code{loigcal}]\cr
+#'   Should the downloaded files be removed from disk at the end?
+#'   Default is \code{TRUE}.
+#' @param show.info [\code{logical(1)}]\cr 
+#'   Verbose output on console?
+#'   Default is \code{TRUE}. 
+#' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
 downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, show.info = TRUE) {
   checkArg(name, "character", len = 1L, na.ok = FALSE)
