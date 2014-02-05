@@ -9,9 +9,9 @@
 #' @param clean.up [\code{loigcal}]\cr
 #'   Should the downloaded files be removed from disk at the end?
 #'   Default is \code{TRUE}.
-#' @param show.info [\code{logical(1)}]\cr 
+#' @param show.info [\code{logical(1)}]\cr
 #'   Verbose output on console?
-#'   Default is \code{TRUE}. 
+#'   Default is \code{TRUE}.
 #' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
 downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, show.info = TRUE) {
@@ -19,15 +19,17 @@ downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, 
   checkArg(dir, "character", len = 1L, na.ok = FALSE)
   checkArg(clean.up, "logical", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
-  
+
   fn.data.set.desc <- file.path(dir, "data_set_description.xml")
   fn.data.set <- file.path(dir, "data_set.ARFF")
 
   # get id for given dataset name
-  SQL <- paste0("SELECT did, default_target_attribute FROM dataset WHERE name = '", name, "'")
-  sqlRes <- runSQLQuery(SQL)
-  id <- sqlRes[1, "did"]
-  target <- sqlRes[1,"default_target_attribute"]
+  query <- paste0("SELECT did, default_target_attribute FROM dataset WHERE name = '", name, "'")
+  res <- runSQLQuery(query)
+  if (nrow(res) == 0L)
+    stopf("No data set on OpenML server found for: %s", name)
+  id <- res[1L, "did"]
+  target <- res[1,"default_target_attribute"]
 
   if (show.info) {
     messagef("Downloading data set '%s' from OpenML repository.", name)
