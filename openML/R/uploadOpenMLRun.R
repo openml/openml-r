@@ -2,13 +2,18 @@
 #' 
 #' Share a run of an implementation on a given OpenML task.
 #' 
-#' @param run.desc [\code{\link{OpenMLRun}}]\cr 
-#'   An OpenML run description file. Should contain the task and implementation id
-#'   and optionally any parameter settings that are specific for this run.
+#' @param task [\code{\link{OpenMLTask}}]\cr 
+#'   The task.
+#' @param mlr.lrn [\code{\link[mlr]{Learner}}]\cr 
+#'   The mlr learner, if used. Optional.
+#' @param oml.impl [\code{\link{OpenMLImplementation}}]\cr 
+#'   The OpenML implementation object of the implementation. Must be stored on the OpenML server.
 #' @param predictions [\code{data.frame}]\cr
-#'   A data.frame with the predictions. Must have the same form as produced by \code{\link{runTask}}.
+#'   The predictions. Must have the same form as produced by \code{\link{runTask}}.
 #' @param session.hash [\code{character(1)}]\cr
 #'   A session token returned by \code{\link{authenticateUser}}.
+#' @param run.pars [\code{list}]\cr
+#'   If no mlr learner was used, this is a list of all \code{\link{OpenMLRunParameter}s}.
 #' @param show.info [\code{logical(1)}]\cr
 #'   Verbose output on console?
 #'   Default is \code{TRUE}.

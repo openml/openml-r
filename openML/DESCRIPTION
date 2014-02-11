@@ -11,7 +11,8 @@ Imports:
     RCurl,
     rjson,
     stringr,
-    XML
+    XML,
+    RWeka
 Suggests:
     mlr
 LazyData: yes
@@ -21,7 +22,6 @@ Collate:
     'authenticateUser.R'
     'createOpenMLImplementationForMLRLearner.R'
     'downloadFile.R'
-    'downloadOpenMLDataAsTask.R'
     'downloadOpenMLDataSet.R'
     'downloadOpenMLDataSetDescription.R'
     'downloadOpenMLDataSplits.R'
@@ -55,3 +55,4 @@ Collate:
     'writeOpenMLRunXML.R'
     'xml_helpers.R'
     'zzz.R'
+    'downloadOpenMLDataAsMlrTask.R'

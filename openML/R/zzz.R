@@ -8,5 +8,6 @@
 #' @import rjson 
 #' @import stringr 
 #' @import XML
+#' @import RWeka
 NULL
 

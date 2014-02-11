@@ -1,9 +1,7 @@
-#' Generate a list of OpenML implementation parameters for a given MLR learner.
-#'
-#' Generate a list of \code{\link{OpenMLImplementationParameter}s} for a given MLR learner.
+#' Generate a list of OpenML implementation parameters for a given mlr learner.
 #' 
-#' @param learner [\code{\link[mlr]{Learner}}]\cr
-#'   An MLR learner object.
+#' @param mlr.lrn [\code{\link[mlr]{Learner}}]\cr
+#'   The mlr learner.
 #' @return A list of \code{\link{OpenMLImplementationParameter}s}.
 #' @examples
 #' library(mlr)
@@ -11,8 +9,8 @@
 #' pars <- makeImplementationParameterList(lrn)
 #' pars
 #' @export
-makeImplementationParameterList <- function(learner) {
-  pars <- learner$par.set$pars
+makeImplementationParameterList <- function(mlr.lrn) {
+  pars <- mlr.lrn$par.set$pars
   par.list <- list()
   for(i in seq_along(pars)){
     name <- pars[[i]]$id

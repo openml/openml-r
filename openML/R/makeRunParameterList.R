@@ -1,9 +1,7 @@
-#' Generate a list of OpenML run parameter settings for a given MLR learner.
-#'
-#' Generate a list of \code{\link{OpenMLRunParameter}s} for a given MLR learner.
+#' Generate a list of OpenML run parameter settings for a given mlr learner.
 #' 
-#' @param learner [\code{\link[mlr]{Learner}}]\cr
-#'   An MLR learner object.
+#' @param mlr.lrn [\code{\link[mlr]{Learner}}]\cr
+#'   The mlr learner.
 #' @param component [\code{character}]\cr
 #'   If the learner is a (sub-)component of an implementation, this component's name. 
 #' @return A list of \code{\link{OpenMLRunParameter}s}.
@@ -18,9 +16,9 @@
 #' bagging.par.settings <- makeRunParameterList(bagging)
 #' bagging.par.settings
 #' @export
-makeRunParameterList <- function(learner, component = character(0)) {
-  par.vals <- learner$par.vals
-  par.names <- names(learner$par.vals)
+makeRunParameterList <- function(mlr.lrn, component = character(0)) {
+  par.vals <- mlr.lrn$par.vals
+  par.names <- names(mlr.lrn$par.vals)
   par.settings <- list()    
   for(i in seq_along(par.vals)){
     run.par <- OpenMLRunParameter(
@@ -29,11 +27,11 @@ makeRunParameterList <- function(learner, component = character(0)) {
       component = component)
     par.settings <- c(par.settings, run.par)
   }
-  if(!is.null(learner$next.learner)) {
+  if(!is.null(mlr.lrn$next.learner)) {
     # Use the learner's id (without "classif." or "regr.") as the subcomponent's name... 
     # FIXME: check if or make sure that this is correct
-    component <- strsplit(learner$next.learner$id, split = ".", fixed=TRUE)[[1]][2]
-    inner.par.settings <- makeRunParameterList(learner$next.learner, component = component)
+    component <- strsplit(mlr.lrn$next.learner$id, split = ".", fixed=TRUE)[[1]][2]
+    inner.par.settings <- makeRunParameterList(mlr.lrn$next.learner, component = component)
     par.settings <- c(par.settings, inner.par.settings)
   }
   return(par.settings)
