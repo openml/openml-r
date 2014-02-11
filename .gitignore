@@ -3,6 +3,6 @@ OpenML_r.Rproj
 .Rhistory
 R/openML.Rcheck
 R/openML/man
-downloadUploadTest/
+openML/tests/downloadUploadTest/downloadAllImplementations/Downloads/
 openML.Rcheck
 openML*.tar.gz
