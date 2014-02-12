@@ -25,15 +25,14 @@ createOpenMLImplementationForMLRLearner <- function(
   checkArg(name, "character")
   if(!missing(version))
     checkArg(version, "character")
+  else
+    version <- packageDescription(lrn$package)$Version
+  
   if(!missing(description))
     checkArg(description, "character")
-  
-  if(missing(description)) {
+  else
     description <- sprintf("Learner %s from package %s.", name, lrn$package)
-  }
-  if(missing(version)) {
-    version <- packageDescription(lrn$package)$Version
-  }
+
   impl <- OpenMLImplementation(
     name = name,
     version = version,
