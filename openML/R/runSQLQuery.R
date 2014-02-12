@@ -25,19 +25,21 @@ runSQLQuery <- function(query, simplify = TRUE, show.info = FALSE) {
   query <- str_replace_all(query, " ", "%20")
 
   OPEN_ML_SQL_QUERY_URL <- "http://www.openml.org/api_query"
-  URL <- sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, query)
-  download.file(URL, json.file, quiet = TRUE)
+  url <- sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, query)
+  download.file(url, json.file, quiet = TRUE)
   parsed.doc <- fromJSON(file = json.file)
 
   if(show.info)
     message(parsed.doc$status)
 
   unlink(json.file)
-  data <- convertListOfRowsToDataFrame(parsed.doc$data, strings.as.factors = FALSE,
+ 
+  data <- convertListOfRowsToDataFrame(as.list(parsed.doc$data), strings.as.factors = FALSE,
     col.names = extractSubList(parsed.doc$columns, "title"))
+    
   #FIXME: for now guess types, the type is set as undefined in json, everything is encoded as strings
   data <- as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
-
+  
   if (ncol(data) == 1L && simplify)
     return(data[, 1L])
   else
