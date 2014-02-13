@@ -2,8 +2,8 @@
 \alias{downloadOpenMLDataAsMlrTask}
 \title{Download an OpenML data set and convert it into an mlr task.}
 \usage{
-  downloadOpenMLDataAsMlrTask(name, dir = tempdir(),
-    clean.up = TRUE, show.info = TRUE)
+downloadOpenMLDataAsMlrTask(name, dir = tempdir(), clean.up = TRUE,
+  show.info = TRUE)
 }
 \arguments{
   \item{name}{[\code{character}]\cr The name of the data
@@ -22,10 +22,10 @@
   console?  Default is \code{TRUE}.}
 }
 \value{
-  [\code{\link[mlr]{SupervisedTask}}]
+[\code{\link[mlr]{SupervisedTask}}]
 }
 \description{
-  Download an OpenML data set and convert it into an mlr
-  task.
+Download an OpenML data set and convert it into an mlr
+task.
 }
 

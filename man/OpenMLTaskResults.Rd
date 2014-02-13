@@ -1,14 +1,15 @@
+\docType{class}
 \name{OpenMLTaskResults}
 \alias{OpenMLTaskResults}
 \alias{OpenMLTaskResults-class}
 \title{OpenMLTaskResults}
 \description{
-  This class of objects contains information on all
-  \code{\link{OpenMLRunResults}} for a certain
-  \code{\link{OpenMLTask}}.
+This class of objects contains information on all
+\code{\link{OpenMLRunResults}} for a certain
+\code{\link{OpenMLTask}}.
 }
 \details{
-  The objects contain information on ... .
+The objects contain information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{task.id}}{[\code{character}]\cr ID

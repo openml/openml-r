@@ -1,15 +1,16 @@
+\docType{class}
 \name{OpenMLDataSetDescription}
 \alias{OpenMLDataSetDescription}
 \alias{OpenMLDataSetDescription-class}
 \title{OpenMLDataSetDescription}
 \description{
-  This class of objects contains the information describing
-  an openML data set.
+This class of objects contains the information describing
+an openML data set.
 }
 \details{
-  Objects can be created by calls of the form
-  \code{OpenMLDataSetDescription(...)}. The objects contain
-  information on ... .
+Objects can be created by calls of the form
+\code{OpenMLDataSetDescription(...)}. The objects contain
+information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{id}}{[\code{integer(1)}]\cr The

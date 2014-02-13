@@ -2,7 +2,7 @@
 \alias{runTask}
 \title{Solve a task with MLR.}
 \usage{
-  runTask(task, learner, return.mlr.results = FALSE)
+runTask(task, learner, return.mlr.results = FALSE)
 }
 \arguments{
   \item{task}{[\code{\linkS4class{OpenMLTask}}]\cr An
@@ -19,22 +19,21 @@
   Default is \code{TRUE}.}
 }
 \value{
-  List of:
-  \item{run.pred}{[\code{\link[mlr]{ResamplePrediction}}]\cr
-  Predictions resulting from the run. These are necessary
-  in order to upload a run.}
-  \item{mlr.resample.results}{[\code{list}]\cr The results
-  of the MLR function \code{\link[mlr]{resample}}.\cr
-  \code{NULL} if \code{return.mlr.results == FALSE}.}
+List of:
+\item{run.pred}{[\code{\link[mlr]{ResamplePrediction}}]\cr
+Predictions resulting from the run. These are necessary in
+order to upload a run.}
+\item{mlr.resample.results}{[\code{list}]\cr The results of
+the MLR function \code{\link[mlr]{resample}}.\cr
+\code{NULL} if \code{return.mlr.results == FALSE}.}
 }
 \description{
-  Solve a task with a specified learner from MLR, compute
-  predictions and upload the results to the OpenML server.
+Solve a task with a specified learner from MLR, compute
+predictions and upload the results to the OpenML server.
 }
 \seealso{
-  \code{\linkS4class{OpenMLTask}},
-  \code{\link[mlr]{learners}},
-  \code{\link{authenticateUser}},
-  \code{\link[mlr]{resample}}
+\code{\linkS4class{OpenMLTask}},
+\code{\link[mlr]{learners}},
+\code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
 }
 

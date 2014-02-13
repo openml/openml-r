@@ -1,15 +1,16 @@
+\docType{class}
 \name{OpenMLImplementation}
 \alias{OpenMLImplementation}
 \alias{OpenMLImplementation-class}
 \title{OpenMLImplementation}
 \description{
-  This class of objects contains the information describing
-  an openML implementation.
+This class of objects contains the information describing
+an openML implementation.
 }
 \details{
-  Objects can be created by calls of the form
-  \code{OpenMLImplementation(...)}. The objects contain
-  information on ... .
+Objects can be created by calls of the form
+\code{OpenMLImplementation(...)}. The objects contain
+information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{id}}{[\code{character}]\cr ID of
