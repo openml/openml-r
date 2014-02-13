@@ -15,6 +15,5 @@ tutorial:
 	mkdir doc/knitted
 	${RSCRIPT} ./tools/generate-md-tutorial
 	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/*.md
-	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/tutorial/*.md
 
 
