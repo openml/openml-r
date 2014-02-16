@@ -1,16 +1,15 @@
-\docType{class}
 \name{OpenMLDataSetDescription}
 \alias{OpenMLDataSetDescription}
 \alias{OpenMLDataSetDescription-class}
 \title{OpenMLDataSetDescription}
 \description{
-This class of objects contains the information describing
-an openML data set.
+  This class of objects contains the information describing
+  an openML data set.
 }
 \details{
-Objects can be created by calls of the form
-\code{OpenMLDataSetDescription(...)}. The objects contain
-information on ... .
+  Objects can be created by calls of the form
+  \code{OpenMLDataSetDescription(...)}. The objects contain
+  information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{id}}{[\code{integer(1)}]\cr The
@@ -37,6 +36,12 @@ information on ... .
   row id attribute.}
   \item{\code{md5.checksum}}{[\code{character}]\cr The md5
   checksum} \item{\code{data.set}}{[\code{character}]\cr
-  The data set.} }
+  The data set.}
+  \item{\code{original.col.names}}{[\code{character}]\cr
+  The data set's original column names.}
+  \item{\code{new.col.names}}{[\code{character}]\cr If
+  there are special characters in the original column
+  names, then these are new column names, that are unique
+  and only contain allowed characters.} }
 }
 

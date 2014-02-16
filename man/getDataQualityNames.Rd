@@ -2,12 +2,12 @@
 \alias{getDataQualityNames}
 \title{Retrieve the names of all available data qualities.}
 \usage{
-getDataQualityNames()
+  getDataQualityNames()
 }
 \value{
-[\code{character}].
+  [\code{character}].
 }
 \description{
-Retrieve the names of all available data qualities.
+  Retrieve the names of all available data qualities.
 }
 

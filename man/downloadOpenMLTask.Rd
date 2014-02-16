@@ -2,9 +2,10 @@
 \alias{downloadOpenMLTask}
 \title{Download a task from the OpenML repository.}
 \usage{
-downloadOpenMLTask(id, dir = tempdir(), clean.up = TRUE,
-  fetch.data.set.description = TRUE, fetch.data.set = TRUE,
-  fetch.data.splits = TRUE, show.info = TRUE)
+  downloadOpenMLTask(id, dir = tempdir(), clean.up = TRUE,
+    fetch.data.set.description = TRUE,
+    fetch.data.set = TRUE, fetch.data.splits = TRUE,
+    show.info = TRUE)
 }
 \arguments{
   \item{id}{[\code{integer(1)}]\cr ID number of task on
@@ -34,18 +35,18 @@ downloadOpenMLTask(id, dir = tempdir(), clean.up = TRUE,
   console?  Default is \code{TRUE}.}
 }
 \value{
-\code{\linkS4class{OpenMLTask}} object.
+  \code{\linkS4class{OpenMLTask}} object.
 }
 \description{
-This function downloads an OpenML task and all associated
-files from the OpenML repository, intermediately stores the
-files on disk and creates an S4 object which completely
-specifies the task.
+  This function downloads an OpenML task and all associated
+  files from the OpenML repository, intermediately stores
+  the files on disk and creates an S4 object which
+  completely specifies the task.
 }
 \details{
-Usually there is no reason to set the \code{fetch.*}
-arguments to \code{FALSE}, as you want all information
-completely encapsulated in the task object.
+  Usually there is no reason to set the \code{fetch.*}
+  arguments to \code{FALSE}, as you want all information
+  completely encapsulated in the task object.
 }
 \examples{
 # Download task and access relevant information to start running experiments

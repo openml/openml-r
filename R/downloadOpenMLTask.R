@@ -53,6 +53,10 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
   checkArg(fetch.data.splits, "logical", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
   
+  if (fetch.data.set && !fetch.data.set.description) {
+    stop("Error: You can't download a data set without also downloading the data set description!")
+  }
+  
   fn.task <- file.path(dir, "task.xml")
   fn.data.set.desc <- file.path(dir, "data_set_description.xml")
   fn.data.set <- file.path(dir, "data_set.ARFF")
@@ -74,6 +78,13 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
   if (fetch.data.set) {
     downloadOpenMLDataSet(task@task.data.desc@url, fn.data.set, show.info)
     task@task.data.desc@data.set <- parseOpenMLDataSet(task@task.data.desc, fn.data.set)
+    
+    # make valid column names
+    task@task.data.desc@original.col.names <- colnames(task@task.data.desc@data.set)
+    task@task.data.desc@new.col.names <- make.names(task@task.data.desc@original.col.names, unique=TRUE)
+    target.inds <- which(task@task.data.desc@original.col.names %in% task@task.target.features )
+    task@task.target.features <- task@task.data.desc@new.col.names[target.inds]
+    colnames(task@task.data.desc@data.set) <- task@task.data.desc@new.col.names
   }
   
   if (fetch.data.splits) {

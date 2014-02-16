@@ -37,6 +37,11 @@
 #'    The md5 checksum}
 #'    \item{\code{data.set}}{[\code{character}]\cr 
 #'    The data set.}
+#'    \item{\code{original.col.names}}{[\code{character}]\cr 
+#'    The data set's original column names.}
+#'    \item{\code{new.col.names}}{[\code{character}]\cr 
+#'    If there are special characters in the original column names, then these are new column names,
+#'    that are unique and only contain allowed characters.}
 #'  }
 #'
 #' @name OpenMLDataSetDescription 
@@ -62,7 +67,9 @@ setClass("OpenMLDataSetDescription", representation(
   url = "character",
   row.id.attribute = "character",
   md5.checksum = "character",
-  data.set = "data.frame"
+  data.set = "data.frame",
+  original.col.names = "character",
+  new.col.names = "character"
 ))
 
 #' OptionalOpenMLDataSetDescription
@@ -76,26 +83,20 @@ setClass("OpenMLDataSetDescription", representation(
 #' @exportClass OptionalOpenMLDataSetDescription
 
 setClassUnion("OptionalOpenMLDataSetDescription",
-              c("OpenMLDataSetDescription","NULL"))
+  c("OpenMLDataSetDescription","NULL"))
 
 # ***** Constructor *****
 OpenMLDataSetDescription <- function(id,
-                                     name,version,
-                                     creator,contributor="",
-																		 collection.date="", upload.date,
-                                     description,language="",format,licence="",
-                                     url,row.id.attribute="",md5.checksum="",
-                                     data.set)
+  name, version, creator, contributor="", collection.date="", upload.date,
+  description,language="", format,licence="", url,row.id.attribute="", md5.checksum="",
+  data.set, original.col.names="", new.col.names="")
 {
   new("OpenMLDataSetDescription",
-      id=id,name=name,version=version,
-      creator=creator,contributor=contributor,
-			collection.date=collection.date, upload.date=upload.date,
-      description=description,language=language,format=format,
-      licence=licence,url=url,
-      row.id.attribute=row.id.attribute,md5.checksum=md5.checksum,
-      data.set=data.set
-      )
+    id=id, name=name, version=version, creator=creator, contributor=contributor, 
+		collection.date=collection.date, upload.date=upload.date, description=description, 
+    language=language, format=format, licence=licence, url=url, row.id.attribute=row.id.attribute, 
+    md5.checksum=md5.checksum, data.set=data.set, original.col.names=original.col.names,
+    new.col.names=new.col.names)
 }
 
 # ***** Methods *****

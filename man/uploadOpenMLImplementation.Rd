@@ -2,8 +2,8 @@
 \alias{uploadOpenMLImplementation}
 \title{Upload an OpenML implementation to the server.}
 \usage{
-uploadOpenMLImplementation(implementation, sourcefile, binaryfile, session.hash,
-  show.info = TRUE)
+  uploadOpenMLImplementation(implementation, sourcefile,
+    binaryfile, session.hash, show.info = TRUE)
 }
 \arguments{
   \item{implementation}{[\code{\link{OpenMLImplementation}}]\cr
@@ -25,6 +25,6 @@ uploadOpenMLImplementation(implementation, sourcefile, binaryfile, session.hash,
   console?  Default is \code{TRUE}.}
 }
 \description{
-Upload an OpenML implementation to the server.
+  Upload an OpenML implementation to the server.
 }
 

@@ -1,16 +1,15 @@
-\docType{class}
 \name{OpenMLEstimationProcedure}
 \alias{OpenMLEstimationProcedure}
 \alias{OpenMLEstimationProcedure-class}
 \title{OpenMLEstimationProcedure}
 \description{
-This class of objects contains the information describing
-an openML estimation procedure.
+  This class of objects contains the information describing
+  an openML estimation procedure.
 }
 \details{
-Objects can be created by calls of the form
-\code{OpenMLEstimationProcedure(...)}. The objects contain
-information on ... .
+  Objects can be created by calls of the form
+  \code{OpenMLEstimationProcedure(...)}. The objects
+  contain information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{type}}{[\code{character}]\cr The

@@ -2,7 +2,7 @@
 \alias{runSQLQuery}
 \title{Run an SQL query on the OpenML DB and retrieve results.}
 \usage{
-runSQLQuery(query, simplify = TRUE, show.info = FALSE)
+  runSQLQuery(query, simplify = TRUE, show.info = FALSE)
 }
 \arguments{
   \item{query}{[\code{character(1)}]\cr The SQL query.}
@@ -15,10 +15,10 @@ runSQLQuery(query, simplify = TRUE, show.info = FALSE)
   console?  Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame}]. The results as a table.
+  [\code{data.frame}]. The results as a table.
 }
 \description{
-Most users should not need to use this, only a last measure
-to access all information on the server.
+  Most users should not need to use this, only a last
+  measure to access all information on the server.
 }
 

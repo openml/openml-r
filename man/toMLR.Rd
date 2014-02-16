@@ -2,16 +2,16 @@
 \alias{toMLR}
 \title{Convert an OpenML task to an MLR task object.}
 \usage{
-toMLR(task)
+  toMLR(task)
 }
 \arguments{
   \item{task}{[\code{\linkS4class{OpenMLTask}}]\cr An
   OpenML task object. Required.}
 }
 \value{
-[\code{\link[mlr]{SupervisedTask}}]
+  [\code{\link[mlr]{SupervisedTask}}]
 }
 \description{
-Convert an OpenML task to an MLR task object.
+  Convert an OpenML task to an MLR task object.
 }
 

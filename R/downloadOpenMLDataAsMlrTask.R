@@ -29,7 +29,7 @@ downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, 
   if (nrow(res) == 0L)
     stopf("No data set on OpenML server found for: %s", name)
   id <- res[1L, "did"]
-  target <- res[1,"default_target_attribute"]
+  target <- res[1, "default_target_attribute"]
 
   if (show.info) {
     messagef("Downloading data set '%s' from OpenML repository.", name)
@@ -56,12 +56,9 @@ downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, 
   # fix this for now by removing
   data <- droplevels(data)
 
-  # FIXME: hack to convert bad feature names
-  feature.ind <- which(colnames(data) %nin% target)
-  feature.names <- colnames(data)[feature.ind]
-  feature.names <- str_replace_all(feature.names, pattern=c("\\-"), replacement="_")
-  feature.names <- str_replace_all(feature.names, pattern=c("/"), replacement="_")
-  colnames(data)[feature.ind] <- feature.names
+  target.ind <- which(colnames(data) %in% target)
+  colnames(data) <- make.names(colnames(data), unique=TRUE)
+  target <- colnames(data)[target.ind]
 
   if (classif) {
     mlr.task <- makeClassifTask(id = name, data = data, target = target)

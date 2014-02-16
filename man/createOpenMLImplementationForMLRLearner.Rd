@@ -2,8 +2,8 @@
 \alias{createOpenMLImplementationForMLRLearner}
 \title{createOpenMLImplementationForMLRLearner.}
 \usage{
-createOpenMLImplementationForMLRLearner(lrn, name = lrn$id, version,
-  description)
+  createOpenMLImplementationForMLRLearner(lrn,
+    name = lrn$id, version, description)
 }
 \arguments{
   \item{lrn}{[\code{\link[mlr]{Learner}}]\cr The mlr
@@ -21,10 +21,11 @@ createOpenMLImplementationForMLRLearner(lrn, name = lrn$id, version,
   specification of the learner and the associated package.}
 }
 \value{
-[\code{\link{OpenMLImplementation}}].
+  [\code{\link{OpenMLImplementation}}].
 }
 \description{
-Create an OpenML implementation description object for an
-mlr learner. Required if you want to upload an mlr learner.
+  Create an OpenML implementation description object for an
+  mlr learner. Required if you want to upload an mlr
+  learner.
 }
 

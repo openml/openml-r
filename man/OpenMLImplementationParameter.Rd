@@ -1,16 +1,15 @@
-\docType{class}
 \name{OpenMLImplementationParameter}
 \alias{OpenMLImplementationParameter}
 \alias{OpenMLImplementationParameter-class}
 \title{OpenMLImplementationParameter}
 \description{
-This class of objects contains information on an
-implementation parameter.
+  This class of objects contains information on an
+  implementation parameter.
 }
 \details{
-Objects can be created by calls of the form
-\code{OpenMLImplementationParameter(...)}. The objects
-contain information on ... .
+  Objects can be created by calls of the form
+  \code{OpenMLImplementationParameter(...)}. The objects
+  contain information on ... .
 }
 \section{Slots}{
   \describe{ \item{\code{name}}{[\code{character}]\cr The
