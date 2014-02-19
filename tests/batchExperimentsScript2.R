@@ -29,7 +29,6 @@ addAlgorithm(reg, id="lrn", fun=resample.lrn)
 
 # get the task IDs of all classification tasks
 classif.task.ids <- runSQLQuery("select task_id from task where ttid = 1")
-classif.task.ids <- as.numeric(as.character(classif.task.ids$task_id))
 
 for(id in classif.task.ids[1:155]) {
   pars <- list(id = id)
