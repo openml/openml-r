@@ -29,8 +29,9 @@
   \item{\code{task.preds}}{[\code{list}]\cr A list that
   contains information on the format of the predictions for
   the particular task.}
-
-  }
+  \item{\code{task.evaluation.measures}}{[\code{character}]\cr
+  The evaluation measure(s) that should be used for
+  optimization.} }
 }
 \examples{
 showClass("OpenMLTask")

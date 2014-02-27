@@ -44,8 +44,8 @@
 #'    \item{\code{bibliographical.reference}}{[\code{list}]\cr
 #'    An optional list containing information on bibliographical references in form of
 #'    \code{\link{OpenMLBibRef}s}.}
-#'    \item{\code{implements}}{[\code{character}]\cr
-#'    Ontological reference.}
+#'    %\item{\code{implements}}{[\code{character}]\cr
+#'    %Ontological reference.}
 #'    \item{\code{parameter}}{[\code{list}]\cr
 #'    The parameters of the implementation. A list containing 
 #'    \code{\link{OpenMLImplementationParameter}s}.}

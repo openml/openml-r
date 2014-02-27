@@ -11,10 +11,12 @@
 #'    ID of the OpenMLRun.}
 #'    \item{\code{task.id}}{[\code{character}]\cr
 #'    ID of the OpenMLTask that belongs to this run.}
-#'    \item{\code{user.id}}{[\code{character}]\cr
+#'    \item{\code{uploader}}{[\code{character}]\cr
 #'    The uploader's OpenML user ID.}
 #'    \item{\code{implementation.id}}{[\code{character}]\cr
 #'    ID of the implementation used for this run.}
+#'    \item{\code{setup.id}}{[\code{character}]\cr
+#'    ID of the setup that belongs to this run.}
 #'    \item{\code{parameters}}{[\code{character}]\cr
 #'    A named character vector of the parameter settings used for this run (if they differ from the 
 #'    default settings).}
@@ -69,7 +71,6 @@ OpenMLRunResults <- function(
 
 # ***** Methods *****
 
-# FIXME: add user.id and uploader
 # show
 setMethod("show", "OpenMLRunResults", function(object) {
   catNotEmpty <- function(s, val) {
@@ -82,7 +83,7 @@ setMethod("show", "OpenMLRunResults", function(object) {
   
   catNotEmpty('Run ID            :: ', object@run.id)
   catNotEmpty('Task ID           :: ', object@task.id)
-  catNotEmpty('User ID           :: ', object@user.id)
+  catNotEmpty('User ID           :: ', object@uploader)
   catNotEmpty('Implementation ID :: ', object@implementation.id)
   
   ## FIXME: Add parameters.
