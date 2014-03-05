@@ -27,20 +27,35 @@ resample.lrn <- function(static, dynamic, lrn) {
 
 addAlgorithm(reg, id="lrn", fun=resample.lrn)
 
-# get the task IDs of all classification tasks
-classif.task.ids <- runSQLQuery("select task_id from task where ttid = 1")
-
-for(id in classif.task.ids[1:155]) {
-  pars <- list(id = id)
-  task.design <- makeDesign("task", exhaustive=pars)
-  task <- downloadOpenMLTask(id)
-  pars <- try(list(lrn = listLearnersForTask(toMLR(task)$mlr.task)))
-  if(is.error(pars) || length(pars$lrn) == 0) 
-    next
-  lrn.design <- makeDesign("lrn", exhaustive=pars)
+runExperiments <- function(reg, task.low, task.high, lrn.low, lrn.high, 
+  res=list(walltime=3600, memory=4*1024), wait=function(retries) 100, max.retries=10) {
+   
+  # get the task IDs of all classification tasks
+  classif.task.ids <- runSQLQuery("select task_id from task where ttid = 1")
   
-  addExperiments(reg, prob.designs=task.design, algo.designs=lrn.design)
+  for(id in classif.task.ids[task.low:task.high]) {
+    pars <- list(id = id)
+    task.design <- makeDesign("task", exhaustive=pars)
+    task <- downloadOpenMLTask(id)
+    
+    pars <- try(listLearnersForTask(toMLR(task)$mlr.task))
+    
+    if(is.error(pars) || length(pars) == 0 || length(pars) < lrn.low){
+      next
+    } else {
+      if(missing(lrn.high))
+        this.lrn.high <- length(pars)
+      else
+        this.lrn.high <- lrn.high
+      
+      if(length(pars) < this.lrn.high) 
+        this.lrn.high <- length(pars)
+    }
+    pars <- list(lrn = pars[lrn.low:this.lrn.high])
+    lrn.design <- makeDesign("lrn", exhaustive=pars)
+    
+    addExperiments(reg, prob.designs=task.design, algo.designs=lrn.design)
+  }
+  
+  submitJobs(reg, resources=res, wait=wait, max.retries=max.retries)
 }
-
-submitJobs(reg, resources=list(walltime=3600, memory=4*1024),
-  wait=function(retries) 100, max.retries=10)
