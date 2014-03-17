@@ -88,8 +88,14 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
   }
   
   if (fetch.data.splits) {
-    downloadOpenMLDataSplits(task@task.estimation.procedure@data.splits.url, fn.data.splits, show.info)
-    task@task.estimation.procedure@data.splits <- parseOpenMLDataSplits(task@task.data.desc@data.set, fn.data.splits)
+    # No real error handling. If no data splits are available, just print a warning and go on.
+    if (task@task.estimation.procedure@data.splits.url == "No URL") {
+      warning("There is no URL to fetch data splits from. 
+        Either the task type does not support data splits or the task is defective.")
+      } else {
+      downloadOpenMLDataSplits(task@task.estimation.procedure@data.splits.url, fn.data.splits, show.info)
+      task@task.estimation.procedure@data.splits <- parseOpenMLDataSplits(task@task.data.desc@data.set, fn.data.splits)
+    }
   }
   
   if (clean.up) {
@@ -134,9 +140,14 @@ parseOpenMLTask <- function(file) {
   )
   
   # estimation procedure
+  
+  data.splits.url <- xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url")
+  if (is.null(data.splits.url)) 
+    data.splits.url <- "No URL"
+    
   estim.proc <- OpenMLEstimationProcedure(
     type = xmlRValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:type"), 
-    data.splits.url = xmlRValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url"),
+    data.splits.url = data.splits.url,
     data.splits = data.frame(),
     parameters = getParams("/oml:task/oml:input/oml:estimation_procedure")
   )
