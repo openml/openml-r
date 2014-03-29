@@ -23,6 +23,9 @@
   Should constant features be removed? Default is
   \code{TRUE}. Note, that setting this to \code{FALSE} may
   lead to fatal errors.}
+
+  \item{...}{[any]\cr Further arguments that are passed to
+  \code{\link[mlr]{removeConstantFeatures}}.}
 }
 \value{
   List of:
