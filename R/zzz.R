@@ -9,5 +9,6 @@
 #' @import stringr 
 #' @import XML
 #' @import RWeka
+#' @import mlr
 NULL
 

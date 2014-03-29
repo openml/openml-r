@@ -11,6 +11,11 @@
 #'   Should not only the predictions but all of the by MLR computed information be returned? 
 #'   This includes test measures in each step of the resampling procedure as well as the aggregated 
 #'   performance. See \code{\link[mlr]{resample}}. Default is \code{TRUE}.
+#' @param remove.const.features [\code{logical(1)}]\cr
+#'   Should constant features be removed? Default is \code{TRUE}. Note, that setting this 
+#'   to \code{FALSE} may lead to fatal errors. 
+#' @param ... [any]\cr
+#'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}. 
 #' @return List of:
 #'   \item{run.pred}{[\code{\link[mlr]{ResamplePrediction}}]\cr
 #'     Predictions resulting from the run. These are necessary in order to upload a run.}
@@ -21,7 +26,7 @@
 #'   \code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
 #' @export
 # FIXME: if !return.mlr.results, the output is not a list!
-runTask <- function(task, learner, return.mlr.results = FALSE) {
+runTask <- function(task, learner, return.mlr.results = FALSE, remove.const.feats = TRUE, ...) {
   checkArg(task, "OpenMLTask")
   checkArg(learner, "Learner")
   checkArg(return.mlr.results, "logical")
@@ -29,6 +34,10 @@ runTask <- function(task, learner, return.mlr.results = FALSE) {
     (task@task.type == "Supervised Regression" && learner$type != "regr"))
     stopf("Learner type ('%s') does not correspond to task type ('%s').", task@task.type, learner$type)
   mlr.task <- toMLR(task)
+  
+  if(remove.const.feats)
+    mlr.task <- removeConstantFeatures(x = mlr.task, ...)
+  
   res <- resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures)
   pred <- reformatPredictions(pred = res$pred$data, task = task)
   results <- list(

@@ -13,6 +13,10 @@
 \section{Slots}{
   \describe{ \item{\code{task.id}}{[\code{character}]\cr ID
   of the OpenMLTask.}
+  \item{\code{task.type.id}}{[\code{character}]\cr ID of
+  the task type.}
+  \item{\code{input.data}}{[\code{character}]\cr ID of the
+  data set that belongs to the task.}
   \item{\code{task.name}}{[\code{character}]\cr A name
   describing the task shortly.}
   \item{\code{estimation.procedure}}{[\code{character}]\cr

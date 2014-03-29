@@ -12,8 +12,7 @@ Imports:
     rjson,
     stringr,
     XML,
-    RWeka
-Suggests:
+    RWeka,
     mlr
 LazyData: yes
 ByteCompile: yes

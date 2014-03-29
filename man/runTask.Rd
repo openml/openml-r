@@ -2,7 +2,8 @@
 \alias{runTask}
 \title{Solve a task with MLR.}
 \usage{
-  runTask(task, learner, return.mlr.results = FALSE)
+  runTask(task, learner, return.mlr.results = FALSE,
+    remove.const.feats = TRUE, ...)
 }
 \arguments{
   \item{task}{[\code{\linkS4class{OpenMLTask}}]\cr An
@@ -17,6 +18,11 @@
   each step of the resampling procedure as well as the
   aggregated performance. See \code{\link[mlr]{resample}}.
   Default is \code{TRUE}.}
+
+  \item{remove.const.features}{[\code{logical(1)}]\cr
+  Should constant features be removed? Default is
+  \code{TRUE}. Note, that setting this to \code{FALSE} may
+  lead to fatal errors.}
 }
 \value{
   List of:
