@@ -36,7 +36,7 @@ runTask <- function(task, learner, return.mlr.results = FALSE, remove.const.feat
   mlr.task <- toMLR(task)
   
   if(remove.const.feats)
-    mlr.task <- removeConstantFeatures(x = mlr.task$mlr.task, ...)
+    mlr.task$mlr.task <- removeConstantFeatures(x = mlr.task$mlr.task, ...)
   
   res <- resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures)
   pred <- reformatPredictions(pred = res$pred$data, task = task)
