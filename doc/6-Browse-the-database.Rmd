@@ -18,7 +18,7 @@ please use the argument 'set':
 
 ```{r eval = FALSE}
 dq <- getDataQualities(set = "all")
-=======
+```
 
 ### Make an arbitrary SQL-query
 The freest way to browse the OpenML database is by SQL-queries. The function `runSQLQuery` is 
