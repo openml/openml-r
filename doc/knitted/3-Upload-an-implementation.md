@@ -21,7 +21,7 @@ learner <- makeLearner("classif.rpart")
 openML.impl <- createOpenMLImplementationForMLRLearner(learner)
 ```
 
-This description object can be uploaded by
+This description object can be uploaded as follows:
 
 ```r
 uploadOpenMLImplementation(openML.impl, session.hash = hash)

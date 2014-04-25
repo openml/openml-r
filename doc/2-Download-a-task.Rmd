@@ -24,6 +24,7 @@ mlr.task <- downloadOpenMLDataAsMlrTask(name = "iris")
 ```
 
 Now you can freely apply any resampling procedure. For further information on how this works, see [here](http://berndbischl.github.io/mlr/man/makeResampleDesc.html).
+
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:    
 [1 Introduction](1-Introduction.md)    
