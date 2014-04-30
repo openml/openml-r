@@ -48,8 +48,7 @@ Now we can create the whole description object. Try to find a good name for your
 openML.impl <- OpenMLImplementation(
   name = "good_name",
   version = "1.0",
-  description = "Please take some time and write a description of your algorithm/changes compared with the previous   
-  version/etc. here.",
+  description = "Please take some time and write a description of your algorithm/changes compared with the previous version/etc. here.",
   parameter = impl.pars)
 ```
 Now we finally have the implementation description object, which can be uploaded as we have already seen in the section above:
