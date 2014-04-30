@@ -54,7 +54,7 @@ impl.pars <- list(impl.par.a, impl.par.b)
 Now we can create the whole description object. Try to find a good name for your algorithm that gives other users an idea of what is happening. 
 
 ```r
-openML.impl <- OpenMLImplementation(name = "good_name", version = "1.0", description = "Please take some time and write a description of your algorithm/changes compared with the previous\n  version/etc. here.", 
+openML.impl <- OpenMLImplementation(name = "good_name", version = "1.0", description = "Please take some time and write a description of your algorithm/changes compared with the previous   \n  version/etc. here.", 
     parameter = impl.pars)
 ```
 
