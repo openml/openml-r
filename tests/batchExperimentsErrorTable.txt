@@ -1,0 +1,4 @@
+Task ID       Learner               Error                                 Reason                  Where does it happen?
+20            classif.nnet          too many weights                      240 factor features     
+3             classif.lssvm         length of 'center'...                 ???                     predict
+1             classif.lvq1          NA/NaN/Inf in foreign function call   chars as factor lvls?
