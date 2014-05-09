@@ -28,14 +28,6 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
     if (length(impl@source.url) > 0 && impl@source.url != "") {
       if (show.info)
         messagef("Downloading implementation source file from URL:\n%s.", impl@source.url)
-      # take 2nd from last element before "/download"
-      # shoud be stored filename
-      #FIXME is thsi correct?
-      
-      # FIXME: I think the very last element of the link is the stored file name. 
-      # I changed the source/binary name to "impl.name(impl.version).format" to make it clearer.
-      # (otherwise the file name could be anything)
-      #fn.impl.src <- rev(strsplit(impl@source.url, "/")[[1]])[1]
       
       format <- rev(strsplit(rev(strsplit(impl@source.url, "/")[[1]])[1], "[.]")[[1]])[1]
       fn.impl.src <- sprintf("%s(%s)_source.%s", impl@name, impl@version, format)
@@ -45,7 +37,7 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
     if (length(impl@binary.url) > 0 && impl@source.url != "") {
       if (show.info)
         messagef("Downloading implementation binary file.")
-      #fn.impl.bin <- rev(strsplit(impl@binary.url, "/")[[1]])[2]
+
       fn.impl.src <- sprintf("%s(%s)_binary", impl@name, impl@version)
       fn.impl.bin <- file.path(dir, fn.impl.bin)  
       downloadBinaryFile(url = impl@binary.url, file = fn.impl.bin, show.info = show.info)
@@ -69,7 +61,7 @@ parseOpenMLImplementation <- function(file) {
   args[["full.description"]] <- xmlOValS(doc, "/oml:implementation/oml:full_description")
   args[["installation.notes"]] <- xmlOValS(doc, "/oml:implementation/oml:installation_notes")
   args[["dependencies"]] <- xmlOValS(doc, "/oml:implementation/oml:dependencies")
-  #FIXME: add bin ref
+  args[["bibliographical.reference"]] <- parseOpenMLBibRef(doc)
   
   ## components section
   comp_ns <- getNodeSet(doc, "/oml:implementation/oml:components/oml:implementation")
@@ -117,4 +109,20 @@ parseOpenMLParameters <- function(doc) {
       OpenMLImplementationParameter(par.names[i], par.types[i], par.defs[i], par.descs[i]))
   }
   par
+}
+
+parseOpenMLBibRef <- function(doc) {  
+  path <- "/oml:implementation/oml:bibliographical_reference"
+  
+  ns <- getNodeSet(doc, path)
+  
+  bib.citation <- xmlValsMultNsS(doc, sprintf("%s/oml:citation", path))
+  bib.url <- xmlValsMultNsS(doc, sprintf("%s/oml:url", path))
+  
+  bib <- list()
+  for(i in seq_along(bib.citation)) {
+    bib <- c(bib, 
+      OpenMLBibRef(bib.citation[i], bib.url[i]))
+  }
+  bib
 }

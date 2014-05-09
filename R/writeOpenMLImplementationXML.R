@@ -5,7 +5,7 @@
 # @param file [\code{character(1)}]\cr
 #   Destination path where the XML file should be saved.
 # @return [\code{invisible(NULL)}].
-writeOpenMLImplementationXML <- function(description, file = character(0)) {
+writeOpenMLImplementationXML <- function(description, file) {
   checkArg(description, "OpenMLImplementation", s4 = TRUE)
   checkArg(file, "character")
   
@@ -28,23 +28,19 @@ writeOpenMLImplementationXML <- function(description, file = character(0)) {
     mynode("full_description", description@full.description, parent)
     mynode("installation_notes", description@installation.notes, parent)
     mynode("dependencies", description@dependencies, parent)
-    if(length(description@bibliographical.reference) > 0) {
-      for(i in seq_along(description@bibliographical_reference)) {
-        par <- newXMLNode("bibliographical_reference", parent = parent, namespace = "oml")
-        mynode("citation", description@bibliographical_reference[[i]]@citation, parent = par)
-        mynode("url", description@bibliographical_reference[[i]]@url, parent = par)
-      }
+    
+    for(i in seq_along(description@bibliographical.reference)) {
+      par <- newXMLNode("bibliographical_reference", parent = parent, namespace = "oml")
+      mynode("citation", description@bibliographical.reference[[i]]@citation, parent = par)
+      mynode("url", description@bibliographical.reference[[i]]@url, parent = par)
     }
-    mynode("bibliographical_reference", description@bibliographical.reference)
-    if(length(description@parameter) > 0) {
-      for(i in seq_along(description@parameter)) {
-        par <- newXMLNode("parameter", parent = parent, namespace = "oml")
-        mynode("name", description@parameter[[i]]@name, parent = par)
-        mynode("data_type", description@parameter[[i]]@data.type, parent = par)
-        mynode("default_value", description@parameter[[i]]@default.value, parent = par)
-        mynode("description", description@parameter[[i]]@description, parent = par)
-      }
-    } 
+    for(i in seq_along(description@parameter)) {
+      par <- newXMLNode("parameter", parent = parent, namespace = "oml")
+      mynode("name", description@parameter[[i]]@name, parent = par)
+      mynode("data_type", description@parameter[[i]]@data.type, parent = par)
+      mynode("default_value", description@parameter[[i]]@default.value, parent = par)
+      mynode("description", description@parameter[[i]]@description, parent = par)
+    }
     mynode("source_format", description@source.format, parent)
     mynode("binary_format", description@binary.format, parent)
     mynode("source_md5", description@source.md5, parent)
@@ -61,10 +57,7 @@ writeOpenMLImplementationXML <- function(description, file = character(0)) {
       doc <- addNodes(description@components[[i]], doc, parent = sub.impl)
     }
   }
-  print(doc)
-  #FIXME: remove if(length(file)) later.
-  if(length(file))
-    saveXML(top, file = file)
+  saveXML(top, file = file)
 }
 
 
