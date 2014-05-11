@@ -19,9 +19,11 @@ uploadOpenMLImplementation <- function(implementation, sourcefile, binaryfile, s
   
   # Generate a sourcefile, if user doesn't provide one. Just for now. (?)
   file <- file.path(getwd(), sprintf("%s_source.R", implementation@name))
+  user.prov.srcfile <- TRUE
   if(missing(sourcefile)) {
     catf(file = file, "library(mlr) \nlrn <- makeLearner(\"%s\")", implementation@name)
     sourcefile <- file
+    user.prov.srcfile <- FALSE
   }
   
   file <- tempfile()
@@ -41,17 +43,16 @@ uploadOpenMLImplementation <- function(implementation, sourcefile, binaryfile, s
     source = fileUpload(filename = sourcefile)
   )
   write(response, file = file)
-  #FIXME: not very elegant, the XMLResponse can be of type "response" or "upload_implementation"...
-  doc <- try(parseXMLResponse(file, "Uploading implementation", "upload_implementation"), silent = TRUE)
-  if(is.error(doc))
-    doc <- parseXMLResponse(file, "Uploading implementation", "response")
+
+  doc <- parseXMLResponse(file, "Uploading implementation", c("upload_implementation", "response"))
   
   if (show.info) {
     messagef("Implementation successfully uploaded. Implementation ID: %s", 
-             xmlOValS(doc, "/oml:upload_implementation/oml:id"))
+      xmlOValS(doc, "/oml:upload_implementation/oml:id"))
   }  
-  #FIXME: this way a by the user provided sourcefile will be deleted as well..
-  unlink(sourcefile)
+
+  if (!user.prov.srcfile)
+    unlink(sourcefile)
 }
 
 # 

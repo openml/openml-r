@@ -27,14 +27,16 @@ writeOpenMLRunXML <- function(description, file = character(0)) {
   top <- newXMLNode("oml:run", parent = doc, namespace = c(oml = "http://openml.org/openml"))
   # FIXME check against carefully against schema 
   mynode <- function(name, val, parent = top) {
-    if(length(val)) 
+    if (length(val) > 0) 
       newXMLNode(name, as.character(val), parent = parent, namespace = "oml")
   }
   
   mynode("task_id", description@task.id)
   mynode("implementation_id", description@implementation.id)
+  if (length(description@error.message) > 0)
+    mynode("error_message", description@error.message)
   
-  if(length(description@parameter.settings)) {
+  if (length(description@parameter.settings) > 0) {
     for(i in seq_along(description@parameter.settings)) {
       par.setting <- newXMLNode("parameter_setting", parent = top, namespace = "oml")
       mynode("name", description@parameter.settings[[i]]@name, parent = par.setting)

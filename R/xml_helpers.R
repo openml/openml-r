@@ -67,8 +67,8 @@ xmlValsMultNsS <- function(doc, path, fun) {
 expectXMLType <- function(file, doc, type) {
   r <- xmlRoot(doc)
   rootname <- xmlName(r)
-  if (rootname != type) 
-    stopf("Expected to find XML type %s, not %s, in file %s", type, rootname, file)
+  if (rootname %nin% type) 
+    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, file)
 }
 
 isErrorXML <- function(doc) {
