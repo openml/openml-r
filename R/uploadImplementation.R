@@ -18,9 +18,10 @@ uploadOpenMLImplementation <- function(implementation, sourcefile, binaryfile, s
   show.info = TRUE) {
   
   # Generate a sourcefile, if user doesn't provide one. Just for now. (?)
+  # FIXME: makes no sense for non-mlr implementations 
   file <- file.path(getwd(), sprintf("%s_source.R", implementation@name))
   user.prov.srcfile <- TRUE
-  if(missing(sourcefile)) {
+  if (missing(sourcefile)) {
     catf(file = file, "library(mlr) \nlrn <- makeLearner(\"%s\")", implementation@name)
     sourcefile <- file
     user.prov.srcfile <- FALSE

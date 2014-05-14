@@ -53,44 +53,43 @@ parseOpenMLImplementation <- function(file) {
   args[["id"]] <- xmlRValS(doc, "/oml:implementation/oml:id")
   args[["name"]] <- xmlRValS(doc, "/oml:implementation/oml:name")
   args[["version"]] <- xmlRValS(doc, "/oml:implementation/oml:version")
+  args[["external.version"]] <- xmlRValS(doc, "/oml:implementation/oml:external_version")
   args[["description"]] <- xmlRValS(doc, "/oml:implementation/oml:description")
-  args[["creator"]] <- xmlOValS(doc, "/oml:implementation/oml:creator")
+  args[["creator"]] <- xmlValsMultNsS(doc, "/oml:implementation/oml:creator")
   args[["contributor"]] <- xmlValsMultNsS(doc, "/oml:implementation/oml:contributor")
+  args[["upload.date"]] <- xmlRValS(doc, "/oml:implementation/oml:upload_date")
   args[["licence"]] <- xmlOValS(doc, "/oml:implementation/oml:licence")
   args[["language"]] <- xmlOValS(doc, "/oml:implementation/oml:language")
   args[["full.description"]] <- xmlOValS(doc, "/oml:implementation/oml:full_description")
   args[["installation.notes"]] <- xmlOValS(doc, "/oml:implementation/oml:installation_notes")
   args[["dependencies"]] <- xmlOValS(doc, "/oml:implementation/oml:dependencies")
   args[["bibliographical.reference"]] <- parseOpenMLBibRef(doc)
+  #args[["implements"]] <- xmlOValS(doc, "/oml:implementation/oml:implements")
+  args[["parameter"]] <- parseOpenMLParameters(doc)  
   
   ## components section
   comp_ns <- getNodeSet(doc, "/oml:implementation/oml:components/oml:implementation")
-  if(length(comp_ns) > 0) {
-    comp <- list()
-    for(i in 1:length(comp_ns)){
-      file2 <- sprintf("%s/downloadUploadTest/comp.xml", getwd())
-      saveXML(comp_ns[[i]], file = file2)
-      comp <- c(comp, parseOpenMLImplementation(file2))
-      unlink(file2)
-    }
-    args[["components"]] <- comp
+  comp <- list()
+  for(i in seq_along(comp_ns)){
+    file2 <- sprintf("%s/downloadUploadTest/comp.xml", getwd())
+    saveXML(comp_ns[[i]], file = file2)
+    comp <- c(comp, parseOpenMLImplementation(file2))
+    unlink(file2)
   }
-  
-  args[["parameter"]] <- parseOpenMLParameters(doc)  
+  args[["components"]] <- comp
+
+
   args[["collection.date"]] <- xmlOValS(doc, "/oml:implementation/oml:collection_date")
   args[["source.url"]] <- xmlOValS(doc, "/oml:implementation/oml:source_url")
   args[["binary.url"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_url")
-  args[["binary.format"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_format")
+  args[["source.format"]] <- xmlOValS(doc, "/oml:implementation/oml:source_format")
   args[["binary.format"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_format")
   args[["source.md5"]] <- xmlOValS(doc, "/oml:implementation/oml:source_md5")
   args[["binary.md5"]] <- xmlOValS(doc, "/oml:implementation/oml:binary_md5")
 
   impl <- do.call(OpenMLImplementation, args)
-  convertOpenMLImplementation(impl)
-}
 
-convertOpenMLImplementation <- function(impl) {
-  impl
+  return(impl)
 }
 
 parseOpenMLParameters <- function(doc) {  
@@ -104,11 +103,11 @@ parseOpenMLParameters <- function(doc) {
   par.descs <- xmlValsMultNsS(doc, sprintf("%s/oml:description", path))
   
   par <- list()
-  for(i in 1:length(par.names)) {
+  for (i in 1:length(par.names)) {
     par <- c(par, 
       OpenMLImplementationParameter(par.names[i], par.types[i], par.defs[i], par.descs[i]))
   }
-  par
+  return(par)
 }
 
 parseOpenMLBibRef <- function(doc) {  
@@ -120,9 +119,9 @@ parseOpenMLBibRef <- function(doc) {
   bib.url <- xmlValsMultNsS(doc, sprintf("%s/oml:url", path))
   
   bib <- list()
-  for(i in seq_along(bib.citation)) {
+  for (i in seq_along(bib.citation)) {
     bib <- c(bib, 
       OpenMLBibRef(bib.citation[i], bib.url[i]))
   }
-  bib
+  return(bib)
 }

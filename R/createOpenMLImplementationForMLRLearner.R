@@ -17,35 +17,28 @@
 createOpenMLImplementationForMLRLearner <- function(
   lrn, 
   name = lrn$id, 
-  version, 
+  version,
   description) {
-  # FIXME: Do we want to leave the chance for the user to change name and/or version?
+  # FIXME: Do we want to leave the chance for the user to change the name?
   
   checkArg(lrn, "Learner")
   checkArg(name, "character")
-  if(!missing(version))
-    checkArg(version, "character")
-  else
-    version <- packageDescription(lrn$package)$Version
+
+  version <- packageDescription(lrn$package)$Version
   
-  if(!missing(description))
+  if (!missing(description))
     checkArg(description, "character")
   else
     description <- sprintf("Learner %s from package %s.", name, lrn$package)
 
   impl <- OpenMLImplementation(
     name = name,
-    version = version,
     description = description,
     parameter = makeImplementationParameterList(lrn)
   )
+  
+  if (!missing(version)) 
+    impl@external.version <- version
+  
   return(impl)
-  #file <- sprintf("%s/sourcefile.R", getwd())
-  ## FIXME: generate a generic sourcefile?
-  #content <- ""
-  #save(content, file = file)
-  
-  #uploadOpenMLImplementation(impl, sourcefile = file, session.hash = session.hash) 
-  
-  #unlink(file)
 }

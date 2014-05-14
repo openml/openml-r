@@ -78,6 +78,7 @@ setClass("OpenMLImplementation", representation(
   uploader = "integer",
   name = "character",
   version = "character",
+  external.version = 'character',
   description = "character",
   creator = "character",
   contributor = "character",
@@ -87,7 +88,7 @@ setClass("OpenMLImplementation", representation(
   full.description = "character",
   installation.notes = "character",
   dependencies = "character",
-  #FIXME add bib ref and implements
+  #FIXME add implements
   bibliographical.reference = "list",
   #implements = "character",
   parameter = "list",
@@ -109,43 +110,37 @@ setClass("OpenMLImplementation", representation(
 # --------------------------------------------------------------
 # constructor function
 OpenMLImplementation <- function(
-  id = "",
+  id = character(0L),
   uploader = integer(),
-  name = "",
-  version = "",
-  description = "",
-  creator = character(),
-  contributor = character(),
-  upload.date = character(),
-  licence = character(),
+  name = character(0L),
+  version = character(0L),
+  external.version = character(0L),
+  description = character(0L),
+  creator = character(0L),
+  contributor = character(0L),
+  upload.date = character(0L),
+  licence = character(0L),
   language = "English",
-  full.description = character(),
-  installation.notes = character(),
-  dependencies = character(),
+  full.description = character(0L),
+  installation.notes = character(0L),
+  dependencies = character(0L),
   bibliographical.reference = list(),
-  #implements = character(),
+  # implements = character(0L),
   parameter = list(),
   components = list(),
-  source.url = character(),
-  binary.url = character(),
-  source.format = character(),
-  # FIXME: why do we specify this? We can see this from the 
-  # user provided file anyway?
-  # actually we have to think about upload (known) and download here.
-  #FIXME should all these mising values be encoded as empty strings? probably not.
-  binary.format = character(),
-  source.md5 = character(),
-  binary.md5 = character()
-  #programming.language = "R",
-  #operating.system = R.version$os,
-  #bib.citation="",
-  #bib.url = "",
+  source.url = character(0L),
+  binary.url = character(0L),
+  source.format = character(0L),
+  binary.format = character(0L),
+  source.md5 = character(0L),
+  binary.md5 = character(0L)
 ) {
   new("OpenMLImplementation",
     id = id,
     uploader = uploader,
     name = name,
     version = version,
+    external.version = external.version,
     description = description,
     creator = creator,
     contributor = contributor,
@@ -164,12 +159,7 @@ OpenMLImplementation <- function(
     source.format = source.format,
     binary.format = binary.format,
     source.md5 = source.md5,
-    binary.md5 = binary.md5
-#    programming.language = programming.language,
- #   operating.system = operating.system,
-#    bib.citation = bib.citation,
-#    bib.url = bib.url,
-#    implements = implements,    
+    binary.md5 = binary.md5  
   )
 }
 
@@ -178,16 +168,17 @@ OpenMLImplementation <- function(
 # show
 setMethod("show", "OpenMLImplementation", function(object) {
   catNotEmpty <- function(s, val) {
-    if (val != "") 
+    if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
   }
   
   ## General implementation info
   catf('\n** Implementation Information **')
   
-  catNotEmpty('ID      :: ', object@id)
-  catNotEmpty('Name    :: ', object@name)
-  catNotEmpty('Version :: ', object@version)
+  catNotEmpty('ID               :: ', object@id)
+  catNotEmpty('Name             :: ', object@name)
+  catNotEmpty('OpenML Version   :: ', object@version)
+  catNotEmpty('External Version :: ', object@external.version)
   
   ## Authors and contributors
   if (length(object@creator) > 0) {
