@@ -7,59 +7,61 @@ downloadOpenMLRunResults <- function(id, dir = getwd(), show.info = TRUE) {
 
 parseOpenMLRunResults <- function(file) {
   doc <- parseXMLResponse(file, "Getting run results", "run")
-  getMetrics <- function(path) {
-    ns.names <- getNodeSet(doc, paste(path, "oml:evaluation/oml:name", sep ="/"))
-    metric.names <- unlist(lapply(ns.names, function(x) xmlValue(x)))
-    #ns.labels <- getNodeSet(doc, paste(path, "oml:metric/oml:label", sep ="/"))
-    #metric.labels <- unlist(lapply(ns.labels, function(x) xmlValue(x)))
-    ns.values <- getNodeSet(doc, paste(path, "oml:evaluation/oml:value", sep ="/"))
-    metric.values <- unlist(lapply(ns.values, function(x) xmlValue(x)))
+
+  parseData <- function(path) {
+    # parse datasets
+    path.ds <- paste(path, "oml:dataset", sep ="/")
+    ns.datasets <- getNodeSet(doc, path.ds)
+    datasets <- list()
+    for (i in seq_along(ns.datasets)) {
+      args <- list()
+      args[["did"]] <- xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep=''))
+      args[["name"]] <- xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep=''))
+      args[["url"]] <- xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep=''))
+      datasets <- c(datasets, args)
+    }
     
-    metrics <- data.frame(metric.values)#, metric.labels)
-    rownames(metrics) <- metric.names
-    colnames(metrics) <- c("value")#, "label")
+    # parse evaluations
+    # FIXME: make this more beautiful
+    path.evals <- paste(path, "oml:evaluation", sep ="/")
+    ns.evals <- getNodeSet(doc, path.evals)
+    evals <- list()
+    for (i in seq_along(ns.evals)) {
+      args <- list()
+      args[["did"]] <- xmlOValR(doc, paste(path.evals, "[", i, "]/oml:did", sep=''))
+      args[["name"]] <- xmlRValS(doc, paste(path.evals, "[", i, "]/oml:name", sep=''))
+      args[["implementation"]] <- xmlRValR(doc, paste(path.evals, "[", i, "]/oml:implementation", sep=''))
+      args[["value"]] <- xmlOValR(doc, paste(path.evals, "[", i, "]/oml:value", sep=''))
+      args[["array.data"]] <- xmlOValS(doc, paste(path.evals, "[", i, "]/oml:array_data", sep=''))
+      evals <- c(evals, list(args))
+    }
     
-    #metrics <- mapply(list, metric.names, metric.labels, metric.values, SIMPLIFY=FALSE)
-    #for(i in seq_along(metrics)) {
-    #  names(metrics[[i]]) <- c("name", "label", "value")
-    #}
-    return(metrics)
+    return(do.call(OpenMLData, list(dataset = datasets, evaluation = evals)))
   }
-  run.id <- xmlRValS(doc, "/oml:run/oml:run_id")
-  uploader <- xmlRValS(doc, "/oml:run/oml:uploader")
-  task.id <- xmlRValS(doc, "/oml:run/oml:task_id")
-  implementation.id <- xmlRValS(doc, "/oml:run/oml:implementation_id")
-  setup.id <- xmlRValS(doc, "/oml:run/oml:setup_id")
   
-  data.set.id <- xmlRValS(doc, "/oml:run/oml:input_data/oml:dataset/oml:did")
-  data.set.name <- xmlRValS(doc, "/oml:run/oml:input_data/oml:dataset/oml:name")
-  data.set.url <- xmlRValS(doc, "/oml:run/oml:input_data/oml:dataset/oml:url")
+  run.args <- list()
   
-  # FIXME: what about recursive parameters (pars of sub-components)?
-  # FIXME: should we use a list here instead of a named character vector?
-  ns.pars <- getNodeSet(doc, "/oml:run/oml:setup/oml:parameters/oml:parameter")
-  par.names <- unlist(lapply(ns.pars, function(x) xmlGetAttr(x, "name")))
-  par.names <- unlist(lapply(str_split(par.names, "_"), function(x) x[2]))
-  parameters <- as.character(unlist(lapply(ns.pars, function(x) xmlGetAttr(x, "value"))))
-  names(parameters) <- par.names 
+  run.args[["run.id"]] <- xmlREValI(doc, "/oml:run/oml:run_id")
+  run.args[["uploader"]] <- xmlREValI(doc, "/oml:run/oml:uploader")
+  run.args[["task.id"]] <- xmlREValI(doc, "/oml:run/oml:task_id")
+  run.args[["implementation.id"]] <- xmlRValS(doc, "/oml:run/oml:implementation_id")
+  run.args[["setup.id"]] <- xmlREValI(doc, "/oml:run/oml:setup_id")
+  run.args[["error.message"]] <- xmlOValS(doc, "/oml:run/oml:error_message")
   
-  pred.id <- xmlRValS(doc, "/oml:run/oml:output_data/oml:dataset/oml:did")
-  pred.name <- xmlRValS(doc, "/oml:run/oml:output_data/oml:dataset/oml:name")
-  pred.url <- xmlRValS(doc, "/oml:run/oml:output_data/oml:dataset/oml:url")
+  # parse parameters
+  par.set <- list()
+  ns.pars <- getNodeSet(doc, "/oml:run/oml:parameter_setting")
+  for (i in seq_along(ns.pars)) {
+    args <- list()
+    args[["name"]] <- xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:name", sep=''))
+    args[["value"]] <- xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:value", sep=''))
+    args[["component"]] <- xmlOValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:component", sep=''))
+    par.set <- c(par.set, do.call(OpenMLRunParameter, args))
+  }
+  run.args[["parameter.setting"]] <- par.set
   
-  metrics <- getMetrics("/oml:run/oml:output_data")
+  run.args[["input.data"]] <- parseData("/oml:run/oml:input_data")
+  run.args[["output.data"]] <- parseData("/oml:run/oml:output_data")
   
-  # FIXME: add data set descriptions
-  results <- OpenMLRunResults(
-    run.id = run.id,
-    task.id = task.id,
-    uploader = uploader,
-    implementation.id = implementation.id,
-    setup.id = setup.id,
-    #data.set.desc = OpenMLDataSetDescription(id = data.set.id, name = data.set.name, url = data.set.url),
-    parameters = parameters,
-    #pred.desc = OpenMLDataSetDescription(id = pred.id, name = pred.name, url = pred.url),
-    metrics = metrics
-  )
-  return(results)
+  return(do.call(OpenMLRunResults, run.args))
 }

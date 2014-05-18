@@ -34,38 +34,40 @@
 # --------------------------------------------------------------
 # class def
 setClass("OpenMLRunResults", representation(
-  run.id = "character",
-  task.id = "character",
-  uploader = "character",
+  run.id = "numeric",
+  uploader = "numeric",
+  task.id = "numeric",
   implementation.id = "character",
-  setup.id = "character",
-  parameters = "character",
-  metrics = "data.frame"
+  setup.id = "numeric",
+  error.message = "character",
+  parameter.setting = "list",
+  input.data = "OpenMLData",
+  output.data = "OpenMLData"
 ))
 
 # --------------------------------------------------------------
 # constructor function
 OpenMLRunResults <- function(
-  run.id = "",
-  task.id = "",
-  uploader = "",
-  implementation.id = "",
-  setup.id = "",
-  #data.set.desc = OpenMLDataSetDescription(),
-  parameters = "",
-  #pred.desc = OpenMLDataSetDescription(),
-  metrics = data.frame()
+  run.id = numeric(0L),
+  uploader = numeric(0L),
+  task.id = numeric(0L),
+  implementation.id = character(0L),
+  setup.id = numeric(0L),
+  error.message = character(0L),
+  parameter.setting = list(),
+  input.data = OpenMLData(),
+  output.data = OpenMLData()
 ) {
   new("OpenMLRunResults",
       run.id = run.id,
-      task.id = task.id,
       uploader = uploader,
+      task.id = task.id,
       implementation.id = implementation.id,
       setup.id = setup.id,
-      #data.set.desc = data.set.desc,
-      parameters = parameters,
-      #pred.desc = pred.desc,
-      metrics = metrics
+      error.message = error.message,
+      parameter.setting = parameter.setting,
+      input.data = input.data,
+      output.data = output.data
   )
 }
 

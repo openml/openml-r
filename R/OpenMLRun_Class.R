@@ -21,7 +21,7 @@
 #' @aliases OpenMLRun-class
 #' @exportClass OpenMLRun
 
-
+# FIXME: Do we still need this? This is a subclass of OpenMLRunResults. Maybe more convenient though.
 setClass("OpenMLRun", representation(
   task.id = "character",
   implementation.id = "character",

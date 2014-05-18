@@ -55,6 +55,30 @@ xmlRValD <- function(doc, path) {
   xmlVal(doc, path, FALSE, function(x) as.POSIXct(x, tz="CET"))
 }
 
+xmlREValI <- function(doc, path) {
+  val <- xmlRValI(doc, path)
+  if (is.na(val))
+    return(integer(0L))
+  else
+    return(val)
+}
+
+xmlREValR <- function(doc, path) {
+  val <- xmlRValR(doc, path)
+  if (is.na(val))
+    return(numeric(0L))
+  else
+    return(val)
+}
+
+xmlREValI <- function(doc, path) {
+  val <- xmlRValI(doc, path)
+  if (is.na(val))
+    return(integer(0L))
+  else
+    return(val)
+}
+
 xmlValsMultNs <- function(doc, path, fun, val) {
   ns <- getNodeSet(doc, path)
   vapply(ns, function(x) fun(xmlValue(x)), val)
