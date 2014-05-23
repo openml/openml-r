@@ -1,7 +1,26 @@
-downloadOpenMLRunResults <- function(id, dir = getwd(), show.info = TRUE) {
+#' Download OpenML run results from the server.
+#' 
+#' @param id [\code{numeric}]\cr 
+#'   The task ID.
+#' @param dir [\code{character(1)}]\cr 
+#'   The directory where to save the downloaded run xml. The file is called "get_run_id.xml" where "id" is replaced
+#'   by the actual id. Default is the working directory.
+#' @param show.info [\code{logical(1)}]\cr
+#'   Verbose output on console?
+#'   Default is \code{TRUE}.
+#' @param clean.up [\code{logical(1)}]\cr
+#'   Should the downloaded run xml file be removed at the end? 
+#'   Default is \code{TRUE}.
+#' @return [\code{\link{OpenMLRunResults}}]
+#' @export
+
+downloadOpenMLRunResults <- function(id, dir = getwd(), show.info = TRUE, clean.up = TRUE) {
   fn.get.run <- file.path(dir, sprintf("get_run_%g.xml", id))
   downloadAPICallFile(api.fun = "openml.run.get", file = fn.get.run, run_id = id, show.info = show.info)
   results <- parseOpenMLRunResults(fn.get.run)
+  if (clean.up)
+    unlink(fn.get.run)
+  
   return(results)
 }
 
@@ -22,7 +41,6 @@ parseOpenMLRunResults <- function(file) {
     }
     
     # parse evaluations
-    # FIXME: make this more beautiful
     path.evals <- paste(path, "oml:evaluation", sep ="/")
     ns.evals <- getNodeSet(doc, path.evals)
     evals <- list()

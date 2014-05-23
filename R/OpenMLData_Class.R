@@ -26,15 +26,18 @@ setClass("OpenMLData", representation(
 # ***** Constructor *****
 OpenMLData <- function(dataset = list(), evaluation = list()) {
   new("OpenMLData", 
-      dataset = dataset,
-      evaluation = evaluation
+    dataset = dataset,
+    evaluation = evaluation
   )
 }
 
 # ***** Methods *****
 
 # show
-# FIXME: add this
 setMethod("show", "OpenMLData", function(object) {
+  catf('\n** Data Set(s) **')
+  print(do.call(rbind.data.frame, object@dataset))
   
+  catf('\n** Evaluations **')
+  print(do.call(rbind.data.frame, object@evaluation))
 })

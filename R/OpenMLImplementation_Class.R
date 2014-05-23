@@ -49,9 +49,9 @@
 #'    \item{\code{parameter}}{[\code{list}]\cr
 #'    The parameters of the implementation. A list containing 
 #'    \code{\link{OpenMLImplementationParameter}s}.}
-#'    \item{\code{components}}{[\code{list}]}\cr
+#'    \item{\code{components}}{[\code{list}]\cr
 #'    A list contatining \code{\link{OpenMLImplementation}s}. Typically components of a workflow or 
-#'    subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.
+#'    subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.}
 #'    \item{\code{source.url}}{[\code{character}]\cr
 #'    URL from which the source code can be downloaded. Added by the server. Ignored when uploaded manually.}
 #'    \item{\code{binary.url}}{[\code{character}]\cr
