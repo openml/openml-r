@@ -13,8 +13,6 @@ test_that("download all tasks", {
     expect_true(is.character(tf) && length(tf) == 1 && !is.na(tf))
     ds = task@task.data.desc@data.set
     expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) > 1 )
-    print(task)
-    print(task@task.data.desc)
     if (task@task.type == "Supervised Classification")
       lrn = makeLearner("classif.rpart")
     else if (task@task.type == "Supervised Regression")

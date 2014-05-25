@@ -4,7 +4,7 @@ test_that("writeOpenMLRunXML", {
   lrn <- makeLearner("classif.rpart", par.vals=list(minsplit = 5, maxdepth = 10))
   run.pars <- makeRunParameterList(lrn)
   
-  desc <- OpenMLRun("1", "classif.rpart(1.0)", run.pars)
+  desc <- OpenMLRun(task.id="1", implementation.id="classif.rpart(1.0)", parameter.setting=run.pars)
   file <- tempfile()
   writeOpenMLRunXML(desc, file)
   
@@ -26,5 +26,5 @@ test_that("writeOpenMLRunXML", {
     expect_true(run.pars[[i]]@name == names[i] && run.pars[[i]]@value == values[i])
   }
   unlink(file)
-}
+})
   

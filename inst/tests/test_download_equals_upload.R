@@ -9,8 +9,10 @@ test_that("is downloaded = uploaded implementation", {
   slots <- names(getSlots("OpenMLImplementation"))
   
   for(i in slots) {
-    if(i %nin% c("id", "uploader", "upload.date", "source.url", "binary.url", "parameter", "components")) 
+    if(i %nin% c("id", "uploader", "version", "external.version", "upload.date", "source.url", 
+      "binary.url", "parameter", "components")) {
       expect_true(all(slot(impl_dl, i) == slot(impl_ul, i)))  
+    }
   }
   expect_true(all(sort(unlist(lapply(impl_dl@parameter, function(a) a@name))) 
     == sort(unlist(lapply(impl_ul@parameter, function(a) a@name)))))

@@ -17,12 +17,15 @@
 #' @return [\code{\link{OpenMLImplementation}}].
 #' @export
 
-downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.binary = TRUE, show.info = TRUE) {
+downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.binary = TRUE, 
+  show.info = TRUE, clean.up = FALSE) {
+  
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(dir, "character", len = 1L, na.ok = FALSE)
   checkArg(download.source.binary, "logical", len = 1L, na.ok = FALSE)
   fn.impl.xml <- file.path(dir, sprintf("%s.xml", id))  
-  downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, show.info = show.info)  
+  downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, 
+    show.info = show.info)  
   impl <- parseOpenMLImplementation(fn.impl.xml)
   if (download.source.binary) {
     if (length(impl@source.url) > 0 && impl@source.url != "") {
@@ -33,8 +36,8 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
       fn.impl.src <- sprintf("%s(%s)_source.%s", impl@name, impl@version, format)
       fn.impl.src <- file.path(dir, fn.impl.src) 
       downloadBinaryFile(url = impl@source.url, file = fn.impl.src, show.info = show.info)
-    }
-    if (length(impl@binary.url) > 0 && impl@source.url != "") {
+    } 
+    if (length(impl@binary.url) > 0 && impl@binary.url != "") {
       if (show.info)
         messagef("Downloading implementation binary file.")
 
@@ -43,6 +46,9 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
       downloadBinaryFile(url = impl@binary.url, file = fn.impl.bin, show.info = show.info)
     }
   }
+  if(clean.up)
+    unlink(fn.impl.xml)
+  
   return(impl)
 }
 
