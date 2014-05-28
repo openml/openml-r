@@ -14,6 +14,9 @@
 #' @param show.info [logical(1)]\cr
 #'   Verbose output on console? 
 #'   Default is \code{TRUE}.
+#' @param clean.up [logical(1)]\cr
+#'   Delete implementation xml file at the end?
+#'   Default is \code{FALSE}.
 #' @return [\code{\link{OpenMLImplementation}}].
 #' @export
 
@@ -23,10 +26,15 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(dir, "character", len = 1L, na.ok = FALSE)
   checkArg(download.source.binary, "logical", len = 1L, na.ok = FALSE)
+  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  checkArg(clean.up, "logical", len = 1L, na.ok = FALSE)
+  
   fn.impl.xml <- file.path(dir, sprintf("%s.xml", id))  
   downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, 
     show.info = show.info)  
   impl <- parseOpenMLImplementation(fn.impl.xml)
+  if(clean.up)
+    unlink(fn.impl.xml)
   if (download.source.binary) {
     if (length(impl@source.url) > 0 && impl@source.url != "") {
       if (show.info)
@@ -46,9 +54,6 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
       downloadBinaryFile(url = impl@binary.url, file = fn.impl.bin, show.info = show.info)
     }
   }
-  if(clean.up)
-    unlink(fn.impl.xml)
-  
   return(impl)
 }
 
