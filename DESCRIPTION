@@ -13,7 +13,8 @@ Imports:
     stringr,
     XML,
     RWeka,
-    mlr
+    mlr,
+    plyr
 LazyData: yes
 ByteCompile: yes
 Version: 1.0

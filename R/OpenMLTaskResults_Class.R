@@ -42,11 +42,11 @@ setClass("OpenMLTaskResults", representation(
 # --------------------------------------------------------------
 # constructor function
 OpenMLTaskResults <- function(
-  task.id = "",
-  task.name = "",
-  task.type.id = "",
-  input.data = "",
-  estimation.procedure = "",
+  task.id = character(0L),
+  task.name = character(0L),
+  task.type.id  = character(0L),
+  input.data = character(0L),
+  estimation.procedure = character(0L),
   metrics = data.frame()
 ) {
   new("OpenMLTaskResults",
@@ -64,7 +64,7 @@ OpenMLTaskResults <- function(
 # show
 setMethod("show", "OpenMLTaskResults", function(object) {
   catNotEmpty <- function(s, val) {
-    if (val != "") 
+    if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
   }
   
@@ -79,14 +79,5 @@ setMethod("show", "OpenMLTaskResults", function(object) {
   
   ## Metrics
   catf('\n** Metrics **')
-  
-  #if(length(object@metrics) > 0) {
-  #  for(i in seq_along(object@metrics)) {
-  #    catNotEmpty('Name              :: ', object@metrics[[i]]$name)
-  #    catNotEmpty('Value             :: ', object@metrics[[i]]$value)
-  #    catNotEmpty('Label             :: ', object@metrics[[i]]$label)
-  #    cat("\n")
-  #  }
-  #}
   print(object@metrics)
 })

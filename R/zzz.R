@@ -10,5 +10,6 @@
 #' @import XML
 #' @import RWeka
 #' @import mlr
+#' @import plyr
 NULL
 
