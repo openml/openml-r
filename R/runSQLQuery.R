@@ -24,7 +24,9 @@ runSQLQuery <- function(query, simplify = TRUE, show.info = FALSE) {
   # replace whitespaces so we dont run into problems with the query
   query <- str_replace_all(query, " ", "%20")
 
-  OPEN_ML_SQL_QUERY_URL <- "http://www.openml.org/api_query"
+  # Use new beta server, leave old address commented to be able to switch quickly.
+  # OPEN_ML_SQL_QUERY_URL <- "http://www.openml.org/api_query"
+  OPEN_ML_SQL_QUERY_URL <- "http://openml.liacs.nl/api_query"
   url <- sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, query)
   download.file(url, json.file, quiet = TRUE)
   parsed.doc <- fromJSON(file = json.file)

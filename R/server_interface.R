@@ -1,5 +1,7 @@
-
-OPEN_ML_SERVER_API_URL <- "http://expdb.cs.kuleuven.be/expdb/api"
+# Old Server:
+# OPEN_ML_SERVER_API_URL <- "http://expdb.cs.kuleuven.be/expdb/api"
+# Beta Server:
+OPEN_ML_SERVER_API_URL <- "http://openml.liacs.nl/api"
 
 # Generate a URL to download files from the server API.
 # 
