@@ -1,8 +1,11 @@
 context("getDataQualities")
 
 test_that("getDataQualities", {
-  expect_is({dqn = getDataQualityNames()}, "character")
-  expect_is(dq = getDataQualities(), "data.frame")
-  expect_equal(cols = ncol(getDataQualities()), 10)
-  expect_equal(cols = ncol(getDataQualities(set = "all")), length(getDataQualityNames()) + 1)
+  dqn = getDataQualityNames()
+  dq1 = getDataQualities()
+  dq2 = getDataQualities(set = "all")
+  expect_is(dqn, "character")
+  expect_is(dq1, "data.frame")
+  expect_is(dq2, "data.frame")
+  expect_equal(ncol(dq2), length(dqn) + 1)
 })
