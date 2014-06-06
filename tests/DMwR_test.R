@@ -8,8 +8,8 @@ library(devtools)
 ## version!
 load_all("/home/ltorgo/Research/Publications/Books/DataMiningWithR/CRC/Livro/Package/DMwR_devel/DMwR")
 
-## The openML package
-load_all("/usersData/ltorgo/Research/Projects/OnGoing/Harvest/ResearchWork/OpenML/R/openML")
+## The OpenML package
+load_all("/usersData/ltorgo/Research/Projects/OnGoing/Harvest/ResearchWork/OpenML/R/OpenML")
 
 
 ##################################################################
@@ -23,7 +23,7 @@ load_all("/usersData/ltorgo/Research/Projects/OnGoing/Harvest/ResearchWork/OpenM
 ## This was tested and it is currently running properly (ltorgo, 25Ja2013)
 ##
 
-## Running a standard workflow using a regression tree on the iris openML task
+## Running a standard workflow using a regression tree on the iris OpenML task
 ## The user supplies:
 ## i) the implementation OpenML ID
 ## ii) the workflow function name
