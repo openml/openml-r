@@ -7,5 +7,6 @@
 #' @import RWeka
 #' @import mlr
 #' @import plyr
+#' @import checkmate
 NULL
 

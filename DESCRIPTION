@@ -14,7 +14,8 @@ Imports:
     XML,
     RWeka,
     mlr,
-    plyr
+    plyr,
+    checkmate
 LazyData: yes
 ByteCompile: yes
 Version: 1.0
