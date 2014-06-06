@@ -9,13 +9,13 @@ test_that("download all tasks", {
   for (i in ids) {
     print(i)
     task = downloadOpenMLTask(id=i, show.info = TRUE, clean.up=TRUE)
-    tf = task@task.target.features
+    tf = task$task.target.features
     expect_true(is.character(tf) && length(tf) == 1 && !is.na(tf))
-    ds = task@task.data.desc@data.set
+    ds = task$task.data.desc$data.set
     expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) > 1 )
-    if (task@task.type == "Supervised Classification")
+    if (task$task.type == "Supervised Classification")
       lrn = makeLearner("classif.rpart")
-    else if (task@task.type == "Supervised Regression")
+    else if (task$task.type == "Supervised Regression")
       lrn = makeLearner("regr.rpart")
     res = runTask(task, lrn)
   }
