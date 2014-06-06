@@ -16,21 +16,24 @@
 #' bagging.par.settings = makeRunParameterList(bagging)
 #' bagging.par.settings
 #' @export
-makeRunParameterList = function(mlr.lrn, component = character(0)) {
+makeRunParameterList = function(mlr.lrn, component = NULL) {
+  assertClass(mlr.lrn, "Learner")
+  if (!is.null(component))
+    assertString(component)
+    
   par.vals = mlr.lrn$par.vals
   par.names = names(mlr.lrn$par.vals)
-  par.settings = list()    
-  for(i in seq_along(par.vals)){
-    run.par = OpenMLRunParameter(
+  par.settings = vector("list", length(par.vals))  
+  for (i in seq_along(par.vals)) {
+    par.settings[[i]] = OpenMLRunParameter(
       name = par.names[i], 
       value = as.character(par.vals[[i]]),
       component = component)
-    par.settings = c(par.settings, run.par)
   }
-  if(!is.null(mlr.lrn$next.learner)) {
+  if (!is.null(mlr.lrn$next.learner)) {
     # Use the learner's id (without "classif." or "regr.") as the subcomponent's name... 
     # FIXME: check if or make sure that this is correct
-    component = strsplit(mlr.lrn$next.learner$id, split = ".", fixed=TRUE)[[1]][2]
+    component = strsplit(mlr.lrn$next.learner$id, split = ".", fixed = TRUE)[[1]][2]
     inner.par.settings = makeRunParameterList(mlr.lrn$next.learner, component = component)
     par.settings = c(par.settings, inner.par.settings)
   }

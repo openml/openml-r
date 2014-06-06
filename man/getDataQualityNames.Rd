@@ -3,7 +3,13 @@
 \alias{getDataQualityNames}
 \title{Retrieve the names of all available data qualities.}
 \usage{
-getDataQualityNames()
+getDataQualityNames(set = "all")
+}
+\arguments{
+\item{set}{[\code{character(1)}]\cr
+Either \code{"basic"}, which means only rudimentary data quality names
+are retrieved, or \code{"all"}.
+Default is \code{"all"}.}
 }
 \value{
 [\code{character}].

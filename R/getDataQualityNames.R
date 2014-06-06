@@ -7,6 +7,7 @@
 #' @return [\code{character}].
 #' @export
 getDataQualityNames = function(set = "all") {
+  assertChoice(set, c("all", "basic"))
   if (set == "all") {
     return(runSQLQuery("SELECT DISTINCT quality FROM data_quality"))
   } else {
