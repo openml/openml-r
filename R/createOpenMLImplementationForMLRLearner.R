@@ -14,7 +14,7 @@
 #'   Default is a short specification of the learner and the associated package.
 #' @return [\code{\link{OpenMLImplementation}}]. 
 #' @export
-createOpenMLImplementationForMLRLearner <- function(
+createOpenMLImplementationForMLRLearner = function(
   lrn, 
   name = lrn$id, 
   version,
@@ -24,21 +24,21 @@ createOpenMLImplementationForMLRLearner <- function(
   checkArg(lrn, "Learner")
   checkArg(name, "character")
 
-  version <- packageDescription(lrn$package)$Version
+  version = packageDescription(lrn$package)$Version
   
   if (!missing(description))
     checkArg(description, "character")
   else
-    description <- sprintf("Learner %s from package %s.", name, lrn$package)
+    description = sprintf("Learner %s from package %s.", name, lrn$package)
 
-  impl <- OpenMLImplementation(
+  impl = OpenMLImplementation(
     name = name,
     description = description,
     parameter = makeImplementationParameterList(lrn)
   )
   
   if (!missing(version)) 
-    impl$external.version <- version
+    impl$external.version = version
   
   return(impl)
 }

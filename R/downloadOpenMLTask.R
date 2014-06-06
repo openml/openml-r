@@ -31,7 +31,7 @@
 #' @examples
 #' # Download task and access relevant information to start running experiments
 #' \dontrun{
-#' task <- downloadOpenMLTask(id = 1)
+#' task = downloadOpenMLTask(id = 1)
 #' show(task)
 #' print(task<at>task.type)
 #' print(task<at>task.target.features)
@@ -41,10 +41,10 @@
 
 #FIXME: check file io errorsr, dir writable and so on
 #FIXME not all combios of fetch-* make sense, also test them
-downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE, 
+downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE, 
   fetch.data.set.description = TRUE, fetch.data.set = TRUE, fetch.data.splits = TRUE, show.info = TRUE) {
   
-  id <- convertInteger(id)
+  id = convertInteger(id)
   checkArg(id, "integer", len = 1L, na.ok = FALSE)
   checkArg(dir, "character", len = 1L, na.ok = FALSE)
   checkArg(clean.up, "logical", len = 1L, na.ok = FALSE)
@@ -57,10 +57,10 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
     stop("Error: You can't download a data set without also downloading the data set description!")
   }
   
-  fn.task <- file.path(dir, "task.xml")
-  fn.data.set.desc <- file.path(dir, "data_set_description.xml")
-  fn.data.set <- file.path(dir, "data_set.ARFF")
-  fn.data.splits <- file.path(dir, "data_splits.ARFF")
+  fn.task = file.path(dir, "task.xml")
+  fn.data.set.desc = file.path(dir, "data_set_description.xml")
+  fn.data.set = file.path(dir, "data_set.ARFF")
+  fn.data.splits = file.path(dir, "data_splits.ARFF")
   
   if (show.info) {
     messagef("Downloading task %i from OpenML repository.", id)
@@ -68,23 +68,23 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
   }
   
   downloadAPICallFile(api.fun = "openml.tasks.search", file = fn.task, task.id = id, show.info = show.info) 
-  task <- parseOpenMLTask(fn.task)
+  task = parseOpenMLTask(fn.task)
   
   if (fetch.data.set.description) {
     downloadOpenMLDataSetDescription(task$task.data.desc.id, fn.data.set.desc, show.info)
-    task$task.data.desc <- parseOpenMLDataSetDescription(fn.data.set.desc)
+    task$task.data.desc = parseOpenMLDataSetDescription(fn.data.set.desc)
   }
   
   if (fetch.data.set) {
     downloadOpenMLDataSet(task$task.data.desc$url, fn.data.set, show.info)
-    task$task.data.desc$data.set <- parseOpenMLDataSet(task$task.data.desc, fn.data.set)
+    task$task.data.desc$data.set = parseOpenMLDataSet(task$task.data.desc, fn.data.set)
     
     # make valid column names
-    task$task.data.desc$original.col.names <- colnames(task$task.data.desc$data.set)
-    task$task.data.desc$new.col.names <- make.names(task$task.data.desc$original.col.names, unique=TRUE)
-    target.inds <- which(task$task.data.desc$original.col.names %in% task$task.target.features )
-    task$task.target.features <- task$task.data.desc$new.col.names[target.inds]
-    colnames(task$task.data.desc$data.set) <- task$task.data.desc$new.col.names
+    task$task.data.desc$original.col.names = colnames(task$task.data.desc$data.set)
+    task$task.data.desc$new.col.names = make.names(task$task.data.desc$original.col.names, unique=TRUE)
+    target.inds = which(task$task.data.desc$original.col.names %in% task$task.target.features )
+    task$task.target.features = task$task.data.desc$new.col.names[target.inds]
+    colnames(task$task.data.desc$data.set) = task$task.data.desc$new.col.names
   }
   
   if (fetch.data.splits) {
@@ -94,7 +94,7 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
         Either the task type does not support data splits or the task is defective.")
       } else {
       downloadOpenMLDataSplits(task$task.estimation.procedure$data.splits.url, fn.data.splits, show.info)
-      task$task.estimation.procedure$data.splits <- parseOpenMLDataSplits(task$task.data.desc$data.set, fn.data.splits)
+      task$task.estimation.procedure$data.splits = parseOpenMLDataSplits(task$task.data.desc$data.set, fn.data.splits)
     }
   }
   
@@ -110,42 +110,42 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
   return(task)
 }
 
-parseOpenMLTask <- function(file) {
-  doc <- parseXMLResponse(file, "Getting task", "task")
+parseOpenMLTask = function(file) {
+  doc = parseXMLResponse(file, "Getting task", "task")
   
-  getParams <- function(path) {
-    ns.parameters <- getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
-    parameters <- lapply(ns.parameters, function(x) xmlValue(x))
-    names(parameters) <- sapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
+  getParams = function(path) {
+    ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
+    parameters = lapply(ns.parameters, function(x) xmlValue(x))
+    names(parameters) = sapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
     parameters
   }
   
   # task
-  task.id <- xmlRValI(doc, "/oml:task/oml:task_id")
-  task.type <- xmlRValS(doc, "/oml:task/oml:task_type")
-  targets <- xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
-  params <- getParams("oml:task")
+  task.id = xmlRValI(doc, "/oml:task/oml:task_id")
+  task.type = xmlRValS(doc, "/oml:task/oml:task_type")
+  targets = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
+  params = getParams("oml:task")
   
   # data set description
-  data.desc.id <- xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id")
-  data.desc <- NULL
+  data.desc.id = xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id")
+  data.desc = NULL
   
   # prediction
-  ns.preds.features <- getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
-  preds.features <- lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
-  names(preds.features) <- sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
-  task.preds <- list(
+  ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
+  preds.features = lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
+  names(preds.features) = sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
+  task.preds = list(
     format = xmlRValS(doc, "/oml:task/oml:output/oml:predictions/oml:format"),
     features = preds.features
   )
   
   # estimation procedure
   
-  data.splits.url <- xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url")
+  data.splits.url = xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url")
   if (is.null(data.splits.url)) 
-    data.splits.url <- "No URL"
+    data.splits.url = "No URL"
     
-  estim.proc <- OpenMLEstimationProcedure(
+  estim.proc = OpenMLEstimationProcedure(
     type = xmlRValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:type"), 
     data.splits.url = data.splits.url,
     data.splits = data.frame(),
@@ -153,9 +153,9 @@ parseOpenMLTask <- function(file) {
   )
   
   # measures
-  measures <- xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure")
+  measures = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure")
   
-  task <- OpenMLTask(
+  task = OpenMLTask(
     task.id = task.id,
     task.type = task.type,
     task.target.features = targets,
@@ -169,20 +169,20 @@ parseOpenMLTask <- function(file) {
   convertOpenMLTaskSlots(task)
 }
 
-convertParam <- function(params, name, fun) {
+convertParam = function(params, name, fun) {
   if(!is.null(params[[name]]))
-    params[[name]] <- fun(params[[name]])
+    params[[name]] = fun(params[[name]])
   return(params)
 }
 
-convertOpenMLTaskSlots <- function(task) {
+convertOpenMLTaskSlots = function(task) {
   # convert estim params to correct types
-  p <- task$task.estimation.procedure$parameters
-  p <- convertParam(p, "number_repeats", as.integer)
-  p <- convertParam(p, "number_folds", as.integer)
-  task$task.estimation.procedure$parameters <- p
+  p = task$task.estimation.procedure$parameters
+  p = convertParam(p, "number_repeats", as.integer)
+  p = convertParam(p, "number_folds", as.integer)
+  task$task.estimation.procedure$parameters = p
   
-  #task$task.evaluation.measures <- strsplit(task$task.evaluation.measures, split=",")[[1]]
+  #task$task.evaluation.measures = strsplit(task$task.evaluation.measures, split=",")[[1]]
   return(task)
 }
 

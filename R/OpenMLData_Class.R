@@ -24,7 +24,7 @@ setClass("OpenMLData", representation(
 ))
 
 # ***** Constructor *****
-OpenMLData <- function(dataset = list(), evaluation = list()) {
+OpenMLData = function(dataset = list(), evaluation = list()) {
   new("OpenMLData", 
     dataset = dataset,
     evaluation = evaluation

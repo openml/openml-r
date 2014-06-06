@@ -29,7 +29,7 @@ setClass("OpenMLImplementationParameter", representation(
 ))
 
 # ***** Constructor *****
-OpenMLImplementationParameter <- function(
+OpenMLImplementationParameter = function(
   name, 
   data.type = character(0), 
   default.value = character(0), 

@@ -19,14 +19,14 @@
 #   <oml:parameter_setting>
 #   <oml:name>C</oml:name>
 #   <oml:value>0.01</oml:value>
-writeOpenMLRunXML <- function(description, file = character(0)) {
+writeOpenMLRunXML = function(description, file = character(0)) {
   checkArg(description, "OpenMLRun", s4 = TRUE)
   checkArg(file, "character")
   
-  doc <- newXMLDoc()
-  top <- newXMLNode("oml:run", parent = doc, namespace = c(oml = "http://openml.org/openml"))
+  doc = newXMLDoc()
+  top = newXMLNode("oml:run", parent = doc, namespace = c(oml = "http://openml.org/openml"))
   # FIXME check against carefully against schema 
-  mynode <- function(name, val, parent = top) {
+  mynode = function(name, val, parent = top) {
     if (length(val) > 0) 
       newXMLNode(name, as.character(val), parent = parent, namespace = "oml")
   }
@@ -38,7 +38,7 @@ writeOpenMLRunXML <- function(description, file = character(0)) {
   
   if (length(description$parameter.settings) > 0) {
     for(i in seq_along(description$parameter.settings)) {
-      par.setting <- newXMLNode("parameter_setting", parent = top, namespace = "oml")
+      par.setting = newXMLNode("parameter_setting", parent = top, namespace = "oml")
       mynode("name", description$parameter.settings[[i]]$name, parent = par.setting)
       mynode("value", description$parameter.settings[[i]]$value, parent = par.setting)
       mynode("component", description$parameter.settings[[i]]$component, parent = par.setting)

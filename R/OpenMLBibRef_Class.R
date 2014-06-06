@@ -23,7 +23,7 @@ setClass("OpenMLBibRef", representation(
 ))
 
 # ***** Constructor *****
-OpenMLBibRef <- function(
+OpenMLBibRef = function(
   citation = character(0), 
   url = character(0)) {
   

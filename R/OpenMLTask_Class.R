@@ -51,7 +51,7 @@ setClass("OpenMLTask", representation(
 
 
 # ***** Constructor *****
-OpenMLTask <- function(task.id, task.type, task.pars, task.target.features,
+OpenMLTask = function(task.id, task.type, task.pars, task.target.features,
                        task.data.desc.id, task.data.desc,
                        task.estimation.procedure,
                        task.preds, task.evaluation.measures) {
