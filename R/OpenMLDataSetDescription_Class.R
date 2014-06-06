@@ -101,7 +101,8 @@ OpenMLDataSetDescription = function(id,
 
 # ***** Methods *****
 
-setMethod("show", "OpenMLDataSetDescription",	function(object) {
+#' @export
+print.OpenMLDataSetDescription = function(object, ...) {
   # incorrect indentation to see aligment!
 	catf('\nDataset %s :: (openML ID = %i, version = %s)', object$name, object$id, object$version)
 	catf('\tCreator          : %s', object$creator)
@@ -124,5 +125,5 @@ setMethod("show", "OpenMLDataSetDescription",	function(object) {
 	cat('\n')
 	catf('\tData :')
 	catf(printStrToChar(object$data.set))
-})
+}
 

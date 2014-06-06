@@ -69,7 +69,8 @@ OpenMLTask = function(task.id, task.type, task.pars, task.target.features,
 
 # show
 # Note: The data splits and the predictions are not shown
-setMethod("show", "OpenMLTask", function(object) {
+#' @export
+print.OpenMLTask = function(object, ...) {
   ## Task general info
   catf('\nTask ID ::  %i \n\nTask Type ::  %s', object$task.id, object$task.type)
   if (length(object$task.pars)) 
@@ -105,5 +106,5 @@ setMethod("show", "OpenMLTask", function(object) {
   cat(collapse(paste("\t\t", names(object$task.preds$features), " = ", object$task.preds$features), sep = "\n"))
   cat('\nEvaluation Measures ::\n')
   catf('%s', collapse(object$task.evaluation.measures, '\n'))
-})
+}
 

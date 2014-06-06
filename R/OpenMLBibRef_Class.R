@@ -37,8 +37,9 @@ OpenMLBibRef = function(
 
 # show
 # FIXME: how should missing values be represented? here, character(0) AND "" are possible.
-setMethod("show", "OpenMLBibRef", function(object) {  
+#' @export
+print.OpenMLBibRef = function(object, ...) {  
   catf("  %s", object$citation)  
   if(length(object$url) > 0 && object$url != "")
     catf("  url :: %s\n", object$url)
-})
+}

@@ -14,11 +14,11 @@ ImplementationParameter = function(name, data.type = "", default.value = "", des
  )
 }
 
-# show
-setMethod("show", "ImplementationParameter", function(object) {
+#' @export
+print.ImplementationParameter = function(object, ...) {
   cat(object$name)
   if (object$data.type != "") cat(' : ',object$data.type)
   if (object$default.value != "") cat(' (default value = ',object$default.value,' )')
   if (object$description != "") cat('\n   Description : ',object$description)
   cat('\n')
-})
+}

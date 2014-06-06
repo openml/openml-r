@@ -56,11 +56,12 @@ OpenMLEstimationProcedure = function(type, data.splits.url, data.splits, paramet
 # ***** Methods *****
 
 # Note: The data splits and the predictions are not shown
-setMethod("show", "OpenMLEstimationProcedure", function(object) {
+#' @export
+print.OpenMLEstimationProcedure = function(object, ...)  {
   catf('\nEstimation Method :: %s',object$type)
   catf('Parameters         ::')
   for(i in 1:length(object$parameters))
     catf('\t%s = %s', names(object$parameters)[i], object$parameters[[i]])
   catf('Data Splits        :: ')
   str(object$data.splits)
-})
+}
