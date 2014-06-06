@@ -5,29 +5,29 @@
 #' @return A list of \code{\link{OpenMLImplementationParameter}s}.
 #' @examples
 #' library(mlr)
-#' lrn <- makeLearner("classif.randomForest")
-#' pars <- makeImplementationParameterList(lrn)
+#' lrn = makeLearner("classif.randomForest")
+#' pars = makeImplementationParameterList(lrn)
 #' pars
 #' @export
-makeImplementationParameterList <- function(mlr.lrn) {
-  pars <- mlr.lrn$par.set$pars
-  par.list <- list()
+makeImplementationParameterList = function(mlr.lrn) {
+  pars = mlr.lrn$par.set$pars
+  par.list = list()
   for(i in seq_along(pars)){
-    name <- pars[[i]]$id
-    data.type <- pars[[i]]$type
+    name = pars[[i]]$id
+    data.type = pars[[i]]$type
     # FIXME: data.type Should be either integer, numeric, string, vector, matrix, object.
-    # if(data.type == "discrete") data.type <- "string"      ? 
-    # if(data.type == "numericvector") data.type <- "vector" ? 
+    # if(data.type == "discrete") data.type = "string"      ? 
+    # if(data.type == "numericvector") data.type = "vector" ? 
     # ...
     if(pars[[i]]$has.default)
-      default.value <- as.character(pars[[i]]$default)
+      default.value = as.character(pars[[i]]$default)
     else
-      default.value <- character(0)
-    impl.par <- OpenMLImplementationParameter(
+      default.value = character(0)
+    impl.par = OpenMLImplementationParameter(
       name = name, 
       data.type = data.type, 
       default.value = default.value)
-    par.list <- c(par.list, impl.par)
+    par.list = c(par.list, impl.par)
   }
   return(par.list)
 }

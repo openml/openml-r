@@ -41,7 +41,7 @@ setClass("OpenMLTaskResults", representation(
 
 # --------------------------------------------------------------
 # constructor function
-OpenMLTaskResults <- function(
+OpenMLTaskResults = function(
   task.id = character(0L),
   task.name = character(0L),
   task.type.id  = character(0L),
@@ -63,7 +63,7 @@ OpenMLTaskResults <- function(
 
 # show
 setMethod("show", "OpenMLTaskResults", function(object) {
-  catNotEmpty <- function(s, val) {
+  catNotEmpty = function(s, val) {
     if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
   }

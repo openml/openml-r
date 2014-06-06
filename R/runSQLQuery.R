@@ -14,33 +14,33 @@
 #'   Default is \code{FALSE}.
 #' @return [\code{data.frame}]. The results as a table.
 #' @export
-runSQLQuery <- function(query, simplify = TRUE, show.info = FALSE) {
+runSQLQuery = function(query, simplify = TRUE, show.info = FALSE) {
   checkArg(query, "character", len = 1L, na.ok = FALSE)
   checkArg(simplify, "logical", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
 
-  json.file <- tempfile()
+  json.file = tempfile()
 
   # replace whitespaces so we dont run into problems with the query
-  query <- str_replace_all(query, " ", "%20")
+  query = str_replace_all(query, " ", "%20")
 
   # Use new beta server, leave old address commented to be able to switch quickly.
-  # OPEN_ML_SQL_QUERY_URL <- "http://www.openml.org/api_query"
-  OPEN_ML_SQL_QUERY_URL <- "http://openml.liacs.nl/api_query"
-  url <- sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, query)
+  # OPEN_ML_SQL_QUERY_URL = "http://www.openml.org/api_query"
+  OPEN_ML_SQL_QUERY_URL = "http://openml.liacs.nl/api_query"
+  url = sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, query)
   download.file(url, json.file, quiet = TRUE)
-  parsed.doc <- fromJSON(file = json.file)
+  parsed.doc = fromJSON(file = json.file)
 
   if(show.info)
     message(parsed.doc$status)
 
   unlink(json.file)
  
-  data <- convertListOfRowsToDataFrame(as.list(parsed.doc$data), strings.as.factors = FALSE,
+  data = convertListOfRowsToDataFrame(as.list(parsed.doc$data), strings.as.factors = FALSE,
     col.names = extractSubList(parsed.doc$columns, "title"))
     
   #FIXME: for now guess types, the type is set as undefined in json, everything is encoded as strings
-  data <- as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
+  data = as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
   
   if (ncol(data) == 1L && simplify)
     return(data[, 1L])

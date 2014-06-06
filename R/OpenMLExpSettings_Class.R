@@ -33,7 +33,7 @@ setClass("OpenMLExpSettings", representation(
 ))
 
 # ***** Constructor *****
-OpenMLExpSettings <- function(type,n.folds,n.repeats,data.splits) {
+OpenMLExpSettings = function(type,n.folds,n.repeats,data.splits) {
   new("OpenMLExpSettings", type=type, n.folds=n.folds,n.repeats=n.repeats,
       data.splits=data.splits)
 }

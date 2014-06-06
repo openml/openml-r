@@ -26,7 +26,7 @@
 
 # FIXME: Rewrite description as soon as the function's parameters are definite.
 
-uploadOpenMLRun <- function(task, mlr.lrn, impl.id, predictions, error.msg, session.hash, run.pars = NULL, show.info = TRUE) {
+uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, session.hash, run.pars = NULL, show.info = TRUE) {
   
   # FIXME: We might want to have a function(task, mlr.lrn, predictions, hash) that uploads both the
   # implementation and the predictions. For this, we need an API call to get the ID of an already
@@ -35,7 +35,7 @@ uploadOpenMLRun <- function(task, mlr.lrn, impl.id, predictions, error.msg, sess
     checkArg(run.pars, "list")
   } else {
     checkArg(mlr.lrn, "Learner")
-    run.pars <- makeRunParameterList(mlr.lrn)
+    run.pars = makeRunParameterList(mlr.lrn)
   }
   checkArg(task, "OpenMLTask")
   checkArg(impl.id, "character")
@@ -46,47 +46,47 @@ uploadOpenMLRun <- function(task, mlr.lrn, impl.id, predictions, error.msg, sess
     checkArg(error.msg, "try-error")
   }
   
-  run.desc <- OpenMLRun(
+  run.desc = OpenMLRun(
     task.id = as.character(task$task.id), 
     implementation.id = impl.id, 
     parameter.settings = run.pars)
   
   if (!missing(error.msg))
-    run.desc$error.message <- error.msg[1]
+    run.desc$error.message = error.msg[1]
   
-  description <- tempfile()
+  description = tempfile()
   writeOpenMLRunXML(run.desc, description)
   
-  file <- tempfile()
+  file = tempfile()
   if (show.info) {
     messagef("Uploading run to server.")
     messagef("Downloading response to: %s", file)
   }
   
-  url <- getServerFunctionURL("openml.run.upload")
+  url = getServerFunctionURL("openml.run.upload")
   
   if (!missing(predictions)) {
-    output <- tempfile()
+    output = tempfile()
     write.arff(predictions, file = output) 
-    params <- list(
+    params = list(
       description = fileUpload(filename = description),
       predictions = fileUpload(filename = output),
       session_hash = session.hash
     )
   } else {
-    params <- list(
+    params = list(
       description = fileUpload(filename = description),
       session_hash = session.hash
     )
   }
 
-  content <- postForm(url, 
+  content = postForm(url, 
     .params = params
   )
-  #content <- postForm(url, .params = params, .checkParams = FALSE)
+  #content = postForm(url, .params = params, .checkParams = FALSE)
   write(content, file = file)
   # was uploading successful?
-  doc <- try(parseXMLResponse(file, "Uploading run", "upload_run"), silent = TRUE)
+  doc = try(parseXMLResponse(file, "Uploading run", "upload_run"), silent = TRUE)
   # if not, print the error.
   if (is.error(doc)) {
     parseXMLResponse(file, "Uploading run", "response")

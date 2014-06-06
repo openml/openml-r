@@ -109,7 +109,7 @@ setClass("OpenMLImplementation", representation(
 
 # --------------------------------------------------------------
 # constructor function
-OpenMLImplementation <- function(
+OpenMLImplementation = function(
   id = character(0L),
   uploader = integer(),
   name = character(0L),
@@ -167,7 +167,7 @@ OpenMLImplementation <- function(
 
 # show
 setMethod("show", "OpenMLImplementation", function(object) {
-  catNotEmpty <- function(s, val) {
+  catNotEmpty = function(s, val) {
     if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
   }

@@ -14,22 +14,22 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
-downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, show.info = TRUE) {
+downloadOpenMLDataAsMlrTask = function(name, dir = tempdir(), clean.up = TRUE, show.info = TRUE) {
   checkArg(name, "character", len = 1L, na.ok = FALSE)
   checkArg(dir, "character", len = 1L, na.ok = FALSE)
   checkArg(clean.up, "logical", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
 
-  fn.data.set.desc <- file.path(dir, "data_set_description.xml")
-  fn.data.set <- file.path(dir, "data_set.ARFF")
+  fn.data.set.desc = file.path(dir, "data_set_description.xml")
+  fn.data.set = file.path(dir, "data_set.ARFF")
 
   # get id for given dataset name
-  query <- paste0("SELECT did, default_target_attribute FROM dataset WHERE name = '", name, "'")
-  res <- runSQLQuery(query)
+  query = paste0("SELECT did, default_target_attribute FROM dataset WHERE name = '", name, "'")
+  res = runSQLQuery(query)
   if (nrow(res) == 0L)
     stopf("No data set on OpenML server found for: %s", name)
-  id <- res[1L, "did"]
-  target <- res[1, "default_target_attribute"]
+  id = res[1L, "did"]
+  target = res[1, "default_target_attribute"]
 
   if (show.info) {
     messagef("Downloading data set '%s' from OpenML repository.", name)
@@ -37,9 +37,9 @@ downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, 
   }
 
   downloadOpenMLDataSetDescription(id = id, file = fn.data.set.desc, show.info = show.info)
-  task.data.desc <- parseOpenMLDataSetDescription(file = fn.data.set.desc)
+  task.data.desc = parseOpenMLDataSetDescription(file = fn.data.set.desc)
   downloadOpenMLDataSet(task.data.desc$url, fn.data.set, show.info)
-  task.data.desc$data.set <- parseOpenMLDataSet(task.data.desc, fn.data.set)
+  task.data.desc$data.set = parseOpenMLDataSet(task.data.desc, fn.data.set)
 
   if (clean.up) {
     unlink(fn.data.set.desc)
@@ -49,21 +49,21 @@ downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, 
   }
 
   # FIXME: Dirty from now on:
-  classif <- is.factor(task.data.desc$data.set[, target])
+  classif = is.factor(task.data.desc$data.set[, target])
 
-  data <- task.data.desc$data.set
+  data = task.data.desc$data.set
   # FIXME: some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
-  data <- droplevels(data)
+  data = droplevels(data)
 
-  target.ind <- which(colnames(data) %in% target)
-  colnames(data) <- make.names(colnames(data), unique=TRUE)
-  target <- colnames(data)[target.ind]
+  target.ind = which(colnames(data) %in% target)
+  colnames(data) = make.names(colnames(data), unique=TRUE)
+  target = colnames(data)[target.ind]
 
   if (classif) {
-    mlr.task <- makeClassifTask(id = name, data = data, target = target)
+    mlr.task = makeClassifTask(id = name, data = data, target = target)
   } else {
-    mlr.task <- makeRegrTask(id = name, data = data, target = target)
+    mlr.task = makeRegrTask(id = name, data = data, target = target)
   }
 
   return(mlr.task)

@@ -44,7 +44,7 @@ setClassUnion("OptionalOpenMLEstimationProcedure",
               c("OpenMLEstimationProcedure","NULL"))
 
 # ***** Constructor *****
-OpenMLEstimationProcedure <- function(type, data.splits.url, data.splits, parameters) {
+OpenMLEstimationProcedure = function(type, data.splits.url, data.splits, parameters) {
   new("OpenMLEstimationProcedure",
     type = type,
     data.splits.url = data.splits.url,

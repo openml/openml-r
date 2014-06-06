@@ -12,7 +12,7 @@
 #'
 #' @return [\code{data.frame}]. Rows correspond to data sets, columns to data qualities.
 #' @export
-getDataQualities <- function(set = "basic") {
+getDataQualities = function(set = "basic") {
   checkArg(set, choices = c("basic", "all"))
 
   dquals = if (set == "all")
@@ -23,12 +23,12 @@ getDataQualities <- function(set = "basic") {
       "NumberOfNumericFeatures", "NumberOfSymbolicFeatures")
 
   # we need to recode missing values in qualities a bit by applying an SQL function for each quality
-  query <- sprintf("MAX(IF(dq.quality='%s', dq.value, NULL)) AS %s", dquals, dquals)
-  query <- collapse(query)
-  query <- paste("SELECT d.name AS dataset,", query,
+  query = sprintf("MAX(IF(dq.quality='%s', dq.value, NULL)) AS %s", dquals, dquals)
+  query = collapse(query)
+  query = paste("SELECT d.name AS dataset,", query,
     "FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY dataset")
 
-  res <- runSQLQuery(query)
+  res = runSQLQuery(query)
   return(res)
 }
 

@@ -52,7 +52,7 @@ setClass("OpenMLRunResults", representation(
 
 # --------------------------------------------------------------
 # constructor function
-OpenMLRunResults <- function(
+OpenMLRunResults = function(
   run.id = numeric(0L),
   uploader = numeric(0L),
   task.id = numeric(0L),
@@ -80,7 +80,7 @@ OpenMLRunResults <- function(
 
 # show
 setMethod("show", "OpenMLRunResults", function(object) {
-  catNotEmpty <- function(s, val) {
+  catNotEmpty = function(s, val) {
     if (val != "") 
       catf("%s %s", s, val)
   }

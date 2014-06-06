@@ -31,7 +31,7 @@ setClass("OpenMLRun", representation(
 
 
 # ***** Constructor *****
-OpenMLRun <- function(task.id, implementation.id, error.message = character(0), parameter.settings=list()) {
+OpenMLRun = function(task.id, implementation.id, error.message = character(0), parameter.settings=list()) {
   new("OpenMLRun",
     task.id = task.id,
     implementation.id = implementation.id,

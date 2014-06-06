@@ -5,7 +5,7 @@ setClass("ImplementationParameter", representation(
   description = "character"
 ))
 
-ImplementationParameter <- function(name, data.type = "", default.value = "", description = "") {
+ImplementationParameter = function(name, data.type = "", default.value = "", description = "") {
   new("ImplementationParameter", 
     name = name,
     data.type = data.type,

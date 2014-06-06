@@ -86,7 +86,7 @@ setClassUnion("OptionalOpenMLDataSetDescription",
   c("OpenMLDataSetDescription","NULL"))
 
 # ***** Constructor *****
-OpenMLDataSetDescription <- function(id,
+OpenMLDataSetDescription = function(id,
   name, version, creator, contributor="", collection.date="", upload.date,
   description,language="", format,licence="", url,row.id.attribute="", md5.checksum="",
   data.set, original.col.names="", new.col.names="")

@@ -14,20 +14,20 @@
 #'   Verbose output on console?
 #'   Default is \code{TRUE}.
 #' @export
-uploadOpenMLImplementation <- function(implementation, sourcefile, binaryfile, session.hash, 
+uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, session.hash, 
   show.info = TRUE) {
   
   # Generate a sourcefile, if user doesn't provide one. Just for now. (?)
   # FIXME: makes no sense for non-mlr implementations 
-  file <- file.path(getwd(), sprintf("%s_source.R", implementation$name))
-  user.prov.srcfile <- TRUE
+  file = file.path(getwd(), sprintf("%s_source.R", implementation$name))
+  user.prov.srcfile = TRUE
   if (missing(sourcefile)) {
-    catf(file = file, "library(mlr) \nlrn <- makeLearner(\"%s\")", implementation$name)
-    sourcefile <- file
-    user.prov.srcfile <- FALSE
+    catf(file = file, "library(mlr) \nlrn = makeLearner(\"%s\")", implementation$name)
+    sourcefile = file
+    user.prov.srcfile = FALSE
   }
   
-  file <- tempfile()
+  file = tempfile()
   
   writeOpenMLImplementationXML(implementation, file)
   
@@ -36,16 +36,16 @@ uploadOpenMLImplementation <- function(implementation, sourcefile, binaryfile, s
      messagef("Downloading response to: %s", file)
    }
   
-  url <- getServerFunctionURL("openml.implementation.upload")
+  url = getServerFunctionURL("openml.implementation.upload")
   #FIXME: handle binary
-  response <- postForm(url, 
+  response = postForm(url, 
     session_hash = session.hash,
     description = fileUpload(filename = file),
     source = fileUpload(filename = sourcefile)
   )
   write(response, file = file)
 
-  doc <- parseXMLResponse(file, "Uploading implementation", c("upload_implementation", "response"))
+  doc = parseXMLResponse(file, "Uploading implementation", c("upload_implementation", "response"))
   
   if (show.info) {
     messagef("Implementation successfully uploaded. Implementation ID: %s", 
