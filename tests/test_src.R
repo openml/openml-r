@@ -4,10 +4,10 @@ library(RCurl)
 library(BBmisc)
 library(RWeka)
 
-load_all("openML", reset = TRUE)
+load_all("OpenML", reset = TRUE)
 
 test <- downloadOpenMLImplementation("weka.AODE(1.8.2.3)", file = "../../../test.R")
-# source('~/cos/OpenML/R/openML/R/uploadOpenMLRun.R')
+# source('~/cos/OpenML/R/OpenML/R/uploadOpenMLRun.R')
 # 
 # options(warn = 2)
 # 
@@ -20,7 +20,7 @@ test <- downloadOpenMLImplementation("weka.AODE(1.8.2.3)", file = "../../../test
 # 
 # uploadOpenMLRun(description = file, output.files = file, session.hash)
 
-#source('~/cos/OpenML/R/openML/R/authenticateUser.R')
+#source('~/cos/OpenML/R/OpenML/R/authenticateUser.R')
 #downloadOpenMLImplementation("df", file, TRUE)
 
 # 

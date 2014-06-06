@@ -1,9 +1,9 @@
 library(BatchExperiments)
 library(mlr)
 library(stringr)
-devtools::load_all("openML")
+devtools::load_all("OpenML")
 
-reg <- makeExperimentRegistry(id="openML_with_mlr", packages=c("mlr", "RCurl", "XML", "stringr"))
+reg <- makeExperimentRegistry(id="OpenML_with_mlr", packages=c("mlr", "RCurl", "XML", "stringr"))
 
 all.res <- reduceResults(reg, 
   fun = function(aggr, job, res) rbind(aggr, c(job$algo.pars, job$prob.pars, res)), init = c())

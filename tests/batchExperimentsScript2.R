@@ -2,12 +2,12 @@
 library(BatchExperiments)
 library(mlr)
 library(stringr)
-devtools::load_all("openML")
+devtools::load_all("OpenML")
 
-reg <- makeExperimentRegistry(id="openML_with_mlr_2", packages=c("mlr", "RCurl", "XML", "stringr"))
+reg <- makeExperimentRegistry(id="OpenML_with_mlr_2", packages=c("mlr", "RCurl", "XML", "stringr"))
 
 getTask <- function(id) {
-  devtools::load_all("openML")
+  devtools::load_all("OpenML")
   task <- downloadOpenMLTask(id)
   return(task)
 }
@@ -15,7 +15,7 @@ getTask <- function(id) {
 addProblem(reg, id="task", dynamic=getTask)
 
 resample.lrn <- function(static, dynamic, lrn) {
-  devtools::load_all("openML")
+  devtools::load_all("OpenML")
   res <- try(runTask(dynamic, makeLearner(lrn), return.mlr.results = TRUE), silent=TRUE)
   if(is.error(res)) {
     message(res)
