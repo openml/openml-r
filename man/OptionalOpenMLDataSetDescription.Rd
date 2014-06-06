@@ -4,7 +4,7 @@
 \alias{OptionalOpenMLDataSetDescription-class}
 \title{OptionalOpenMLDataSetDescription}
 \description{
-Either an object of class \code{\link{OpenMLDataSetDescription}} or \code{NULL}.
+Either an x of class \code{\link{OpenMLDataSetDescription}} or \code{NULL}.
 }
 \seealso{
 \code{\link{OpenMLDataSetDescription}}, \code{\link{OpenMLTask}}
