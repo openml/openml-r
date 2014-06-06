@@ -2,7 +2,7 @@
 
 #' OpenMLTask
 #'
-#' This class of objects contains the information describing an openML task.
+#' This class of objects contains the information describing an OpenML task.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLTask(...)}.
 #' The objects contain information on ... .
@@ -81,7 +81,7 @@ print.OpenMLTask = function(object, ...) {
   
   ## Data set info
   if (!is.null(object$task.data.desc)) {
-    catf('\nDataset ::  %s  (openML ID =  %i, version = %s)', 
+    catf('\nDataset ::  %s  (OpenML ID =  %i, version = %s)', 
          object$task.data.desc$name, object$task.data.desc$id, object$task.data.desc$version)
     catf('\tData frame with %i rows and %i columns', 
          nrow(object$task.data.desc$data.set), ncol(object$task.data.desc$data.set))

@@ -1,6 +1,6 @@
 #' OpenMLImplementation
 #'
-#' This class of objects contains the information describing an openML implementation.
+#' This class of objects contains the information describing an OpenML implementation.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLImplementation(...)}.
 #' The objects contain information on ... .

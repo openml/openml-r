@@ -1,6 +1,6 @@
 #' OpenMLDataSetDescription
 #'
-#' This class of objects contains the information describing an openML data set.
+#' This class of objects contains the information describing an OpenML data set.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLDataSetDescription(...)}.
 #' The objects contain information on ... .
@@ -104,7 +104,7 @@ OpenMLDataSetDescription = function(id,
 #' @export
 print.OpenMLDataSetDescription = function(object, ...) {
   # incorrect indentation to see aligment!
-	catf('\nDataset %s :: (openML ID = %i, version = %s)', object$name, object$id, object$version)
+	catf('\nDataset %s :: (OpenML ID = %i, version = %s)', object$name, object$id, object$version)
 	catf('\tCreator          : %s', object$creator)
 	if (length(object$contributor) > 0)
 	  catf('\tContributor      : %s', object$contributor)

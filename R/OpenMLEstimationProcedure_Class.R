@@ -1,6 +1,6 @@
 #' OpenMLEstimationProcedure
 #'
-#' This class of objects contains the information describing an openML estimation procedure.
+#' This class of objects contains the information describing an OpenML estimation procedure.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLEstimationProcedure(...)}.
 #' The objects contain information on ... .
