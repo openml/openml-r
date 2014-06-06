@@ -80,9 +80,15 @@ print.OpenMLTask = function(x, ...) {
   catf('\nTask Target Feature :: %s', collapse(x$task.target.features, "\t"))
   
   ## Data set info
+<<<<<<< HEAD
   if (!is.null(x$task.data.desc)) {
     catf('\nDataset ::  %s  (openML ID =  %i, version = %s)', 
          x$task.data.desc$name, x$task.data.desc$id, x$task.data.desc$version)
+=======
+  if (!is.null(object$task.data.desc)) {
+    catf('\nDataset ::  %s  (OpenML ID =  %i, version = %s)', 
+         object$task.data.desc$name, object$task.data.desc$id, object$task.data.desc$version)
+>>>>>>> e8b0b6241ec03f17913429863d4bfdfe85807fab
     catf('\tData frame with %i rows and %i columns', 
          nrow(x$task.data.desc$data.set), ncol(x$task.data.desc$data.set))
   }

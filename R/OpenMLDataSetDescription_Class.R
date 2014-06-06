@@ -104,6 +104,7 @@ OpenMLDataSetDescription = function(id,
 #' @export
 print.OpenMLDataSetDescription = function(x, ...) {
   # incorrect indentation to see aligment!
+<<<<<<< HEAD
 	catf('\nDataset %s :: (openML ID = %i, version = %s)', x$name, x$id, x$version)
 	catf('\tCreator          : %s', x$creator)
 	if (length(x$contributor) > 0)
@@ -120,6 +121,24 @@ print.OpenMLDataSetDescription = function(x, ...) {
 	  catf('\tRow Id Attr.  	 : %s', x$row.id.attribute)
 	if (x$md5.checksum != '')
 	  catf('\tmd5 Check Sum    : %s', x$md5.checksum)
+=======
+	catf('\nDataset %s :: (OpenML ID = %i, version = %s)', object$name, object$id, object$version)
+	catf('\tCreator          : %s', object$creator)
+	if (length(object$contributor) > 0)
+	  catf('\tContributor      : %s', object$contributor)
+	catf('\tCollection Date  : %s', object$collection.date)
+	catf('\tUpload Date      : %s', object$upload.date)
+	if (object$licence != '')
+	  catf('\tLicence          : %s', object$licence)
+	catf('\tURL              : %s', object$url)
+	if (object$language != '')
+	  catf('\tLanguage         : %s', object$language)
+	catf('\tFormat           : %s', object$format)
+	if (object$row.id.attribute != '')
+	  catf('\tRow Id Attr.  	 : %s', object$row.id.attribute)
+	if (object$md5.checksum != '')
+	  catf('\tmd5 Check Sum    : %s', object$md5.checksum)
+>>>>>>> e8b0b6241ec03f17913429863d4bfdfe85807fab
 	catf('\tDescription :')
 	cat(collapse(paste('\t\t', strwrap(x$description), '\n'), sep=''))
 	cat('\n')
