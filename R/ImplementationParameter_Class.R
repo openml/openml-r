@@ -15,10 +15,10 @@ ImplementationParameter = function(name, data.type = "", default.value = "", des
 }
 
 #' @export
-print.ImplementationParameter = function(object, ...) {
-  cat(object$name)
-  if (object$data.type != "") cat(' : ',object$data.type)
-  if (object$default.value != "") cat(' (default value = ',object$default.value,' )')
-  if (object$description != "") cat('\n   Description : ',object$description)
+print.ImplementationParameter = function(x, ...) {
+  cat(x$name)
+  if (x$data.type != "") cat(' : ',x$data.type)
+  if (x$default.value != "") cat(' (default value = ',x$default.value,' )')
+  if (x$description != "") cat('\n   Description : ',x$description)
   cat('\n')
 }

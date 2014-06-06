@@ -35,10 +35,10 @@ OpenMLData = function(dataset = list(), evaluation = list()) {
 
 # show
 #' @export
-print.OpenMLData = function(object, ...)  function(object) {
+print.OpenMLData = function(x, ...)  function(x) {
   catf('\n** Data Set(s) **')
-  print(do.call(rbind.data.frame, object$dataset))
+  print(do.call(rbind.data.frame, x$dataset))
   
   catf('\n** Evaluations **')
-  print(do.call(rbind.data.frame, object$evaluation))
+  print(do.call(rbind.data.frame, x$evaluation))
 }

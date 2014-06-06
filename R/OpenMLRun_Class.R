@@ -43,17 +43,17 @@ OpenMLRun = function(task.id, implementation.id, error.message = character(0), p
 # ***** Methods *****
 
 #' @export
-print.OpenMLRun = function(object, ...)  {
+print.OpenMLRun = function(x, ...)  {
   catf('** Information on an OpenML Run **\n')
-  catf('Task ID           :: %s', object$task.id)
-  catf('Implementation ID :: %s', object$implementation.id)
-  if (length(object$error.message) > 0) {
-    catf('Error message     :: %s', object$error.message)
+  catf('Task ID           :: %s', x$task.id)
+  catf('Implementation ID :: %s', x$implementation.id)
+  if (length(x$error.message) > 0) {
+    catf('Error message     :: %s', x$error.message)
   }
   #FIXME reimplent
-  if (length(object$parameter.settings) > 0) {
+  if (length(x$parameter.settings) > 0) {
     cat('Parameter Settings used on the Run:\n')
-    print(object$parameter.settings)
+    print(x$parameter.settings)
   }
   cat('\n')
 }

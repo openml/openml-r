@@ -63,7 +63,7 @@ OpenMLTaskResults = function(
 
 # show
 #' @export
-print.OpenMLTaskResults = function(object, ...)  {
+print.OpenMLTaskResults = function(x, ...)  {
   catNotEmpty = function(s, val) {
     if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
@@ -72,13 +72,13 @@ print.OpenMLTaskResults = function(object, ...)  {
   ## General info
   catf('\n** Task Information **')
    
-  catNotEmpty('Task ID              :: ', object$task.id)
-  catNotEmpty('Task Name            :: ', object$task.name)
-  catNotEmpty('Task Type ID         :: ', object$task.type.id)  
-  catNotEmpty('Input Data           :: ', object$input.data)
-  catNotEmpty('Estimation Procedure :: ', object$estimation.procedure)
+  catNotEmpty('Task ID              :: ', x$task.id)
+  catNotEmpty('Task Name            :: ', x$task.name)
+  catNotEmpty('Task Type ID         :: ', x$task.type.id)  
+  catNotEmpty('Input Data           :: ', x$input.data)
+  catNotEmpty('Estimation Procedure :: ', x$estimation.procedure)
   
   ## Metrics
   catf('\n** Metrics **')
-  print(object$metrics)
+  print(x$metrics)
 }

@@ -39,11 +39,11 @@ OpenMLRunParameter = function(name, value, component = character(0)) {
 
 # show
 #' @export
-print.OpenMLRunParameter = function(object, ...)  {
-  s = if(length(object$component))
-    sprintf(' (parameter of component %s)', object$component)
+print.OpenMLRunParameter = function(x, ...)  {
+  s = if(length(x$component))
+    sprintf(' (parameter of component %s)', x$component)
   else
     ""
   # FIXME does this work for arbitary values? unit test this
-  catf("%s %s = %s", s, object$name, object$value)
+  catf("%s %s = %s", s, x$name, x$value)
 }

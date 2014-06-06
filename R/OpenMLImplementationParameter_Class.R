@@ -48,12 +48,12 @@ OpenMLImplementationParameter = function(
 # show
 # FIXME: how should missing values be represented? here, character(0) AND "" are possible.
 #' @export
-print.OpenMLImplementationParameter = function(object, ...) {  
-  catf("Parameter %s", object$name)  
-  if (length(object$data.type) > 0 && object$data.type != "")
-    catf("  type    :: %s", object$data.type)
-  if (length(object$default.value) > 0 && object$default.value != "")
-    catf("  default :: %s", object$default.value)
-  if (length(object$description) > 0 && object$description != "")
-    catf("\n%s", object$description)
+print.OpenMLImplementationParameter = function(x, ...) {  
+  catf("Parameter %s", x$name)  
+  if (length(x$data.type) > 0 && x$data.type != "")
+    catf("  type    :: %s", x$data.type)
+  if (length(x$default.value) > 0 && x$default.value != "")
+    catf("  default :: %s", x$default.value)
+  if (length(x$description) > 0 && x$description != "")
+    catf("\n%s", x$description)
 }

@@ -80,7 +80,7 @@ OpenMLRunResults = function(
 
 # show
 #' @export
-print.OpenMLRunResults = function(object, ...)  {
+print.OpenMLRunResults = function(x, ...)  {
   catNotEmpty = function(s, val) {
     if (val != "") 
       catf("%s %s", s, val)
@@ -89,24 +89,24 @@ print.OpenMLRunResults = function(object, ...)  {
   ## General info
   catf('\n** Run Information **')
   
-  catNotEmpty('Run ID            :: ', object$run.id)
-  catNotEmpty('Task ID           :: ', object$task.id)
-  catNotEmpty('User ID           :: ', object$uploader)
-  catNotEmpty('Implementation ID :: ', object$implementation.id)
+  catNotEmpty('Run ID            :: ', x$run.id)
+  catNotEmpty('Task ID           :: ', x$task.id)
+  catNotEmpty('User ID           :: ', x$uploader)
+  catNotEmpty('Implementation ID :: ', x$implementation.id)
   
   ## FIXME: Add parameters.
   
   ## Metrics
   catf('\n** Metrics **')
   
-  #if(length(object$metrics) > 0) {
-  #  for(i in seq_along(object$metrics)) {
-  #    catNotEmpty('Name              :: ', object$metrics[[i]]$name)
-  #    catNotEmpty('Value             :: ', object$metrics[[i]]$value)
-  #    catNotEmpty('Label             :: ', object$metrics[[i]]$label)
+  #if(length(x$metrics) > 0) {
+  #  for(i in seq_along(x$metrics)) {
+  #    catNotEmpty('Name              :: ', x$metrics[[i]]$name)
+  #    catNotEmpty('Value             :: ', x$metrics[[i]]$value)
+  #    catNotEmpty('Label             :: ', x$metrics[[i]]$label)
   #    cat("\n")
   #  }
   #}
-  print(object$output.data)
+  print(x$output.data)
 }
 

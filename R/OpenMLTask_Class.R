@@ -2,7 +2,7 @@
 
 #' OpenMLTask
 #'
-#' This class of objects contains the information describing an openML task.
+#' This class of objects contains the information describing an OpenML task.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLTask(...)}.
 #' The objects contain information on ... .
@@ -70,41 +70,41 @@ OpenMLTask = function(task.id, task.type, task.pars, task.target.features,
 # show
 # Note: The data splits and the predictions are not shown
 #' @export
-print.OpenMLTask = function(object, ...) {
+print.OpenMLTask = function(x, ...) {
   ## Task general info
-  catf('\nTask ID ::  %i \n\nTask Type ::  %s', object$task.id, object$task.type)
-  if (length(object$task.pars)) 
-    cat(collapse(paste("\t", names(object$task.pars), " = ", object$task.pars), sep = "\n"))
+  catf('\nTask ID ::  %i \n\nTask Type ::  %s', x$task.id, x$task.type)
+  if (length(x$task.pars)) 
+    cat(collapse(paste("\t", names(x$task.pars), " = ", x$task.pars), sep = "\n"))
   
   ## Target variables info
-  catf('\nTask Target Feature :: %s', collapse(object$task.target.features, "\t"))
+  catf('\nTask Target Feature :: %s', collapse(x$task.target.features, "\t"))
   
   ## Data set info
-  if (!is.null(object$task.data.desc)) {
+  if (!is.null(x$task.data.desc)) {
     catf('\nDataset ::  %s  (openML ID =  %i, version = %s)', 
-         object$task.data.desc$name, object$task.data.desc$id, object$task.data.desc$version)
+         x$task.data.desc$name, x$task.data.desc$id, x$task.data.desc$version)
     catf('\tData frame with %i rows and %i columns', 
-         nrow(object$task.data.desc$data.set), ncol(object$task.data.desc$data.set))
+         nrow(x$task.data.desc$data.set), ncol(x$task.data.desc$data.set))
   }
   
   ## Estimation procedure info
-  if (!is.null(object$task.estimation.procedure)) {
-    catf('\nEstimation Procedure :: %s', object$task.estimation.procedure$type)
+  if (!is.null(x$task.estimation.procedure)) {
+    catf('\nEstimation Procedure :: %s', x$task.estimation.procedure$type)
     catf('\tData splits for estimation %s.',
-         ifelse(all(dim(object$task.estimation.procedure$data.splits) == 0), 'not available', 'available'))
-    if (length(object$task.estimation.procedure$parameters)) {
+         ifelse(all(dim(x$task.estimation.procedure$data.splits) == 0), 'not available', 'available'))
+    if (length(x$task.estimation.procedure$parameters)) {
       
       cat('\tParameters of the estimation procedure:\n')
       
-      cat(collapse(paste("\t", names(object$task.estimation.procedure$parameters), " = ", 
-                         object$task.estimation.procedure$parameters), sep = "\n"))
+      cat(collapse(paste("\t", names(x$task.estimation.procedure$parameters), " = ", 
+                         x$task.estimation.procedure$parameters), sep = "\n"))
     }
   }
   cat('\nPredictions ::\n')
-  catf('\tFormat = %s', object$task.preds$format)
+  catf('\tFormat = %s', x$task.preds$format)
   cat('\tColumns:\n')
-  cat(collapse(paste("\t\t", names(object$task.preds$features), " = ", object$task.preds$features), sep = "\n"))
+  cat(collapse(paste("\t\t", names(x$task.preds$features), " = ", x$task.preds$features), sep = "\n"))
   cat('\nEvaluation Measures ::\n')
-  catf('%s', collapse(object$task.evaluation.measures, '\n'))
+  catf('%s', collapse(x$task.evaluation.measures, '\n'))
 }
 

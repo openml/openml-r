@@ -1,6 +1,6 @@
 #' OpenMLEstimationProcedure
 #'
-#' This class of objects contains the information describing an openML estimation procedure.
+#' This class of objects contains the information describing an OpenML estimation procedure.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLEstimationProcedure(...)}.
 #' The objects contain information on ... .
@@ -31,7 +31,7 @@ setClass("OpenMLEstimationProcedure", representation(
 
 #' OptionalOpenMLEstimationProcedure
 #'
-#' Either an object of class \code{\link{OpenMLEstimationProcedure}} or \code{NULL}.
+#' Either an x of class \code{\link{OpenMLEstimationProcedure}} or \code{NULL}.
 #' 
 #' @seealso \code{\link{OpenMLEstimationProcedure}}, \code{\link{OpenMLTask}}
 #' @name OptionalOpenMLEstimationProcedure
@@ -57,11 +57,11 @@ OpenMLEstimationProcedure = function(type, data.splits.url, data.splits, paramet
 
 # Note: The data splits and the predictions are not shown
 #' @export
-print.OpenMLEstimationProcedure = function(object, ...)  {
-  catf('\nEstimation Method :: %s',object$type)
+print.OpenMLEstimationProcedure = function(x, ...)  {
+  catf('\nEstimation Method :: %s',x$type)
   catf('Parameters         ::')
-  for(i in 1:length(object$parameters))
-    catf('\t%s = %s', names(object$parameters)[i], object$parameters[[i]])
+  for(i in 1:length(x$parameters))
+    catf('\t%s = %s', names(x$parameters)[i], x$parameters[[i]])
   catf('Data Splits        :: ')
-  str(object$data.splits)
+  str(x$data.splits)
 }

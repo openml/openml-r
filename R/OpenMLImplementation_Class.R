@@ -1,6 +1,6 @@
 #' OpenMLImplementation
 #'
-#' This class of objects contains the information describing an openML implementation.
+#' This class of objects contains the information describing an OpenML implementation.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLImplementation(...)}.
 #' The objects contain information on ... .
@@ -167,7 +167,7 @@ OpenMLImplementation = function(
 
 # show
 #' @export
-print.OpenMLImplementation = function(object, ...)  {
+print.OpenMLImplementation = function(x, ...)  {
   catNotEmpty = function(s, val) {
     if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
@@ -176,73 +176,73 @@ print.OpenMLImplementation = function(object, ...)  {
   ## General implementation info
   catf('\n** Implementation Information **')
   
-  catNotEmpty('ID               :: ', object$id)
-  catNotEmpty('Name             :: ', object$name)
-  catNotEmpty('OpenML Version   :: ', object$version)
-  catNotEmpty('External Version :: ', object$external.version)
+  catNotEmpty('ID               :: ', x$id)
+  catNotEmpty('Name             :: ', x$name)
+  catNotEmpty('OpenML Version   :: ', x$version)
+  catNotEmpty('External Version :: ', x$external.version)
   
   ## Authors and contributors
-  if (length(object$creator) > 0) {
+  if (length(x$creator) > 0) {
     cat('\nCreator(s)     :: ')
-    cat(collapse(object$creator, sep = ", "))
+    cat(collapse(x$creator, sep = ", "))
   }
-  if (length(object$contributor) > 0) {
+  if (length(x$contributor) > 0) {
     cat('\nContributor(s) :: ')
-    cat(collapse(object$contributor, sep = ", "))
+    cat(collapse(x$contributor, sep = ", "))
   }
   
   ## Other info
-  catf('\nDate :: %s', object$upload.date)
-  #catNotEmpty('Licence :: ', object$licence)
-  #catNotEmpty('Language :: ', object$language)
+  catf('\nDate :: %s', x$upload.date)
+  #catNotEmpty('Licence :: ', x$licence)
+  #catNotEmpty('Language :: ', x$language)
   
   ## Implementation specific info
   catf('\n\nDescription of the implementation :')
-  catf(object$description)
+  catf(x$description)
   
   #FIXME: We need to reimplement these lines.
-  #catNotEmpty('Full description :: ', object$full.description)
-  #catNotEmpty('Installation notes :: ', object$installation.notes)
-  #catNotEmpty('Dependencies :: ', collapse(object$dependencies, ", "))
-  #catNotEmpty('\nProgramming language :: ',object$programming.language)
-  #catNotEmpty('\nOperating system :: ',object$operating.system)
+  #catNotEmpty('Full description :: ', x$full.description)
+  #catNotEmpty('Installation notes :: ', x$installation.notes)
+  #catNotEmpty('Dependencies :: ', collapse(x$dependencies, ", "))
+  #catNotEmpty('\nProgramming language :: ',x$programming.language)
+  #catNotEmpty('\nOperating system :: ',x$operating.system)
   
   ## Bibliographic info
-  #if (object$bib.citation != "")
-  #  catf('\nBibliographic citation :: ',object$bib.citation)
-  #if (object$bib.url != "")
-  #  catf('\nBibliographic URL :: ',object$bib.url)
+  #if (x$bib.citation != "")
+  #  catf('\nBibliographic citation :: ',x$bib.citation)
+  #if (x$bib.url != "")
+  #  catf('\nBibliographic URL :: ',x$bib.url)
   
   ## More implementation details
-  #if (object$implements != "")
-  #  catf('\nImplements :: ',object$implements)
+  #if (x$implements != "")
+  #  catf('\nImplements :: ',x$implements)
  
   ## Implementation parameters
-  if (length(object$parameter)) {
+  if (length(x$parameter)) {
     catf('\nImplementation parameters :\n')
-    for(i in 1:length(object$parameter)) 
-      print(object$parameter[i])
+    for(i in 1:length(x$parameter)) 
+      print(x$parameter[i])
   }
   
   ## Implementation components
-  if (length(object$components)) {
+  if (length(x$components)) {
     catf('\nDescription of Implementation Components ::')
-    print(object$components)
+    print(x$components)
   }
   
   ## Bibliographical references
-  if (length(object$bibliographical.reference) > 0) {
+  if (length(x$bibliographical.reference) > 0) {
     catf("Bibliographical Reference(s):")
-    for(i in 1:length(object$bibliographical.reference)) 
-      print(object$bibliographical.reference[[i]])  
+    for(i in 1:length(x$bibliographical.reference)) 
+      print(x$bibliographical.reference[[i]])  
   }
   ## The implementation source information
-  #catNotEmpty('Source URL :: ', object$source.url)
-  #catNotEmpty('Binary URL :: ', object$binary.url)
-  #catNotEmpty('Source format :: ', object$source.format)
-  #catNotEmpty('Binary format :: ', object$binary.format)
-  #catNotEmpty('Source MD5 :: ', object$source.md5)
-  #catNotEmpty('Binary MD5 :: ', object$binary.md5)
+  #catNotEmpty('Source URL :: ', x$source.url)
+  #catNotEmpty('Binary URL :: ', x$binary.url)
+  #catNotEmpty('Source format :: ', x$source.format)
+  #catNotEmpty('Binary format :: ', x$binary.format)
+  #catNotEmpty('Source MD5 :: ', x$source.md5)
+  #catNotEmpty('Binary MD5 :: ', x$binary.md5)
   #cat('\n\n')
 }
   

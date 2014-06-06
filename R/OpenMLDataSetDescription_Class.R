@@ -1,6 +1,6 @@
 #' OpenMLDataSetDescription
 #'
-#' This class of objects contains the information describing an openML data set.
+#' This class of objects contains the information describing an OpenML data set.
 #' 
 #' Objects can be created by calls of the form \code{OpenMLDataSetDescription(...)}.
 #' The objects contain information on ... .
@@ -74,7 +74,7 @@ setClass("OpenMLDataSetDescription", representation(
 
 #' OptionalOpenMLDataSetDescription
 #'
-#' Either an object of class \code{\link{OpenMLDataSetDescription}} or \code{NULL}.
+#' Either an x of class \code{\link{OpenMLDataSetDescription}} or \code{NULL}.
 #' 
 #' @seealso \code{\link{OpenMLDataSetDescription}}, \code{\link{OpenMLTask}}
 #' @name OptionalOpenMLDataSetDescription
@@ -102,28 +102,28 @@ OpenMLDataSetDescription = function(id,
 # ***** Methods *****
 
 #' @export
-print.OpenMLDataSetDescription = function(object, ...) {
+print.OpenMLDataSetDescription = function(x, ...) {
   # incorrect indentation to see aligment!
-	catf('\nDataset %s :: (openML ID = %i, version = %s)', object$name, object$id, object$version)
-	catf('\tCreator          : %s', object$creator)
-	if (length(object$contributor) > 0)
-	  catf('\tContributor      : %s', object$contributor)
-	catf('\tCollection Date  : %s', object$collection.date)
-	catf('\tUpload Date      : %s', object$upload.date)
-	if (object$licence != '')
-	  catf('\tLicence          : %s', object$licence)
-	catf('\tURL              : %s', object$url)
-	if (object$language != '')
-	  catf('\tLanguage         : %s', object$language)
-	catf('\tFormat           : %s', object$format)
-	if (object$row.id.attribute != '')
-	  catf('\tRow Id Attr.  	 : %s', object$row.id.attribute)
-	if (object$md5.checksum != '')
-	  catf('\tmd5 Check Sum    : %s', object$md5.checksum)
+	catf('\nDataset %s :: (openML ID = %i, version = %s)', x$name, x$id, x$version)
+	catf('\tCreator          : %s', x$creator)
+	if (length(x$contributor) > 0)
+	  catf('\tContributor      : %s', x$contributor)
+	catf('\tCollection Date  : %s', x$collection.date)
+	catf('\tUpload Date      : %s', x$upload.date)
+	if (x$licence != '')
+	  catf('\tLicence          : %s', x$licence)
+	catf('\tURL              : %s', x$url)
+	if (x$language != '')
+	  catf('\tLanguage         : %s', x$language)
+	catf('\tFormat           : %s', x$format)
+	if (x$row.id.attribute != '')
+	  catf('\tRow Id Attr.  	 : %s', x$row.id.attribute)
+	if (x$md5.checksum != '')
+	  catf('\tmd5 Check Sum    : %s', x$md5.checksum)
 	catf('\tDescription :')
-	cat(collapse(paste('\t\t', strwrap(object$description), '\n'), sep=''))
+	cat(collapse(paste('\t\t', strwrap(x$description), '\n'), sep=''))
 	cat('\n')
 	catf('\tData :')
-	catf(printStrToChar(object$data.set))
+	catf(printStrToChar(x$data.set))
 }
 
