@@ -15,11 +15,11 @@ There are some helper functions in case you are using the package [mlr](https://
 ```{r eval = FALSE}
 library(mlr)
 learner = makeLearner("classif.rpart")
-openML.impl = createOpenMLImplementationForMLRLearner(learner)
+OpenML.impl = createOpenMLImplementationForMLRLearner(learner)
 ```
 This description object can be uploaded as follows:
 ```{r eval = FALSE}
-uploadOpenMLImplementation(openML.impl, session.hash = hash)
+uploadOpenMLImplementation(OpenML.impl, session.hash = hash)
 ```
 
 ### Upload an implementation without using mlr
@@ -45,7 +45,7 @@ impl.pars = list(impl.par.a, impl.par.b)
 ```
 Now we can create the whole description object. Try to find a good name for your algorithm that gives other users an idea of what is happening. 
 ```{r eval = FALSE}
-openML.impl = OpenMLImplementation(
+OpenML.impl = OpenMLImplementation(
   name = "good_name",
   version = "1.0",
   description = "Please take some time and write a description of your algorithm/changes compared with the previous version/etc. here.",
@@ -53,7 +53,7 @@ openML.impl = OpenMLImplementation(
 ```
 Now we finally have the implementation description object, which can be uploaded as we have already seen in the section above:
 ```{r eval = FALSE}
-uploadOpenMLImplementation(openML.impl, session.hash = hash)
+uploadOpenMLImplementation(OpenML.impl, session.hash = hash)
 ```
 
 ----------------------------------------------------------------------------------------------------------------------
