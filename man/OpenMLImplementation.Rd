@@ -5,7 +5,7 @@
 \alias{OpenMLImplementation-class}
 \title{OpenMLImplementation}
 \description{
-This class of objects contains the information describing an openML implementation.
+This class of objects contains the information describing an OpenML implementation.
 }
 \details{
 Objects can be created by calls of the form \code{OpenMLImplementation(...)}.

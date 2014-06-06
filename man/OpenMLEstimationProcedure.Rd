@@ -5,7 +5,7 @@
 \alias{OpenMLEstimationProcedure-class}
 \title{OpenMLEstimationProcedure}
 \description{
-This class of objects contains the information describing an openML estimation procedure.
+This class of objects contains the information describing an OpenML estimation procedure.
 }
 \details{
 Objects can be created by calls of the form \code{OpenMLEstimationProcedure(...)}.

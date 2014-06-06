@@ -5,7 +5,7 @@
 \alias{OpenMLDataSetDescription-class}
 \title{OpenMLDataSetDescription}
 \description{
-This class of objects contains the information describing an openML data set.
+This class of objects contains the information describing an OpenML data set.
 }
 \details{
 Objects can be created by calls of the form \code{OpenMLDataSetDescription(...)}.

@@ -5,7 +5,7 @@
 \alias{OpenMLTask-class}
 \title{OpenMLTask}
 \description{
-This class of objects contains the information describing an openML task.
+This class of objects contains the information describing an OpenML task.
 }
 \details{
 Objects can be created by calls of the form \code{OpenMLTask(...)}.

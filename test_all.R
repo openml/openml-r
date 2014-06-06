@@ -11,6 +11,6 @@ if (interactive()) {
   library(mlr)
   load_all(".")
 } else {
-  library(openML)  
+  library(OpenML)  
 }
-test_dir("inst/tests")
+test_dir("tests/testthat")
