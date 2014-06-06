@@ -1,4 +1,4 @@
-library(openML)
+library(OpenML)
 library(mlr)
 library(stringr)
 

@@ -2,18 +2,18 @@ library(mlr)
 library(BBmisc)
 library(RCurl)
 library(devtools)
-load_all("openML/")
+load_all("OpenML/")
 
 
 # IMPLEMENTATIONEN: upload, download
 
 lrn <- makeLearner("classif.JRip")
 
-openML_impl <- createOpenMLImplementationForMLRLearner(lrn)
+OpenML_impl <- createOpenMLImplementationForMLRLearner(lrn)
 
 hash <- authenticateUser("dominik.kirchhoff@tu-dortmund.de", "testpasswort")
 
-uploadOpenMLImplementation(openML_impl, session.hash=hash)
+uploadOpenMLImplementation(OpenML_impl, session.hash=hash)
 
 impl_dl <- downloadOpenMLImplementation("classif.JRip(0.4-18)")
 
@@ -30,7 +30,7 @@ run_preds <- runTask(task, lrn)
 #  implementation.id = "classif.JRip(0.4-18)", 
 #  parameter.settings = makeRunParameterList(lrn))
 
-run_ul <- uploadOpenMLRun(task, lrn, openML_impl, run_preds, hash)
+run_ul <- uploadOpenMLRun(task, lrn, OpenML_impl, run_preds, hash)
 
 # RUN RESULTS: download
 
