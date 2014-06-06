@@ -49,7 +49,7 @@ completely encapsulated in the task object.
 \examples{
 # Download task and access relevant information to start running experiments
 \dontrun{
-task <- downloadOpenMLTask(id = 1)
+task = downloadOpenMLTask(id = 1)
 show(task)
 print(task<at>task.type)
 print(task<at>task.target.features)

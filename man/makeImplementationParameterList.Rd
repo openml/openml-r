@@ -17,8 +17,8 @@ Generate a list of OpenML implementation parameters for a given mlr learner.
 }
 \examples{
 library(mlr)
-lrn <- makeLearner("classif.randomForest")
-pars <- makeImplementationParameterList(lrn)
+lrn = makeLearner("classif.randomForest")
+pars = makeImplementationParameterList(lrn)
 pars
 }
 
