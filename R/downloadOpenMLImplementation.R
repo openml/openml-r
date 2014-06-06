@@ -49,7 +49,7 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
       if (show.info)
         messagef("Downloading implementation binary file.")
 
-      fn.impl.src <- sprintf("%s(%s)_binary", impl@name, impl@version)
+      fn.impl.bin <- sprintf("%s(%s)_binary", impl@name, impl@version)
       fn.impl.bin <- file.path(dir, fn.impl.bin)  
       downloadBinaryFile(url = impl@binary.url, file = fn.impl.bin, show.info = show.info)
     }

@@ -106,6 +106,6 @@ setMethod("show", "OpenMLRunResults", function(object) {
   #    cat("\n")
   #  }
   #}
-  print(object@metrics)
+  print(object@output.data)
 })
 
