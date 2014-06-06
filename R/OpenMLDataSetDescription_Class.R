@@ -72,19 +72,6 @@ setClass("OpenMLDataSetDescription", representation(
   new.col.names = "character"
 ))
 
-#' OptionalOpenMLDataSetDescription
-#'
-#' Either an x of class \code{\link{OpenMLDataSetDescription}} or \code{NULL}.
-#' 
-#' @seealso \code{\link{OpenMLDataSetDescription}}, \code{\link{OpenMLTask}}
-#' @name OptionalOpenMLDataSetDescription
-#' @rdname OptionalOpenMLDataSetDescription
-#' @aliases OptionalOpenMLDataSetDescription-class
-#' @exportClass OptionalOpenMLDataSetDescription
-
-setClassUnion("OptionalOpenMLDataSetDescription",
-  c("OpenMLDataSetDescription","NULL"))
-
 # ***** Constructor *****
 OpenMLDataSetDescription = function(id,
   name, version, creator, contributor="", collection.date="", upload.date,

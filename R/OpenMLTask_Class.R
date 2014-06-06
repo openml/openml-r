@@ -52,15 +52,15 @@ setClass("OpenMLTask", representation(
 
 # ***** Constructor *****
 OpenMLTask = function(task.id, task.type, task.pars, task.target.features,
-                       task.data.desc.id, task.data.desc,
-                       task.estimation.procedure,
-                       task.preds, task.evaluation.measures) {
+  task.data.desc.id, task.data.desc,
+  task.estimation.procedure,
+  task.preds, task.evaluation.measures) {
   makeS3Obj("OpenMLTask",
-      task.id = task.id, task.type = task.type, task.pars = task.pars,
-      task.target.features = task.target.features,
-      task.data.desc.id = task.data.desc.id, task.data.desc = task.data.desc,
-      task.estimation.procedure = task.estimation.procedure,
-      task.preds = task.preds, task.evaluation.measures = task.evaluation.measures
+    task.id = task.id, task.type = task.type, task.pars = task.pars,
+    task.target.features = task.target.features,
+    task.data.desc.id = task.data.desc.id, task.data.desc = task.data.desc,
+    task.estimation.procedure = task.estimation.procedure,
+    task.preds = task.preds, task.evaluation.measures = task.evaluation.measures
   )
 }
 
@@ -82,22 +82,22 @@ print.OpenMLTask = function(x, ...) {
   ## Data set info
   if (!is.null(x$task.data.desc)) {
     catf('\nDataset ::  %s  (openML ID =  %i, version = %s)', 
-         x$task.data.desc$name, x$task.data.desc$id, x$task.data.desc$version)
+      x$task.data.desc$name, x$task.data.desc$id, x$task.data.desc$version)
     catf('\tData frame with %i rows and %i columns', 
-         nrow(x$task.data.desc$data.set), ncol(x$task.data.desc$data.set))
+      nrow(x$task.data.desc$data.set), ncol(x$task.data.desc$data.set))
   }
   
   ## Estimation procedure info
   if (!is.null(x$task.estimation.procedure)) {
     catf('\nEstimation Procedure :: %s', x$task.estimation.procedure$type)
     catf('\tData splits for estimation %s.',
-         ifelse(all(dim(x$task.estimation.procedure$data.splits) == 0), 'not available', 'available'))
+      ifelse(all(dim(x$task.estimation.procedure$data.splits) == 0), 'not available', 'available'))
     if (length(x$task.estimation.procedure$parameters)) {
       
       cat('\tParameters of the estimation procedure:\n')
       
       cat(collapse(paste("\t", names(x$task.estimation.procedure$parameters), " = ", 
-                         x$task.estimation.procedure$parameters), sep = "\n"))
+        x$task.estimation.procedure$parameters), sep = "\n"))
     }
   }
   cat('\nPredictions ::\n')

@@ -29,20 +29,6 @@ setClass("OpenMLEstimationProcedure", representation(
   parameters = "list"
 ))
 
-#' OptionalOpenMLEstimationProcedure
-#'
-#' Either an x of class \code{\link{OpenMLEstimationProcedure}} or \code{NULL}.
-#' 
-#' @seealso \code{\link{OpenMLEstimationProcedure}}, \code{\link{OpenMLTask}}
-#' @name OptionalOpenMLEstimationProcedure
-#' @rdname OptionalOpenMLEstimationProcedure
-#' @aliases OptionalOpenMLEstimationProcedure-class
-#' @exportClass OptionalOpenMLEstimationProcedure
-
-#FIXME do we really need this?
-setClassUnion("OptionalOpenMLEstimationProcedure",
-              c("OpenMLEstimationProcedure","NULL"))
-
 # ***** Constructor *****
 OpenMLEstimationProcedure = function(type, data.splits.url, data.splits, parameters) {
   makeS3Obj("OpenMLEstimationProcedure",
