@@ -47,12 +47,12 @@ uploadOpenMLRun <- function(task, mlr.lrn, impl.id, predictions, error.msg, sess
   }
   
   run.desc <- OpenMLRun(
-    task.id = as.character(task@task.id), 
+    task.id = as.character(task$task.id), 
     implementation.id = impl.id, 
     parameter.settings = run.pars)
   
   if (!missing(error.msg))
-    run.desc@error.message <- error.msg[1]
+    run.desc$error.message <- error.msg[1]
   
   description <- tempfile()
   writeOpenMLRunXML(run.desc, description)

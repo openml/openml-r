@@ -30,9 +30,9 @@ runTask <- function(task, learner, return.mlr.results = FALSE, remove.const.feat
   checkArg(task, "OpenMLTask")
   checkArg(learner, "Learner")
   checkArg(return.mlr.results, "logical")
-  if((task@task.type == "Supervised Classification" && learner$type != "classif") ||
-    (task@task.type == "Supervised Regression" && learner$type != "regr"))
-    stopf("Learner type ('%s') does not correspond to task type ('%s').", task@task.type, learner$type)
+  if((task$task.type == "Supervised Classification" && learner$type != "classif") ||
+    (task$task.type == "Supervised Regression" && learner$type != "regr"))
+    stopf("Learner type ('%s') does not correspond to task type ('%s').", task$task.type, learner$type)
   mlr.task <- toMLR(task)
   
   if(remove.const.feats)
@@ -76,8 +76,8 @@ runTask <- function(task, learner, return.mlr.results = FALSE, remove.const.feat
 reformatPredictions <- function(pred, task) {
   iter <- pred$iter
   n <- length(iter)
-  folds <- task@task.estimation.procedure@parameters$number_folds
-  reps <- task@task.estimation.procedure@parameters$number_repeats
+  folds <- task$task.estimation.procedure$parameters$number_folds
+  reps <- task$task.estimation.procedure$parameters$number_repeats
   rep <- rep(1:reps, each = n/reps)
   fold <- iter %% folds
   fold[fold == 0] <- folds
@@ -86,7 +86,7 @@ reformatPredictions <- function(pred, task) {
   # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
   new_pred <- data.frame(rep = rep - 1, fold = fold - 1, row_id = rowid - 1, prediction = pred$response)
   
-  if(task@task.type == "Supervised Classification") {
+  if(task$task.type == "Supervised Classification") {
     classes <- levels(pred$response)
     probs <- c()
     if(all(sprintf("prob.%s", classes) %in% colnames(pred))) {

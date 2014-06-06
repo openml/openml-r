@@ -8,10 +8,10 @@
 toMLR <- function(task) {
   checkArg(task, "OpenMLTask")
   requirePackages("mlr", why="toMLR")
-  task.type <- task@task.type
-  data.set.desc <- task@task.data.desc
-  data <- task@task.data.desc@data.set
-  target <- task@task.target.features
+  task.type <- task$task.type
+  data.set.desc <- task$task.data.desc
+  data <- task$task.data.desc$data.set
+  target <- task$task.target.features
   
   #FIXME some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
@@ -24,7 +24,7 @@ toMLR <- function(task) {
   feature.names <- str_replace_all(feature.names, pattern=c("/"), replacement="_")  
   colnames(data)[feature.ind] <- feature.names
   
-  estim.proc <- task@task.estimation.procedure
+  estim.proc <- task$task.estimation.procedure
   if (task.type == "Supervised Classification") {
     mlr.task <- makeClassifTask(data = data, target = target)
   } else if (task.type == "Supervised Regression") {
@@ -33,15 +33,15 @@ toMLR <- function(task) {
     stopf("Encountered currently unsupported task type: %s", task.type)
   }
   mlr.rin <- createMLRResampleInstance(estim.proc, mlr.task)
-  mlr.measures <- createMLRMeasures(task@task.evaluation.measures, task.type)
+  mlr.measures <- createMLRMeasures(task$task.evaluation.measures, task.type)
   list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
 }
 
 createMLRResampleInstance <- function(estim.proc, mlr.task) {
-  type <- estim.proc@type
-  n.repeats <- estim.proc@parameters[["number_repeats"]]
-  n.folds <- estim.proc@parameters[["number_folds"]]
-  data.splits <- estim.proc@data.splits
+  type <- estim.proc$type
+  n.repeats <- estim.proc$parameters[["number_repeats"]]
+  n.folds <- estim.proc$parameters[["number_folds"]]
+  data.splits <- estim.proc$data.splits
   # FIXME : more resampling
   if (type == "crossvalidation") {
     #FIXME why is stratify TRUE here? does the server always prdoced stratified

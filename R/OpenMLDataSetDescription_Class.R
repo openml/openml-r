@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLDataSetDescription(...)}.
 #' The objects contain information on ... .
 #'
-#'@section Slots: 
+#'$section Slots: 
 #'  \describe{
 #'    \item{\code{id}}{[\code{integer(1)}]\cr
 #'    The OpenML ID number of the data set.}
@@ -103,26 +103,26 @@ OpenMLDataSetDescription <- function(id,
 
 setMethod("show", "OpenMLDataSetDescription",	function(object) {
   # incorrect indentation to see aligment!
-	catf('\nDataset %s :: (openML ID = %i, version = %s)', object@name, object@id, object@version)
-	catf('\tCreator          : %s', object@creator)
-	if (length(object@contributor) > 0)
-	  catf('\tContributor      : %s', object@contributor)
-	catf('\tCollection Date  : %s', object@collection.date)
-	catf('\tUpload Date      : %s', object@upload.date)
-	if (object@licence != '')
-	  catf('\tLicence          : %s', object@licence)
-	catf('\tURL              : %s', object@url)
-	if (object@language != '')
-	  catf('\tLanguage         : %s', object@language)
-	catf('\tFormat           : %s', object@format)
-	if (object@row.id.attribute != '')
-	  catf('\tRow Id Attr.  	 : %s', object@row.id.attribute)
-	if (object@md5.checksum != '')
-	  catf('\tmd5 Check Sum    : %s', object@md5.checksum)
+	catf('\nDataset %s :: (openML ID = %i, version = %s)', object$name, object$id, object$version)
+	catf('\tCreator          : %s', object$creator)
+	if (length(object$contributor) > 0)
+	  catf('\tContributor      : %s', object$contributor)
+	catf('\tCollection Date  : %s', object$collection.date)
+	catf('\tUpload Date      : %s', object$upload.date)
+	if (object$licence != '')
+	  catf('\tLicence          : %s', object$licence)
+	catf('\tURL              : %s', object$url)
+	if (object$language != '')
+	  catf('\tLanguage         : %s', object$language)
+	catf('\tFormat           : %s', object$format)
+	if (object$row.id.attribute != '')
+	  catf('\tRow Id Attr.  	 : %s', object$row.id.attribute)
+	if (object$md5.checksum != '')
+	  catf('\tmd5 Check Sum    : %s', object$md5.checksum)
 	catf('\tDescription :')
-	cat(collapse(paste('\t\t', strwrap(object@description), '\n'), sep=''))
+	cat(collapse(paste('\t\t', strwrap(object$description), '\n'), sep=''))
 	cat('\n')
 	catf('\tData :')
-	catf(printStrToChar(object@data.set))
+	catf(printStrToChar(object$data.set))
 })
 

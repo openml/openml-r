@@ -38,7 +38,7 @@ createOpenMLImplementationForMLRLearner <- function(
   )
   
   if (!missing(version)) 
-    impl@external.version <- version
+    impl$external.version <- version
   
   return(impl)
 }

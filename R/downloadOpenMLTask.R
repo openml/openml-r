@@ -71,30 +71,30 @@ downloadOpenMLTask <- function(id, dir = tempdir(), clean.up = TRUE,
   task <- parseOpenMLTask(fn.task)
   
   if (fetch.data.set.description) {
-    downloadOpenMLDataSetDescription(task@task.data.desc.id, fn.data.set.desc, show.info)
-    task@task.data.desc <- parseOpenMLDataSetDescription(fn.data.set.desc)
+    downloadOpenMLDataSetDescription(task$task.data.desc.id, fn.data.set.desc, show.info)
+    task$task.data.desc <- parseOpenMLDataSetDescription(fn.data.set.desc)
   }
   
   if (fetch.data.set) {
-    downloadOpenMLDataSet(task@task.data.desc@url, fn.data.set, show.info)
-    task@task.data.desc@data.set <- parseOpenMLDataSet(task@task.data.desc, fn.data.set)
+    downloadOpenMLDataSet(task$task.data.desc$url, fn.data.set, show.info)
+    task$task.data.desc$data.set <- parseOpenMLDataSet(task$task.data.desc, fn.data.set)
     
     # make valid column names
-    task@task.data.desc@original.col.names <- colnames(task@task.data.desc@data.set)
-    task@task.data.desc@new.col.names <- make.names(task@task.data.desc@original.col.names, unique=TRUE)
-    target.inds <- which(task@task.data.desc@original.col.names %in% task@task.target.features )
-    task@task.target.features <- task@task.data.desc@new.col.names[target.inds]
-    colnames(task@task.data.desc@data.set) <- task@task.data.desc@new.col.names
+    task$task.data.desc$original.col.names <- colnames(task$task.data.desc$data.set)
+    task$task.data.desc$new.col.names <- make.names(task$task.data.desc$original.col.names, unique=TRUE)
+    target.inds <- which(task$task.data.desc$original.col.names %in% task$task.target.features )
+    task$task.target.features <- task$task.data.desc$new.col.names[target.inds]
+    colnames(task$task.data.desc$data.set) <- task$task.data.desc$new.col.names
   }
   
   if (fetch.data.splits) {
     # No real error handling. If no data splits are available, just print a warning and go on.
-    if (task@task.estimation.procedure@data.splits.url == "No URL") {
+    if (task$task.estimation.procedure$data.splits.url == "No URL") {
       warning("There is no URL to fetch data splits from. 
         Either the task type does not support data splits or the task is defective.")
       } else {
-      downloadOpenMLDataSplits(task@task.estimation.procedure@data.splits.url, fn.data.splits, show.info)
-      task@task.estimation.procedure@data.splits <- parseOpenMLDataSplits(task@task.data.desc@data.set, fn.data.splits)
+      downloadOpenMLDataSplits(task$task.estimation.procedure$data.splits.url, fn.data.splits, show.info)
+      task$task.estimation.procedure$data.splits <- parseOpenMLDataSplits(task$task.data.desc$data.set, fn.data.splits)
     }
   }
   
@@ -177,12 +177,12 @@ convertParam <- function(params, name, fun) {
 
 convertOpenMLTaskSlots <- function(task) {
   # convert estim params to correct types
-  p <- task@task.estimation.procedure@parameters
+  p <- task$task.estimation.procedure$parameters
   p <- convertParam(p, "number_repeats", as.integer)
   p <- convertParam(p, "number_folds", as.integer)
-  task@task.estimation.procedure@parameters <- p
+  task$task.estimation.procedure$parameters <- p
   
-  #task@task.evaluation.measures <- strsplit(task@task.evaluation.measures, split=",")[[1]]
+  #task$task.evaluation.measures <- strsplit(task$task.evaluation.measures, split=",")[[1]]
   return(task)
 }
 

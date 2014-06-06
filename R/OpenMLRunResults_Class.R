@@ -88,24 +88,24 @@ setMethod("show", "OpenMLRunResults", function(object) {
   ## General info
   catf('\n** Run Information **')
   
-  catNotEmpty('Run ID            :: ', object@run.id)
-  catNotEmpty('Task ID           :: ', object@task.id)
-  catNotEmpty('User ID           :: ', object@uploader)
-  catNotEmpty('Implementation ID :: ', object@implementation.id)
+  catNotEmpty('Run ID            :: ', object$run.id)
+  catNotEmpty('Task ID           :: ', object$task.id)
+  catNotEmpty('User ID           :: ', object$uploader)
+  catNotEmpty('Implementation ID :: ', object$implementation.id)
   
   ## FIXME: Add parameters.
   
   ## Metrics
   catf('\n** Metrics **')
   
-  #if(length(object@metrics) > 0) {
-  #  for(i in seq_along(object@metrics)) {
-  #    catNotEmpty('Name              :: ', object@metrics[[i]]$name)
-  #    catNotEmpty('Value             :: ', object@metrics[[i]]$value)
-  #    catNotEmpty('Label             :: ', object@metrics[[i]]$label)
+  #if(length(object$metrics) > 0) {
+  #  for(i in seq_along(object$metrics)) {
+  #    catNotEmpty('Name              :: ', object$metrics[[i]]$name)
+  #    catNotEmpty('Value             :: ', object$metrics[[i]]$value)
+  #    catNotEmpty('Label             :: ', object$metrics[[i]]$label)
   #    cat("\n")
   #  }
   #}
-  print(object@output.data)
+  print(object$output.data)
 })
 

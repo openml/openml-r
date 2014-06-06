@@ -36,22 +36,22 @@ downloadOpenMLImplementation <- function(id, dir = getwd(), download.source.bina
   if(clean.up)
     unlink(fn.impl.xml)
   if (download.source.binary) {
-    if (length(impl@source.url) > 0 && impl@source.url != "") {
+    if (length(impl$source.url) > 0 && impl$source.url != "") {
       if (show.info)
-        messagef("Downloading implementation source file from URL:\n%s.", impl@source.url)
+        messagef("Downloading implementation source file from URL:\n%s.", impl$source.url)
       
-      format <- rev(strsplit(rev(strsplit(impl@source.url, "/")[[1]])[1], "[.]")[[1]])[1]
-      fn.impl.src <- sprintf("%s(%s)_source.%s", impl@name, impl@version, format)
+      format <- rev(strsplit(rev(strsplit(impl$source.url, "/")[[1]])[1], "[.]")[[1]])[1]
+      fn.impl.src <- sprintf("%s(%s)_source.%s", impl$name, impl$version, format)
       fn.impl.src <- file.path(dir, fn.impl.src) 
-      downloadBinaryFile(url = impl@source.url, file = fn.impl.src, show.info = show.info)
+      downloadBinaryFile(url = impl$source.url, file = fn.impl.src, show.info = show.info)
     } 
-    if (length(impl@binary.url) > 0 && impl@binary.url != "") {
+    if (length(impl$binary.url) > 0 && impl$binary.url != "") {
       if (show.info)
         messagef("Downloading implementation binary file.")
 
-      fn.impl.bin <- sprintf("%s(%s)_binary", impl@name, impl@version)
+      fn.impl.bin <- sprintf("%s(%s)_binary", impl$name, impl$version)
       fn.impl.bin <- file.path(dir, fn.impl.bin)  
-      downloadBinaryFile(url = impl@binary.url, file = fn.impl.bin, show.info = show.info)
+      downloadBinaryFile(url = impl$binary.url, file = fn.impl.bin, show.info = show.info)
     }
   }
   return(impl)

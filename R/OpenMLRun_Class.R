@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLRun(...)}.
 #' The objects contain information on ... .
 #'
-#'@section Slots: 
+#'$section Slots: 
 #'  \describe{
 #'    \item{\code{task.id}}{[\code{character}]\cr
 #'    The id of the solved task.}
@@ -44,15 +44,15 @@ OpenMLRun <- function(task.id, implementation.id, error.message = character(0), 
 
 setMethod("show", "OpenMLRun", function(object) {
   catf('** Information on an OpenML Run **\n')
-  catf('Task ID           :: %s', object@task.id)
-  catf('Implementation ID :: %s', object@implementation.id)
-  if (length(object@error.message) > 0) {
-    catf('Error message     :: %s', object@error.message)
+  catf('Task ID           :: %s', object$task.id)
+  catf('Implementation ID :: %s', object$implementation.id)
+  if (length(object$error.message) > 0) {
+    catf('Error message     :: %s', object$error.message)
   }
   #FIXME reimplent
-  if (length(object@parameter.settings) > 0) {
+  if (length(object$parameter.settings) > 0) {
     cat('Parameter Settings used on the Run:\n')
-    print(object@parameter.settings)
+    print(object$parameter.settings)
   }
   cat('\n')
 })

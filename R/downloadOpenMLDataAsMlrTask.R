@@ -38,8 +38,8 @@ downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, 
 
   downloadOpenMLDataSetDescription(id = id, file = fn.data.set.desc, show.info = show.info)
   task.data.desc <- parseOpenMLDataSetDescription(file = fn.data.set.desc)
-  downloadOpenMLDataSet(task.data.desc@url, fn.data.set, show.info)
-  task.data.desc@data.set <- parseOpenMLDataSet(task.data.desc, fn.data.set)
+  downloadOpenMLDataSet(task.data.desc$url, fn.data.set, show.info)
+  task.data.desc$data.set <- parseOpenMLDataSet(task.data.desc, fn.data.set)
 
   if (clean.up) {
     unlink(fn.data.set.desc)
@@ -49,9 +49,9 @@ downloadOpenMLDataAsMlrTask <- function(name, dir = tempdir(), clean.up = TRUE, 
   }
 
   # FIXME: Dirty from now on:
-  classif <- is.factor(task.data.desc@data.set[, target])
+  classif <- is.factor(task.data.desc$data.set[, target])
 
-  data <- task.data.desc@data.set
+  data <- task.data.desc$data.set
   # FIXME: some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
   data <- droplevels(data)

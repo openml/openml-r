@@ -18,45 +18,45 @@ writeOpenMLImplementationXML <- function(description, file) {
   }
   
   addNodes <- function(description, doc, parent = top) {  
-    mynode("name", description@name, parent)
-    mynode("external_version", description@external.version, parent)
-    mynode("description", description@description, parent)
-    mynode("creator", description@creator, parent)
-    mynode("contributor", description@contributor, parent)
-    mynode("licence", description@licence, parent)
-    mynode("language", description@language, parent)
-    mynode("full_description", description@full.description, parent)
-    mynode("installation_notes", description@installation.notes, parent)
-    mynode("dependencies", description@dependencies, parent)
+    mynode("name", description$name, parent)
+    mynode("external_version", description$external.version, parent)
+    mynode("description", description$description, parent)
+    mynode("creator", description$creator, parent)
+    mynode("contributor", description$contributor, parent)
+    mynode("licence", description$licence, parent)
+    mynode("language", description$language, parent)
+    mynode("full_description", description$full.description, parent)
+    mynode("installation_notes", description$installation.notes, parent)
+    mynode("dependencies", description$dependencies, parent)
     
-    for (i in seq_along(description@bibliographical.reference)) {
+    for (i in seq_along(description$bibliographical.reference)) {
       par <- newXMLNode("bibliographical_reference", parent = parent, namespace = "oml")
-      mynode("citation", description@bibliographical.reference[[i]]@citation, parent = par)
-      mynode("url", description@bibliographical.reference[[i]]@url, parent = par)
+      mynode("citation", description$bibliographical.reference[[i]]$citation, parent = par)
+      mynode("url", description$bibliographical.reference[[i]]$url, parent = par)
     }
-    for (i in seq_along(description@parameter)) {
+    for (i in seq_along(description$parameter)) {
       par <- newXMLNode("parameter", parent = parent, namespace = "oml")
-      mynode("name", description@parameter[[i]]@name, parent = par)
-      mynode("data_type", description@parameter[[i]]@data.type, parent = par)
-      mynode("default_value", description@parameter[[i]]@default.value, parent = par)
-      mynode("description", description@parameter[[i]]@description, parent = par)
+      mynode("name", description$parameter[[i]]$name, parent = par)
+      mynode("data_type", description$parameter[[i]]$data.type, parent = par)
+      mynode("default_value", description$parameter[[i]]$default.value, parent = par)
+      mynode("description", description$parameter[[i]]$description, parent = par)
     }
     
-    mynode("source_format", description@source.format, parent)
-    mynode("binary_format", description@binary.format, parent)
-    mynode("source_md5", description@source.md5, parent)
-    mynode("binary_md5", description@binary.md5, parent)
+    mynode("source_format", description$source.format, parent)
+    mynode("binary_format", description$binary.format, parent)
+    mynode("source_md5", description$source.md5, parent)
+    mynode("binary_md5", description$binary.md5, parent)
     return(doc)
   }
   
   doc <- addNodes(description, doc, top)
   
-  for(i in seq_along(description@components)) {
+  for(i in seq_along(description$components)) {
     comp <- newXMLNode("component", parent = top, namespace = "oml")
     # FIXME: add component identifier -> OpenMLComponent_Class?
     # mynode("identifier", "bla", parent = comp)
     sub.impl <- newXMLNode("implementation", parent = comp, namespace = "oml")
-    doc <- addNodes(description@components[[i]], doc, parent = sub.impl)
+    doc <- addNodes(description$components[[i]], doc, parent = sub.impl)
   }
   
   saveXML(top, file = file)

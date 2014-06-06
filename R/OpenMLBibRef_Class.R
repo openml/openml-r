@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLBibRef(...)}.
 #' The objects contain information on ... .
 #'
-#'@section Slots: 
+#'$section Slots: 
 #'  \describe{
 #'    \item{\code{citation}}{[\code{character}]\cr
 #'    Free form reference for this implementation.}
@@ -38,7 +38,7 @@ OpenMLBibRef <- function(
 # show
 # FIXME: how should missing values be represented? here, character(0) AND "" are possible.
 setMethod("show", "OpenMLBibRef", function(object) {  
-  catf("  %s", object@citation)  
-  if(length(object@url) > 0 && object@url != "")
-    catf("  url :: %s\n", object@url)
+  catf("  %s", object$citation)  
+  if(length(object$url) > 0 && object$url != "")
+    catf("  url :: %s\n", object$url)
 })

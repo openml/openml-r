@@ -6,7 +6,7 @@
 #' Objects can be created by calls of the form \code{OpenMLData(...)}.
 #' The objects contain information on ... .
 #'
-#'@section Slots: 
+#'$section Slots: 
 #'  \describe{
 #'    \item{\code{dataset}}{[\code{list}]\cr
 #'    A list of short data set descriptions with elements "did", "name" and "url". This list is possibly empty.}
@@ -36,8 +36,8 @@ OpenMLData <- function(dataset = list(), evaluation = list()) {
 # show
 setMethod("show", "OpenMLData", function(object) {
   catf('\n** Data Set(s) **')
-  print(do.call(rbind.data.frame, object@dataset))
+  print(do.call(rbind.data.frame, object$dataset))
   
   catf('\n** Evaluations **')
-  print(do.call(rbind.data.frame, object@evaluation))
+  print(do.call(rbind.data.frame, object$evaluation))
 })

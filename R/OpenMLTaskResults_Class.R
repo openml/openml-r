@@ -6,7 +6,7 @@
 #' The objects contain information on ... .
 #'
 #'
-#'@section Slots: 
+#'$section Slots: 
 #'  \describe{
 #'    \item{\code{task.id}}{[\code{character}]\cr
 #'    ID of the OpenMLTask.}
@@ -71,13 +71,13 @@ setMethod("show", "OpenMLTaskResults", function(object) {
   ## General info
   catf('\n** Task Information **')
    
-  catNotEmpty('Task ID              :: ', object@task.id)
-  catNotEmpty('Task Name            :: ', object@task.name)
-  catNotEmpty('Task Type ID         :: ', object@task.type.id)  
-  catNotEmpty('Input Data           :: ', object@input.data)
-  catNotEmpty('Estimation Procedure :: ', object@estimation.procedure)
+  catNotEmpty('Task ID              :: ', object$task.id)
+  catNotEmpty('Task Name            :: ', object$task.name)
+  catNotEmpty('Task Type ID         :: ', object$task.type.id)  
+  catNotEmpty('Input Data           :: ', object$input.data)
+  catNotEmpty('Estimation Procedure :: ', object$estimation.procedure)
   
   ## Metrics
   catf('\n** Metrics **')
-  print(object@metrics)
+  print(object$metrics)
 })

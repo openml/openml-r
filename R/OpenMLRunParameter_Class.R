@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLRunParameter(...)}.
 #' The objects contain information on ... .
 #'
-#'@section Slots: 
+#'$section Slots: 
 #'  \describe{
 #'    \item{\code{name}}{[\code{character}]\cr
 #'    The name of the parameter.}
@@ -39,10 +39,10 @@ OpenMLRunParameter <- function(name, value, component = character(0)) {
 
 # show
 setMethod("show", "OpenMLRunParameter", function(object) {
-  s <- if(length(object@component))
-    sprintf(' (parameter of component %s)', object@component)
+  s <- if(length(object$component))
+    sprintf(' (parameter of component %s)', object$component)
   else
     ""
   # FIXME does this work for arbitary values? unit test this
-  catf("%s %s = %s", s, object@name, object@value)
+  catf("%s %s = %s", s, object$name, object$value)
 })

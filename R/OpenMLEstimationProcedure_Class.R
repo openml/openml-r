@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLEstimationProcedure(...)}.
 #' The objects contain information on ... .
 #'
-#'@section Slots: 
+#'$section Slots: 
 #'  \describe{
 #'    \item{\code{type}}{[\code{character}]\cr
 #'    The type of the estimation procedure.}
@@ -57,10 +57,10 @@ OpenMLEstimationProcedure <- function(type, data.splits.url, data.splits, parame
 
 # Note: The data splits and the predictions are not shown
 setMethod("show", "OpenMLEstimationProcedure", function(object) {
-  catf('\nEstimation Method :: %s',object@type)
+  catf('\nEstimation Method :: %s',object$type)
   catf('Parameters         ::')
-  for(i in 1:length(object@parameters))
-    catf('\t%s = %s', names(object@parameters)[i], object@parameters[[i]])
+  for(i in 1:length(object$parameters))
+    catf('\t%s = %s', names(object$parameters)[i], object$parameters[[i]])
   catf('Data Splits        :: ')
-  str(object@data.splits)
+  str(object$data.splits)
 })
