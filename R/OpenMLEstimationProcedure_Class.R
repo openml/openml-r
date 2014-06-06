@@ -45,7 +45,7 @@ setClassUnion("OptionalOpenMLEstimationProcedure",
 
 # ***** Constructor *****
 OpenMLEstimationProcedure = function(type, data.splits.url, data.splits, parameters) {
-  new("OpenMLEstimationProcedure",
+  makeS3Obj("OpenMLEstimationProcedure",
     type = type,
     data.splits.url = data.splits.url,
     data.splits = data.splits,

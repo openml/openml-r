@@ -91,7 +91,7 @@ OpenMLDataSetDescription = function(id,
   description,language="", format,licence="", url,row.id.attribute="", md5.checksum="",
   data.set, original.col.names="", new.col.names="")
 {
-  new("OpenMLDataSetDescription",
+  makeS3Obj("OpenMLDataSetDescription",
     id=id, name=name, version=version, creator=creator, contributor=contributor, 
 		collection.date=collection.date, upload.date=upload.date, description=description, 
     language=language, format=format, licence=licence, url=url, row.id.attribute=row.id.attribute, 

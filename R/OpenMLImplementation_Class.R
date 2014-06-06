@@ -135,7 +135,7 @@ OpenMLImplementation = function(
   source.md5 = character(0L),
   binary.md5 = character(0L)
 ) {
-  new("OpenMLImplementation",
+  makeS3Obj("OpenMLImplementation",
     id = id,
     uploader = uploader,
     name = name,

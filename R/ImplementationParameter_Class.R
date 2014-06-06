@@ -6,7 +6,7 @@ setClass("ImplementationParameter", representation(
 ))
 
 ImplementationParameter = function(name, data.type = "", default.value = "", description = "") {
-  new("ImplementationParameter", 
+  makeS3Obj("ImplementationParameter", 
     name = name,
     data.type = data.type,
     default.value = default.value,

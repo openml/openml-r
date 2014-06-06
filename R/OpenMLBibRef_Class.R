@@ -27,7 +27,7 @@ OpenMLBibRef = function(
   citation = character(0), 
   url = character(0)) {
   
-  new("OpenMLBibRef", 
+  makeS3Obj("OpenMLBibRef", 
       citation = citation,
       url = url
   )

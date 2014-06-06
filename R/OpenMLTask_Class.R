@@ -55,7 +55,7 @@ OpenMLTask = function(task.id, task.type, task.pars, task.target.features,
                        task.data.desc.id, task.data.desc,
                        task.estimation.procedure,
                        task.preds, task.evaluation.measures) {
-  new("OpenMLTask",
+  makeS3Obj("OpenMLTask",
       task.id = task.id, task.type = task.type, task.pars = task.pars,
       task.target.features = task.target.features,
       task.data.desc.id = task.data.desc.id, task.data.desc = task.data.desc,

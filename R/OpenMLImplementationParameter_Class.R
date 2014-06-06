@@ -35,7 +35,7 @@ OpenMLImplementationParameter = function(
   default.value = character(0), 
   description = character(0)) {
   
-  new("OpenMLImplementationParameter", 
+  makeS3Obj("OpenMLImplementationParameter", 
       name = name,
       data.type = data.type,
       default.value = default.value,

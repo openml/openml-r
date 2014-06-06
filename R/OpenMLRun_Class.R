@@ -32,7 +32,7 @@ setClass("OpenMLRun", representation(
 
 # ***** Constructor *****
 OpenMLRun = function(task.id, implementation.id, error.message = character(0), parameter.settings=list()) {
-  new("OpenMLRun",
+  makeS3Obj("OpenMLRun",
     task.id = task.id,
     implementation.id = implementation.id,
     error.message = error.message,

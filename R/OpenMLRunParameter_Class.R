@@ -28,7 +28,7 @@ setClass("OpenMLRunParameter", representation(
 
 # ***** Constructor *****
 OpenMLRunParameter = function(name, value, component = character(0)) {
-  new("OpenMLRunParameter", 
+  makeS3Obj("OpenMLRunParameter", 
     name = name,
     value = value,
     component = component

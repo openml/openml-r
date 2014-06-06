@@ -49,7 +49,7 @@ OpenMLTaskResults = function(
   estimation.procedure = character(0L),
   metrics = data.frame()
 ) {
-  new("OpenMLTaskResults",
+  makeS3Obj("OpenMLTaskResults",
       task.id = task.id,
       task.name = task.name,
       task.type.id = task.type.id,

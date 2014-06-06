@@ -25,7 +25,7 @@ setClass("OpenMLData", representation(
 
 # ***** Constructor *****
 OpenMLData = function(dataset = list(), evaluation = list()) {
-  new("OpenMLData", 
+  makeS3Obj("OpenMLData", 
     dataset = dataset,
     evaluation = evaluation
   )

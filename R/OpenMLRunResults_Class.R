@@ -63,7 +63,7 @@ OpenMLRunResults = function(
   input.data = OpenMLData(),
   output.data = OpenMLData()
 ) {
-  new("OpenMLRunResults",
+  makeS3Obj("OpenMLRunResults",
       run.id = run.id,
       uploader = uploader,
       task.id = task.id,
