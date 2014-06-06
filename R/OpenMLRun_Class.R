@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLRun(...)}.
 #' The objects contain information on ... .
 #'
-#'$section Slots: 
+#' @section Slots: 
 #'  \describe{
 #'    \item{\code{task.id}}{[\code{character}]\cr
 #'    The id of the solved task.}

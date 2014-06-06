@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLEstimationProcedure(...)}.
 #' The objects contain information on ... .
 #'
-#'$section Slots: 
+#' @section Slots: 
 #'  \describe{
 #'    \item{\code{type}}{[\code{character}]\cr
 #'    The type of the estimation procedure.}

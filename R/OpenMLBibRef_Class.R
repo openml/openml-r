@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLBibRef(...)}.
 #' The objects contain information on ... .
 #'
-#'$section Slots: 
+#' @section Slots: 
 #'  \describe{
 #'    \item{\code{citation}}{[\code{character}]\cr
 #'    Free form reference for this implementation.}

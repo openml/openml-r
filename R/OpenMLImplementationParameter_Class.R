@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLImplementationParameter(...)}.
 #' The objects contain information on ... .
 #'
-#'$section Slots: 
+#' @section Slots: 
 #'  \describe{
 #'    \item{\code{name}}{[\code{character}]\cr
 #'    The name of the parameter.}
