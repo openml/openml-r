@@ -1,4 +1,4 @@
-#'    \code{\link{OpenMLRunParameter}s}.}
+#    \code{\link{OpenMLRunParameter}s}.}
 
 
 #' @title Construct OpenMLRun.
