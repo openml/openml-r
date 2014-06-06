@@ -79,7 +79,8 @@ OpenMLRunResults = function(
 # ***** Methods *****
 
 # show
-setMethod("show", "OpenMLRunResults", function(object) {
+#' @export
+print.OpenMLRunResults = function(object, ...)  {
   catNotEmpty = function(s, val) {
     if (val != "") 
       catf("%s %s", s, val)
@@ -107,5 +108,5 @@ setMethod("show", "OpenMLRunResults", function(object) {
   #  }
   #}
   print(object$output.data)
-})
+}
 

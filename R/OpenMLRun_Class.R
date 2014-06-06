@@ -42,7 +42,8 @@ OpenMLRun = function(task.id, implementation.id, error.message = character(0), p
 
 # ***** Methods *****
 
-setMethod("show", "OpenMLRun", function(object) {
+#' @export
+print.OpenMLRun = function(object, ...)  {
   catf('** Information on an OpenML Run **\n')
   catf('Task ID           :: %s', object$task.id)
   catf('Implementation ID :: %s', object$implementation.id)
@@ -55,8 +56,7 @@ setMethod("show", "OpenMLRun", function(object) {
     print(object$parameter.settings)
   }
   cat('\n')
-})
-
+}
 
 
 

@@ -62,7 +62,8 @@ OpenMLTaskResults = function(
 # ***** Methods *****
 
 # show
-setMethod("show", "OpenMLTaskResults", function(object) {
+#' @export
+print.OpenMLTaskResults = function(object, ...)  {
   catNotEmpty = function(s, val) {
     if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
@@ -80,4 +81,4 @@ setMethod("show", "OpenMLTaskResults", function(object) {
   ## Metrics
   catf('\n** Metrics **')
   print(object$metrics)
-})
+}

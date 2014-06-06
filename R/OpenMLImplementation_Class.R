@@ -166,7 +166,8 @@ OpenMLImplementation = function(
 # ***** Methods *****
 
 # show
-setMethod("show", "OpenMLImplementation", function(object) {
+#' @export
+print.OpenMLImplementation = function(object, ...)  {
   catNotEmpty = function(s, val) {
     if (val != "" && length(val) > 0) 
       catf("%s %s", s, val)
@@ -243,6 +244,6 @@ setMethod("show", "OpenMLImplementation", function(object) {
   #catNotEmpty('Source MD5 :: ', object$source.md5)
   #catNotEmpty('Binary MD5 :: ', object$binary.md5)
   #cat('\n\n')
-})
+}
   
 
