@@ -1,9 +1,7 @@
 context("runTask")
 
 test_that("runTask", {
-  # problems with id 6.
-  for(id in c(1:5,7:10)) {
-    print(id)
+  for(id in 1:2) {
     task = downloadOpenMLTask(id)
     if(task$task.type == "Supervised Classification") {
       lrn = makeLearner("classif.rpart")
