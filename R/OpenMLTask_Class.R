@@ -7,7 +7,7 @@
 #' Objects can be created by calls of the form \code{OpenMLTask(...)}.
 #' The objects contain information on ... .
 #'
-#'$section Slots: 
+#' @section Slots: 
 #'  \describe{
 #'    \item{\code{task.id}}{[\code{integer(1)}]\cr
 #'    The task's OpenML ID.}

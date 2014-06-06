@@ -6,7 +6,7 @@
 #' The objects contain information on ... .
 #'
 #'
-#'$section Slots: 
+#' @section Slots: 
 #'  \describe{
 #'    \item{\code{task.id}}{[\code{character}]\cr
 #'    ID of the OpenMLTask.}

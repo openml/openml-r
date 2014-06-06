@@ -5,7 +5,7 @@
 #' Objects can be created by calls of the form \code{OpenMLDataSetDescription(...)}.
 #' The objects contain information on ... .
 #'
-#'$section Slots: 
+#' @section Slots: 
 #'  \describe{
 #'    \item{\code{id}}{[\code{integer(1)}]\cr
 #'    The OpenML ID number of the data set.}
