@@ -10,7 +10,7 @@ http://openml.org/search.
 The following call returns an OpenML task object: 
 
 ```{r message = FALSE, eval = FALSE}
-task <- downloadOpenMLTask(id = 4)
+task = downloadOpenMLTask(id = 4)
 print(task)
 ```
 
@@ -20,7 +20,7 @@ Note: You do not have to be registered at http://openml.org/ to download a task.
 OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate from these fixings. Of course, it is possible to define new tasks that match your desires, but this will not always be the means of choice -- e.g., when you want to run a few preliminary experiments. For this matter, you can use the function `downloadOpenMLDataAsMlrTask` if you are working with [mlr](https://github.com/berndbischl/mlr). By the following example call, the Iris data set is downloaded and automatically converted into an mlr (classification) task: 
 
 ```{r message = FALSE, eval = FALSE}
-mlr.task <- downloadOpenMLDataAsMlrTask(name = "iris")
+mlr.task = downloadOpenMLDataAsMlrTask(name = "iris")
 ```
 
 Now you can freely apply any resampling procedure. For further information on how this works, see [here](http://berndbischl.github.io/mlr/man/makeResampleDesc.html).

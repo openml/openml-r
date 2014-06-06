@@ -10,14 +10,14 @@ By default, only basic data characteristics like the number of features/instance
 values etc. are retrieved:
 
 ```{r eval = FALSE}
-dq <- getDataQualities()
+dq = getDataQualities()
 ```
 
 If you want to retrieve not only the basic data qualities but also meta learning features, 
 please use the argument 'set':
 
 ```{r eval = FALSE}
-dq <- getDataQualities(set = "all")
+dq = getDataQualities(set = "all")
 ```
 
 ### Make an arbitrary SQL-query
