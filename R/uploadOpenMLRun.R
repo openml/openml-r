@@ -46,10 +46,11 @@ uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, sessi
     checkArg(error.msg, "try-error")
   }
   
-  run.desc = OpenMLRun(
+  run.desc = makeOpenMLRun(
     task.id = as.character(task$task.id), 
     implementation.id = impl.id, 
-    parameter.settings = run.pars)
+    parameter.settings = run.pars
+  )
   
   if (!missing(error.msg))
     run.desc$error.message = error.msg[1]
