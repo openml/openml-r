@@ -14,6 +14,7 @@
 #'    Optional parameter settings for this run.
 #'    Default is empty list.
 #' @export
+#' @aliases OpenMLRun
 makeOpenMLRun = function(task.id, implementation.id, error.message = NA_character_, parameter.settings = list()) {
   assertString(task.id)
   assertString(implementation.id)

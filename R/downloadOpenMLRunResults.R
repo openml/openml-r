@@ -43,7 +43,7 @@ parseOpenMLRunResults = function(file) {
     # parse evaluations
     path.evals = paste(path, "oml:evaluation", sep ="/")
     ns.evals = getNodeSet(doc, path.evals)
-    evals = list()
+    evals = vector("list", length(ns.evals))
     for (i in seq_along(ns.evals)) {
       args = list()
       args[["did"]] = xmlOValR(doc, paste(path.evals, "[", i, "]/oml:did", sep=''))
@@ -51,10 +51,10 @@ parseOpenMLRunResults = function(file) {
       args[["implementation"]] = xmlRValR(doc, paste(path.evals, "[", i, "]/oml:implementation", sep=''))
       args[["value"]] = xmlOValR(doc, paste(path.evals, "[", i, "]/oml:value", sep=''))
       args[["array.data"]] = xmlOValS(doc, paste(path.evals, "[", i, "]/oml:array_data", sep=''))
-      evals = c(evals, list(args))
+      evals[[i]] = args
     }
-    
-    return(do.call(OpenMLData, list(dataset = datasets, evaluation = evals)))
+    evals = do.call(rbind.fill, lapply(evals, as.data.frame))
+    return(do.call(makeOpenMLData, list(dataset = datasets, evaluation = evals)))
   }
   
   run.args = list()
