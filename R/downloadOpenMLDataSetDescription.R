@@ -25,7 +25,7 @@ parseOpenMLDataSetDescription = function(file) {
   args[["md5.checksum"]] = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum")
   args[["data.set"]] = data.frame()
 
-  dsd = do.call(OpenMLDataSetDescription, args)
+  dsd = do.call(makeOpenMLDataSetDescription, args)
   convertOpenMLDataSetDescription(dsd)
 }
 

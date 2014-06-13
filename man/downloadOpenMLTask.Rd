@@ -12,7 +12,8 @@ downloadOpenMLTask(id, dir = tempdir(), clean.up = TRUE,
 ID number of task on OpenML server, used to retrieve the task.}
 
 \item{dir}{[\code{character(1)}]\cr
-Directory where downloaded files from the repository are stored.
+Directory where downloaded files from the repository are stored. If the directory does not exist,
+it will be created.
 Default is the path of the per-session temporary directory \code{tempdir()}.}
 
 \item{clean.up}{[\code{logical(1)}]\cr
@@ -40,7 +41,7 @@ Default is \code{TRUE}.}
 }
 \description{
 This function downloads an OpenML task and all associated files from the OpenML repository,
-intermediately stores the files on disk and creates an S4 object which completely specifies the task.
+intermediately stores the files on disk and creates an S3 object which completely specifies the task.
 }
 \details{
 Usually there is no reason to set the \code{fetch.*} arguments to \code{FALSE}, as you want all information
@@ -51,9 +52,9 @@ completely encapsulated in the task object.
 \dontrun{
 task = downloadOpenMLTask(id = 1)
 show(task)
-print(task<at>task.type)
-print(task<at>task.target.features)
-print(head(task<at>data.desc<at>data.set))
+print(task$task.type)
+print(task$task.target.features)
+print(head(task$data.desc$data.set))
 }
 }
 

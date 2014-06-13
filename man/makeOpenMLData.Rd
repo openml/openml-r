@@ -11,7 +11,7 @@ makeOpenMLData(dataset = NULL, evaluation)
 "name" and "url".
 Default is \code{NULL}, which means there are no data sets.}
 
-\item{evaluation}{[\code{list}]\cr
+\item{evaluation}{[\code{data.frame}]\cr
 An optional list of one or more evaluations. Default is \code{NULL}, which means there are no data sets.}
 }
 \description{

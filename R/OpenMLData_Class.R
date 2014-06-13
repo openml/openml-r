@@ -3,7 +3,7 @@
 #' @param dataset [\code{list}]\cr An optional list of one or more data set descriptions with elements "did", 
 #'   "name" and "url".
 #'   Default is \code{NULL}, which means there are no data sets.
-#' @param evaluation [\code{list}]\cr 
+#' @param evaluation [\code{data.frame}]\cr 
 #'   An optional list of one or more evaluations. Default is \code{NULL}, which means there are no data sets.
 #' @export
 #' @aliases OpenMLData

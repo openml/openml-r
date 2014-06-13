@@ -13,12 +13,11 @@ parseOpenMLDataSet = function(dsd, file) {
 
 
 convertOpenMLDataSet = function(dsd, ds) {
-  #FIXME what is missing value for row_id? check defaults?
   # remove rowid from data and set as rownames  
-  if (dsd$row.id.attribute != "") {
+  if (!is.na(dsd$row.id.attribute)) {
     rowid = ds[, dsd$row.id.attribute]
     ds[, dsd$row.id.attribute] = NULL
-  } else{
+  } else {
     rowid = as.character(0:(nrow(ds)-1))
   }
   setRowNames(ds, as.character(rowid))

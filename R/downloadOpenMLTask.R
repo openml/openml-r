@@ -1,7 +1,7 @@
 #' Download a task from the OpenML repository.
 #'
 #' This function downloads an OpenML task and all associated files from the OpenML repository,
-#' intermediately stores the files on disk and creates an S4 object which completely specifies the task.
+#' intermediately stores the files on disk and creates an S3 object which completely specifies the task.
 #'
 #' Usually there is no reason to set the \code{fetch.*} arguments to \code{FALSE}, as you want all information
 #' completely encapsulated in the task object.
@@ -9,7 +9,8 @@
 #' @param id [\code{integer(1)}]\cr 
 #'   ID number of task on OpenML server, used to retrieve the task. 
 #' @param dir [\code{character(1)}]\cr 
-#'   Directory where downloaded files from the repository are stored. 
+#'   Directory where downloaded files from the repository are stored. If the directory does not exist,
+#'   it will be created.
 #'   Default is the path of the per-session temporary directory \code{tempdir()}.
 #' @param clean.up [\code{logical(1)}]\cr 
 #'   Should the downloaded files be removed from disk at the end?
@@ -33,14 +34,11 @@
 #' \dontrun{
 #' task = downloadOpenMLTask(id = 1)
 #' show(task)
-#' print(task<at>task.type)
-#' print(task<at>task.target.features)
-#' print(head(task<at>data.desc<at>data.set))
+#' print(task$task.type)
+#' print(task$task.target.features)
+#' print(head(task$data.desc$data.set))
 #' }
-# FIXME: @-characters can't be used in the example   
 
-#FIXME: check file io errorsr, dir writable and so on
-#FIXME not all combios of fetch-* make sense, also test them
 downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE, 
   fetch.data.set.description = TRUE, fetch.data.set = TRUE, fetch.data.splits = TRUE, show.info = TRUE) {
   
@@ -52,6 +50,12 @@ downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE,
   checkArg(fetch.data.set, "logical", len = 1L, na.ok = FALSE)
   checkArg(fetch.data.splits, "logical", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  
+  if (!testDirectory(dir)) {
+    messagef("Directory '%s' does not exist. Creating.", dir)
+    dir.create(dir) 
+  }
+  assertDirectory(dir)
   
   if (fetch.data.set && !fetch.data.set.description) {
     stop("Error: You can't download a data set without also downloading the data set description!")
@@ -145,7 +149,7 @@ parseOpenMLTask = function(file) {
   if (is.null(data.splits.url)) 
     data.splits.url = "No URL"
     
-  estim.proc = OpenMLEstimationProcedure(
+  estim.proc = makeOpenMLEstimationProcedure(
     type = xmlRValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:type"), 
     data.splits.url = data.splits.url,
     data.splits = data.frame(),
@@ -170,7 +174,7 @@ parseOpenMLTask = function(file) {
 }
 
 convertParam = function(params, name, fun) {
-  if(!is.null(params[[name]]))
+  if (!is.null(params[[name]]))
     params[[name]] = fun(params[[name]])
   return(params)
 }

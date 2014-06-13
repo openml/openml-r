@@ -11,7 +11,7 @@
 #'   The  name of the data set.
 #' @param version [\code{character(1)}]\cr
 #'   Version of the data set, added by the server. 
-#' @param description [\code{character}]\cr
+#' @param description [\code{character(1)}]\cr
 #'   Description of the data set, given by the uploader.
 #' @param format [\code{character(1)}]\cr
 #'   Format of the data set. Typically, this is "arff".
@@ -21,7 +21,7 @@
 #'   People, that contibuted to this version of the data set (e.g., by reformatting). Optional. 
 #' @param collection.date [\code{character(1)}]\cr
 #'   The date the data was originally collected. Given by the uploader. Optional.
-#' @param upload.date [\code{character(1)}]\cr
+#' @param upload.date [\code{\link[base]{POSIXt}}]\cr
 #'   The date the data was uploaded. Added by the server.
 #' @param language [\code{character(1)}]\cr
 #'   Language in which the data is represented. Starts with 1 upper case letter, rest lower case, 
@@ -47,17 +47,17 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format, 
   contributor = NA_character_, collection.date = NA_character_, upload.date,
   language = NA_character_, licence = NA_character_, url, # default.target.attribute, 
   row.id.attribute = NA_character_, md5.checksum = NA_character_,
-  data.set, original.col.names = NA_character_, new.col.names = NA_character_)
-{
+  data.set, original.col.names = NA_character_, new.col.names = NA_character_) {
+  
   assertIntegerish(id)
   assertString(name)
   assertString(version)
   assertString(description)
   assertString(format)
-  assertString(creator, na.ok = TRUE)
-  assertString(contributor, na.ok = TRUE)
+  assertCharacter(creator)
+  assertCharacter(contributor)
   assertString(collection.date, na.ok = TRUE)
-  assertString(upload.date)
+  assertClass(upload.date, "POSIXt")
   assertString(language, na.ok = TRUE)
   assertString(licence, na.ok = TRUE)
   assertString(url)
@@ -65,8 +65,9 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format, 
   assertString(row.id.attribute, na.ok = TRUE)
   assertString(md5.checksum, na.ok = TRUE)
   assertDataFrame(data.set)
-  assertString(original.col.names, na.ok = TRUE)
-  assertString(new.col.names, na.ok = TRUE)
+  assertCharacter(original.col.names)
+  assertCharacter(new.col.names)
+  
   makeS3Obj("OpenMLDataSetDescription",
     id = id, name = name, version = version, description = description, format = format,
     creator = creator, contributor = contributor, collection.date = collection.date, 
