@@ -1,45 +1,36 @@
-#' OpenMLImplementationParameter
+#' Construct OpenMLImplementationParameter.
 #'
-#' This class of objects contains information on an implementation parameter.
-#' 
-#' Objects can be created by calls of the form \code{OpenMLImplementationParameter(...)}.
-#' The objects contain information on ... .
-#'
-#' @section Slots: 
-#'  \describe{
-#'    \item{\code{name}}{[\code{character}]\cr
-#'    The name of the parameter.}
-#'    \item{\code{data.type}}{[\code{character}]\cr
-#'    The data type of the parameter. Should be either integer, numeric, string, vector, matrix, object.}
-#'    \item{\code{default.value}}{[\code{character}]\cr
-#'    The default value of the parameter. Optional, but highly encouraged.}
-#'    \item{\code{description}}{[\code{character}]\cr
-#'    A description of what this parameter does.}
-#'  }
-#' @name OpenMLImplementationParameter
-#' @rdname OpenMLImplementationParameter
-#' @aliases OpenMLImplementationParameter-class
-#' @exportClass OpenMLImplementationParameter
-
-setClass("OpenMLImplementationParameter", representation(
-  name = "character",
-  data.type = "character",
-  default.value = "character",
-  description = "character"
-))
-
-# ***** Constructor *****
-OpenMLImplementationParameter = function(
+#' @param name [\code{character(1)}]\cr
+#'   The name of the parameter.
+#' @param data.type [\code{character(1)}]\cr
+#'   The data type of the parameter. Should be either integer, numeric, string, vector, matrix or object.
+#' @param default.value [\code{character(1)}]\cr
+#'   The default value of the parameter.
+#' @param description [\code{character(1)}]\cr
+#'   A description of what this parameter does.
+#' @param recommended.range [\code{character(1)}]\cr
+#'   Minimal/maximal value and/or a recommended range of values. 
+#' @export
+#' @aliases OpenMLImplementationParameter
+makeOpenMLImplementationParameter = function(
   name, 
-  data.type = character(0), 
-  default.value = character(0), 
-  description = character(0)) {
+  data.type = NA_character_, 
+  default.value = NA_character_, 
+  description = NA_character_,
+  recommended.range = NA_character_
+  ) {
+  
+  assertString(name)
+  assertString(default.value, na.ok = TRUE)
+  assertString(description, na.ok = TRUE)
+  assertString(recommended.range, na.ok = TRUE)
   
   makeS3Obj("OpenMLImplementationParameter", 
       name = name,
       data.type = data.type,
       default.value = default.value,
-      description = description
+      description = description,
+      recommended.range = recommended.range
   )
 }
 

@@ -23,7 +23,8 @@
 downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binary = TRUE, 
   show.info = TRUE, clean.up = FALSE) {
   
-  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  id = convertInteger(id)
+  checkArg(id, "integer", len = 1L, na.ok = FALSE)
   checkArg(dir, "character", len = 1L, na.ok = FALSE)
   checkArg(download.source.binary, "logical", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
@@ -36,22 +37,24 @@ downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binar
   if(clean.up)
     unlink(fn.impl.xml)
   if (download.source.binary) {
-    if (length(impl$source.url) > 0 && impl$source.url != "") {
+    if (!is.na(impl$source.url)) {
       if (show.info)
         messagef("Downloading implementation source file from URL:\n%s.", impl$source.url)
       
       format = rev(strsplit(rev(strsplit(impl$source.url, "/")[[1]])[1], "[.]")[[1]])[1]
       fn.impl.src = sprintf("%s(%s)_source.%s", impl$name, impl$version, format)
       fn.impl.src = file.path(dir, fn.impl.src) 
-      downloadBinaryFile(url = impl$source.url, file = fn.impl.src, show.info = show.info)
+      # downloadBinaryFile(url = impl$source.url, file = fn.impl.src, show.info = show.info)
+      download.file(url = impl$binary.url, destfile = fn.impl.bin, mode="wb")
     } 
-    if (length(impl$binary.url) > 0 && impl$binary.url != "") {
+    if (!is.na(impl$binary.url)) {
       if (show.info)
         messagef("Downloading implementation binary file.")
 
       fn.impl.bin = sprintf("%s(%s)_binary", impl$name, impl$version)
       fn.impl.bin = file.path(dir, fn.impl.bin)  
-      downloadBinaryFile(url = impl$binary.url, file = fn.impl.bin, show.info = show.info)
+      # downloadBinaryFile(url = impl$binary.url, file = fn.impl.bin, show.info = show.info)
+      download.file(url = impl$binary.url, destfile = fn.impl.bin, mode="wb")
     }
   }
   return(impl)
@@ -61,7 +64,7 @@ parseOpenMLImplementation = function(file) {
   checkArg(file, "character", len = 1L, na.ok = FALSE)
   doc = parseXMLResponse(file, "Getting implementation", "implementation")
   args = list()
-  args[["id"]] = xmlRValS(doc, "/oml:implementation/oml:id")
+  args[["id"]] = xmlRValI(doc, "/oml:implementation/oml:id")
   args[["name"]] = xmlRValS(doc, "/oml:implementation/oml:name")
   args[["version"]] = xmlRValS(doc, "/oml:implementation/oml:version")
   args[["external.version"]] = xmlRValS(doc, "/oml:implementation/oml:external_version")
@@ -79,12 +82,14 @@ parseOpenMLImplementation = function(file) {
   args[["parameter"]] = parseOpenMLParameters(doc)  
   
   ## components section
-  comp_ns = getNodeSet(doc, "/oml:implementation/oml:components/oml:implementation")
-  comp = list()
+  comp_ns = getNodeSet(doc, "/oml:implementation/oml:component/oml:implementation")
+  
+  
+  comp = vector("list", length = length(comp_ns))
   for(i in seq_along(comp_ns)){
-    file2 = sprintf("%s/downloadUploadTest/comp.xml", getwd())
+    file2 = tempfile()
     saveXML(comp_ns[[i]], file = file2)
-    comp = c(comp, parseOpenMLImplementation(file2))
+    comp[[i]] = parseOpenMLImplementation(file2)
     unlink(file2)
   }
   args[["components"]] = comp
@@ -98,7 +103,7 @@ parseOpenMLImplementation = function(file) {
   args[["source.md5"]] = xmlOValS(doc, "/oml:implementation/oml:source_md5")
   args[["binary.md5"]] = xmlOValS(doc, "/oml:implementation/oml:binary_md5")
 
-  impl = do.call(OpenMLImplementation, args)
+  impl = do.call(makeOpenMLImplementation, args)
 
   return(impl)
 }
@@ -112,11 +117,12 @@ parseOpenMLParameters = function(doc) {
   par.types = xmlValsMultNsS(doc, sprintf("%s/oml:data_type", path))
   par.defs = xmlValsMultNsS(doc, sprintf("%s/oml:default_value", path))
   par.descs = xmlValsMultNsS(doc, sprintf("%s/oml:description", path))
+  par.rec.range = xmlValsMultNsS(doc, sprintf("%s/oml:recommendedRange", path))
   
-  par = list()
-  for (i in 1:length(par.names)) {
-    par = c(par, 
-      OpenMLImplementationParameter(par.names[i], par.types[i], par.defs[i], par.descs[i]))
+  par = vector("list", length(par.names))
+  for (i in seq_along(par)) {
+    par[[i]] = makeOpenMLImplementationParameter(name = par.names[i], data.type = par.types[i], 
+      default.value = par.defs[i], description = par.descs[i], recommended.range = par.rec.range[i])
   }
   return(par)
 }

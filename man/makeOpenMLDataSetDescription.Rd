@@ -21,7 +21,7 @@ The  name of the data set.}
 \item{version}{[\code{character(1)}]\cr
 Version of the data set, added by the server.}
 
-\item{description}{[\code{character}]\cr
+\item{description}{[\code{character(1)}]\cr
 Description of the data set, given by the uploader.}
 
 \item{format}{[\code{character(1)}]\cr
@@ -36,7 +36,7 @@ People, that contibuted to this version of the data set (e.g., by reformatting).
 \item{collection.date}{[\code{character(1)}]\cr
 The date the data was originally collected. Given by the uploader. Optional.}
 
-\item{upload.date}{[\code{character(1)}]\cr
+\item{upload.date}{[\code{\link[base]{POSIXt}}]\cr
 The date the data was uploaded. Added by the server.}
 
 \item{language}{[\code{character(1)}]\cr

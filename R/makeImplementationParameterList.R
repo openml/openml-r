@@ -23,7 +23,7 @@ makeImplementationParameterList = function(mlr.lrn) {
       default.value = as.character(pars[[i]]$default)
     else
       default.value = character(0)
-    impl.par = OpenMLImplementationParameter(
+    impl.par = makeOpenMLImplementationParameter(
       name = name, 
       data.type = data.type, 
       default.value = default.value)
