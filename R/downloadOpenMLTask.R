@@ -159,7 +159,7 @@ parseOpenMLTask = function(file) {
   # measures
   measures = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure")
   
-  task = OpenMLTask(
+  task = makeOpenMLTask(
     task.id = task.id,
     task.type = task.type,
     task.target.features = targets,

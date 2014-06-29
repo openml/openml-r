@@ -11,7 +11,7 @@
 #' @export
 makeImplementationParameterList = function(mlr.lrn) {
   pars = mlr.lrn$par.set$pars
-  par.list = list()
+  par.list = vector("list", length = length(pars))
   for(i in seq_along(pars)){
     name = pars[[i]]$id
     data.type = pars[[i]]$type
@@ -19,15 +19,15 @@ makeImplementationParameterList = function(mlr.lrn) {
     # if(data.type == "discrete") data.type = "string"      ? 
     # if(data.type == "numericvector") data.type = "vector" ? 
     # ...
-    if(pars[[i]]$has.default)
+    if (pars[[i]]$has.default)
       default.value = as.character(pars[[i]]$default)
     else
-      default.value = character(0)
+      default.value = NA_character_
     impl.par = makeOpenMLImplementationParameter(
       name = name, 
       data.type = data.type, 
       default.value = default.value)
-    par.list = c(par.list, impl.par)
+    par.list[[i]] = impl.par
   }
   return(par.list)
 }

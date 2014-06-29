@@ -31,7 +31,7 @@ createOpenMLImplementationForMLRLearner = function(
   else
     description = sprintf("Learner %s from package %s.", name, lrn$package)
 
-  impl = OpenMLImplementation(
+  impl = makeOpenMLImplementation(
     name = name,
     description = description,
     parameter = makeImplementationParameterList(lrn)

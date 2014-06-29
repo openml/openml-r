@@ -34,18 +34,19 @@ parseOpenMLTaskResults = function(file) {
         "[", i, "]/oml:setup_id", sep=''))
       impl.id = xmlRValS(doc, paste("/oml:task_evaluations/oml:evaluation", 
         "[", i, "]/oml:implementation_id", sep=''))
-      impl = xmlRValI(doc, paste("/oml:task_evaluations/oml:evaluation", 
+      impl = xmlRValS(doc, paste("/oml:task_evaluations/oml:evaluation", 
         "[", i, "]/oml:implementation", sep=''))
       ns.metrics = getNodeSet(doc, paste("/oml:task_evaluations/oml:evaluation",
         "[", i, "]/oml:measure", sep=''))
       
       metric.names = unlist(lapply(ns.metrics, function(x) xmlGetAttr(x, "name")))
-      # FIXME: os_information must remain a string
-      metric.values = as.numeric(unlist(lapply(ns.metrics, function(x) xmlValue(x))))
+      metric.values = sapply(ns.metrics, function(x) xmlValue(x))
       
       task.res[[i]] = data.frame(run.id, setup.id, impl.id, impl, t(metric.values))
       colnames(task.res[[i]])[-(1:4)] = metric.names
     }
+    # rbind task results and fill missing measures with <NA>
+    # FIXME: this way, all columns are factors. convert them somehow.
     metrics = do.call(rbind.fill, task.res)
     row.names(metrics) = metrics$run.id
     metrics$run.id = NULL
@@ -64,7 +65,7 @@ parseOpenMLTaskResults = function(file) {
     metrics = data.frame()
   }
   
-  results = OpenMLTaskResults(
+  results = makeOpenMLTaskResults(
     task.id = task.id,
     task.name = task.name,
     task.type.id = task.type.id,

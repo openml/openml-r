@@ -41,10 +41,10 @@ makeOpenMLImplementationParameter = function(
 #' @export
 print.OpenMLImplementationParameter = function(x, ...) {  
   catf("Parameter %s", x$name)  
-  if (length(x$data.type) > 0 && x$data.type != "")
+  if (!is.na(x$data.type))
     catf("  type    :: %s", x$data.type)
-  if (length(x$default.value) > 0 && x$default.value != "")
+  if (!is.na(x$default.value))
     catf("  default :: %s", x$default.value)
-  if (length(x$description) > 0 && x$description != "")
+  if (!is.na(x$description))
     catf("\n%s", x$description)
 }

@@ -1,33 +1,20 @@
-#' OpenMLRunParameter
-#'
-#' This class of objects contains information on the setting of a single parameter of an OpenML run.
+#' @title Construct OpenMLRunParameter
 #' 
-#' Objects can be created by calls of the form \code{OpenMLRunParameter(...)}.
-#' The objects contain information on ... .
-#'
-#' @section Slots: 
-#'  \describe{
-#'    \item{\code{name}}{[\code{character}]\cr
-#'    The name of the parameter.}
-#'    \item{\code{value}}{[\code{character}]\cr
-#'    The value of the parameter.}
-#'    \item{\code{component}}{[\code{character}]\cr
+#' @param name [\code{character(1)}]\cr
+#'    The name of the parameter.
+#' @param value [\code{character(1)}]\cr
+#'    The value of the parameter.
+#' @param component [\code{character(1)}]\cr
 #'    The implementation name of a component, if the parameter belongs to this component. 
-#'    This name must match a component of the implementation.}
-#'  }
-#' @name OpenMLRunParameter
-#' @rdname OpenMLRunParameter
-#' @aliases OpenMLRunParameter-class
-#' @exportClass OpenMLRunParameter
-
-setClass("OpenMLRunParameter", representation(
-  name = "character",
-  value = "character",
-  component = "character"
-))
-
-# ***** Constructor *****
-OpenMLRunParameter = function(name, value, component = character(0)) {
+#'    This name must match a component of the implementation.
+#'
+#' @export
+#' @aliases OpenMLRunParameter
+makeOpenMLRunParameter = function(name, value, component = NA_character_) {
+  assertString(name)
+  assertString(value)
+  assertString(component, na.ok = TRUE)
+  
   makeS3Obj("OpenMLRunParameter", 
     name = name,
     value = value,
@@ -40,10 +27,10 @@ OpenMLRunParameter = function(name, value, component = character(0)) {
 # show
 #' @export
 print.OpenMLRunParameter = function(x, ...)  {
-  s = if(length(x$component))
-    sprintf(' (parameter of component %s)', x$component)
+  if (!is.na(x$component))
+    s = sprintf(' (parameter of component %s)', x$component)
   else
-    ""
+    s = ""
   # FIXME does this work for arbitary values? unit test this
   catf("%s %s = %s", s, x$name, x$value)
 }

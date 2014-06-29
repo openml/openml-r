@@ -25,7 +25,7 @@ makeRunParameterList = function(mlr.lrn, component = NULL) {
   par.names = names(mlr.lrn$par.vals)
   par.settings = vector("list", length(par.vals))  
   for (i in seq_along(par.vals)) {
-    par.settings[[i]] = OpenMLRunParameter(
+    par.settings[[i]] = makeOpenMLRunParameter(
       name = par.names[i], 
       value = as.character(par.vals[[i]]),
       component = component)

@@ -1,11 +1,11 @@
-setClass("ImplementationParameter", representation(
-  name = "character",
-  data.type = "character",
-  default.value = "character",
-  description = "character"
-))
-
-ImplementationParameter = function(name, data.type = "", default.value = "", description = "") {
+ImplementationParameter = function(name, data.type, default.value = NA_character_, 
+  description = NA_character_) {
+  
+  assertString(name)
+  assertString(data.type)
+  assertString(default.value, na.ok = TRUE)
+  assertString(description, na.ok = TRUE)
+  
   makeS3Obj("ImplementationParameter", 
     name = name,
     data.type = data.type,
@@ -17,8 +17,8 @@ ImplementationParameter = function(name, data.type = "", default.value = "", des
 #' @export
 print.ImplementationParameter = function(x, ...) {
   cat(x$name)
-  if (x$data.type != "") cat(' : ',x$data.type)
-  if (x$default.value != "") cat(' (default value = ',x$default.value,' )')
-  if (x$description != "") cat('\n   Description : ',x$description)
+  if (!is.na(x$data.type)) cat(' : ', x$data.type)
+  if (!is.na(x$default.value)) cat(' (default value = ', x$default.value, ' )')
+  if (!is.na(x$description)) cat('\n   Description : ', x$description)
   cat('\n')
 }

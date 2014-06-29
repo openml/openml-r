@@ -145,18 +145,18 @@ makeOpenMLImplementation = function(
 # show
 #' @export
 print.OpenMLImplementation = function(x, ...)  {
-  catNotEmpty = function(s, val) {
-    if (val != "" && length(val) > 0) 
+  catNotNA = function(s, val) {
+    if (!is.na(val)) 
       catf("%s %s", s, val)
   }
   
   ## General implementation info
   catf('\n** Implementation Information **')
   
-  catNotEmpty('ID               :: ', x$id)
-  catNotEmpty('Name             :: ', x$name)
-  catNotEmpty('OpenML Version   :: ', x$version)
-  catNotEmpty('External Version :: ', x$external.version)
+  catNotNA('ID               :: ', x$id)
+  catNotNA('Name             :: ', x$name)
+  catNotNA('OpenML Version   :: ', x$version)
+  catNotNA('External Version :: ', x$external.version)
   
   ## Authors and contributors
   if (length(x$creator) > 0) {

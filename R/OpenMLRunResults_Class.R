@@ -1,68 +1,47 @@
-#' OpenMLRunResults
-#'
-#' This class of objects contains information on the results of an \code{\link{OpenMLRun}}.
-#' The objects contain information on... 
+#' @title Construct OpenMLRunResults.
 #' 
-#' @section Slots: 
-#'   \describe{
-#'     \item{\code{run.id}}{[\code{numeric(1)}]\cr
-#'       ID of the run. Added by server. Ignored when uploading a run.}
-#'     \item{\code{uploader}}{[\code{numeric(1)}]\cr   
-#'       ID of the user that uploaded the run. Added by server. Ignored when uploading a run.}
-#'     \item{\code{task.id}}{[\code{numeric(1)}]\cr
-#'       ID of the task that is solved in this run. This ID is given in the task description.} 
-#'     \item{\code{implementation.id}}{[\code{character(1)}]\cr
+#' @param run.id [\code{numeric(1)}]\cr
+#'       ID of the run. Added by server. Ignored when uploading a run.
+#' @param uploader [\code{numeric(1)}]\cr   
+#'       ID of the user that uploaded the run. Added by server. Ignored when uploading a run.
+#' @param task.id [\code{numeric(1)}]\cr
+#'       ID of the task that is solved in this run. This ID is given in the task description.
+#' @param implementation.id [\code{character(1)}]\cr
 #'       ID of the implementation used to solve the task. Returned by the API when you first upload the 
-#'       implementation, or given in the implementation description when you download an existing implementation. }
-#'     \item{\code{setup.id}}{[\code{numeric(1)}]\cr
+#'       implementation, or given in the implementation description when you download an existing 
+#'       implementation.
+#' @param setup.id [\code{numeric(1)}]\cr
 #'       Unique ID of the used setup. Ignored when uploading a run (i.e., it will be searched based 
-#'       on the parameter settings).} 
-#'     \item{\code{error.message}}{[\code{character(1)}]\cr
-#'       Whenever an error occurs during the run, this can be reported here.}
-#'     \item{\code{parameter.setting}}{[\code{list}]\cr
-#'       A list of \code{\link{OpenMLRunParameter}s} containing information on the parameter settings.}
-#'     \item{\code{input.data}}{[\code{\link{OpenMLData}}]\cr
-#'       All data that served as input for the run. Added by server. Ignored when uploading.}
-#'     \item{\code{output.data}}{[\code{\link{OpenMLData}}]\cr
+#'       on the parameter settings).
+#' @param error.message [\code{character(1)}]\cr
+#'       Whenever an error occurs during the run, this can be reported here.
+#' @param parameter.setting [\code{list}]\cr
+#'       A list of \code{\link{OpenMLRunParameter}s} containing information on the parameter settings.
+#' @param input.data [\code{\link{OpenMLData}}]\cr
+#'       All data that served as input for the run. Added by server. Ignored when uploading.
+#' @param output.data [\code{\link{OpenMLData}}]\cr
 #'       All data that was the output of this run, i.e., predictions, evaluation scores. 
 #'       Most of this will be added by the server, but users can also provide evaluation scores for their 
-#'       own evaluation measures.}
-#'   }
-#'
-#' @name OpenMLRunResults
-#' @rdname OpenMLRunResults
-#' @aliases OpenMLRunResults-class
-#' @exportClass OpenMLRunResults
-
+#'       own evaluation measures.
+#' @export 
+#' @aliases OpenMLRunResults
 
 # FIXME: add setup.string
-# --------------------------------------------------------------
-# class def
-setClass("OpenMLRunResults", representation(
-  run.id = "numeric",
-  uploader = "numeric",
-  task.id = "numeric",
-  implementation.id = "character",
-  setup.id = "numeric",
-  error.message = "character",
-  parameter.setting = "list",
-  input.data = "OpenMLData",
-  output.data = "OpenMLData"
-))
-
-# --------------------------------------------------------------
-# constructor function
-OpenMLRunResults = function(
-  run.id = numeric(0L),
-  uploader = numeric(0L),
-  task.id = numeric(0L),
-  implementation.id = character(0L),
-  setup.id = numeric(0L),
-  error.message = character(0L),
-  parameter.setting = list(),
-  input.data = OpenMLData(),
+makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, setup.id,
+  error.message = NA_character_, parameter.setting = list(), input.data = OpenMLData(),
   output.data = OpenMLData()
 ) {
+  
+  assertIntegerish(run.id)
+  assertIntegerish(uploader)
+  assertIntegerish(task.id)
+  assertString(implementation.id)
+  assertIntegerish(setup.id)
+  assertString(error.message, na.ok = TRUE)
+  assertList(parameter.setting)
+  assertClass(input.data, "OpenMLData")
+  assertClass(output.data, "OpenMLData")
+  
   makeS3Obj("OpenMLRunResults",
       run.id = run.id,
       uploader = uploader,

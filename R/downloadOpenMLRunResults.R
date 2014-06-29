@@ -67,19 +67,19 @@ parseOpenMLRunResults = function(file) {
   run.args[["error.message"]] = xmlOValS(doc, "/oml:run/oml:error_message")
   
   # parse parameters
-  par.set = list()
   ns.pars = getNodeSet(doc, "/oml:run/oml:parameter_setting")
+  par.set = vector("list", length = length(ns.pars))
   for (i in seq_along(ns.pars)) {
     args = list()
     args[["name"]] = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:name", sep=''))
     args[["value"]] = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:value", sep=''))
     args[["component"]] = xmlOValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:component", sep=''))
-    par.set = c(par.set, do.call(OpenMLRunParameter, args))
+    par.set[[i]] = do.call(makeOpenMLRunParameter, args)
   }
   run.args[["parameter.setting"]] = par.set
   
   run.args[["input.data"]] = parseData("/oml:run/oml:input_data")
   run.args[["output.data"]] = parseData("/oml:run/oml:output_data")
   
-  return(do.call(OpenMLRunResults, run.args))
+  return(do.call(makeOpenMLRunResults, run.args))
 }
