@@ -13,7 +13,7 @@ writeOpenMLImplementationXML = function(description, file) {
   top = newXMLNode("oml:implementation", parent = doc, namespace = c(oml = "http://openml.org/openml"))
   
   mynode = function(name, val, parent = top){
-    if (length(val) > 0) 
+    if (!is.na(val)) 
       newXMLNode(name, as.character(val), parent = parent, namespace = "oml")
   }
   

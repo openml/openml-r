@@ -2,7 +2,7 @@
 #' 
 #' Retrieves an implementation for a given id. 
 #' 
-#' @param id [\code{character(1)}]\cr
+#' @param id [\code{integer(1)}]\cr
 #'   The implementation id.
 #' @param dir [\code{character(1)}]\cr 
 #'   Directory where downloaded files from the repository are stored. 
@@ -23,12 +23,11 @@
 downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binary = TRUE, 
   show.info = TRUE, clean.up = FALSE) {
   
-  id = convertInteger(id)
-  checkArg(id, "integer", len = 1L, na.ok = FALSE)
-  checkArg(dir, "character", len = 1L, na.ok = FALSE)
-  checkArg(download.source.binary, "logical", len = 1L, na.ok = FALSE)
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
-  checkArg(clean.up, "logical", len = 1L, na.ok = FALSE)
+  assertIntegerish(id)
+  assertDirectory(dir)
+  assertFlag(download.source.binary)
+  assertFlag(show.info)
+  assertFlag(clean.up)
   
   fn.impl.xml = file.path(dir, sprintf("%s.xml", id))  
   downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, 
@@ -45,7 +44,7 @@ downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binar
       fn.impl.src = sprintf("%s(%s)_source.%s", impl$name, impl$version, format)
       fn.impl.src = file.path(dir, fn.impl.src) 
       # downloadBinaryFile(url = impl$source.url, file = fn.impl.src, show.info = show.info)
-      download.file(url = impl$binary.url, destfile = fn.impl.bin, mode="wb")
+      download.file(url = impl$source.url, destfile = fn.impl.src, mode = "wb")
     } 
     if (!is.na(impl$binary.url)) {
       if (show.info)
@@ -54,7 +53,7 @@ downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binar
       fn.impl.bin = sprintf("%s(%s)_binary", impl$name, impl$version)
       fn.impl.bin = file.path(dir, fn.impl.bin)  
       # downloadBinaryFile(url = impl$binary.url, file = fn.impl.bin, show.info = show.info)
-      download.file(url = impl$binary.url, destfile = fn.impl.bin, mode="wb")
+      download.file(url = impl$binary.url, destfile = fn.impl.bin, mode = "wb")
     }
   }
   return(impl)

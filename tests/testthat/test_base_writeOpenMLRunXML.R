@@ -1,10 +1,10 @@
 context("writeOpenMLRunXML")
 
 test_that("writeOpenMLRunXML", {
-  lrn = makeLearner("classif.rpart", par.vals=list(minsplit = 5, maxdepth = 10))
+  lrn = makeLearner("classif.rpart", par.vals = list(minsplit = 5, maxdepth = 10))
   run.pars = makeRunParameterList(lrn)
   
-  desc = makeOpenMLRun(task.id="1", implementation.id="classif.rpart(1.0)", parameter.setting=run.pars)
+  desc = makeOpenMLRun(task.id = "1", implementation.id = "classif.rpart(1.0)", parameter.setting = run.pars)
   file = tempfile()
   writeOpenMLRunXML(desc, file)
   

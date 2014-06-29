@@ -27,8 +27,9 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
     user.prov.srcfile = FALSE
   }
   
-  file = tempfile()
+  implementation$source.md5 = digest(file = sourcefile)
   
+  file = tempfile()
   writeOpenMLImplementationXML(implementation, file)
   
    if (show.info) {

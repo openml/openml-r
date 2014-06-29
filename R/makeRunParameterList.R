@@ -16,10 +16,9 @@
 #' bagging.par.settings = makeRunParameterList(bagging)
 #' bagging.par.settings
 #' @export
-makeRunParameterList = function(mlr.lrn, component = NULL) {
+makeRunParameterList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
-  if (!is.null(component))
-    assertString(component)
+  assertString(component, na.ok = TRUE)
     
   par.vals = mlr.lrn$par.vals
   par.names = names(mlr.lrn$par.vals)

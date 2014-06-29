@@ -7,7 +7,7 @@ downloadOpenMLImplementation(id, dir = getwd(),
   download.source.binary = TRUE, show.info = TRUE, clean.up = FALSE)
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{[\code{integer(1)}]\cr
 The implementation id.}
 
 \item{dir}{[\code{character(1)}]\cr

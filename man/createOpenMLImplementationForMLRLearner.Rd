@@ -3,8 +3,7 @@
 \alias{createOpenMLImplementationForMLRLearner}
 \title{createOpenMLImplementationForMLRLearner.}
 \usage{
-createOpenMLImplementationForMLRLearner(lrn, name = lrn$id, version,
-  description)
+createOpenMLImplementationForMLRLearner(lrn, name = lrn$id, description)
 }
 \arguments{
 \item{lrn}{[\code{\link[mlr]{Learner}}]\cr

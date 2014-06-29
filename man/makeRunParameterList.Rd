@@ -3,7 +3,7 @@
 \alias{makeRunParameterList}
 \title{Generate a list of OpenML run parameter settings for a given mlr learner.}
 \usage{
-makeRunParameterList(mlr.lrn, component = NULL)
+makeRunParameterList(mlr.lrn, component = NA_character_)
 }
 \arguments{
 \item{mlr.lrn}{[\code{\link[mlr]{Learner}}]\cr

@@ -16,29 +16,22 @@
 #' @export
 createOpenMLImplementationForMLRLearner = function(
   lrn, 
-  name = lrn$id, 
-  version,
+  name = lrn$id,
   description) {
-  # FIXME: Do we want to leave the chance for the user to change the name?
   
-  checkArg(lrn, "Learner")
-  checkArg(name, "character")
-
-  version = packageDescription(lrn$package)$Version
+  assertClass(lrn, "Learner")
+  assertString(name)
   
   if (!missing(description))
-    checkArg(description, "character")
+    assertString(description)
   else
     description = sprintf("Learner %s from package %s.", name, lrn$package)
 
   impl = makeOpenMLImplementation(
     name = name,
+    version = packageDescription(lrn$package)$Version,
     description = description,
     parameter = makeImplementationParameterList(lrn)
   )
-  
-  if (!missing(version)) 
-    impl$external.version = version
-  
   return(impl)
 }
