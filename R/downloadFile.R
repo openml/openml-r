@@ -1,8 +1,8 @@
 # Download a file from the OpenML server through a server API call.
-# 
+#
 # Gets the URL for the API call from \code{\link{getServerFunctionURL}}.
 # Then retrieves the file from the URL by \code{\link{downloadBinaryFile}}.
-# 
+#
 # @param api.fun [\code{character(1)}]\cr
 #   Name of API function to call on server.
 # @param file [\code{character(1)}]\cr
@@ -11,7 +11,7 @@
 #   Arguments for API call.
 #   Passed through to \code{\link{getServerFunctionURL}}.
 # @param show.info [\code{logical(1)}]\cr
-#   Verbose output on console? 
+#   Verbose output on console?
 #   Default is \code{TRUE}.
 # @return [\code{invisible(NULL)}].
 downloadAPICallFile = function(api.fun, file, ..., show.info = TRUE) {
@@ -22,16 +22,16 @@ downloadAPICallFile = function(api.fun, file, ..., show.info = TRUE) {
 }
 
 # Download a binary file from a given URL.
-# 
+#
 # Combination of \code{\link{getURL}} and \code{\link{write}}.
 # No real errorhandling, if something goes wrong, function will stop.
-# 
+#
 # @param url [\code{character(1)}]\cr
 #   The source URL.
 # @param file [\code{character(1)}]\cr
 #   The destination path.
 # @param show.info [\code{logical(1)}]\cr
-#   Verbose output on console? 
+#   Verbose output on console?
 #   Default is \code{TRUE}.
 # @return [\code{invisible(NULL)}].
 downloadBinaryFile = function(url, file, show.info = TRUE) {
@@ -44,3 +44,4 @@ downloadBinaryFile = function(url, file, show.info = TRUE) {
   write(content, file = file)
   invisible(NULL)
 }
+
