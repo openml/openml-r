@@ -13,7 +13,8 @@ parseOpenMLDataSet = function(dsd, file) {
   convertOpenMLDataSet(dsd, ds)
 }
 
-# remove rowid coluumn from data and name rows with it instead
+# remove rowid column from data set data.frame and name rows with it instead
+# if we dont have rowids we use 0, ..., n-1 for row names
 convertOpenMLDataSet = function(dsd, ds) {
   if (!is.na(dsd$row.id.attribute)) {
     rowid = ds[, dsd$row.id.attribute]
