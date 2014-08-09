@@ -1,19 +1,20 @@
+# download the data set from given url to a file on disk
 downloadOpenMLDataSet = function(url, file, show.info) {
-  checkArg(url, "character", len = 1L, na.ok = FALSE)
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
+  assertString(url)
+  assertPathForOutput(file)
   downloadBinaryFile(url, file, show.info)
 }
 
+# parse the data set from given file on disk and data set description
 parseOpenMLDataSet = function(dsd, file) {
-  checkArg(dsd, "OpenMLDataSetDescription")  
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
+  assertClass(dsd, "OpenMLDataSetDescription")
+  assertFile(file, access = "r")
   ds = read.arff(file)
   convertOpenMLDataSet(dsd, ds)
 }
 
-
+# remove rowid coluumn from data and name rows with it instead
 convertOpenMLDataSet = function(dsd, ds) {
-  # remove rowid from data and set as rownames  
   if (!is.na(dsd$row.id.attribute)) {
     rowid = ds[, dsd$row.id.attribute]
     ds[, dsd$row.id.attribute] = NULL
