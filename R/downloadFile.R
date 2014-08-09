@@ -15,8 +15,9 @@
 #   Default is \code{TRUE}.
 # @return [\code{invisible(NULL)}].
 downloadAPICallFile = function(api.fun, file, ..., show.info = TRUE) {
-  checkArg(api.fun, "character", len = 1L, na.ok = FALSE)
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
+  assertString(api.fun)
+  assertFlag(show.info)
+  assertPathForOutput(file)
   url = getServerFunctionURL(api.fun, ...)
   downloadBinaryFile(url, file, show.info)
 }
@@ -35,9 +36,9 @@ downloadAPICallFile = function(api.fun, file, ..., show.info = TRUE) {
 #   Default is \code{TRUE}.
 # @return [\code{invisible(NULL)}].
 downloadBinaryFile = function(url, file, show.info = TRUE) {
-  checkArg(url, "character", len = 1L, na.ok = FALSE)
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertString(url)
+  assertPathForOutput(file)
+  assertFlag(show.info)
   if (show.info)
     messagef("Downloading file: %s from:\n  %s", file, url)
   content = getURL(url)
