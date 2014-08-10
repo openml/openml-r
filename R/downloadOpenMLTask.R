@@ -89,7 +89,7 @@ downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE,
 
     # make valid column names
     task$task.data.desc$original.col.names = colnames(task$task.data.desc$data.set)
-    task$task.data.desc$new.col.names = make.names(task$task.data.desc$original.col.names, unique=TRUE)
+    task$task.data.desc$new.col.names = make.names(task$task.data.desc$original.col.names, unique = TRUE)
     target.inds = which(task$task.data.desc$original.col.names %in% task$task.target.features )
     task$task.target.features = task$task.data.desc$new.col.names[target.inds]
     colnames(task$task.data.desc$data.set) = task$task.data.desc$new.col.names
@@ -181,7 +181,7 @@ convertOpenMLTaskSlots = function(task) {
   p = convertParam(p, "number_folds", as.integer)
   task$task.estimation.procedure$parameters = p
 
-  #task$task.evaluation.measures = strsplit(task$task.evaluation.measures, split=",")[[1]]
+  #task$task.evaluation.measures = strsplit(task$task.evaluation.measures, split = ",")[[1]]
   return(task)
 }
 

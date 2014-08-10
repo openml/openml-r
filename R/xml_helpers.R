@@ -13,9 +13,9 @@ xmlNs = function(doc, path, optional) {
 
 xmlVal = function(doc, path, optional, fun) {
   ns = xmlNs(doc, path, optional)
-	# path not found, also cant be no optional, otherwise exception in call before
-	if (is.null(ns))
-	  return(NULL)		
+  # path not found, also cant be no optional, otherwise exception in call before
+  if (is.null(ns))
+    return(NULL)
   if (length(ns) == 1L) {
     fun(xmlValue(ns[[1]]))
   } else {
@@ -91,7 +91,7 @@ xmlValsMultNsS = function(doc, path, fun) {
 expectXMLType = function(file, doc, type) {
   r = xmlRoot(doc)
   rootname = xmlName(r)
-  if (rootname %nin% type) 
+  if (rootname %nin% type)
     stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, file)
 }
 
@@ -106,14 +106,14 @@ isErrorXML = function(doc) {
       add_info = "No additional information available."
     return(list(code = code, msg = msg, add_info = add_info))
   } else {
-    return(NULL)    
+    return(NULL)
   }
 }
 
 checkAndHandleErrorXML = function(file, doc, prefix.msg) {
   z = isErrorXML(doc)
   if (!is.null(z)) {
-    stopf("Error in server / XML response for: %s\n\t\t%s.\n\t\t%s\nFile: %s", 
+    stopf("Error in server / XML response for: %s\n\t\t%s.\n\t\t%s\nFile: %s",
       prefix.msg, z$msg, z$add_info, file)
   }
 }
