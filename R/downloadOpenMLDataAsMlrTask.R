@@ -1,10 +1,13 @@
-#' Download an OpenML data set and convert it into an mlr task.
-#'
+# FIXME: we need to check that we can create an OK mlr task for the openml task
+# mlr might not support what openml does.
+
+#' @title Download an OpenML data set and convert it into an mlr task.
 #'
 #' @param name [\code{character}]\cr
 #'   The name of the data set.
 #' @param dir [\code{character}]\cr
-#'   The directory where intermediate files are stored. If clean.up = TRUE, this does not matter.
+#'   The directory where intermediate files are stored.
+#'   If clean.up = TRUE, this does not matter.
 #'   Default is the session's temporary directory.
 #' @param clean.up [\code{loigcal}]\cr
 #'   Should the downloaded files be removed from disk at the end?
@@ -15,13 +18,22 @@
 #' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
 downloadOpenMLDataAsMlrTask = function(name, dir = tempdir(), clean.up = TRUE, show.info = TRUE) {
-  checkArg(name, "character", len = 1L, na.ok = FALSE)
-  checkArg(dir, "character", len = 1L, na.ok = FALSE)
-  checkArg(clean.up, "logical", len = 1L, na.ok = FALSE)
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertString(name)
+  assertDirectory(dir, access = "w")
+  assertFlag(clean.up)
+  assertFlag(show.info)
 
   fn.data.set.desc = file.path(dir, "data_set_description.xml")
-  fn.data.set = file.path(dir, "data_set.ARFF")
+  fn.data.set = file.path(dir, "data_set.arff")
+
+  on.exit({
+    if (clean.up) {
+      unlink(fn.data.set.desc)
+      unlink(fn.data.set)
+      if (show.info)
+        messagef("All intermediate XML and ARFF files are now removed.")
+    }
+  })
 
   # get id for given dataset name
   query = paste0("SELECT did, default_target_attribute FROM dataset WHERE name = '", name, "'")
@@ -37,27 +49,23 @@ downloadOpenMLDataAsMlrTask = function(name, dir = tempdir(), clean.up = TRUE, s
   }
 
   downloadOpenMLDataSetDescription(id = id, file = fn.data.set.desc, show.info = show.info)
-  task.data.desc = parseOpenMLDataSetDescription(file = fn.data.set.desc)
-  downloadOpenMLDataSet(task.data.desc$url, fn.data.set, show.info)
-  task.data.desc$data.set = parseOpenMLDataSet(task.data.desc, fn.data.set)
+  data.desc = parseOpenMLDataSetDescription(file = fn.data.set.desc)
+  downloadOpenMLDataSet(data.desc$url, fn.data.set, show.info)
+  data.desc$data.set = parseOpenMLDataSet(data.desc, fn.data.set)
 
-  if (clean.up) {
-    unlink(fn.data.set.desc)
-    unlink(fn.data.set)
-    if (show.info)
-      messagef("All intermediate XML and ARFF files are now removed.")
-  }
+  data = data.desc$data.set
 
   # FIXME: Dirty from now on:
-  classif = is.factor(task.data.desc$data.set[, target])
+  classif = is.factor(data[, target])
 
-  data = task.data.desc$data.set
+  #FIXME: this is bad. at least make it an option
+  data = subset(data, !is.na(data[, target]))
   # FIXME: some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
   data = droplevels(data)
 
   target.ind = which(colnames(data) %in% target)
-  colnames(data) = make.names(colnames(data), unique=TRUE)
+  colnames(data) = make.names(colnames(data), unique = TRUE)
   target = colnames(data)[target.ind]
 
   if (classif) {

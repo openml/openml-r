@@ -1,5 +1,3 @@
-# FIXME dont do this on CRAN!
-
 context("download all tasks")
 
 test_that("download all tasks", {
@@ -19,4 +17,4 @@ test_that("download all tasks", {
       lrn = makeLearner("regr.rpart")
     res = runTask(task, lrn)
   }
-})  
+})
