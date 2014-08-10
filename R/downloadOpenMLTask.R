@@ -58,6 +58,18 @@ downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE,
   fn.data.set = file.path(dir, "data_set.ARFF")
   fn.data.splits = file.path(dir, "data_splits.ARFF")
 
+  on.exit({
+    if (clean.up) {
+      unlink(fn.task)
+      unlink(fn.data.set.desc)
+      unlink(fn.data.set)
+      unlink(fn.data.splits)
+      unlink(fn.task)
+      if (show.info)
+        messagef("All intermediate XML and ARFF files are now removed.")
+    }
+  })
+
   if (show.info) {
     messagef("Downloading task %i from OpenML repository.", id)
     messagef("Intermediate files (XML and ARFF) will be stored in : %s", dir)
@@ -94,15 +106,6 @@ downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE,
     }
   }
 
-  if (clean.up) {
-    unlink(fn.task)
-    unlink(fn.data.set.desc)
-    unlink(fn.data.set)
-    unlink(fn.data.splits)
-    unlink(fn.task)
-    if (show.info)
-      messagef("All intermediate XML and ARFF files are now removed.")
-  }
   return(task)
 }
 

@@ -1,11 +1,13 @@
 #FIXME: provide helper functions for error xmls
 
+# download data splits file from URL to local file
 downloadOpenMLDataSplits = function(url, file, show.info = TRUE) {
   assertString(url)
   assertPathForOutput(file)
   downloadBinaryFile(url, file, show.info)
 }
 
+# parses the splits file into a data.frame
 parseOpenMLDataSplits = function(ds, file) {
   assertClass(ds, "data.frame")
   assertFile(file, access = "r")
@@ -13,10 +15,10 @@ parseOpenMLDataSplits = function(ds, file) {
   convertOpenMLDataSplits(ds, splits)
 }
 
+# slightly converts the splits data frame
+# rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
 convertOpenMLDataSplits = function(ds, splits) {
-  # 'repeat' is a BAD col. name in R
   colnames(splits)[colnames(splits) == "repeat"] = "rep"
-  # all counters in OpenML (server) are 0-based, R is 1-based
   ri = splits$rowid
   rns = rownames(ds)
   splits$rowid = sapply(ri, function(x) which(x == rns))
