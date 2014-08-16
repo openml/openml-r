@@ -8,10 +8,10 @@
 toMLR = function(task) {
   checkArg(task, "OpenMLTask")
   requirePackages("mlr", why="toMLR")
-  task.type = task$task.type
-  data.set.desc = task$task.data.desc
-  data = task$task.data.desc$data.set
-  target = task$task.target.features
+  task.type = task$type
+  data.set.desc = task$data.desc
+  data = task$data.desc$data.set
+  target = task$target.features
   
   #FIXME some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
@@ -24,7 +24,7 @@ toMLR = function(task) {
   feature.names = str_replace_all(feature.names, pattern=c("/"), replacement="_")  
   colnames(data)[feature.ind] = feature.names
   
-  estim.proc = task$task.estimation.procedure
+  estim.proc = task$estimation.procedure
   if (task.type == "Supervised Classification") {
     mlr.task = makeClassifTask(data = data, target = target)
   } else if (task.type == "Supervised Regression") {
