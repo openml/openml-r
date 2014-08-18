@@ -11,7 +11,8 @@ downloadOpenMLDataAsMlrTask(name, dir = tempdir(), clean.up = TRUE,
 The name of the data set.}
 
 \item{dir}{[\code{character}]\cr
-The directory where intermediate files are stored. If clean.up = TRUE, this does not matter.
+The directory where intermediate files are stored.
+If clean.up = TRUE, this does not matter.
 Default is the session's temporary directory.}
 
 \item{clean.up}{[\code{loigcal}]\cr
