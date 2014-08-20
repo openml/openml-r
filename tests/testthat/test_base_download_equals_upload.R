@@ -4,7 +4,7 @@ context("is downloaded = uploaded implementation")
 test_that("is downloaded = uploaded implementation", {
   learner = makeLearner("classif.J48")
   impl.ul = createOpenMLImplementationForMLRLearner(learner)
-  impl.dl = downloadOpenMLImplementation(id = 362, dir = tempdir())
+  impl.dl = downloadOpenMLImplementation(id = 362, dir = tempdir(), clean.up = TRUE)
 
   slots = names(formals(makeOpenMLImplementation))
   server.added.slots = c("id", "uploader", "version", "upload.date", "source.url",

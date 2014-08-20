@@ -30,12 +30,12 @@ runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats
   checkArg(task, "OpenMLTask")
   checkArg(learner, "Learner")
   checkArg(return.mlr.results, "logical")
-  if((task$task.type == "Supervised Classification" && learner$type != "classif") ||
-    (task$task.type == "Supervised Regression" && learner$type != "regr"))
-    stopf("Learner type ('%s') does not correspond to task type ('%s').", task$task.type, learner$type)
+  if ((task$type == "Supervised Classification" && learner$type != "classif") ||
+    (task$type == "Supervised Regression" && learner$type != "regr"))
+    stopf("Learner type ('%s') does not correspond to task type ('%s').", task$type, learner$type)
   mlr.task = toMLR(task)
   
-  if(remove.const.feats)
+  if (remove.const.feats)
     mlr.task$mlr.task = removeConstantFeatures(x = mlr.task$mlr.task, ...)
   
   res = resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures)
@@ -44,7 +44,7 @@ runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats
     run.pred = pred, 
     mlr.resample.results = res
   )  
-  if(!return.mlr.results) {
+  if (!return.mlr.results) {
     results$mlr.resample.results = NULL
     results = results$run.pred
   }
@@ -76,8 +76,8 @@ runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats
 reformatPredictions = function(pred, task) {
   iter = pred$iter
   n = length(iter)
-  folds = task$task.estimation.procedure$parameters$number_folds
-  reps = task$task.estimation.procedure$parameters$number_repeats
+  folds = task$estimation.procedure$parameters$number_folds
+  reps = task$estimation.procedure$parameters$number_repeats
   rep = rep(1:reps, each = n/reps)
   fold = iter %% folds
   fold[fold == 0] = folds
@@ -86,15 +86,15 @@ reformatPredictions = function(pred, task) {
   # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
   new_pred = data.frame(rep = rep - 1, fold = fold - 1, row_id = rowid - 1, prediction = pred$response)
   
-  if(task$task.type == "Supervised Classification") {
+  if (task$type == "Supervised Classification") {
     classes = levels(pred$response)
     probs = c()
-    if(all(sprintf("prob.%s", classes) %in% colnames(pred))) {
-      for(i in 1:length(classes)) {
+    if (all(sprintf("prob.%s", classes) %in% colnames(pred))) {
+      for (i in 1:length(classes)) {
         probs = cbind(probs, pred[, sprintf("prob.%s", classes[i])])
       }
     } else {
-      for(i in 1:length(classes)) {
+      for (i in 1:length(classes)) {
         probs = cbind(probs, ifelse(pred$response == classes[i], 1, 0))
       } 
     }

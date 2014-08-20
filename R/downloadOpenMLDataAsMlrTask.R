@@ -3,13 +3,16 @@
 
 #' @title Download an OpenML data set and convert it into an mlr task.
 #'
-#' @param name [\code{character}]\cr
+#' @param name [\code{character(1)}]\cr
 #'   The name of the data set.
-#' @param dir [\code{character}]\cr
+#' @param version [\code{numeric(1)}]\cr
+#'   Version that should be downloaded. Must be an integer. If this is missing or the version
+#'   is not available, the latest version of the data set is downloaded.
+#' @param dir [\code{character(1)}]\cr
 #'   The directory where intermediate files are stored.
 #'   If clean.up = TRUE, this does not matter.
 #'   Default is the session's temporary directory.
-#' @param clean.up [\code{loigcal}]\cr
+#' @param clean.up [\code{loigcal(1)}]\cr
 #'   Should the downloaded files be removed from disk at the end?
 #'   Default is \code{TRUE}.
 #' @param show.info [\code{logical(1)}]\cr
@@ -17,7 +20,9 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
-downloadOpenMLDataAsMlrTask = function(name, dir = tempdir(), clean.up = TRUE, show.info = TRUE) {
+downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up = TRUE, 
+  show.info = TRUE) {
+  
   assertString(name)
   assertDirectory(dir, access = "w")
   assertFlag(clean.up)
@@ -36,12 +41,23 @@ downloadOpenMLDataAsMlrTask = function(name, dir = tempdir(), clean.up = TRUE, s
   })
 
   # get id for given dataset name
-  query = paste0("SELECT did, default_target_attribute FROM dataset WHERE name = '", name, "'")
+  query = paste0("SELECT did, default_target_attribute, version FROM dataset WHERE name = '", 
+    name, "'")
+  
   res = runSQLQuery(query)
   if (nrow(res) == 0L)
     stopf("No data set on OpenML server found for: %s", name)
-  id = res[1L, "did"]
-  target = res[1, "default_target_attribute"]
+  
+  if (!missing(version) && version %nin% res$version) {
+    warningf("Version '%i' not available. Downloading latest version instead. \n", version)
+    version = max(res$version)
+  } else if (missing(version)) {
+    version = max(res$version)
+  }
+  row = which(res$version == version)
+  
+  id = res[row, "did"]
+  target = res[row, "default_target_attribute"]
 
   if (show.info) {
     messagef("Downloading data set '%s' from OpenML repository.", name)

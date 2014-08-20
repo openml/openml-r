@@ -3,7 +3,7 @@ context("runTask")
 test_that("runTask", {
   for(id in 1:2) {
     task = downloadOpenMLTask(id)
-    if(task$task.type == "Supervised Classification") {
+    if (task$type == "Supervised Classification") {
       lrn = makeLearner("classif.rpart")
     } else {
       lrn = makeLearner("regr.lm")
