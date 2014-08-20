@@ -41,22 +41,26 @@ createMLRResampleInstance = function(estim.proc, mlr.task) {
   type = estim.proc$type
   n.repeats = estim.proc$parameters[["number_repeats"]]
   n.folds = estim.proc$parameters[["number_folds"]]
+  percentage = as.numeric(estim.proc$parameters[["percentage"]])
   data.splits = estim.proc$data.splits
+  #FIXME why is stratify TRUE here? does the server always prdoced stratified
+  # resampling for classif? check this
+  stratify = (mlr.task$task.desc$type == "classif")
   # FIXME : more resampling
   if (type == "crossvalidation") {
-    #FIXME why is stratify TRUE here? does the server always prdoced stratified
-    # resampling for classif? check this
-    stratify = (mlr.task$task.desc$type == "classif")
     if (n.repeats == 1L)
       mlr.rdesc = makeResampleDesc("CV", iters = n.folds, stratify = stratify)
     else 
       mlr.rdesc = makeResampleDesc("RepCV", reps = n.repeats, folds = n.folds, stratify = stratify)
+    mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)  
+  } else if (type == "holdout") {
+    mlr.rdesc = makeResampleDesc("Holdout", split = 1 - percentage/100)
+    mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
+    n.folds = 1
   } else {
     stopf("Unsupported estimation procedure type: %s", type)
   }
-  mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)  
   iter = 1L
-  #print(table(data.splits$rep, data.splits$fold, data.splits$type))
   for (r in 1:n.repeats) {
     for (f in 1:n.folds) {
       d = subset(data.splits, rep ==  r & data.splits$fold == f)
@@ -66,6 +70,8 @@ createMLRResampleInstance = function(estim.proc, mlr.task) {
     }
   }
   return(mlr.rin)
+  #print(table(data.splits$rep, data.splits$fold, data.splits$type))
+
 }
 
 # FIXME: add more metrics/measures.
