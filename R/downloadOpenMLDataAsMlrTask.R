@@ -28,9 +28,6 @@ downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up 
   assertFlag(clean.up)
   assertFlag(show.info)
 
-  fn.data.set.desc = file.path(dir, "data_set_description.xml")
-  fn.data.set = file.path(dir, "data_set.arff")
-
   on.exit({
     if (clean.up) {
       unlink(fn.data.set.desc)
@@ -64,6 +61,9 @@ downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up 
     messagef("Intermediate files (XML and ARFF) will be stored in : %s", dir)
   }
 
+  fn.data.set.desc = file.path(dir, sprintf("data_set_desc_%s_v%i.xml", name, version))
+  fn.data.set = file.path(dir, sprintf("data_set_%s_v%i.arff", name, version))
+  
   downloadOpenMLDataSetDescription(id = id, file = fn.data.set.desc, show.info = show.info)
   data.desc = parseOpenMLDataSetDescription(file = fn.data.set.desc)
   downloadOpenMLDataSet(data.desc$url, fn.data.set, show.info)
