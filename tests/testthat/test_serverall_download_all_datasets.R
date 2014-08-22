@@ -1,10 +1,14 @@
 context("download all data sets")
 
 # we download "most" data sets, because large ones might cause runtime and mem problems currently
+# we also only download the safe data and most recent version
+
 
 test_that("download all data sets", {
   quals = getDataQualities()
-  quals2 = subset(quals, NumberOfInstances <= 10000 & NumberOfFeatures <= 1000)
+  dsets = getOpenMLDatasetNames()
+  quals2 = subset(quals, dataset %in% dsets$name & NumberOfInstances <= 10000 & NumberOfFeatures <= 100)
+
   ids = quals2$dataset
 
   for (i in ids) {
