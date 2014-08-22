@@ -8,7 +8,7 @@
 
 #FIXME: document better
 
-getOpenMLDatasetNames = function(only.newest = TRUE) {
+getOpenMLDatasetNames = function() {
   file = tempfile()
   downloadAPICallFile(api.fun = "openml.data.safe", file = file, show.info = FALSE)
   doc = parseXMLResponse(file, "Getting safe data set names", "data-safe")
@@ -19,12 +19,6 @@ getOpenMLDatasetNames = function(only.newest = TRUE) {
     stringsAsFactors = FALSE
   )
 
-  # reduce to most recent version
-  if (only.newest) {
-    d = ddply(d, "name", function(d) {
-      d[which.max(d$version), ]
-    })
-  }
   return(d)
 }
 

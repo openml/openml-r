@@ -20,9 +20,9 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
-downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up = TRUE, 
+downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up = TRUE,
   show.info = TRUE) {
-  
+
   assertString(name)
   assertDirectory(dir, access = "w")
   assertFlag(clean.up)
@@ -38,13 +38,15 @@ downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up 
   })
 
   # get id for given dataset name
-  query = paste0("SELECT did, default_target_attribute, version FROM dataset WHERE name = '", 
+  query = paste0("SELECT did, default_target_attribute, version FROM dataset WHERE name = '",
     name, "'")
-  
+
   res = runSQLQuery(query)
   if (nrow(res) == 0L)
     stopf("No data set on OpenML server found for: %s", name)
-  
+
+  #FIXME: it does not really make sense to only download the latest version.
+  # MAYBE set version to 1 by default.
   if (!missing(version) && version %nin% res$version) {
     warningf("Version '%i' not available. Downloading latest version instead. \n", version)
     version = max(res$version)
@@ -52,7 +54,7 @@ downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up 
     version = max(res$version)
   }
   row = which(res$version == version)
-  
+
   id = res[row, "did"]
   target = res[row, "default_target_attribute"]
 
@@ -63,7 +65,7 @@ downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up 
 
   fn.data.set.desc = file.path(dir, sprintf("data_set_desc_%s_v%i.xml", name, version))
   fn.data.set = file.path(dir, sprintf("data_set_%s_v%i.arff", name, version))
-  
+
   downloadOpenMLDataSetDescription(id = id, file = fn.data.set.desc, show.info = show.info)
   data.desc = parseOpenMLDataSetDescription(file = fn.data.set.desc)
   downloadOpenMLDataSet(data.desc$url, fn.data.set, show.info)

@@ -1,8 +1,6 @@
 context("download all data sets")
 
-# we download "most" data sets, because large ones might cause runtime and mem problems currently
-# we also only download the safe data and most recent version
-
+# we download "most" safe data sets, because large ones might cause runtime and mem problems currently
 
 test_that("download all data sets", {
   quals = getDataQualities()

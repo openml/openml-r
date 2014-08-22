@@ -14,7 +14,7 @@
 #' @export
 
 # FIXME: use API call
-# FIXME: how are data set versions dealt with?
+# FIXME: how are data set versions dealt with? we need to see them
 
 getDataQualities = function(set = "basic") {
   assertChoice(set, c("all", "basic"))
