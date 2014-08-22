@@ -7,11 +7,15 @@
 #'
 #' @param set [\code{character(1)}]\cr
 #'   Either \code{"basic"}, which means only rudimentary data qualities (number of features/instances/classes/missing values/...)
-#'   are retrieved, or \code{"all"}. The latter includes 'basic' data qualities as well as meta learning features. 
+#'   are retrieved, or \code{"all"}. The latter includes 'basic' data qualities as well as meta learning features.
 #'   Default is \code{"basic"}.
 #'
 #' @return [\code{data.frame}]. Rows correspond to data sets, columns to data qualities.
 #' @export
+
+# FIXME: use API call
+# FIXME: how are data set versions dealt with?
+
 getDataQualities = function(set = "basic") {
   assertChoice(set, c("all", "basic"))
 
@@ -29,6 +33,7 @@ getDataQualities = function(set = "basic") {
     "FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY dataset")
 
   res = runSQLQuery(query)
+  rownames(res) = res$dataset
   return(res)
 }
 
