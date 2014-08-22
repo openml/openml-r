@@ -15,7 +15,8 @@ getOpenMLDatasetNames = function(only.newest = TRUE) {
   d = data.frame(
     did = xmlValsMultNsI(doc, path = "/oml:data-safe/oml:data/oml:did"),
     name = xmlValsMultNsS(doc, path = "/oml:data-safe/oml:data/oml:name"),
-    version = xmlValsMultNsI(doc, path = "/oml:data-safe/oml:data/oml:version")
+    version = xmlValsMultNsI(doc, path = "/oml:data-safe/oml:data/oml:version"),
+    stringsAsFactors = FALSE
   )
 
   # reduce to most recent version
