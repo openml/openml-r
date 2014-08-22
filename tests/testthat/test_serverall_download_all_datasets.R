@@ -1,14 +1,13 @@
 context("download all data sets")
 
+# we download "most" data sets, because large ones might cause runtime and mem problems currently
+
 test_that("download all data sets", {
-  ids = getOpenMLDatasetNames()
+  quals = getDataQualities()
+  quals2 = subset(quals, NumberOfInstances <= 10000 & NumberOfFeatures <= 1000)
+  ids = quals2$dataset
 
-  # remove some simulated data sets. they just take too long as they are large
-  j1 = str_detect(ids, "^BNG")
-  j2 = str_detect(ids, "^RandomRBF")
-  ids = ids[!(j1 | j2)]
-
-  for (i in ids[101:150]) {
+  for (i in ids) {
     print(i)
     task = downloadOpenMLDataAsMlrTask(i, show.info = FALSE, clean.up = TRUE)
     ds = task$env$data
