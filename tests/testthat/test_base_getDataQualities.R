@@ -8,4 +8,5 @@ test_that("getDataQualities", {
   expect_is(dq1, "data.frame")
   expect_is(dq2, "data.frame")
   expect_equal(ncol(dq2), length(dqn) + 1)
+  expect_true(setequal(make.names(dqn), colnames(dq2)[-1]))
 })

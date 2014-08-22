@@ -33,8 +33,12 @@ downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binar
   downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, 
     show.info = show.info)  
   impl = parseOpenMLImplementation(fn.impl.xml)
-  if(clean.up)
-    unlink(fn.impl.xml)
+  
+  on.exit({
+    if(clean.up)
+      unlink(fn.impl.xml)
+  })
+  
   if (download.source.binary) {
     if (!is.na(impl$source.url)) {
       if (show.info)
@@ -66,7 +70,7 @@ parseOpenMLImplementation = function(file) {
   args[["id"]] = xmlRValI(doc, "/oml:implementation/oml:id")
   args[["name"]] = xmlRValS(doc, "/oml:implementation/oml:name")
   args[["version"]] = xmlRValS(doc, "/oml:implementation/oml:version")
-  args[["external.version"]] = xmlRValS(doc, "/oml:implementation/oml:external_version")
+  args[["external.version"]] = xmlOValS(doc, "/oml:implementation/oml:external_version")
   args[["description"]] = xmlRValS(doc, "/oml:implementation/oml:description")
   args[["creator"]] = xmlValsMultNsS(doc, "/oml:implementation/oml:creator")
   args[["contributor"]] = xmlValsMultNsS(doc, "/oml:implementation/oml:contributor")
