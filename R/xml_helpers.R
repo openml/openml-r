@@ -84,8 +84,12 @@ xmlValsMultNs = function(doc, path, fun, val) {
   vapply(ns, function(x) fun(xmlValue(x)), val)
 }
 
-xmlValsMultNsS = function(doc, path, fun) {
+xmlValsMultNsS = function(doc, path) {
   xmlValsMultNs(doc, path, as.character, character(1))
+}
+
+xmlValsMultNsI = function(doc, path) {
+  xmlValsMultNs(doc, path, as.integer, integer(1))
 }
 
 expectXMLType = function(file, doc, type) {
