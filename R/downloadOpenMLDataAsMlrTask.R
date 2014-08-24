@@ -20,9 +20,11 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
-downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up = TRUE,
+downloadOpenMLDataAsMlrTask = function(name, version = 1, dir = tempdir(), clean.up = TRUE,
   show.info = TRUE) {
 
+  fn.data.set.desc = fn.data.set = NULL
+  
   assertString(name)
   assertDirectory(dir, access = "w")
   assertFlag(clean.up)
@@ -30,8 +32,8 @@ downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up 
 
   on.exit({
     if (clean.up) {
-      unlink(fn.data.set.desc)
-      unlink(fn.data.set)
+      if (!is.null(fn.data.set.desc)) unlink(fn.data.set.desc)
+      if (!is.null(fn.data.set)) unlink(fn.data.set)
       if (show.info)
         messagef("All intermediate XML and ARFF files are now removed.")
     }
@@ -45,14 +47,10 @@ downloadOpenMLDataAsMlrTask = function(name, version, dir = tempdir(), clean.up 
   if (nrow(res) == 0L)
     stopf("No data set on OpenML server found for: %s", name)
 
-  #FIXME: it does not really make sense to only download the latest version.
-  # MAYBE set version to 1 by default.
-  if (!missing(version) && version %nin% res$version) {
+  if (version %nin% res$version) {
     warningf("Version '%i' not available. Downloading latest version instead. \n", version)
     version = max(res$version)
-  } else if (missing(version)) {
-    version = max(res$version)
-  }
+  } 
   row = which(res$version == version)
 
   id = res[row, "did"]
