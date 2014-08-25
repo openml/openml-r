@@ -33,7 +33,8 @@ Sometimes data sets have more than one version. The default is to download the f
 mlr.task = downloadOpenMLDataAsMlrTask(name = "iris", version = 2)
 ```
 
-It is recommended to download the first version if you do not have a clue what is different (or better) in a later version of the data set.
+It is recommended to download the first version if you do not know about what is different in a later version.
+
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:    
 [1 Introduction](1-Introduction.md)    

@@ -1,11 +1,11 @@
 Upload predictions
 ==================
 
-Predictions have to be uploaded in a standardized form. In the slot 'task.preds', every task contains information on which columns must be supplied. For supervised classification and regression tasks, these are:
-* repeat 
-* fold 
-* row_id     
-* prediction  
+Predictions have to be uploaded in a standardized form. The call `task$preds$features` gives us the expected column names and their types. For supervised classification and regression tasks, these are:
+* repeat (integer)
+* fold (integer)
+* row_id (integer)   
+* prediction (string)
 
 and additionally, in case of a classification task:
 * confidence.*classname_1* 
@@ -47,12 +47,12 @@ run.ul = uploadOpenMLRun(task = task,
   session.hash = hash)
 ```
 
-If you do not work with mlr, you must create a run parameter list. This is a list that contains an `OpenMLRunParameter` for every parameter **whose setting varies from the default**. The class `OpenMLRunParameter` has the following slots: 
+If you do not work with mlr, you must create a run parameter list. This is a list that contains an `OpenMLRunParameter` for each parameter **whose setting varies from the default**. The class `OpenMLRunParameter` has the following members: 
 * name
 * value 
-* component (Optional and only needed if the parameter belongs to a (sub-)component of the implementation. Then, the name of this component must be handed over here.)
+* component (optional and only needed if the parameter belongs to a (sub-)component of the implementation. Then, the name of this component must be handed over here.)
 
-Let's continue with the fictive example from [section 3](3-Upload-an-implementation.md) and assume, that we set the parameter "a" to a value of 300. Parameter "b" on the other hand remains in the default setting. 
+Let's continue with the fictive example from [section 3](3-Upload-an-implementation.md) and assume that we set the parameter "a" to a value of 300. Parameter "b" on the other hand remains in the default setting. 
 
 ```splus
 run.par.a = OpenMLRunParameter(

@@ -30,7 +30,7 @@ If you are not using mlr, you will have to invest quite a bit more time to get t
 
 The following example shows how to create an OpenML implementation description object manually.
 
-First, create an implementation parameter list. This is a list that contains an `OpenMLImplementationParameter` for every parameter of your implementation. Let's assume we have written an algorithm that has two parameters called "a" (numeric, default: 500) and "b" (logical, default: TRUE). 
+First, create an implementation parameter list. This is a list that contains an `OpenMLImplementationParameter` for each parameter of your implementation. Let's assume we have written an algorithm that has two parameters called "a" (numeric, default: 500) and "b" (logical, default: TRUE). 
 
 ```splus
 impl.par.a = OpenMLImplementationParameter(

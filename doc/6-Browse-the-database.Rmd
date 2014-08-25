@@ -1,23 +1,28 @@
 Browse the database
 ===================
 
-Data sets have different data qualities and users might want to work on data sets that meet
-certain conditions. 
+To browse the data base for appropriate data sets, you can use the so called data qualities. Data qualities contain basic data characteristics (number of features/instances/classes/missing values etc.) as well as values of more abstract meta learning features. 
 
 ### Get data qualities
 With the function `getDataQualities` you can obtain all data qualities of all stored data sets. 
-By default, only basic data characteristics like the number of features/instances/classes/missing 
-values etc. are retrieved:
+By default, only the basic data characteristics are retrieved:
 
 ```{r eval = FALSE}
 dq = getDataQualities()
 ```
 
 If you want to retrieve not only the basic data qualities but also meta learning features, 
-please use the argument 'set':
+please use the argument "set":
 
 ```{r eval = FALSE}
 dq = getDataQualities(set = "all")
+```
+
+Now, you have a data.frame with some data qualities. You can use them to find data sets that meet certain conditions. Let's assume we want to work on data sets that have only numeric features and not a single missing value:
+
+```{r eval = FALSE}
+filtered.dq = subset(dq, NumberOfNumericFeatures == NumberOfFeatures & NumberOfMissingValues == 0)
+filtered.dq$dataset
 ```
 
 ### Make an arbitrary SQL-query
@@ -29,7 +34,7 @@ you can see in the following example:
 runSQLQuery(query = "SELECT id FROM implementation WHERE name = 'classif.rpart'")
 ```
 
-Note, that most users should not need this function.
+Note that most users should not need this function.
 
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:   

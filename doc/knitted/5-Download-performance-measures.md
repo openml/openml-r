@@ -4,12 +4,12 @@ Download performance measures
 The server computes several performance measures (metrics) for every run that is uploaded and stores these. This makes it possible to easily compare your results to the results of others who have worked on the same task. 
 
 ### Download run results
-To download the results of one of your own runs, you have to know the corresponding run id, which is returned by `uploadOpenMLRun`. In [section 4](4-Upload-predictions.md), we uploaded a run and retrieved a unique run id that we called 'run_ul'. In order to get all stored metrics for this specific run, we can use the function `downloadOpenMLRunResults`:
+To download the results of one of your own runs, you have to know the corresponding run ID, which is returned by `uploadOpenMLRun`. In [section 4](4-Upload-predictions.md), we uploaded a run and retrieved a unique run id that we called "run.ul". In order to get all stored metrics for this specific run, we can use the function `downloadOpenMLRunResults`:
 
 
 ```splus
-run_results = downloadOpenMLRunResults(run_ul)
-run_results@metrics
+run.results = downloadOpenMLRunResults(run.ul)
+run.results@metrics
 ```
 
 ### Download task results
@@ -17,8 +17,8 @@ It is possible to download all stored metrics of all runs of a certain task at t
 
 
 ```splus
-task_results = downloadOpenMLTaskResults(id = 4)
-task_results
+task.results = downloadOpenMLTaskResults(id = 4)
+task.results
 ```
 
 ----------------------------------------------------------------------------------------------------------------------
