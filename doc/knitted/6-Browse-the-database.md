@@ -10,19 +10,17 @@ By default, only basic data characteristics like the number of features/instance
 values etc. are retrieved:
 
 
-```r
-dq <- getDataQualities()
+```splus
+dq = getDataQualities()
 ```
-
 
 If you want to retrieve not only the basic data qualities but also meta learning features, 
 please use the argument 'set':
 
 
-```r
-dq <- getDataQualities(set = "all")
+```splus
+dq = getDataQualities(set = "all")
 ```
-
 
 ### Make an arbitrary SQL-query
 The freest way to browse the OpenML database is by SQL-queries. The function `runSQLQuery` is 
@@ -30,10 +28,9 @@ an interface for any arbitrary SQL-query. The query is passed as a string to the
 you can see in the following example:
 
 
-```r
+```splus
 runSQLQuery(query = "SELECT id FROM implementation WHERE name = 'classif.rpart'")
 ```
-
 
 Note, that most users should not need this function.
 

@@ -30,21 +30,22 @@ Example: An excerpt of predictions (Iris data set, 10-fold CV, 2 repeats).
 If you are working with [mlr](https://github.com/berndbischl/mlr), you can use the OpenML function `runTask` that returns a data.frame of predictions in the desired form:
 
 
-```r
-predictions <- runTask(task, learner)
+```splus
+predictions = runTask(task, learner)
 ```
-
 
 If the prediction type of the learner is set to "response" instead of "prob", the confidence-columns will contain only 0s and 1s as in the example above. Else, the predicted class probabilities will be used.
 
 ### Upload predictions to the server
 To upload the predictions, mlr users only need the following call:
 
-```r
-run.ul <- uploadOpenMLRun(task = task, mlr.lrn = learner, oml.impl = openML.impl, 
-    predictions = predictions, session.hash = hash)
+```splus
+run.ul = uploadOpenMLRun(task = task, 
+  mlr.lrn = learner, 
+  oml.impl = OpenML.impl, 
+  predictions = predictions, 
+  session.hash = hash)
 ```
-
 
 If you do not work with mlr, you must create a run parameter list. This is a list that contains an `OpenMLRunParameter` for every parameter **whose setting varies from the default**. The class `OpenMLRunParameter` has the following slots: 
 * name
@@ -53,20 +54,23 @@ If you do not work with mlr, you must create a run parameter list. This is a lis
 
 Let's continue with the fictive example from [section 3](3-Upload-an-implementation.md) and assume, that we set the parameter "a" to a value of 300. Parameter "b" on the other hand remains in the default setting. 
 
-```r
-run.par.a <- OpenMLRunParameter(name = "a", value = "300")
+```splus
+run.par.a = OpenMLRunParameter(
+  name = "a", 
+  value = "300")  
 
-run.pars <- list(run.par.a)
+run.pars = list(run.par.a)
 ```
-
 
 Now we upload the run. We leave out the argument "mlr.lrn", because we are not using mlr. Instead, we hand over our run parameter list "run.pars":
 
-```r
-run.ul <- uploadOpenMLRun(task = task, oml.impl = openML.impl, predictions = predictions, 
-    run.pars = run.pars, session.hash = hash)
+```splus
+run.ul = uploadOpenMLRun(task = task, 
+  oml.impl = OpenML.impl, 
+  predictions = predictions,
+  run.pars = run.pars,
+  session.hash = hash)
 ```
-
 
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:    
