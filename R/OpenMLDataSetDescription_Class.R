@@ -1,8 +1,3 @@
-#FIXME:  parse date as Date and change slot type
-#FIXME:  upload.date is of class POSIXt, but collection.date is of class character
-# collection.date = "character",
-# upload.date = "POSIXt",
-
 #' @title Construct OpenMLDataSetDescription.
 #'
 #' @param id [\code{integer(1)}]\cr
@@ -39,15 +34,17 @@
 #' @param original.col.names [\code{character}]\cr
 #'   The original column names of the data set. These might not be valid names in R!
 #' @param new.col.names [\code{character}]\cr
-#'   New column names that are actually used in R. These are valid and unique and differ from the original
-#'   column names only if those are invalid. 
+#'   New column names that are actually used in R. These are valid and unique and differ from the 
+#'   original column names only if those are invalid. 
 #' @export
 #' @aliases OpenMLDataSetDescription
-makeOpenMLDataSetDescription = function(id, name, version, description, format, creator = NA_character_, 
-  contributor = NA_character_, collection.date = NA_character_, upload.date,
-  language = NA_character_, licence = NA_character_, url, # default.target.attribute, 
-  row.id.attribute = NA_character_, md5.checksum = NA_character_,
-  data.set, original.col.names = NA_character_, new.col.names = NA_character_) {
+makeOpenMLDataSetDescription = function(id, name, version, description, format, 
+  creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,
+  language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_, 
+  row.id.attribute = NA_character_, version.label = NA_character_, citation = NA_character_, 
+  visibility = NA_character_, original.data.url = NA_character_, paper.url = NA_character_,
+  md5.checksum = NA_character_, data.set, original.col.names = NA_character_, 
+  new.col.names = NA_character_) {
   
   assertIntegerish(id)
   assertString(name)
@@ -61,8 +58,13 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format, 
   assertString(language, na.ok = TRUE)
   assertString(licence, na.ok = TRUE)
   assertString(url)
-  # assertString(default.target.attribute)
+  assertString(default.target.attribute, na.ok = TRUE)
   assertString(row.id.attribute, na.ok = TRUE)
+  assertString(version.label, na.ok = TRUE)
+  assertString(citation, na.ok = TRUE)
+  assertString(visibility, na.ok = TRUE)
+  assertString(original.data.url, na.ok = TRUE)
+  assertString(paper.url, na.ok = TRUE)
   assertString(md5.checksum, na.ok = TRUE)
   assertDataFrame(data.set)
   assertCharacter(original.col.names)
@@ -72,36 +74,37 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format, 
     id = id, name = name, version = version, description = description, format = format,
     creator = creator, contributor = contributor, collection.date = collection.date, 
     upload.date = upload.date, language = language, licence = licence, url = url, 
-    # default.target.attribute = default.target.attribute, 
-    row.id.attribute = row.id.attribute, md5.checksum = md5.checksum, data.set = data.set, 
-    original.col.names = original.col.names, new.col.names = new.col.names)
+    default.target.attribute = default.target.attribute,row.id.attribute = row.id.attribute, 
+    version.label = version.label, citation = citation, visibility = visibility, 
+    original.data.url = original.data.url, paper.url = paper.url, md5.checksum = md5.checksum, 
+    data.set = data.set, original.col.names = original.col.names, new.col.names = new.col.names)
 }
 
 # ***** Methods *****
 
 #' @export
 print.OpenMLDataSetDescription = function(x, ...) {
-  # incorrect indentation to see aligment!
-  catf('\nDataset %s :: (openML ID = %i, version = %s)', x$name, x$id, x$version)
-  catf('\tCreator          : %s', x$creator)
-  if (length(x$contributor) > 0)
-    catf('\tContributor      : %s', x$contributor)
-  catf('\tCollection Date  : %s', x$collection.date)
-  catf('\tUpload Date      : %s', x$upload.date)
-  if (x$licence != '')
-    catf('\tLicence          : %s', x$licence)
-  catf('\tURL              : %s', x$url)
-  if (x$language != '')
-    catf('\tLanguage         : %s', x$language)
-  catf('\tFormat           : %s', x$format)
-  if (x$row.id.attribute != '')
-    catf('\tRow Id Attr.  	 : %s', x$row.id.attribute)
-  if (x$md5.checksum != '')
-    catf('\tmd5 Check Sum    : %s', x$md5.checksum)
-  catf('\tDescription :')
-  cat(collapse(paste('\t\t', strwrap(x$description), '\n'), sep=''))
-  cat('\n')
-  catf('\tData :')
-  catf(printStrToChar(x$data.set))
+  catfNotNA = function(text, obj) {
+    if (!all(is.na(obj)))
+      catf(text, collapse(obj, sep = "; "))
+  }
+  # Wrong indentation to see alignment
+  catf('\nData Set "%s" :: (OpenML ID = %i, Version = %s)', x$name, x$id, x$version)
+  catfNotNA('\tCreator(s)     : %s', x$creator)
+  catfNotNA('\tContributor(s) : %s', x$contributor)
+  catfNotNA('\tCollection Date: %s', x$collection.date)
+       catf('\tUpload Date    : %s', x$upload.date)
+  catfNotNA('\tLicence        : %s', x$licence)
+       catf('\tURL            : %s', x$url)
+  catfNotNA('\tLanguage       : %s', x$language)
+       catf('\tFormat         : %s', x$format)
+  catfNotNA('\tRow Id Attr.  	: %s', x$row.id.attribute)
+  catfNotNA('\tmd5 Check Sum  : %s', x$md5.checksum)
+       catf('\tDescription    :')
+  # FIXME: This way, there are too many linebreaks.
+  desc = str_replace_all(x$description, pattern="\n", replacement="\n \n")
+  # getOption("width") - 20 is a heuristic to keep the description readable
+  cat(collapse(paste('\t\t', strwrap(desc, width = getOption("width") - 20), '\n'), sep = ''))
+       catf('\n\tData           :')
+  cat(collapse(paste('\t\t', unlist(strsplit(printStrToChar(x$data.set), '\n')), '\n'), sep = ''))
 }
-

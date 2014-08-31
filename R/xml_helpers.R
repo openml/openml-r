@@ -88,6 +88,14 @@ xmlValsMultNsS = function(doc, path) {
   xmlValsMultNs(doc, path, as.character, character(1))
 }
 
+xmlOValsMultNsS = function(doc, path) {
+  val = xmlValsMultNs(doc, path, as.character, character(1))
+  if (length(val) == 0)
+    return(NULL)
+  else
+    return(val)
+}
+
 xmlValsMultNsI = function(doc, path) {
   xmlValsMultNs(doc, path, as.integer, integer(1))
 }

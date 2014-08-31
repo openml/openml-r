@@ -1,11 +1,11 @@
 downloadOpenMLDataSetDescription = function(id, file, show.info) {
-  checkArg(id, "integer", len = 1L, na.ok = FALSE)
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
+  checkIntegerish(id)
+  checkPathForOutput(file)
   downloadAPICallFile(api.fun = "openml.data.description", file = file, data.id = id, show.info = show.info)
 }
 
 parseOpenMLDataSetDescription = function(file) {
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
+  checkFile(file)
   doc = parseXMLResponse(file, "Getting data set description", "data_set_description")
 
   args = list()
@@ -14,21 +14,22 @@ parseOpenMLDataSetDescription = function(file) {
   args[["version"]] = xmlRValS(doc, "/oml:data_set_description/oml:version")
   args[["description"]] = xmlRValS(doc, "/oml:data_set_description/oml:description")
   args[["format"]] = xmlRValS(doc, "/oml:data_set_description/oml:format")
-  args[["creator"]] = xmlValsMultNsS(doc, "/oml:data_set_description/oml:creator")
-  args[["contributor"]] = xmlValsMultNsS(doc, "/oml:data_set_description/oml:contributor")
+  args[["creator"]] = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:creator")
+  args[["contributor"]] = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:contributor")
   args[["collection.date"]] = xmlOValS(doc, "/oml:data_set_description/oml:collection_date")
   args[["upload.date"]] = xmlRValD(doc, "/oml:data_set_description/oml:upload_date")
   args[["language"]] = xmlOValS(doc, "/oml:data_set_description/oml:language")
   args[["licence"]] = xmlOValS(doc, "/oml:data_set_description/oml:licence")
   args[["url"]] = xmlRValS(doc, "/oml:data_set_description/oml:url")
+  args[["default.target.attribute"]] = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute")
   args[["row.id.attribute"]] = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute")
+  args[["version.label"]] = xmlOValS(doc, "/oml:data_set_description/oml:version_label")
+  args[["citation"]] = xmlOValS(doc, "/oml:data_set_description/oml:citation")
+  args[["visibility"]] = xmlOValS(doc, "/oml:data_set_description/oml:visibility")
+  args[["original.data.url"]] = xmlOValS(doc, "/oml:data_set_description/oml:original_data_url")
+  args[["paper.url"]] = xmlOValS(doc, "/oml:data_set_description/oml:paper.url")
   args[["md5.checksum"]] = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum")
   args[["data.set"]] = data.frame()
 
   dsd = do.call(makeOpenMLDataSetDescription, args)
-  convertOpenMLDataSetDescription(dsd)
-}
-
-convertOpenMLDataSetDescription = function(dsd) {
-  dsd
 }
