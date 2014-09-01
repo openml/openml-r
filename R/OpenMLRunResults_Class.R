@@ -32,11 +32,11 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
   output.data = OpenMLData()
 ) {
   
-  assertIntegerish(run.id)
-  assertIntegerish(uploader)
-  assertIntegerish(task.id)
+  assertInt(run.id)
+  assertInt(uploader)
+  assertInt(task.id)
   assertString(implementation.id)
-  assertIntegerish(setup.id)
+  assertInt(setup.id)
   assertString(error.message, na.ok = TRUE)
   assertList(parameter.setting)
   assertClass(input.data, "OpenMLData")

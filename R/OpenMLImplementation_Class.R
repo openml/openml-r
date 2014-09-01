@@ -85,8 +85,8 @@ makeOpenMLImplementation = function(
   binary.md5 = NA_character_
   ) {
   
-  assertIntegerish(id)
-  assertIntegerish(uploader)
+  assertInt(id)
+  assertInt(uploader)
   assertString(name)
   assertString(version, na.ok = TRUE)
   assertString(external.version, na.ok = TRUE)

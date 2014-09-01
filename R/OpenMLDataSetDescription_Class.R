@@ -46,7 +46,7 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
   md5.checksum = NA_character_, data.set, original.col.names = NA_character_, 
   new.col.names = NA_character_) {
   
-  assertIntegerish(id)
+  assertInt(id)
   assertString(name)
   assertString(version)
   assertString(description)

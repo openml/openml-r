@@ -27,11 +27,11 @@ makeOpenMLTask = function(id, type, pars = list(), target.features = NA_characte
   data.desc.id, data.desc = NULL, estimation.procedure, preds = list(),
   evaluation.measures) {
 
-  assertIntegerish(id)
+  assertInt(id)
   assertString(type)
   assertList(pars)
   assertCharacter(target.features)
-  assertIntegerish(data.desc.id)
+  assertInt(data.desc.id)
   if (!is.null(data.desc))
     assertClass(data.desc, "OpenMLDataSetDescription")
   if (!is.null(estimation.procedure))

@@ -1,5 +1,5 @@
 downloadOpenMLDataSetDescription = function(id, file, show.info) {
-  assertIntegerish(id)
+  id = asInt(id)
   assertPathForOutput(file, overwrite = TRUE)
   downloadAPICallFile(api.fun = "openml.data.description", file = file, data.id = id, show.info = show.info)
 }

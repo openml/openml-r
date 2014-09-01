@@ -23,7 +23,7 @@
 downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binary = TRUE, 
   show.info = TRUE, clean.up = FALSE) {
   
-  assertIntegerish(id)
+  id = asInt(id)
   assertDirectory(dir)
   assertFlag(download.source.binary)
   assertFlag(show.info)
