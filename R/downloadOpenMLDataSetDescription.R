@@ -1,11 +1,11 @@
 downloadOpenMLDataSetDescription = function(id, file, show.info) {
-  checkIntegerish(id)
-  checkPathForOutput(file)
+  assertIntegerish(id)
+  assertPathForOutput(file, overwrite = TRUE)
   downloadAPICallFile(api.fun = "openml.data.description", file = file, data.id = id, show.info = show.info)
 }
 
 parseOpenMLDataSetDescription = function(file) {
-  checkFile(file)
+  assertFile(file)
   doc = parseXMLResponse(file, "Getting data set description", "data_set_description")
 
   args = list()
