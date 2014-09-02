@@ -3,19 +3,23 @@
 \alias{downloadOpenMLDataAsMlrTask}
 \title{Download an OpenML data set and convert it into an mlr task.}
 \usage{
-downloadOpenMLDataAsMlrTask(name, dir = tempdir(), clean.up = TRUE,
-  show.info = TRUE)
+downloadOpenMLDataAsMlrTask(name, version = 1, dir = tempdir(),
+  clean.up = TRUE, show.info = TRUE)
 }
 \arguments{
-\item{name}{[\code{character}]\cr
+\item{name}{[\code{character(1)}]\cr
 The name of the data set.}
 
-\item{dir}{[\code{character}]\cr
+\item{version}{[\code{numeric(1)}]\cr
+Version that should be downloaded. Must be an integer. If this is missing or the version
+is not available, the latest version of the data set is downloaded.}
+
+\item{dir}{[\code{character(1)}]\cr
 The directory where intermediate files are stored.
 If clean.up = TRUE, this does not matter.
 Default is the session's temporary directory.}
 
-\item{clean.up}{[\code{loigcal}]\cr
+\item{clean.up}{[\code{loigcal(1)}]\cr
 Should the downloaded files be removed from disk at the end?
 Default is \code{TRUE}.}
 

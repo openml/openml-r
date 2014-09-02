@@ -7,7 +7,10 @@
 makeOpenMLDataSetDescription(id, name, version, description, format,
   creator = NA_character_, contributor = NA_character_,
   collection.date = NA_character_, upload.date, language = NA_character_,
-  licence = NA_character_, url, row.id.attribute = NA_character_,
+  licence = NA_character_, url, default.target.attribute = NA_character_,
+  row.id.attribute = NA_character_, version.label = NA_character_,
+  citation = NA_character_, visibility = NA_character_,
+  original.data.url = NA_character_, paper.url = NA_character_,
   md5.checksum = NA_character_, data.set,
   original.col.names = NA_character_, new.col.names = NA_character_)
 }
@@ -62,8 +65,8 @@ The data set.}
 The original column names of the data set. These might not be valid names in R!}
 
 \item{new.col.names}{[\code{character}]\cr
-New column names that are actually used in R. These are valid and unique and differ from the original
-column names only if those are invalid.}
+New column names that are actually used in R. These are valid and unique and differ from the
+original column names only if those are invalid.}
 }
 \description{
 Construct OpenMLDataSetDescription.

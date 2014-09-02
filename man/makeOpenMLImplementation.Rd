@@ -28,8 +28,10 @@ The name of the implementation. Name-version combinations should be unique.\cr
 Allowed characters: () [] a-z A-Z 0-9 . _ - +}
 
 \item{version}{[\code{character(1)}]\cr
-The version of the implementation.\cr
-Allowed characters: () [] a-z A-Z 0-9 . _ - +}
+The version of the implementation. Default is 1.0. Ignored at upload time.}
+
+\item{external.version}{[\code{character(1)}]\cr
+An external version, defined by the user. In combination with the name, it must be unique.}
 
 \item{description}{[\code{character(1)}]\cr
 A user description of the implementation.}

@@ -9,8 +9,9 @@
 #'   The name of the implementation. Name-version combinations should be unique.\cr 
 #'   Allowed characters: () [] a-z A-Z 0-9 . _ - +
 #' @param version [\code{character(1)}]\cr
-#'   The version of the implementation.\cr 
-#'   Allowed characters: () [] a-z A-Z 0-9 . _ - +
+#'   The version of the implementation. Default is 1.0. Ignored at upload time.
+#' @param external.version [\code{character(1)}]\cr
+#'   An external version, defined by the user. In combination with the name, it must be unique.
 #' @param description [\code{character(1)}]\cr
 #'   A user description of the implementation.
 #' @param creator [\code{character}]\cr
@@ -85,8 +86,8 @@ makeOpenMLImplementation = function(
   binary.md5 = NA_character_
   ) {
   
-  assertInt(id)
-  assertInt(uploader)
+  assertInt(id, na.ok = TRUE)
+  assertInt(uploader, na.ok = TRUE)
   assertString(name)
   assertString(version, na.ok = TRUE)
   assertString(external.version, na.ok = TRUE)
@@ -145,82 +146,86 @@ makeOpenMLImplementation = function(
 # show
 #' @export
 print.OpenMLImplementation = function(x, ...)  {
-  catNotNA = function(s, val) {
-    if (!is.na(val)) 
-      catf("%s %s", s, val)
+  catfNotNA = function(text, obj) {
+    if (!all(is.na(obj)))
+      catf(text, collapse(obj, sep = "; "))
   }
-  
+
   ## General implementation info
-  catf('\n** Implementation Information **')
+  catf('\nFlow "%s" :: (OpenML ID = %i, Version = %s)', x$name, x$id, x$version)
+  catfNotNA('\tExternal Version         : %s', x$external.version)
+  catfNotNA('\tCreator(s)               : %s', x$creator)
   
-  catNotNA('ID               :: ', x$id)
-  catNotNA('Name             :: ', x$name)
-  catNotNA('OpenML Version   :: ', x$version)
-  catNotNA('External Version :: ', x$external.version)
-  
-  ## Authors and contributors
-  if (length(x$creator) > 0) {
-    cat('\nCreator(s)     :: ')
-    cat(collapse(x$creator, sep = ", "))
-  }
+  # Contributors
   if (length(x$contributor) > 0) {
-    cat('\nContributor(s) :: ')
-    cat(collapse(x$contributor, sep = ", "))
+    cons.chars = getOption("width") - 2 - 34
+    rest.names = x$contributor
+    nr.fitting.names = sum(cumsum(str_length(rest.names) + 2) <= cons.chars)
+    cat.out = paste0('\tContributor(s)           : ', 
+                     collapse(rest.names[1:nr.fitting.names], sep = "; "))
+    if (nr.fitting.names != length(rest.names))
+      cat.out = paste0(cat.out, ";")
+    rest.names = rest.names[-c(1:nr.fitting.names)]
+    cons.chars = cons.chars + 20
+    while (length(rest.names) > 0) {
+      nr.fitting.names = sum(cumsum(str_length(rest.names) + 2) <= cons.chars)
+      cat.out = paste0(cat.out, '\t\t', collapse(rest.names[1:nr.fitting.names], sep = "; "))
+      if (nr.fitting.names != length(rest.names))
+        cat.out = paste0(cat.out, ";")
+      rest.names = rest.names[-c(1:nr.fitting.names)]
+    }
+    cat.out = paste0(cat.out, '\n\n')
+    cat(cat.out)
   }
   
-  ## Other info
-  catf('\nDate :: %s', x$upload.date)
-  #catNotEmpty('Licence :: ', x$licence)
-  #catNotEmpty('Language :: ', x$language)
-  
-  ## Implementation specific info
-  catf('\n\nDescription of the implementation :')
-  catf(x$description)
-  
-  #FIXME: We need to reimplement these lines.
-  #catNotEmpty('Full description :: ', x$full.description)
-  #catNotEmpty('Installation notes :: ', x$installation.notes)
-  #catNotEmpty('Dependencies :: ', collapse(x$dependencies, ", "))
-  #catNotEmpty('\nProgramming language :: ',x$programming.language)
-  #catNotEmpty('\nOperating system :: ',x$operating.system)
-  
-  ## Bibliographic info
-  #if (x$bib.citation != "")
-  #  catf('\nBibliographic citation :: ',x$bib.citation)
-  #if (x$bib.url != "")
-  #  catf('\nBibliographic URL :: ',x$bib.url)
+  catfNotNA('\tUpload Date              : %s', x$upload.date)
+  catfNotNA('\tLicence                  : %s', x$licence)
+  catfNotNA('\tLanguage                 : %s', x$language)
+       catf('\tDescription              :')
+  # FIXME: This way, there are too many linebreaks.
+  desc = str_replace_all(x$description, pattern="\n", replacement="\n \n")
+  # getOption("width") - 20 is a heuristic to keep the description readable
+  cat(collapse(paste0('\t\t', strwrap(desc, width = getOption("width") - 20), '\n'), sep = ''))
+  cat('\n')
+  catfNotNA('\tInstallation Notes       : %s', x$installation.notes)
+  catfNotNA('\tDependencies             : %s', x$dependencies)
   
   ## More implementation details
-  #if (x$implements != "")
-  #  catf('\nImplements :: ',x$implements)
+  # catfNotNA('\Implements                : %s', x$implements)
  
   ## Implementation parameters
-  if (length(x$parameter)) {
-    catf('\nImplementation parameters :\n')
-    for(i in 1:length(x$parameter)) 
-      print(x$parameter[i])
+  if (length(x$parameter) > 0) {
+       cat('\tFlow Parameters          :\n')
+    for (i in 1:length(x$parameter)) {
+      par = x$parameter[[i]]
+      catf('\t\t_______________________________________________p_a_r_a_m_e_t_e_r_[%i]', i)
+      catf('\t\tParameter %s', par$name)
+      catfNotNA('\t\t\ttype    :: %s', par$data.type)
+      catfNotNA('\t\t\tdefault :: %s', par$default.value)
+      cat('\n')
+      cat(collapse(paste0('\t\t', strwrap(par$description, width = getOption("width") - 20), '\n'), sep = ''))
+    }
   }
   
   ## Implementation components
-  if (length(x$components)) {
-    catf('\nDescription of Implementation Components ::')
-    print(x$components)
+  if (length(x$components) > 0) {
+    cat('\n\tFlow Components          :\n')
+    for (i in 1:length(x$components)) {
+      comp = x$components[[i]]
+      catf('\t\t_______________________________________________c_o_m_p_o_n_e_n_t_[%i]', i)
+      catf('\t\tFlow "%s" :: (OpenML ID = %i, Version = %s)', comp$name, comp$id, comp$version)
+      catfNotNA('\t\t\tExternal Version         : %s', comp$external.version)
+      catfNotNA('\t\t\tCreator(s)               : %s', comp$creator)
+    }
   }
   
   ## Bibliographical references
-  if (length(x$bibliographical.reference) > 0) {
-    catf("Bibliographical Reference(s):")
-    for(i in 1:length(x$bibliographical.reference)) 
-      print(x$bibliographical.reference[[i]])  
-  }
-  ## The implementation source information
-  #catNotEmpty('Source URL :: ', x$source.url)
-  #catNotEmpty('Binary URL :: ', x$binary.url)
-  #catNotEmpty('Source format :: ', x$source.format)
-  #catNotEmpty('Binary format :: ', x$binary.format)
-  #catNotEmpty('Source MD5 :: ', x$source.md5)
-  #catNotEmpty('Binary MD5 :: ', x$binary.md5)
-  #cat('\n\n')
+  # if (length(x$bibliographical.reference) > 0) {
+  #  catfNotNA('')
+  #  catf('Bibliographical Reference(s):')
+  #  for (i in 1:length(x$bibliographical.reference)) 
+  #    print(x$bibliographical.reference[[i]])  
+  # }
 }
   
 

@@ -6,9 +6,9 @@
 getOpenMLDatasetNames()
 }
 \value{
-[\code{character}].
+[\code{data.frame}].
 }
 \description{
-Get all names of OpenML data sets which are registered on the server.
+We currently return only data sets which are marked as safe on OpenML.
 }
 
