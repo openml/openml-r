@@ -42,7 +42,7 @@ Optional. The persons/institutions that created the implementation.}
 \item{contributor}{[\code{character}]\cr
 Optional. (Minor) contributors to the workflow}
 
-\item{upload.date}{[\code{characte(1)r}]\cr
+\item{upload.date}{[\code{characte(1)}]\cr
 The date on which the implementation was uploaded.\cr
 Format YYYY-mm-ddThh:MM:SS.
 Added by the server. Ignored when uploaded manually.}

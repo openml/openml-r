@@ -5,6 +5,7 @@
 #' @param url [\code{character(1)}]\cr
 #'   URL to an online version of the paper, e.g. PDF.
 #' @export
+#' @aliases OpenMLBibRef
 makeOpenMLBibRef = function(citation, url) {
   assertString(citation)
   assertString(url)
