@@ -37,14 +37,17 @@ makeOpenMLImplementationParameter = function(
 # ***** Methods *****
 
 # show
-# FIXME: how should missing values be represented? here, character(0) AND "" are possible.
 #' @export
 print.OpenMLImplementationParameter = function(x, ...) {  
-  catf("Parameter %s", x$name)  
-  if (!is.na(x$data.type))
-    catf("  type    :: %s", x$data.type)
-  if (!is.na(x$default.value))
-    catf("  default :: %s", x$default.value)
-  if (!is.na(x$description))
-    catf("\n%s", x$description)
+  catfNotNA = function(text, obj) {
+    if (!all(is.na(obj)))
+      catf(text, collapse(obj, sep = "; "))
+  }
+  catf('Parameter %s:', x$name)
+  catfNotNA('\ttype             : %s', x$data.type)
+  catfNotNA('\tdefault          : %s', x$default.value)
+  catfNotNA('\trecommended range: %s', x$recommended.range)
+  cat('\n')
+  cat(collapse(paste0(strwrap(x$description, width = getOption("width") - 2), '\n'), sep = ''))
+  cat(collapse(rep("_", getOption("width") - 2), sep = ""))
 }

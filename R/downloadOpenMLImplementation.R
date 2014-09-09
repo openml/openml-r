@@ -16,12 +16,12 @@
 #'   Default is \code{TRUE}.
 #' @param clean.up [logical(1)]\cr
 #'   Delete implementation xml file at the end?
-#'   Default is \code{FALSE}.
+#'   Default is \code{TRUE}.
 #' @return [\code{\link{OpenMLImplementation}}].
 #' @export
 
 downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binary = TRUE, 
-  show.info = TRUE, clean.up = FALSE) {
+  show.info = TRUE, clean.up = TRUE) {
   
   id = asInt(id)
   assertDirectory(dir)
@@ -29,34 +29,33 @@ downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binar
   assertFlag(show.info)
   assertFlag(clean.up)
   
-  fn.impl.xml = file.path(dir, sprintf("%s.xml", id))  
+  fn.impl.xml = file.path(dir, sprintf("flow_%i.xml", id))  
+  
+  on.exit({
+    if (clean.up)
+      unlink(fn.impl.xml)
+    if (show.info)
+      messagef("Intermediate Flow XML has been removed.")
+  })
+  
   downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, 
     show.info = show.info)  
   impl = parseOpenMLImplementation(fn.impl.xml)
-  
-  on.exit({
-    if(clean.up)
-      unlink(fn.impl.xml)
-  })
   
   if (download.source.binary) {
     if (!is.na(impl$source.url)) {
       if (show.info)
         messagef("Downloading implementation source file from URL:\n%s.", impl$source.url)
-      
       format = rev(strsplit(rev(strsplit(impl$source.url, "/")[[1]])[1], "[.]")[[1]])[1]
       fn.impl.src = sprintf("%s(%s)_source.%s", impl$name, impl$version, format)
-      fn.impl.src = file.path(dir, fn.impl.src) 
-      # downloadBinaryFile(url = impl$source.url, file = fn.impl.src, show.info = show.info)
+      fn.impl.src = file.path(dir, fn.impl.src)
       download.file(url = impl$source.url, destfile = fn.impl.src, mode = "wb")
     } 
     if (!is.na(impl$binary.url)) {
       if (show.info)
         messagef("Downloading implementation binary file.")
-
       fn.impl.bin = sprintf("%s(%s)_binary", impl$name, impl$version)
-      fn.impl.bin = file.path(dir, fn.impl.bin)  
-      # downloadBinaryFile(url = impl$binary.url, file = fn.impl.bin, show.info = show.info)
+      fn.impl.bin = file.path(dir, fn.impl.bin)
       download.file(url = impl$binary.url, destfile = fn.impl.bin, mode = "wb")
     }
   }
@@ -115,12 +114,13 @@ parseOpenMLParameters = function(doc) {
   path = "/oml:implementation/oml:parameter"
   
   ns = getNodeSet(doc, path)
+  nr.pars = length(ns)
   
   par.names = xmlValsMultNsS(doc, sprintf("%s/oml:name", path))
-  par.types = xmlValsMultNsS(doc, sprintf("%s/oml:data_type", path))
-  par.defs = xmlValsMultNsS(doc, sprintf("%s/oml:default_value", path))
-  par.descs = xmlValsMultNsS(doc, sprintf("%s/oml:description", path))
-  par.rec.range = xmlValsMultNsS(doc, sprintf("%s/oml:recommendedRange", path))
+  par.types = xmlOValsMultNsSPara(doc, sprintf("%s/oml:data_type", path), exp.length = nr.pars)
+  par.defs = xmlOValsMultNsSPara(doc, sprintf("%s/oml:default_value", path), exp.length = nr.pars)
+  par.descs = xmlOValsMultNsSPara(doc, sprintf("%s/oml:description", path), exp.length = nr.pars)
+  par.rec.range = xmlOValsMultNsSPara(doc, sprintf("%s/oml:recommendedRange", path), exp.length = nr.pars)
   
   par = vector("list", length(par.names))
   for (i in seq_along(par)) {

@@ -1,21 +1,10 @@
 downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRUE,
   show.info = TRUE) {
   
-  fn.data.set.desc = fn.data.set = NULL
-  
   assertString(name)
   assertDirectory(dir, access = "w")
   assertFlag(clean.up)
   assertFlag(show.info)
-  
-  on.exit({
-    if (clean.up) {
-      if (!is.null(fn.data.set.desc)) unlink(fn.data.set.desc)
-      if (!is.null(fn.data.set)) unlink(fn.data.set)
-      if (show.info)
-        messagef("All intermediate XML and ARFF files are now removed.")
-    }
-  })
   
   # get id for given dataset name
   query = paste0("SELECT did, default_target_attribute, version FROM dataset WHERE name = '",
@@ -41,6 +30,15 @@ downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRU
   
   fn.data.set.desc = file.path(dir, sprintf("data_set_desc_%s_v%i.xml", name, version))
   fn.data.set = file.path(dir, sprintf("data_set_%s_v%i.arff", name, version))
+  
+  on.exit({
+    if (clean.up) {
+      unlink(fn.data.set.desc)
+      unlink(fn.data.set)
+      if (show.info)
+        messagef("All intermediate XML and ARFF files are now removed.")
+    }
+  })
   
   downloadOpenMLDataSetDescription(id = id, file = fn.data.set.desc, show.info = show.info)
   data.desc = parseOpenMLDataSetDescription(file = fn.data.set.desc)

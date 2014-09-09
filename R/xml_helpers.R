@@ -96,6 +96,16 @@ xmlOValsMultNsS = function(doc, path) {
     return(val)
 }
 
+xmlOValsMultNsSPara = function(doc, path, subs = NA_character_, exp.length) {
+  val = xmlValsMultNs(doc, path, as.character, character(1))
+  if (length(val) == 0)
+    return(rep(subs, times = exp.length))
+  val[is.na(val) | val == ""] = subs
+  if (length(val) != exp.length)
+    val = c(val, rep(subs, times = exp.length - length(val)))
+  return(val)
+}
+
 xmlValsMultNsI = function(doc, path) {
   xmlValsMultNs(doc, path, as.integer, integer(1))
 }
