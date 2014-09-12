@@ -5,7 +5,7 @@
 #'
 #'
 #' @return [\code{data.frame}].
-
+#' @export
 #FIXME: document better
 
 getOpenMLRegisteredTasks = function(type = "classification") {

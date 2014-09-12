@@ -18,7 +18,7 @@
 #'   Optional. The persons/institutions that created the implementation.
 #' @param contributor [\code{character}]\cr
 #'   Optional. (Minor) contributors to the workflow
-#' @param upload.date [\code{characte(1)}]\cr
+#' @param upload.date [\code{character(1)}]\cr
 #'   The date on which the implementation was uploaded.\cr
 #'   Format YYYY-mm-ddThh:MM:SS. 
 #'   Added by the server. Ignored when uploaded manually.
@@ -33,7 +33,7 @@
 #' @param installation.notes [\code{character(1)}]\cr
 #'   Optional. Additional hints on how to run the implementation.
 #' @param dependencies [\code{character(1)}]\cr
-#'   The dependencies of the implementation.
+#'   Optional. The dependencies of the implementation.
 #' @param bibliographical.reference [\code{list}]\cr
 #'   An optional list containing information on bibliographical references in form of
 #'   \code{\link{OpenMLBibRef}s}.
@@ -43,7 +43,7 @@
 #'   The parameters of the implementation. A list containing 
 #'   \code{\link{OpenMLImplementationParameter}s}.
 #' @param components [\code{list}]\cr
-#'   A list contatining \code{\link{OpenMLImplementation}s}. Typically components of a workflow or 
+#'   A list containing \code{\link{OpenMLImplementation}s}. Typically components of a workflow or 
 #'   subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.
 #' @param source.url [\code{character(1)}]\cr
 #'   URL from which the source code can be downloaded. Added by the server. Ignored when uploaded manually.
@@ -157,6 +157,7 @@ print.OpenMLImplementation = function(x, ...)  {
   catfNotNA('\tCreator(s)               : %s', x$creator)
   
   # Contributors
+  # Insert line breaks so that no name is displayed in more than one line in the console.
   if (length(x$contributor) > 0) {
     cons.chars = getOption("width") - 2 - 34
     rest.names = x$contributor
@@ -194,8 +195,10 @@ print.OpenMLImplementation = function(x, ...)  {
   # catfNotNA('\Implements                : %s', x$implements)
  
   ## Implementation parameters
+       catf('\tNumber of Flow Parameters: %i', length(x$parameter))
+       catf('\tNumber of Flow Components: %i', length(x$components))
   if (length(x$parameter) > 0) {
-       cat('\tFlow Parameters          :\n')
+        cat('\tFlow Parameters          :\n')
     for (i in 1:length(x$parameter)) {
       par = x$parameter[[i]]
       catf('\t\t_______________________________________________p_a_r_a_m_e_t_e_r_[%i]', i)

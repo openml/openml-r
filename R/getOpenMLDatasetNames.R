@@ -5,7 +5,7 @@
 #'
 #'
 #' @return [\code{data.frame}].
-
+#' @export
 #FIXME: document better
 
 getOpenMLDatasetNames = function() {
