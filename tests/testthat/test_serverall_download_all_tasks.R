@@ -14,7 +14,7 @@ test_that("download all tasks", {
   })
   taskinfo2 = taskinfo[ok,]
 
-  for (i in taskinfo2$task_id[1:1]) {
+  for (i in taskinfo2$task_id) {
     print(i)
     task = downloadOpenMLTask(id = i, show.info = TRUE, clean.up = TRUE)
     tf = task$target.features
@@ -26,7 +26,7 @@ test_that("download all tasks", {
     expect_true(is.character(ems) && length(ems) > 0L && all(str_trim(ems) != ""))
 
     if (task$type == "Supervised Classification")
-      lrn = makeLearner("classif.rpart")
+      lrn = makeLearner("classif.J48")
     else if (task$type == "Supervised Regression")
       lrn = makeLearner("regr.rpart")
     res = runTask(task, lrn)
