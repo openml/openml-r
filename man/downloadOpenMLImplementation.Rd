@@ -4,7 +4,7 @@
 \title{Download an OpenML implementation from the OpenML server through a server API call.}
 \usage{
 downloadOpenMLImplementation(id, dir = getwd(),
-  download.source.binary = TRUE, show.info = TRUE, clean.up = FALSE)
+  download.source.binary = TRUE, show.info = TRUE, clean.up = TRUE)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -25,7 +25,7 @@ Default is \code{TRUE}.}
 
 \item{clean.up}{[logical(1)]\cr
 Delete implementation xml file at the end?
-Default is \code{FALSE}.}
+Default is \code{TRUE}.}
 }
 \value{
 [\code{\link{OpenMLImplementation}}].

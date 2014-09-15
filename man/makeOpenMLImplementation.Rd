@@ -42,7 +42,7 @@ Optional. The persons/institutions that created the implementation.}
 \item{contributor}{[\code{character}]\cr
 Optional. (Minor) contributors to the workflow}
 
-\item{upload.date}{[\code{characte(1)}]\cr
+\item{upload.date}{[\code{character(1)}]\cr
 The date on which the implementation was uploaded.\cr
 Format YYYY-mm-ddThh:MM:SS.
 Added by the server. Ignored when uploaded manually.}
@@ -62,7 +62,7 @@ information about all components of the workflow.}
 Optional. Additional hints on how to run the implementation.}
 
 \item{dependencies}{[\code{character(1)}]\cr
-The dependencies of the implementation.}
+Optional. The dependencies of the implementation.}
 
 \item{bibliographical.reference}{[\code{list}]\cr
  An optional list containing information on bibliographical references in form of
@@ -77,7 +77,7 @@ The parameters of the implementation. A list containing
 \code{\link{OpenMLImplementationParameter}s}.}
 
 \item{components}{[\code{list}]\cr
-A list contatining \code{\link{OpenMLImplementation}s}. Typically components of a workflow or
+A list containing \code{\link{OpenMLImplementation}s}. Typically components of a workflow or
 subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.}
 
 \item{source.url}{[\code{character(1)}]\cr
