@@ -6,8 +6,8 @@
 #   Destination path where the XML file should be saved.
 # @return [\code{invisible(NULL)}].
 writeOpenMLImplementationXML = function(description, file) {
-  checkArg(description, "OpenMLImplementation", s4 = TRUE)
-  checkArg(file, "character")
+  assertClass(description, "OpenMLImplementation")
+  assertPathForOutput(file, overwrite = TRUE)
   
   doc = newXMLDoc()
   top = newXMLNode("oml:implementation", parent = doc, namespace = c(oml = "http://openml.org/openml"))

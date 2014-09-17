@@ -47,7 +47,7 @@ uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, sessi
   }
   
   run.desc = makeOpenMLRun(
-    task.id = as.character(task$task.id), 
+    task.id = as.character(task$id), 
     implementation.id = impl.id, 
     parameter.settings = run.pars
   )
@@ -69,21 +69,19 @@ uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, sessi
   if (!missing(predictions)) {
     output = tempfile()
     write.arff(predictions, file = output) 
-    params = list(
+    
+    content = postForm(url, 
       description = fileUpload(filename = description),
       predictions = fileUpload(filename = output),
       session_hash = session.hash
     )
   } else {
-    params = list(
+    content = postForm(url, 
       description = fileUpload(filename = description),
       session_hash = session.hash
     )
   }
 
-  content = postForm(url, 
-    .params = params
-  )
   #content = postForm(url, .params = params, .checkParams = FALSE)
   write(content, file = file)
   # was uploading successful?
