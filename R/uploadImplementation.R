@@ -15,27 +15,44 @@
 #'   Default is \code{TRUE}.
 #' @export
 uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, session.hash, 
-  show.info = TRUE) {
+  delete.source.binary = FALSE, show.info = TRUE) {
   
-  # Generate a sourcefile, if user doesn't provide one. Just for now. (?)
-  # FIXME: makes no sense for non-mlr implementations 
-  file = file.path(getwd(), sprintf("%s_source.R", implementation$name))
-  user.prov.srcfile = TRUE
-  if (missing(sourcefile)) {
-    catf(file = file, "library(mlr) \nlrn = makeLearner(\"%s\")", implementation$name)
-    sourcefile = file
-    user.prov.srcfile = FALSE
+  if (missing(sourcefile) && missing(binaryfile)) {
+    stopf("Please provide source and/or binary file.")
   }
+  if (!missing(binaryfile)) {
+    assertFile(binaryfile)
+    implementation$binary.md5 = digest(file = binaryfile)
+  }
+  if (!missing(sourcefile)) {
+    assertFile(sourcefile)
+    implementation$source.md5 = digest(file = sourcefile)
+  }
+  on.exit({
+    if (delete.source.binary) {
+      if (!missing(binaryfile)) 
+        unlink(binaryfile)
+      if (!missing(sourcefile))
+        unlink(sourcefile)
+    }
+  })
+  assertClass(implementation, "OpenMLImplementation")
+  assertString(session.hash)
+  assertFlag(delete.source.binary)
+  assertFlag(show.info)
   
-  implementation$source.md5 = digest(file = sourcefile)
-  
+  exist.check = checkOpenMLFlowForExistance(implementation)
+  if (exist.check$exists) {
+    catf("Flow already exists (ID = %s).", exist.check$id)
+    return(exist.check$id)
+  } 
   file = tempfile()
   writeOpenMLImplementationXML(implementation, file)
   
-   if (show.info) {
-     messagef("Uploading implementation to server.")
-     messagef("Downloading response to: %s", file)
-   }
+  if (show.info) {
+    messagef("Uploading implementation to server.")
+    messagef("Downloading response to: %s", file)
+  }
   
   url = getServerFunctionURL("openml.implementation.upload")
   #FIXME: handle binary
@@ -48,13 +65,11 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
 
   doc = parseXMLResponse(file, "Uploading implementation", c("upload_implementation", "response"))
   
+  id = xmlOValS(doc, "/oml:upload_implementation/oml:id")
   if (show.info) {
-    messagef("Implementation successfully uploaded. Implementation ID: %s", 
-      xmlOValS(doc, "/oml:upload_implementation/oml:id"))
+    messagef("Implementation successfully uploaded. Implementation ID: %s", id)
   }  
-
-  if (!user.prov.srcfile)
-    unlink(sourcefile)
+  return(id)
 }
 
 # 

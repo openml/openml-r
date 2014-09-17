@@ -14,14 +14,10 @@
 #'   Default is a short specification of the learner and the associated package.
 #' @return [\code{\link{OpenMLImplementation}}]. 
 #' @export
-createOpenMLImplementationForMLRLearner = function(
-  lrn, 
-  name = lrn$id,
-  description) {
-  
+createOpenMLImplementationForMLRLearner = function(lrn, name = lrn$id, description) { 
   assertClass(lrn, "Learner")
   assertString(name)
-  
+
   if (!missing(description))
     assertString(description)
   else
@@ -29,7 +25,7 @@ createOpenMLImplementationForMLRLearner = function(
 
   impl = makeOpenMLImplementation(
     name = name,
-    version = packageDescription(lrn$package)$Version,
+    external.version = packageDescription(lrn$package)$Version,
     description = description,
     parameter = makeImplementationParameterList(lrn)
   )
