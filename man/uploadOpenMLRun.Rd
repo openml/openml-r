@@ -4,7 +4,7 @@
 \title{Upload an OpenML run to the server.}
 \usage{
 uploadOpenMLRun(task, mlr.lrn, impl.id, predictions, error.msg, session.hash,
-  run.pars = NULL, show.info = TRUE)
+  run.pars = NULL, clean.up = TRUE, show.info = TRUE)
 }
 \arguments{
 \item{task}{[\code{\link{OpenMLTask}}]\cr

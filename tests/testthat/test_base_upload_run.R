@@ -8,7 +8,7 @@ test_that("upload run", {
   sourcefile = generateSourcefileForMlrLearner(flow)
   flow.id = uploadOpenMLImplementation(flow, sourcefile = sourcefile, session.hash = hash, 
     delete.source.binary = TRUE)
-  expect.is(flow.id, "integer")
+  expect_is(flow.id, "integer")
   
   task = downloadOpenMLTask(4)
   res = runTask(task, lrn) 

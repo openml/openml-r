@@ -4,7 +4,7 @@
 \title{Upload an OpenML implementation to the server.}
 \usage{
 uploadOpenMLImplementation(implementation, sourcefile, binaryfile, session.hash,
-  show.info = TRUE)
+  delete.source.binary = FALSE, show.info = TRUE)
 }
 \arguments{
 \item{implementation}{[\code{\link{OpenMLImplementation}}]\cr
