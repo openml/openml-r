@@ -9,6 +9,6 @@ checkOpenMLFlowForExistance = function(flow, show.info = TRUE) {
     external_version = flow$external.version, show.info = show.info)
   doc = parseXMLResponse(fn.impl.xml, "Checking existance of flow", "implementation_exists")
   exists = as.logical(xmlRValS(doc, "/oml:implementation_exists/oml:exists"))
-  id = xmlOValS(doc, "/oml:implementation_exists/oml:id")
+  id = xmlOValI(doc, "/oml:implementation_exists/oml:id")
   return(list(exists = exists, id = id))
 }

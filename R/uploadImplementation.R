@@ -43,10 +43,11 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
   
   exist.check = checkOpenMLFlowForExistance(implementation)
   if (exist.check$exists) {
-    catf("Flow already exists (ID = %s).", exist.check$id)
+    catf("Flow already exists (ID = %i).", exist.check$id)
     return(exist.check$id)
   } 
   file = tempfile()
+  on.exit(unlink(file), add = TRUE)
   writeOpenMLImplementationXML(implementation, file)
   
   if (show.info) {
@@ -65,9 +66,9 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
 
   doc = parseXMLResponse(file, "Uploading implementation", c("upload_implementation", "response"))
   
-  id = xmlOValS(doc, "/oml:upload_implementation/oml:id")
+  id = xmlOValI(doc, "/oml:upload_implementation/oml:id")
   if (show.info) {
-    messagef("Implementation successfully uploaded. Implementation ID: %s", id)
+    messagef("Implementation successfully uploaded. Implementation ID: %i", id)
   }  
   return(id)
 }

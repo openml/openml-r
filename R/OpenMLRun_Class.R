@@ -16,8 +16,8 @@
 #' @export
 #' @aliases OpenMLRun
 makeOpenMLRun = function(task.id, implementation.id, error.message = NA_character_, parameter.settings = list()) {
-  assertString(task.id)
-  assertString(implementation.id)
+  task.id = asCount(task.id)
+  implementation.id = asCount(implementation.id)
   assertString(error.message, na.ok = TRUE)
   assertList(parameter.settings)
   makeS3Obj("OpenMLRun",
@@ -32,16 +32,22 @@ makeOpenMLRun = function(task.id, implementation.id, error.message = NA_characte
 
 #' @export
 print.OpenMLRun = function(x, ...)  {
-  catf('** Information on an OpenML Run **\n')
-  catf('Task ID           :: %s', x$task.id)
-  catf('Implementation ID :: %s', x$implementation.id)
-  if (length(x$error.message) > 0) {
-    catf('Error message     :: %s', x$error.message)
+  catf('\nOpenML Run :: (Task ID = %i, Flow ID = %s)', x$task.id, x$implementation.id)
+  if (!is.na(x$error.message)) {
+    catf('\tError Message: %s', x$error.message)
   }
-  #FIXME reimplent
   if (length(x$parameter.settings) > 0) {
-    cat('Parameter Settings used on the Run:\n')
-    print(x$parameter.settings)
+    cat('\n\tParameter Settings used on this Run:\n')
+    pars.names = extractSubList(x$parameter.settings, "name")
+    pars.vals = extractSubList(x$parameter.settings, "value", simplify = FALSE)
+    names(pars.vals) = pars.names
+    for (i in seq_along(x$parameter.settings)) {
+      comp = x$parameter.settings[[i]]$component
+      if (!is.na(comp)) {
+        pars.vals[[i]] = sprintf("%s (Component '%s')", pars.vals[i], comp)
+      }
+    }
+    BBmisc:::prettyPrint(pars.vals, prefix = "\t\t", sep = " = ", name.align = "right")
   }
   cat('\n')
 }

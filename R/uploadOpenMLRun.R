@@ -26,39 +26,39 @@
 
 # FIXME: Rewrite description as soon as the function's parameters are definite.
 
-uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, session.hash, run.pars = NULL, show.info = TRUE) {
+uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, session.hash, 
+  run.pars = NULL, clean.up = TRUE, show.info = TRUE) {
   
-  # FIXME: We might want to have a function(task, mlr.lrn, predictions, hash) that uploads both the
-  # implementation and the predictions. For this, we need an API call to get the ID of an already
-  # registered implementation.
   if (missing(mlr.lrn)) {
-    checkArg(run.pars, "list")
+    assertList(run.pars)
   } else {
-    checkArg(mlr.lrn, "Learner")
+    assertClass(mlr.lrn, "Learner")
     run.pars = makeRunParameterList(mlr.lrn)
   }
-  checkArg(task, "OpenMLTask")
-  checkArg(impl.id, "character")
+  assertClass(task, "OpenMLTask")
+  impl.id = asCount(impl.id)
     
   if (missing(error.msg)) {
-    checkArg(predictions, "data.frame")
+    assertDataFrame(predictions)
   } else {
-    checkArg(error.msg, "try-error")
+    assertString(error.msg)
   }
   
   run.desc = makeOpenMLRun(
-    task.id = as.character(task$id), 
+    task.id = task$id, 
     implementation.id = impl.id, 
     parameter.settings = run.pars
   )
   
   if (!missing(error.msg))
-    run.desc$error.message = error.msg[1]
+    run.desc$error.message = error.msg
   
   description = tempfile()
+  on.exit(if (clean.up) unlink(description))
   writeOpenMLRunXML(run.desc, description)
   
   file = tempfile()
+  on.exit(if (clean.up) unlink(file), add = TRUE)
   if (show.info) {
     messagef("Uploading run to server.")
     messagef("Downloading response to: %s", file)
@@ -68,6 +68,7 @@ uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, sessi
   
   if (!missing(predictions)) {
     output = tempfile()
+    on.exit(if (clean.up) unlink(output), add = TRUE)
     write.arff(predictions, file = output) 
     
     content = postForm(url, 
@@ -81,8 +82,6 @@ uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, sessi
       session_hash = session.hash
     )
   }
-
-  #content = postForm(url, .params = params, .checkParams = FALSE)
   write(content, file = file)
   # was uploading successful?
   doc = try(parseXMLResponse(file, "Uploading run", "upload_run"), silent = TRUE)
