@@ -6,8 +6,8 @@
 #' @export
 
 toMLR = function(task) {
-  checkArg(task, "OpenMLTask")
-  requirePackages("mlr", why="toMLR")
+  assertClass(task, "OpenMLTask")
+  requirePackages("mlr", why = "toMLR")
   task.type = task$type
   data.set.desc = task$data.desc
   data = task$data.desc$data.set
