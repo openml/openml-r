@@ -15,32 +15,45 @@
 #' @return [\code{data.frame}]. The results as a table.
 #' @export
 runSQLQuery = function(query, simplify = TRUE, show.info = FALSE) {
-  checkArg(query, "character", len = 1L, na.ok = FALSE)
-  checkArg(simplify, "logical", len = 1L, na.ok = FALSE)
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
-
+  assertString(query)
+  assertFlag(simplify)
+  assertFlag(show.info)
+  
   json.file = tempfile()
-
-  # replace whitespaces so we dont run into problems with the query
+  on.exit(unlink(json.file))
+  
+  # replace whitespaces so we don't run into problems with the query
   query = str_replace_all(query, " ", "%20")
 
   # Use new beta server, leave old address commented to be able to switch quickly.
-  # OPEN_ML_SQL_QUERY_URL = "http://www.openml.org/api_query"
-  OPEN_ML_SQL_QUERY_URL = "http://openml.liacs.nl/api_query"
-  url = sprintf("%s/?q=%s", OPEN_ML_SQL_QUERY_URL, query)
+  # query.url = "http://www.openml.org/api_query"
+  query.url = "http://openml.liacs.nl/api_query"
+  url = sprintf("%s/?q=%s", query.url, query)
   download.file(url, json.file, quiet = TRUE)
   parsed.doc = fromJSON(file = json.file)
 
   if(show.info)
     message(parsed.doc$status)
-
-  unlink(json.file)
  
   data = convertListOfRowsToDataFrame(as.list(parsed.doc$data), strings.as.factors = FALSE,
     col.names = extractSubList(parsed.doc$columns, "title"))
     
   #FIXME: for now guess types, the type is set as undefined in json, everything is encoded as strings
-  data = as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
+  #data = as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
+  
+  types = extractSubList(parsed.doc$columns, "datatype")
+  if (ncol(data) > 0) {
+    for (i in 1:ncol(data)) {
+      data[, i] = switch(types[i],
+        "int" = as.integer(data[, i]),
+        "integer" = as.integer(data[, i]),
+        "string" = as.character(data[, i]),
+        "double" = as.numeric(data[, i]),
+        "blob" = as.character(data[, i]),
+        "datetime" = as.POSIXct(data[, i]),
+        stopf("Unsupported column type: %s", types[i])) 
+    }
+  }
   
   if (ncol(data) == 1L && simplify)
     return(data[, 1L])

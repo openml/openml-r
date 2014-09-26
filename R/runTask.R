@@ -27,9 +27,11 @@
 #' @export
 # FIXME: if !return.mlr.results, the output is not a list!
 runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats = TRUE, ...) {
-  checkArg(task, "OpenMLTask")
-  checkArg(learner, "Learner")
-  checkArg(return.mlr.results, "logical")
+  assertClass(task, "OpenMLTask")
+  assertClass(learner, "Learner")
+  assertFlag(return.mlr.results)
+  assertFlag(remove.const.feats)
+  
   if ((task$type == "Supervised Classification" && learner$type != "classif") ||
     (task$type == "Supervised Regression" && learner$type != "regr"))
     stopf("Learner type ('%s') does not correspond to task type ('%s').", task$type, learner$type)

@@ -63,7 +63,7 @@ downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binar
 }
 
 parseOpenMLImplementation = function(file) {
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
+  assertFile(file)
   doc = parseXMLResponse(file, "Getting implementation", "implementation")
   args = list()
   args[["id"]] = xmlRValI(doc, "/oml:implementation/oml:id")
@@ -86,16 +86,14 @@ parseOpenMLImplementation = function(file) {
   ## components section
   comp_ns = getNodeSet(doc, "/oml:implementation/oml:component/oml:implementation")
   
-  
   comp = vector("list", length = length(comp_ns))
-  for(i in seq_along(comp_ns)){
+  for (i in seq_along(comp_ns)){
     file2 = tempfile()
     saveXML(comp_ns[[i]], file = file2)
     comp[[i]] = parseOpenMLImplementation(file2)
     unlink(file2)
   }
   args[["components"]] = comp
-
 
   args[["collection.date"]] = xmlOValS(doc, "/oml:implementation/oml:collection_date")
   args[["source.url"]] = xmlOValS(doc, "/oml:implementation/oml:source_url")
@@ -138,10 +136,9 @@ parseOpenMLBibRef = function(doc) {
   bib.citation = xmlValsMultNsS(doc, sprintf("%s/oml:citation", path))
   bib.url = xmlValsMultNsS(doc, sprintf("%s/oml:url", path))
   
-  bib = list()
+  bib = vector("list", length(bib.citation))
   for (i in seq_along(bib.citation)) {
-    bib = c(bib, 
-      OpenMLBibRef(bib.citation[i], bib.url[i]))
+    bib[[i]] = makeOpenMLBibRef(bib.citation[i], bib.url[i])
   }
   return(bib)
 }

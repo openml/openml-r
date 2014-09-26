@@ -12,16 +12,16 @@
 #' @return [\code{character(1)}]. Session hash for further communication.
 #' @export
 authenticateUser = function(email, password, show.info = TRUE) {
-  checkArg(email, "character", len = 1L, na.ok = FALSE)
-  checkArg(password, "character", len = 1L, na.ok = FALSE)
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertString(email)
+  assertString(password)
+  assertFlag(show.info)
   file = tempfile()
+  on.exit(unlist(file))
   if (show.info) {
     messagef("Authenticating user at server: %s", email)
-    messagef("Downloading response to: %s", file)
   }
   url = getServerFunctionURL("openml.authenticate")
-  md5 = digest(password, algo="md5", serialize=FALSE)
+  md5 = digest(password, algo = "md5", serialize = FALSE)
   params = list(username = email, password = md5)
   content = postForm(url, .params = params, .checkParams = FALSE)
   write(content, file = file)
@@ -30,7 +30,7 @@ authenticateUser = function(email, password, show.info = TRUE) {
   
 
 parseAuthenticateUserResponse = function(file, show.info = TRUE) {
-  checkArg(file, "character", len = 1L, na.ok = FALSE)
+  assertFile(file)
   doc = parseXMLResponse(file, "Authenticating user", "authenticate")  
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
   valid.until = xmlRValS(doc, "/oml:authenticate/oml:valid_until")
