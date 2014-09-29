@@ -1,18 +1,22 @@
-#' Convert an OpenML task to an MLR task object.
+#' Convert an OpenML task to an mlr task object.
 #'
 #' @param task [\code{\linkS4class{OpenMLTask}}]\cr
 #'   An OpenML task object. Required.
 #' @return [\code{\link[mlr]{SupervisedTask}}]
 #' @export
 
-toMLR = function(task) {
+toMlr = function(task) {
   assertClass(task, "OpenMLTask")
-  requirePackages("mlr", why = "toMLR")
+  requirePackages("mlr", why = "toMlr")
   task.type = task$type
   data.set.desc = task$data.desc
   data = task$data.desc$data.set
   target = task$target.features
 
+  orig.lvls = NULL
+  if (task.type == "Supervised Classification") {
+    orig.lvls = levels(data[, target])
+  }
   #FIXME some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
   data = droplevels(data)
@@ -34,10 +38,12 @@ toMLR = function(task) {
   }
   mlr.rin = createMLRResampleInstance(estim.proc, mlr.task)
   mlr.measures = createMLRMeasures(task$task.evaluation.measures, task.type)
-  list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
+  res = list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
+  res$orig.lvls = orig.lvls
+  return(res)
 }
 
-createMLRResampleInstance = function(estim.proc, mlr.task) {
+createMlrResampleInstance = function(estim.proc, mlr.task) {
   type = estim.proc$type
   n.repeats = estim.proc$parameters[["number_repeats"]]
   n.folds = estim.proc$parameters[["number_folds"]]
@@ -76,7 +82,7 @@ createMLRResampleInstance = function(estim.proc, mlr.task) {
 }
 
 # FIXME: add more metrics/measures.
-createMLRMeasures = function(measures, type) {
+createMlrMeasures = function(measures, type) {
   lapply(measures, function(m) {
     if(type == "Supervised Classification") {
       switch(m,
