@@ -24,12 +24,12 @@
 #'       Most of this will be added by the server, but users can also provide evaluation scores for their 
 #'       own evaluation measures.
 #' @export 
-#' @aliases OpenMLRunResults
+#' @aliases OpenMLRunResults OpenMLRunResults-class
 
 # FIXME: add setup.string
 makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, setup.id,
-  error.message = NA_character_, parameter.setting = list(), input.data = OpenMLData(),
-  output.data = OpenMLData()
+  error.message = NA_character_, parameter.setting = list(), input.data = makeOpenMLData(),
+  output.data = makeOpenMLData()
 ) {
   
   assertInt(run.id)

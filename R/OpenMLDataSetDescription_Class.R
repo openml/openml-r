@@ -37,7 +37,7 @@
 #'   New column names that are actually used in R. These are valid and unique and differ from the 
 #'   original column names only if those are invalid. 
 #' @export
-#' @aliases OpenMLDataSetDescription
+#' @aliases OpenMLDataSetDescription OpenMLDataSetDescription-class
 makeOpenMLDataSetDescription = function(id, name, version, description, format, 
   creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,
   language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_, 

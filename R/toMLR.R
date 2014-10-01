@@ -2,7 +2,7 @@
 #'
 #' @param task [\code{\linkS4class{OpenMLTask}}]\cr
 #'   An OpenML task object. Required.
-#' @return [\code{\link[mlr]{SupervisedTask}}]
+#' @return [\code{\link[mlr]{Task}}]
 #' @export
 
 toMlr = function(task) {
@@ -36,8 +36,8 @@ toMlr = function(task) {
   } else {
     stopf("Encountered currently unsupported task type: %s", task.type)
   }
-  mlr.rin = createMLRResampleInstance(estim.proc, mlr.task)
-  mlr.measures = createMLRMeasures(task$task.evaluation.measures, task.type)
+  mlr.rin = createMlrResampleInstance(estim.proc, mlr.task)
+  mlr.measures = createMlrMeasures(task$task.evaluation.measures, task.type)
   res = list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
   res$orig.lvls = orig.lvls
   return(res)

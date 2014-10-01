@@ -21,7 +21,7 @@
 #' @param evaluation.measures [\code{character}]\cr
 #'   The evaluation measure(s) that should be used for optimization.
 #' @export
-#' @aliases OpenMLTask
+#' @aliases OpenMLTask OpenMLTask-class
 #' @seealso \code{\linkS4class{OpenMLDataSetDescription}}
 makeOpenMLTask = function(id, type, pars = list(), target.features = NA_character_,
   data.desc.id, data.desc = NULL, estimation.procedure, preds = list(),

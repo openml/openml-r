@@ -10,7 +10,7 @@ toMlr(task)
 An OpenML task object. Required.}
 }
 \value{
-[\code{\link[mlr]{SupervisedTask}}]
+[\code{\link[mlr]{Task}}]
 }
 \description{
 Convert an OpenML task to an mlr task object.

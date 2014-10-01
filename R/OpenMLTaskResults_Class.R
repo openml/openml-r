@@ -15,7 +15,7 @@
 #' @param metrics [\code{data.frame}]\cr
 #'   A data.frame of the metrics of all runs that were uploaded for this task.
 #' @export
-#' @aliases OpenMLTask
+#' @aliases OpenMLTaskResults OpenMLTaskResults-class
 makeOpenMLTaskResults = function(task.id, task.name, task.type.id = NA_character_, 
   input.data = NA_character_, estimation.procedure = NA_character_, metrics
 ) {

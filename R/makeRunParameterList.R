@@ -8,7 +8,7 @@
 #' @examples
 #' library(mlr)
 #' lrn = makeLearner("classif.rpart", minsplit = 1)
-#' bagging = makeBaggingWrapper(lrn, bag.iters = 500)
+#' bagging = makeBaggingWrapper(lrn, bw.iters = 500)
 #' 
 #' lrn.par.settings = makeRunParameterList(lrn)
 #' lrn.par.settings
