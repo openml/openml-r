@@ -100,6 +100,7 @@ reformatPredictions = function(pred, task, orig.lvls) {
     new_pred = cbind(new_pred, probs)
   }
 
+  levels(new_pred$prediction) = orig.lvls
   colnames(new_pred)[1] = "repeat"
   return(new_pred)
 }
