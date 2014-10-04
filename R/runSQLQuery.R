@@ -50,7 +50,7 @@ runSQLQuery = function(query, simplify = TRUE, show.info = FALSE) {
         "string" = as.character(data[, i]),
         "double" = as.numeric(data[, i]),
         "blob" = as.character(data[, i]),
-        "datetime" = as.POSIXct(data[, i]),
+        "datetime" = as.character(data[, i]),
         stopf("Unsupported column type: %s", types[i])) 
     }
   }

@@ -5,14 +5,20 @@ context("download all data sets")
 test_that("download all data sets", {
   quals = getDataQualities()
   dsets = getOpenMLDatasetNames()
-  quals2 = subset(quals, dataset %in% dsets$name & NumberOfInstances <= 10000 & NumberOfFeatures <= 100)
+  quals2 = subset(quals, dataset %in% dsets$name & NumberOfInstances <= 10000 & 
+    NumberOfFeatures <= 100 & dataset != "Zoo_test_jan")
 
-  ids = quals2$dataset
-
-  for (i in ids) {
-    print(i)
-    task = downloadOpenMLDataAsMlrTask(i, show.info = FALSE, clean.up = TRUE)
-    ds = task$env$data
-    expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) > 1 )
+  ids = quals2[, c("dataset", "version")]
+  
+  for (i in 1:nrow(ids)) {
+    if (ids[i, "version"] %in% dsets[dsets$name == ids[i, "dataset"], ]) {
+      print(sprintf("%s, v. %i", ids[i, "dataset"], ids[i, "version"]))
+      oml.data = downloadOpenMLData(ids[i, "dataset"], version = ids[i, "version"], 
+                                    show.info = FALSE, clean.up = TRUE)
+      expect_true(oml.data$name == ids[i, "dataset"])
+      expect_true(oml.data$version == ids[i, "version"])
+      ds = oml.data$data.set
+      expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) >= 1)
+    }
   }
 })

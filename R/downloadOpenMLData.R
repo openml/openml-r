@@ -1,16 +1,33 @@
-downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRUE,
+#' @title Download an OpenML data set including its description.
+#'
+#' @param name [\code{character(1)}]\cr
+#'   The name of the data set.
+#' @param version [\code{integer(1)}]\cr
+#'   Version that should be downloaded. If the desired version is not available, the latest version 
+#'   of the data set is downloaded. Default is \code{1}.
+#' @param dir [\code{character(1)}]\cr
+#'   The directory where intermediate files are stored.
+#'   Default is the session's temporary directory.
+#' @param clean.up [\code{loigcal(1)}]\cr
+#'   Should the downloaded files be removed from disk at the end?
+#'   Default is \code{TRUE}.
+#' @param show.info [\code{logical(1)}]\cr
+#'   Verbose output on console?
+#'   Default is \code{TRUE}.
+#' @return [\code{\link{OpenMLDataSetDescription}}]
+#' @export
+downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRUE, 
   show.info = TRUE) {
   
   assertString(name)
+  assertCount(version, positive = TRUE)
   assertDirectory(dir, access = "w")
   assertFlag(clean.up)
   assertFlag(show.info)
   
-  # get id for given dataset name
-  query = paste0("SELECT did, default_target_attribute, version FROM dataset WHERE name = '",
-                 name, "'")
+  dsets = getOpenMLDatasetNames()
+  res = dsets[dsets$name == name, ]
   
-  res = runSQLQuery(query)
   if (nrow(res) == 0L)
     stopf("No data set on OpenML server found for: %s", name)
   
@@ -18,10 +35,8 @@ downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRU
     warningf("Version '%i' not available. Downloading latest version instead. \n", version)
     version = max(res$version)
   } 
-  row = which(res$version == version)
-  
-  id = res[row, "did"]
-  target = res[row, "default_target_attribute"]
+
+  id = res[res$version == version, "did"]  
   
   if (show.info) {
     messagef("Downloading data set '%s' from OpenML repository.", name)
@@ -45,15 +60,17 @@ downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRU
   downloadOpenMLDataSet(data.desc$url, fn.data.set, show.info)
   data = parseOpenMLDataSet(data.desc, fn.data.set)
   
+  def.target = data.desc$default.target.attribute
+  
   data.desc$original.col.names = colnames(data)
   
-  target.ind = which(colnames(data) %in% target)
+  target.ind = which(colnames(data) %in% def.target)
   colnames(data) = make.names(colnames(data), unique = TRUE)
-  target = colnames(data)[target.ind]
+  def.target = colnames(data)[target.ind]
   
   data.desc$new.col.names = colnames(data)
   data.desc$data.set = data
-  data.desc$default.target.attribute = target
+  data.desc$default.target.attribute = def.target
   
   return(data.desc)
 }

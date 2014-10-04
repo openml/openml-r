@@ -7,6 +7,6 @@ test_that("getDataQualities", {
   expect_is(dqn, "character")
   expect_is(dq1, "data.frame")
   expect_is(dq2, "data.frame")
-  expect_equal(ncol(dq2), length(dqn) + 1)
-  expect_true(setequal(make.names(dqn), colnames(dq2)[-1]))
+  expect_true(ncol(dq1) == 12 && nrow(dq1) > 1)
+  expect_true(setequal(dqn, setdiff(colnames(dq2), c("did", "dataset", "version"))))
 })

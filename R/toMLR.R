@@ -1,18 +1,75 @@
-#' Convert an OpenML task to an mlr task object.
-#'
-#' @param task [\code{\linkS4class{OpenMLTask}}]\cr
-#'   An OpenML task object. Required.
+#' @title Convert an OpenML object to mlr.
+#'   
+#' @description This function converts an \code{\link{OpenMLDataSetDescription}}
+#'   or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}}. In
+#'   the latter case, a list is returned with the following elements:\cr 
+#'   \code{mlr.task} -- the \code{\link[mlr]{Task}},\cr \code{mlr.rin} -- a
+#'   \code{\link[mlr]{ResampleInstance}} which was defined by the server,\cr 
+#'   \code{mlr.measures} -- a list of \code{\link[mlr]{Measure}s} to optimize
+#'   for,\cr \code{orig.lvls} -- a \code{character} vector containing all
+#'   original (possibly empty) levels of the target feature. Empty levels are
+#'   removed from the data set during conversion.
+#' @param obj [\code{\link{OpenMLDataSetDescription}} | \code{\link{OpenMLTask}}]\cr 
+#'   The object that should be converted. Required.
+#' @param target [\code{character}]\cr 
+#'   The target for the classification/regression task. Default is the 
+#'   \code{default.target.attribute} of the \code{DataSetDescription}.
+#' @param remove.target.NAs [\code{logical(1)}]\cr
+#'   Should rows with missing target values be removed? Default is \code{TRUE}. Note, that 
+#'   the function might fail if you set this to \code{FALSE}.
 #' @return [\code{\link[mlr]{Task}}]
 #' @export
-
-toMlr = function(task) {
-  assertClass(task, "OpenMLTask")
+toMlr = function(obj, target, remove.target.NAs) {
   requirePackages("mlr", why = "toMlr")
-  task.type = task$type
-  data.set.desc = task$data.desc
-  data = task$data.desc$data.set
-  target = task$target.features
+  UseMethod("toMlr")
+}
 
+#' @rdname toMlr
+#' @export
+toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute, 
+  remove.target.NAs = TRUE) {
+  
+  assertSubset(target, obj$data.desc$new.col.names, empty.ok = FALSE)
+  assertFlag(remove.target.NAs)
+  task.type = obj$type
+  data.set.desc = obj$data.desc
+  data = obj$data.desc$data.set
+  estim.proc = obj$estimation.procedure
+  if (remove.target.NAs) {
+    tar.na = is.na(data[, target])
+    data = subset(data, !tar.na)
+  }
+  mlr.task = createMlrTask(data, target, task.type)
+  mlr.rin = createMlrResampleInstance(estim.proc, mlr.task$mlr.task)
+  mlr.measures = createMlrMeasures(obj$task.evaluation.measures, task.type)
+  res = list(mlr.task = mlr.task$mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
+  res$orig.lvls = mlr.task$orig.lvls
+  return(res)
+}
+
+#' @rdname toMlr
+#' @export
+toMlr.OpenMLDataSetDescription = function(obj, target = obj$default.target.attribute,
+  remove.target.NAs = TRUE) {
+  
+  assertSubset(target, obj$new.col.names, empty.ok = FALSE)
+  assertFlag(remove.target.NAs)
+  data = obj$data.set
+  if (remove.target.NAs) {
+    tar.na = is.na(data[, target])
+    data = subset(data, !tar.na)
+  }
+  if (length(target) == 1) {
+    task.type = ifelse(is.factor(data[, target]), "Supervised Classification", "Supervised Regression")
+  } else {
+    stopf("Currently no support for tasks with more than one target column.")
+  }
+  mlr.task = createMlrTask(data, target, task.type)
+  return(mlr.task$mlr.task)
+}
+
+createMlrTask = function(data, target, task.type) {
+  assertDataFrame(data)
   orig.lvls = NULL
   if (task.type == "Supervised Classification") {
     orig.lvls = levels(data[, target])
@@ -20,15 +77,6 @@ toMlr = function(task) {
   #FIXME some data sets have empty factor levels, mlr does not like this
   # fix this for now by removing
   data = droplevels(data)
-
-  # FIXME: hack to convert bad feature names
-  feature.ind = which(colnames(data) %nin% target)
-  feature.names = colnames(data)[feature.ind]
-  feature.names = str_replace_all(feature.names, pattern=c("\\-"), replacement="_")
-  feature.names = str_replace_all(feature.names, pattern=c("/"), replacement="_")
-  colnames(data)[feature.ind] = feature.names
-
-  estim.proc = task$estimation.procedure
   if (task.type == "Supervised Classification") {
     mlr.task = makeClassifTask(data = data, target = target)
   } else if (task.type == "Supervised Regression") {
@@ -36,11 +84,7 @@ toMlr = function(task) {
   } else {
     stopf("Encountered currently unsupported task type: %s", task.type)
   }
-  mlr.rin = createMlrResampleInstance(estim.proc, mlr.task)
-  mlr.measures = createMlrMeasures(task$task.evaluation.measures, task.type)
-  res = list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
-  res$orig.lvls = orig.lvls
-  return(res)
+  return(list(mlr.task = mlr.task, orig.lvls = orig.lvls))
 }
 
 createMlrResampleInstance = function(estim.proc, mlr.task) {
@@ -77,8 +121,6 @@ createMlrResampleInstance = function(estim.proc, mlr.task) {
     }
   }
   return(mlr.rin)
-  #print(table(data.splits$rep, data.splits$fold, data.splits$type))
-
 }
 
 # FIXME: add more metrics/measures.

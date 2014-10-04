@@ -14,7 +14,6 @@
 #' @export
 
 # FIXME: use API call
-# FIXME: how are data set versions dealt with? we need to see them
 
 getDataQualities = function(set = "basic") {
   assertChoice(set, c("all", "basic"))
@@ -29,11 +28,11 @@ getDataQualities = function(set = "basic") {
   # we need to recode missing values in qualities a bit by applying an SQL function for each quality
   query = sprintf("MAX(IF(dq.quality='%s', dq.value, NULL)) AS `%s`", dquals, dquals)
   query = collapse(query)
-  query = paste("SELECT d.name AS dataset,", query,
-    "FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY dataset")
+  query = paste("SELECT d.did AS did, d.name AS dataset, d.version, ", query,
+    "FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY did")
 
   res = runSQLQuery(query)
-  rownames(res) = res$dataset
+  rownames(res) = res$did
   return(res)
 }
 
