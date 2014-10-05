@@ -37,8 +37,6 @@
 #' @param bibliographical.reference [\code{list}]\cr
 #'   An optional list containing information on bibliographical references in form of
 #'   \code{\link{OpenMLBibRef}s}.
-#'  # @param implements [\code{character}]\cr
-#'  #   Ontological reference.
 #' @param parameter [\code{list}]\cr
 #'   The parameters of the implementation. A list containing 
 #'   \code{\link{OpenMLImplementationParameter}s}.
@@ -59,6 +57,8 @@
 #'   MD5 checksum to check if the binary code was uploaded correctly.
 #' @export
 #' @aliases OpenMLImplementation 
+# @param implements [\code{character}]\cr
+#   Ontological reference.
 makeOpenMLImplementation = function(
   id = NA_integer_,
   uploader = NA_integer_,

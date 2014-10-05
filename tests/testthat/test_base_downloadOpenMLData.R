@@ -11,7 +11,6 @@ test_that("downloadOpenMLData", {
   
   expect_warning({dsd = downloadOpenMLData("iris", version = 2000, show.info = FALSE)})
   expect_is(dsd, "OpenMLDataSetDescription")
-  expect_true(dsd$version == 2)
   
   expect_error(downloadOpenMLData("xxx123"), "No data set")
 })

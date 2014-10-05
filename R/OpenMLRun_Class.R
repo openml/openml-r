@@ -47,7 +47,7 @@ print.OpenMLRun = function(x, ...)  {
         pars.vals[[i]] = sprintf("%s (Component '%s')", pars.vals[i], comp)
       }
     }
-    BBmisc:::prettyPrint(pars.vals, prefix = "\t\t", sep = " = ", name.align = "right")
+    #BBmisc:::prettyPrint(pars.vals, prefix = "\t\t", sep = " = ", name.align = "right")
   }
   cat('\n')
 }

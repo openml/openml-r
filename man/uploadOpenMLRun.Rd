@@ -30,6 +30,10 @@ A session token returned by \code{\link{authenticateUser}}.}
 \item{run.pars}{[\code{list}]\cr
 If no mlr learner was used, this is a list of all \code{\link{OpenMLRunParameter}s}.}
 
+\item{clean.up}{[\code{logical(1)}]\cr
+Should intermediate files be removed from disk at the end?
+Default is \code{TRUE}.}
+
 \item{show.info}{[\code{logical(1)}]\cr
 Verbose output on console?
 Default is \code{TRUE}.}

@@ -11,7 +11,7 @@
 #'   Should not only the predictions but all of the by mlr computed information be returned?
 #'   This includes test measures in each step of the resampling procedure as well as the aggregated
 #'   performance. See \code{\link[mlr]{resample}}. Default is \code{TRUE}.
-#' @param remove.const.features [\code{logical(1)}]\cr
+#' @param remove.const.feats [\code{logical(1)}]\cr
 #'   Should constant features be removed? Default is \code{TRUE}. Note, that setting this
 #'   to \code{FALSE} may lead to fatal errors.
 #' @param ... [any]\cr

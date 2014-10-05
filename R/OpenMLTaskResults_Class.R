@@ -2,28 +2,27 @@
 #'
 #' @title Construct OpenMLTask.
 #'   
-#' @param task.id [\code{character}]\cr
+#' @param task.id [\code{integer(1)}]\cr
 #'   ID of the OpenMLTask.
-#' @param task.type.id [\code{character(1)}]\cr
+#' @param task.type.id [\code{integer(1)}]\cr
 #'   ID of the task type.
-#' @param input.data [\code{character(1)}]\cr
+#' @param input.data [\code{integer(1)}]\cr
 #'   ID of the data set that belongs to the task.
 #' @param task.name [\code{character(1)}]\cr
 #'   A name describing the task shortly.
-#' @param estimation.procedure [\code{character}]\cr
-#'   Information on the task's estimation procedure.
+#' @param estimation.procedure [\code{character(1)}]\cr
+#'   The task's estimation procedure.
 #' @param metrics [\code{data.frame}]\cr
 #'   A data.frame of the metrics of all runs that were uploaded for this task.
 #' @export
 #' @aliases OpenMLTaskResults OpenMLTaskResults-class
-makeOpenMLTaskResults = function(task.id, task.name, task.type.id = NA_character_, 
-  input.data = NA_character_, estimation.procedure = NA_character_, metrics
-) {
+makeOpenMLTaskResults = function(task.id, task.name, task.type.id = NA_integer_, 
+  input.data = NA_integer_, estimation.procedure = NA_character_, metrics) {
   
-  assertString(task.id)
+  assertCount(task.id)
   assertString(task.name)
-  assertString(task.type.id, na.ok = TRUE)
-  assertString(input.data, na.ok = TRUE)
+  assertCount(task.type.id, na.ok = TRUE)
+  assertCount(input.data, na.ok = TRUE)
   assertString(estimation.procedure, na.ok = TRUE)
   assertDataFrame(metrics)
   
@@ -41,23 +40,19 @@ makeOpenMLTaskResults = function(task.id, task.name, task.type.id = NA_character
 
 # show
 #' @export
-print.OpenMLTaskResults = function(x, ...)  {
+print.OpenMLTaskResults = function(x, printMetrics = FALSE, ...)  {
   catNotNA = function(s, val) {
-    if (!is.na(val)) 
+    if (!is.na(val))
       catf("%s %s", s, val)
   }
-  
+
   ## General info
-  catf('\n** Task Information **')
-   
-  catNotNA('Task ID              :: ', x$task.id)
-  catNotNA('Task Name            :: ', x$task.name)
-  catNotNA('Task Type ID         :: ', x$task.type.id)  
-  catNotNA('Input Data           :: ', x$input.data)
-  catNotNA('Estimation Procedure :: ', x$estimation.procedure)
+  catf('\nTask Results :: (Task ID = %i, Data ID = %i)', x$task.id, x$input.data)
+  catNotNA('\tTask Type ID        : ', x$task.type.id)
+  catNotNA('\tEstimation Procedure: ', x$estimation.procedure)
   
-  ## Metrics
-  catf('\n** Metrics **')
-  # Do not print confusion matrices and os information to keep it clear
-  print(subset(x$metrics, select = -c(confusion_matrix, os_information)))
+  if (printMetrics) {
+    cat('\n\tMetrics             :\n\n')
+    print(x$metrics[, colnames(x$metrics) %nin% c("confusion_matrix", "os_information")])
+  }
 }

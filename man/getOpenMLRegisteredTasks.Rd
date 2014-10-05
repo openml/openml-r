@@ -5,6 +5,10 @@
 \usage{
 getOpenMLRegisteredTasks(type = "classification")
 }
+\arguments{
+\item{type}{[\code{character(1)}]\cr
+  Currently only "classification" is supported.}
+}
 \value{
 [\code{data.frame}].
 }

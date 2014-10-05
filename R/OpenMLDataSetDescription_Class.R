@@ -25,10 +25,26 @@
 #'   Licence of the data. \code{NA} means: Public Domain or "don't know/care".
 #' @param url [\code{character(1)}]\cr 
 #'   Valid URL that points to the data file.
+#' @param default.target.attribute [\code{character}]\cr 
+#'   The default target attribute, if it exists. Of course, tasks can be defined that use 
+#'   another attribute as target.
 #' @param row.id.attribute [\code{character(1)}]\cr  
-#'   The attribute that represents the row-id column, if present in the dataset. Else \code{NA}. 
+#'   The attribute that represents the row-id column, if present in the data set. Else \code{NA}. 
+#' @param version.label [\code{character(1)}]\cr
+#'   Version label provided by user, something relevant to the user. Can also be a date, 
+#'   hash, or some other type of id.
+#' @param citation [\code{character(1)}]\cr
+#'   Reference(s) that should be cited when building on this data.
+#' @param visibility [\code{character(1)}]\cr
+#'   Who can see the data set. Typical values: 'Everyone', 'All my friends', 'Only me'. 
+#'   Can also be any of the user's circles.
+#' @param original.data.url [\code{character(1)}]\cr
+#'   For derived data, the url to the original data set. 
+#'   This can be an OpenML data set, e.g. 'http://openml.org/d/1'.
+#' @param paper.url [\code{character(1)}]\cr   
+#'   Link to a paper describing the data set.
 #' @param md5.checksum [\code{character(1)}]\cr 
-#'   MD5 checksum to check if the dataset is downloaded without corruption.
+#'   MD5 checksum to check if the data set is downloaded without corruption.
 #' @param data.set [\code{data.frame}]\cr 
 #'   The data set. 
 #' @param original.col.names [\code{character}]\cr

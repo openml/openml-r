@@ -5,24 +5,24 @@
 \alias{makeOpenMLTaskResults}
 \title{Construct OpenMLTask.}
 \usage{
-makeOpenMLTaskResults(task.id, task.name, task.type.id = NA_character_,
-  input.data = NA_character_, estimation.procedure = NA_character_, metrics)
+makeOpenMLTaskResults(task.id, task.name, task.type.id = NA_integer_,
+  input.data = NA_integer_, estimation.procedure = NA_character_, metrics)
 }
 \arguments{
-\item{task.id}{[\code{character}]\cr
+\item{task.id}{[\code{integer(1)}]\cr
 ID of the OpenMLTask.}
 
-\item{task.type.id}{[\code{character(1)}]\cr
+\item{task.type.id}{[\code{integer(1)}]\cr
 ID of the task type.}
 
-\item{input.data}{[\code{character(1)}]\cr
+\item{input.data}{[\code{integer(1)}]\cr
 ID of the data set that belongs to the task.}
 
 \item{task.name}{[\code{character(1)}]\cr
 A name describing the task shortly.}
 
-\item{estimation.procedure}{[\code{character}]\cr
-Information on the task's estimation procedure.}
+\item{estimation.procedure}{[\code{character(1)}]\cr
+The task's estimation procedure.}
 
 \item{metrics}{[\code{data.frame}]\cr
 A data.frame of the metrics of all runs that were uploaded for this task.}

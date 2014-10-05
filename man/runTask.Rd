@@ -18,7 +18,7 @@ Should not only the predictions but all of the by mlr computed information be re
 This includes test measures in each step of the resampling procedure as well as the aggregated
 performance. See \code{\link[mlr]{resample}}. Default is \code{TRUE}.}
 
-\item{remove.const.features}{[\code{logical(1)}]\cr
+\item{remove.const.feats}{[\code{logical(1)}]\cr
 Should constant features be removed? Default is \code{TRUE}. Note, that setting this
 to \code{FALSE} may lead to fatal errors.}
 

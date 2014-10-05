@@ -27,5 +27,6 @@ print.OpenMLData = function(x, ...) {
   
   catf('\n** Evaluations **')
   # Exclude column "array.data" in print to keep it readable
-  print(subset(x$evaluation, select=-array.data))
+  eval = x$evaluation
+  print(eval[, colnames(eval) != "array.data"])
 }

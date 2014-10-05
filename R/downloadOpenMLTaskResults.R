@@ -14,12 +14,18 @@
 #' @return [\code{\link{OpenMLTaskResults}}]
 #' @export
 downloadOpenMLTaskResults = function(id, dir = getwd(), show.info = TRUE, clean.up = TRUE) {
+  assertCount(id)
+  assertDirectory(dir)
+  assertFlag(show.info)
+  assertFlag(clean.up)
   fn.task.results = file.path(dir, sprintf("results_task_%g.xml", id))
+  on.exit({
+    if (clean.up) 
+      unlink(fn.task.results)
+  })
   downloadAPICallFile(api.fun = "openml.task.evaluations", file = fn.task.results, task_id = id, 
     show.info = show.info)
   results = parseOpenMLTaskResults(fn.task.results)
-  if (clean.up)
-    unlink(fn.task.results)
   return(results)
 }
 
@@ -46,16 +52,15 @@ parseOpenMLTaskResults = function(file) {
       colnames(task.res[[i]])[-(1:4)] = metric.names
     }
     # rbind task results and fill missing measures with <NA>
-    # FIXME: this way, all columns are factors. convert them somehow.
     metrics = do.call(rbind.fill, task.res)
-    row.names(metrics) = metrics$run.id
-    metrics$run.id = NULL
+    # cols of metrics are factors now, convert them:
+    metrics = as.data.frame(lapply(metrics, function(x) type.convert(as.character(x))))
     return(metrics)
   }
-  task.id = xmlRValS(doc, "/oml:task_evaluations/oml:task_id")
+  task.id = xmlRValI(doc, "/oml:task_evaluations/oml:task_id")
   task.name = xmlRValS(doc, "/oml:task_evaluations/oml:task_name")
-  task.type.id = xmlRValS(doc, "/oml:task_evaluations/oml:task_type_id")
-  input.data = xmlRValS(doc, "/oml:task_evaluations/oml:input_data")
+  task.type.id = xmlRValI(doc, "/oml:task_evaluations/oml:task_type_id")
+  input.data = xmlRValI(doc, "/oml:task_evaluations/oml:input_data")
   estim.proc = xmlRValS(doc, "/oml:task_evaluations/oml:estimation_procedure")
   
   ns.runs = getNodeSet(doc, "/oml:task_evaluations/oml:evaluation")

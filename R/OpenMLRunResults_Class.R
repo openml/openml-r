@@ -1,3 +1,5 @@
+#' OpenMLRunResults
+#'
 #' @title Construct OpenMLRunResults.
 #' 
 #' @param run.id [\code{numeric(1)}]\cr
@@ -59,33 +61,22 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
 
 # show
 #' @export
-print.OpenMLRunResults = function(x, ...)  {
-  catNotEmpty = function(s, val) {
-    if (val != "") 
+print.OpenMLRunResults = function(x, printMetrics = FALSE, ...)  {
+  catNotNA = function(s, val) {
+    if (!is.na(val)) 
       catf("%s %s", s, val)
   }
   
   ## General info
-  catf('\n** Run Information **')
-  
-  catNotEmpty('Run ID            :: ', x$run.id)
-  catNotEmpty('Task ID           :: ', x$task.id)
-  catNotEmpty('User ID           :: ', x$uploader)
-  catNotEmpty('Implementation ID :: ', x$implementation.id)
-  
+  catf('\nRun Results :: (Run ID = %i, Task ID = %i)', x$run.id, x$task.id)
+  catNotNA('\tFlow ID: ', x$implementation.id)
+  catNotNA('\tUser ID: ', x$uploader)
+
+  if (printMetrics) {
+    cat('\n\tMetrics:\n\n')
+    m = x$output.data$evaluation
+    print(m[, colnames(m) != "array.data"])
+  }
   ## FIXME: Add parameters.
-  
-  ## Metrics
-  catf('\n** Metrics **')
-  
-  #if(length(x$metrics) > 0) {
-  #  for(i in seq_along(x$metrics)) {
-  #    catNotEmpty('Name              :: ', x$metrics[[i]]$name)
-  #    catNotEmpty('Value             :: ', x$metrics[[i]]$value)
-  #    catNotEmpty('Label             :: ', x$metrics[[i]]$label)
-  #    cat("\n")
-  #  }
-  #}
-  print(x$output.data)
 }
 

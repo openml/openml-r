@@ -43,6 +43,6 @@ Most of this will be added by the server, but users can also provide evaluation 
 own evaluation measures.}
 }
 \description{
-Construct OpenMLRunResults.
+OpenMLRunResults
 }
 

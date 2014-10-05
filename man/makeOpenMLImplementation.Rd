@@ -65,12 +65,8 @@ Optional. Additional hints on how to run the implementation.}
 Optional. The dependencies of the implementation.}
 
 \item{bibliographical.reference}{[\code{list}]\cr
- An optional list containing information on bibliographical references in form of
- \code{\link{OpenMLBibRef}s}.
-#}
-
-\item{implements}{[\code{character}]\cr
-#   Ontological reference.}
+An optional list containing information on bibliographical references in form of
+\code{\link{OpenMLBibRef}s}.}
 
 \item{parameter}{[\code{list}]\cr
 The parameters of the implementation. A list containing

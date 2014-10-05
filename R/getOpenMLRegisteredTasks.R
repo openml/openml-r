@@ -3,7 +3,9 @@
 #' @description
 #' We currently return only  which are marked as safe on OpenML.
 #'
-#'
+#' @param type [\code{character(1)}]\cr
+#'   Currently only "classification" is supported.
+#'   
 #' @return [\code{data.frame}].
 #' @export
 #FIXME: document better
