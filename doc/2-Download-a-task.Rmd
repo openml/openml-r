@@ -15,22 +15,20 @@ print(task)
 
 Note: You do not have to be registered at http://openml.org/ to download a task. 
 
-### Download an OpenML data set as an mlr task
-OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate from these fixings. Of course, it is possible to define new tasks that match your desires, but this will not always be the means of choice -- e.g., when you want to run a few preliminary experiments. For this matter, you can use the function `downloadOpenMLDataAsMlrTask` if you are working with [mlr](https://github.com/berndbischl/mlr). By the following example call, the Iris data set is downloaded and automatically converted into an mlr (classification) task: 
+### Download an OpenML data set only
+OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate from these fixings. Of course, it is possible to define new tasks that match your desires, but this will not always be the means of choice -- e.g., when you want to run a few preliminary experiments. For this matter, you can use the function `downloadOpenMLData`, which downloads an OpenMLDataSetDescription including the corresponding data set. Sometimes data sets have more than one version. The default is to download the first version of a data set but a different version can be selected easily with the argument `version`. It is recommended to download the first version if you do not know about what is different in a later version. 
 
 ```{r message = FALSE, eval = FALSE}
-mlr.task = downloadOpenMLDataAsMlrTask(name = "iris")
+oml.data = downloadOpenMLData(name = "iris")
+```
+
+If you are working with [mlr](https://github.com/berndbischl/mlr), you can now go ahead and convert `oml.data` into an mlr (classification) task. Most data sets have a default target attribute. If this is not available or you want to select a different target feature, use the parameter `target`:
+
+```{r message = FALSE, eval = FALSE}
+mlr.task = toMlr(oml.task, target = "class")
 ```
 
 Now you can freely apply any resampling procedure. For further information on how this works, see [here](http://berndbischl.github.io/mlr/man/makeResampleDesc.html).
-
-Sometimes data sets have more than one version. The default is to download the first version of a data set but a different version can be selected easily:
-
-```{r message = FALSE, eval = FALSE}
-mlr.task = downloadOpenMLDataAsMlrTask(name = "iris", version = 2)
-```
-
-It is recommended to download the first version if you do not know about what is different in a later version.
 
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:    

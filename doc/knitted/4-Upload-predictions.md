@@ -42,7 +42,7 @@ To upload the predictions, mlr users only need the following call:
 ```splus
 run.ul = uploadOpenMLRun(task = task, 
   mlr.lrn = learner, 
-  oml.impl = OpenML.impl, 
+  impl.id = flow.id, 
   predictions = predictions, 
   session.hash = hash)
 ```
@@ -66,7 +66,7 @@ Now we upload the run. We leave out the argument "mlr.lrn", because we are not u
 
 ```splus
 run.ul = uploadOpenMLRun(task = task, 
-  oml.impl = OpenML.impl, 
+  impl.id = flow.id, 
   predictions = predictions,
   run.pars = run.pars,
   session.hash = hash)

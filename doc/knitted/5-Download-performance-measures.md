@@ -9,7 +9,8 @@ To download the results of one of your own runs, you have to know the correspond
 
 ```splus
 run.results = downloadOpenMLRunResults(run.ul)
-run.results@metrics
+run.results  # print only general info
+print(run.results, printMetrics = TRUE)  # print metrics as well.
 ```
 
 ### Download task results
@@ -18,7 +19,8 @@ It is possible to download all stored metrics of all runs of a certain task at t
 
 ```splus
 task.results = downloadOpenMLTaskResults(id = 4)
-task.results
+task.results  # print only general info
+print(task.results, printMetrics = TRUE)  # print metrics as well. Might be very confusing!
 ```
 
 ----------------------------------------------------------------------------------------------------------------------
