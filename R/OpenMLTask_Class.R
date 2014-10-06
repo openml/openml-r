@@ -51,43 +51,28 @@ makeOpenMLTask = function(id, type, pars = list(), target.features = NA_characte
 # ***** Methods *****
 
 # show
-# Note: The data splits and the predictions are not shown
 #' @export
 print.OpenMLTask = function(x, ...) {
-  ## Task general info
-  catf('\nTask ID ::  %i \n\nTask Type ::  %s', x$id, x$type)
-  if (length(x$pars))
-    cat(collapse(paste("\t", names(x$pars), " = ", x$pars), sep = "\n"))
-
-  ## Target variables info
-  catf('\nTask Target Feature :: %s', collapse(x$target.features, "\t"))
-
-  ## Data set info
-  if (!is.null(x$data.desc)) {
-    catf('\nDataset ::  %s  (openML ID =  %i, version = %s)',
-      x$data.desc$name, x$data.desc$id, x$data.desc$version)
-    catf('\tData frame with %i rows and %i columns',
-      nrow(x$data.desc$data.set), ncol(x$data.desc$data.set))
+  catNotNA = function(s, val, fun = identity, ...) {
+    if (!all(is.na(val))) 
+      catf("%s %s", s, fun(val, ...))
   }
-
-  ## Estimation procedure info
-  if (!is.null(x$estimation.procedure)) {
-    catf('\nEstimation Procedure :: %s', x$estimation.procedure$type)
-    catf('\tData splits for estimation %s.',
-      ifelse(all(dim(x$estimation.procedure$data.splits) == 0), 'not available', 'available'))
-    if (length(x$estimation.procedure$parameters)) {
-
-      cat('\tParameters of the estimation procedure:\n')
-
-      cat(collapse(paste("\t", names(x$estimation.procedure$parameters), " = ",
-        x$estimation.procedure$parameters), sep = "\n"))
-    }
+  
+  catf('\nOpenML Task %i :: (Data ID = %i)', x$id, x$data.desc.id)
+  catNotNA('\tTask Type            :', x$type)
+      catf('\tData Set             : %s :: (Version %s, OpenML ID = %i)', x$data.desc$name, 
+       x$data.desc$version, x$data.desc$id)
+  catNotNA('\tTarget Feature(s)    :', x$target.features, fun = collapse, sep = ", ")
+  if (!is.na(x$estimation.procedure$type)) {
+    est.type = x$estimation.procedure$type
+    strat = x$estimation.procedure$parameters$stratified_sampling
+    strat = ifelse(!is.null(strat) && as.logical(strat), "Stratified ", "")
+    n.rep = x$estimation.procedure$parameters$number_repeats
+    n.rep = ifelse(!is.null(n.rep), paste(n.rep, "x "), "") 
+    n.folds = x$estimation.procedure$parameters$number_folds
+    n.folds = ifelse(!is.null(n.folds), paste(n.folds, "folds"), "") 
+    catf('\tEstimation Procedure : %s%s (%s%s)', strat, est.type, n.rep, n.folds)
   }
-  cat('\nPredictions ::\n')
-  catf('\tFormat = %s', x$preds$format)
-  cat('\tColumns:\n')
-  cat(collapse(paste("\t\t", names(x$preds$features), " = ", x$preds$features), sep = "\n"))
-  cat('\nEvaluation Measures ::\n')
-  catf('%s', collapse(x$evaluation.measures, '\n'))
+  if (!all(x$evaluation.measures == ""))
+    catNotNA('\tEvaluation Measure(s):', x$evaluation.measures, fun = collapse, sep = ", ")
 }
-
