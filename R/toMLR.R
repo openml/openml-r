@@ -41,7 +41,7 @@ toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute
   }
   mlr.task = createMlrTask(data, target, task.type)
   mlr.rin = createMlrResampleInstance(estim.proc, mlr.task$mlr.task)
-  mlr.measures = createMlrMeasures(obj$task.evaluation.measures, task.type)
+  mlr.measures = createMlrMeasures(obj$evaluation.measures, task.type)
   res = list(mlr.task = mlr.task$mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
   res$orig.lvls = mlr.task$orig.lvls
   return(res)
@@ -126,7 +126,7 @@ createMlrResampleInstance = function(estim.proc, mlr.task) {
 # FIXME: add more metrics/measures.
 createMlrMeasures = function(measures, type) {
   lapply(measures, function(m) {
-    if(type == "Supervised Classification") {
+    if (type == "Supervised Classification") {
       switch(m,
         mean_absolute_error = mmce,
         area_under_roc_curve = auc,

@@ -105,22 +105,8 @@ print.OpenMLDataSetDescription = function(x, ...) {
       catf(text, collapse(obj, sep = "; "))
   }
   # Wrong indentation to see alignment
-  catf('\nData Set "%s" :: (OpenML ID = %i, Version = %s)', x$name, x$id, x$version)
-  catfNotNA('\tCreator(s)     : %s', x$creator)
-  catfNotNA('\tContributor(s) : %s', x$contributor)
-  catfNotNA('\tCollection Date: %s', x$collection.date)
-       catf('\tUpload Date    : %s', x$upload.date)
-  catfNotNA('\tLicence        : %s', x$licence)
-       catf('\tURL            : %s', x$url)
-  catfNotNA('\tLanguage       : %s', x$language)
-       catf('\tFormat         : %s', x$format)
-  catfNotNA('\tRow Id Attr.  	: %s', x$row.id.attribute)
-  catfNotNA('\tmd5 Check Sum  : %s', x$md5.checksum)
-       catf('\tDescription    :')
-  # FIXME: This way, there are too many linebreaks.
-  desc = str_replace_all(x$description, pattern="\n", replacement="\n \n")
-  # getOption("width") - 20 is a heuristic to keep the description readable
-  cat(collapse(paste('\t\t', strwrap(desc, width = getOption("width") - 20), '\n'), sep = ''))
-       catf('\n\tData           :')
-  cat(collapse(paste('\t\t', unlist(strsplit(printStrToChar(x$data.set), '\n')), '\n'), sep = ''))
+  catf('\nData Set "%s" :: (Version = %s, OpenML ID = %i)', x$name, x$version, x$id)
+  catfNotNA('\tCollection Data         : %s', x$collection.date)
+  catfNotNA('\tCreator(s)              : %s', x$creator)
+  catfNotNA('\tDefault Target Attribute: %s', x$default.target.attribute)
 }
