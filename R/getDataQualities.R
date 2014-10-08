@@ -6,8 +6,9 @@
 #' For a complete list of all data qualities, see \code{\link{getDataQualityNames}}.
 #'
 #' @param set [\code{character(1)}]\cr
-#'   Either \code{"basic"}, which means only rudimentary data qualities (number of features/instances/classes/missing values/...)
-#'   are retrieved, or \code{"all"}. The latter includes 'basic' data qualities as well as meta learning features.
+#'   Either \code{"basic"}, which means only rudimentary data qualities (number of 
+#'   features/instances/classes/missing values/...) are retrieved, or \code{"all"}. 
+#'   The latter includes 'basic' data qualities as well as meta learning features.
 #'   Default is \code{"basic"}.
 #'
 #' @return [\code{data.frame}]. Rows correspond to data sets, columns to data qualities.
@@ -31,9 +32,23 @@ getDataQualities = function(set = "basic") {
   query = paste("SELECT d.did AS did, d.name AS dataset, d.version, ", query,
     "FROM dataset d, data_quality dq WHERE d.did = dq.data AND d.isOriginal = 'true' GROUP BY did")
 
-  res = runSQLQuery(query)
-  rownames(res) = res$did
-  return(res)
+  dq = runSQLQuery(query)
+  types = runSQLQuery("SELECT name, datatype FROM quality")
+  
+  # iterate over data qualities and convert their types. First three columns are did, dataset and
+  # version, ignore them here.
+  for (i in 4:ncol(dq)) {
+    type = types[types$name == colnames(dq)[i], "datatype"]
+    if (length(type) == 0)
+      type = "undefined"
+    dq[, i] = switch(type,
+      "integer" = as.integer(dq[, i]),
+      "double" = as.numeric(dq[, i]),
+      "string" = as.character(dq[, i]),
+      type.convert(as.character(dq[, i]), as.is = TRUE))
+  }
+  rownames(dq) = dq$did
+  return(dq)
 }
 
 
