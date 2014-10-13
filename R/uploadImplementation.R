@@ -12,12 +12,10 @@
 #'   A session token returned by \code{\link{authenticateUser}}.
 #' @param delete.source.binary [\code{logical(1)}]\cr   
 #'   Should downloaded source and binary files be removed at the end? Default is \code{FALSE}.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @export
 uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, session.hash, 
-  delete.source.binary = FALSE, show.info = TRUE) {
+  delete.source.binary = FALSE, show.info = getOpenMLOption("show.info")) {
   
   if (missing(sourcefile) && missing(binaryfile)) {
     stopf("Please provide source and/or binary file.")

@@ -8,5 +8,7 @@
 #' @import mlr
 #' @import plyr
 #' @import checkmate
-NULL
 
+.onAttach = function(libname, pkgname) {
+  configureOpenML()
+}

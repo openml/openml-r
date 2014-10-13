@@ -5,20 +5,20 @@
 #' @param dir [\code{character(1)}]\cr 
 #'   The directory where to save the downloaded run xml. The file is called "results_task_id.xml" where "id" is 
 #'   replaced by the actual id. Default is the working directory.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @param clean.up [\code{logical(1)}]\cr
 #'   Should the downloaded xml file be removed at the end? 
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{OpenMLTaskResults}}]
 #' @export
-downloadOpenMLTaskResults = function(id, dir = getwd(), show.info = TRUE, clean.up = TRUE) {
-  assertCount(id)
-  assertDirectory(dir)
+downloadOpenMLTaskResults = function(id, dir = getwd(), show.info = getOpenMLOption("show.info"), 
+  clean.up = TRUE) {
+  
+  id = asCount(id)
+  assertDirectory(dir, "w")
   assertFlag(show.info)
   assertFlag(clean.up)
-  fn.task.results = file.path(dir, sprintf("results_task_%g.xml", id))
+  fn.task.results = file.path(dir, sprintf("results_task_%i.xml", id))
   on.exit({
     if (clean.up) 
       unlink(fn.task.results)

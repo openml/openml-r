@@ -9,10 +9,10 @@
 #' @param impl.id [\code{\link{character}}]\cr 
 #'   The ID of the OpenML implementation that is stored on the OpenML server.
 #' @param predictions [\code{data.frame}]\cr
-#'   The predictions. Must have the same form as produced by \code{\link{runTask}}. If a fatal error occured while 
-#'   computing predictions, you have the possibility to leave this out and pass an error message instead (as parameter
-#'   error.msg).
-#' @param error.msg [\code{try-error}]\cr
+#'   The predictions. Must have the same form as produced by \code{\link{runTask}}. If a fatal error 
+#'   occured while computing predictions, you have the possibility to leave this out and pass an error 
+#'   message instead (as parameter \code{error.msg}).
+#' @param error.msg [\code{character(1)}]\cr
 #'   An optional error message. If this is not empty, the predictions (if present) are ignored.
 #' @param session.hash [\code{character(1)}]\cr
 #'   A session token returned by \code{\link{authenticateUser}}.
@@ -21,23 +21,18 @@
 #' @param clean.up [\code{logical(1)}]\cr
 #'   Should intermediate files be removed from disk at the end?
 #'   Default is \code{TRUE}.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @return [\code{numeric(1)} or \code{NULL}]. Run ID if the run was uploaded succesfully.
 #' @export
 
-# FIXME: Rewrite description as soon as the function's parameters are definite.
-
 uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, session.hash, 
-  run.pars = NULL, clean.up = TRUE, show.info = TRUE) {
+  run.pars = NULL, clean.up = TRUE, show.info = getOpenMLOption("show.info")) {
   
-  if (missing(mlr.lrn)) {
-    assertList(run.pars)
-  } else {
+  if (!missing(mlr.lrn)) {
     assertClass(mlr.lrn, "Learner")
     run.pars = makeRunParameterList(mlr.lrn)
   }
+  assertList(run.pars)
   assertClass(task, "OpenMLTask")
   impl.id = asCount(impl.id)
     

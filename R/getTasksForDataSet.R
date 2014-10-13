@@ -1,6 +1,6 @@
 #' Get task IDs for a certain data set
 #'
-#' @param id [\code{integer}]\cr
+#' @param did [\code{integer}]\cr
 #'   One or more data set IDs.
 #' @return [\code{integer}]. A vector containing the task IDs.
 #' @export

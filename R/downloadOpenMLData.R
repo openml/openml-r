@@ -11,13 +11,11 @@
 #' @param clean.up [\code{loigcal(1)}]\cr
 #'   Should the downloaded files be removed from disk at the end?
 #'   Default is \code{TRUE}.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @return [\code{\link{OpenMLDataSetDescription}}]
 #' @export
 downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRUE, 
-  show.info = TRUE) {
+  show.info = getOpenMLOption("show.info")) {
   
   assertString(name)
   assertCount(version, positive = TRUE)

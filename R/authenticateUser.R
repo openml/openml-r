@@ -6,12 +6,10 @@
 #'   Your E-mail address at OpenMl server.
 #' @param password [\code{character(1)}]\cr 
 #'   Your password at OpenML server.
-#' @param show.info [\code{logical(1)}]\cr 
-#'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @return [\code{character(1)}]. Session hash for further communication.
 #' @export
-authenticateUser = function(email, password, show.info = TRUE) {
+authenticateUser = function(email, password, show.info = getOpenMLOption("show.info")) {
   assertString(email)
   assertString(password)
   assertFlag(show.info)
@@ -25,11 +23,11 @@ authenticateUser = function(email, password, show.info = TRUE) {
   params = list(username = email, password = md5)
   content = postForm(url, .params = params, .checkParams = FALSE)
   write(content, file = file)
-  parseAuthenticateUserResponse(file)
+  parseAuthenticateUserResponse(file, show.info)
 }
   
 
-parseAuthenticateUserResponse = function(file, show.info = TRUE) {
+parseAuthenticateUserResponse = function(file, show.info) {
   assertFile(file)
   doc = parseXMLResponse(file, "Authenticating user", "authenticate")  
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")

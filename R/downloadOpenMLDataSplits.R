@@ -1,7 +1,7 @@
 #FIXME: provide helper functions for error xmls
 
 # download data splits file from URL to local file
-downloadOpenMLDataSplits = function(url, file, show.info = TRUE) {
+downloadOpenMLDataSplits = function(url, file, show.info = getOpenMLOption("show.info")) {
   assertString(url)
   assertPathForOutput(file)
   downloadBinaryFile(url, file, show.info)

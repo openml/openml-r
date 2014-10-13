@@ -14,7 +14,7 @@
 #   Verbose output on console?
 #   Default is \code{TRUE}.
 # @return [\code{invisible(NULL)}].
-downloadAPICallFile = function(api.fun, file, ..., show.info = TRUE) {
+downloadAPICallFile = function(api.fun, file, ..., show.info = getOpenMLOption("show.info")) {
   assertString(api.fun)
   assertFlag(show.info)
   assertPathForOutput(file)
@@ -35,7 +35,7 @@ downloadAPICallFile = function(api.fun, file, ..., show.info = TRUE) {
 #   Verbose output on console?
 #   Default is \code{TRUE}.
 # @return [\code{invisible(NULL)}].
-downloadBinaryFile = function(url, file, show.info = TRUE) {
+downloadBinaryFile = function(url, file, show.info = getOpenMLOption("show.info")) {
   assertString(url)
   assertPathForOutput(file)
   assertFlag(show.info)

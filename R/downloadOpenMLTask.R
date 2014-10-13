@@ -25,9 +25,7 @@
 #' @param fetch.data.splits [\code{logical(1)}]\cr
 #'   Should the data splits (for resampling) also be downloaded?
 #'   Default is \code{TRUE}.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @return \code{\linkS4class{OpenMLTask}} object.
 #' @export
 #' @examples
@@ -41,7 +39,8 @@
 #' }
 
 downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE,
-  fetch.data.set.description = TRUE, fetch.data.set = TRUE, fetch.data.splits = TRUE, show.info = TRUE) {
+  fetch.data.set.description = TRUE, fetch.data.set = TRUE, fetch.data.splits = TRUE, 
+  show.info = getOpenMLOption("show.info")) {
 
   id = asInt(id)
   assertDirectory(dir, "w")

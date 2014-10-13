@@ -11,9 +11,7 @@
 #'   Should source / binary files of the implementation also be downloaded?
 #'   They will also be stored in \code{dir}.
 #'   Default is \code{TRUE}.
-#' @param show.info [logical(1)]\cr
-#'   Verbose output on console? 
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @param clean.up [logical(1)]\cr
 #'   Delete implementation xml file at the end?
 #'   Default is \code{TRUE}.
@@ -21,7 +19,7 @@
 #' @export
 
 downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binary = TRUE, 
-  show.info = TRUE, clean.up = TRUE) {
+  show.info = getOpenMLOption("show.info"), clean.up = TRUE) {
   
   id = asInt(id)
   assertDirectory(dir)

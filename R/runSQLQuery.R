@@ -9,12 +9,10 @@
 #'   If there is only one column in the resulting table,
 #'   directly return the corresponding vector?
 #'   Default is \code{TRUE}.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console?
-#'   Default is \code{FALSE}.
+#' @template arg_showinfo
 #' @return [\code{data.frame}]. The results as a table.
 #' @export
-runSQLQuery = function(query, simplify = TRUE, show.info = FALSE) {
+runSQLQuery = function(query, simplify = TRUE, show.info = getOpenMLOption("show.info")) {
   assertString(query)
   assertFlag(simplify)
   assertFlag(show.info)

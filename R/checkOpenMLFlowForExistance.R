@@ -1,4 +1,4 @@
-checkOpenMLFlowForExistance = function(flow, show.info = TRUE) {
+checkOpenMLFlowForExistance = function(flow, show.info = getOpenMLOption("show.info")) {
   assertClass(flow, "OpenMLImplementation")
   assertFlag(show.info)
   fn.impl.xml = tempfile()

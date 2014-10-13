@@ -1,7 +1,6 @@
 #' Get all names of OpenML data qualities.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console? Default is \code{FALSE}.
-getOpenMLDataQualityList = function(show.info = FALSE) {
+#' @template arg_showinfo
+getOpenMLDataQualityList = function(show.info = getOpenMLOption("show.info")) {
   file = tempfile()
   on.exit({
     unlink(file)
