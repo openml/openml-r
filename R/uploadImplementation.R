@@ -43,7 +43,8 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
   
   exist.check = checkOpenMLFlowForExistance(implementation)
   if (exist.check$exists) {
-    catf("Flow already exists (ID = %i).", exist.check$id)
+    if (show.info)
+      catf("Flow already exists (ID = %i).", exist.check$id)
     return(exist.check$id)
   } 
   file = tempfile()

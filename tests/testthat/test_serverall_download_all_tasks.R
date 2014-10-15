@@ -14,7 +14,7 @@ test_that("download all tasks", {
     q = quals[quals$dataset == name & quals$version == version, ]
     if (q$NumberOfInstances <= 10000 & q$NumberOfFeatures <= 100 & name != "Zoo_test_jan") {
       print(id)
-      task = downloadOpenMLTask(id = id, show.info = TRUE, clean.up = TRUE)
+      task = downloadOpenMLTask(id)
       tf = task$target.features
       expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
       ds = task$data.desc$data.set

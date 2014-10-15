@@ -125,32 +125,46 @@ createMlrResampleInstance = function(estim.proc, mlr.task) {
 
 # FIXME: add more metrics/measures.
 createMlrMeasures = function(measures, type) {
-  lapply(measures, function(m) {
-    if (type == "Supervised Classification") {
-      switch(m,
-        mean_absolute_error = mmce,
-        area_under_roc_curve = auc,
-        build_cpu_time = timetrain,
-        f_measure = f1,
-        matthews_correlation_coefficient = mcc,
-        precision = ppv,
-        predictive_accuracy = acc,
-        recall = tpr,
-        stopf("Unsupported evaluation measure: %s", m)
-      )
-    } else {
-      switch(m,
-        root_mean_squared_error = rmse,
-        mean_absolute_error = mae,
-        area_under_roc_curve = auc,
-        build_cpu_time = timetrain,
-        f_measure = f1,
-        matthews_correlation_coefficient = mcc,
-        precision = ppv,
-        predictive_accuracy = acc,
-        recall = tpr,
-        stopf("Unsupported evaluation measure: %s", m)
-      )
+  assertCharacter(measures, any.missing = FALSE)
+  
+  getMlrMeasures = function(measures, measure.list) {
+    mlr.measures = vector("list", length(measures))
+    for (i in seq_along(measures)) {
+      which.contain = lapply(measure.list, function(x) measures[i] %in% x)
+      measure.name = names(which.contain[which.contain == TRUE])
+      if (is.null(measure.name)) {
+        stopf("Unsupported evaluation measure: %s", measure.name)
+      }
+      mlr.measures[[i]] = get(measure.name)
     }
-  })
+    return(mlr.measures)
+  }
+  
+  classif.list = list(
+    mmce = c("mean_absolute_error", "mean absolute error"),
+    auc = c("area_under_roc_curve", "area under roc curve"),
+    timetrain = c("build_cpu_time", "build cpu time"),
+    f1 = c("f_measure", "f measure"),
+    mcc = c("matthews_correlation_coefficient", "matthews correlation coefficient"),
+    ppv = "precision",
+    acc = c("predictive_accuracy", "predictive accuracy"),
+    tpr = "recall")
+  regr.list = list(
+    rmse = c("root_mean_squared_error", "root mean squared error"),
+    mae = c("mean_absolute_error", "mean absolute error"),
+    auc = c("area_under_roc_curve", "area under roc curve"),
+    timetrain = c("build_cpu_time", "build cpu time"),
+    f1 = c("f_measure", "f measure"),
+    mcc = c("matthews_correlation_coefficient", "matthews correlation coefficient"),
+    ppv = "precision",
+    acc = c("predictive_accuracy", "predictive accuracy"),
+    tpr = "recall")
+  
+  if (type == "Supervised Classification") {
+    return(getMlrMeasures(measures, classif.list))
+  } else if (type == "Supervised Regression") {
+    return(getMlrMeasures(measures, regr.list))
+  } else {
+    stopf("Unsupported task type: %s", type)
+  }
 }

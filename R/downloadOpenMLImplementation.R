@@ -47,7 +47,7 @@ downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binar
       format = rev(strsplit(rev(strsplit(impl$source.url, "/")[[1]])[1], "[.]")[[1]])[1]
       fn.impl.src = sprintf("%s(%s)_source.%s", impl$name, impl$version, format)
       fn.impl.src = file.path(dir, fn.impl.src)
-      download.file(url = impl$source.url, destfile = fn.impl.src, mode = "wb")
+      download.file(url = impl$source.url, destfile = fn.impl.src, quiet = !show.info, mode = "wb")
     } 
     if (!is.na(impl$binary.url)) {
       if (show.info)
@@ -69,8 +69,8 @@ parseOpenMLImplementation = function(file) {
   args[["version"]] = xmlRValS(doc, "/oml:implementation/oml:version")
   args[["external.version"]] = xmlOValS(doc, "/oml:implementation/oml:external_version")
   args[["description"]] = xmlRValS(doc, "/oml:implementation/oml:description")
-  args[["creator"]] = xmlValsMultNsS(doc, "/oml:implementation/oml:creator")
-  args[["contributor"]] = xmlValsMultNsS(doc, "/oml:implementation/oml:contributor")
+  args[["creator"]] = xmlOValsMultNsS(doc, "/oml:implementation/oml:creator")
+  args[["contributor"]] = xmlOValsMultNsS(doc, "/oml:implementation/oml:contributor")
   args[["upload.date"]] = xmlRValS(doc, "/oml:implementation/oml:upload_date")
   args[["licence"]] = xmlOValS(doc, "/oml:implementation/oml:licence")
   args[["language"]] = xmlOValS(doc, "/oml:implementation/oml:language")
@@ -138,5 +138,8 @@ parseOpenMLBibRef = function(doc) {
   for (i in seq_along(bib.citation)) {
     bib[[i]] = makeOpenMLBibRef(bib.citation[i], bib.url[i])
   }
-  return(bib)
+  if (length(bib) > 0)
+    return(bib)
+  else
+    return(NULL)
 }

@@ -6,6 +6,6 @@ test_that("download all implementations", {
   for (i in seq_along(impls)) {
     id = impls[i]
     print(id)
-    impl = downloadOpenMLImplementation(id = id, download.source.binary = FALSE, clean.up = TRUE)
+    impl = downloadOpenMLImplementation(id = id, download.source.binary = FALSE)
   }
 })  

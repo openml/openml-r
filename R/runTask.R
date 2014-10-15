@@ -16,6 +16,7 @@
 #'   to \code{FALSE} may lead to fatal errors.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.
+#' @template arg_showinfo
 #' @return List of:
 #'   \item{run.pred}{[\code{\link[mlr]{ResamplePrediction}}]\cr
 #'     Predictions resulting from the run. These are necessary in order to upload a run.}
@@ -26,11 +27,14 @@
 #'   \code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
 #' @export
 # FIXME: if !return.mlr.results, the output is not a list!
-runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats = TRUE, ...) {
+runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats = TRUE, ...,
+  show.info = getOpenMLOption("show.info")) {
+  
   assertClass(task, "OpenMLTask")
   assertClass(learner, "Learner")
   assertFlag(return.mlr.results)
   assertFlag(remove.const.feats)
+  assertFlag(show.info)
   
   if ((task$type == "Supervised Classification" && learner$type != "classif") ||
     (task$type == "Supervised Regression" && learner$type != "regr"))
@@ -38,9 +42,10 @@ runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats
   mlr.task = toMlr(task)
 
   if (remove.const.feats)
-    mlr.task$mlr.task = removeConstantFeatures(obj = mlr.task$mlr.task, ...)
+    mlr.task$mlr.task = removeConstantFeatures(obj = mlr.task$mlr.task, show.info = show.info, ...)
 
-  res = resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures)
+  res = resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures,
+    show.info = show.info)
   pred = reformatPredictions(pred = res$pred$data, task = task, orig.lvls = mlr.task$orig.lvls)
   results = list(
     run.pred = pred,

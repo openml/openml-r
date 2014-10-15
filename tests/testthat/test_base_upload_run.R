@@ -5,9 +5,10 @@ test_that("upload run", {
   
   lrn = makeLearner("classif.JRip")
   flow = createOpenMLImplementationForMLRLearner(lrn)
-  sourcefile = generateSourcefileForMlrLearner(flow)
+  sourcefile = generateSourcefileForMlrLearner(lrn)
   flow.id = uploadOpenMLImplementation(flow, sourcefile = sourcefile, session.hash = hash, 
     delete.source.binary = TRUE)
+  unlink(sourcefile)
   expect_is(flow.id, "integer")
   
   task = downloadOpenMLTask(4)
@@ -22,6 +23,6 @@ test_that("upload run", {
   run.id2 = uploadOpenMLRun(task, lrn, flow.id, res, session.hash = hash)
   expect_is(run.id, "integer")
   rr = downloadOpenMLRunResults(run.id2)
-  # expect_true(all(extractSubList(rr$parameter.setting, element = "name") == c("F", "N")))
+  expect_true(all(extractSubList(rr$parameter.setting, element = "name") == c("F", "N")))
   expect_true(all(extractSubList(rr$parameter.setting, element = "value") == c("2", "1")))
 })

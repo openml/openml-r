@@ -13,8 +13,7 @@ test_that("download all data sets", {
   for (i in 1:nrow(ids)) {
     if (ids[i, "version"] %in% dsets[dsets$name == ids[i, "dataset"], ]) {
       print(sprintf("%s, v. %i", ids[i, "dataset"], ids[i, "version"]))
-      oml.data = downloadOpenMLData(ids[i, "dataset"], version = ids[i, "version"], 
-                                    show.info = FALSE, clean.up = TRUE)
+      oml.data = downloadOpenMLData(ids[i, "dataset"], version = ids[i, "version"])
       expect_true(oml.data$name == ids[i, "dataset"])
       expect_true(oml.data$version == ids[i, "version"])
       ds = oml.data$data.set

@@ -4,7 +4,7 @@
 \title{Solve a task with mlr.}
 \usage{
 runTask(task, learner, return.mlr.results = FALSE,
-  remove.const.feats = TRUE, ...)
+  remove.const.feats = TRUE, ..., show.info = getOpenMLOption("show.info"))
 }
 \arguments{
 \item{task}{[\code{\linkS4class{OpenMLTask}}]\cr
@@ -24,6 +24,10 @@ to \code{FALSE} may lead to fatal errors.}
 
 \item{...}{[any]\cr
 Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.}
+
+\item{show.info}{[\code{logical(1)}]\cr
+Print verbose output on console?
+Default is set via \code{\link{configureOpenML}}.}
 }
 \value{
 List of:
