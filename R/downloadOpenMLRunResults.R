@@ -69,6 +69,7 @@ parseOpenMLRunResults = function(file) {
   run.args[["task.id"]] = xmlREValI(doc, "/oml:run/oml:task_id")
   run.args[["implementation.id"]] = xmlRValS(doc, "/oml:run/oml:implementation_id")
   run.args[["setup.id"]] = xmlREValI(doc, "/oml:run/oml:setup_id")
+  run.args[["setup.string"]] = xmlOValS(doc, "/oml:run/oml:setup_string")
   run.args[["error.message"]] = xmlOValS(doc, "/oml:run/oml:error_message")
   
   # parse parameters

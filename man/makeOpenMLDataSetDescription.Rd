@@ -8,9 +8,10 @@ makeOpenMLDataSetDescription(id, name, version, description, format,
   creator = NA_character_, contributor = NA_character_,
   collection.date = NA_character_, upload.date, language = NA_character_,
   licence = NA_character_, url, default.target.attribute = NA_character_,
-  row.id.attribute = NA_character_, version.label = NA_character_,
-  citation = NA_character_, visibility = NA_character_,
-  original.data.url = NA_character_, paper.url = NA_character_,
+  row.id.attribute = NA_character_, ignore.attribute = NA_character_,
+  version.label = NA_character_, citation = NA_character_,
+  visibility = NA_character_, original.data.url = NA_character_,
+  paper.url = NA_character_, update.comment = NA_character_,
   md5.checksum = NA_character_, data.set,
   original.col.names = NA_character_, new.col.names = NA_character_)
 }
@@ -59,6 +60,9 @@ another attribute as target.}
 \item{row.id.attribute}{[\code{character(1)}]\cr
 The attribute that represents the row-id column, if present in the data set. Else \code{NA}.}
 
+\item{ignore.attribute}{[\code{character(1)}]\cr
+Attributes that should be excluded in modelling, such as identifiers and indexes. Optional.}
+
 \item{version.label}{[\code{character(1)}]\cr
 Version label provided by user, something relevant to the user. Can also be a date,
 hash, or some other type of id.}
@@ -76,6 +80,9 @@ This can be an OpenML data set, e.g. 'http://openml.org/d/1'.}
 
 \item{paper.url}{[\code{character(1)}]\cr
 Link to a paper describing the data set.}
+
+\item{update.comment}{[\code{character(1)}]\cr
+When the data set is updated, add an explanation here.}
 
 \item{md5.checksum}{[\code{character(1)}]\cr
 MD5 checksum to check if the data set is downloaded without corruption.}

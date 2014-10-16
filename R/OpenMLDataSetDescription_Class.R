@@ -25,11 +25,13 @@
 #'   Licence of the data. \code{NA} means: Public Domain or "don't know/care".
 #' @param url [\code{character(1)}]\cr 
 #'   Valid URL that points to the data file.
-#' @param default.target.attribute [\code{character}]\cr 
+#' @param default.target.attribute [\code{character}]\cr
 #'   The default target attribute, if it exists. Of course, tasks can be defined that use 
 #'   another attribute as target.
-#' @param row.id.attribute [\code{character(1)}]\cr  
-#'   The attribute that represents the row-id column, if present in the data set. Else \code{NA}. 
+#' @param row.id.attribute [\code{character(1)}]\cr
+#'   The attribute that represents the row-id column, if present in the data set. Else \code{NA}.
+#' @param ignore.attribute [\code{character(1)}]\cr 
+#'   Attributes that should be excluded in modelling, such as identifiers and indexes. Optional.
 #' @param version.label [\code{character(1)}]\cr
 #'   Version label provided by user, something relevant to the user. Can also be a date, 
 #'   hash, or some other type of id.
@@ -43,6 +45,8 @@
 #'   This can be an OpenML data set, e.g. 'http://openml.org/d/1'.
 #' @param paper.url [\code{character(1)}]\cr   
 #'   Link to a paper describing the data set.
+#' @param update.comment [\code{character(1)}]\cr
+#'   When the data set is updated, add an explanation here.
 #' @param md5.checksum [\code{character(1)}]\cr 
 #'   MD5 checksum to check if the data set is downloaded without corruption.
 #' @param data.set [\code{data.frame}]\cr 
@@ -54,13 +58,13 @@
 #'   original column names only if those are invalid. 
 #' @export
 #' @aliases OpenMLDataSetDescription
-makeOpenMLDataSetDescription = function(id, name, version, description, format, 
+makeOpenMLDataSetDescription = function(id, name, version, description, format,
   creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,
-  language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_, 
-  row.id.attribute = NA_character_, version.label = NA_character_, citation = NA_character_, 
-  visibility = NA_character_, original.data.url = NA_character_, paper.url = NA_character_,
-  md5.checksum = NA_character_, data.set, original.col.names = NA_character_, 
-  new.col.names = NA_character_) {
+  language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_,
+  row.id.attribute = NA_character_, ignore.attribute = NA_character_, version.label = NA_character_,
+  citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
+  paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_, data.set,
+  original.col.names = NA_character_, new.col.names = NA_character_) {
   
   assertInt(id)
   assertString(name)
@@ -76,11 +80,13 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
   assertString(url)
   assertString(default.target.attribute, na.ok = TRUE)
   assertString(row.id.attribute, na.ok = TRUE)
+  assertCharacter(ignore.attribute)
   assertString(version.label, na.ok = TRUE)
   assertString(citation, na.ok = TRUE)
   assertString(visibility, na.ok = TRUE)
   assertString(original.data.url, na.ok = TRUE)
   assertString(paper.url, na.ok = TRUE)
+  assertString(update.comment, na.ok = TRUE)
   assertString(md5.checksum, na.ok = TRUE)
   assertDataFrame(data.set)
   assertCharacter(original.col.names)
@@ -88,12 +94,13 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
   
   makeS3Obj("OpenMLDataSetDescription",
     id = id, name = name, version = version, description = description, format = format,
-    creator = creator, contributor = contributor, collection.date = collection.date, 
-    upload.date = upload.date, language = language, licence = licence, url = url, 
-    default.target.attribute = default.target.attribute,row.id.attribute = row.id.attribute, 
-    version.label = version.label, citation = citation, visibility = visibility, 
-    original.data.url = original.data.url, paper.url = paper.url, md5.checksum = md5.checksum, 
-    data.set = data.set, original.col.names = original.col.names, new.col.names = new.col.names)
+    creator = creator, contributor = contributor, collection.date = collection.date,
+    upload.date = upload.date, language = language, licence = licence, url = url,
+    default.target.attribute = default.target.attribute, row.id.attribute = row.id.attribute,
+    ignore.attribute = ignore.attribute, version.label = version.label, citation = citation,
+    visibility = visibility, original.data.url = original.data.url, paper.url = paper.url,
+    update.comment = update.comment, md5.checksum = md5.checksum, data.set = data.set,
+    original.col.names = original.col.names, new.col.names = new.col.names)
 }
 
 # ***** Methods *****

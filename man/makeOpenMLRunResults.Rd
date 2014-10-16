@@ -5,43 +5,47 @@
 \title{Construct OpenMLRunResults.}
 \usage{
 makeOpenMLRunResults(run.id, uploader, task.id, implementation.id, setup.id,
-  error.message = NA_character_, parameter.setting = list(),
-  input.data = makeOpenMLData(), output.data = makeOpenMLData())
+  setup.string = NA_character_, error.message = NA_character_,
+  parameter.setting = list(), input.data = makeOpenMLData(),
+  output.data = makeOpenMLData())
 }
 \arguments{
-\item{run.id}{[\code{numeric(1)}]\cr
-ID of the run. Added by server. Ignored when uploading a run.}
+\item{run.id}{[\code{numeric(1)}]\cr ID of the run. Added by server. Ignored when uploading a
+run.}
 
-\item{uploader}{[\code{numeric(1)}]\cr
-ID of the user that uploaded the run. Added by server. Ignored when uploading a run.}
+\item{uploader}{[\code{numeric(1)}]\cr ID of the user that uploaded the run. Added by server.
+Ignored when uploading a run.}
 
-\item{task.id}{[\code{numeric(1)}]\cr
-ID of the task that is solved in this run. This ID is given in the task description.}
+\item{task.id}{[\code{numeric(1)}]\cr ID of the task that is solved in this run. This ID is given
+in the task description.}
 
-\item{implementation.id}{[\code{character(1)}]\cr
-ID of the implementation used to solve the task. Returned by the API when you first upload the
-implementation, or given in the implementation description when you download an existing
-implementation.}
+\item{implementation.id}{[\code{character(1)}]\cr ID of the implementation used to solve the
+task. Returned by the API when you upload the implementation, or given in the implementation
+description when you download an existing implementation.}
 
-\item{setup.id}{[\code{numeric(1)}]\cr
-Unique ID of the used setup. Ignored when uploading a run (i.e., it will be searched based
-on the parameter settings).}
+\item{setup.id}{[\code{numeric(1)}]\cr Unique ID of the used setup. Ignored when uploading a run
+(i.e., it will be searched based on the parameter settings).}
 
-\item{error.message}{[\code{character(1)}]\cr
-Whenever an error occurs during the run, this can be reported here.}
+\item{setup.string}{[\code{character(1)}]\cr The CLI string that can invoke the learner with the
+correct parameter settings. Optional.}
 
-\item{parameter.setting}{[\code{list}]\cr
-A list of \code{\link{OpenMLRunParameter}s} containing information on the parameter settings.}
+\item{error.message}{[\code{character(1)}]\cr Whenever an error occurs during the run, this can
+be reported here.}
 
-\item{input.data}{[\code{\link{OpenMLData}}]\cr
-All data that served as input for the run. Added by server. Ignored when uploading.}
+\item{parameter.setting}{[\code{list}]\cr A list of \code{\link{OpenMLRunParameter}s} containing
+information on the parameter settings.}
 
-\item{output.data}{[\code{\link{OpenMLData}}]\cr
-All data that was the output of this run, i.e., predictions, evaluation scores.
-Most of this will be added by the server, but users can also provide evaluation scores for their
-own evaluation measures.}
+\item{input.data}{[\code{\link{OpenMLData}}]\cr All data that served as input for the run. Added
+by server. Ignored when uploading.}
+
+\item{output.data}{[\code{\link{OpenMLData}}]\cr All data that was the output of this run, i.e.,
+predictions, evaluation scores. Most of this will be added by the server, but users can also
+provide evaluation scores for their own evaluation measures.}
 }
 \description{
 OpenMLRunResults
+}
+\seealso{
+\code{\link{downloadOpenMLRunResults}}, \code{\link{downloadOpenMLTaskResults}}
 }
 

@@ -30,6 +30,12 @@ Default is set via \code{\link{configureOpenML}}.}
 [\code{\link{OpenMLDataSetDescription}}]
 }
 \description{
-Download an OpenML data set including its description.
+Given a name and (optionally) a version of a data set, this function will download
+  the whole data set description from the OpenML server. Note that this does not include data
+  splits or other task-related information. Tasks can be downloaded with
+  \code{\link{downloadOpenMLTask}}.
+}
+\seealso{
+\code{\link{toMlr}}, \code{\link{downloadOpenMLTask}}
 }
 

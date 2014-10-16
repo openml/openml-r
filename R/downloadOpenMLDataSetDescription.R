@@ -23,11 +23,13 @@ parseOpenMLDataSetDescription = function(file) {
   args[["url"]] = xmlRValS(doc, "/oml:data_set_description/oml:url")
   args[["default.target.attribute"]] = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute")
   args[["row.id.attribute"]] = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute")
+  args[["ignore.attribute"]] = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute")
   args[["version.label"]] = xmlOValS(doc, "/oml:data_set_description/oml:version_label")
   args[["citation"]] = xmlOValS(doc, "/oml:data_set_description/oml:citation")
   args[["visibility"]] = xmlOValS(doc, "/oml:data_set_description/oml:visibility")
   args[["original.data.url"]] = xmlOValS(doc, "/oml:data_set_description/oml:original_data_url")
   args[["paper.url"]] = xmlOValS(doc, "/oml:data_set_description/oml:paper.url")
+  args[["update.comment"]] = xmlOValS(doc, "/oml:data_set_description/oml:update.comment")
   args[["md5.checksum"]] = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum")
   args[["data.set"]] = data.frame()
 

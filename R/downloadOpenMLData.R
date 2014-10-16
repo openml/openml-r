@@ -1,5 +1,10 @@
 #' @title Download an OpenML data set including its description.
 #'
+#' @description Given a name and (optionally) a version of a data set, this function will download
+#'   the whole data set description from the OpenML server. Note that this does not include data
+#'   splits or other task-related information. Tasks can be downloaded with
+#'   \code{\link{downloadOpenMLTask}}.
+#'   
 #' @param name [\code{character(1)}]\cr
 #'   The name of the data set.
 #' @param version [\code{integer(1)}]\cr
@@ -14,6 +19,7 @@
 #' @template arg_showinfo
 #' @return [\code{\link{OpenMLDataSetDescription}}]
 #' @export
+#' @seealso \code{\link{toMlr}}, \code{\link{downloadOpenMLTask}}
 downloadOpenMLData = function(name, version = 1, dir = tempdir(), clean.up = TRUE, 
   show.info = getOpenMLOption("show.info")) {
   
