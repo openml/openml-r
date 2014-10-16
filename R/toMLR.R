@@ -1,14 +1,8 @@
 #' @title Convert an OpenML object to mlr.
 #'   
 #' @description This function converts an \code{\link{OpenMLDataSetDescription}}
-#'   or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}}. In
-#'   the latter case, a list is returned with the following elements:\cr 
-#'   \code{mlr.task} -- the \code{\link[mlr]{Task}},\cr \code{mlr.rin} -- a
-#'   \code{\link[mlr]{ResampleInstance}} which was defined by the server,\cr 
-#'   \code{mlr.measures} -- a list of \code{\link[mlr]{Measure}s} to optimize
-#'   for,\cr \code{orig.lvls} -- a \code{character} vector containing all
-#'   original (possibly empty) levels of the target feature. Empty levels are
-#'   removed from the data set during conversion.
+#'   or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given 
+#'   \code{\link{OpenMLTask}}, various other mlr objects (see below).
 #' @param obj [\code{\link{OpenMLDataSetDescription}} | \code{\link{OpenMLTask}}]\cr 
 #'   The object that should be converted. Required.
 #' @param target [\code{character}]\cr 
@@ -17,9 +11,22 @@
 #' @param remove.target.NAs [\code{logical(1)}]\cr
 #'   Should rows with missing target values be removed? Default is \code{TRUE}. Note, that 
 #'   the function might fail if you set this to \code{FALSE}.
-#' @return [\code{\link[mlr]{Task}}]
+#' @param ignore.flagged.attributes [\code{logical(1)}]\cr   
+#'   Should those features that are listed in the data set description's member "ignore.attribute"
+#'   be ignored? Default is \code{TRUE}.
+#' @return Either a [\code{\link[mlr]{Task}}] or, a list of:
+#'   \item{mlr.task}{[\code{\link[mlr]{Task}}]\cr
+#'     The task.}
+#'   \item{mlr.rin}{[\code{\link[mlr]{ResampleInstance}}]\cr
+#'     A server defined resample instance.}
+#'   \item{mlr.measures}{[\code{list}]\cr
+#'     A list of \code{\link[mlr]{Measure}s} to optimize for.}
+#'   \item{original.lvls}{[\code{character}]\cr
+#'     All original (possibly empty) levels of the target feature. Empty levels are
+#'     removed from the data set during conversion but their names are needed to produce proper
+#'     uploadable predictions.}
 #' @export
-toMlr = function(obj, target, remove.target.NAs) {
+toMlr = function(obj, target, remove.target.NAs, ignore.flagged.attributes) {
   requirePackages("mlr", why = "toMlr")
   UseMethod("toMlr")
 }
@@ -27,19 +34,21 @@ toMlr = function(obj, target, remove.target.NAs) {
 #' @rdname toMlr
 #' @export
 toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute, 
-  remove.target.NAs = TRUE) {
+  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
   
   assertSubset(target, obj$data.desc$new.col.names, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
+  assertFlag(ignore.flagged.attributes)
+  
   task.type = obj$type
-  data.set.desc = obj$data.desc
-  data = obj$data.desc$data.set
+  data.desc = obj$data.desc
+  data = data.desc$data.set
   estim.proc = obj$estimation.procedure
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
-    data = subset(data, !tar.na)
+    data.desc$data.set = subset(data, !tar.na)
   }
-  mlr.task = createMlrTask(data, target, task.type)
+  mlr.task = createMlrTask(data.desc, target, task.type, ignore.flagged.attributes)
   mlr.rin = createMlrResampleInstance(estim.proc, mlr.task$mlr.task)
   mlr.measures = createMlrMeasures(obj$evaluation.measures, task.type)
   res = list(mlr.task = mlr.task$mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
@@ -50,33 +59,38 @@ toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute
 #' @rdname toMlr
 #' @export
 toMlr.OpenMLDataSetDescription = function(obj, target = obj$default.target.attribute,
-  remove.target.NAs = TRUE) {
+  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
   
   assertSubset(target, obj$new.col.names, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
+  assertFlag(ignore.flagged.attributes)
+  
   data = obj$data.set
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
-    data = subset(data, !tar.na)
+    obj$data.set = subset(data, !tar.na)
   }
   if (length(target) == 1) {
     task.type = ifelse(is.factor(data[, target]), "Supervised Classification", "Supervised Regression")
   } else {
     stopf("Currently no support for tasks with more than one target column.")
   }
-  mlr.task = createMlrTask(data, target, task.type)
+  mlr.task = createMlrTask(obj, target, task.type, ignore.flagged.attributes)
   return(mlr.task$mlr.task)
 }
 
-createMlrTask = function(data, target, task.type) {
-  assertDataFrame(data)
+createMlrTask = function(data.desc, target, task.type, ignore.flagged.attributes) {
+  assertClass(data.desc, "OpenMLDataSetDescription")
+  data = data.desc$data.set
+  
   orig.lvls = NULL
   if (task.type == "Supervised Classification") {
     orig.lvls = levels(data[, target])
   }
-  #FIXME some data sets have empty factor levels, mlr does not like this
-  # fix this for now by removing
-  data = droplevels(data)
+  if (!is.na(data.desc$ignore.attribute) && ignore.flagged.attributes) {
+    inds = which(data.desc$original.col.names %in% data.desc$ignore.attribute)
+    data = data[, -inds]
+  }
   if (task.type == "Supervised Classification") {
     mlr.task = makeClassifTask(data = data, target = target)
   } else if (task.type == "Supervised Regression") {

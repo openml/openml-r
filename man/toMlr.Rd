@@ -5,13 +5,15 @@
 \alias{toMlr.OpenMLTask}
 \title{Convert an OpenML object to mlr.}
 \usage{
-toMlr(obj, target, remove.target.NAs)
+toMlr(obj, target, remove.target.NAs, ignore.flagged.attributes)
 
 \method{toMlr}{OpenMLTask}(obj,
-  target = obj$data.desc$default.target.attribute, remove.target.NAs = TRUE)
+  target = obj$data.desc$default.target.attribute, remove.target.NAs = TRUE,
+  ignore.flagged.attributes = TRUE)
 
 \method{toMlr}{OpenMLDataSetDescription}(obj,
-  target = obj$default.target.attribute, remove.target.NAs = TRUE)
+  target = obj$default.target.attribute, remove.target.NAs = TRUE,
+  ignore.flagged.attributes = TRUE)
 }
 \arguments{
 \item{obj}{[\code{\link{OpenMLDataSetDescription}} | \code{\link{OpenMLTask}}]\cr
@@ -24,19 +26,27 @@ The target for the classification/regression task. Default is the
 \item{remove.target.NAs}{[\code{logical(1)}]\cr
 Should rows with missing target values be removed? Default is \code{TRUE}. Note, that
 the function might fail if you set this to \code{FALSE}.}
+
+\item{ignore.flagged.attributes}{[\code{logical(1)}]\cr
+Should those features that are listed in the data set description's member "ignore.attribute"
+be ignored? Default is \code{TRUE}.}
 }
 \value{
-[\code{\link[mlr]{Task}}]
+Either a [\code{\link[mlr]{Task}}] or, a list of:
+  \item{mlr.task}{[\code{\link[mlr]{Task}}]\cr
+    The task.}
+  \item{mlr.rin}{[\code{\link[mlr]{ResampleInstance}}]\cr
+    A server defined resample instance.}
+  \item{mlr.measures}{[\code{list}]\cr
+    A list of \code{\link[mlr]{Measure}s} to optimize for.}
+  \item{original.lvls}{[\code{character}]\cr
+    All original (possibly empty) levels of the target feature. Empty levels are
+    removed from the data set during conversion but their names are needed to produce proper
+    uploadable predictions.}
 }
 \description{
 This function converts an \code{\link{OpenMLDataSetDescription}}
-  or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}}. In
-  the latter case, a list is returned with the following elements:\cr
-  \code{mlr.task} -- the \code{\link[mlr]{Task}},\cr \code{mlr.rin} -- a
-  \code{\link[mlr]{ResampleInstance}} which was defined by the server,\cr
-  \code{mlr.measures} -- a list of \code{\link[mlr]{Measure}s} to optimize
-  for,\cr \code{orig.lvls} -- a \code{character} vector containing all
-  original (possibly empty) levels of the target feature. Empty levels are
-  removed from the data set during conversion.
+  or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given
+  \code{\link{OpenMLTask}}, various other mlr objects (see below).
 }
 
