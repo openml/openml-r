@@ -8,6 +8,7 @@
 #' @import mlr
 #' @import plyr
 #' @import checkmate
+#' @import base64enc
 
 .onAttach = function(libname, pkgname) {
   configureOpenML()

@@ -26,7 +26,7 @@
 #'       Most of this will be added by the server, but users can also provide evaluation scores for their 
 #'       own evaluation measures.
 #' @export 
-#' @aliases OpenMLRunResults OpenMLRunResults-class
+#' @aliases OpenMLRunResults
 
 # FIXME: add setup.string
 makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, setup.id,

@@ -26,7 +26,7 @@
 #'   Should the data splits (for resampling) also be downloaded?
 #'   Default is \code{TRUE}.
 #' @template arg_showinfo
-#' @return \code{\linkS4class{OpenMLTask}} object.
+#' @return \code{\link{OpenMLTask}}.
 #' @export
 #' @examples
 #' # Download task and access relevant information to start running experiments

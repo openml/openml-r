@@ -37,7 +37,7 @@ Print verbose output on console?
 Default is set via \code{\link{configureOpenML}}.}
 }
 \value{
-\code{\linkS4class{OpenMLTask}} object.
+\code{\link{OpenMLTask}}.
 }
 \description{
 This function downloads an OpenML task and all associated files from the OpenML repository,

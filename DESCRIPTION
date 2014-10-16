@@ -15,7 +15,8 @@ Imports:
     XML,
     RWeka,
     mlr,
-    plyr
+    plyr,
+    base64enc
 LazyData: yes
 ByteCompile: yes
 Version: 1.0
