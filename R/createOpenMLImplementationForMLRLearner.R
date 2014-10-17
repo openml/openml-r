@@ -1,4 +1,4 @@
-#' createOpenMLImplementationForMLRLearner.
+#' createOpenMLImplementationForMlrLearner.
 #'
 #' Create an OpenML implementation description object for an mlr learner. 
 #' Required if you want to upload an mlr learner.
@@ -12,18 +12,19 @@
 #'   Default is a short specification of the learner and the associated package.
 #' @return [\code{\link{OpenMLImplementation}}]. 
 #' @export
-createOpenMLImplementationForMLRLearner = function(lrn, name = lrn$id, description) { 
+createOpenMLImplementationForMlrLearner = function(lrn, name = lrn$id, description) { 
   assertClass(lrn, "Learner")
   assertString(name)
 
   if (!missing(description))
     assertString(description)
   else
-    description = sprintf("Learner %s from package %s.", name, lrn$package)
+    description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
 
   impl = makeOpenMLImplementation(
     name = name,
-    external.version = packageDescription(lrn$package)$Version,
+    # set package version of the basic learner's package as the flow's external.version
+    external.version = packageDescription(lrn$package[length(lrn$package)])$Version,
     description = description,
     parameter = makeImplementationParameterList(lrn)
   )

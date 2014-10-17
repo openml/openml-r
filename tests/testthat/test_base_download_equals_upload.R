@@ -3,7 +3,7 @@ context("is downloaded = uploaded implementation")
 # test, if a downloaded implementation contains all the information of the uploaded implementation
 test_that("is downloaded = uploaded implementation", {
   learner = makeLearner("classif.J48")
-  impl.ul = createOpenMLImplementationForMLRLearner(learner)
+  impl.ul = createOpenMLImplementationForMlrLearner(learner)
   impl.dl = downloadOpenMLImplementation(id = 362, download.source.binary = FALSE)
 
   slots = names(formals(makeOpenMLImplementation))

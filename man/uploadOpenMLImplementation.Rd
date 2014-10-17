@@ -22,7 +22,7 @@ Either source or binary is required.}
 A session token returned by \code{\link{authenticateUser}}.}
 
 \item{delete.source.binary}{[\code{logical(1)}]\cr
-Should downloaded source and binary files be removed at the end? Default is \code{FALSE}.}
+Should all source and binary files be removed at the end? Default is \code{FALSE}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
