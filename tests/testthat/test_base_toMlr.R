@@ -1,7 +1,7 @@
 context("toMlr")
 
 test_that("toMlr", {
-  dsd = downloadOpenMLData("iris", show.info = FALSE)
+  dsd = downloadOpenMLData("iris")
   task = toMlr(dsd)
   expect_is(task, "ClassifTask")
   expect_true(task$task.desc$target == "class")
@@ -11,7 +11,7 @@ test_that("toMlr", {
   expect_true(task$task.desc$target == "sepallength")
   expect_true(task$task.desc$type == "regr")
   
-  oml.task = downloadOpenMLTask(1, show.info = FALSE)
+  oml.task = downloadOpenMLTask(1)
   mlr.task = toMlr(oml.task)
   expect_true(mlr.task$mlr.task$task.desc$target == "class")
   expect_is(mlr.task$mlr.rin, "ResampleInstance")

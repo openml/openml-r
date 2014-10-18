@@ -10,9 +10,11 @@
 #' @param description [\code{character(1)}]\cr
 #'   An optional description of the learner. 
 #'   Default is a short specification of the learner and the associated package.
+#' @param ... [\code{any}]\cr
+#'   Further optional parameters that are passed to \code{\link{makeOpenMLImplementation}}.
 #' @return [\code{\link{OpenMLImplementation}}]. 
 #' @export
-createOpenMLImplementationForMlrLearner = function(lrn, name = lrn$id, description) { 
+createOpenMLImplementationForMlrLearner = function(lrn, name = lrn$id, description, ...) { 
   assertClass(lrn, "Learner")
   assertString(name)
 
@@ -23,10 +25,11 @@ createOpenMLImplementationForMlrLearner = function(lrn, name = lrn$id, descripti
 
   impl = makeOpenMLImplementation(
     name = name,
-    # set package version of the basic learner's package as the flow's external.version
-    external.version = packageDescription(lrn$package[length(lrn$package)])$Version,
+    # set package version of the "last" learner as the flow's external.version
+    external.version = packageDescription(lrn$package[1])$Version,
     description = description,
-    parameter = makeImplementationParameterList(lrn)
+    parameter = makeImplementationParameterList(lrn),
+    ...
   )
   if (!is.null(lrn$next.learner)) {
     identifier = str_split(lrn$next.learner$id, '[.]')[[1]][2]

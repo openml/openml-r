@@ -41,7 +41,7 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
   assertFlag(delete.source.binary)
   assertFlag(show.info)
   
-  exist.check = checkOpenMLFlowForExistance(implementation)
+  exist.check = checkOpenMLFlowForExistence(implementation)
   if (exist.check$exists) {
     if (show.info)
       catf("Flow already exists (ID = %i).", exist.check$id)
