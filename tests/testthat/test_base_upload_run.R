@@ -4,7 +4,7 @@ test_that("upload run", {
   hash = authenticateUser("openml.rteam@gmail.com", "testpassword")
   
   lrn = makeLearner("classif.JRip")
-  flow.id = uploadMlrLearner(flow, hash)
+  flow.id = uploadMlrLearner(lrn, hash)
   expect_is(flow.id, "integer")
   
   task = downloadOpenMLTask(4)

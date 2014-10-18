@@ -1,17 +1,18 @@
-#' @title Construct OpenMLData.
+#' @title Construct OpenMLIOData.
 #'   
-#' @param dataset [\code{list}]\cr An optional list of one or more data set descriptions with elements "did", 
-#'   "name" and "url".
+#' @param dataset [\code{list}]\cr An optional list of one or more data set descriptions with 
+#'   elements "did", "name" and "url".
 #'   Default is \code{NULL}, which means there are no data sets.
 #' @param evaluation [\code{data.frame}]\cr 
-#'   An optional list of one or more evaluations. Default is \code{NULL}, which means there are no data sets.
+#'   An optional list of one or more evaluations. Default is \code{NULL}, which means there are 
+#'   no data sets.
 #' @export
-#' @aliases OpenMLData
-makeOpenMLData = function(dataset = NULL, evaluation) {
+#' @aliases OpenMLIOData
+makeOpenMLIOData = function(dataset = NULL, evaluation) {
   if (!is.null(dataset))
     assertList(dataset)
   # assertDataFrame(evaluation) -> error?
-  makeS3Obj("OpenMLData", 
+  makeS3Obj("OpenMLIOData", 
     dataset = dataset,
     evaluation = evaluation
   )
@@ -21,7 +22,7 @@ makeOpenMLData = function(dataset = NULL, evaluation) {
 
 # show
 #' @export
-print.OpenMLData = function(x, ...) {
+print.OpenMLIOData = function(x, ...) {
   catf('\n** Data Set(s) **')
   print(do.call(rbind.data.frame, x$dataset))
   

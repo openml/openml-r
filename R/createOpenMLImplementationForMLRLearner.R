@@ -28,5 +28,11 @@ createOpenMLImplementationForMlrLearner = function(lrn, name = lrn$id, descripti
     description = description,
     parameter = makeImplementationParameterList(lrn)
   )
+  if (!is.null(lrn$next.learner)) {
+    identifier = str_split(lrn$next.learner$id, '[.]')[[1]][2]
+    impl$components = list(createOpenMLImplementationForMlrLearner(lrn$next.learner))
+    names(impl$components) = identifier
+  }
+    
   return(impl)
 }

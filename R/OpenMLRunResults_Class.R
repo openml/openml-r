@@ -19,9 +19,9 @@
 #'   be reported here.
 #' @param parameter.setting [\code{list}]\cr A list of \code{\link{OpenMLRunParameter}s} containing
 #'   information on the parameter settings.
-#' @param input.data [\code{\link{OpenMLData}}]\cr All data that served as input for the run. Added
+#' @param input.data [\code{\link{OpenMLIOData}}]\cr All data that served as input for the run. Added
 #'   by server. Ignored when uploading.
-#' @param output.data [\code{\link{OpenMLData}}]\cr All data that was the output of this run, i.e.,
+#' @param output.data [\code{\link{OpenMLIOData}}]\cr All data that was the output of this run, i.e.,
 #'   predictions, evaluation scores. Most of this will be added by the server, but users can also
 #'   provide evaluation scores for their own evaluation measures.
 #' @export
@@ -29,7 +29,7 @@
 #' @seealso \code{\link{downloadOpenMLRunResults}}, \code{\link{downloadOpenMLTaskResults}}
 makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, setup.id, 
   setup.string = NA_character_, error.message = NA_character_, parameter.setting = list(),
-  input.data = makeOpenMLData(), output.data = makeOpenMLData()) {
+  input.data = makeOpenMLIOData(), output.data = makeOpenMLIOData()) {
   
   run.id = asCount(run.id)
   uploader = asCount(uploader)
@@ -39,8 +39,8 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
   assertString(setup.string, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
   assertList(parameter.setting)
-  assertClass(input.data, "OpenMLData")
-  assertClass(output.data, "OpenMLData")
+  assertClass(input.data, "OpenMLIOData")
+  assertClass(output.data, "OpenMLIOData")
   
   makeS3Obj("OpenMLRunResults",
       run.id = run.id,

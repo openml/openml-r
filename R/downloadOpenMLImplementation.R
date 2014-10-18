@@ -85,10 +85,12 @@ parseOpenMLImplementation = function(file) {
   comp_ns = getNodeSet(doc, "/oml:implementation/oml:component/oml:implementation")
   
   comp = vector("list", length = length(comp_ns))
-  for (i in seq_along(comp_ns)){
+  for (i in seq_along(comp_ns)) {
     file2 = tempfile()
     saveXML(comp_ns[[i]], file = file2)
     comp[[i]] = parseOpenMLImplementation(file2)
+    names(comp)[i] = xmlRValS(doc, 
+      paste("/oml:implementation/oml:component[",i,"]/oml:identifier", sep=''))
     unlink(file2)
   }
   args[["components"]] = comp

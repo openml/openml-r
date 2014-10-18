@@ -6,8 +6,8 @@
 \usage{
 makeOpenMLRunResults(run.id, uploader, task.id, implementation.id, setup.id,
   setup.string = NA_character_, error.message = NA_character_,
-  parameter.setting = list(), input.data = makeOpenMLData(),
-  output.data = makeOpenMLData())
+  parameter.setting = list(), input.data = makeOpenMLIOData(),
+  output.data = makeOpenMLIOData())
 }
 \arguments{
 \item{run.id}{[\code{numeric(1)}]\cr ID of the run. Added by server. Ignored when uploading a
@@ -35,10 +35,10 @@ be reported here.}
 \item{parameter.setting}{[\code{list}]\cr A list of \code{\link{OpenMLRunParameter}s} containing
 information on the parameter settings.}
 
-\item{input.data}{[\code{\link{OpenMLData}}]\cr All data that served as input for the run. Added
+\item{input.data}{[\code{\link{OpenMLIOData}}]\cr All data that served as input for the run. Added
 by server. Ignored when uploading.}
 
-\item{output.data}{[\code{\link{OpenMLData}}]\cr All data that was the output of this run, i.e.,
+\item{output.data}{[\code{\link{OpenMLIOData}}]\cr All data that was the output of this run, i.e.,
 predictions, evaluation scores. Most of this will be added by the server, but users can also
 provide evaluation scores for their own evaluation measures.}
 }

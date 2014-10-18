@@ -53,8 +53,9 @@ writeOpenMLImplementationXML = function(description, file) {
   
   for(i in seq_along(description$components)) {
     comp = newXMLNode("component", parent = top, namespace = "oml")
-    # FIXME: add component identifier -> OpenMLComponent_Class?
-    # mynode("identifier", "bla", parent = comp)
+    identifier = names(description$components)[i]
+    identifier = ifelse(!is.null(identifier), identifier, description$components[[i]]$name)
+    mynode("identifier", , parent = comp)
     sub.impl = newXMLNode("implementation", parent = comp, namespace = "oml")
     doc = addNodes(description$components[[i]], doc, parent = sub.impl)
   }

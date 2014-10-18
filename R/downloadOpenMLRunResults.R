@@ -59,7 +59,7 @@ parseOpenMLRunResults = function(file) {
       evals[[i]] = args
     }
     evals = do.call(rbind.fill, lapply(evals, as.data.frame))
-    return(do.call(makeOpenMLData, list(dataset = datasets, evaluation = evals)))
+    return(do.call(makeOpenMLIOData, list(dataset = datasets, evaluation = evals)))
   }
   
   run.args = list()
