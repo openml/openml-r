@@ -1,6 +1,7 @@
 *.Rproj
 .Rproj.user
 .Rhistory
+.Rapp.history
 OpenML.Rcheck
 OpenML/tests/downloadUploadTest/downloadAllImplementations/Downloads/
 OpenML*.tar.gz
