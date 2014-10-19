@@ -3,7 +3,7 @@
 \alias{createOpenMLImplementationForMlrLearner}
 \title{createOpenMLImplementationForMlrLearner.}
 \usage{
-createOpenMLImplementationForMlrLearner(lrn, name = lrn$id, description)
+createOpenMLImplementationForMlrLearner(lrn, name = lrn$id, description, ...)
 }
 \arguments{
 \item{lrn}{[\code{\link[mlr]{Learner}}]\cr
@@ -15,6 +15,9 @@ The name of the implementation object. Default is the learner's ID.}
 \item{description}{[\code{character(1)}]\cr
 An optional description of the learner.
 Default is a short specification of the learner and the associated package.}
+
+\item{...}{[\code{any}]\cr
+Further optional parameters that are passed to \code{\link{makeOpenMLImplementation}}.}
 }
 \value{
 [\code{\link{OpenMLImplementation}}].
