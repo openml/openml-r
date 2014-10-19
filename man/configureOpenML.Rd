@@ -14,14 +14,18 @@ value for that specific function call.
 Default is \code{TRUE}.}
 }
 \value{
-[\code{invisible(NULL)}].
+[\code{named list}] (invisibly) with updated configuration.
 }
 \description{
 Configuration is done by setting custom \code{\link{options}}.
-
 If you do not set an option here, its current value will be kept.
-
-If you call this function with an empty argument list, everything is set to its defaults.
+}
+\examples{
+# save state
+ before = configureOpenML()
+ configureOpenML(show.info = FALSE)
+ # reset
+ do.call(configureOpenML, before)
 }
 \seealso{
 Other configure: \code{\link{getOpenMLOptions}}

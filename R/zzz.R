@@ -11,5 +11,5 @@
 #' @import base64enc
 
 .onAttach = function(libname, pkgname) {
-  configureOpenML()
+  setOpenMLOption("show.info", getOpenMLOption("show.info", TRUE))
 }

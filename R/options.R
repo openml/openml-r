@@ -18,6 +18,5 @@ setOpenMLOption = function(name, val) {
 }
 
 getOpenMLOption = function(name, default) {
-  name = sprintf("OpenML.%s", name)
-  getOption(name, default)
+  getOption(sprintf("OpenML.%s", name), default)
 }
