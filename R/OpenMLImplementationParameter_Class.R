@@ -47,7 +47,5 @@ print.OpenMLImplementationParameter = function(x, ...) {
   catfNotNA('\ttype             : %s', x$data.type)
   catfNotNA('\tdefault          : %s', x$default.value)
   catfNotNA('\trecommended range: %s', x$recommended.range)
-  cat('\n')
-  cat(collapse(paste0(strwrap(x$description, width = getOption("width") - 2), '\n'), sep = ''))
-  cat(collapse(rep("_", getOption("width") - 2), sep = ""))
+  catfNotNA('\tdescription      :\n\n%s', x$description)
 }

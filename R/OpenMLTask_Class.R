@@ -60,7 +60,7 @@ print.OpenMLTask = function(x, ...) {
   
   catf('\nOpenML Task %i :: (Data ID = %i)', x$id, x$data.desc.id)
   catNotNA('\tTask Type            :', x$type)
-      catf('\tData Set             : %s :: (Version %s, OpenML ID = %i)', x$data.desc$name, 
+      catf('\tData Set             : %s :: (Version = %s, OpenML ID = %i)', x$data.desc$name, 
        x$data.desc$version, x$data.desc$id)
   catNotNA('\tTarget Feature(s)    :', x$target.features, fun = collapse, sep = ", ")
   if (!is.na(x$estimation.procedure$type)) {
@@ -68,9 +68,9 @@ print.OpenMLTask = function(x, ...) {
     strat = x$estimation.procedure$parameters$stratified_sampling
     strat = ifelse(!is.null(strat) && as.logical(strat), "Stratified ", "")
     n.rep = x$estimation.procedure$parameters$number_repeats
-    n.rep = ifelse(!is.null(n.rep), paste(n.rep, "x "), "") 
+    n.rep = ifelse(!is.null(n.rep), as.character(n.rep), "") 
     n.folds = x$estimation.procedure$parameters$number_folds
-    n.folds = ifelse(!is.null(n.folds), paste(n.folds, "folds"), "") 
+    n.folds = ifelse(!is.null(n.folds) && !is.na(n.folds), paste(" x", n.folds, "folds"), " rep(s)") 
     catf('\tEstimation Procedure : %s%s (%s%s)', strat, est.type, n.rep, n.folds)
   }
   if (!all(x$evaluation.measures == ""))

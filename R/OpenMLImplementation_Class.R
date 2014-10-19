@@ -155,80 +155,11 @@ print.OpenMLImplementation = function(x, ...)  {
   catf('\nFlow "%s" :: (Version = %s, OpenML ID = %i)', x$name, x$version, x$id)
   catfNotNA('\tExternal Version         : %s', x$external.version)
   catfNotNA('\tCreator(s)               : %s', x$creator)
-  
-#   # Contributors
-#   # Insert line breaks so that no name is displayed in more than one line in the console.
-#   if (length(x$contributor) > 0) {
-#     cons.chars = getOption("width") - 2 - 34
-#     rest.names = x$contributor
-#     nr.fitting.names = sum(cumsum(str_length(rest.names) + 2) <= cons.chars)
-#     cat.out = paste0('\tContributor(s)           : ', 
-#                      collapse(rest.names[1:nr.fitting.names], sep = "; "))
-#     if (nr.fitting.names != length(rest.names))
-#       cat.out = paste0(cat.out, ";")
-#     rest.names = rest.names[-c(1:nr.fitting.names)]
-#     cons.chars = cons.chars + 20
-#     while (length(rest.names) > 0) {
-#       nr.fitting.names = sum(cumsum(str_length(rest.names) + 2) <= cons.chars)
-#       cat.out = paste0(cat.out, '\t\t', collapse(rest.names[1:nr.fitting.names], sep = "; "))
-#       if (nr.fitting.names != length(rest.names))
-#         cat.out = paste0(cat.out, ";")
-#       rest.names = rest.names[-c(1:nr.fitting.names)]
-#     }
-#     cat.out = paste0(cat.out, '\n\n')
-#     cat(cat.out)
-#   }
-  
-#   catfNotNA('\tUpload Date              : %s', x$upload.date)
   catfNotNA('\tLicence                  : %s', x$licence)
-#   catfNotNA('\tLanguage                 : %s', x$language)
-#        catf('\tDescription              :')
-  # FIXME: This way, there are too many linebreaks.
-  desc = str_replace_all(x$description, pattern="\n", replacement="\n \n")
-  # getOption("width") - 20 is a heuristic to keep the description readable
-#   cat(collapse(paste0('\t\t', strwrap(desc, width = getOption("width") - 20), '\n'), sep = ''))
-#   cat('\n')
   catfNotNA('\tInstallation Notes       : %s', x$installation.notes)
   catfNotNA('\tDependencies             : %s', x$dependencies)
-  
-  ## More implementation details
-  # catfNotNA('\Implements                : %s', x$implements)
- 
-  ## Implementation parameters
        catf('\tNumber of Flow Parameters: %i', length(x$parameter))
        catf('\tNumber of Flow Components: %i', length(x$components))
-#   if (length(x$parameter) > 0) {
-#         cat('\tFlow Parameters          :\n')
-#     for (i in 1:length(x$parameter)) {
-#       par = x$parameter[[i]]
-#       catf('\t\t_______________________________________________p_a_r_a_m_e_t_e_r_[%i]', i)
-#       catf('\t\tParameter %s', par$name)
-#       catfNotNA('\t\t\ttype    :: %s', par$data.type)
-#       catfNotNA('\t\t\tdefault :: %s', par$default.value)
-#       cat('\n')
-#       cat(collapse(paste0('\t\t', strwrap(par$description, width = getOption("width") - 20), '\n'), sep = ''))
-#     }
-#   }
-#   
-#   ## Implementation components
-#   if (length(x$components) > 0) {
-#     cat('\n\tFlow Components          :\n')
-#     for (i in 1:length(x$components)) {
-#       comp = x$components[[i]]
-#       catf('\t\t_______________________________________________c_o_m_p_o_n_e_n_t_[%i]', i)
-#       catf('\t\tFlow "%s" :: (OpenML ID = %i, Version = %s)', comp$name, comp$id, comp$version)
-#       catfNotNA('\t\t\tExternal Version         : %s', comp$external.version)
-#       catfNotNA('\t\t\tCreator(s)               : %s', comp$creator)
-#     }
-#   }
-  
-  ## Bibliographical references
-  # if (length(x$bibliographical.reference) > 0) {
-  #  catfNotNA('')
-  #  catf('Bibliographical Reference(s):')
-  #  for (i in 1:length(x$bibliographical.reference)) 
-  #    print(x$bibliographical.reference[[i]])  
-  # }
 }
   
 

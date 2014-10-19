@@ -35,9 +35,9 @@ makeOpenMLEstimationProcedure = function(type, data.splits.url = NA_character_, 
 #' @export
 print.OpenMLEstimationProcedure = function(x, ...)  {
   catf('\nEstimation Method :: %s',x$type)
-  catf('Parameters         ::')
-  for(i in 1:length(x$parameters))
-    catf('\t%s = %s', names(x$parameters)[i], x$parameters[[i]])
-  catf('Data Splits        :: ')
-  str(x$data.splits)
+  catf('\tParameters:')
+  for(i in 1:length(x$parameters)){
+    if (!is.na(x$parameters[[i]]))
+      catf('\t\t%s = %s', names(x$parameters)[i], x$parameters[[i]])
+  }
 }
