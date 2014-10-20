@@ -3,6 +3,8 @@ context("download all tasks")
 # we download "most" safe tasks / dsets, because large ones might cause runtime and mem problems currently
 
 test_that("download all tasks", {
+  skip_on_cran()
+  skip_on_travis()
   taskinfo = getOpenMLRegisteredTasks()
   quals = getDataQualities()
   measures = getOpenMLEvaluationMeasures()
