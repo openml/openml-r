@@ -8,6 +8,7 @@
 #' @import mlr
 #' @import checkmate
 #' @import base64enc
+#' @importFrom plyr rbind.fill
 
 .onAttach = function(libname, pkgname) {
   setOpenMLOption("show.info", getOpenMLOption("show.info", TRUE))

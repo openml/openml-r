@@ -16,6 +16,7 @@ Imports:
     stringr,
     XML,
     RWeka,
+    plyr,
     mlr,
     base64enc
 LazyData: yes
