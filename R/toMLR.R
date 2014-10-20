@@ -153,6 +153,7 @@ createMlrMeasures = function(measures, type) {
     return(mlr.measures)
   }
 
+  # FIXME: match using gsub("[[:space:]_]", "")
   classif.list = list(
     mmce = c("mean_absolute_error", "mean absolute error"),
     auc = c("area_under_roc_curve", "area under roc curve"),

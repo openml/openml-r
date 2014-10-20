@@ -5,7 +5,7 @@
 #' @param name [\code{character(1)}]\cr
 #'   The  name of the data set.
 #' @param version [\code{character(1)}]\cr
-#'   Version of the data set, added by the server. 
+#'   Version of the data set, added by the server.
 #' @param description [\code{character(1)}]\cr
 #'   Description of the data set, given by the uploader.
 #' @param format [\code{character(1)}]\cr
@@ -13,49 +13,49 @@
 #' @param creator [\code{character}]\cr
 #'   The person(s), that created this data set. Optional.
 #' @param contributor [\code{character}]\cr
-#'   People, that contibuted to this version of the data set (e.g., by reformatting). Optional. 
+#'   People, that contibuted to this version of the data set (e.g., by reformatting). Optional.
 #' @param collection.date [\code{character(1)}]\cr
 #'   The date the data was originally collected. Given by the uploader. Optional.
 #' @param upload.date [\code{\link[base]{POSIXt}}]\cr
 #'   The date the data was uploaded. Added by the server.
 #' @param language [\code{character(1)}]\cr
-#'   Language in which the data is represented. Starts with 1 upper case letter, rest lower case, 
+#'   Language in which the data is represented. Starts with 1 upper case letter, rest lower case,
 #'   e.g. 'English'
-#' @param licence [\code{character(1)}]\cr   
+#' @param licence [\code{character(1)}]\cr
 #'   Licence of the data. \code{NA} means: Public Domain or "don't know/care".
-#' @param url [\code{character(1)}]\cr 
+#' @param url [\code{character(1)}]\cr
 #'   Valid URL that points to the data file.
 #' @param default.target.attribute [\code{character}]\cr
-#'   The default target attribute, if it exists. Of course, tasks can be defined that use 
+#'   The default target attribute, if it exists. Of course, tasks can be defined that use
 #'   another attribute as target.
 #' @param row.id.attribute [\code{character(1)}]\cr
 #'   The attribute that represents the row-id column, if present in the data set. Else \code{NA}.
-#' @param ignore.attribute [\code{character(1)}]\cr 
+#' @param ignore.attribute [\code{character(1)}]\cr
 #'   Attributes that should be excluded in modelling, such as identifiers and indexes. Optional.
 #' @param version.label [\code{character(1)}]\cr
-#'   Version label provided by user, something relevant to the user. Can also be a date, 
+#'   Version label provided by user, something relevant to the user. Can also be a date,
 #'   hash, or some other type of id.
 #' @param citation [\code{character(1)}]\cr
 #'   Reference(s) that should be cited when building on this data.
 #' @param visibility [\code{character(1)}]\cr
-#'   Who can see the data set. Typical values: 'Everyone', 'All my friends', 'Only me'. 
+#'   Who can see the data set. Typical values: 'Everyone', 'All my friends', 'Only me'.
 #'   Can also be any of the user's circles.
 #' @param original.data.url [\code{character(1)}]\cr
-#'   For derived data, the url to the original data set. 
+#'   For derived data, the url to the original data set.
 #'   This can be an OpenML data set, e.g. 'http://openml.org/d/1'.
-#' @param paper.url [\code{character(1)}]\cr   
+#' @param paper.url [\code{character(1)}]\cr
 #'   Link to a paper describing the data set.
 #' @param update.comment [\code{character(1)}]\cr
 #'   When the data set is updated, add an explanation here.
-#' @param md5.checksum [\code{character(1)}]\cr 
+#' @param md5.checksum [\code{character(1)}]\cr
 #'   MD5 checksum to check if the data set is downloaded without corruption.
-#' @param data.set [\code{data.frame}]\cr 
-#'   The data set. 
+#' @param data.set [\code{data.frame}]\cr
+#'   The data set.
 #' @param original.col.names [\code{character}]\cr
 #'   The original column names of the data set. These might not be valid names in R!
 #' @param new.col.names [\code{character}]\cr
-#'   New column names that are actually used in R. These are valid and unique and differ from the 
-#'   original column names only if those are invalid. 
+#'   New column names that are actually used in R. These are valid and unique and differ from the
+#'   original column names only if those are invalid.
 #' @export
 #' @aliases OpenMLDataSetDescription
 makeOpenMLDataSetDescription = function(id, name, version, description, format,
@@ -65,7 +65,7 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
   citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
   paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_, data.set,
   original.col.names = NA_character_, new.col.names = NA_character_) {
-  
+
   assertInt(id)
   assertString(name)
   assertString(version)
@@ -91,7 +91,7 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
   assertDataFrame(data.set)
   assertCharacter(original.col.names)
   assertCharacter(new.col.names)
-  
+
   makeS3Obj("OpenMLDataSetDescription",
     id = id, name = name, version = version, description = description, format = format,
     creator = creator, contributor = contributor, collection.date = collection.date,

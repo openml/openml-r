@@ -1,9 +1,9 @@
 #' Print the description of an OpenML object.
-#' 
+#'
 #' @param x
 #'   The object whose description should be printed. This is typically an
-#'   \code{\link{OpenMLDataSetDescription}}, an \code{\link{OpenMLImplementation}} or an 
-#'   \code{\link{OpenMLTask}}. In the latter case, the description of the corresponding 
+#'   \code{\link{OpenMLDataSetDescription}}, an \code{\link{OpenMLImplementation}} or an
+#'   \code{\link{OpenMLTask}}. In the latter case, the description of the corresponding
 #'   data set is printed.
 #' @export
 printDescription = function(x) {

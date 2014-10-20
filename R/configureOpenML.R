@@ -10,6 +10,9 @@
 #'   Setting the argument manually in one of these functions will overwrite the default
 #'   value for that specific function call.
 #'   Default is \code{TRUE}.
+#' @param cache.dir [\code{character(1)}]\cr
+#'   Directory to cache downloaded files. Defaults to \code{\link[base]{tempdir}}
+#'  (per session cache). Set it a directory to enable a persistent cache.
 #' @return [\code{named list}] (invisibly) with updated configuration.
 #' @family configure
 #' @export

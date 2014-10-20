@@ -16,10 +16,10 @@ runSQLQuery = function(query, simplify = TRUE, show.info = getOpenMLOption("show
   assertString(query)
   assertFlag(simplify)
   assertFlag(show.info)
-  
+
   json.file = tempfile()
   on.exit(unlink(json.file))
-  
+
   # replace whitespaces so we don't run into problems with the query
   query = str_replace_all(query, " ", "%20")
 
@@ -32,13 +32,13 @@ runSQLQuery = function(query, simplify = TRUE, show.info = getOpenMLOption("show
 
   if(show.info)
     message(parsed.doc$status)
- 
+
   data = convertListOfRowsToDataFrame(as.list(parsed.doc$data), strings.as.factors = FALSE,
     col.names = extractSubList(parsed.doc$columns, "title"))
-    
+
   #FIXME: for now guess types, the type is set as undefined in json, everything is encoded as strings
   #data = as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
-  
+
   types = extractSubList(parsed.doc$columns, "datatype")
   if (ncol(data) > 0) {
     for (i in 1:ncol(data)) {
@@ -49,14 +49,12 @@ runSQLQuery = function(query, simplify = TRUE, show.info = getOpenMLOption("show
         "double" = as.numeric(data[, i]),
         "blob" = as.character(data[, i]),
         "datetime" = as.character(data[, i]),
-        stopf("Unsupported column type: %s", types[i])) 
+        stopf("Unsupported column type: %s", types[i]))
     }
   }
-  
+
   if (ncol(data) == 1L && simplify)
     return(data[, 1L])
   else
     return(data)
 }
-
-

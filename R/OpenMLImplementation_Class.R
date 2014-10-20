@@ -6,7 +6,7 @@
 #' @param uploader [\code{integer(1)}]\cr
 #'   The user that uploaded the implementation. Added by the server. Ignored when uploaded manually.
 #' @param name [\code{character(1)}]\cr
-#'   The name of the implementation. Name-version combinations should be unique.\cr 
+#'   The name of the implementation. Name-version combinations should be unique.\cr
 #'   Allowed characters: () [] a-z A-Z 0-9 . _ - +
 #' @param version [\code{character(1)}]\cr
 #'   The version of the implementation. Default is 1.0. Ignored at upload time.
@@ -20,14 +20,14 @@
 #'   Optional. (Minor) contributors to the workflow
 #' @param upload.date [\code{character(1)}]\cr
 #'   The date on which the implementation was uploaded.\cr
-#'   Format YYYY-mm-ddThh:MM:SS. 
+#'   Format YYYY-mm-ddThh:MM:SS.
 #'   Added by the server. Ignored when uploaded manually.
 #' @param licence [\code{character(1)}]\cr
 #'   Optional. Default is none, meaning Public Domain or "don't know/care".
 #' @param language [\code{character(1)}]\cr
 #'   Optional. Starts with one upper case letter, rest is lower case. Default is English.
 #' @param full.description [\code{character(1)}]\cr
-#'   Optional. Full description of the workflow, e.g, man pages filled in by tool. 
+#'   Optional. Full description of the workflow, e.g, man pages filled in by tool.
 #'   This is a much more elaborate description than given in the 'description field'. It may include
 #'   information about all components of the workflow.
 #' @param installation.notes [\code{character(1)}]\cr
@@ -38,10 +38,10 @@
 #'   An optional list containing information on bibliographical references in form of
 #'   \code{\link{OpenMLBibRef}s}.
 #' @param parameter [\code{list}]\cr
-#'   The parameters of the implementation. A list containing 
+#'   The parameters of the implementation. A list containing
 #'   \code{\link{OpenMLImplementationParameter}s}.
 #' @param components [\code{list}]\cr
-#'   A list containing \code{\link{OpenMLImplementation}s}. Typically components of a workflow or 
+#'   A list containing \code{\link{OpenMLImplementation}s}. Typically components of a workflow or
 #'   subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.
 #' @param source.url [\code{character(1)}]\cr
 #'   URL from which the source code can be downloaded. Added by the server. Ignored when uploaded manually.
@@ -56,7 +56,7 @@
 #' @param binary.md5 [\code{character(1)}]\cr
 #'   MD5 checksum to check if the binary code was uploaded correctly.
 #' @export
-#' @aliases OpenMLImplementation 
+#' @aliases OpenMLImplementation
 # @param implements [\code{character}]\cr
 #   Ontological reference.
 makeOpenMLImplementation = function(
@@ -85,7 +85,7 @@ makeOpenMLImplementation = function(
   source.md5 = NA_character_,
   binary.md5 = NA_character_
   ) {
-  
+
   assertInt(id, na.ok = TRUE)
   assertInt(uploader, na.ok = TRUE)
   assertString(name)
@@ -112,7 +112,7 @@ makeOpenMLImplementation = function(
   assertString(binary.format, na.ok = TRUE)
   assertString(source.md5, na.ok = TRUE)
   assertString(binary.md5, na.ok = TRUE)
-  
+
   makeS3Obj("OpenMLImplementation",
     id = id,
     uploader = uploader,
@@ -137,7 +137,7 @@ makeOpenMLImplementation = function(
     source.format = source.format,
     binary.format = binary.format,
     source.md5 = source.md5,
-    binary.md5 = binary.md5  
+    binary.md5 = binary.md5
   )
 }
 
@@ -161,5 +161,3 @@ print.OpenMLImplementation = function(x, ...)  {
        catf('\tNumber of Flow Parameters: %i', length(x$parameter))
        catf('\tNumber of Flow Components: %i', length(x$components))
 }
-  
-

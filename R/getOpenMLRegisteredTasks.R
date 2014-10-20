@@ -5,22 +5,19 @@
 #'
 #' @param type [\code{character(1)}]\cr
 #'   Currently only "classification" is supported.
-#'   
+#'
 #' @return [\code{data.frame}].
 #' @export
-#FIXME: document better
-
 getOpenMLRegisteredTasks = function(type = "classification") {
+  #FIXME: document better
   assertSubset(type, "classification")
   file = tempfile()
   downloadAPICallFile(api.fun = "openml.task.classification.safe", file = file, show.info = FALSE)
   doc = parseXMLResponse(file, "Getting safe task info", "task-classification-safe")
-  d = data.frame(
+  data.frame(
     task_id = xmlValsMultNsI(doc, path = "/oml:task-classification-safe/oml:task/oml:task_id"),
     data_name = xmlValsMultNsS(doc, path = "/oml:task-classification-safe/oml:task/oml:data_name"),
     data_version = xmlValsMultNsI(doc, path = "/oml:task-classification-safe/oml:task/oml:data_version"),
     stringsAsFactors = FALSE
   )
-
-  return(d)
 }

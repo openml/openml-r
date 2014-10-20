@@ -20,9 +20,7 @@
 #' @return [\code{\link{OpenMLDataSetDescription}}]
 #' @export
 #' @seealso \code{\link{toMlr}}, \code{\link{downloadOpenMLTask}}
-downloadOpenMLData = function(name, version = 1, dir = getOpenMLOption("cache.dir"), clean.up = TRUE,
-  show.info = getOpenMLOption("show.info")) {
-
+downloadOpenMLData = function(name, version = 1, dir = getOpenMLOption("cache.dir"), clean.up = TRUE, show.info = getOpenMLOption("show.info")) {
   assertString(name)
   assertCount(version, positive = TRUE)
   assertDirectory(dir, access = "w")

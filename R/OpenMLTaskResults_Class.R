@@ -1,10 +1,10 @@
 #' OpenMLTaskResults
 #'
 #' @title Construct OpenMLTaskResults.
-#'   
-#' @description Objects of this class are returned by \code{\link{downloadOpenMLTaskResults}}. All 
+#'
+#' @description Objects of this class are returned by \code{\link{downloadOpenMLTaskResults}}. All
 #'   members are filled in by the server.
-#'   
+#'
 #' @param task.id [\code{integer(1)}]\cr
 #'   ID of the OpenMLTask.
 #' @param task.name [\code{character(1)}]\cr
@@ -20,16 +20,16 @@
 #' @export
 #' @aliases OpenMLTaskResults
 #' @seealso \code{\link{downloadOpenMLTaskResults}}
-makeOpenMLTaskResults = function(task.id, task.name, task.type.id = NA_integer_, 
+makeOpenMLTaskResults = function(task.id, task.name, task.type.id = NA_integer_,
   input.data = NA_integer_, estimation.procedure = NA_character_, metrics) {
-  
+
   assertCount(task.id)
   assertString(task.name)
   assertCount(task.type.id, na.ok = TRUE)
   assertCount(input.data, na.ok = TRUE)
   assertString(estimation.procedure, na.ok = TRUE)
   assertDataFrame(metrics)
-  
+
   makeS3Obj("OpenMLTaskResults",
       task.id = task.id,
       task.name = task.name,
@@ -54,7 +54,7 @@ print.OpenMLTaskResults = function(x, printMetrics = FALSE, ...)  {
   catf('\nTask Results :: (Task ID = %i, Data ID = %i)', x$task.id, x$input.data)
   catNotNA('\tTask Type ID        : ', x$task.type.id)
   catNotNA('\tEstimation Procedure: ', x$estimation.procedure)
-  
+
   if (printMetrics) {
     cat('\n\tMetrics             :\n\n')
     print(x$metrics[, colnames(x$metrics) %nin% c("confusion_matrix", "os_information")])

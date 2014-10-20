@@ -9,7 +9,7 @@
 makeOpenMLBibRef = function(citation, url) {
   assertString(citation)
   assertString(url)
-  makeS3Obj("OpenMLBibRef", 
+  makeS3Obj("OpenMLBibRef",
       citation = citation,
       url = url
   )
@@ -20,8 +20,8 @@ makeOpenMLBibRef = function(citation, url) {
 # show
 # FIXME: how should missing values be represented? here, character(0) AND "" are possible.
 #' @export
-print.OpenMLBibRef = function(x, ...) {  
-  catf("  %s", x$citation)  
+print.OpenMLBibRef = function(x, ...) {
+  catf("  %s", x$citation)
   if(length(x$url) > 0 && x$url != "")
     catf("  url :: %s\n", x$url)
 }

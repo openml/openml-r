@@ -3,7 +3,7 @@
 \alias{downloadOpenMLTask}
 \title{Download a task from the OpenML repository.}
 \usage{
-downloadOpenMLTask(id, dir = tempdir(), clean.up = TRUE,
+downloadOpenMLTask(id, dir = getOpenMLOption("cache.dir"), clean.up = TRUE,
   fetch.data.set.description = TRUE, fetch.data.set = TRUE,
   fetch.data.splits = TRUE, show.info = getOpenMLOption("show.info"))
 }
@@ -14,7 +14,8 @@ ID number of task on OpenML server, used to retrieve the task.}
 \item{dir}{[\code{character(1)}]\cr
 Directory where downloaded files from the repository are stored. If the directory does not exist,
 it will be created.
-Default is the path of the per-session temporary directory \code{tempdir()}.}
+Default is defined via option \dQuote{cache.dir} which itself defaults to
+a per-session temporary directory.}
 
 \item{clean.up}{[\code{logical(1)}]\cr
 Should the downloaded files be removed from disk at the end?

@@ -45,4 +45,3 @@ downloadBinaryFile = function(url, file, show.info = getOpenMLOption("show.info"
   write(content, file = file)
   invisible(NULL)
 }
-

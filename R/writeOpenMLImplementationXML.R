@@ -8,16 +8,16 @@
 writeOpenMLImplementationXML = function(description, file) {
   assertClass(description, "OpenMLImplementation")
   assertPathForOutput(file, overwrite = TRUE)
-  
+
   doc = newXMLDoc()
   top = newXMLNode("oml:implementation", parent = doc, namespace = c(oml = "http://openml.org/openml"))
-  
+
   mynode = function(name, val, parent = top){
-    if (!is.na(val)) 
+    if (!is.na(val))
       newXMLNode(name, as.character(val), parent = parent, namespace = "oml")
   }
-  
-  addNodes = function(description, doc, parent = top) {  
+
+  addNodes = function(description, doc, parent = top) {
     mynode("name", description$name, parent)
     mynode("external_version", description$external.version, parent)
     mynode("description", description$description, parent)
@@ -28,7 +28,7 @@ writeOpenMLImplementationXML = function(description, file) {
     mynode("full_description", description$full.description, parent)
     mynode("installation_notes", description$installation.notes, parent)
     mynode("dependencies", description$dependencies, parent)
-    
+
     for (i in seq_along(description$bibliographical.reference)) {
       par = newXMLNode("bibliographical_reference", parent = parent, namespace = "oml")
       mynode("citation", description$bibliographical.reference[[i]]$citation, parent = par)
@@ -41,16 +41,16 @@ writeOpenMLImplementationXML = function(description, file) {
       mynode("default_value", description$parameter[[i]]$default.value, parent = par)
       mynode("description", description$parameter[[i]]$description, parent = par)
     }
-    
+
     mynode("source_format", description$source.format, parent)
     mynode("binary_format", description$binary.format, parent)
     mynode("source_md5", description$source.md5, parent)
     mynode("binary_md5", description$binary.md5, parent)
     return(doc)
   }
-  
+
   doc = addNodes(description, doc, top)
-  
+
   for(i in seq_along(description$components)) {
     comp = newXMLNode("component", parent = top, namespace = "oml")
     identifier = names(description$components)[i]
@@ -59,17 +59,17 @@ writeOpenMLImplementationXML = function(description, file) {
     sub.impl = newXMLNode("implementation", parent = comp, namespace = "oml")
     doc = addNodes(description$components[[i]], doc, parent = sub.impl)
   }
-  
+
   saveXML(top, file = file)
 }
 
 
-# # 
+# #
 # cat(saveXML(doc))
 #  cat("\n")
-# # 
-# # 
-# # # 
+# #
+# #
+# # #
 # # # iter = 1L
 # # # for (i in 1:reps) {
 # # #   for (j in 1:folds) {
@@ -78,7 +78,7 @@ writeOpenMLImplementationXML = function(description, file) {
 # # #     newXMLNode("c", "With some text", parent = top)
 # # #     print(top)
 # # #     saveXML(top, file = "bla.xml")
-# # #     
+# # #
 # # #     iter = iter + 1L
 # # #   }
 # # # }

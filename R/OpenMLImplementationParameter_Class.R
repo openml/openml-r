@@ -9,23 +9,23 @@
 #' @param description [\code{character(1)}]\cr
 #'   A description of what this parameter does.
 #' @param recommended.range [\code{character(1)}]\cr
-#'   Minimal/maximal value and/or a recommended range of values. 
+#'   Minimal/maximal value and/or a recommended range of values.
 #' @export
 #' @aliases OpenMLImplementationParameter
 makeOpenMLImplementationParameter = function(
-  name, 
-  data.type = NA_character_, 
-  default.value = NA_character_, 
+  name,
+  data.type = NA_character_,
+  default.value = NA_character_,
   description = NA_character_,
   recommended.range = NA_character_
   ) {
-  
+
   assertString(name)
   assertString(default.value, na.ok = TRUE)
   assertString(description, na.ok = TRUE)
   assertString(recommended.range, na.ok = TRUE)
-  
-  makeS3Obj("OpenMLImplementationParameter", 
+
+  makeS3Obj("OpenMLImplementationParameter",
       name = name,
       data.type = data.type,
       default.value = default.value,
@@ -38,7 +38,7 @@ makeOpenMLImplementationParameter = function(
 
 # show
 #' @export
-print.OpenMLImplementationParameter = function(x, ...) {  
+print.OpenMLImplementationParameter = function(x, ...) {
   catfNotNA = function(text, obj) {
     if (!all(is.na(obj)))
       catf(text, collapse(obj, sep = "; "))

@@ -1,13 +1,13 @@
 #' Download an OpenML implementation from the OpenML server through a server API call.
-#' 
-#' Retrieves an implementation for a given id. 
-#' 
+#'
+#' Retrieves an implementation for a given id.
+#'
 #' @param id [\code{integer(1)}]\cr
 #'   The implementation id.
-#' @param dir [\code{character(1)}]\cr 
-#'   Directory where downloaded files from the repository are stored. 
+#' @param dir [\code{character(1)}]\cr
+#'   Directory where downloaded files from the repository are stored.
 #'   Default is current directory.
-#' @param download.source.binary [\code{logical(1)}]\cr    
+#' @param download.source.binary [\code{logical(1)}]\cr
 #'   Should source / binary files of the implementation also be downloaded?
 #'   They will also be stored in \code{dir}.
 #'   Default is \code{TRUE}.
@@ -17,38 +17,36 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{OpenMLImplementation}}].
 #' @export
-
-downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binary = TRUE, 
+downloadOpenMLImplementation = function(id, dir = getwd(), download.source.binary = TRUE,
   show.info = getOpenMLOption("show.info"), clean.up = TRUE) {
-  
   id = asInt(id)
   assertDirectory(dir)
   assertFlag(download.source.binary)
   assertFlag(show.info)
   assertFlag(clean.up)
-  
-  fn.impl.xml = file.path(dir, sprintf("flow_%i.xml", id))  
-  
+
+  fn.impl.xml = file.path(dir, sprintf("flow_%i.xml", id))
+
   on.exit({
     if (clean.up)
       unlink(fn.impl.xml)
     if (show.info)
       messagef("Intermediate Flow XML has been removed.")
   })
-  
-  downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id, 
-    show.info = show.info)  
+
+  downloadAPICallFile(api.fun = "openml.implementation.get", file = fn.impl.xml, implementation_id = id,
+    show.info = show.info)
   impl = parseOpenMLImplementation(fn.impl.xml)
-  
+
   if (download.source.binary) {
     if (!is.na(impl$source.url)) {
       if (show.info)
         messagef("Downloading implementation source file from URL:\n%s.", impl$source.url)
-      format = rev(strsplit(rev(strsplit(impl$source.url, "/")[[1]])[1], "[.]")[[1]])[1]
+      format = rev(strsplit(rev(strsplit(impl$source.url, "/")[[1L]])[1L], "[.]")[[1L]])[1L]
       fn.impl.src = sprintf("%s(%s)_source.%s", impl$name, impl$version, format)
       fn.impl.src = file.path(dir, fn.impl.src)
       download.file(url = impl$source.url, destfile = fn.impl.src, quiet = !show.info, mode = "wb")
-    } 
+    }
     if (!is.na(impl$binary.url)) {
       if (show.info)
         messagef("Downloading implementation binary file.")
@@ -79,17 +77,17 @@ parseOpenMLImplementation = function(file) {
   args[["dependencies"]] = xmlOValS(doc, "/oml:implementation/oml:dependencies")
   args[["bibliographical.reference"]] = parseOpenMLBibRef(doc)
   #args[["implements"]] = xmlOValS(doc, "/oml:implementation/oml:implements")
-  args[["parameter"]] = parseOpenMLParameters(doc)  
-  
+  args[["parameter"]] = parseOpenMLParameters(doc)
+
   ## components section
   comp_ns = getNodeSet(doc, "/oml:implementation/oml:component/oml:implementation")
-  
+
   comp = vector("list", length = length(comp_ns))
   for (i in seq_along(comp_ns)) {
     file2 = tempfile()
     saveXML(comp_ns[[i]], file = file2)
     comp[[i]] = parseOpenMLImplementation(file2)
-    names(comp)[i] = xmlRValS(doc, 
+    names(comp)[i] = xmlRValS(doc,
       paste("/oml:implementation/oml:component[",i,"]/oml:identifier", sep=''))
     unlink(file2)
   }
@@ -108,34 +106,35 @@ parseOpenMLImplementation = function(file) {
   return(impl)
 }
 
-parseOpenMLParameters = function(doc) {  
+parseOpenMLParameters = function(doc) {
   path = "/oml:implementation/oml:parameter"
-  
+
   ns = getNodeSet(doc, path)
   nr.pars = length(ns)
-  
+
   par.names = xmlValsMultNsS(doc, sprintf("%s/oml:name", path))
   par.types = xmlOValsMultNsSPara(doc, sprintf("%s/oml:data_type", path), exp.length = nr.pars)
   par.defs = xmlOValsMultNsSPara(doc, sprintf("%s/oml:default_value", path), exp.length = nr.pars)
   par.descs = xmlOValsMultNsSPara(doc, sprintf("%s/oml:description", path), exp.length = nr.pars)
   par.rec.range = xmlOValsMultNsSPara(doc, sprintf("%s/oml:recommendedRange", path), exp.length = nr.pars)
-  
+
   par = vector("list", length(par.names))
   for (i in seq_along(par)) {
-    par[[i]] = makeOpenMLImplementationParameter(name = par.names[i], data.type = par.types[i], 
+    par[[i]] = makeOpenMLImplementationParameter(name = par.names[i], data.type = par.types[i],
       default.value = par.defs[i], description = par.descs[i], recommended.range = par.rec.range[i])
   }
   return(par)
 }
 
-parseOpenMLBibRef = function(doc) {  
+parseOpenMLBibRef = function(doc) {
   path = "/oml:implementation/oml:bibliographical_reference"
-  
+
   ns = getNodeSet(doc, path)
-  
+
   bib.citation = xmlValsMultNsS(doc, sprintf("%s/oml:citation", path))
   bib.url = xmlValsMultNsS(doc, sprintf("%s/oml:url", path))
-  
+
+  # FIXME: Map()
   bib = vector("list", length(bib.citation))
   for (i in seq_along(bib.citation)) {
     bib[[i]] = makeOpenMLBibRef(bib.citation[i], bib.url[i])

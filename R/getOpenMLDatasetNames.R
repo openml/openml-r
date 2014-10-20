@@ -6,19 +6,16 @@
 #'
 #' @return [\code{data.frame}].
 #' @export
-#FIXME: document better
-
 getOpenMLDatasetNames = function() {
+  # FIXME: document better
+  # FIXME: cleanup?
   file = tempfile()
   downloadAPICallFile(api.fun = "openml.data.safe", file = file, show.info = FALSE)
   doc = parseXMLResponse(file, "Getting safe data set names", "data-safe")
-  d = data.frame(
+  data.frame(
     did = xmlValsMultNsI(doc, path = "/oml:data-safe/oml:data/oml:did"),
     name = xmlValsMultNsS(doc, path = "/oml:data-safe/oml:data/oml:name"),
     version = xmlValsMultNsI(doc, path = "/oml:data-safe/oml:data/oml:version"),
     stringsAsFactors = FALSE
   )
-
-  return(d)
 }
-

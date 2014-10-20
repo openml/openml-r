@@ -13,6 +13,7 @@ authenticateUser = function(email, password, show.info = getOpenMLOption("show.i
   assertString(email)
   assertString(password)
   assertFlag(show.info)
+  # FIXME: we might want to use https for this!
   file = tempfile()
   on.exit(unlink(file))
   if (show.info) {

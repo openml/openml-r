@@ -24,4 +24,3 @@ convertOpenMLDataSet = function(dsd, ds) {
   }
   setRowNames(ds, as.character(rowid))
 }
-

@@ -2,7 +2,7 @@
 #'
 #' @param set [\code{character(1)}]\cr
 #'   Either \code{"basic"}, which means only rudimentary data quality names
-#'   are retrieved, or \code{"all"}. 
+#'   are retrieved, or \code{"all"}.
 #'   Default is \code{"all"}.
 #' @return [\code{character}].
 #' @export
@@ -16,5 +16,3 @@ getDataQualityNames = function(set = "all") {
       "NumberOfNumericFeatures", "NumberOfSymbolicFeatures"))
   }
 }
-
-

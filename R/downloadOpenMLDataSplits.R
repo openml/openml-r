@@ -21,6 +21,7 @@ convertOpenMLDataSplits = function(ds, splits) {
   colnames(splits)[colnames(splits) == "repeat"] = "rep"
   ri = splits$rowid
   rns = rownames(ds)
+  # FIXME: use match()!
   splits$rowid = sapply(ri, function(x) which(x == rns))
   splits$rep = splits$rep + 1
   splits$fold = splits$fold + 1

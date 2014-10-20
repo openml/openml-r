@@ -3,7 +3,7 @@
 \alias{configureOpenML}
 \title{Configures the behavior of the package.}
 \usage{
-configureOpenML(show.info)
+configureOpenML(show.info, cache.dir)
 }
 \arguments{
 \item{show.info}{[\code{logical(1)}]\cr
@@ -12,6 +12,10 @@ verbose output on the console. This option sets the default value for these argu
 Setting the argument manually in one of these functions will overwrite the default
 value for that specific function call.
 Default is \code{TRUE}.}
+
+\item{cache.dir}{[\code{character(1)}]\cr
+ Directory to cache downloaded files. Defaults to \code{\link[base]{tempdir}}
+(per session cache). Set it a directory to enable a persistent cache.}
 }
 \value{
 [\code{named list}] (invisibly) with updated configuration.

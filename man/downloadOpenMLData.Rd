@@ -3,8 +3,8 @@
 \alias{downloadOpenMLData}
 \title{Download an OpenML data set including its description.}
 \usage{
-downloadOpenMLData(name, version = 1, dir = tempdir(), clean.up = TRUE,
-  show.info = getOpenMLOption("show.info"))
+downloadOpenMLData(name, version = 1, dir = getOpenMLOption("cache.dir"),
+  clean.up = TRUE, show.info = getOpenMLOption("show.info"))
 }
 \arguments{
 \item{name}{[\code{character(1)}]\cr

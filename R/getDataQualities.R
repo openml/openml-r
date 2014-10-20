@@ -6,17 +6,15 @@
 #' For a complete list of all data qualities, see \code{\link{getDataQualityNames}}.
 #'
 #' @param set [\code{character(1)}]\cr
-#'   Either \code{"basic"}, which means only rudimentary data qualities (number of 
-#'   features/instances/classes/missing values/...) are retrieved, or \code{"all"}. 
+#'   Either \code{"basic"}, which means only rudimentary data qualities (number of
+#'   features/instances/classes/missing values/...) are retrieved, or \code{"all"}.
 #'   The latter includes 'basic' data qualities as well as meta learning features.
 #'   Default is \code{"basic"}.
 #'
 #' @return [\code{data.frame}]. Rows correspond to data sets, columns to data qualities.
 #' @export
-
-# FIXME: use API call
-
 getDataQualities = function(set = "basic") {
+  # FIXME: use API call
   assertChoice(set, c("all", "basic"))
 
   dquals = if (set == "all")
@@ -34,7 +32,7 @@ getDataQualities = function(set = "basic") {
 
   dq = runSQLQuery(query)
   types = runSQLQuery("SELECT name, datatype FROM quality")
-  
+
   # iterate over data qualities and convert their types. First three columns are did, dataset and
   # version, ignore them here.
   for (i in 4:ncol(dq)) {
@@ -50,5 +48,3 @@ getDataQualities = function(set = "basic") {
   rownames(dq) = dq$did
   return(dq)
 }
-
-

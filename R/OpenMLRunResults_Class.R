@@ -1,7 +1,7 @@
 #' OpenMLRunResults
-#' 
+#'
 #' @title Construct OpenMLRunResults.
-#'   
+#'
 #' @param run.id [\code{numeric(1)}]\cr ID of the run. Added by server. Ignored when uploading a
 #'   run.
 #' @param uploader [\code{numeric(1)}]\cr ID of the user that uploaded the run. Added by server.
@@ -27,10 +27,10 @@
 #' @export
 #' @aliases OpenMLRunResults
 #' @seealso \code{\link{downloadOpenMLRunResults}}, \code{\link{downloadOpenMLTaskResults}}
-makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, setup.id, 
+makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, setup.id,
   setup.string = NA_character_, error.message = NA_character_, parameter.setting = list(),
   input.data = makeOpenMLIOData(), output.data = makeOpenMLIOData()) {
-  
+
   run.id = asCount(run.id)
   uploader = asCount(uploader)
   task.id = asCount(task.id)
@@ -41,7 +41,7 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
   assertList(parameter.setting)
   assertClass(input.data, "OpenMLIOData")
   assertClass(output.data, "OpenMLIOData")
-  
+
   makeS3Obj("OpenMLRunResults",
       run.id = run.id,
       uploader = uploader,
@@ -62,10 +62,10 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
 #' @export
 print.OpenMLRunResults = function(x, printMetrics = FALSE, ...)  {
   catNotNA = function(s, val) {
-    if (!is.na(val)) 
+    if (!is.na(val))
       catf("%s %s", s, val)
   }
-  
+
   ## General info
   catf('\nRun Results :: (Run ID = %i, Task ID = %i)', x$run.id, x$task.id)
   catNotNA('\tFlow ID: ', x$implementation.id)
@@ -77,4 +77,3 @@ print.OpenMLRunResults = function(x, printMetrics = FALSE, ...)  {
     print(m[, colnames(m) != "array.data"])
   }
 }
-

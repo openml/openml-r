@@ -1,31 +1,30 @@
 #' Download OpenML run results from the server.
-#' 
-#' @param id [\code{numeric}]\cr 
+#'
+#' @param id [\code{numeric}]\cr
 #'   The task ID.
-#' @param dir [\code{character(1)}]\cr 
+#' @param dir [\code{character(1)}]\cr
 #'   The directory where to save the downloaded run xml. The file is called "get_run_id.xml" where "id" is replaced
 #'   by the actual id. Default is the working directory.
 #' @template arg_showinfo
 #' @param clean.up [\code{logical(1)}]\cr
-#'   Should the downloaded run xml file be removed at the end? 
+#'   Should the downloaded run xml file be removed at the end?
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{OpenMLRunResults}}]
 #' @export
 
-downloadOpenMLRunResults = function(id, dir = getwd(), show.info = getOpenMLOption("show.info"), 
+downloadOpenMLRunResults = function(id, dir = getwd(), show.info = getOpenMLOption("show.info"),
   clean.up = TRUE) {
-  
   id = asInt(id)
   assertDirectory(dir, access = "w")
   assertFlag(show.info)
   assertFlag(clean.up)
-  
+
   fn.get.run = file.path(dir, sprintf("get_run_%g.xml", id))
   downloadAPICallFile(api.fun = "openml.run.get", file = fn.get.run, run_id = id, show.info = show.info)
   results = parseOpenMLRunResults(fn.get.run)
   if (clean.up)
     unlink(fn.get.run)
-  
+
   return(results)
 }
 
@@ -44,7 +43,7 @@ parseOpenMLRunResults = function(file) {
       args[["url"]] = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep=''))
       datasets = c(datasets, args)
     }
-    
+
     # parse evaluations
     path.evals = paste(path, "oml:evaluation", sep ="/")
     ns.evals = getNodeSet(doc, path.evals)
@@ -61,9 +60,9 @@ parseOpenMLRunResults = function(file) {
     evals = do.call(rbind.fill, lapply(evals, as.data.frame))
     return(do.call(makeOpenMLIOData, list(dataset = datasets, evaluation = evals)))
   }
-  
+
   run.args = list()
-  
+
   run.args[["run.id"]] = xmlREValI(doc, "/oml:run/oml:run_id")
   run.args[["uploader"]] = xmlREValI(doc, "/oml:run/oml:uploader")
   run.args[["task.id"]] = xmlREValI(doc, "/oml:run/oml:task_id")
@@ -71,7 +70,7 @@ parseOpenMLRunResults = function(file) {
   run.args[["setup.id"]] = xmlREValI(doc, "/oml:run/oml:setup_id")
   run.args[["setup.string"]] = xmlOValS(doc, "/oml:run/oml:setup_string")
   run.args[["error.message"]] = xmlOValS(doc, "/oml:run/oml:error_message")
-  
+
   # parse parameters
   ns.pars = getNodeSet(doc, "/oml:run/oml:parameter_setting")
   par.set = vector("list", length = length(ns.pars))
@@ -83,9 +82,9 @@ parseOpenMLRunResults = function(file) {
     par.set[[i]] = do.call(makeOpenMLRunParameter, args)
   }
   run.args[["parameter.setting"]] = par.set
-  
+
   run.args[["input.data"]] = parseData("/oml:run/oml:input_data")
   run.args[["output.data"]] = parseData("/oml:run/oml:output_data")
-  
+
   return(do.call(makeOpenMLRunResults, run.args))
 }
