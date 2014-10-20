@@ -29,20 +29,20 @@
 # FIXME: if !return.mlr.results, the output is not a list!
 runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats = TRUE, ...,
   show.info = getOpenMLOption("show.info")) {
-  
+
   assertClass(task, "OpenMLTask")
   assertClass(learner, "Learner")
   assertFlag(return.mlr.results)
   assertFlag(remove.const.feats)
   assertFlag(show.info)
-  
+
   if ((task$type == "Supervised Classification" && learner$type != "classif") ||
     (task$type == "Supervised Regression" && learner$type != "regr"))
     stopf("Learner type ('%s') does not correspond to task type ('%s').", task$type, learner$type)
   mlr.task = toMlr(task)
 
   if (remove.const.feats)
-    mlr.task$mlr.task = removeConstantFeatures(obj = mlr.task$mlr.task, show.info = show.info, ...)
+    mlr.task$mlr.task = removeConstantFeatures(mlr.task$mlr.task, show.info = show.info, ...)
 
   res = resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures,
     show.info = show.info)
@@ -92,7 +92,7 @@ reformatPredictions = function(pred, task, orig.lvls) {
 
   # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
   new_pred = data.frame(rep = rep - 1, fold = fold - 1, row_id = rowid - 1, prediction = pred$response)
-  
+
   probs = c()
   if (task$type == "Supervised Classification") {
     for (lvl in orig.lvls) {
