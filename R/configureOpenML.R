@@ -25,7 +25,11 @@ configureOpenML = function(show.info, cache.dir) {
     setOpenMLOption("show.info", show.info)
   }
   if (!missing(cache.dir)) {
-    assertPathForOutput(cache.dir)
+    assertString(cache.dir)
+    if (!isDirectory(cache.dir)) {
+      if (!dir.create(cache.dir))
+        stopf("Could not create cache directory '%s'", cache.dir)
+    }
     setOpenMLOption("cache.dir", cache.dir)
   }
 
