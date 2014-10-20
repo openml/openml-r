@@ -1,10 +1,10 @@
 #' Authenticate at server.
 #'
-#' Required if you want to upload anything. 
+#' Required if you want to upload anything.
 #'
-#' @param email [\code{character(1)}]\cr 
+#' @param email [\code{character(1)}]\cr
 #'   Your E-mail address at OpenMl server.
-#' @param password [\code{character(1)}]\cr 
+#' @param password [\code{character(1)}]\cr
 #'   Your password at OpenML server.
 #' @template arg_showinfo
 #' @return [\code{character(1)}]. Session hash for further communication.
@@ -14,7 +14,7 @@ authenticateUser = function(email, password, show.info = getOpenMLOption("show.i
   assertString(password)
   assertFlag(show.info)
   file = tempfile()
-  on.exit(unlist(file))
+  on.exit(unlink(file))
   if (show.info) {
     messagef("Authenticating user at server: %s", email)
   }
@@ -25,11 +25,11 @@ authenticateUser = function(email, password, show.info = getOpenMLOption("show.i
   write(content, file = file)
   parseAuthenticateUserResponse(file, show.info)
 }
-  
+
 
 parseAuthenticateUserResponse = function(file, show.info) {
   assertFile(file)
-  doc = parseXMLResponse(file, "Authenticating user", "authenticate")  
+  doc = parseXMLResponse(file, "Authenticating user", "authenticate")
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
   valid.until = xmlRValS(doc, "/oml:authenticate/oml:valid_until")
   if (show.info)

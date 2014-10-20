@@ -12,7 +12,8 @@
 #' @param dir [\code{character(1)}]\cr
 #'   Directory where downloaded files from the repository are stored. If the directory does not exist,
 #'   it will be created.
-#'   Default is the path of the per-session temporary directory \code{tempdir()}.
+#'   Default is defined via option \dQuote{cache.dir} which itself defaults to
+#'   a per-session temporary directory.
 #' @param clean.up [\code{logical(1)}]\cr
 #'   Should the downloaded files be removed from disk at the end?
 #'   Default is \code{TRUE}.
@@ -38,8 +39,8 @@
 #' print(head(task$data.desc$data.set))
 #' }
 
-downloadOpenMLTask = function(id, dir = tempdir(), clean.up = TRUE,
-  fetch.data.set.description = TRUE, fetch.data.set = TRUE, fetch.data.splits = TRUE, 
+downloadOpenMLTask = function(id, dir = getOpenMLOption("cache.dir"), clean.up = TRUE,
+  fetch.data.set.description = TRUE, fetch.data.set = TRUE, fetch.data.splits = TRUE,
   show.info = getOpenMLOption("show.info")) {
 
   id = asInt(id)

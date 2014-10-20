@@ -12,4 +12,5 @@
 
 .onAttach = function(libname, pkgname) {
   setOpenMLOption("show.info", getOpenMLOption("show.info", TRUE))
+  setOpenMLOption("cache.dir", getOpenMLOption("cache.dir", tempdir()))
 }

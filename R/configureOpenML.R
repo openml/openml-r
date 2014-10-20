@@ -19,10 +19,14 @@
 #'  configureOpenML(show.info = FALSE)
 #'  # reset
 #'  do.call(configureOpenML, before)
-configureOpenML = function(show.info) {
+configureOpenML = function(show.info, cache.dir) {
   if (!missing(show.info)) {
     assertFlag(show.info)
     setOpenMLOption("show.info", show.info)
+  }
+  if (!missing(cache.dir)) {
+    assertPathForOutput(cache.dir)
+    setOpenMLOption("cache.dir", cache.dir)
   }
 
   invisible(getOpenMLOptions())
