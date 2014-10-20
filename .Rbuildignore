@@ -3,6 +3,7 @@ doc
 notes
 tests
 todo-files
+TODOS
 tools
 
 .gitignore
@@ -12,6 +13,8 @@ tools
 ^.*tar.gz$
 install_dependencies.R
 Makefile
+man-roxygen
+batch-exp
 README.md
 test_all.R
 test_src.R
