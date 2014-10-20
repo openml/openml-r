@@ -1,7 +1,6 @@
 generateSourcefileForMlrLearner = function(lrn, dir = getwd()) {
   assertClass(lrn, "Learner")
   assertDirectory(dir)
-  requirePackages("base64enc", why = "generating a sourcefile")
   file = file.path(dir, sprintf("%s_source.R", lrn$id))
   xx = base64encode(serialize(lrn, ascii = TRUE, connection = NULL))
   text = c("sourcedFlow = function(task.id) {",

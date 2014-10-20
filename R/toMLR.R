@@ -1,17 +1,17 @@
 #' @title Convert an OpenML object to mlr.
-#'   
+#'
 #' @description This function converts an \code{\link{OpenMLDataSetDescription}}
-#'   or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given 
+#'   or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given
 #'   \code{\link{OpenMLTask}}, various other mlr objects (see below).
-#' @param obj [\code{\link{OpenMLDataSetDescription}} | \code{\link{OpenMLTask}}]\cr 
+#' @param obj [\code{\link{OpenMLDataSetDescription}} | \code{\link{OpenMLTask}}]\cr
 #'   The object that should be converted. Required.
-#' @param target [\code{character}]\cr 
-#'   The target for the classification/regression task. Default is the 
+#' @param target [\code{character}]\cr
+#'   The target for the classification/regression task. Default is the
 #'   \code{default.target.attribute} of the \code{DataSetDescription}.
 #' @param remove.target.NAs [\code{logical(1)}]\cr
-#'   Should rows with missing target values be removed? Default is \code{TRUE}. Note, that 
+#'   Should rows with missing target values be removed? Default is \code{TRUE}. Note, that
 #'   the function might fail if you set this to \code{FALSE}.
-#' @param ignore.flagged.attributes [\code{logical(1)}]\cr   
+#' @param ignore.flagged.attributes [\code{logical(1)}]\cr
 #'   Should those features that are listed in the data set description's member "ignore.attribute"
 #'   be ignored? Default is \code{TRUE}.
 #' @return Either a [\code{\link[mlr]{Task}}] or, a list of:
@@ -27,19 +27,18 @@
 #'     uploadable predictions.}
 #' @export
 toMlr = function(obj, target, remove.target.NAs, ignore.flagged.attributes) {
-  requirePackages("mlr", why = "toMlr")
   UseMethod("toMlr")
 }
 
 #' @rdname toMlr
 #' @export
-toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute, 
+toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
-  
+
   assertSubset(target, obj$data.desc$new.col.names, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
   assertFlag(ignore.flagged.attributes)
-  
+
   task.type = obj$type
   data.desc = obj$data.desc
   data = data.desc$data.set
@@ -60,11 +59,11 @@ toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute
 #' @export
 toMlr.OpenMLDataSetDescription = function(obj, target = obj$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
-  
+
   assertSubset(target, obj$new.col.names, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
   assertFlag(ignore.flagged.attributes)
-  
+
   data = obj$data.set
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
@@ -82,7 +81,7 @@ toMlr.OpenMLDataSetDescription = function(obj, target = obj$default.target.attri
 createMlrTask = function(data.desc, target, task.type, ignore.flagged.attributes) {
   assertClass(data.desc, "OpenMLDataSetDescription")
   data = data.desc$data.set
-  
+
   orig.lvls = NULL
   if (task.type == "Supervised Classification") {
     orig.lvls = levels(data[, target])
@@ -140,7 +139,7 @@ createMlrResampleInstance = function(estim.proc, mlr.task) {
 # FIXME: add more metrics/measures.
 createMlrMeasures = function(measures, type) {
   assertCharacter(measures, any.missing = FALSE)
-  
+
   getMlrMeasures = function(measures, measure.list) {
     mlr.measures = vector("list", length(measures))
     for (i in seq_along(measures)) {
@@ -153,7 +152,7 @@ createMlrMeasures = function(measures, type) {
     }
     return(mlr.measures)
   }
-  
+
   classif.list = list(
     mmce = c("mean_absolute_error", "mean absolute error"),
     auc = c("area_under_roc_curve", "area under roc curve"),
@@ -173,7 +172,7 @@ createMlrMeasures = function(measures, type) {
     ppv = "precision",
     acc = c("predictive_accuracy", "predictive accuracy"),
     tpr = "recall")
-  
+
   if (type == "Supervised Classification") {
     return(getMlrMeasures(measures, classif.list))
   } else if (type == "Supervised Regression") {
