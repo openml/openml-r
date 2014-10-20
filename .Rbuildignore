@@ -14,7 +14,7 @@ tools
 install_dependencies.R
 Makefile
 man-roxygen
-batch-exp
+batch_exps
 README.md
 test_all.R
 test_src.R
