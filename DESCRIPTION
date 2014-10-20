@@ -5,7 +5,8 @@ Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <???>,
     Dominik Kirchhoff <dom.kirchhoff@gmail.com>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
-Suggests: randomForest
+Suggests:
+    randomForest
 Imports:
     BBmisc,
     checkmate,
