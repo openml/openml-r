@@ -2,11 +2,16 @@
 
 language: c
 script: ./travis-tool.sh run_tests
+env:
+  global:
+  - _R_CHECK_TIMINGS_=0
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
 install:
+  - ./travis-tool.sh aptget_install r-cran-rjava
+  - sudo R CMD javareconf
   - ./travis-tool.sh github_package hadley/testthat
   - ./travis-tool.sh github_package hadley/assertthat
   - ./travis-tool.sh github_package mllg/checkmate
@@ -14,11 +19,11 @@ install:
   - ./travis-tool.sh github_package berndbischl/mlr
   - ./travis-tool.sh install_deps
 branches:
-  except:
-   - /-expt$/
+  only:
+   - master
 notifications:
   email:
     on_success: change
     on_failure: change
-after_script:
+after_failure:
   - ./travis-tool.sh dump_logs
