@@ -6,7 +6,8 @@ Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <???>,
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Suggests:
-    randomForest
+    randomForest,
+    rpart
 Imports:
     BBmisc,
     checkmate,
