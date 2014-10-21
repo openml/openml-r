@@ -29,21 +29,18 @@ runSQLQuery = function(query, simplify = TRUE, show.info = getOpenMLOption("show
   #data = as.data.frame(lapply(data, type.convert, as.is = TRUE), stringsAsFactors = FALSE)
 
   types = extractSubList(parsed.doc$columns, "datatype")
-  if (ncol(data) > 0) {
-    for (i in 1:ncol(data)) {
-      data[, i] = switch(types[i],
-        "int" = as.integer(data[, i]),
-        "integer" = as.integer(data[, i]),
-        "string" = as.character(data[, i]),
-        "double" = as.numeric(data[, i]),
-        "blob" = as.character(data[, i]),
-        "datetime" = as.character(data[, i]),
-        stopf("Unsupported column type: %s", types[i]))
-    }
+  for (i in seq_col(data)) {
+    data[, i] = switch(types[i],
+      "int" = as.integer(data[, i]),
+      "integer" = as.integer(data[, i]),
+      "string" = as.character(data[, i]),
+      "double" = as.numeric(data[, i]),
+      "blob" = as.character(data[, i]),
+      "datetime" = as.character(data[, i]),
+      stopf("Unsupported column type: %s", types[i]))
   }
 
   if (ncol(data) == 1L && simplify)
-    return(data[, 1L])
-  else
-    return(data)
+    return(data[[1L]])
+  return(data)
 }
