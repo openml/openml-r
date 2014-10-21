@@ -18,7 +18,7 @@ Default is set via \code{\link{configureOpenML}}.}
 }
 \description{
 This will reset the status of one of your uploaded \code{\link{OpenMLRun}s} to
-  "unprocessed", meaning that the server's evaluation enginge will pick up on it again. This is
+  "unprocessed", meaning that the server's evaluation engine will pick up on it again. This is
   useful if a temporary server problem occured so that your run has not been processed correctly.
 }
 

@@ -113,7 +113,7 @@ print.OpenMLDataSetDescription = function(x, ...) {
   }
   # Wrong indentation to see alignment
   catf('\nData Set "%s" :: (Version = %s, OpenML ID = %i)', x$name, x$version, x$id)
-  catfNotNA('\tCollection Data         : %s', x$collection.date)
+  catfNotNA('\tCollection Date         : %s', x$collection.date)
   catfNotNA('\tCreator(s)              : %s', x$creator)
   catfNotNA('\tDefault Target Attribute: %s', x$default.target.attribute)
 }

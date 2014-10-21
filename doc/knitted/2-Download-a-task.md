@@ -11,7 +11,17 @@ The following call returns an OpenML task object:
 
 ```splus
 task = downloadOpenMLTask(id = 4)
-print(task)
+task
+```
+
+```
+## 
+## OpenML Task 4 :: (Data ID = 4)
+## 	Task Type            : Supervised Classification
+## 	Data Set             : labor :: (Version = 1, OpenML ID = 4)
+## 	Target Feature(s)    : class
+## 	Estimation Procedure : Stratified crossvalidation (1 x 10 folds)
+## 	Evaluation Measure(s): predictive accuracy
 ```
 
 Note: You do not have to be registered at http://openml.org/ to download a task. 
@@ -22,13 +32,40 @@ OpenML tasks have predefined estimation procedures and measures. Sometimes you m
 
 ```splus
 oml.data = downloadOpenMLData(name = "iris")
+oml.data
+```
+
+```
+## 
+## Data Set "iris" :: (Version = 1, OpenML ID = 61)
+## 	Collection Date         : 1936
+## 	Creator(s)              : R.A. Fisher
+## 	Default Target Attribute: class
 ```
 
 If you are working with [mlr](https://github.com/berndbischl/mlr), you can now go ahead and convert `oml.data` into an mlr (classification) task. Most data sets have a default target attribute. If this is not available or you want to select a different target feature, use the parameter `target`:
 
 
 ```splus
-mlr.task = toMlr(oml.task, target = "class")
+mlr.task = toMlr(oml.data, target = "class")
+mlr.task
+```
+
+```
+## Supervised task: data
+## Type: classif
+## Target: class
+## Observations: 150
+## Features:
+## numerics  factors 
+##        4        0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Classes: 3
+##     Iris-setosa Iris-versicolor  Iris-virginica 
+##              50              50              50 
+## Positive class: NA
 ```
 
 Now you can freely apply any resampling procedure. For further information on how this works, see [here](http://berndbischl.github.io/mlr/man/makeResampleDesc.html).

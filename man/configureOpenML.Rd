@@ -3,7 +3,7 @@
 \alias{configureOpenML}
 \title{Configures the behavior of the package.}
 \usage{
-configureOpenML(show.info, cache.dir)
+configureOpenML(show.info, cache.dir, cache.compression)
 }
 \arguments{
 \item{show.info}{[\code{logical(1)}]\cr
@@ -16,6 +16,11 @@ Default is \code{TRUE}.}
 \item{cache.dir}{[\code{character(1)}]\cr
  Directory to cache downloaded files. Defaults to \code{\link[base]{tempdir}}
 (per session cache). Set it a directory to enable a persistent cache.}
+
+\item{cache.compression}{[\code{character(1)}]\cr
+Compression type for storing downloaded ASCII files.
+Possible values are \dQuote{none} (default), \dQuote{gz} (fast)
+and \dQuote{xz} (slow, smaller file size).}
 }
 \value{
 [\code{named list}] (invisibly) with updated configuration.
