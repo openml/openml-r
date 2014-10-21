@@ -10,13 +10,13 @@
 #' @return [\code{character(1)}]. Session hash for further communication.
 #' @export
 authenticateUser = function(email, password, show.info = getOpenMLOption("show.info")) {
-  # FIXME: we might want to use https for this!
   assertString(email)
   assertString(password)
   assertFlag(show.info)
   if (show.info)
     messagef("Authenticating user at server: %s", email)
-  url = getServerFunctionURL("openml.authenticate")
+  # FIXME: we might want to use https for this!
+  url = getServerFunctionURL("openml.authenticate", secure = FALSE)
   md5 = digest(password, algo = "md5", serialize = FALSE)
   params = list(username = email, password = md5)
   content = postForm(url, .params = params, .checkParams = FALSE)
