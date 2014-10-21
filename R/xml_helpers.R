@@ -96,7 +96,7 @@ xmlOValsMultNsS = function(doc, path) {
 }
 
 xmlOValsMultNsSPara = function(doc, path, subs = NA_character_, exp.length) {
-  val = xmlValsMultNs(doc, path, as.character, character(1))
+  val = xmlValsMultNs(doc, path, as.character, character(1L))
   if (length(val) == 0)
     return(rep(subs, times = exp.length))
   val[is.na(val) | val == ""] = subs
@@ -106,13 +106,15 @@ xmlOValsMultNsSPara = function(doc, path, subs = NA_character_, exp.length) {
 }
 
 xmlValsMultNsI = function(doc, path) {
-  xmlValsMultNs(doc, path, as.integer, integer(1))
+  xmlValsMultNs(doc, path, as.integer, integer(1L))
 }
 
 parseXMLResponse = function(file, msg, type, as.text = FALSE) {
   doc = try(xmlParse(file, asText = as.text))
-  if (is.error(doc))
+  if (is.error(doc)) {
     stopf("Error in parsing XML for type %s in file: %s", type, file)
+  }
+
   r = xmlRoot(doc)
   rootname = xmlName(r)
 

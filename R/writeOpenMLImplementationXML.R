@@ -62,23 +62,3 @@ writeOpenMLImplementationXML = function(description, file) {
 
   saveXML(top, file = file)
 }
-
-
-# #
-# cat(saveXML(doc))
-#  cat("\n")
-# #
-# #
-# # #
-# # # iter = 1L
-# # # for (i in 1:reps) {
-# # #   for (j in 1:folds) {
-# # #     top = newXMLNode("a")
-# # #     newXMLNode("", attrs = c(x = 1, y = 'abc'), parent = top)
-# # #     newXMLNode("c", "With some text", parent = top)
-# # #     print(top)
-# # #     saveXML(top, file = "bla.xml")
-# # #
-# # #     iter = iter + 1L
-# # #   }
-# # # }

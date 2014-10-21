@@ -8,7 +8,6 @@ sourcedFlow = function(task.id) {
 }
 "
 
-
 generateSourcefileForMlrLearner = function(lrn, dir = getwd()) {
   assertClass(lrn, "Learner")
   assertDirectory(dir)
