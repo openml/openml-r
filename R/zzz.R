@@ -11,6 +11,9 @@
 #' @importFrom plyr rbind.fill
 
 .onAttach = function(libname, pkgname) {
-  setOpenMLOption("show.info", getOpenMLOption("show.info", TRUE))
-  setOpenMLOption("cache.dir", getOpenMLOption("cache.dir", tempdir()))
+  configureOpenML(
+    show.info = getOpenMLOption("show.info", TRUE),
+    cache.dir = getOpenMLOption("cache.dir", tempdir()),
+    cache.compression = getOpenMLOption("cache.compression", "none")
+  )
 }
