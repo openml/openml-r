@@ -1,5 +1,7 @@
-OPEN_ML_SERVER_API_URL = "http://openml.org/api"
-OPEN_ML_SERVER_API_URL_S = "https://openml.org/api"
+OPENML_URL_API = "http://openml.org/api"
+OPENML_URL_API_SECURE = "https://openml.org/api"
+OPENML_URL_API_QUERY = "http://www.openml.org/api_query"
+OPENML_URL_API_QUERY_BETA = "http://openml.liacs.nl/api_query"
 
 # Generate a URL to download files from the server API.
 #
@@ -12,7 +14,7 @@ OPEN_ML_SERVER_API_URL_S = "https://openml.org/api"
 # @return [\code{character(1)}].
 getServerFunctionURL = function(fname, secure = FALSE, ...) {
   url = sprintf("%s/?f=%s",
-    if(secure) OPEN_ML_SERVER_API_URL_S else OPEN_ML_SERVER_API_URL,
+    if(secure) OPENML_URL_API_SECURE else OPENML_URL_API,
     fname)
   args = list(...)
   if (length(args) > 0L) {

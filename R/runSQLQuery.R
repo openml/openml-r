@@ -17,18 +17,7 @@ runSQLQuery = function(query, simplify = TRUE, show.info = getOpenMLOption("show
   assertFlag(simplify)
   assertFlag(show.info)
 
-  json.file = tempfile()
-  on.exit(unlink(json.file))
-
-  # replace whitespaces so we don't run into problems with the query
-  query = str_replace_all(query, " ", "%20")
-
-  # Use new beta server, leave old address commented to be able to switch quickly.
-  # query.url = "http://www.openml.org/api_query"
-  query.url = "http://openml.liacs.nl/api_query"
-  url = sprintf("%s/?q=%s", query.url, query)
-  download.file(url, json.file, quiet = TRUE)
-  parsed.doc = fromJSON(file = json.file)
+  parsed.doc = fromJSON(file = sprintf("%s/?q=%s", OPENML_URL_API_QUERY, URLencode(query)))
 
   if(show.info)
     message(parsed.doc$status)
