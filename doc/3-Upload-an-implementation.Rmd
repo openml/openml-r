@@ -6,21 +6,20 @@ If you want to upload predictions of an algorithm for a certain task, you have t
 ### Get a valid session hash
 In order to upload anything to the server, you have to authenticate your identity first. Therefore, you need to be registered at openml.org. Use the following function to get an authentication hash that is valid for one hour:
 
-```{r eval = FALSE}
-hash = authenticateUser(email = "your@email.com", password = "your_password")
+```{r message = FALSE}
+hash = authenticateUser(email = "openml.rteam@gmail.com", password = "testpassword")
 ```
 ### Upload an mlr learner
-There are some helper functions in case you are using the package [mlr](https://github.com/berndbischl/mlr) (Machine Learning in R). To upload an mlr learner you have to convert it into an OpenML implementation description object. This can be done by the function `createOpenMLImplementationForMLRLearner`:
-
-```{r eval = FALSE}
-library(mlr)
-learner = makeLearner("classif.rpart")
-oml.flow = createOpenMLImplementationForMLRLearner(learner)
+There are some helper functions in case you are using the package [mlr](https://github.com/berndbischl/mlr). Uploading an mlr learner is easy and quickly done. It doesn't matter if the learner has been
+uploaded already by you or some other user; `uploadMlrLearner` checks this first and returns the 
+flow ID in any case:
+```{r echo = FALSE}
+library(methods)
 ```
-This description object can be uploaded as follows: First, we need to generate a sourcefile. This is an .R-file with code that shows other users how you obtain results with your flow. Using mlr, we can generate a small sourcefile then and upload it together with the flow:
-```{r eval = FALSE}
-sourcefile = generateSourcefileForMlrLearner(oml.flow)
-flow.id = uploadOpenMLImplementation(oml.flow, sourcefile = sourcefile, session.hash = hash)
+```{r warning = FALSE, message = FALSE}
+library(mlr)
+learner = makeLearner("classif.JRip")
+flow.id = uploadMlrLearner(learner, hash)
 ```
 
 ### Upload an implementation without using mlr
@@ -52,9 +51,9 @@ oml.flow = OpenMLImplementation(
   description = "Please take some time and write a description of your algorithm/changes compared with the previous version/etc. here.",
   parameter = impl.pars)
 ```
-Now we finally have the implementation description object. The last step is to write an R-script with your flow. Let's assume you have done this and have a string `sourcefile` containing the path to your script. Your flow can now be uploaded as we have seen in the section above:
+Now we finally have the implementation description object. The last step is to write an R-script with your flow. Let's assume you have done this and have a string `sourcefile` containing the path to your script. Your flow can now be uploaded as follows:
 ```{r eval = FALSE}
-flow.id = uploadOpenMLImplementation(oml.flow, sourcefile = sourcefile, session.hash = hash)
+flow.id.2 = uploadOpenMLImplementation(oml.flow, sourcefile = sourcefile, session.hash = hash)
 ```
 
 ----------------------------------------------------------------------------------------------------------------------

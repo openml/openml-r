@@ -19,14 +19,14 @@ task
 Note: You do not have to be registered at http://openml.org/ to download a task. 
 
 ### Download an OpenML data set only
-OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate from these fixings. Of course, it is possible to define new tasks that match your desires, but this will not always be the means of choice -- e.g., when you want to run a few preliminary experiments. For this matter, you can use the function `downloadOpenMLData`, which downloads an OpenMLDataSetDescription including the corresponding data set. Sometimes data sets have more than one version. The default is to download the first version of a data set but a different version can be selected easily with the argument `version`. It is recommended to download the first version if you do not know about what is different in a later version. 
+OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate from these fixings. Of course, it is possible to define new tasks that match your desires, but this will not always be the means of choice -- e.g., when you want to run a few preliminary experiments. For this matter, you can use the function `downloadOpenMLData`, which downloads an OpenMLDataSetDescription including the corresponding data set. Sometimes data sets have more than one version. The default is to download the first version of a data set but a different version can be selected easily with the argument `version`. It is recommended to download the first version if you do not know what is different in a later version. 
 
 ```{r}
 oml.data = downloadOpenMLData(name = "iris")
 oml.data
 ```
 
-If you are working with [mlr](https://github.com/berndbischl/mlr), you can now go ahead and convert `oml.data` into an mlr (classification) task. Most data sets have a default target attribute. If this is not available or you want to select a different target feature, use the parameter `target`:
+If you are working with [mlr](https://github.com/berndbischl/mlr) (Machine Learning in R), you can now go ahead and convert `oml.data` into an mlr (classification) task. Most data sets have a default target attribute. If this is not available or you want to select a different target feature, use the parameter `target`:
 
 ```{r warning = FALSE}
 mlr.task = toMlr(oml.data, target = "class")
