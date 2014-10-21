@@ -1,4 +1,3 @@
-
 xmlNs = function(doc, path, optional) {
   ns = getNodeSet(doc, path)
   if (length(ns) == 0L) {
@@ -110,44 +109,22 @@ xmlValsMultNsI = function(doc, path) {
   xmlValsMultNs(doc, path, as.integer, integer(1))
 }
 
-expectXMLType = function(file, doc, type) {
+parseXMLResponse = function(file, msg, type, as.text = FALSE) {
+  doc = try(xmlParse(file, asText = as.text))
+  if (is.error(doc))
+    stopf("Error in parsing XML for type %s in file: %s", type, file)
   r = xmlRoot(doc)
   rootname = xmlName(r)
-  if (rootname %nin% type)
-    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, file)
-}
 
-isErrorXML = function(doc) {
-  r = xmlRoot(doc)
-  rootname = xmlName(r)
   if (rootname == "error") {
     code = xmlRValI(doc, "/oml:error/oml:code")
-    msg = xmlRValS(doc, "/oml:error/oml:message")
-    add_info = xmlOValS(doc, "/oml:error/oml:additional_information")
-    if(is.null(add_info))
-      add_info = "No additional information available."
-    return(list(code = code, msg = msg, add_info = add_info))
-  } else {
-    return(NULL)
-  }
-}
-
-checkAndHandleErrorXML = function(file, doc, prefix.msg) {
-  z = isErrorXML(doc)
-  if (!is.null(z)) {
     stopf("Error in server / XML response for: %s\n\t\t%s.\n\t\t%s\nFile: %s",
-      prefix.msg, z$msg, z$add_info, file)
+      msg, xmlRValS(doc, "/oml:error/oml:message"), xmlOValS(doc, "/oml:error/oml:additional_information"), file)
   }
-}
 
-parseXMLResponse = function(file, msg, type) {
-  doc = try(xmlParse(file))
-  if (is.error(doc)) {
-    stopf("Error in parsing XML for type %s in file: %s", type, file)
+  if (rootname %nin% type) {
+    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, file)
   }
-  checkAndHandleErrorXML(file, doc, msg)
-  expectXMLType(file, doc, type)
+
   return(doc)
 }
-
-# FIXME: add expectXMLType (otheriwise error) for the parser functions
