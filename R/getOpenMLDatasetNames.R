@@ -8,6 +8,7 @@
 #' @export
 getOpenMLDatasetNames = function() {
   # FIXME: document better
+  # FIXME: this doesn't work anymore, does the API call still exist?
   url = getAPIURL("openml.data.safe")
   doc = parseXMLResponse(url, "Getting safe data set names", "data-safe")
   data.frame(

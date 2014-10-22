@@ -64,7 +64,9 @@ for (id in task.ids) {
 
 boxplot(qs, ylim = c(0, 1), main = "Quantiles of lda measures")
 ```
-![Boxplot of the quantiles](https://github.com/openml/r/tree/master/doc/figures/boxplot_example.png?raw=true)
+![Boxplot of the quantiles](https://raw.githubusercontent.com/openml/r/master/doc/figures/boxplot_example.png)  
+As we can see in the boxplot, the performance of lda varies quite strongly. Mostly, though, the lda
+measures were better than the average of all run results on the considered tasks.
 
 ----------------------------------------------------------------------------------------------------
 Jump to:   
