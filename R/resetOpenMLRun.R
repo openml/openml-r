@@ -1,4 +1,4 @@
-#' @title Reset an OpenMLRun.
+#' @title Reset an OpenML run.
 #'
 #' @description This will reset the status of one of your uploaded \code{\link{OpenMLRun}s} to
 #'   "unprocessed", meaning that the server's evaluation engine will pick up on it again. This is
@@ -14,16 +14,12 @@ resetOpenMLRun = function(run.id, session.hash, show.info = getOpenMLOption("sho
   run.id = asCount(run.id)
   assertString(session.hash)
 
-  file = tempfile()
-  on.exit(unlink(file))
-
   url = getAPIURL("openml.run.reset")
   response = postForm(url,
     session_hash = session.hash,
     run_id = run.id
   )
-  write(response, file = file)
-  doc = parseXMLResponse(file, "Resetting run", "run_reset")
+  doc = parseXMLResponse(response, "Resetting run", "run_reset", as.text = TRUE)
 
   if (show.info)
     catf("Run %s succesfully reset.", run.id)
