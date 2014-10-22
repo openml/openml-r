@@ -64,7 +64,7 @@ for (id in task.ids) {
 
 boxplot(qs, ylim = c(0, 1), main = "Quantiles of lda measures")
 ```
-![Boxplot of the quantiles](https://github.com/openml/r/tree/master/doc/figures/boxplot_example.png)
+![Boxplot of the quantiles](https://github.com/openml/r/tree/master/doc/figures/boxplot_example.png?raw=true)
 
 ----------------------------------------------------------------------------------------------------
 Jump to:   
@@ -73,5 +73,5 @@ Jump to:
 [3 Upload an implementation](3-Upload-an-implementation.md)  
 [4 Upload predictions](4-Upload-predictions.md)  
 [5 Download performance measures](5-Download-performance-measures.md)  
-[6 Browse the database](6-Browse-the-database.md)
+[6 Browse the database](6-Browse-the-database.md)  
 7 Example workflow with mlr
