@@ -2,15 +2,15 @@ context("generateSourcefileForMlrLearner")
 
 test_that("generateSourcefileForMlrLearner", {
   lrn = makeLearner("classif.JRip")
-  sf = generateSourcefileForMlrLearner(lrn)
+  sf = generateSourcefileForMlrLearner(lrn, dir = tempdir())
   source(sf)
   unlink(sf)
   res = sourcedFlow(1)
   expect_is(res, "data.frame")
   expect_equal(dim(res), c(898, 10))
-  
+
   lrn = makeBaggingWrapper(lrn, bw.iters = 5)
-  sf = generateSourcefileForMlrLearner(lrn)
+  sf = generateSourcefileForMlrLearner(lrn, dir = tempdir())
   source(sf)
   unlink(sf)
   res = sourcedFlow(1)

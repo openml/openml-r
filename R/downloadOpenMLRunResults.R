@@ -2,89 +2,74 @@
 #'
 #' @param id [\code{numeric}]\cr
 #'   The task ID.
-#' @param dir [\code{character(1)}]\cr
-#'   The directory where to save the downloaded run xml. The file is called "get_run_id.xml" where "id" is replaced
-#'   by the actual id. Default is the working directory.
+#' @template arg_ignore.cache
 #' @template arg_showinfo
 #' @param clean.up [\code{logical(1)}]\cr
 #'   Should the downloaded run xml file be removed at the end?
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{OpenMLRunResults}}]
 #' @export
-
-downloadOpenMLRunResults = function(id, dir = getwd(), show.info = getOpenMLOption("show.info"),
-  clean.up = TRUE) {
+downloadOpenMLRunResults = function(id, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
   id = asInt(id)
-  assertDirectory(dir, access = "w")
   assertFlag(show.info)
-  assertFlag(clean.up)
 
-  fn.get.run = file.path(dir, sprintf("get_run_%g.xml", id))
-  downloadAPICallFile(api.fun = "openml.run.get", file = fn.get.run, run_id = id, show.info = show.info)
-  results = parseOpenMLRunResults(fn.get.run)
-  if (clean.up)
-    unlink(fn.get.run)
-
-  return(results)
+  fn = file.path("runs", id, sprintf("%i.xml", id))
+  url = getAPIURL("openml.run.get", run_id = id)
+  # FIXME: cache?
+  doc = parseXMLResponse(url, "Getting run results", "run")
+  parseOpenMLRunResults(doc)
 }
 
-parseOpenMLRunResults = function(file) {
-  doc = parseXMLResponse(file, "Getting run results", "run")
-
+parseOpenMLRunResults = function(doc) {
   parseData = function(path) {
     # parse datasets
     path.ds = paste(path, "oml:dataset", sep ="/")
     ns.datasets = getNodeSet(doc, path.ds)
-    datasets = list()
-    for (i in seq_along(ns.datasets)) {
-      args = list()
-      args[["did"]] = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep=''))
-      args[["name"]] = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep=''))
-      args[["url"]] = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep=''))
-      datasets = c(datasets, args)
-    }
+    datasets = lapply(seq_along(ns.datasets), function(i) {
+      list(
+        did = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep='')),
+        name = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep='')),
+        url = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep=''))
+    )})
 
     # parse evaluations
     path.evals = paste(path, "oml:evaluation", sep ="/")
     ns.evals = getNodeSet(doc, path.evals)
-    evals = vector("list", length(ns.evals))
-    for (i in seq_along(ns.evals)) {
-      args = list()
-      args[["did"]] = xmlOValR(doc, paste(path.evals, "[", i, "]/oml:did", sep=''))
-      args[["name"]] = xmlRValS(doc, paste(path.evals, "[", i, "]/oml:name", sep=''))
-      args[["implementation"]] = xmlRValR(doc, paste(path.evals, "[", i, "]/oml:implementation", sep=''))
-      args[["value"]] = xmlOValR(doc, paste(path.evals, "[", i, "]/oml:value", sep=''))
-      args[["array.data"]] = xmlOValS(doc, paste(path.evals, "[", i, "]/oml:array_data", sep=''))
-      evals[[i]] = args
-    }
-    evals = do.call(rbind.fill, lapply(evals, as.data.frame))
-    return(do.call(makeOpenMLIOData, list(dataset = datasets, evaluation = evals)))
+    evals = lapply(seq_along(ns.evals), function(i) {
+      data.frame(
+        did = xmlOValR(doc, paste(path.evals, "[", i, "]/oml:did", sep='')),
+        name = xmlRValS(doc, paste(path.evals, "[", i, "]/oml:name", sep='')),
+        implementation = xmlRValR(doc, paste(path.evals, "[", i, "]/oml:implementation", sep='')),
+        value = xmlOValR(doc, paste(path.evals, "[", i, "]/oml:value", sep='')),
+        array.data = xmlOValS(doc, paste(path.evals, "[", i, "]/oml:array_data", sep=''))
+      )
+    })
+    makeOpenMLIOData(dataset = datasets, evaluation = do.call(rbind.fill, evals))
   }
 
-  run.args = list()
-
-  run.args[["run.id"]] = xmlREValI(doc, "/oml:run/oml:run_id")
-  run.args[["uploader"]] = xmlREValI(doc, "/oml:run/oml:uploader")
-  run.args[["task.id"]] = xmlREValI(doc, "/oml:run/oml:task_id")
-  run.args[["implementation.id"]] = xmlRValS(doc, "/oml:run/oml:implementation_id")
-  run.args[["setup.id"]] = xmlREValI(doc, "/oml:run/oml:setup_id")
-  run.args[["setup.string"]] = xmlOValS(doc, "/oml:run/oml:setup_string")
-  run.args[["error.message"]] = xmlOValS(doc, "/oml:run/oml:error_message")
+  run.args = filterNull(list(
+    run.id = xmlREValI(doc, "/oml:run/oml:run_id"),
+    uploader = xmlREValI(doc, "/oml:run/oml:uploader"),
+    task.id = xmlREValI(doc, "/oml:run/oml:task_id"),
+    implementation.id = xmlRValS(doc, "/oml:run/oml:implementation_id"),
+    setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),
+    setup.string = xmlOValS(doc, "/oml:run/oml:setup_string"),
+    error.message = xmlOValS(doc, "/oml:run/oml:error_message"),
+    input.data = parseData("/oml:run/oml:input_data"),
+    output.data = parseData("/oml:run/oml:output_data"),
+    parameter.setting = list()
+  ))
 
   # parse parameters
   ns.pars = getNodeSet(doc, "/oml:run/oml:parameter_setting")
-  par.set = vector("list", length = length(ns.pars))
-  for (i in seq_along(ns.pars)) {
-    args = list()
-    args[["name"]] = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:name", sep=''))
-    args[["value"]] = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:value", sep=''))
-    args[["component"]] = xmlOValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:component", sep=''))
-    par.set[[i]] = do.call(makeOpenMLRunParameter, args)
-  }
-  run.args[["parameter.setting"]] = par.set
+  run.args[["parameter.setting"]] = lapply(seq_along(ns.pars), function(i) {
+    args = filterNull(list(
+      name = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:name", sep='')),
+      value = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:value", sep='')),
+      component = xmlOValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:component", sep=''))
+    ))
+    do.call(makeOpenMLRunParameter, args)
+  })
 
-  run.args[["input.data"]] = parseData("/oml:run/oml:input_data")
-  run.args[["output.data"]] = parseData("/oml:run/oml:output_data")
-
-  return(do.call(makeOpenMLRunResults, run.args))
+  do.call(makeOpenMLRunResults, run.args)
 }

@@ -11,25 +11,16 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{OpenMLTaskResults}}]
 #' @export
-downloadOpenMLTaskResults = function(id, dir = getwd(), show.info = getOpenMLOption("show.info"),
-  clean.up = TRUE) {
+downloadOpenMLTaskResults = function(id, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
   id = asCount(id)
-  assertDirectory(dir, "w")
-  assertFlag(show.info)
-  assertFlag(clean.up)
-  fn.task.results = file.path(dir, sprintf("results_task_%i.xml", id))
-  on.exit({
-    if (clean.up)
-      unlink(fn.task.results)
-  })
-  downloadAPICallFile(api.fun = "openml.task.evaluations", file = fn.task.results, task_id = id,
-    show.info = show.info)
-  results = parseOpenMLTaskResults(fn.task.results)
-  return(results)
+  fn = file.path("results", "id", sprintf("%i.xml"))
+  url = getAPIURL("openml.task.evaluations", task_id = id)
+  contents = downloadXML(url, file = fn, ignore.cache = ignore.cache, show.info = show.info)
+  doc = parseXMLResponse(contents, "Getting task results", "task_evaluations", as.text = TRUE)
+  parseOpenMLTaskResults(doc)
 }
 
-parseOpenMLTaskResults = function(file) {
-  doc = parseXMLResponse(file, "Getting task results", "task_evaluations")
+parseOpenMLTaskResults = function(doc) {
   getMetrics = function(ns.runs) {
     task.res = list()
     for (i in seq_along(ns.runs)) {
@@ -63,7 +54,7 @@ parseOpenMLTaskResults = function(file) {
   estim.proc = xmlRValS(doc, "/oml:task_evaluations/oml:estimation_procedure")
 
   ns.runs = getNodeSet(doc, "/oml:task_evaluations/oml:evaluation")
-  if (length(ns.runs) != 0) {
+  if (length(ns.runs) != 0L) {
     metrics = getMetrics(ns.runs)
   } else {
     metrics = data.frame()

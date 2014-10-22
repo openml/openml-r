@@ -1,37 +1,38 @@
-downloadOpenMLDataSetDescription = function(id, file, show.info) {
+downloadOpenMLDataSetDescription = function(id, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
   id = asInt(id)
-  assertPathForOutput(file, overwrite = TRUE)
-  downloadAPICallFile(api.fun = "openml.data.description", file = file, data.id = id, show.info = show.info)
+  fn = file.path("descriptions", id, sprintf("%i.xml", id))
+  url = getAPIURL("openml.data.description", data.id = id)
+  contents = downloadXML(url, file = fn, ignore.cache = ignore.cache, show.info = show.info)
+  doc = parseXMLResponse(contents, "Getting data set description", "data_set_description", as.text = TRUE)
+  parseOpenMLDataSetDescription(doc)
 }
 
-parseOpenMLDataSetDescription = function(file) {
-  assertFile(file)
-  doc = parseXMLResponse(file, "Getting data set description", "data_set_description")
+parseOpenMLDataSetDescription = function(doc) {
+  args = filterNull(list(
+    id = xmlRValI(doc, "/oml:data_set_description/oml:id"),
+    name = xmlRValS(doc, "/oml:data_set_description/oml:name"),
+    version = xmlRValS(doc, "/oml:data_set_description/oml:version"),
+    description = xmlRValS(doc, "/oml:data_set_description/oml:description"),
+    format = xmlRValS(doc, "/oml:data_set_description/oml:format"),
+    creator = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:creator"),
+    contributor = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:contributor"),
+    collection.date = xmlOValS(doc, "/oml:data_set_description/oml:collection_date"),
+    upload.date = xmlRValD(doc, "/oml:data_set_description/oml:upload_date"),
+    language = xmlOValS(doc, "/oml:data_set_description/oml:language"),
+    licence = xmlOValS(doc, "/oml:data_set_description/oml:licence"),
+    url = xmlRValS(doc, "/oml:data_set_description/oml:url"),
+    default.target.attribute = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute"),
+    row.id.attribute = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute"),
+    ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute"),
+    version.label = xmlOValS(doc, "/oml:data_set_description/oml:version_label"),
+    citation = xmlOValS(doc, "/oml:data_set_description/oml:citation"),
+    visibility = xmlOValS(doc, "/oml:data_set_description/oml:visibility"),
+    original.data.url = xmlOValS(doc, "/oml:data_set_description/oml:original_data_url"),
+    paper.url = xmlOValS(doc, "/oml:data_set_description/oml:paper.url"),
+    update.comment = xmlOValS(doc, "/oml:data_set_description/oml:update.comment"),
+    md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum"),
+    data.set = data.frame()
+  ))
 
-  args = list()
-  args[["id"]] = xmlRValI(doc, "/oml:data_set_description/oml:id")
-  args[["name"]] = xmlRValS(doc, "/oml:data_set_description/oml:name")
-  args[["version"]] = xmlRValS(doc, "/oml:data_set_description/oml:version")
-  args[["description"]] = xmlRValS(doc, "/oml:data_set_description/oml:description")
-  args[["format"]] = xmlRValS(doc, "/oml:data_set_description/oml:format")
-  args[["creator"]] = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:creator")
-  args[["contributor"]] = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:contributor")
-  args[["collection.date"]] = xmlOValS(doc, "/oml:data_set_description/oml:collection_date")
-  args[["upload.date"]] = xmlRValD(doc, "/oml:data_set_description/oml:upload_date")
-  args[["language"]] = xmlOValS(doc, "/oml:data_set_description/oml:language")
-  args[["licence"]] = xmlOValS(doc, "/oml:data_set_description/oml:licence")
-  args[["url"]] = xmlRValS(doc, "/oml:data_set_description/oml:url")
-  args[["default.target.attribute"]] = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute")
-  args[["row.id.attribute"]] = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute")
-  args[["ignore.attribute"]] = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute")
-  args[["version.label"]] = xmlOValS(doc, "/oml:data_set_description/oml:version_label")
-  args[["citation"]] = xmlOValS(doc, "/oml:data_set_description/oml:citation")
-  args[["visibility"]] = xmlOValS(doc, "/oml:data_set_description/oml:visibility")
-  args[["original.data.url"]] = xmlOValS(doc, "/oml:data_set_description/oml:original_data_url")
-  args[["paper.url"]] = xmlOValS(doc, "/oml:data_set_description/oml:paper.url")
-  args[["update.comment"]] = xmlOValS(doc, "/oml:data_set_description/oml:update.comment")
-  args[["md5.checksum"]] = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum")
-  args[["data.set"]] = data.frame()
-
-  dsd = do.call(makeOpenMLDataSetDescription, args)
+  do.call(makeOpenMLDataSetDescription, args)
 }

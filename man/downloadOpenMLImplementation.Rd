@@ -3,30 +3,25 @@
 \alias{downloadOpenMLImplementation}
 \title{Download an OpenML implementation from the OpenML server through a server API call.}
 \usage{
-downloadOpenMLImplementation(id, dir = getwd(),
-  download.source.binary = TRUE, show.info = getOpenMLOption("show.info"),
-  clean.up = TRUE)
+downloadOpenMLImplementation(id, download.source.binary = TRUE,
+  ignore.cache = FALSE, show.info = getOpenMLOption("show.info"))
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
 The implementation id.}
-
-\item{dir}{[\code{character(1)}]\cr
-Directory where downloaded files from the repository are stored.
-Default is current directory.}
 
 \item{download.source.binary}{[\code{logical(1)}]\cr
 Should source / binary files of the implementation also be downloaded?
 They will also be stored in \code{dir}.
 Default is \code{TRUE}.}
 
+\item{ignore.cache}{[\code{logical(1)}]\cr
+Ignore a possibly cached version and force
+re-download of files? Default is \code{FALSE}.}
+
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
 Default is set via \code{\link{configureOpenML}}.}
-
-\item{clean.up}{[logical(1)]\cr
-Delete implementation xml file at the end?
-Default is \code{TRUE}.}
 }
 \value{
 [\code{\link{OpenMLImplementation}}].

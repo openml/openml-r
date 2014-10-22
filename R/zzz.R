@@ -9,6 +9,7 @@
 #' @import checkmate
 #' @import base64enc
 #' @importFrom plyr rbind.fill
+NULL
 
 .onAttach = function(libname, pkgname) {
   configureOpenML(

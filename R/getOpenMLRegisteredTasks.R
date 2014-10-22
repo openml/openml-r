@@ -11,9 +11,8 @@
 getOpenMLRegisteredTasks = function(type = "classification") {
   #FIXME: document better
   assertSubset(type, "classification")
-  file = tempfile()
-  downloadAPICallFile(api.fun = "openml.task.classification.safe", file = file, show.info = FALSE)
-  doc = parseXMLResponse(file, "Getting safe task info", "task-classification-safe")
+  url = getAPIURL("openml.task.classification.safe")
+  doc = parseXMLResponse(url, "Getting safe task info", "task-classification-safe")
   data.frame(
     task_id = xmlValsMultNsI(doc, path = "/oml:task-classification-safe/oml:task/oml:task_id"),
     data_name = xmlValsMultNsS(doc, path = "/oml:task-classification-safe/oml:task/oml:data_name"),

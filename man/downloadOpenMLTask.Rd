@@ -3,23 +3,13 @@
 \alias{downloadOpenMLTask}
 \title{Download a task from the OpenML repository.}
 \usage{
-downloadOpenMLTask(id, dir = getOpenMLOption("cache.dir"), clean.up = TRUE,
-  fetch.data.set.description = TRUE, fetch.data.set = TRUE,
-  fetch.data.splits = TRUE, show.info = getOpenMLOption("show.info"))
+downloadOpenMLTask(id, fetch.data.set.description = TRUE,
+  fetch.data.set = TRUE, fetch.data.splits = TRUE, ignore.cache = FALSE,
+  show.info = getOpenMLOption("show.info"))
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
 ID number of task on OpenML server, used to retrieve the task.}
-
-\item{dir}{[\code{character(1)}]\cr
-Directory where downloaded files from the repository are stored. If the directory does not exist,
-it will be created.
-Default is defined via option \dQuote{cache.dir} which itself defaults to
-a per-session temporary directory.}
-
-\item{clean.up}{[\code{logical(1)}]\cr
-Should the downloaded files be removed from disk at the end?
-Default is \code{TRUE}.}
 
 \item{fetch.data.set.description}{[\code{logical(1)}]\cr
 Should the data set description also be downloaded?
@@ -32,6 +22,10 @@ Default is \code{TRUE}.}
 \item{fetch.data.splits}{[\code{logical(1)}]\cr
 Should the data splits (for resampling) also be downloaded?
 Default is \code{TRUE}.}
+
+\item{ignore.cache}{[\code{logical(1)}]\cr
+Ignore a possibly cached version and force
+re-download of files? Default is \code{FALSE}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
