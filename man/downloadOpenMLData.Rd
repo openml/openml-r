@@ -3,8 +3,8 @@
 \alias{downloadOpenMLData}
 \title{Download an OpenML data set including its description.}
 \usage{
-downloadOpenMLData(name, version = 1, dir = getOpenMLOption("cache.dir"),
-  clean.up = TRUE, show.info = getOpenMLOption("show.info"))
+downloadOpenMLData(name, version = 1, ignore.cache = FALSE,
+  show.info = getOpenMLOption("show.info"))
 }
 \arguments{
 \item{name}{[\code{character(1)}]\cr
@@ -14,13 +14,9 @@ The name of the data set.}
 Version that should be downloaded. If the desired version is not available, the latest version
 of the data set is downloaded. Default is \code{1}.}
 
-\item{dir}{[\code{character(1)}]\cr
-The directory where intermediate files are stored.
-Default is the session's temporary directory.}
-
-\item{clean.up}{[\code{loigcal(1)}]\cr
-Should the downloaded files be removed from disk at the end?
-Default is \code{TRUE}.}
+\item{ignore.cache}{[\code{logical(1)}]\cr
+Ignore a possibly cached version and force
+re-download of files? Default is \code{FALSE}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
@@ -31,9 +27,9 @@ Default is set via \code{\link{configureOpenML}}.}
 }
 \description{
 Given a name and (optionally) a version of a data set, this function will download
-  the whole data set description from the OpenML server. Note that this does not include data
-  splits or other task-related information. Tasks can be downloaded with
-  \code{\link{downloadOpenMLTask}}.
+the whole data set description from the OpenML server. Note that this does not include data
+splits or other task-related information. Tasks can be downloaded with
+\code{\link{downloadOpenMLTask}}.
 }
 \seealso{
 \code{\link{toMlr}}, \code{\link{downloadOpenMLTask}}

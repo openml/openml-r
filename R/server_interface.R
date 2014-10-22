@@ -12,7 +12,7 @@ OPENML_URL_API_QUERY_BETA = "http://openml.liacs.nl/api_query"
 # @param ... [any]\cr
 #   Arguments for API call.
 # @return [\code{character(1)}].
-getServerFunctionURL = function(fname, secure = FALSE, ...) {
+getAPIURL = function(fname, secure = FALSE, ...) {
   url = sprintf("%s/?f=%s",
     if(secure) OPENML_URL_API_SECURE else OPENML_URL_API,
     fname)

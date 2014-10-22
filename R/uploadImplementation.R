@@ -56,7 +56,7 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
     messagef("Downloading response to: %s", file)
   }
 
-  url = getServerFunctionURL("openml.implementation.upload")
+  url = getAPIURL("openml.implementation.upload")
   #FIXME: handle binary
   response = postForm(url,
     session_hash = session.hash,

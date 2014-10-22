@@ -2,35 +2,25 @@
 #'
 #' @param id [\code{numeric}]\cr
 #'   The task ID.
-#' @param dir [\code{character(1)}]\cr
-#'   The directory where to save the downloaded run xml. The file is called "get_run_id.xml" where "id" is replaced
-#'   by the actual id. Default is the working directory.
+#' @template arg_ignore.cache
 #' @template arg_showinfo
 #' @param clean.up [\code{logical(1)}]\cr
 #'   Should the downloaded run xml file be removed at the end?
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{OpenMLRunResults}}]
 #' @export
-
-downloadOpenMLRunResults = function(id, dir = getwd(), show.info = getOpenMLOption("show.info"),
-  clean.up = TRUE) {
+downloadOpenMLRunResults = function(id, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
   id = asInt(id)
-  assertDirectory(dir, access = "w")
   assertFlag(show.info)
-  assertFlag(clean.up)
 
-  fn.get.run = file.path(dir, sprintf("get_run_%g.xml", id))
-  downloadAPICallFile(api.fun = "openml.run.get", file = fn.get.run, run_id = id, show.info = show.info)
-  results = parseOpenMLRunResults(fn.get.run)
-  if (clean.up)
-    unlink(fn.get.run)
-
-  return(results)
+  fn = file.path("runs", id, sprintf("%i.xml", id))
+  url = getAPIURL("openml.run.get", run_id = id)
+  # FIXME: cache?
+  doc = parseXMLResponse(url, "Getting run results", "run")
+  parseOpenMLRunResults(doc)
 }
 
-parseOpenMLRunResults = function(file) {
-  doc = parseXMLResponse(file, "Getting run results", "run")
-
+parseOpenMLRunResults = function(doc) {
   parseData = function(path) {
     # parse datasets
     path.ds = paste(path, "oml:dataset", sep ="/")

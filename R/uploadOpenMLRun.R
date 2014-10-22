@@ -62,7 +62,7 @@ uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, sessi
     messagef("Downloading response to: %s", file)
   }
 
-  url = getServerFunctionURL("openml.run.upload")
+  url = getAPIURL("openml.run.upload")
 
   if (!missing(predictions)) {
     output = tempfile()

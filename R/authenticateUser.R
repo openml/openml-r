@@ -16,7 +16,7 @@ authenticateUser = function(email, password, show.info = getOpenMLOption("show.i
   if (show.info)
     messagef("Authenticating user at server: %s", email)
   # FIXME: we might want to use https for this!
-  url = getServerFunctionURL("openml.authenticate", secure = FALSE)
+  url = getAPIURL("openml.authenticate", secure = FALSE)
   md5 = digest(password, algo = "md5", serialize = FALSE)
   params = list(username = email, password = md5)
   content = postForm(url, .params = params, .checkParams = FALSE)

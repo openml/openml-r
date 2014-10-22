@@ -3,20 +3,20 @@
 \alias{downloadOpenMLTaskResults}
 \title{Download OpenML task results from the server.}
 \usage{
-downloadOpenMLTaskResults(id, dir = getwd(),
-  show.info = getOpenMLOption("show.info"), clean.up = TRUE)
+downloadOpenMLTaskResults(id, ignore.cache = FALSE,
+  show.info = getOpenMLOption("show.info"))
 }
 \arguments{
 \item{id}{[\code{numeric}]\cr
 The task ID.}
 
-\item{dir}{[\code{character(1)}]\cr
-The directory where to save the downloaded run xml. The file is called "results_task_id.xml" where "id" is
-replaced by the actual id. Default is the working directory.}
-
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
 Default is set via \code{\link{configureOpenML}}.}
+
+\item{dir}{[\code{character(1)}]\cr
+The directory where to save the downloaded run xml. The file is called "results_task_id.xml" where "id" is
+replaced by the actual id. Default is the working directory.}
 
 \item{clean.up}{[\code{logical(1)}]\cr
 Should the downloaded xml file be removed at the end?

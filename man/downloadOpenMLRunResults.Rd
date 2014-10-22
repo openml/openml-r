@@ -3,16 +3,16 @@
 \alias{downloadOpenMLRunResults}
 \title{Download OpenML run results from the server.}
 \usage{
-downloadOpenMLRunResults(id, dir = getwd(),
-  show.info = getOpenMLOption("show.info"), clean.up = TRUE)
+downloadOpenMLRunResults(id, ignore.cache = FALSE,
+  show.info = getOpenMLOption("show.info"))
 }
 \arguments{
 \item{id}{[\code{numeric}]\cr
 The task ID.}
 
-\item{dir}{[\code{character(1)}]\cr
-The directory where to save the downloaded run xml. The file is called "get_run_id.xml" where "id" is replaced
-by the actual id. Default is the working directory.}
+\item{ignore.cache}{[\code{logical(1)}]\cr
+Ignore a possibly cached version and force
+re-download of files? Default is \code{FALSE}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?

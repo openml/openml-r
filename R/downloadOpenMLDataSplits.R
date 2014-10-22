@@ -1,29 +1,23 @@
 #FIXME: provide helper functions for error xmls
 
 # download data splits file from URL to local file
-downloadOpenMLDataSplits = function(url, file, show.info = getOpenMLOption("show.info")) {
-  assertString(url)
-  assertPathForOutput(file)
-  downloadBinaryFile(url, file, show.info)
+downloadOpenMLDataSplits = function(task, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
+  id = task$id
+  url = task$estimation.procedure$data.splits.url
+  fn = file.path("splits", id, sprintf("%i.arff", id))
+  data = downloadARFF(url, fn, ignore.cache = ignore.cache, show.info = show.info)
+  parseOpenMLDataSplits(task, data)
 }
 
-# parses the splits file into a data.frame
-parseOpenMLDataSplits = function(ds, file) {
-  assertClass(ds, "data.frame")
-  assertFile(file, access = "r")
-  splits = read.arff(file)
-  convertOpenMLDataSplits(ds, splits)
-}
-
-# slightly converts the splits data frame
-# rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
-convertOpenMLDataSplits = function(ds, splits) {
-  colnames(splits)[colnames(splits) == "repeat"] = "rep"
-  ri = splits$rowid
-  rns = rownames(ds)
+parseOpenMLDataSplits = function(task, data) {
+  # slightly converts the splits data frame
+  # rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
+  colnames(data)[colnames(data) == "repeat"] = "rep"
+  ri = data$rowid
+  rns = rownames(task$data.desc$data.set)
   # FIXME: use match()!
-  splits$rowid = sapply(ri, function(x) which(x == rns))
-  splits$rep = splits$rep + 1
-  splits$fold = splits$fold + 1
-  return(splits)
+  data$rowid = sapply(ri, function(x) which(x == rns))
+  data$rep = data$rep + 1
+  data$fold = data$fold + 1
+  return(data)
 }
