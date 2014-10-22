@@ -64,7 +64,7 @@ for (id in task.ids) {
 
 boxplot(qs, ylim = c(0, 1), main = "Quantiles of lda measures")
 ```
-![Boxplot of the quantiles](https://github.com/openml/r/tree/master/doc/figures/boxplot_example.png?raw=true)
+![Boxplot of the quantiles](https://raw.githubusercontent.com/openml/r/master/doc/figures/boxplot_example.png)
 
 ----------------------------------------------------------------------------------------------------
 Jump to:   
