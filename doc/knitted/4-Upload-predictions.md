@@ -43,7 +43,7 @@ used.
 To upload the predictions, mlr users only need the following call:
 
 ```splus
-run.ul = uploadOpenMLRun(task = task, 
+run.id = uploadOpenMLRun(task = task, 
   mlr.lrn = learner, 
   impl.id = flow.id, 
   predictions = predictions, 
@@ -73,7 +73,7 @@ Now we upload the run. We leave out the argument "mlr.lrn", because we are not u
 we hand over our run parameter list "run.pars":
 
 ```splus
-run.ul = uploadOpenMLRun(task = task, 
+run.id = uploadOpenMLRun(task = task, 
   impl.id = flow.id, 
   predictions = predictions,
   run.pars = run.pars,
@@ -88,3 +88,4 @@ Jump to:
 4 Upload predictions  
 [5 Download performance measures](5-Download-performance-measures.md)  
 [6 Browse the database](6-Browse-the-database.md)
+[7 Example workflow with mlr](7-Example-workflow-with-mlr.md)

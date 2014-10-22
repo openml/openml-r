@@ -6,11 +6,11 @@ on the same task.
 
 ### Download run results
 To download the results of one of your own runs, you have to know the corresponding run ID, which is returned by `uploadOpenMLRun`. In [section 4](4-Upload-predictions.md), we uploaded a run and
-retrieved a unique run id that we called "run.ul". In order to get all stored metrics for this
+retrieved a unique run id that we called "run.id". In order to get all stored metrics for this
 specific run, we can use the function `downloadOpenMLRunResults`:
 
 ```{r}
-run.results = downloadOpenMLRunResults(run.ul)
+run.results = downloadOpenMLRunResults(run.id)
 run.results
 ```
 You can print the metrics to the console to get a first look:
@@ -37,7 +37,9 @@ like in the example above with `printMetrics = TRUE`). You can access the whole 
 ```{r eval = FALSE}
 task.metrics = task.results$metrics
 ```
-
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+deleteOpenMLRun(run.id)
+```
 ----------------------------------------------------------------------------------------------------
 Jump to:   
 [1 Introduction](1-Introduction.md)  
@@ -46,3 +48,4 @@ Jump to:
 [4 Upload predictions](4-Upload-predictions.md)  
 5 Download performance measures  
 [6 Browse the database](6-Browse-the-database.md)
+[7 Example workflow with mlr](7-Example-workflow-with-mlr.md)

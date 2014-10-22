@@ -44,15 +44,23 @@ you do not know what is different in a later version.
 
 ```splus
 oml.data = downloadOpenMLData(name = "iris")
+```
+
+```
+## Extra content at the end of the document
+```
+
+```
+## Error: Error in parsing XML for type data-safe in file:
+## /var/folders/d5/fyvnxzp52nv73tgx_xkdk0lw0000gn/T//Rtmpsu6WSW/file213c13c667d6
+```
+
+```splus
 oml.data
 ```
 
 ```
-## 
-## Data Set "iris" :: (Version = 1, OpenML ID = 61)
-## 	Collection Date         : 1936
-## 	Creator(s)              : R.A. Fisher
-## 	Default Target Attribute: class
+## Error: Objekt 'oml.data' nicht gefunden
 ```
 
 If you are working with [mlr](https://github.com/berndbischl/mlr) (Machine Learning in R), you can
@@ -61,24 +69,18 @@ now go ahead and convert `oml.data` into an mlr (classification) task. Most data
 
 ```splus
 mlr.task = toMlr(oml.data, target = "class")
+```
+
+```
+## Error: Objekt 'oml.data' nicht gefunden
+```
+
+```splus
 mlr.task
 ```
 
 ```
-## Supervised task: data
-## Type: classif
-## Target: class
-## Observations: 150
-## Features:
-## numerics  factors 
-##        4        0 
-## Missings: FALSE
-## Has weights: FALSE
-## Has blocking: FALSE
-## Classes: 3
-##     Iris-setosa Iris-versicolor  Iris-virginica 
-##              50              50              50 
-## Positive class: NA
+## Error: Objekt 'mlr.task' nicht gefunden
 ```
 
 Now you can freely apply any resampling procedure. For further information on how this works, see
@@ -92,3 +94,4 @@ Jump to:
 [4 Upload predictions](4-Upload-predictions.md)  
 [5 Download performance measures](5-Download-performance-measures.md)  
 [6 Browse the database](6-Browse-the-database.md)
+[7 Example workflow with mlr](7-Example-workflow-with-mlr.md)

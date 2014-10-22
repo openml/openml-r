@@ -13,7 +13,7 @@
 #' @export
 downloadOpenMLTaskResults = function(id, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
   id = asCount(id)
-  fn = file.path("results", "id", sprintf("%i.xml"))
+  fn = file.path("results", sprintf("results_task_%i.xml", id))
   url = getAPIURL("openml.task.evaluations", task_id = id)
   contents = downloadXML(url, file = fn, ignore.cache = ignore.cache, show.info = show.info)
   doc = parseXMLResponse(contents, "Getting task results", "task_evaluations", as.text = TRUE)
