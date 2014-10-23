@@ -9,18 +9,9 @@
 #'
 #' @param id [\code{integer(1)}]\cr
 #'   ID number of task on OpenML server, used to retrieve the task.
-#' @param fetch.data.set.description [\code{logical(1)}]\cr
-#'   Should the data set description also be downloaded?
-#'   Default is \code{TRUE}.
-#' @param fetch.data.set [\code{logical(1)}]\cr
-#'   Should the data set also be downloaded?
-#'   Default is \code{TRUE}.
-#' @param fetch.data.splits [\code{logical(1)}]\cr
-#'   Should the data splits (for resampling) also be downloaded?
-#'   Default is \code{TRUE}.
 #' @template arg_ignore.cache
-#' @template arg_showinfo
-#' @return \code{\link{OpenMLTask}}.
+#' @template arg_verbose
+#' @return [\code{\link{OpenMLTask}}]
 #' @export
 #' @examples
 #' # Download task and access relevant information to start running experiments
@@ -31,51 +22,32 @@
 #' print(task$target.features)
 #' print(head(task$data.desc$data.set))
 #' }
-downloadOpenMLTask = function(id, fetch.data.set.description = TRUE, fetch.data.set = TRUE,
-  fetch.data.splits = TRUE, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
+downloadOpenMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
-  assertFlag(fetch.data.set.description)
-  assertFlag(fetch.data.set)
-  assertFlag(fetch.data.splits)
-  assertFlag(show.info)
 
-  if (fetch.data.set && !fetch.data.set.description)
-    stop("You cannot download a data set without also downloading the data set description!")
+  showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 
-  # fn.data.set.desc = file.path(dir, "data_set_description.xml")
-  # fn.data.set = file.path(dir, "data_set.ARFF")
-  # fn.data.splits = file.path(dir, "data_splits.ARFF")
+  f = findInCacheTask(id, create = TRUE)
 
-  if (show.info)
-    messagef("Downloading task %i from OpenML repository.", id)
-
-  url = getAPIURL("openml.tasks.search", task_id = id)
-  doc = parseXMLResponse(url, "Getting task", "task")
-  task = parseOpenMLTask(doc)
-
-  if (fetch.data.set.description) {
-    task$data.desc = downloadOpenMLDataSetDescription(task$data.desc.id, ignore.cache = ignore.cache, show.info = show.info)
+  # get XML description
+  if (!f$found || ignore.cache) {
+    url = getAPIURL("openml.task.get", task_id = id)
+    path = getCacheTaskPath(id, "task.xml")
+    task.contents = downloadXML(url, path, verbosity)
+  } else {
+    task.contents = readLines(getCacheFilePath("tasks", id, "task.xml"))
   }
+  task.xml = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
+  task = parseOpenMLTask(task.xml)
 
-  if (fetch.data.set) {
-    # FIXME: this is duplicated code, we already have functions for that
-    # FIXME: keep it simple. just download everything?
-    task$data.desc$data.set = downloadOpenMLDataSet(task$data.desc$id, ignore.cache = ignore.cache, show.info = show.info)
-    # make valid column names
-    task$data.desc$original.col.names = colnames(task$data.desc$data.set)
-    task$data.desc$new.col.names = make.names(task$data.desc$original.col.names, unique = TRUE)
-    target.inds = which(task$data.desc$original.col.names %in% task$target.features )
-    task$target.features = task$data.desc$new.col.names[target.inds]
-    colnames(task$data.desc$data.set) = task$data.desc$new.col.names
-  }
+  # this goes thru cache
+  ds = downloadOpenMLDataSet(task$data.desc.id, ignore.cache, verbosity)
 
-  if (fetch.data.splits) {
-    # No real error handling. If no data splits are available, just print a warning and go on.
-    if (task$estimation.procedure$data.splits.url == "No URL") {
-      warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
-      } else {
-      task$estimation.procedure$data.splits = downloadOpenMLDataSplits(task, ignore.cache = ignore.cache, show.info = show.info)
-    }
+  # No real error handling. If no data splits are available, just print a warning and go on.
+  if (task$estimation.procedure$data.splits.url == "No URL") {
+    warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
+  } else {
+    task$estimation.procedure$data.splits = downloadOpenMLDataSplits(task, ignore.cache, verbosity)
   }
   return(task)
 }
@@ -153,3 +125,26 @@ convertOpenMLTaskSlots = function(task) {
   #task$evaluation.measures = strsplit(task$evaluation.measures, split = ",")[[1]]
   return(task)
 }
+
+# download data splits file from URL to local file
+downloadOpenMLDataSplits = function(task, ignore.cache = FALSE, verbosity = NULL) {
+  id = task$id
+  url = task$estimation.procedure$data.splits.url
+  fn = getCacheTaskPath(id, "datasplits.arff")
+  data = downloadARFF(url, fn, verbosity)
+  parseOpenMLDataSplits(task, data)
+}
+
+parseOpenMLDataSplits = function(task, data) {
+  # slightly converts the splits data frame
+  # rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
+  colnames(data)[colnames(data) == "repeat"] = "rep"
+  ri = data$rowid
+  rns = rownames(task$data.desc$data.set)
+  # FIXME: use match()!
+  data$rowid = sapply(ri, function(x) which(x == rns))
+  data$rep = data$rep + 1
+  data$fold = data$fold + 1
+  return(data)
+}
+

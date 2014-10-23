@@ -23,8 +23,12 @@ getCacheTasksDir = function() {
   getCacheSubDir("tasks")
 }
 
-getDataSetPath = function(id, file) {
+getCacheDataSetPath = function(id, file) {
   getCacheFilePath("datasets", id, file)
+}
+
+getCacheTaskPath = function(id, file) {
+  getCacheFilePath("tasks", id, file)
 }
 
 
@@ -45,6 +49,7 @@ createCacheSubDirs = function(verbosity = NULL) {
   cd = conf$cachedir
   showInfo(verbosity, "Creating chache sub dirs in: %s", cd)
   createDir(getCacheDataSetsDir(), verbosity)
+  createDir(getCacheTasksDir(), verbosity)
 }
 
 
@@ -69,6 +74,10 @@ findInCache = function(subdir, id, create) {
 
 findInCacheDataSet = function(id, create) {
   findInCache("datasets", id, create)
+}
+
+findInCacheTask = function(id, create) {
+  findInCache("tasks", id, create)
 }
 
 clearOMLCache = function() {

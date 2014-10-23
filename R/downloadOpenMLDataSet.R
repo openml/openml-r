@@ -9,10 +9,9 @@
 #' @param id [\code{integer(1)}]\cr
 #'   The id of the data set.
 #' @template arg_ignore.cache
-#' @template arg_showinfo
-#' @return [\code{\link{OpenMLDataSetDescription}}]
+#' @template arg_verbosity
+#' @return [\code{\link{OpenMLDataSet}}]
 #' @export
-#' @seealso \code{\link{toMlr}}, \code{\link{downloadOpenMLTask}}
 downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
   showInfo(verbosity, "Downloading data set '%i' from OpenML repository.", id)
@@ -32,7 +31,7 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   if (!f$found || ignore.cache) {
     data = downloadOpenMLDataFile(id, data.desc, verbosity)
   } else {
-    data = read.arff(getCacheFilePath("datasets", id, "dataset.arff"))
+    data = read.arff(getCacheDataSetPath(id, "dataset.arff"))
     data = parseOpenMLDataFile(data.desc, data)
   }
 
@@ -45,6 +44,7 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   colnames.new = colnames(data)
 
   makeS3Obj("OpenMLDataSet",
+    desc = data.desc,
     data = data,
     colnames.new = colnames.new,
     colnames.old = colnames.old
@@ -54,7 +54,7 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
 # get the XML description
 downloadOpenMLDataSetDescription = function(id, verbosity = NULL) {
   id = asInt(id)
-  path = getDataSetPath(id, "description.xml")
+  path = getCacheDataSetPath(id, "description.xml")
   url = getAPIURL("openml.data.description", data.id = id)
   contents = downloadXML(url, path, verbosity)
 }
@@ -91,7 +91,7 @@ parseOpenMLDataSetDescription = function(doc) {
 
 # download the ARFF itself
 downloadOpenMLDataFile = function(id, desc, verbosity = NULL) {
-  path = getDataSetPath(id, "dataset.arff")
+  path = getCacheDataSetPath(id, "dataset.arff")
   data = downloadARFF(desc$url, file = path, verbosity)
   parseOpenMLDataFile(desc, data)
 }
@@ -105,5 +105,10 @@ parseOpenMLDataFile = function(desc, data) {
     rowid = seq_row(data) - 1L
   }
   setRowNames(data, as.character(rowid))
+}
+
+#' @export
+print.OpenMLDataSet = function(x, ...) {
+  print.OpenMLDataSetDescription(x$desc)
 }
 

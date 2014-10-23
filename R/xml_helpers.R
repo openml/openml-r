@@ -111,17 +111,20 @@ xmlValsMultNsI = function(doc, path) {
 
 parseXMLResponse = function(file, msg, type, as.text = FALSE) {
   doc = try(xmlParse(file, asText = as.text))
-  if (is.error(doc)) {
+  if (is.error(doc))
     stopf("Error in parsing XML for type %s in file: %s", type, file)
-  }
 
   r = xmlRoot(doc)
   rootname = xmlName(r)
-
   if (rootname == "error") {
+    extra = xmlOValS(doc, "/oml:error/oml:additional_information")
     code = xmlRValI(doc, "/oml:error/oml:code")
-    stopf("Error in server / XML response for: %s\n\t\t%s.\n\t\t%s\nFile: %s",
-      msg, xmlRValS(doc, "/oml:error/oml:message"), xmlOValS(doc, "/oml:error/oml:additional_information"), file)
+    stopf("Error (code = %i) in server / XML response for: %s\n\t\t%s.\n\t\t%s",
+      code,
+      msg,
+      xmlRValS(doc, "/oml:error/oml:message"),
+      ifelse(is.null(extra), "", extra)
+    )
   }
 
   if (rootname %nin% type) {
