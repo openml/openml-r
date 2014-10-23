@@ -3,36 +3,25 @@
 \alias{downloadOpenMLTask}
 \title{Download a task from the OpenML repository.}
 \usage{
-downloadOpenMLTask(id, fetch.data.set.description = TRUE,
-  fetch.data.set = TRUE, fetch.data.splits = TRUE, ignore.cache = FALSE,
-  show.info = getOpenMLOption("show.info"))
+downloadOpenMLTask(id, ignore.cache = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
 ID number of task on OpenML server, used to retrieve the task.}
 
-\item{fetch.data.set.description}{[\code{logical(1)}]\cr
-Should the data set description also be downloaded?
-Default is \code{TRUE}.}
-
-\item{fetch.data.set}{[\code{logical(1)}]\cr
-Should the data set also be downloaded?
-Default is \code{TRUE}.}
-
-\item{fetch.data.splits}{[\code{logical(1)}]\cr
-Should the data splits (for resampling) also be downloaded?
-Default is \code{TRUE}.}
-
 \item{ignore.cache}{[\code{logical(1)}]\cr
 Ignore a possibly cached version and force
 re-download of files? Default is \code{FALSE}.}
 
-\item{show.info}{[\code{logical(1)}]\cr
-Print verbose output on console?
-Default is set via \code{\link{configureOpenML}}.}
+\item{verbosity}{[\code{integer(1)}]\cr
+Print verbose output on console? Possible values are:\cr
+\code{0}: normal output,\cr
+\code{1}: info output,\cr
+\code{2}: debug output.\cr
+Default is set via \code{\link{setOpenMLConfig}}.}
 }
 \value{
-\code{\link{OpenMLTask}}.
+[\code{\link{OpenMLTask}}]
 }
 \description{
 This function downloads an OpenML task and all associated files from the OpenML repository,

@@ -38,12 +38,14 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
 
   def.target = data.desc$default.target.attribute
   target.ind = which(colnames(data) %in% def.target)
-  default.target.attribute = colnames(data)[target.ind]
 
   colnames.old = colnames(data)
   colnames(data) = make.names(colnames(data), unique = TRUE)
   colnames.new = colnames(data)
 
+  # overwrite default target attribute to make sure that it's the actual name of the column
+  data.desc$default.target.attribute = colnames.new[target.ind]
+  
   makeS3Obj("OpenMLDataSet",
     desc = data.desc,
     data = data,
@@ -84,8 +86,7 @@ parseOpenMLDataSetDescription = function(doc) {
     original.data.url = xmlOValS(doc, "/oml:data_set_description/oml:original_data_url"),
     paper.url = xmlOValS(doc, "/oml:data_set_description/oml:paper.url"),
     update.comment = xmlOValS(doc, "/oml:data_set_description/oml:update.comment"),
-    md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum"),
-    data.set = data.frame()
+    md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum")
   ))
   do.call(makeOpenMLDataSetDescription, args)
 }

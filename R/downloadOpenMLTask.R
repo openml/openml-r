@@ -10,7 +10,7 @@
 #' @param id [\code{integer(1)}]\cr
 #'   ID number of task on OpenML server, used to retrieve the task.
 #' @template arg_ignore.cache
-#' @template arg_verbose
+#' @template arg_verbosity
 #' @return [\code{\link{OpenMLTask}}]
 #' @export
 #' @examples

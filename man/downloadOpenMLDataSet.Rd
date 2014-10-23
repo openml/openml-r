@@ -3,8 +3,7 @@
 \alias{downloadOpenMLDataSet}
 \title{Download an OpenML data set.}
 \usage{
-downloadOpenMLDataSet(id, ignore.cache = FALSE,
-  show.info = getOpenMLOption("show.info"))
+downloadOpenMLDataSet(id, ignore.cache = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -14,20 +13,20 @@ The id of the data set.}
 Ignore a possibly cached version and force
 re-download of files? Default is \code{FALSE}.}
 
-\item{show.info}{[\code{logical(1)}]\cr
-Print verbose output on console?
-Default is set via \code{\link{configureOpenML}}.}
+\item{verbosity}{[\code{integer(1)}]\cr
+Print verbose output on console? Possible values are:\cr
+\code{0}: normal output,\cr
+\code{1}: info output,\cr
+\code{2}: debug output.\cr
+Default is set via \code{\link{setOpenMLConfig}}.}
 }
 \value{
-[\code{\link{OpenMLDataSetDescription}}]
+[\code{\link{OpenMLDataSet}}]
 }
 \description{
 Given the id, this function will download the whole data set, including the ARFF and
 the description XML from the OpenML server. Note that this does not include data
 splits or other task-related information. Tasks can be downloaded with
 \code{\link{downloadOpenMLTask}}.
-}
-\seealso{
-\code{\link{toMlr}}, \code{\link{downloadOpenMLTask}}
 }
 

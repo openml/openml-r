@@ -21,6 +21,11 @@ printDescription.OpenMLDataSetDescription = function(x) {
 }
 
 #' @export
+printDescription.OpenMLDataSet = function(x) {
+  cat(x$desc$description)
+}
+
+#' @export
 printDescription.OpenMLImplementation = function(x) {
   cat(x$description)
 }

@@ -12,8 +12,7 @@ makeOpenMLDataSetDescription(id, name, version, description, format,
   version.label = NA_character_, citation = NA_character_,
   visibility = NA_character_, original.data.url = NA_character_,
   paper.url = NA_character_, update.comment = NA_character_,
-  md5.checksum = NA_character_, data.set,
-  original.col.names = NA_character_, new.col.names = NA_character_)
+  md5.checksum = NA_character_)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
