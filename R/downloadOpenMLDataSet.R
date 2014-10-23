@@ -32,7 +32,8 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   if (!f$found || ignore.cache) {
     data = downloadOpenMLDataFile(id, data.desc, verbosity)
   } else {
-    data = parseOpenMLDataFile()
+    data = read.arff(getCacheFilePath("datasets", id, "dataset.arff"))
+    data = parseOpenMLDataFile(data.desc, data)
   }
 
   def.target = data.desc$default.target.attribute

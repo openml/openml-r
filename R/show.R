@@ -2,6 +2,10 @@ showInfo = function(verbosity, msg, ...) {
   showMessage(verbosity, msg, ..., minlev = 1L)
 }
 
+showDebug = function(verbosity, msg, ...) {
+  showMessage(verbosity, msg, ..., minlev = 2L)
+}
+
 showMessage = function(verbosity, msg, ..., minlev) {
   if (is.null(verbosity))
     verbosity = getOpenMLConfig()$verbosity
