@@ -57,17 +57,19 @@ toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute
 
 #' @rdname toMlr
 #' @export
-toMlr.OpenMLDataSetDescription = function(obj, target = obj$default.target.attribute,
+toMlr.OpenMLDataSet = function(obj, target = obj$desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
 
-  assertSubset(target, obj$new.col.names, empty.ok = FALSE)
+  desc = obj$desc
+  
+  assertSubset(target, obj$colnames.new, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
   assertFlag(ignore.flagged.attributes)
 
-  data = obj$data.set
+  data = obj$data
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
-    obj$data.set = subset(data, !tar.na)
+    obj$data = subset(data, !tar.na)
   }
   if (length(target) == 1) {
     task.type = ifelse(is.factor(data[, target]), "Supervised Classification", "Supervised Regression")
@@ -78,16 +80,16 @@ toMlr.OpenMLDataSetDescription = function(obj, target = obj$default.target.attri
   return(mlr.task$mlr.task)
 }
 
-createMlrTask = function(data.desc, target, task.type, ignore.flagged.attributes) {
-  assertClass(data.desc, "OpenMLDataSetDescription")
-  data = data.desc$data.set
-
+createMlrTask = function(data.set, target, task.type, ignore.flagged.attributes) {
+  assertClass(data.set, "OpenMLDataSet")
+  data = data.set$data
+  desc = data.set$desc
   orig.lvls = NULL
   if (task.type == "Supervised Classification") {
     orig.lvls = levels(data[, target])
   }
-  if (!is.na(data.desc$ignore.attribute) && ignore.flagged.attributes) {
-    inds = which(data.desc$original.col.names %in% data.desc$ignore.attribute)
+  if (!is.na(desc$ignore.attribute) && ignore.flagged.attributes) {
+    inds = which(data$colnames.new %in% desc$ignore.attribute)
     data = data[, -inds]
   }
   if (task.type == "Supervised Classification") {

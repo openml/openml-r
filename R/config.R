@@ -25,11 +25,16 @@ readConfigFile = function(conffile) {
   conf = as.environment(setNames(as.list(lines[, 2L]), lines[, 1L]))
   # if (is.error(x))
     # stopf("There was an error in sourcing your configuration file '%s': %s!", conffile, as.character(x))
-
+  
+  if (!is.null(conf$verbosity))
+    conf$verbosity = as.integer(conf$verbosity)
+  
   checkConfig(conf)
   # FIXME: probably horrible security wise....
-  conf$pwdmd5 = digest(conf$password)
+  if (!is.null(conf$password))
+    conf$pwdmd5 = digest(conf$password)
   conf$password = NULL
+  
   conf = addClasses(conf, "OpenMLConfig")
   return(conf)
 }
@@ -92,10 +97,10 @@ printableConfig = function(conf) {
   x[setdiff(getConfigNames(), names(x))] = ""
   fmt = paste(
     "OpenML configuration:",
-    "  server: %s",
-    "  username: %s",
-    "  cachedir: %s",
-    "  pwdmd5: ***",
+    "  server   : %s",
+    "  username : %s",
+    "  cachedir : %s",
+    "  pwdmd5   : ***",
     "  verbosity: %s\n",
     sep = "\n")
   sprintf(fmt, x$server, x$username, x$cachedir, x$verbosity)

@@ -63,8 +63,7 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
   language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_,
   row.id.attribute = NA_character_, ignore.attribute = NA_character_, version.label = NA_character_,
   citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
-  paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_, data.set,
-  original.col.names = NA_character_, new.col.names = NA_character_) {
+  paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_) {
 
   assertInt(id)
   assertString(name)
@@ -88,9 +87,6 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
   assertString(paper.url, na.ok = TRUE)
   assertString(update.comment, na.ok = TRUE)
   assertString(md5.checksum, na.ok = TRUE)
-  assertDataFrame(data.set)
-  assertCharacter(original.col.names)
-  assertCharacter(new.col.names)
 
   makeS3Obj("OpenMLDataSetDescription",
     id = id, name = name, version = version, description = description, format = format,
@@ -99,8 +95,7 @@ makeOpenMLDataSetDescription = function(id, name, version, description, format,
     default.target.attribute = default.target.attribute, row.id.attribute = row.id.attribute,
     ignore.attribute = ignore.attribute, version.label = version.label, citation = citation,
     visibility = visibility, original.data.url = original.data.url, paper.url = paper.url,
-    update.comment = update.comment, md5.checksum = md5.checksum, data.set = data.set,
-    original.col.names = original.col.names, new.col.names = new.col.names)
+    update.comment = update.comment, md5.checksum = md5.checksum)
 }
 
 # ***** Methods *****
