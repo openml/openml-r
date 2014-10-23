@@ -19,7 +19,7 @@ test_that("download all tasks", {
       task = downloadOpenMLTask(id)
       tf = task$target.features
       expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
-      ds = task$data.desc$data.set
+      ds = task$data.set$data
       expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) >= 1)
       ems = task$evaluation.measures
       # expect_true(ems %in% measures)

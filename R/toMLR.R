@@ -1,9 +1,9 @@
 #' @title Convert an OpenML object to mlr.
 #'
-#' @description This function converts an \code{\link{OpenMLDataSetDescription}}
+#' @description This function converts an \code{\link{OMLDataSet}}
 #'   or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given
 #'   \code{\link{OpenMLTask}}, various other mlr objects (see below).
-#' @param obj [\code{\link{OpenMLDataSetDescription}} | \code{\link{OpenMLTask}}]\cr
+#' @param obj [\code{\link{OMLDataSet}} | \code{\link{OpenMLTask}}]\cr
 #'   The object that should be converted. Required.
 #' @param target [\code{character}]\cr
 #'   The target for the classification/regression task. Default is the
@@ -32,22 +32,22 @@ toMlr = function(obj, target, remove.target.NAs, ignore.flagged.attributes) {
 
 #' @rdname toMlr
 #' @export
-toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute,
+toMlr.OpenMLTask = function(obj, target = obj$data.set$desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
 
-  assertSubset(target, obj$data.desc$new.col.names, empty.ok = FALSE)
+  assertSubset(target, obj$data.set$colnames.new, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
   assertFlag(ignore.flagged.attributes)
 
   task.type = obj$type
-  data.desc = obj$data.desc
-  data = data.desc$data.set
+  data.set = obj$data.set
+  data = obj$data.set$data
   estim.proc = obj$estimation.procedure
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
-    data.desc$data.set = subset(data, !tar.na)
+    data.set$data = subset(data, !tar.na)
   }
-  mlr.task = createMlrTask(data.desc, target, task.type, ignore.flagged.attributes)
+  mlr.task = createMlrTask(data.set, target, task.type, ignore.flagged.attributes)
   mlr.rin = createMlrResampleInstance(estim.proc, mlr.task$mlr.task)
   mlr.measures = createMlrMeasures(obj$evaluation.measures, task.type)
   res = list(mlr.task = mlr.task$mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
@@ -57,7 +57,7 @@ toMlr.OpenMLTask = function(obj, target = obj$data.desc$default.target.attribute
 
 #' @rdname toMlr
 #' @export
-toMlr.OpenMLDataSet = function(obj, target = obj$desc$default.target.attribute,
+toMlr.OMLDataSet = function(obj, target = obj$desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
 
   desc = obj$desc
@@ -81,7 +81,7 @@ toMlr.OpenMLDataSet = function(obj, target = obj$desc$default.target.attribute,
 }
 
 createMlrTask = function(data.set, target, task.type, ignore.flagged.attributes) {
-  assertClass(data.set, "OpenMLDataSet")
+  assertClass(data.set, "OMLDataSet")
   data = data.set$data
   desc = data.set$desc
   orig.lvls = NULL

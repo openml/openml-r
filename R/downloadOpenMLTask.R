@@ -20,7 +20,7 @@
 #' show(task)
 #' print(task$type)
 #' print(task$target.features)
-#' print(head(task$data.desc$data.set))
+#' print(head(task$data.set$data))
 #' }
 downloadOpenMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
@@ -41,9 +41,10 @@ downloadOpenMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
   task.xml = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
   task = parseOpenMLTask(task.xml)
 
-  # this goes thru cache
-  ds = downloadOpenMLDataSet(task$data.desc.id, ignore.cache, verbosity)
-
+  # this goes through cache
+  ds = downloadOMLDataSet(task$data.desc.id, ignore.cache, verbosity)
+  task$data.set = ds
+  
   # No real error handling. If no data splits are available, just print a warning and go on.
   if (task$estimation.procedure$data.splits.url == "No URL") {
     warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
@@ -69,7 +70,7 @@ parseOpenMLTask = function(doc) {
 
   # data set description
   data.desc.id = xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id")
-  data.desc = NULL
+  data.set = NULL
 
   # prediction
   ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
@@ -102,7 +103,7 @@ parseOpenMLTask = function(doc) {
     target.features = targets,
     pars = params,
     data.desc.id = data.desc.id,
-    data.desc = data.desc,
+    data.set = data.set,
     estimation.procedure = estim.proc,
     preds = preds,
     evaluation.measures = measures
@@ -141,7 +142,7 @@ parseOpenMLDataSplits = function(task, data) {
   # rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
   colnames(data)[colnames(data) == "repeat"] = "rep"
   ri = data$rowid
-  rns = rownames(task$data.desc$data.set)
+  rns = rownames(task$data.set$data)
   # FIXME: use match()!
   data$rowid = sapply(ri, function(x) which(x == rns))
   data$rep = data$rep + 1

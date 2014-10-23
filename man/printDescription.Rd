@@ -6,8 +6,8 @@
 printDescription(x)
 }
 \arguments{
-\item{x}{The object whose description should be printed. This is typically an
-\code{\link{OpenMLDataSetDescription}}, an \code{\link{OpenMLImplementation}} or an
+\item{x}{The object whose description should be printed. This is typically an \code{\link{OMLDataSet}},
+an \code{\link{OMLDataSetDescription}}, an \code{\link{OpenMLImplementation}} or an
 \code{\link{OpenMLTask}}. In the latter case, the description of the corresponding
 data set is printed.}
 }

@@ -5,7 +5,7 @@
 \title{Construct OpenMLTask.}
 \usage{
 makeOpenMLTask(id, type, pars = list(), target.features = NA_character_,
-  data.desc.id, data.desc = NULL, estimation.procedure, preds = list(),
+  data.desc.id, data.set = NULL, estimation.procedure, preds = list(),
   evaluation.measures)
 }
 \arguments{
@@ -24,8 +24,8 @@ The name(s) of the target feature(s). There may be none, one or multiple target 
 \item{data.desc.id}{[\code{integer(1)}]\cr
 The OpenML ID of the data set associated with the task.}
 
-\item{data.desc}{[\code{\link{OpenMLDataSetDescription}}]\cr
-Information on the data set. Optional.}
+\item{data.set}{[\code{\link{OMLDataSet}}]\cr
+The data set including its description.}
 
 \item{estimation.procedure}{[\code{\link{OpenMLEstimationProcedure}}]\cr
 Information on the task's estimation method and the asoociated data splits. Optional.}
@@ -40,6 +40,6 @@ The evaluation measure(s) that should be used for optimization.}
 Construct OpenMLTask.
 }
 \seealso{
-\code{\link{OpenMLDataSetDescription}}
+\code{\link{OMLDataSetDescription}}
 }
 

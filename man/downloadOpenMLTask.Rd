@@ -37,7 +37,7 @@ task = downloadOpenMLTask(id = 1)
 show(task)
 print(task$type)
 print(task$target.features)
-print(head(task$data.desc$data.set))
+print(head(task$data.set$data))
 }
 }
 

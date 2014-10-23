@@ -4,15 +4,15 @@
 #' Given the id, this function will download the whole data set, including the ARFF and
 #' the description XML from the OpenML server. Note that this does not include data
 #' splits or other task-related information. Tasks can be downloaded with
-#' \code{\link{downloadOpenMLTask}}.
+#' \code{\link{downloadOMLTask}}.
 #'
 #' @param id [\code{integer(1)}]\cr
 #'   The id of the data set.
 #' @template arg_ignore.cache
 #' @template arg_verbosity
-#' @return [\code{\link{OpenMLDataSet}}]
+#' @return [\code{\link{OMLDataSet}}]
 #' @export
-downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
+downloadOMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
   showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
 
@@ -20,20 +20,20 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
 
   # get XML description
   if (!f$found || ignore.cache) {
-    data.desc.contents = downloadOpenMLDataSetDescription(id, verbosity)
+    data.desc.contents = downloadOMLDataSetDescription(id, verbosity)
   } else {
     showInfo(verbosity, "Found in cache.")
     data.desc.contents = readLines(getCacheFilePath("datasets", id, "description.xml"))
   }
   data.desc.xml = parseXMLResponse(data.desc.contents, "Getting data set description", "data_set_description", as.text = TRUE)
-  data.desc = parseOpenMLDataSetDescription(data.desc.xml)
+  data.desc = parseOMLDataSetDescription(data.desc.xml)
 
   # now get data file
   if (!f$found || ignore.cache) {
-    data = downloadOpenMLDataFile(id, data.desc, verbosity)
+    data = downloadOMLDataFile(id, data.desc, verbosity)
   } else {
     data = read.arff(getCacheDataSetPath(id, "dataset.arff"))
-    data = parseOpenMLDataFile(data.desc, data)
+    data = parseOMLDataFile(data.desc, data)
   }
 
   def.target = data.desc$default.target.attribute
@@ -46,7 +46,7 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   # overwrite default target attribute to make sure that it's the actual name of the column
   data.desc$default.target.attribute = colnames.new[target.ind]
   
-  makeS3Obj("OpenMLDataSet",
+  makeS3Obj("OMLDataSet",
     desc = data.desc,
     data = data,
     colnames.new = colnames.new,
@@ -55,7 +55,7 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
 }
 
 # get the XML description
-downloadOpenMLDataSetDescription = function(id, verbosity = NULL) {
+downloadOMLDataSetDescription = function(id, verbosity = NULL) {
   id = asInt(id)
   path = getCacheDataSetPath(id, "description.xml")
   url = getAPIURL("openml.data.description", data.id = id)
@@ -63,7 +63,7 @@ downloadOpenMLDataSetDescription = function(id, verbosity = NULL) {
 }
 
 # parse the xml description
-parseOpenMLDataSetDescription = function(doc) {
+parseOMLDataSetDescription = function(doc) {
   args = filterNull(list(
     id = xmlRValI(doc, "/oml:data_set_description/oml:id"),
     name = xmlRValS(doc, "/oml:data_set_description/oml:name"),
@@ -88,18 +88,18 @@ parseOpenMLDataSetDescription = function(doc) {
     update.comment = xmlOValS(doc, "/oml:data_set_description/oml:update.comment"),
     md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum")
   ))
-  do.call(makeOpenMLDataSetDescription, args)
+  do.call(makeOMLDataSetDescription, args)
 }
 
 # download the ARFF itself
-downloadOpenMLDataFile = function(id, desc, verbosity = NULL) {
+downloadOMLDataFile = function(id, desc, verbosity = NULL) {
   path = getCacheDataSetPath(id, "dataset.arff")
   data = downloadARFF(desc$url, file = path, verbosity)
-  parseOpenMLDataFile(desc, data)
+  parseOMLDataFile(desc, data)
 }
 
 # parse the data set from given file on disk and data set description
-parseOpenMLDataFile = function(desc, data) {
+parseOMLDataFile = function(desc, data) {
   if (!is.na(desc$row.id.attribute)) {
     rowid = data[, desc$row.id.attribute]
     data[, desc$row.id.attribute] = NULL
@@ -110,7 +110,7 @@ parseOpenMLDataFile = function(desc, data) {
 }
 
 #' @export
-print.OpenMLDataSet = function(x, ...) {
-  print.OpenMLDataSetDescription(x$desc)
+print.OMLDataSet = function(x, ...) {
+  print.OMLDataSetDescription(x$desc)
 }
 

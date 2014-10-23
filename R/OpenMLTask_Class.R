@@ -12,8 +12,8 @@
 #'   The name(s) of the target feature(s). There may be none, one or multiple target features.
 #' @param data.desc.id [\code{integer(1)}]\cr
 #'   The OpenML ID of the data set associated with the task.
-#' @param data.desc [\code{\link{OpenMLDataSetDescription}}]\cr
-#'   Information on the data set. Optional.
+#' @param data.set [\code{\link{OMLDataSet}}]\cr
+#'   The data set including its description.
 #' @param estimation.procedure [\code{\link{OpenMLEstimationProcedure}}]\cr
 #'   Information on the task's estimation method and the asoociated data splits. Optional.
 #' @param preds [\code{list}]\cr
@@ -22,9 +22,9 @@
 #'   The evaluation measure(s) that should be used for optimization.
 #' @export
 #' @aliases OpenMLTask
-#' @seealso \code{\link{OpenMLDataSetDescription}}
+#' @seealso \code{\link{OMLDataSetDescription}}
 makeOpenMLTask = function(id, type, pars = list(), target.features = NA_character_,
-  data.desc.id, data.desc = NULL, estimation.procedure, preds = list(),
+  data.desc.id, data.set = NULL, estimation.procedure, preds = list(),
   evaluation.measures) {
 
   assertInt(id)
@@ -32,8 +32,8 @@ makeOpenMLTask = function(id, type, pars = list(), target.features = NA_characte
   assertList(pars)
   assertCharacter(target.features)
   assertInt(data.desc.id)
-  if (!is.null(data.desc))
-    assertClass(data.desc, "OpenMLDataSetDescription")
+  if (!is.null(data.set))
+    assertClass(data.set, "OMLDataSet")
   if (!is.null(estimation.procedure))
     assertClass(estimation.procedure, "OpenMLEstimationProcedure")
   assertList(preds)
@@ -42,7 +42,7 @@ makeOpenMLTask = function(id, type, pars = list(), target.features = NA_characte
   makeS3Obj("OpenMLTask",
     id = id, type = type, pars = pars,
     target.features = target.features, data.desc.id = data.desc.id,
-    data.desc = data.desc, estimation.procedure = estimation.procedure,
+    data.set = data.set, estimation.procedure = estimation.procedure,
     preds = preds, evaluation.measures = evaluation.measures
   )
 }
@@ -58,10 +58,10 @@ print.OpenMLTask = function(x, ...) {
       catf("%s %s", s, fun(val, ...))
   }
 
-  catf('\nOpenML Task %i :: (Data ID = %i)', x$id, x$data.desc.id)
+  catf('\nOpenML Task %i :: (Data ID = %i)', x$id, x$data.set$desc.id)
   catNotNA('\tTask Type            :', x$type)
-      catf('\tData Set             : %s :: (Version = %s, OpenML ID = %i)', x$data.desc$name,
-       x$data.desc$version, x$data.desc$id)
+      catf('\tData Set             : %s :: (Version = %s, OpenML ID = %i)', x$data.set$desc$name,
+       x$data.set$desc$version, x$data.set$desc$id)
   catNotNA('\tTarget Feature(s)    :', x$target.features, fun = collapse, sep = ", ")
   if (!is.na(x$estimation.procedure$type)) {
     est.type = x$estimation.procedure$type
