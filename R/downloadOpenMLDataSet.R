@@ -13,15 +13,27 @@
 #' @return [\code{\link{OpenMLDataSetDescription}}]
 #' @export
 #' @seealso \code{\link{toMlr}}, \code{\link{downloadOpenMLTask}}
-downloadOpenMLDataSet = function(id, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
-  assertFlag(show.info)
+downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
-  # id = guessDataIdFromName(name, version)
-  if (show.info)
-    messagef("Downloading data set '%s' (id=%i) from OpenML repository.", name, id)
+  showInfo(verbosity, "Downloading data set '%i' from OpenML repository.", id)
 
-  data.desc = downloadOpenMLDataSetDescription(id = id, ignore.cache = ignore.cache, show.info = show.info)
-  data = downloadOpenMLDataSet(id, data.desc, ignore.cache = ignore.cache, show.info = show.info)
+  f = findInCacheDataSet(id, create = TRUE)
+
+  # get XML description
+  if (!f$found || ignore.cache) {
+    data.desc.contents = downloadOpenMLDataSetDescription(id, verbosity)
+  } else {
+    data.desc.contents = readLines(getCacheFilePath("datasets", id, "description.xml"))
+  }
+  data.desc.xml = parseXMLResponse(data.desc.contents, "Getting data set description", "data_set_description", as.text = TRUE)
+  data.desc = parseOpenMLDataSetDescription(data.desc.xml)
+
+  # now get data file
+  if (!f$found || ignore.cache) {
+    data = downloadOpenMLDataFile(id, data.desc, verbosity)
+  } else {
+    data = parseOpenMLDataFile()
+  }
 
   def.target = data.desc$default.target.attribute
   target.ind = which(colnames(data) %in% def.target)
@@ -38,51 +50,12 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, show.info = getOpenML
   )
 }
 
-# guessDataIdFromName = function(name, version = 1) {
-#   assertString(name)
-#   assertCount(version, positive = TRUE)
-#   dsets = getOpenMLDatasetNames()
-#   res = dsets[dsets$name == name, ]
-
-#   if (nrow(res) == 0L)
-#     stopf("No data set on OpenML server found for: %s", name)
-
-#   if (version %nin% res$version) {
-#     warningf("Version '%i' not available. Downloading latest version instead. \n", version)
-#     version = max(res$version)
-#   }
-
-#   res[res$version == version, "did"]
-# }
-
-# download the ARFF itself
-downloadOpenMLDataFile = function(id, desc = NULL, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
-  fn = file.path("datasets", id, sprintf("%s.arff", id))
-  if (is.null(desc))
-    desc = downloadOpenMLDataSetDescription(id)
-  data = downloadARFF(desc$url, file = fn, ignore.cache = ignore.cache, show.info = show.info)
-  parseOpenMLDataSet(desc, data)
-}
-
-# parse the data set from given file on disk and data set description
-parseOpenMLDataFile = function(desc, data) {
-  if (!is.na(desc$row.id.attribute)) {
-    rowid = data[, desc$row.id.attribute]
-    data[, desc$row.id.attribute] = NULL
-  } else {
-    rowid = seq_row(data) - 1L
-  }
-  setRowNames(data, as.character(rowid))
-}
-
 # get the XML description
-downloadOpenMLDataSetDescription = function(id, ignore.cache = FALSE, show.info = getOpenMLOption("show.info")) {
+downloadOpenMLDataSetDescription = function(id, verbosity = NULL) {
   id = asInt(id)
-  fn = file.path("descriptions", id, sprintf("%i.xml", id))
+  path = getDataSetPath(id, "description.xml")
   url = getAPIURL("openml.data.description", data.id = id)
-  contents = downloadXML(url, file = fn, ignore.cache = ignore.cache, show.info = show.info)
-  doc = parseXMLResponse(contents, "Getting data set description", "data_set_description", as.text = TRUE)
-  parseOpenMLDataSetDescription(doc)
+  contents = downloadXML(url, path, verbosity)
 }
 
 # parse the xml description
@@ -112,7 +85,24 @@ parseOpenMLDataSetDescription = function(doc) {
     md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum"),
     data.set = data.frame()
   ))
-
   do.call(makeOpenMLDataSetDescription, args)
+}
+
+# download the ARFF itself
+downloadOpenMLDataFile = function(id, desc, verbosity = NULL) {
+  path = getDataSetPath(id, "dataset.arff")
+  data = downloadARFF(desc$url, file = path, verbosity)
+  parseOpenMLDataFile(desc, data)
+}
+
+# parse the data set from given file on disk and data set description
+parseOpenMLDataFile = function(desc, data) {
+  if (!is.na(desc$row.id.attribute)) {
+    rowid = data[, desc$row.id.attribute]
+    data[, desc$row.id.attribute] = NULL
+  } else {
+    rowid = seq_row(data) - 1L
+  }
+  setRowNames(data, as.character(rowid))
 }
 
