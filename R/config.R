@@ -45,8 +45,8 @@ assignConfig = function(conf) {
 readConfigAndAssign = function() {
   assignConfigDefaults()
   fn.user = path.expand("~/.openml/config")
-  if(!file.exists(fn.user)) {
-    warning("No configuation found! Assigning defaults.")
+  if (!file.exists(fn.user)) {
+    warning("No configuration found! Assigning defaults.")
   } else {
     conf = readConfigFile(fn.user)
     assignConfig(conf)
