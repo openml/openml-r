@@ -58,7 +58,7 @@ assignConfigDefaults = function() {
   conf$server = "http://www.openml.org"
   conf$username = NA_character_
   conf$pwdmd5 = NA_character_
-  conf$openmldir = path.expand("~")
+  conf$openmldir = path.expand("~/.openml")
   conf$cachedir = file.path(conf$openmldir, "cache")
   conf$verbosity = 1L
 }
