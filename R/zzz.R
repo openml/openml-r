@@ -16,6 +16,7 @@ class(.OpenML.config) = c("OpenMLConfig", class(.OpenML.config))
 
 .onAttach = function(libname, pkgname) {
   readConfigAndAssign()
+  createCacheSubDirs()
 }
 
 
