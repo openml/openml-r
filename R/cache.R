@@ -32,7 +32,7 @@ getDataSetPath = function(id, file) {
 createDir = function(dir, verbosity = NULL) {
   ex = file.exists(dir)
   if (!ex) {
-    ok = dir.create(dir)
+    ok = dir.create(dir, recursive = TRUE)
     if (ok)
       showInfo(verbosity, "Created dir: %s", dir)
     else
