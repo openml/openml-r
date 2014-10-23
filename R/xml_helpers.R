@@ -109,8 +109,13 @@ xmlValsMultNsI = function(doc, path) {
   xmlValsMultNs(doc, path, as.integer, integer(1L))
 }
 
+xmlValsMultNsN = function(doc, path) {
+  xmlValsMultNs(doc, path, as.numeric, numeric(1L))
+}
+
 parseXMLResponse = function(file, msg, type, as.text = FALSE) {
   doc = try(xmlParse(file, asText = as.text))
+  fp = ifelse(as.text, "<TEXT>", file)
   if (is.error(doc))
     stopf("Error in parsing XML for type %s in file: %s", type, file)
 
@@ -127,9 +132,8 @@ parseXMLResponse = function(file, msg, type, as.text = FALSE) {
     )
   }
 
-  if (rootname %nin% type) {
-    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, file)
-  }
+  if (rootname %nin% type)
+    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, fp)
 
   return(doc)
 }
