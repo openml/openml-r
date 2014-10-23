@@ -1,7 +1,8 @@
 Upload predictions
 ==================
 
-Predictions have to be uploaded in a standardized form. The call `task$preds$features` gives us the expected column names and their types. For supervised classification and regression tasks, these are:
+Predictions have to be uploaded in a standardized form. The call `task$preds$features` gives us the expected column names and their types. For supervised classification and regression tasks, these
+are:
 * repeat (integer)
 * fold (integer)
 * row_id (integer)   
@@ -34,25 +35,31 @@ If you are working with [mlr](https://github.com/berndbischl/mlr), you can use t
 predictions = runTask(task, learner)
 ```
 
-If the prediction type of the learner is set to "response" instead of "prob", the confidence-columns will contain only 0s and 1s as in the example above. Else, the predicted class probabilities will be used.
+If the prediction type of the learner is set to "response" instead of "prob", the confidence-columns
+will contain only 0s and 1s as in the example above. Else, the predicted class probabilities will be
+used.
 
 ### Upload predictions to the server
 To upload the predictions, mlr users only need the following call:
 
 ```splus
-run.ul = uploadOpenMLRun(task = task, 
+run.id = uploadOpenMLRun(task = task, 
   mlr.lrn = learner, 
   impl.id = flow.id, 
   predictions = predictions, 
   session.hash = hash)
 ```
 
-If you do not work with mlr, you must create a run parameter list. This is a list that contains an `OpenMLRunParameter` for each parameter **whose setting varies from the default**. The class `OpenMLRunParameter` has the following members: 
+If you do not work with mlr, you must create a run parameter list. This is a list that contains an `OpenMLRunParameter` for each parameter **whose setting varies from the default**. The class
+`OpenMLRunParameter` has the following members: 
 * name
 * value 
-* component (optional and only needed if the parameter belongs to a (sub-)component of the implementation. Then, the name of this component must be handed over here.)
+* component (optional and only needed if the parameter belongs to a (sub-)component of the
+implementation. Then, the name of this component must be handed over here.)
 
-Let's continue with the fictive example from [section 3](3-Upload-an-implementation.md) and assume that we set the parameter "a" to a value of 300. Parameter "b" on the other hand remains in the default setting. 
+Let's continue with the fictive example from [section 3](3-Upload-an-implementation.md) and assume
+that we set the parameter "a" to a value of 300. Parameter "b" on the other hand remains in the
+default setting. 
 
 ```splus
 run.par.a = OpenMLRunParameter(
@@ -62,21 +69,23 @@ run.par.a = OpenMLRunParameter(
 run.pars = list(run.par.a)
 ```
 
-Now we upload the run. We leave out the argument "mlr.lrn", because we are not using mlr. Instead, we hand over our run parameter list "run.pars":
+Now we upload the run. We leave out the argument "mlr.lrn", because we are not using mlr. Instead,
+we hand over our run parameter list "run.pars":
 
 ```splus
-run.ul = uploadOpenMLRun(task = task, 
+run.id = uploadOpenMLRun(task = task, 
   impl.id = flow.id, 
   predictions = predictions,
   run.pars = run.pars,
   session.hash = hash)
 ```
 
-----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Jump to:    
 [1 Introduction](1-Introduction.md)    
 [2 Download a task](2-Download-a-task.md)  
 [3 Upload an implementation](3-Upload-an-implementation.md)  
 4 Upload predictions  
 [5 Download performance measures](5-Download-performance-measures.md)  
-[6 Browse the database](6-Browse-the-database.md)
+[6 Browse the database](6-Browse-the-database.md)  
+[7 Example workflow with mlr](7-Example-workflow-with-mlr.md)
