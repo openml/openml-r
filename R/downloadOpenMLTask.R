@@ -35,7 +35,8 @@ downloadOpenMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
     path = getCacheTaskPath(id, "task.xml")
     task.contents = downloadXML(url, path, verbosity)
   } else {
-    task.contents = readLines(getCacheFilePath("tasks", id, "task.xml"))
+    showInfo(verbosity, "Found in cache.")
+    task.contents = readLines(getCacheTaskPath(id, "task.xml"))
   }
   task.xml = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
   task = parseOpenMLTask(task.xml)

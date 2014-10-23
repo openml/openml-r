@@ -14,7 +14,7 @@
 #' @export
 downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
-  showInfo(verbosity, "Downloading data set '%i' from OpenML repository.", id)
+  showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
 
   f = findInCacheDataSet(id, create = TRUE)
 
@@ -22,6 +22,7 @@ downloadOpenMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
   if (!f$found || ignore.cache) {
     data.desc.contents = downloadOpenMLDataSetDescription(id, verbosity)
   } else {
+    showInfo(verbosity, "Found in cache.")
     data.desc.contents = readLines(getCacheFilePath("datasets", id, "description.xml"))
   }
   data.desc.xml = parseXMLResponse(data.desc.contents, "Getting data set description", "data_set_description", as.text = TRUE)
