@@ -11,10 +11,12 @@
 #' @importFrom plyr rbind.fill
 NULL
 
+.OpenML.config = new.env()
+class(.OpenML.config) = c("OpenMLConfig", class(.OpenML.config))
+
 .onAttach = function(libname, pkgname) {
-  configureOpenML(
-    show.info = getOpenMLOption("show.info", TRUE),
-    cache.dir = getOpenMLOption("cache.dir", tempdir()),
-    cache.compression = getOpenMLOption("cache.compression", "none")
-  )
+  readConfigAndAssign()
 }
+
+
+
