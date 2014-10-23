@@ -4,17 +4,16 @@
 #' The returned data.frame contains the \code{task_id}, the data set id \code{did},
 #' the \code{status} and some describing data qualities.
 #'
-#' @param id [\code{integer(1)}]\cr
-#'   ID of task type you want to list tasks for.
-#'   See code \link{getOpenMLTaskTypeList}}
-#'   Default is 1.
+#' @param type [\code{integer(1)}]\cr
+#'   The task type you want to list tasks for.
+#'   See code \link{getOpenMLTaskTypeList}.
+#'   Default is \code{1}.
 #' @template arg_verbosity
-#' @return [\code{list}]. One element per task type, containing \code{id}, \code{name} and
-#'   \code{description}.
+#' @return [\code{data.frame}].
 #' @export
 getOpenMLTaskList = function(type = 1L, verbosity = NULL) {
   type = asInt(type)
-  url = getAPIURL("openml.tasks", task_type_id = 1)
+  url = getAPIURL("openml.tasks", task_type_id = type)
   contents = downloadXML(url, NULL, verbosity)
   xml = parseXMLResponse(contents, "Getting task list", "tasks", as.text = TRUE)
   # get list of blocks for tasks
@@ -31,7 +30,7 @@ getOpenMLTaskList = function(type = 1L, verbosity = NULL) {
   }
   quals = do.call(rbind.fill, quals)
   quals = cbind(
-    task_did = xmlValsMultNsI(xml, "/oml:tasks/oml:task/oml:task_id"),
+    task_id = xmlValsMultNsI(xml, "/oml:tasks/oml:task/oml:task_id"),
     task_type = xmlValsMultNsS(xml, "/oml:tasks/oml:task/oml:task_type"),
     did = xmlValsMultNsI(xml, "/oml:tasks/oml:task/oml:did"),
     status = xmlValsMultNsS(xml, "/oml:tasks/oml:task/oml:status"),
