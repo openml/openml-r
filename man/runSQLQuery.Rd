@@ -3,8 +3,7 @@
 \alias{runSQLQuery}
 \title{Run an SQL query on the OpenML DB and retrieve results.}
 \usage{
-runSQLQuery(query, simplify = TRUE,
-  show.info = getOpenMLOption("show.info"))
+runSQLQuery(query, simplify = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{query}{[\code{character(1)}]\cr
@@ -15,9 +14,12 @@ If there is only one column in the resulting table,
 directly return the corresponding vector?
 Default is \code{TRUE}.}
 
-\item{show.info}{[\code{logical(1)}]\cr
-Print verbose output on console?
-Default is set via \code{\link{configureOpenML}}.}
+\item{verbosity}{[\code{integer(1)}]\cr
+Print verbose output on console? Possible values are:\cr
+\code{0}: normal output,\cr
+\code{1}: info output,\cr
+\code{2}: debug output.\cr
+Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
 [\code{data.frame}]. The results as a table.

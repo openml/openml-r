@@ -9,6 +9,7 @@
 #'
 #' @param id [\code{integer(1)}]\cr
 #'   ID number of task on OpenML server, used to retrieve the task.
+#' @template arg_hash
 #' @template arg_ignore.cache
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
@@ -22,7 +23,7 @@
 #' print(task$target.features)
 #' print(head(task$data.set$data))
 #' }
-downloadOMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
+downloadOMLTask = function(id, session.hash, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
 
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
@@ -30,27 +31,34 @@ downloadOMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
   f = findInCacheTask(id, create = TRUE)
 
   # get XML description
-  if (!f$found || ignore.cache) {
+  if (!f$task.found || ignore.cache) {
     url = getAPIURL("openml.task.get", task_id = id)
     path = getCacheTaskPath(id, "task.xml")
-    task.contents = downloadXML(url, path, verbosity)
+    task.contents = postFormOML(url, path, verbosity, session_hash = session.hash)
   } else {
-    showInfo(verbosity, "Found in cache.")
+    showInfo(verbosity, "Task XML found in cache.")
     task.contents = readLines(getCacheTaskPath(id, "task.xml"))
   }
   task.xml = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
   task = parseOMLTask(task.xml)
 
-  # this goes through cache
-  ds = downloadOMLDataSet(task$data.desc.id, ignore.cache, verbosity)
-  task$data.set = ds
-  
   # No real error handling. If no data splits are available, just print a warning and go on.
-  if (task$estimation.procedure$data.splits.url == "No URL") {
-    warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
+  if (!f$datasplits.found || ignore.cache) {
+    if (task$estimation.procedure$data.splits.url == "No URL") {
+      warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
+    } else {
+      task$estimation.procedure$data.splits = downloadOMLDataSplits(task, ignore.cache, verbosity)
+    }
   } else {
-    task$estimation.procedure$data.splits = downloadOMLDataSplits(task, ignore.cache, verbosity)
+    showInfo(verbosity, "Data splits found in cache.")
+    data = read.arff(getCacheTaskPath(id, "datasplits.arff"))
+    task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
+
+  # this goes through cache
+  ds = downloadOMLDataSet(task$data.desc.id, session.hash, ignore.cache, verbosity)
+  task$data.set = ds
+
   return(task)
 }
 

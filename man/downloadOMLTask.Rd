@@ -3,11 +3,14 @@
 \alias{downloadOMLTask}
 \title{Download a task from the OpenML repository.}
 \usage{
-downloadOMLTask(id, ignore.cache = FALSE, verbosity = NULL)
+downloadOMLTask(id, session.hash, ignore.cache = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
 ID number of task on OpenML server, used to retrieve the task.}
+
+\item{session.hash}{[\code{character(1)}]\cr
+A session token returned by \code{\link{authenticateUser}}.}
 
 \item{ignore.cache}{[\code{logical(1)}]\cr
 Ignore a possibly cached version and force

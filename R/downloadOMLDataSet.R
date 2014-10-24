@@ -8,30 +8,32 @@
 #'
 #' @param id [\code{integer(1)}]\cr
 #'   The id of the data set.
+#' @template arg_hash
 #' @template arg_ignore.cache
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}]
 #' @export
-downloadOMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
+downloadOMLDataSet = function(id, session.hash, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
   showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
 
   f = findInCacheDataSet(id, create = TRUE)
 
   # get XML description
-  if (!f$found || ignore.cache) {
-    data.desc.contents = downloadOMLDataSetDescription(id, verbosity)
+  if (!f$description.found || ignore.cache) {
+    data.desc.contents = downloadOMLDataSetDescription(id, verbosity, session.hash)
   } else {
-    showInfo(verbosity, "Found in cache.")
+    showInfo(verbosity, "Data set description found in cache.")
     data.desc.contents = readLines(getCacheFilePath("datasets", id, "description.xml"))
   }
   data.desc.xml = parseXMLResponse(data.desc.contents, "Getting data set description", "data_set_description", as.text = TRUE)
   data.desc = parseOMLDataSetDescription(data.desc.xml)
 
   # now get data file
-  if (!f$found || ignore.cache) {
+  if (!f$dataset.found || ignore.cache) {
     data = downloadOMLDataFile(id, data.desc, verbosity)
   } else {
+    showInfo(verbosity, "Data set found in cache.")
     data = read.arff(getCacheDataSetPath(id, "dataset.arff"))
     data = parseOMLDataFile(data.desc, data)
   }
@@ -55,11 +57,11 @@ downloadOMLDataSet = function(id, ignore.cache = FALSE, verbosity = NULL) {
 }
 
 # get the XML description
-downloadOMLDataSetDescription = function(id, verbosity = NULL) {
+downloadOMLDataSetDescription = function(id, verbosity = NULL, session.hash) {
   id = asInt(id)
   path = getCacheDataSetPath(id, "description.xml")
   url = getAPIURL("openml.data.description", data.id = id)
-  contents = downloadXML(url, path, verbosity)
+  contents = postFormOML(url, path, verbosity, session_hash = session.hash)
 }
 
 # parse the xml description

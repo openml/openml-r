@@ -53,13 +53,13 @@ createCacheSubDirs = function(verbosity = NULL) {
 }
 
 
-# tries to find object path in cache dir. caller can request to create path if not found.
+# tries to find expected elements in cache dir. caller can request to create path if not found.
 # return:
 #  - path to dir,
-#  - whether it already existed
-#  - whether it was created
+#  - whether it was created,
+#  - a flag per element wheter it already existed
 # unsuccessful request to create = exception
-findInCache = function(subdir, id, create) {
+findInCache = function(subdir, id, create, elements) {
   created = FALSE
   path = getCacheSubDir(subdir, id)
   found = file.exists(path)
@@ -69,15 +69,19 @@ findInCache = function(subdir, id, create) {
       stopf("Error in creating cache dir: %s", path)
     created = TRUE
   }
-  list(path = path, found = found, created = created)
+  el = extractSubList(str_split(elements, "[.]"), element = 1)
+  el = paste0(el, ".found")
+  found.list = as.list(elements %in% list.files(path))
+  found.list = setNames(found.list, el)
+  c(list(path = path, created = created), found.list)
 }
 
 findInCacheDataSet = function(id, create) {
-  findInCache("datasets", id, create)
+  findInCache("datasets", id, create, elements = c("dataset.arff", "description.xml"))
 }
 
 findInCacheTask = function(id, create) {
-  findInCache("tasks", id, create)
+  findInCache("tasks", id, create, elements = c("datasplits.arff", "task.xml"))
 }
 
 clearOMLCache = function() {

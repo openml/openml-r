@@ -4,7 +4,7 @@
 \title{Solve a task with mlr.}
 \usage{
 runTask(task, learner, return.mlr.results = FALSE,
-  remove.const.feats = TRUE, ..., show.info = getOpenMLOption("show.info"))
+  remove.const.feats = TRUE, ..., verbosity = NULL)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr
@@ -25,9 +25,12 @@ to \code{FALSE} may lead to fatal errors.}
 \item{...}{[any]\cr
 Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.}
 
-\item{show.info}{[\code{logical(1)}]\cr
-Print verbose output on console?
-Default is set via \code{\link{configureOpenML}}.}
+\item{verbosity}{[\code{integer(1)}]\cr
+Print verbose output on console? Possible values are:\cr
+\code{0}: normal output,\cr
+\code{1}: info output,\cr
+\code{2}: debug output.\cr
+Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
 List of:

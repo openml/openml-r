@@ -3,11 +3,14 @@
 \alias{downloadOMLDataSet}
 \title{Download an OpenML data set.}
 \usage{
-downloadOMLDataSet(id, ignore.cache = FALSE, verbosity = NULL)
+downloadOMLDataSet(id, session.hash, ignore.cache = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
 The id of the data set.}
+
+\item{session.hash}{[\code{character(1)}]\cr
+A session token returned by \code{\link{authenticateUser}}.}
 
 \item{ignore.cache}{[\code{logical(1)}]\cr
 Ignore a possibly cached version and force
