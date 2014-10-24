@@ -1,17 +1,18 @@
 context("toMlr")
 
 test_that("toMlr", {
-  dsd = downloadOpenMLData("iris")
+  dsd = downloadOMLDataSet(id = 10, session.hash)
   task = toMlr(dsd)
   expect_is(task, "ClassifTask")
   expect_true(task$task.desc$target == "class")
   expect_true(task$task.desc$type == "classif")
 
-  task = toMlr(dsd, target = "sepallength")
-  expect_true(task$task.desc$target == "sepallength")
+  target = names(dsd$data[lapply(dsd$data, is.numeric) == TRUE])[1]
+  task = toMlr(dsd, target = target)
+  expect_true(task$task.desc$target == target)
   expect_true(task$task.desc$type == "regr")
 
-  oml.task = downloadOpenMLTask(1)
+  oml.task = downloadOMLTask(1, session.hash)
   mlr.task = toMlr(oml.task)
   expect_true(mlr.task$mlr.task$task.desc$target == "class")
   expect_is(mlr.task$mlr.rin, "ResampleInstance")

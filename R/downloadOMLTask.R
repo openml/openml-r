@@ -42,6 +42,10 @@ downloadOMLTask = function(id, session.hash, ignore.cache = FALSE, verbosity = N
   task.xml = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
   task = parseOMLTask(task.xml)
 
+  # this goes through cache
+  ds = downloadOMLDataSet(task$data.desc.id, session.hash, ignore.cache, verbosity)
+  task$data.set = ds
+
   # No real error handling. If no data splits are available, just print a warning and go on.
   if (!f$datasplits.found || ignore.cache) {
     if (task$estimation.procedure$data.splits.url == "No URL") {
@@ -54,10 +58,6 @@ downloadOMLTask = function(id, session.hash, ignore.cache = FALSE, verbosity = N
     data = read.arff(getCacheTaskPath(id, "datasplits.arff"))
     task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
-
-  # this goes through cache
-  ds = downloadOMLDataSet(task$data.desc.id, session.hash, ignore.cache, verbosity)
-  task$data.set = ds
 
   return(task)
 }

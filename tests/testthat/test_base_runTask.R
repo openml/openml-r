@@ -1,8 +1,8 @@
 context("runTask")
 
 test_that("runTask", {
-  for(id in 1:2) {
-    task = downloadOpenMLTask(id)
+  for (id in 1:2) {
+    task = downloadOMLTask(id, session.hash)
     if (task$type == "Supervised Classification") {
       lrn = makeLearner("classif.rpart")
     } else {

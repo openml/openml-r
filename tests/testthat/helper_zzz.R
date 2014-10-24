@@ -1,4 +1,4 @@
-configureOpenML(show.info = FALSE)
+setOMLConfig(verbosity = 0L)
 configureMlr(on.learner.warning = "quiet", show.learner.output = FALSE)
 
 # remove this after testthat upload
