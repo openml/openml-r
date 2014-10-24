@@ -7,7 +7,7 @@ test_that("upload run", {
   flow.id = uploadMlrLearner(lrn, hash)
   expect_is(flow.id, "integer")
   
-  task = downloadOpenMLTask(4)
+  task = downloadOMLTask(4)
   res = runTask(task, lrn) 
   
   run.id = uploadOpenMLRun(task, lrn, flow.id, res, session.hash = hash)

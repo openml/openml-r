@@ -16,7 +16,7 @@
 #'   to \code{FALSE} may lead to fatal errors.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.
-#' @template arg_showinfo
+#' @template arg_verbosity
 #' @return List of:
 #'   \item{run.pred}{[\code{\link[mlr]{ResamplePrediction}}]\cr
 #'     Predictions resulting from the run. These are necessary in order to upload a run.}
@@ -28,19 +28,22 @@
 #' @export
 # FIXME: if !return.mlr.results, the output is not a list!
 runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats = TRUE, ...,
-  show.info = getOpenMLOption("show.info")) {
+  verbosity = NULL) {
 
   assertClass(task, "OMLTask")
   assertClass(learner, "Learner")
   assertFlag(return.mlr.results)
   assertFlag(remove.const.feats)
-  assertFlag(show.info)
 
   if ((task$type == "Supervised Classification" && learner$type != "classif") ||
     (task$type == "Supervised Regression" && learner$type != "regr"))
     stopf("Learner type ('%s') does not correspond to task type ('%s').", task$type, learner$type)
   mlr.task = toMlr(task)
 
+  if (is.null(verbosity))
+    verbosity = getOMLConfig()$verbosity
+  show.info = (verbosity > 0L)
+  
   if (remove.const.feats)
     mlr.task$mlr.task = removeConstantFeatures(mlr.task$mlr.task, show.info = show.info, ...)
 

@@ -15,7 +15,7 @@
 getOMLTaskList = function(type = 1L, session.hash, verbosity = NULL) {
   type = asInt(type)
   url = getAPIURL("openml.tasks", task_type_id = type)
-  content = postFormOML(url, verbosity, session_hash = session.hash)
+  content = postFormOML(url, NULL, verbosity, session_hash = session.hash)
   xml = parseXMLResponse(content, "Getting task list", "tasks", as.text = TRUE)
   # get list of blocks for tasks
   blocks = xmlChildren(xmlChildren(xml)[[1L]])

@@ -10,7 +10,7 @@
 #' @export
 getOMLDataSetList = function(session.hash, verbosity = NULL) {
   url = getAPIURL("openml.data")
-  content = postFormOML(url, verbosity, session_hash = session.hash)
+  content = postFormOML(url, NULL, verbosity, session_hash = session.hash)
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
   # get list of blocks for data sets
   blocks = xmlChildren(xmlChildren(xml)[[1L]])

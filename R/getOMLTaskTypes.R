@@ -10,7 +10,7 @@
 #' @export
 getOMLTaskTypeList = function(session.hash, verbosity = NULL) {
   url = getAPIURL("openml.task.type")
-  content = postFormOML(url, verbosity, session_hash = session.hash)
+  content = postFormOML(url, NULL, verbosity, session_hash = session.hash)
   xml = parseXMLResponse(content, "Getting task type list", "task_types", as.text = TRUE)
   d = data.frame(
     id = xmlValsMultNsI(xml, "/oml:task_types/oml:task_type/oml:id"),
