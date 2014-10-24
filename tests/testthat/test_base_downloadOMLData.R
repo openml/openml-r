@@ -5,5 +5,5 @@ test_that("downloadOMLDataSet", {
   expect_is(ds, "OMLDataSet")
   expect_true(ds$desc$id == 1)
 
-  expect_error(downloadOMLDataSet(12311092831203), "Unknown dataset")
+  expect_error(downloadOMLDataSet(1231109283, session.hash), "Unknown dataset")
 })
