@@ -18,3 +18,9 @@ downloadARFF = function(url, file, verbosity = NULL) {
   download.file(url, file, mode = "w", quiet = TRUE)
   read.arff(file)
 }
+
+postFormOML = function(url, verbosity = NULL, ...) {
+  showInfo(verbosity, "Downloading '%s' to '%s'", url, "<mem>")
+  content = postForm(url, ...)
+  return(content)
+}

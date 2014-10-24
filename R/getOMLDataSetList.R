@@ -4,13 +4,14 @@
 #' The returned data.frame contains the data set id \code{did}, the \code{status} and
 #' some describing data qualities.
 #'
+#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @export
-getOpenMLDataSetList = function(verbosity = NULL) {
+getOMLDataSetList = function(session.hash, verbosity = NULL) {
   url = getAPIURL("openml.data")
-  contents = downloadXML(url, NULL, verbosity)
-  xml = parseXMLResponse(contents, "Getting data set list", "data", as.text = TRUE)
+  content = postFormOML(url, verbosity, session_hash = session.hash)
+  xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
   # get list of blocks for data sets
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   quals = list()

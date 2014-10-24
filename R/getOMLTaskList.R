@@ -8,14 +8,15 @@
 #'   The task type you want to list tasks for.
 #'   See code \link{getOpenMLTaskTypeList}.
 #'   Default is \code{1}.
+#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @export
-getOpenMLTaskList = function(type = 1L, verbosity = NULL) {
+getOMLTaskList = function(type = 1L, session.hash, verbosity = NULL) {
   type = asInt(type)
   url = getAPIURL("openml.tasks", task_type_id = type)
-  contents = downloadXML(url, NULL, verbosity)
-  xml = parseXMLResponse(contents, "Getting task list", "tasks", as.text = TRUE)
+  content = postFormOML(url, verbosity, session_hash = session.hash)
+  xml = parseXMLResponse(content, "Getting task list", "tasks", as.text = TRUE)
   # get list of blocks for tasks
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   quals = list()

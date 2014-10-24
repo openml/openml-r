@@ -4,8 +4,7 @@
 #'
 #' @param run.id [\code{integer(1)}]\cr
 #'   The run ID. Of course, you can only delete your own runs.
-#' @param session.hash [\code{character(1)}]\cr
-#'   A session token returned by \code{\link{authenticateUser}}.
+#' @template arg_hash
 #' @template arg_showinfo
 #' @export
 deleteOpenMLRun = function(run.id, session.hash, show.info = getOpenMLOption("show.info")) {
