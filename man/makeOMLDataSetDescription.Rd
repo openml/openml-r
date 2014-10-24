@@ -85,16 +85,6 @@ When the data set is updated, add an explanation here.}
 
 \item{md5.checksum}{[\code{character(1)}]\cr
 MD5 checksum to check if the data set is downloaded without corruption.}
-
-\item{data.set}{[\code{data.frame}]\cr
-The data set.}
-
-\item{original.col.names}{[\code{character}]\cr
-The original column names of the data set. These might not be valid names in R!}
-
-\item{new.col.names}{[\code{character}]\cr
-New column names that are actually used in R. These are valid and unique and differ from the
-original column names only if those are invalid.}
 }
 \description{
 Construct OMLDataSetDescription.

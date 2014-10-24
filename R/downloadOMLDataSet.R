@@ -47,12 +47,12 @@ downloadOMLDataSet = function(id, session.hash, ignore.cache = FALSE, verbosity 
 
   # overwrite default target attribute to make sure that it's the actual name of the column
   data.desc$default.target.attribute = colnames.new[target.ind]
-  
-  makeS3Obj("OMLDataSet",
+
+  makeOMLDataSet(
     desc = data.desc,
     data = data,
-    colnames.new = colnames.new,
-    colnames.old = colnames.old
+    colnames.old = colnames.old,
+    colnames.new = colnames.new
   )
 }
 
@@ -110,9 +110,3 @@ parseOMLDataFile = function(desc, data) {
   }
   setRowNames(data, as.character(rowid))
 }
-
-#' @export
-print.OMLDataSet = function(x, ...) {
-  print.OMLDataSetDescription(x$desc)
-}
-

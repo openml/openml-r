@@ -49,13 +49,6 @@
 #'   When the data set is updated, add an explanation here.
 #' @param md5.checksum [\code{character(1)}]\cr
 #'   MD5 checksum to check if the data set is downloaded without corruption.
-#' @param data.set [\code{data.frame}]\cr
-#'   The data set.
-#' @param original.col.names [\code{character}]\cr
-#'   The original column names of the data set. These might not be valid names in R!
-#' @param new.col.names [\code{character}]\cr
-#'   New column names that are actually used in R. These are valid and unique and differ from the
-#'   original column names only if those are invalid.
 #' @export
 #' @aliases OMLDataSetDescription
 makeOMLDataSetDescription = function(id, name, version, description, format,

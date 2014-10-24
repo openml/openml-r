@@ -7,7 +7,7 @@ setOMLConfig(conf = list(), ...)
 }
 \arguments{
 \item{conf}{[\code{OMLConfig} or \code{list}]\cr
-List of configuration parameters as returned by \code{\link{loadConfig}} or \code{\link{getConfig}}.}
+List of configuration parameters as returned by \code{\link{getOMLConfig}}.}
 
 \item{...}{[\code{ANY}]\cr
 Named configuration parameters. Overwrites parameters in \code{conf}, if provided.}

@@ -115,7 +115,7 @@ print.OMLConfig = function(x, ...) {
 #' Set and overwrite configuration settings
 #'
 #' @param conf [\code{OMLConfig} or \code{list}]\cr
-#'   List of configuration parameters as returned by \code{\link{loadConfig}} or \code{\link{getConfig}}.
+#'   List of configuration parameters as returned by \code{\link{getOMLConfig}}.
 #' @param ... [\code{ANY}]\cr
 #'   Named configuration parameters. Overwrites parameters in \code{conf}, if provided.
 #' @return Invisibly returns a list of configuration settings.
