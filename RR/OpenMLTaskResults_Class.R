@@ -6,7 +6,7 @@
 #'   members are filled in by the server.
 #'
 #' @param task.id [\code{integer(1)}]\cr
-#'   ID of the OpenMLTask.
+#'   ID of the OpenML task.
 #' @param task.name [\code{character(1)}]\cr
 #'   A name describing the task shortly.
 #' @param task.type.id [\code{integer(1)}]\cr

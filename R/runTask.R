@@ -3,7 +3,7 @@
 #' Solve a task with a specified learner from mlr and receive predictions that are capable
 #' of being uploaded to the OpenML server.
 #'
-#' @param task [\code{\link{OpenMLTask}}]\cr
+#' @param task [\code{\link{OMLTask}}]\cr
 #'   An OpenML task. Required.
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   Learner object from package mlr to solve the task.
@@ -23,14 +23,14 @@
 #'   \item{mlr.resample.results}{[\code{list}]\cr
 #'     The results of the mlr function \code{\link[mlr]{resample}}.\cr
 #'     \code{NULL} if \code{return.mlr.results == FALSE}.}
-#' @seealso \code{\link{OpenMLTask}}, \code{\link[mlr]{learners}},
+#' @seealso \code{\link{OMLTask}}, \code{\link[mlr]{learners}},
 #'   \code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
 #' @export
 # FIXME: if !return.mlr.results, the output is not a list!
 runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats = TRUE, ...,
   show.info = getOpenMLOption("show.info")) {
 
-  assertClass(task, "OpenMLTask")
+  assertClass(task, "OMLTask")
   assertClass(learner, "Learner")
   assertFlag(return.mlr.results)
   assertFlag(remove.const.feats)
@@ -64,7 +64,7 @@ runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats
 #
 # @param pred [\code{\link[mlr]{Prediction}}]\cr
 #   The predictions.
-# @param task [\code{\link{OpenMLTask}}]\cr
+# @param task [\code{\link{OMLTask}}]\cr
 #   The OpenML task to which the predictions belong.
 # @return data.frame with columns:
 #   \item{repeat}{[\code{numeric}}]\cr

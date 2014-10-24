@@ -2,7 +2,7 @@
 sourcedFlow = function(task.id) {
   library(base64enc)
   library(mlr)
-  task = downloadOpenMLTask(task.id)
+  task = downloadOMLTask(task.id)
   lrn = unserialize(base64decode('%s'))
   runTask(task, lrn)
 }

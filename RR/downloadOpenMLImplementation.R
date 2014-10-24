@@ -57,7 +57,7 @@ parseOpenMLImplementation = function(doc) {
     full.description = xmlOValS(doc, "/oml:implementation/oml:full_description"),
     installation.notes = xmlOValS(doc, "/oml:implementation/oml:installation_notes"),
     dependencies = xmlOValS(doc, "/oml:implementation/oml:dependencies"),
-    bibliographical.reference = parseOpenMLBibRef(doc),
+    bibliographical.reference = parseOMLBibRef(doc),
     parameter = parseOpenMLParameters(doc),
     collection.date = xmlOValS(doc, "/oml:implementation/oml:collection_date"),
     source.url = xmlOValS(doc, "/oml:implementation/oml:source_url"),
@@ -104,7 +104,7 @@ parseOpenMLParameters = function(doc) {
   return(par)
 }
 
-parseOpenMLBibRef = function(doc) {
+parseOMLBibRef = function(doc) {
   path = "/oml:implementation/oml:bibliographical_reference"
 
   ns = getNodeSet(doc, path)
@@ -115,7 +115,7 @@ parseOpenMLBibRef = function(doc) {
   # FIXME: Map()
   bib = vector("list", length(bib.citation))
   for (i in seq_along(bib.citation)) {
-    bib[[i]] = makeOpenMLBibRef(bib.citation[i], bib.url[i])
+    bib[[i]] = makeOMLBibRef(bib.citation[i], bib.url[i])
   }
   if (length(bib) > 0L)
     return(bib)

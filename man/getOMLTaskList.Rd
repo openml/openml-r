@@ -8,7 +8,7 @@ getOMLTaskList(type = 1L, session.hash, verbosity = NULL)
 \arguments{
 \item{type}{[\code{integer(1)}]\cr
 The task type you want to list tasks for.
-See code \link{getOpenMLTaskTypeList}.
+See code \link{getOMLTaskTypeList}.
 Default is \code{1}.}
 
 \item{session.hash}{[\code{character(1)}]\cr

@@ -36,7 +36,7 @@
 #'   Optional. The dependencies of the implementation.
 #' @param bibliographical.reference [\code{list}]\cr
 #'   An optional list containing information on bibliographical references in form of
-#'   \code{\link{OpenMLBibRef}s}.
+#'   \code{\link{OMLBibRef}s}.
 #' @param parameter [\code{list}]\cr
 #'   The parameters of the implementation. A list containing
 #'   \code{\link{OpenMLImplementationParameter}s}.

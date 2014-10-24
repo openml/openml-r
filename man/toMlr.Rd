@@ -2,12 +2,12 @@
 \name{toMlr}
 \alias{toMlr}
 \alias{toMlr.OMLDataSet}
-\alias{toMlr.OpenMLTask}
+\alias{toMlr.OMLTask}
 \title{Convert an OpenML object to mlr.}
 \usage{
 toMlr(obj, target, remove.target.NAs, ignore.flagged.attributes)
 
-\method{toMlr}{OpenMLTask}(obj,
+\method{toMlr}{OMLTask}(obj,
   target = obj$data.set$desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE)
 
@@ -15,7 +15,7 @@ toMlr(obj, target, remove.target.NAs, ignore.flagged.attributes)
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE)
 }
 \arguments{
-\item{obj}{[\code{\link{OMLDataSet}} | \code{\link{OpenMLTask}}]\cr
+\item{obj}{[\code{\link{OMLDataSet}} | \code{\link{OMLTask}}]\cr
 The object that should be converted. Required.}
 
 \item{target}{[\code{character}]\cr
@@ -45,7 +45,7 @@ Either a [\code{\link[mlr]{Task}}] or, a list of:
 }
 \description{
 This function converts an \code{\link{OMLDataSet}}
-  or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given
-  \code{\link{OpenMLTask}}, various other mlr objects (see below).
+  or an \code{\link{OMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given
+  \code{\link{OMLTask}}, various other mlr objects (see below).
 }
 

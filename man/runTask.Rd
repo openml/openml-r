@@ -7,7 +7,7 @@ runTask(task, learner, return.mlr.results = FALSE,
   remove.const.feats = TRUE, ..., show.info = getOpenMLOption("show.info"))
 }
 \arguments{
-\item{task}{[\code{\link{OpenMLTask}}]\cr
+\item{task}{[\code{\link{OMLTask}}]\cr
 An OpenML task. Required.}
 
 \item{learner}{[\code{\link[mlr]{Learner}}]\cr
@@ -42,7 +42,7 @@ Solve a task with a specified learner from mlr and receive predictions that are 
 of being uploaded to the OpenML server.
 }
 \seealso{
-\code{\link{OpenMLTask}}, \code{\link[mlr]{learners}},
+\code{\link{OMLTask}}, \code{\link[mlr]{learners}},
   \code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
 }
 

@@ -20,7 +20,8 @@ Imports:
     RWeka,
     plyr,
     mlr,
-    base64enc
+    base64enc,
+    stats
 LazyData: yes
 ByteCompile: yes
 Version: 1.0

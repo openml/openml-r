@@ -2,7 +2,7 @@
 #'
 #' Share a run of an implementation on a given OpenML task.
 #'
-#' @param task [\code{\link{OpenMLTask}}]\cr
+#' @param task [\code{\link{OMLTask}}]\cr
 #'   The task.
 #' @param mlr.lrn [\code{\link[mlr]{Learner}}]\cr
 #'   The mlr learner, if used. Optional.
@@ -33,7 +33,7 @@ uploadOpenMLRun = function(task, mlr.lrn, impl.id, predictions, error.msg, sessi
     run.pars = makeRunParameterList(mlr.lrn)
   }
   assertList(run.pars)
-  assertClass(task, "OpenMLTask")
+  assertClass(task, "OMLTask")
   impl.id = asCount(impl.id)
 
   if (missing(error.msg)) {

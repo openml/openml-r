@@ -8,6 +8,7 @@
 #' @import mlr
 #' @import checkmate
 #' @import base64enc
+#' @importFrom stats setNames
 #' @importFrom plyr rbind.fill
 NULL
 

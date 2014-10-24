@@ -1,9 +1,9 @@
 #' @title Convert an OpenML object to mlr.
 #'
 #' @description This function converts an \code{\link{OMLDataSet}}
-#'   or an \code{\link{OpenMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given
-#'   \code{\link{OpenMLTask}}, various other mlr objects (see below).
-#' @param obj [\code{\link{OMLDataSet}} | \code{\link{OpenMLTask}}]\cr
+#'   or an \code{\link{OMLTask}} into an mlr \code{\link[mlr]{Task}} and, in case of a given
+#'   \code{\link{OMLTask}}, various other mlr objects (see below).
+#' @param obj [\code{\link{OMLDataSet}} | \code{\link{OMLTask}}]\cr
 #'   The object that should be converted. Required.
 #' @param target [\code{character}]\cr
 #'   The target for the classification/regression task. Default is the
@@ -32,7 +32,7 @@ toMlr = function(obj, target, remove.target.NAs, ignore.flagged.attributes) {
 
 #' @rdname toMlr
 #' @export
-toMlr.OpenMLTask = function(obj, target = obj$data.set$desc$default.target.attribute,
+toMlr.OMLTask = function(obj, target = obj$data.set$desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
 
   assertSubset(target, obj$data.set$colnames.new, empty.ok = FALSE)

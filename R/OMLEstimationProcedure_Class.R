@@ -1,4 +1,4 @@
-#' @title Construct OpenMLEstimationProcedure.
+#' @title Construct OMLEstimationProcedure.
 #'
 #' @param type [\code{character(1)}]\cr
 #'   The type of procedure used for performance estimation: either cross-validation, holdout, bootstrap or
@@ -10,8 +10,8 @@
 #' @param parameters [\code{list}]\cr
 #'   Any parameters for the estimation procedure, e.g. the number of repeats and folds in cross-validation.
 #' @export
-#' @aliases OpenMLEstimationProcedure
-makeOpenMLEstimationProcedure = function(type, data.splits.url = NA_character_, data.splits = NULL,
+#' @aliases OMLEstimationProcedure
+makeOMLEstimationProcedure = function(type, data.splits.url = NA_character_, data.splits = NULL,
   parameters = NULL) {
 
   assertString(type)
@@ -21,7 +21,7 @@ makeOpenMLEstimationProcedure = function(type, data.splits.url = NA_character_, 
   if (!is.null(parameters))
     assertList(parameters, names = "named")
 
-  makeS3Obj("OpenMLEstimationProcedure",
+  makeS3Obj("OMLEstimationProcedure",
     type = type,
     data.splits.url = data.splits.url,
     data.splits = data.splits,
@@ -33,7 +33,7 @@ makeOpenMLEstimationProcedure = function(type, data.splits.url = NA_character_, 
 
 # Note: The data splits and the predictions are not shown
 #' @export
-print.OpenMLEstimationProcedure = function(x, ...)  {
+print.OMLEstimationProcedure = function(x, ...)  {
   catf('\nEstimation Method :: %s',x$type)
   catf('\tParameters:')
   for(i in 1:length(x$parameters)){

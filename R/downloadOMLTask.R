@@ -11,18 +11,18 @@
 #'   ID number of task on OpenML server, used to retrieve the task.
 #' @template arg_ignore.cache
 #' @template arg_verbosity
-#' @return [\code{\link{OpenMLTask}}]
+#' @return [\code{\link{OMLTask}}]
 #' @export
 #' @examples
 #' # Download task and access relevant information to start running experiments
 #' \dontrun{
-#' task = downloadOpenMLTask(id = 1)
+#' task = downloadOMLTask(id = 1)
 #' show(task)
 #' print(task$type)
 #' print(task$target.features)
 #' print(head(task$data.set$data))
 #' }
-downloadOpenMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
+downloadOMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
   id = asInt(id)
 
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
@@ -39,7 +39,7 @@ downloadOpenMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
     task.contents = readLines(getCacheTaskPath(id, "task.xml"))
   }
   task.xml = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
-  task = parseOpenMLTask(task.xml)
+  task = parseOMLTask(task.xml)
 
   # this goes through cache
   ds = downloadOMLDataSet(task$data.desc.id, ignore.cache, verbosity)
@@ -49,12 +49,12 @@ downloadOpenMLTask = function(id, ignore.cache = FALSE, verbosity = NULL) {
   if (task$estimation.procedure$data.splits.url == "No URL") {
     warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
   } else {
-    task$estimation.procedure$data.splits = downloadOpenMLDataSplits(task, ignore.cache, verbosity)
+    task$estimation.procedure$data.splits = downloadOMLDataSplits(task, ignore.cache, verbosity)
   }
   return(task)
 }
 
-parseOpenMLTask = function(doc) {
+parseOMLTask = function(doc) {
   getParams = function(path) {
     ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
     parameters = lapply(ns.parameters, function(x) xmlValue(x))
@@ -87,7 +87,7 @@ parseOpenMLTask = function(doc) {
   if (is.null(data.splits.url))
     data.splits.url = "No URL"
 
-  estim.proc = makeOpenMLEstimationProcedure(
+  estim.proc = makeOMLEstimationProcedure(
     type = xmlRValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:type"),
     data.splits.url = data.splits.url,
     data.splits = data.frame(),
@@ -97,7 +97,7 @@ parseOpenMLTask = function(doc) {
   # measures
   measures = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure")
 
-  task = makeOpenMLTask(
+  task = makeOMLTask(
     id = id,
     type = type,
     target.features = targets,
@@ -108,7 +108,7 @@ parseOpenMLTask = function(doc) {
     preds = preds,
     evaluation.measures = measures
   )
-  convertOpenMLTaskSlots(task)
+  convertOMLTaskSlots(task)
 }
 
 convertParam = function(params, name, fun) {
@@ -117,7 +117,7 @@ convertParam = function(params, name, fun) {
   return(params)
 }
 
-convertOpenMLTaskSlots = function(task) {
+convertOMLTaskSlots = function(task) {
   # convert estim params to correct types
   p = task$estimation.procedure$parameters
   p = convertParam(p, "number_repeats", as.integer)
@@ -129,15 +129,15 @@ convertOpenMLTaskSlots = function(task) {
 }
 
 # download data splits file from URL to local file
-downloadOpenMLDataSplits = function(task, ignore.cache = FALSE, verbosity = NULL) {
+downloadOMLDataSplits = function(task, ignore.cache = FALSE, verbosity = NULL) {
   id = task$id
   url = task$estimation.procedure$data.splits.url
   fn = getCacheTaskPath(id, "datasplits.arff")
   data = downloadARFF(url, fn, verbosity)
-  parseOpenMLDataSplits(task, data)
+  parseOMLDataSplits(task, data)
 }
 
-parseOpenMLDataSplits = function(task, data) {
+parseOMLDataSplits = function(task, data) {
   # slightly converts the splits data frame
   # rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
   colnames(data)[colnames(data) == "repeat"] = "rep"

@@ -2,8 +2,8 @@
 #'
 #' @param x
 #'   The object whose description should be printed. This is typically an \code{\link{OMLDataSet}},
-#'   an \code{\link{OMLDataSetDescription}}, an \code{\link{OpenMLImplementation}} or an
-#'   \code{\link{OpenMLTask}}. In the latter case, the description of the corresponding
+#'   an \code{\link{OMLDataSetDescription}}, an \code{\link{OMLImplementation}} or an
+#'   \code{\link{OMLTask}}. In the latter case, the description of the corresponding
 #'   data set is printed.
 #' @export
 printDescription = function(x) {
@@ -11,7 +11,7 @@ printDescription = function(x) {
 }
 
 #' @export
-printDescription.OpenMLTask = function(x) {
+printDescription.OMLTask = function(x) {
   cat(x$data.set$desc$description)
 }
 
@@ -26,6 +26,6 @@ printDescription.OMLDataSet = function(x) {
 }
 
 #' @export
-printDescription.OpenMLImplementation = function(x) {
+printDescription.OMLImplementation = function(x) {
   cat(x$description)
 }
