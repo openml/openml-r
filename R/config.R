@@ -32,7 +32,7 @@ readConfigFile = function(conffile) {
   checkConfig(conf)
   # FIXME: probably horrible security wise....
   if (!is.null(conf$password))
-    conf$pwdmd5 = digest(conf$password)
+    conf$pwdmd5 = digest(conf$password, serialize = FALSE)
   conf$password = NULL
   
   conf = addClasses(conf, "OpenMLConfig")
