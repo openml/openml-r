@@ -35,13 +35,13 @@ readConfigFile = function(conffile) {
     conf$pwdmd5 = digest(conf$password, serialize = FALSE)
   conf$password = NULL
   
-  conf = addClasses(conf, "OpenMLConfig")
+  conf = addClasses(conf, "OMLConfig")
   return(conf)
 }
 
 # assigns a conf to namespace
 assignConfig = function(conf) {
-  conf.in.ns = getOpenMLConfig()
+  conf.in.ns = getOMLConfig()
   lapply(ls(conf), function(x) assign(x, conf[[x]], envir = conf.in.ns))
 }
 
@@ -59,7 +59,7 @@ readConfigAndAssign = function() {
 }
 
 assignConfigDefaults = function() {
-  conf = getOpenMLConfig()
+  conf = getOMLConfig()
   conf$server = "http://www.openml.org"
   conf$username = NA_character_
   conf$pwdmd5 = NA_character_
@@ -108,39 +108,39 @@ printableConfig = function(conf) {
 
 
 #' @export
-print.OpenMLConfig = function(x, ...) {
+print.OMLConfig = function(x, ...) {
   cat(printableConfig(x))
 }
 
 #' Set and overwrite configuration settings
 #'
-#' @param conf [\code{OpenMLConfig} or \code{list}]\cr
+#' @param conf [\code{OMLConfig} or \code{list}]\cr
 #'   List of configuration parameters as returned by \code{\link{loadConfig}} or \code{\link{getConfig}}.
 #' @param ... [\code{ANY}]\cr
 #'   Named configuration parameters. Overwrites parameters in \code{conf}, if provided.
 #' @return Invisibly returns a list of configuration settings.
 #' @family conf
 #' @export
-setOpenMLConfig = function(conf = list(), ...) {
-  if (!is.list(conf) && !inherits(conf, "OpenMLConfig"))
+setOMLConfig = function(conf = list(), ...) {
+  if (!is.list(conf) && !inherits(conf, "OMLConfig"))
     stopf("Argument 'conf' must be of class 'list' or 'Config', not %s", head(conf, 1L))
   overwrites = insert(conf, list(...))
   if (length(overwrites) == 0L)
-    return(invisible(getConfig()))
+    return(invisible(getOMLConfig()))
   if (!isProperlyNamed(overwrites))
     stopf("All configuration arguments in '...' must be properly named")
   checkConfig(overwrites)
-  conf = insert(as.list(getOpenMLConf()), overwrites)
+  conf = insert(as.list(getOMLConfig()), overwrites)
   assignConfig(as.environment(conf))
   invisible(setClasses(conf, "Config"))
 }
 
 #' Returns a list of OpenML configuration settings
 #'
-#' @return \code{list} of current configuration variables with classs \dQuote{OpenMLConfig}.
+#' @return \code{list} of current configuration variables with classs \dQuote{OMLConfig}.
 #' @family conf
 #' @export
-getOpenMLConfig = function() {
+getOMLConfig = function() {
   get(".OpenML.config", envir = getNamespace("OpenML"))
 }
 

@@ -3,14 +3,14 @@
 #' Required if you want to upload anything.
 #'
 #' @param email [\code{character(1)}]\cr
-#'   Your e-mail address at OpenMl server. Default is set via \code{\link{setOpenMLConfig}}.
+#'   Your e-mail address at OpenMl server. Default is set via \code{\link{setOMLConfig}}.
 #' @param password [\code{character(1)}]\cr
-#'   Your password at OpenML server. Default is set via \code{\link{setOpenMLConfig}}.
+#'   Your password at OpenML server. Default is set via \code{\link{setOMLConfig}}.
 #' @template arg_verbosity
 #' @return [\code{character(1)}]. Session hash for further communication.
 #' @export
 authenticateUser = function(email, password, verbosity = NULL) {
-  conf = getOpenMLConfig()
+  conf = getOMLConfig()
   if (!missing(email)) 
     assertString(email)
   else

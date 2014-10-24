@@ -3,4 +3,4 @@
 #'   \code{0}: normal output,\cr
 #'   \code{1}: info output,\cr
 #'   \code{2}: debug output.\cr
-#'   Default is set via \code{\link{setOpenMLConfig}}.
+#'   Default is set via \code{\link{setOMLConfig}}.

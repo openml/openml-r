@@ -1,7 +1,7 @@
 ##### getters for paths
 
 getCacheSubDir = function(subdir, id = NULL) {
-  conf = getOpenMLConfig()
+  conf = getOMLConfig()
   if (is.null(id))
     file.path(conf$cachedir, subdir)
   else
@@ -9,7 +9,7 @@ getCacheSubDir = function(subdir, id = NULL) {
 }
 
 getCacheFilePath = function(subdir, id, file) {
-  conf = getOpenMLConfig()
+  conf = getOMLConfig()
   file.path(conf$cachedir, subdir, id, file)
 }
 
@@ -45,7 +45,7 @@ createDir = function(dir, verbosity = NULL) {
 }
 
 createCacheSubDirs = function(verbosity = NULL) {
-  conf = getOpenMLConfig()
+  conf = getOMLConfig()
   cd = conf$cachedir
   showInfo(verbosity, "Creating chache sub dirs in: %s", cd)
   createDir(getCacheDataSetsDir(), verbosity)
@@ -81,7 +81,7 @@ findInCacheTask = function(id, create) {
 }
 
 clearOMLCache = function() {
-  conf = getOpenMLConfig()
+  conf = getOMLConfig()
   cd = conf$cachedir
   unlink(cd, recursive = TRUE)
   createDir(cd)

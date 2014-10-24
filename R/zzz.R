@@ -13,7 +13,7 @@
 NULL
 
 .OpenML.config = new.env()
-class(.OpenML.config) = c("OpenMLConfig", class(.OpenML.config))
+class(.OpenML.config) = c("OMLConfig", class(.OpenML.config))
 
 .onAttach = function(libname, pkgname) {
   readConfigAndAssign()

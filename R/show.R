@@ -8,7 +8,7 @@ showDebug = function(verbosity, msg, ...) {
 
 showMessage = function(verbosity, msg, ..., minlev) {
   if (is.null(verbosity))
-    verbosity = getOpenMLConfig()$verbosity
+    verbosity = getOMLConfig()$verbosity
   else
     verbosity = asInt(verbosity)
   if (verbosity >= minlev)

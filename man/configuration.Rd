@@ -8,7 +8,7 @@ please read
 \url{https://github.com/tudo-r/BatchJobs/wiki/Configuration}.
 }
 \seealso{
-Other conf: \code{\link{getOpenMLConfig}};
-  \code{\link{setOpenMLConfig}}
+Other conf: \code{\link{getOMLConfig}};
+  \code{\link{setOMLConfig}}
 }
 

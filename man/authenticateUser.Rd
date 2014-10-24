@@ -7,17 +7,17 @@ authenticateUser(email, password, verbosity = NULL)
 }
 \arguments{
 \item{email}{[\code{character(1)}]\cr
-Your e-mail address at OpenMl server. Default is set via \code{\link{setOpenMLConfig}}.}
+Your e-mail address at OpenMl server. Default is set via \code{\link{setOMLConfig}}.}
 
 \item{password}{[\code{character(1)}]\cr
-Your password at OpenML server. Default is set via \code{\link{setOpenMLConfig}}.}
+Your password at OpenML server. Default is set via \code{\link{setOMLConfig}}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
-Default is set via \code{\link{setOpenMLConfig}}.}
+Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
 [\code{character(1)}]. Session hash for further communication.
