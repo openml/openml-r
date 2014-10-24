@@ -6,7 +6,7 @@ test_that("download all tasks", {
   skip_on_cran()
   skip_on_travis()
   taskinfo = getOpenMLRegisteredTasks()
-  quals = getDataQualities()
+  quals = getOMLDataQualities()
   measures = getOpenMLEvaluationMeasures()
 
   for (i in seq_row(taskinfo)) {

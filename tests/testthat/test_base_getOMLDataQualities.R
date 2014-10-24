@@ -1,9 +1,9 @@
-context("getDataQualities")
+context("getOMLDataQualities")
 
-test_that("getDataQualities", {
-  dqn = getDataQualityNames()
-  dq1 = getDataQualities()
-  dq2 = getDataQualities(set = "all")
+test_that("getOMLDataQualities", {
+  dqn = getOMLDataQualityNames()
+  dq1 = getOMLDataQualities()
+  dq2 = getOMLDataQualities(set = "all")
   expect_is(dqn, "character")
   expect_is(dq1, "data.frame")
   expect_is(dq2, "data.frame")

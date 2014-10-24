@@ -3,7 +3,7 @@
 #' Useful if you want to get a first impression of the available data sets or select
 #' appropriate data sets for a certain study.
 #'
-#' For a complete list of all data qualities, see \code{\link{getDataQualityNames}}.
+#' For a complete list of all data qualities, see \code{\link{getOMLDataQualityNames}}.
 #'
 #' @param set [\code{character(1)}]\cr
 #'   Either \code{"basic"}, which means only rudimentary data qualities (number of
@@ -13,12 +13,12 @@
 #'
 #' @return [\code{data.frame}]. Rows correspond to data sets, columns to data qualities.
 #' @export
-getDataQualities = function(set = "basic") {
+getOMLDataQualities = function(set = "basic") {
   # FIXME: use API call
   assertChoice(set, c("all", "basic"))
 
   dquals = if (set == "all")
-    getDataQualityNames()
+    getOMLDataQualityNames()
   else
     c("NumberOfFeatures", "NumberOfInstances", "NumberOfClasses", "MajorityClassSize",
       "MinorityClassSize", "NumberOfInstancesWithMissingValues", "NumberOfMissingValues",

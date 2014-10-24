@@ -6,7 +6,7 @@
 #'   Default is \code{"all"}.
 #' @return [\code{character}].
 #' @export
-getDataQualityNames = function(set = "all") {
+getOMLDataQualityNames = function(set = "all") {
   assertChoice(set, c("all", "basic"))
   if (set == "all") {
     return(runSQLQuery("SELECT DISTINCT quality FROM data_quality"))

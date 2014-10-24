@@ -5,7 +5,7 @@ context("download all data sets")
 test_that("download all data sets", {
   skip_on_cran()
   skip_on_travis()
-  quals = getDataQualities()
+  quals = getOMLDataQualities()
   dsets = getOpenMLDatasetNames()
   quals2 = subset(quals, dataset %in% dsets$name & NumberOfInstances <= 10000 &
     NumberOfFeatures <= 100 & dataset != "Zoo_test_jan")
