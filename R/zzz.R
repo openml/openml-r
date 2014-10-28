@@ -7,9 +7,8 @@
 #' @import RWeka
 #' @import mlr
 #' @import checkmate
-#' @import data.table
+#' @importFrom data.table rbindlist
 #' @importFrom stats setNames
-#' @importFrom plyr rbind.fill
 NULL
 
 .OpenML.config = new.env(parent = emptyenv())

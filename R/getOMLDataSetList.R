@@ -14,22 +14,15 @@ getOMLDataSetList = function(session.hash, verbosity = NULL) {
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
   # get list of blocks for data sets
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  quals = vector("list", length(blocks))
-  for (i in seq_along(blocks)) {
-    node = blocks[[i]]
-    quals1 = xmlChildren(node)[-(1:2)]
-    quals2 = as.list(as.numeric(vcapply(quals1, xmlValue)))
-    names(quals2) = vcapply(quals1, xmlAttrs)
-    # make sure that empty row without qualities are not dropped by rbind.fill
-    quals2$.foo = 1
-    quals[[i]] = as.data.frame(quals2)
-  }
-  quals = do.call(rbind.fill, quals)
-  quals = cbind(
-    did = xmlValsMultNsI(xml, "/oml:data/oml:dataset/oml:did"),
-    status = xmlValsMultNsS(xml, "/oml:data/oml:dataset/oml:status"),
-    quals
-  )
-  quals$.foo = NULL
-  return(quals)
+  quals = rbindlist(lapply(blocks, function(node) {
+    children = xmlChildren(node)
+    qualities = names(children) == "quality"
+    row = c(
+      list(as.integer(xmlValue(children[["did"]]))), status = xmlValue(children[["status"]]),
+      as.list(as.integer(vcapply(children[qualities], xmlValue)))
+    )
+    names(row) = c("did", "status", vcapply(children[qualities], xmlAttrs))
+    row
+  }), fill = TRUE)
+  return(as.data.frame(quals))
 }

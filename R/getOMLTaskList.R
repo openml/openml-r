@@ -17,28 +17,24 @@ getOMLTaskList = function(type = 1L, session.hash, verbosity = NULL) {
   url = getAPIURL("openml.tasks", task_type_id = type)
   content = postFormOML(url, NULL, verbosity, session_hash = session.hash)
   xml = parseXMLResponse(content, "Getting task list", "tasks", as.text = TRUE)
-  # get list of blocks for tasks
-  blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  quals = list()
-  for (i in seq_along(blocks)) {
-    node = blocks[[i]]
-    quals1 = xmlChildren(node)[-(1:4)]
-    quals2 = as.list(as.numeric(vcapply(quals1, xmlValue)))
-    names(quals2) = vcapply(quals1, xmlAttrs)
-    # make sure that empty row without qualities are not dropped by rbind.fill
-    quals2$.foo = 1
-    quals[[i]] = as.data.frame(quals2, stringsAsFactors = FALSE)
-  }
-  quals = do.call(rbind.fill, quals)
-  quals = cbind(
-    task_id = xmlValsMultNsI(xml, "/oml:tasks/oml:task/oml:task_id"),
-    task_type = xmlValsMultNsS(xml, "/oml:tasks/oml:task/oml:task_type"),
-    did = xmlValsMultNsI(xml, "/oml:tasks/oml:task/oml:did"),
-    status = xmlValsMultNsS(xml, "/oml:tasks/oml:task/oml:status"),
-    quals,
-    stringsAsFactors = FALSE
-  )
-  quals$.foo = NULL
-  return(quals)
-}
 
+  blocks = xmlChildren(xmlChildren(xml)[[1L]])
+  quals = rbindlist(lapply(blocks, function(node) {
+    children = xmlChildren(node)
+    qualities = names(children) == "quality"
+    row = c(
+      list(
+        as.integer(xmlValue(children[["task_id"]])),
+        xmlValue(children[["task_type"]]),
+        as.integer(xmlValue(children[["did"]])),
+        xmlValue(children[["status"]])
+      ),
+      as.list(as.integer(vcapply(children[qualities], xmlValue)))
+    )
+    names(row) = c("task_id", "task_type", "did", "status",
+      vcapply(children[qualities], xmlAttrs))
+    row
+  }), fill = TRUE)
+
+  as.data.frame(quals)
+}
