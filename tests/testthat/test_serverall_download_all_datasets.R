@@ -5,21 +5,17 @@ context("download all data sets")
 test_that("download all data sets", {
   skip_on_cran()
   skip_on_travis()
-  quals = getOMLDataQualities()
-  dsets = getOpenMLDatasetNames()
-  quals2 = subset(quals, dataset %in% dsets$name & NumberOfInstances <= 10000 &
-    NumberOfFeatures <= 100 & dataset != "Zoo_test_jan")
-
-  ids = quals2[, c("dataset", "version")]
-
-  for (i in 1:nrow(ids)) {
-    if (ids[i, "version"] %in% dsets[dsets$name == ids[i, "dataset"], ]) {
-      print(sprintf("%s, v. %i", ids[i, "dataset"], ids[i, "version"]))
-      oml.data = downloadOpenMLData(ids[i, "dataset"], version = ids[i, "version"])
-      expect_true(oml.data$name == ids[i, "dataset"])
-      expect_true(oml.data$version == ids[i, "version"])
-      ds = oml.data$data.set
-      expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) >= 1)
-    }
+  
+  dsl = getOMLDataSetList(session.hash = session.hash)
+  dids = dsl[dsl$status == "active" & dsl$NumberOfInstances <= 10000 & dsl$NumberOfFeatures <= 100, "did"]
+  
+  for (id in dids) {
+    print(id)
+    oml.data = downloadOMLDataSet(id, session.hash)
+    expect_is(oml.data, "OMLDataSet")
+    expect_is(oml.data$desc, "OMLDataSetDescription")
+    expect_identical(length(oml.data$colnames.new), length(oml.data$colnames.old))
+    ds = oml.data$data
+    expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) >= 1)
   }
 })

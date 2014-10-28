@@ -5,18 +5,16 @@ context("download all tasks")
 test_that("download all tasks", {
   skip_on_cran()
   skip_on_travis()
-  taskinfo = getOpenMLRegisteredTasks()
-  quals = getOMLDataQualities()
-  measures = getOpenMLEvaluationMeasures()
-
-  for (i in seq_row(taskinfo)) {
-    name = taskinfo[i, "data_name"]
-    version = taskinfo[i, "data_version"]
-    id = taskinfo[i, "task_id"]
-    q = quals[quals$dataset == name & quals$version == version, ]
-    if (q$NumberOfInstances <= 10000 & q$NumberOfFeatures <= 100 & name != "Zoo_test_jan") {
+  measures = getOMLEvaluationMeasures(session.hash)
+  ttypes = extractSubList(getOMLTaskTypeList(session.hash), "id", use.names = FALSE)
+  
+  dlAllTasksOfType = function(type) {
+    tl = getOMLTaskList(type = type, session.hash = session.hash)
+    tids = tl[tl$status == "active" & tl$NumberOfInstances <= 10000 & tl$NumberOfFeatures <= 100, "task_id"]
+    
+    for (id in tids) {
       print(id)
-      task = downloadOpenMLTask(id)
+      task = downloadOMLTask(id)
       tf = task$target.features
       expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
       ds = task$data.set$data
@@ -26,5 +24,9 @@ test_that("download all tasks", {
       # FIXME: Delete next line when measure spelling is fixed (regarding spaces and underscores)
       all(ems %in% measures | str_replace_all(ems, " ", "_") %in% measures)
     }
+  }
+
+  for (i in ttypes) {
+    dlAllTasksOfType(i)
   }
 })
