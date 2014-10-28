@@ -61,7 +61,7 @@ toMlr.OMLDataSet = function(obj, target = obj$desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
 
   desc = obj$desc
-  
+
   assertSubset(target, obj$colnames.new, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
   assertFlag(ignore.flagged.attributes)

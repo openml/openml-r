@@ -16,7 +16,7 @@ xmlVal = function(doc, path, optional, fun) {
   if (is.null(ns))
     return(NULL)
   if (length(ns) == 1L) {
-    fun(xmlValue(ns[[1]]))
+    fun(xmlValue(ns[[1L]]))
   } else {
     stopf("Multiple XML nodes found: %s", path)
   }
@@ -89,7 +89,7 @@ xmlValsMultNsS = function(doc, path) {
 
 xmlOValsMultNsS = function(doc, path) {
   val = xmlValsMultNs(doc, path, as.character, character(1))
-  if (length(val) == 0)
+  if (length(val) == 0L)
     return(NULL)
   else
     return(val)
@@ -97,9 +97,9 @@ xmlOValsMultNsS = function(doc, path) {
 
 xmlOValsMultNsSPara = function(doc, path, subs = NA_character_, exp.length) {
   val = xmlValsMultNs(doc, path, as.character, character(1L))
-  if (length(val) == 0)
+  if (length(val) == 0L)
     return(rep(subs, times = exp.length))
-  val[is.na(val) | val == ""] = subs
+  val[is.na(val) | !nzchar(val)] = subs
   if (length(val) != exp.length)
     val = c(val, rep(subs, times = exp.length - length(val)))
   return(val)

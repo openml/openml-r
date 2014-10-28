@@ -14,7 +14,7 @@ getOMLDataSetList = function(session.hash, verbosity = NULL) {
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
   # get list of blocks for data sets
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  quals = list()
+  quals = vector("list", length(blocks))
   for (i in seq_along(blocks)) {
     node = blocks[[i]]
     quals1 = xmlChildren(node)[-(1:2)]

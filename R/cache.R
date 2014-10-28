@@ -31,13 +31,10 @@ getCacheTaskPath = function(id, file) {
   getCacheFilePath("tasks", id, file)
 }
 
-
 ##### creating stuff on init
 createDir = function(dir, verbosity = NULL) {
-  ex = file.exists(dir)
-  if (!ex) {
-    ok = dir.create(dir, recursive = TRUE)
-    if (ok)
+  if (!file.exists(dir)) {
+    if (dir.create(dir, recursive = TRUE))
       showInfo(verbosity, "Created dir: %s", dir)
     else
       stopf("Error in creating dir: %s", dir)
@@ -52,7 +49,6 @@ createCacheSubDirs = function(verbosity = NULL) {
   createDir(getCacheTasksDir(), verbosity)
 }
 
-
 # tries to find expected elements in cache dir. caller can request to create path if not found.
 # return:
 #  - path to dir,
@@ -64,12 +60,11 @@ findInCache = function(subdir, id, create, elements) {
   path = getCacheSubDir(subdir, id)
   found = file.exists(path)
   if (!found && create) {
-    ok = dir.create(path)
-    if (!ok)
+    if (!dir.create(path))
       stopf("Error in creating cache dir: %s", path)
     created = TRUE
   }
-  el = extractSubList(str_split(elements, "[.]"), element = 1)
+  el = extractSubList(str_split(elements, "[.]"), element = 1L)
   el = paste0(el, ".found")
   found.list = as.list(elements %in% list.files(path))
   found.list = setNames(found.list, el)

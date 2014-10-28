@@ -9,27 +9,28 @@
 #' @template arg_verbosity
 #' @return [\code{character(1)}]. Session hash for further communication.
 #' @export
-authenticateUser = function(email, password, verbosity = NULL) {
+authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   conf = getOMLConfig()
-  if (!missing(email)) 
-    assertString(email)
-  else
+  if (is.null(email)) {
     email = conf$username
-  if (!missing(password)) {
+  } else {
+    assertString(email)
+  }
+  if (is.null(password)) {
+    md5 = conf$pwdmd5
+  } else {
     assertString(password)
     md5 = digest(password, algo = "md5", serialize = FALSE)
-  } else {
-    md5 = conf$pwdmd5
   }
   showInfo(verbosity, "Authenticating user at server: %s", email)
-  # FIXME: we might want to use https for this!
   url = getAPIURL("openml.authenticate", secure = FALSE)
 
+  # FIXME: we might want to use https for this!
   content = postForm(url, verbosity, username = email, password = md5, .checkParams = FALSE)
   doc = parseXMLResponse(content, "Authenticating user", "authenticate", as.text = TRUE)
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
-  
-  showInfo(verbosity, "Retrieved session hash. Valid until: %s", 
+
+  showInfo(verbosity, "Retrieved session hash. Valid until: %s",
     xmlRValS(doc, "/oml:authenticate/oml:valid_until"))
 
   return(session.hash)

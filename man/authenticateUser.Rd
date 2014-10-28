@@ -3,7 +3,7 @@
 \alias{authenticateUser}
 \title{Authenticate at server.}
 \usage{
-authenticateUser(email, password, verbosity = NULL)
+authenticateUser(email = NULL, password = NULL, verbosity = NULL)
 }
 \arguments{
 \item{email}{[\code{character(1)}]\cr

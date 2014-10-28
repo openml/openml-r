@@ -43,7 +43,7 @@ runTask = function(task, learner, return.mlr.results = FALSE, remove.const.feats
   if (is.null(verbosity))
     verbosity = getOMLConfig()$verbosity
   show.info = (verbosity > 0L)
-  
+
   if (remove.const.feats)
     mlr.task$mlr.task = removeConstantFeatures(mlr.task$mlr.task, show.info = show.info, ...)
 
@@ -88,13 +88,13 @@ reformatPredictions = function(pred, task, orig.lvls) {
   n = length(iter)
   folds = task$estimation.procedure$parameters$number_folds
   reps = task$estimation.procedure$parameters$number_repeats
-  rep = rep(1:reps, each = n/reps)
+  rep = rep(seq_len(reps), each = n/reps)
   fold = iter %% folds
-  fold[fold == 0] = folds
+  fold[fold == 0L] = folds
   rowid = pred$id
 
   # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
-  new_pred = data.frame(rep = rep - 1, fold = fold - 1, row_id = rowid - 1, prediction = pred$response)
+  new_pred = data.frame(rep = rep - 1L, fold = fold - 1L, row_id = rowid - 1L, prediction = pred$response)
 
   probs = c()
   if (task$type == "Supervised Classification") {
@@ -109,6 +109,6 @@ reformatPredictions = function(pred, task, orig.lvls) {
   }
 
   levels(new_pred$prediction) = orig.lvls
-  colnames(new_pred)[1] = "repeat"
+  colnames(new_pred)[1L] = "repeat"
   return(new_pred)
 }

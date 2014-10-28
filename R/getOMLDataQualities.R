@@ -37,7 +37,7 @@ getOMLDataQualities = function(set = "basic") {
   # version, ignore them here.
   for (i in 4:ncol(dq)) {
     type = types[types$name == colnames(dq)[i], "datatype"]
-    if (length(type) == 0)
+    if (length(type) == 0L)
       type = "undefined"
     dq[, i] = switch(type,
       "integer" = as.integer(dq[, i]),

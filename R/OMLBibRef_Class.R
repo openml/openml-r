@@ -22,6 +22,6 @@ makeOMLBibRef = function(citation, url) {
 #' @export
 print.OMLBibRef = function(x, ...) {
   catf("  %s", x$citation)
-  if(length(x$url) > 0 && x$url != "")
+  if (length(x$url) > 0L && nzchar(x$url))
     catf("  url :: %s\n", x$url)
 }

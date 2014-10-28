@@ -12,13 +12,10 @@
 #' @importFrom plyr rbind.fill
 NULL
 
-.OpenML.config = new.env()
+.OpenML.config = new.env(parent = emptyenv())
 class(.OpenML.config) = c("OMLConfig", class(.OpenML.config))
 
 .onAttach = function(libname, pkgname) {
   readConfigAndAssign()
   createCacheSubDirs()
 }
-
-
-

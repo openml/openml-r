@@ -13,28 +13,26 @@ NULL
 readConfigFile = function(conffile) {
   assertFile(conffile)
 
-  conf = new.env()
+  conf = new.env(parent = emptyenv())
   # FIXME: we need to check the format of the conf file
   # the format is <name> = <value>
-  lines = readLines(conffile)
-  lines = str_trim(lines)
-  lines = Filter(function(x) nchar(x) > 0L, lines)
+  lines = Filter(nzchar, str_trim(readLines(conffile)))
   lines = str_split(lines, "=")
   lines = lapply(lines, str_trim)
   lines = do.call(rbind, lines)
   conf = as.environment(setNames(as.list(lines[, 2L]), lines[, 1L]))
   # if (is.error(x))
     # stopf("There was an error in sourcing your configuration file '%s': %s!", conffile, as.character(x))
-  
-  if (!is.null(conf$verbosity))
-    conf$verbosity = as.integer(conf$verbosity)
-  
+
+  # if (!is.null(conf$verbosity))
+  #   conf$verbosity = as.integer(conf$verbosity)
+
   checkConfig(conf)
   # FIXME: probably horrible security wise....
   if (!is.null(conf$password))
     conf$pwdmd5 = digest(conf$password, serialize = FALSE)
   conf$password = NULL
-  
+
   conf = addClasses(conf, "OMLConfig")
   return(conf)
 }
@@ -143,4 +141,3 @@ setOMLConfig = function(conf = list(), ...) {
 getOMLConfig = function() {
   get(".OpenML.config", envir = getNamespace("OpenML"))
 }
-
