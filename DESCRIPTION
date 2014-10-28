@@ -12,6 +12,7 @@ Suggests:
 Imports:
     BBmisc,
     checkmate,
+    data.table,
     digest,
     RCurl,
     rjson,
@@ -20,7 +21,6 @@ Imports:
     RWeka,
     plyr,
     mlr,
-    base64enc,
     stats
 LazyData: yes
 ByteCompile: yes

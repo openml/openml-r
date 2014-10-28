@@ -7,7 +7,7 @@
 #' @import RWeka
 #' @import mlr
 #' @import checkmate
-#' @import base64enc
+#' @import data.table
 #' @importFrom stats setNames
 #' @importFrom plyr rbind.fill
 NULL
