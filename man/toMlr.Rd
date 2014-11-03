@@ -5,14 +5,16 @@
 \alias{toMlr.OMLTask}
 \title{Convert an OpenML object to mlr.}
 \usage{
-toMlr(obj, target, remove.target.NAs, ignore.flagged.attributes)
+toMlr(obj, target, remove.target.NAs, ignore.flagged.attributes, verbosity)
 
 \method{toMlr}{OMLTask}(obj,
   target = obj$data.set$desc$default.target.attribute,
-  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE)
+  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE,
+  verbosity = NULL)
 
 \method{toMlr}{OMLDataSet}(obj, target = obj$desc$default.target.attribute,
-  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE)
+  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE,
+  verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLDataSet}} | \code{\link{OMLTask}}]\cr
@@ -29,6 +31,13 @@ the function might fail if you set this to \code{FALSE}.}
 \item{ignore.flagged.attributes}{[\code{logical(1)}]\cr
 Should those features that are listed in the data set description's member "ignore.attribute"
 be ignored? Default is \code{TRUE}.}
+
+\item{verbosity}{[\code{integer(1)}]\cr
+Print verbose output on console? Possible values are:\cr
+\code{0}: normal output,\cr
+\code{1}: info output,\cr
+\code{2}: debug output.\cr
+Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
 Either a [\code{\link[mlr]{Task}}] or, a list of:

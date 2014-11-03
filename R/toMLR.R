@@ -14,6 +14,7 @@
 #' @param ignore.flagged.attributes [\code{logical(1)}]\cr
 #'   Should those features that are listed in the data set description's member "ignore.attribute"
 #'   be ignored? Default is \code{TRUE}.
+#' @template arg_verbosity
 #' @return Either a [\code{\link[mlr]{Task}}] or, a list of:
 #'   \item{mlr.task}{[\code{\link[mlr]{Task}}]\cr
 #'     The task.}
@@ -26,14 +27,14 @@
 #'     removed from the data set during conversion but their names are needed to produce proper
 #'     uploadable predictions.}
 #' @export
-toMlr = function(obj, target, remove.target.NAs, ignore.flagged.attributes) {
+toMlr = function(obj, target, remove.target.NAs, ignore.flagged.attributes, verbosity) {
   UseMethod("toMlr")
 }
 
 #' @rdname toMlr
 #' @export
 toMlr.OMLTask = function(obj, target = obj$data.set$desc$default.target.attribute,
-  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
+  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE, verbosity = NULL) {
 
   assertSubset(target, obj$data.set$colnames.new, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
@@ -47,7 +48,7 @@ toMlr.OMLTask = function(obj, target = obj$data.set$desc$default.target.attribut
     tar.na = is.na(data[, target])
     data.set$data = subset(data, !tar.na)
   }
-  mlr.task = createMlrTask(data.set, target, task.type, ignore.flagged.attributes)
+  mlr.task = createMlrTask(data.set, target, task.type, ignore.flagged.attributes, verbosity)
   mlr.rin = createMlrResampleInstance(estim.proc, mlr.task$mlr.task)
   mlr.measures = createMlrMeasures(obj$evaluation.measures, task.type)
   res = list(mlr.task = mlr.task$mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
@@ -58,7 +59,7 @@ toMlr.OMLTask = function(obj, target = obj$data.set$desc$default.target.attribut
 #' @rdname toMlr
 #' @export
 toMlr.OMLDataSet = function(obj, target = obj$desc$default.target.attribute,
-  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE) {
+  remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE, verbosity = NULL) {
 
   desc = obj$desc
 
@@ -76,11 +77,11 @@ toMlr.OMLDataSet = function(obj, target = obj$desc$default.target.attribute,
   } else {
     stopf("Currently no support for tasks with more than one target column.")
   }
-  mlr.task = createMlrTask(obj, target, task.type, ignore.flagged.attributes)
+  mlr.task = createMlrTask(obj, target, task.type, ignore.flagged.attributes, verbosity)
   return(mlr.task$mlr.task)
 }
 
-createMlrTask = function(data.set, target, task.type, ignore.flagged.attributes) {
+createMlrTask = function(data.set, target, task.type, ignore.flagged.attributes, verbosity) {
   assertClass(data.set, "OMLDataSet")
   data = data.set$data
   desc = data.set$desc
@@ -92,10 +93,15 @@ createMlrTask = function(data.set, target, task.type, ignore.flagged.attributes)
     inds = which(data$colnames.new %in% desc$ignore.attribute)
     data = data[, -inds]
   }
+
+  if (is.null(verbosity))
+    verbosity = getOMLConfig()$verbosity
+  fixup = ifelse(verbosity == 0L, "quiet", "warn")
+
   if (task.type == "Supervised Classification") {
-    mlr.task = makeClassifTask(data = data, target = target)
+    mlr.task = makeClassifTask(data = data, target = target, fixup.data = fixup)
   } else if (task.type == "Supervised Regression") {
-    mlr.task = makeRegrTask(data = data, target = target)
+    mlr.task = makeRegrTask(data = data, target = target, fixup.data = fixup)
   } else {
     stopf("Encountered currently unsupported task type: %s", task.type)
   }
