@@ -24,8 +24,8 @@ readConfigFile = function(conffile) {
   # if (is.error(x))
     # stopf("There was an error in sourcing your configuration file '%s': %s!", conffile, as.character(x))
 
-  # if (!is.null(conf$verbosity))
-  #   conf$verbosity = as.integer(conf$verbosity)
+  if (!is.null(conf$verbosity))
+   conf$verbosity = as.integer(conf$verbosity)
 
   checkConfig(conf)
   # FIXME: probably horrible security wise....
