@@ -150,36 +150,36 @@ createMlrMeasures = function(measures, type) {
 
   getMlrMeasures = function(measures, measure.list) {
     mlr.measures = vector("list", length(measures))
-    for (i in seq_along(measures)) {
-      which.contain = lapply(measure.list, function(x) measures[i] %in% x)
+    sub.msrs = gsub("[[:space:]_]", "", measures)
+    for (i in seq_along(sub.msrs)) {
+      which.contain = lapply(measure.list, function(x) sub.msrs[i] %in% x)
       measure.name = names(which.contain[which.contain == TRUE])
-      if (is.null(measure.name)) {
-        stopf("Unsupported evaluation measure: %s", measure.name)
+      if (length(measure.name) == 0) {
+        stopf("Unsupported evaluation measure: %s", measures[i])
       }
       mlr.measures[[i]] = get(measure.name)
     }
     return(mlr.measures)
   }
 
-  # FIXME: match using gsub("[[:space:]_]", "")
   classif.list = list(
-    mmce = c("mean_absolute_error", "mean absolute error"),
-    auc = c("area_under_roc_curve", "area under roc curve"),
-    timetrain = c("build_cpu_time", "build cpu time"),
-    f1 = c("f_measure", "f measure"),
-    mcc = c("matthews_correlation_coefficient", "matthews correlation coefficient"),
+    mmce = "meanabsoluteerror",
+    auc = "areaunderroccurve",
+    timetrain = "buildcputime",
+    f1 = "fmeasure",
+    mcc = "matthewscorrelationcoefficient",
     ppv = "precision",
-    acc = c("predictive_accuracy", "predictive accuracy"),
+    acc = "predictiveaccuracy",
     tpr = "recall")
   regr.list = list(
-    rmse = c("root_mean_squared_error", "root mean squared error"),
-    mae = c("mean_absolute_error", "mean absolute error"),
-    auc = c("area_under_roc_curve", "area under roc curve"),
-    timetrain = c("build_cpu_time", "build cpu time"),
-    f1 = c("f_measure", "f measure"),
-    mcc = c("matthews_correlation_coefficient", "matthews correlation coefficient"),
+    rmse = "rootmeansquarederror",
+    mae = "meanabsoluteerror",
+    auc = "areaunderroccurve",
+    timetrain = "buildcputime",
+    f1 = "fmeasure",
+    mcc = "matthewscorrelationcoefficient",
     ppv = "precision",
-    acc = c("predictive_accuracy", "predictive accuracy"),
+    acc = "predictiveaccuracy",
     tpr = "recall")
 
   if (type == "Supervised Classification") {

@@ -25,9 +25,9 @@ getOMLTaskList = function(type = 1L, session.hash, verbosity = NULL) {
     row = c(
       list(
         as.integer(xmlValue(children[["task_id"]])),
-        xmlValue(children[["task_type"]]),
+        as.factor(xmlValue(children[["task_type"]])),
         as.integer(xmlValue(children[["did"]])),
-        xmlValue(children[["status"]])
+        as.factor(xmlValue(children[["status"]]))
       ),
       as.list(as.integer(vcapply(children[qualities], xmlValue)))
     )
