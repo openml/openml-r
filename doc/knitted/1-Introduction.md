@@ -12,7 +12,7 @@ For general information on what [OpenML](http://openml.org/) is, please have a l
 ----------------------------------------------------------------------------------------------------
 Jump to:   
 1 Introduction  
-[2 Configuration](2-Configuration.md) 
+[2 Configuration](2-Configuration.md)  
 [3 Download a task](3-Download-a-task.md)  
 [4 Upload an implementation](4-Upload-an-implementation.md)  
 [5 Upload predictions](5-Upload-predictions.md)  

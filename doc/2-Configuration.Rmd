@@ -1,7 +1,7 @@
 Configuration
 =============
 
-The first step of working with OpenML should be to register yourself at the [OpenML website](openml.liacs.nl). Most of the package's functions require a session hash which is only accessible with a (free) account.
+The first step of working with OpenML should be to register yourself at the [OpenML website](http://openml.liacs.nl). Most of the package's functions require a session hash which is only accessible with a (free) account.
 
 After the registration you should create a configuration file under `~/.openml/config`. This file may contain the following information:
 * username
