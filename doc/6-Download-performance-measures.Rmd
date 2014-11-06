@@ -5,7 +5,7 @@ The server computes several performance measures (metrics) for every run that is
 on the same task. 
 
 ### Download run results
-To download the results of one of your own runs, you have to know the corresponding run ID, which is returned by `uploadOpenMLRun`. In [section 4](4-Upload-predictions.md), we uploaded a run and
+To download the results of one of your own runs, you have to know the corresponding run ID, which is returned by `uploadOpenMLRun`. In [section 5](5-Upload-predictions.md), we uploaded a run and
 retrieved a unique run id that we called "run.id". In order to get all stored metrics for this
 specific run, we can use the function `downloadOpenMLRunResults`:
 

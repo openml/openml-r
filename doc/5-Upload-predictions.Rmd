@@ -55,7 +55,7 @@ If you do not work with mlr, you must create a run parameter list. This is a lis
 * component (optional and only needed if the parameter belongs to a (sub-)component of the
 implementation. Then, the name of this component must be handed over here.)
 
-Let's continue with the fictive example from [section 3](3-Upload-an-implementation.md) and assume
+Let's continue with the fictive example from [section 4](4-Upload-an-implementation.md) and assume
 that we set the parameter "a" to a value of 300. Parameter "b" on the other hand remains in the
 default setting. 
 ```{r eval = FALSE}

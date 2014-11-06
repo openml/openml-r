@@ -21,7 +21,7 @@ session.hash = authenticateUser(email = "openml.rteam@gmail.com", password = "te
 
 ### Download an OpenML task
 To download a certain task from the OpenML server, you need to know the task's ID. You can look for appropriate task IDs [here](http://openml.org/search?q=&type=task). See
-[section 6](6-Browse-the-database.md) to learn how to search for tasks via R.
+[section 7](7-Browse-the-database.md) to learn how to search for tasks via R.
 
 The following call returns an OpenML task object: 
 

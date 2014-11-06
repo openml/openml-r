@@ -30,7 +30,7 @@ head(filtered.dq[, c("did", "dataset", "version")])
 
 These are the names, versions and data set IDs of all appropriate data sets that are stored on the 
 OpenML server. Now we could download one or more of these data sets directly via
-`downloadOpenMLDataSet` as seen in [section 2](2-Download-a-task.md). Another option is to find
+`downloadOMLDataSet` as seen in [section 3](3-Download-a-task.md). Another option is to find
 tasks that work with these data sets and download one or more of them:
 
 ```r
