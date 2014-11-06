@@ -9,17 +9,20 @@ To download the results of one of your own runs, you have to know the correspond
 retrieved a unique run id that we called "run.id". In order to get all stored metrics for this
 specific run, we can use the function `downloadOpenMLRunResults`:
 
-```{r eval = FALSE}
+
+```r
 run.results = downloadOpenMLRunResults(run.id)
 run.results
 ```
 You can print the metrics to the console to get a first look:
-```{r eval = FALSE}
+
+```r
 print(run.results, printMetrics = TRUE)
 ```
 The so called "array.data" in which matrices and vectors are stored is not printed to keep
 the output readable. The complete data.set containing all information is accessible as follows:
-```{r eval = FALSE}
+
+```r
 metrics = run.results$output.data$evaluation
 ```
 ### Download task results
@@ -27,19 +30,19 @@ It is possible to download all stored metrics of all runs of a certain task at t
 might be very useful in order to compare the performance of many different implementations. To
 download all the results of a task, you only have to know the task ID. 
 
-```{r eval = FALSE}
+
+```r
 task.results = downloadOpenMLTaskResults(id = 4)
 task.results
 ```
 For most tasks, there are a lot of runs, so the metrics data.frame might be very large. Thus, it
 rarely makes sense to print the evaluations to the console (which is possible nevertheless, just
 like in the example above with `printMetrics = TRUE`). You can access the whole data.frame with:
-```{r eval = FALSE}
+
+```r
 task.metrics = task.results$metrics
 ```
-```{r eval = FALSE, echo = FALSE, warning = FALSE, message = FALSE}
-deleteOpenMLRun(run.id)
-```
+
 ----------------------------------------------------------------------------------------------------
 Jump to:   
 [1 Introduction](1-Introduction.md)  

@@ -7,20 +7,23 @@ etc.) as well as values of more abstract meta learning features.
 ### Get data qualities
 With the function `getDataQualities` you can obtain all data qualities of all stored data sets. 
 By default, only the basic data characteristics are retrieved:
-```{r eval = FALSE}
+
+```r
 dq = getDataQualities()
 ```
 
 If you want to retrieve not only the basic data qualities but also meta learning features, 
 please use the argument "set":
-```{r eval = FALSE}
+
+```r
 dq = getDataQualities(set = "all")
 ```
 
 Now, you have a data.frame with some data qualities. You can use them to find data sets that meet
 certain conditions. Let's assume we wanted to work on data sets that have only numeric features and
 not a single missing value. Therefore, we simply subset the data.frame:
-```{r eval = FALSE}
+
+```r
 filtered.dq = subset(dq, NumberOfNumericFeatures == NumberOfFeatures & NumberOfMissingValues == 0)
 head(filtered.dq[, c("did", "dataset", "version")])
 ```
@@ -29,7 +32,8 @@ These are the names, versions and data set IDs of all appropriate data sets that
 OpenML server. Now we could download one or more of these data sets directly via
 `downloadOpenMLDataSet` as seen in [section 2](2-Download-a-task.md). Another option is to find
 tasks that work with these data sets and download one or more of them:
-```{r eval = FALSE}
+
+```r
 task.ids = getTasksForDataSet(filtered.dq$did)
 ```
 
@@ -37,7 +41,8 @@ task.ids = getTasksForDataSet(filtered.dq$did)
 The freest way to browse the OpenML database is by SQL-queries. The function `runSQLQuery` is 
 an interface for any arbitrary SQL-query. The query is passed as a string to the function as 
 you can see in the following example:
-```{r eval = FALSE}
+
+```r
 runSQLQuery(query = "SELECT id FROM implementation WHERE name = 'classif.rpart'")
 ```
 

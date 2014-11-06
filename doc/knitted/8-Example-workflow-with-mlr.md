@@ -11,7 +11,8 @@ that have less than 10 features, not more than 100 instances, exactly 2 classes 
 feature and not a single missing value. Then, we have to upload the learner, compute predictions and
 upload these.
 
-```{r eval = FALSE}
+
+```r
 library(mlr)
 
 dq = getDataQualities()

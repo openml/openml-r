@@ -30,9 +30,10 @@ Example: An excerpt of predictions (Iris data set, 10-fold CV, 2 repeats).
 ### Compute predictions of an mlr learner for an OpenML task
 If you are working with [mlr](https://github.com/berndbischl/mlr), you can use the OpenML function `runTask` that returns a data.frame of predictions in the desired form:
 
-```{r eval = FALSE}
+
+```r
 predictions = runTask(task, learner)
-```  
+```
 
 If the prediction type of the learner is set to "response" instead of "prob", the confidence-columns
 will contain only 0s and 1s as in the example above. Else, the predicted class probabilities will be
@@ -40,7 +41,8 @@ used.
 
 ### Upload predictions to the server
 To upload the predictions, mlr users only need the following call:
-```{r eval = FALSE}
+
+```r
 run.id = uploadOpenMLRun(task = task, 
   mlr.lrn = learner, 
   impl.id = flow.id, 
@@ -58,7 +60,8 @@ implementation. Then, the name of this component must be handed over here.)
 Let's continue with the fictive example from [section 3](3-Upload-an-implementation.md) and assume
 that we set the parameter "a" to a value of 300. Parameter "b" on the other hand remains in the
 default setting. 
-```{r eval = FALSE}
+
+```r
 run.par.a = OpenMLRunParameter(
   name = "a", 
   value = "300")  
@@ -68,7 +71,8 @@ run.pars = list(run.par.a)
 
 Now we upload the run. We leave out the argument "mlr.lrn", because we are not using mlr. Instead,
 we hand over our run parameter list "run.pars":
-```{r eval = FALSE}
+
+```r
 run.id = uploadOpenMLRun(task = task, 
   impl.id = flow.id, 
   predictions = predictions,

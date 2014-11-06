@@ -22,7 +22,7 @@ If you have done these two steps, you are ready to go. Have fun!
 
 ----------------------------------------------------------------------------------------------------
 Jump to:    
-[1 Introduction](1-Introduction.md)
+[1 Introduction](1-Introduction.md)  
 2 Configuration  
 [3 Download a task](3-Download-a-task.md)  
 [4 Upload an implementation](4-Upload-an-implementation.md)  
