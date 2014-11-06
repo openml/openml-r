@@ -59,9 +59,10 @@ flow.id.2 = uploadOpenMLImplementation(oml.flow, sourcefile = sourcefile, sessio
 ----------------------------------------------------------------------------------------------------------------------
 Jump to:    
 [1 Introduction](1-Introduction.md)    
-[2 Download a task](2-Download-a-task.md)  
-3 Upload an implementation  
-[4 Upload predictions](4-Upload-predictions.md)  
-[5 Download performance measures](5-Download-performance-measures.md)  
-[6 Browse the database](6-Browse-the-database.md)  
-[7 Example workflow with mlr](7-Example-workflow-with-mlr.md)
+[2 Configuration](2-Configuration.md)  
+[3 Download a task](3-Download-a-task.md)  
+4 Upload an implementation  
+[5 Upload predictions](5-Upload-predictions.md)  
+[6 Download performance measures](6-Download-performance-measures.md)  
+[7 Browse the database](7-Browse-the-database.md)  
+[8 Example workflow with mlr](8-Example-workflow-with-mlr.md)
