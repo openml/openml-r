@@ -40,7 +40,7 @@ readConfigFile = function(conffile) {
 # assigns a conf to namespace
 assignConfig = function(conf) {
   conf.in.ns = getOMLConfig()
-  lapply(ls(conf), function(x) assign(x, conf[[x]], envir = conf.in.ns))
+  invisible(lapply(ls(conf), function(x) assign(x, conf[[x]], envir = conf.in.ns)))
 }
 
 # reads package conf, userhome conf, working dir conf

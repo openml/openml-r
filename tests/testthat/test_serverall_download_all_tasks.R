@@ -14,7 +14,7 @@ test_that("download all tasks", {
     
     for (id in tids) {
       print(id)
-      task = downloadOMLTask(id)
+      task = downloadOMLTask(id, session.hash)
       tf = task$target.features
       expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
       ds = task$data.set$data
@@ -22,7 +22,7 @@ test_that("download all tasks", {
       ems = task$evaluation.measures
       # expect_true(ems %in% measures)
       # FIXME: Delete next line when measure spelling is fixed (regarding spaces and underscores)
-      all(ems %in% measures | str_replace_all(ems, " ", "_") %in% measures)
+      expect_true(all(ems %in% measures | str_replace_all(ems, " ", "_") %in% measures))
     }
   }
 

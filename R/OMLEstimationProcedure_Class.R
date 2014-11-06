@@ -36,8 +36,8 @@ makeOMLEstimationProcedure = function(type, data.splits.url = NA_character_, dat
 print.OMLEstimationProcedure = function(x, ...)  {
   catf('\nEstimation Method :: %s',x$type)
   catf('\tParameters:')
-  for(i in seq_along(x$parameters)){
-    if (!is.na(x$parameters[[i]]))
+  for (i in seq_along(x$parameters)) {
+    if (!is.na(x$parameters[[i]]) && x$parameters[[i]] != "")
       catf('\t\t%s = %s', names(x$parameters)[i], x$parameters[[i]])
   }
 }
