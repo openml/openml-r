@@ -33,5 +33,15 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   showInfo(verbosity, "Retrieved session hash. Valid until: %s",
     xmlRValS(doc, "/oml:authenticate/oml:valid_until"))
 
+  SESSION_HASH <<- session.hash
   return(session.hash)
+}
+
+#' Get the current session's hash
+#' @return [\code{character(1)}].
+#' @export
+getSessionHash = function() {
+  if (is.null(SESSION_HASH)) # ... session expire, renew authenticaton, etc.
+    stop("Please authenticate first.")
+  SESSION_HASH
 }

@@ -12,8 +12,11 @@ NULL
 
 .OpenML.config = new.env(parent = emptyenv())
 class(.OpenML.config) = "OMLConfig"
+SESSION_HASH = NULL
+SESSION_EXPIRE = NULL
 
 .onAttach = function(libname, pkgname) {
   readConfigAndAssign()
   createCacheSubDirs()
 }
+
