@@ -29,11 +29,15 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   content = postForm(url, verbosity, username = email, password = md5, .checkParams = FALSE)
   doc = parseXMLResponse(content, "Authenticating user", "authenticate", as.text = TRUE)
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
-
-  showInfo(verbosity, "Retrieved session hash. Valid until: %s",
-    xmlRValS(doc, "/oml:authenticate/oml:valid_until"))
+  valid.until = xmlRValS(doc, "/oml:authenticate/oml:valid_until")
+  
+  showInfo(verbosity, "Retrieved session hash. Valid until: %s", valid.until)
 
   SESSION_HASH <<- session.hash
+ 
+  # We do this to avoid time zone clashes: 
+  SESSION_HASH_EXPIRES <<- Sys.time() + 55 * 60
+
   return(session.hash)
 }
 
@@ -43,5 +47,7 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
 getSessionHash = function() {
   if (is.null(SESSION_HASH)) # ... session expire, renew authenticaton, etc.
     stop("Please authenticate first.")
+  if (Sys.time() > SESSION_HASH_EXPIRES)
+    stop("Session hash expired. Please refresh your authentication.")
   SESSION_HASH
 }
