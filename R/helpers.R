@@ -14,4 +14,3 @@ showMessage = function(verbosity, msg, ..., minlev) {
   if (verbosity >= minlev)
     messagef(msg, ...)
 }
-
