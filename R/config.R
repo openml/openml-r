@@ -43,19 +43,6 @@ assignConfig = function(conf) {
   invisible(lapply(ls(conf), function(x) assign(x, conf[[x]], envir = conf.in.ns)))
 }
 
-# reads package conf, userhome conf, working dir conf
-# then assigns them to namespace
-readConfigAndAssign = function() {
-  assignConfigDefaults()
-  fn.user = path.expand("~/.openml/config")
-  if (!file.exists(fn.user)) {
-    warning("No configuration found! Assigning defaults.")
-  } else {
-    conf = readConfigFile(fn.user)
-    assignConfig(conf)
-  }
-}
-
 assignConfigDefaults = function() {
   conf = getOMLConfig()
   conf$server = "http://www.openml.org"
@@ -139,5 +126,5 @@ setOMLConfig = function(conf = list(), ...) {
 #' @family conf
 #' @export
 getOMLConfig = function() {
-  get(".OpenML.config", envir = getNamespace("OpenML"))
+  addClasses(get(".OpenML.config", envir = getNamespace("OpenML")), "OMLConfig")
 }

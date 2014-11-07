@@ -1,4 +1,4 @@
-#' List available OpenML data sets
+#' @title List available OpenML data sets
 #'
 #' @description
 #' The returned data.frame contains the data set id \code{did}, the \code{status} and

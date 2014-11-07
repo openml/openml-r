@@ -11,12 +11,21 @@
 NULL
 
 .OpenML.config = new.env(parent = emptyenv())
-class(.OpenML.config) = "OMLConfig"
-SESSION_HASH = NULL
-SESSION_EXPIRE = NULL
 
-.onAttach = function(libname, pkgname) {
-  readConfigAndAssign()
-  createCacheSubDirs()
+
+if (!exists("SESSION_HASH")) {
+  SESSION_HASH = NULL
+  SESSION_EXPIRE = NULL
 }
 
+.onAttach = function(libname, pkgname) {
+  assignConfigDefaults()
+  fn.user = path.expand("~/.openml/config")
+  if (!file.exists(fn.user)) {
+    packageStartupMessage("openml-r: No configuration found! Using defaults.")
+  } else {
+    conf = readConfigFile(fn.user)
+    assignConfig(conf)
+  }
+  createCacheSubDirs()
+}

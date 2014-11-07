@@ -36,7 +36,7 @@ downloadXML = function(url, file, verbosity = NULL, ...) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
   ddd = list(...)
   content = if (length(ddd) > 0L)
-    postForm(url, ...)
+    do.call(postForm, c(list(uri = url), ddd))
   else
     getURL(url)
   if (!is.null(file)) {
