@@ -5,7 +5,7 @@
 #' some describing data qualities.
 #' @template arg_hash
 #'
-#' @template verbosity
+#' @template arg_verbosity
 #' @return data.frame
 #' @export
 listOMLDataSets = function(session.hash = getSessionHash(), verbosity = NULL) {
