@@ -34,9 +34,7 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   showInfo(verbosity, "Retrieved session hash. Valid until: %s", valid.until)
 
   SESSION_HASH <<- session.hash
- 
-  # We do this to avoid time zone clashes: 
-  SESSION_HASH_EXPIRES <<- Sys.time() + 55 * 60
+  SESSION_HASH_EXPIRES <<- as.POSIXct(valid.until)
 
   return(session.hash)
 }
