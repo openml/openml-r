@@ -29,24 +29,27 @@ listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity
       path.evals = "/oml:task_evaluations/oml:evaluation["
       run.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:run_id"))
       setup.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:setup_id"))
-      impl.id = xmlRValS(doc, paste0(path.evals, i, "]/oml:implementation_id"))
+      impl.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:implementation_id"))
       impl = xmlRValS(doc, paste0(path.evals, i, "]/oml:implementation"))
       ns.metrics = getNodeSet(doc, paste0(path.evals, i, "]/oml:measure"))
 
       metric.names = unlist(lapply(ns.metrics, function(x) xmlGetAttr(x, "name")))
       metric.values = sapply(ns.metrics, function(x) xmlValue(x))
 
-      run.info = rbind(run.info, data.frame(run.id, setup.id, impl.id, impl))
+      run.info = rbind(run.info, data.frame(run.id, setup.id, impl.id, impl, stringsAsFactors = FALSE))
       run.res[[i]] = as.data.frame(t(metric.values))
       colnames(run.res[[i]]) = metric.names
     }
     # rbind run results and fill missing measures with <NA>
-    metrics = do.call(rbind.fill, run.res)
+    metrics = rbindlist(run.res, use.names = TRUE, fill = TRUE)
     # cols of metrics are factors now, convert them:
-    metrics = as.data.frame(lapply(metrics, function(x) type.convert(as.character(x))))
+    # FIXME: convert types better as soon as possible (e.g., via listOMLEvaluationMeasures)
+    metrics = as.data.frame(lapply(metrics, function(x) type.convert(as.character(x), as.is = TRUE)),
+      stringsAsFactors = FALSE)
 
-    task.info = lapply(data.frame(task.id, task.type.id, estim.proc), rep, times = nrow(metrics))
-    metrics = cbind(run.info, task.info, metrics)
+    task.info = data.frame(task.id, task.type.id, estim.proc, stringsAsFactors = FALSE)
+    task.info = lapply(task.info, rep, times = nrow(metrics))
+    metrics = cbind(run.info, task.info, metrics, stringsAsFactors = FALSE)
   } else {
     metrics = data.frame()
   }
