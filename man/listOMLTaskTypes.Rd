@@ -7,7 +7,8 @@ listOMLTaskTypes(session.hash = getSessionHash(), verbosity = NULL)
 }
 \arguments{
 \item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}.}
+A session token returned by \code{\link{authenticateUser}}. Default is
+\code{\link{getSessionHash()}}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

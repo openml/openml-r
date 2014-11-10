@@ -15,7 +15,7 @@ NULL
 
 if (!exists("SESSION_HASH")) {
   SESSION_HASH = NULL
-  SESSION_EXPIRE = NULL
+  SESSION_HASH_EXPIRES = NULL
 }
 
 .onAttach = function(libname, pkgname) {
