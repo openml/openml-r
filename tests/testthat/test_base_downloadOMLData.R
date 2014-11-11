@@ -1,6 +1,7 @@
 context("downloadOMLDataSet")
 
 test_that("downloadOMLDataSet", {
+  skip("not yet")
   ds = downloadOMLDataSet(1)
   expect_is(ds, "OMLDataSet")
   expect_true(ds$desc$id == 1)

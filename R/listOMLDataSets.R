@@ -24,5 +24,7 @@ listOMLDataSets = function(session.hash = getSessionHash(), verbosity = NULL) {
     names(row) = c("did", "status", vcapply(children[qualities], xmlAttrs))
     row
   }), fill = TRUE)
-  return(as.data.frame(quals))
+  df = as.data.frame(quals)
+  df$status = factor(df$status, levels = c("active", "inactive", "in_preparation"))
+  return(df)
 }

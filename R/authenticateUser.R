@@ -30,12 +30,10 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   doc = parseXMLResponse(content, "Authenticating user", "authenticate", as.text = TRUE)
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
   valid.until = xmlRValS(doc, "/oml:authenticate/oml:valid_until")
-  
+
   showInfo(verbosity, "Retrieved session hash. Valid until: %s", valid.until)
 
-  SESSION_HASH <<- session.hash
-  SESSION_HASH_EXPIRES <<- as.POSIXct(valid.until)
-
+  .OpenML.session <<- list(hash = session.hash, expires = as.POSIXct(valid.until))
   return(session.hash)
 }
 
@@ -43,9 +41,10 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
 #' @return [\code{character(1)}].
 #' @export
 getSessionHash = function() {
-  if (is.null(SESSION_HASH)) # ... session expire, renew authenticaton, etc.
+  session = .OpenML.session
+  if (is.null(session$hash)) # ... session expire, renew authenticaton, etc.
     stop("Please authenticate first.")
-  if (Sys.time() > SESSION_HASH_EXPIRES)
+  if (session$expires < Sys.time() + 60)
     stop("Session hash expired. Please refresh your authentication.")
-  SESSION_HASH
+  session$hash
 }

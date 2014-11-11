@@ -1,8 +1,9 @@
 context("downloadOMLTask")
 
 test_that("downloadOMLTask", {
+  skip("not yet")
   measures = getOMLEvaluationMeasures(session.hash)
-  
+
   task = downloadOMLTask(1, session.hash)
   tf = task$target.features
   expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
