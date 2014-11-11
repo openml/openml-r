@@ -1,32 +1,82 @@
 #' @title Get an OpenML data set.
 #'
 #' @description
-#' Given the id, this function will download the whole data set, including the ARFF and
-#' the description XML from the OpenML server. Note that this does not include data
-#' splits or other task-related information. Tasks can be downloaded with
-#' \code{\link{downloadOMLTask}}.
+#' This function will return an \code{\link{OMLDataSet}}.
+#' 
+#' @details
+#' Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
+#' and returned.\cr
+#' Given an \code{\link{OMLTask}}, it is checked if the related data set is already encapsulated in the
+#' task object. If not, the task's data set ID will be used to download it.\cr
+#' Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}. 
+#' Tasks can be downloaded with \code{\link{getOMLTask}}.
 #'
-#' @param id [\code{integer(1)}]\cr
-#'   The id of the data set.
+#' @param x [\code{integer(1)} | \code{\link{OMLTask}}]\cr
+#'   Either a data set ID or a task.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}]
+#' @seealso \code{\link{OMLDataSet}}, \code{\link{getOMLTask}}
 #' @export
-getOMLDataSet = function(id, session.hash = getSessionHash(), verbosity = NULL) {
-  id = asInt(id)
+getOMLDataSet = function(x, session.hash, verbosity) {
+  UseMethod("getOMLDataSet")
+}
+
+#' @rdname getOMLDataSet
+#' @export
+getOMLDataSet.OMLTask = function(x, session.hash = getSessionHash(), verbosity = NULL) {
+  if (is.null(x$data.set$data))
+    data.set = getOMLDataSet(x$data.desc.id, session.hash, verbosity)
+  else 
+    data.set = x$data.set
+  return(data.set)
+}
+
+#' @rdname getOMLDataSet
+#' @export
+getOMLDataSet.numeric = function(x, session.hash = getSessionHash(), verbosity = NULL) {
+  id = asInt(x)
   showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
 
   f = findInCacheDataSet(id, create = TRUE)
 
   # get XML description
   if (!f$description.found) {
-    data.desc.contents = downloadOMLDataSetDescription(id, verbosity = verbosity, session.hash = session.hash)
+    path = getCacheDataSetPath(id, "description.xml")
+    url = getAPIURL("openml.data.description", data.id = id)
+    data.desc.contents = downloadXML(url, path, verbosity, session_hash = session.hash)
   } else {
     showInfo(verbosity, "Data set description found in cache.")
     data.desc.contents = readLines(getCacheFilePath("datasets", id, "description.xml"))
   }
+
+  # parse data set description
   data.desc.xml = parseXMLResponse(data.desc.contents, "Getting data set description", "data_set_description", as.text = TRUE)
-  data.desc = parseOMLDataSetDescription(data.desc.xml)
+  args = filterNull(list(
+    id = xmlRValI(data.desc.xml, "/oml:data_set_description/oml:id"),
+    name = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:name"),
+    version = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:version"),
+    description = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:description"),
+    format = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:format"),
+    creator = xmlOValsMultNsS(data.desc.xml, "/oml:data_set_description/oml:creator"),
+    contributor = xmlOValsMultNsS(data.desc.xml, "/oml:data_set_description/oml:contributor"),
+    collection.date = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:collection_date"),
+    upload.date = xmlRValD(data.desc.xml, "/oml:data_set_description/oml:upload_date"),
+    language = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:language"),
+    licence = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:licence"),
+    url = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:url"),
+    default.target.attribute = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:default_target_attribute"),
+    row.id.attribute = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:row_id_attribute"),
+    ignore.attribute = xmlOValsMultNsS(data.desc.xml, "/oml:data_set_description/oml:ignore_attribute"),
+    version.label = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:version_label"),
+    citation = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:citation"),
+    visibility = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:visibility"),
+    original.data.url = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:original_data_url"),
+    paper.url = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:paper.url"),
+    update.comment = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:update.comment"),
+    md5.checksum = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:md5_checksum")
+  ))
+  data.desc = do.call(makeOMLDataSetDescription, args)
 
   # now get data file
   if (!f$dataset.found) {
@@ -53,43 +103,6 @@ getOMLDataSet = function(id, session.hash = getSessionHash(), verbosity = NULL) 
     colnames.old = colnames.old,
     colnames.new = colnames.new
   )
-}
-
-# FIXME: cleanup ... too many functions
-
-downloadOMLDataSetDescription = function(id, verbosity = NULL, session.hash = getSessionHash()) {
-  id = asInt(id)
-  path = getCacheDataSetPath(id, "description.xml")
-  url = getAPIURL("openml.data.description", data.id = id)
-  downloadXML(url, path, verbosity, session_hash = session.hash)
-}
-
-parseOMLDataSetDescription = function(doc) {
-  args = filterNull(list(
-    id = xmlRValI(doc, "/oml:data_set_description/oml:id"),
-    name = xmlRValS(doc, "/oml:data_set_description/oml:name"),
-    version = xmlRValS(doc, "/oml:data_set_description/oml:version"),
-    description = xmlRValS(doc, "/oml:data_set_description/oml:description"),
-    format = xmlRValS(doc, "/oml:data_set_description/oml:format"),
-    creator = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:creator"),
-    contributor = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:contributor"),
-    collection.date = xmlOValS(doc, "/oml:data_set_description/oml:collection_date"),
-    upload.date = xmlRValD(doc, "/oml:data_set_description/oml:upload_date"),
-    language = xmlOValS(doc, "/oml:data_set_description/oml:language"),
-    licence = xmlOValS(doc, "/oml:data_set_description/oml:licence"),
-    url = xmlRValS(doc, "/oml:data_set_description/oml:url"),
-    default.target.attribute = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute"),
-    row.id.attribute = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute"),
-    ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute"),
-    version.label = xmlOValS(doc, "/oml:data_set_description/oml:version_label"),
-    citation = xmlOValS(doc, "/oml:data_set_description/oml:citation"),
-    visibility = xmlOValS(doc, "/oml:data_set_description/oml:visibility"),
-    original.data.url = xmlOValS(doc, "/oml:data_set_description/oml:original_data_url"),
-    paper.url = xmlOValS(doc, "/oml:data_set_description/oml:paper.url"),
-    update.comment = xmlOValS(doc, "/oml:data_set_description/oml:update.comment"),
-    md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum")
-  ))
-  do.call(makeOMLDataSetDescription, args)
 }
 
 #' @title Construct OMLDataSet.

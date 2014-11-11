@@ -15,7 +15,6 @@ Imports:
     data.table,
     digest,
     RCurl,
-    rjson,
     stringr,
     XML,
     RWeka,

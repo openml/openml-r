@@ -58,7 +58,7 @@ print.OMLTask = function(x, ...) {
       catf("%s %s", s, fun(val, ...))
   }
 
-  catf('\nOpenML Task %i :: (Data ID = %i)', x$id, x$data.set$desc.id)
+  catf('\nOpenML Task %i :: (Data ID = %i)', x$id, x$data.desc.id)
   catNotNA('\tTask Type            :', x$type)
       catf('\tData Set             : %s :: (Version = %s, OpenML ID = %i)', x$data.set$desc$name,
        x$data.set$desc$version, x$data.set$desc$id)
