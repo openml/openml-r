@@ -23,12 +23,20 @@ getCacheTasksDir = function() {
   getCacheSubDir("tasks")
 }
 
+getCacheRunsDir = function() {
+  getCacheSubDir("runs")
+}
+
 getCacheDataSetPath = function(id, file) {
   getCacheFilePath("datasets", id, file)
 }
 
 getCacheTaskPath = function(id, file) {
   getCacheFilePath("tasks", id, file)
+}
+
+getCacheRunPath = function(id, file) {
+  getCacheFilePath("runs", id, file)
 }
 
 ##### creating stuff on init
@@ -47,6 +55,7 @@ createCacheSubDirs = function(verbosity = NULL) {
   showInfo(verbosity, "Creating chache sub dirs in: %s", cd)
   createDir(getCacheDataSetsDir(), verbosity)
   createDir(getCacheTasksDir(), verbosity)
+  createDir(getCacheRunsDir(), verbosity)
 }
 
 # tries to find expected elements in cache dir. caller can request to create path if not found.
@@ -77,6 +86,10 @@ findInCacheDataSet = function(id, create) {
 
 findInCacheTask = function(id, create) {
   findInCache("tasks", id, create, elements = c("datasplits.arff", "task.xml"))
+}
+
+findInCacheRun = function(id, create) {
+  findInCache("runs", id, create, elements = "predictions.arff")
 }
 
 clearOMLCache = function() {

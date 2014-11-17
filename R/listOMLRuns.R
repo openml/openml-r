@@ -7,7 +7,7 @@
 #'
 #' @param setup.id [\code{integer(1)}]\cr
 #'
-#' @param implementation.id [\code{integer(1)}]\cr
+#' @param impl.id [\code{integer(1)}]\cr
 #'
 #' @template arg_hash
 #' @template arg_verbosity

@@ -1,6 +1,6 @@
-#' OpenMLRunResults
+#' OMLRun
 #'
-#' @title Construct OpenMLRunResults.
+#' @title Construct OMLRun.
 #'
 #' @param run.id [\code{numeric(1)}]\cr ID of the run. Added by server. Ignored when uploading a
 #'   run.
@@ -17,19 +17,22 @@
 #'   correct parameter settings. Optional.
 #' @param error.message [\code{character(1)}]\cr Whenever an error occurs during the run, this can
 #'   be reported here.
-#' @param parameter.setting [\code{list}]\cr A list of \code{\link{OpenMLRunParameter}s} containing
+#' @param parameter.setting [\code{list}]\cr A list of \code{\link{OMLRunParameter}s} containing
 #'   information on the parameter settings.
-#' @param input.data [\code{\link{OpenMLIOData}}]\cr All data that served as input for the run. Added
+#' @param predictions [\code{data.frame}]\cr The predictions of the run. These are NOT downloaded
+#'   by \code{\link{getOMLRun}}. To retrieve predictions of an uploaded run, please use
+#'   \code{\link{getOMLPredictions}}.
+#' @param input.data [\code{\link{OMLIOData}}]\cr All data that served as input for the run. Added
 #'   by server. Ignored when uploading.
-#' @param output.data [\code{\link{OpenMLIOData}}]\cr All data that was the output of this run, i.e.,
+#' @param output.data [\code{\link{OMLIOData}}]\cr All data that was the output of this run, i.e.,
 #'   predictions, evaluation scores. Most of this will be added by the server, but users can also
 #'   provide evaluation scores for their own evaluation measures.
 #' @export
-#' @aliases OpenMLRunResults
-#' @seealso \code{\link{downloadOpenMLRunResults}}, \code{\link{downloadOpenMLTaskResults}}
-makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, setup.id,
+#' @aliases OMLRun
+#' @seealso \code{\link{getOMLRun}}, \code{\link{listOMLRunResults}}
+makeOMLRun = function(run.id, uploader, task.id, implementation.id, setup.id,
   setup.string = NA_character_, error.message = NA_character_, parameter.setting = list(),
-  input.data = makeOpenMLIOData(), output.data = makeOpenMLIOData()) {
+  predictions = NULL, input.data = makeOMLIOData(), output.data = makeOMLIOData()) {
 
   run.id = asCount(run.id)
   uploader = asCount(uploader)
@@ -39,10 +42,12 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
   assertString(setup.string, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
   assertList(parameter.setting)
-  assertClass(input.data, "OpenMLIOData")
-  assertClass(output.data, "OpenMLIOData")
+  if (!is.null(predictions))
+    assertDataFrame(predictions)
+  assertClass(input.data, "OMLIOData")
+  assertClass(output.data, "OMLIOData")
 
-  makeS3Obj("OpenMLRunResults",
+  makeS3Obj("OMLRun",
       run.id = run.id,
       uploader = uploader,
       task.id = task.id,
@@ -51,6 +56,7 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
       setup.string = setup.string,
       error.message = error.message,
       parameter.setting = parameter.setting,
+      predictions = predictions,
       input.data = input.data,
       output.data = output.data
   )
@@ -60,7 +66,7 @@ makeOpenMLRunResults = function(run.id, uploader, task.id, implementation.id, se
 
 # show
 #' @export
-print.OpenMLRunResults = function(x, printMetrics = FALSE, ...)  {
+print.OMLRun = function(x, printMetrics = FALSE, ...)  {
   catNotNA = function(s, val) {
     if (!is.na(val))
       catf("%s %s", s, val)

@@ -22,7 +22,7 @@
 #' print(head(task$data.set$data))
 #' }
 getOMLTask = function(id, session.hash = getSessionHash(), ignore.cache = FALSE, verbosity = NULL) {
-  id = asInt(id)
+  id = asCount(id)
 
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 

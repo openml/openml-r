@@ -80,12 +80,13 @@ getOMLDataSet.numeric = function(x, session.hash = getSessionHash(), verbosity =
 
   # now get data file
   if (!f$dataset.found) {
-    data = downloadOMLDataFile(id, data.desc, verbosity)
+    path = getCacheDataSetPath(id, "dataset.arff")
+    data = downloadARFF(data.desc$url, file = path, verbosity)
   } else {
     showInfo(verbosity, "Data set found in cache.")
     data = read.arff(getCacheDataSetPath(id, "dataset.arff"))
-    data = parseOMLDataFile(data.desc, data)
   }
+  data = parseOMLDataFile(data.desc, data)
 
   def.target = data.desc$default.target.attribute
   target.ind = which(colnames(data) %in% def.target)
@@ -241,12 +242,6 @@ print.OMLDataSetDescription = function(x, ...) {
   catfNotNA('\tCollection Date         : %s', x$collection.date)
   catfNotNA('\tCreator(s)              : %s', x$creator)
   catfNotNA('\tDefault Target Attribute: %s', x$default.target.attribute)
-}
-
-downloadOMLDataFile = function(id, desc, verbosity = NULL) {
-  path = getCacheDataSetPath(id, "dataset.arff")
-  data = downloadARFF(desc$url, file = path, verbosity)
-  parseOMLDataFile(desc, data)
 }
 
 parseOMLDataFile = function(desc, data) {
