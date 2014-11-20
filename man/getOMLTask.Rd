@@ -35,10 +35,12 @@ intermediately stores the files on disk and creates an S3 object which completel
 \examples{
 # Download task and access relevant information to start running experiments
 \dontrun{
-task = downloadOMLTask(id = 1)
+task = getOMLTask(id = 1)
 show(task)
 print(task$type)
 print(task$target.features)
+print(head(task$data.set$data))
+task$data.set = getOMLDataSet(task)
 print(head(task$data.set$data))
 }
 }

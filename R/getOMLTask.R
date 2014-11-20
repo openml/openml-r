@@ -15,10 +15,12 @@
 #' @examples
 #' # Download task and access relevant information to start running experiments
 #' \dontrun{
-#' task = downloadOMLTask(id = 1)
+#' task = getOMLTask(id = 1)
 #' show(task)
 #' print(task$type)
 #' print(task$target.features)
+#' print(head(task$data.set$data))
+#' task$data.set = getOMLDataSet(task)
 #' print(head(task$data.set$data))
 #' }
 getOMLTask = function(id, session.hash = getSessionHash(), ignore.cache = FALSE, verbosity = NULL) {
@@ -37,8 +39,71 @@ getOMLTask = function(id, session.hash = getSessionHash(), ignore.cache = FALSE,
     showInfo(verbosity, "Task XML found in cache.")
     task.contents = readLines(getCacheTaskPath(id, "task.xml"))
   }
-  task.xml = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
-  task = parseOMLTask(task.xml)
+  doc = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
+
+  # parsing helper
+  getParams = function(path) {
+    ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
+    parameters = lapply(ns.parameters, function(x) xmlValue(x))
+    names(parameters) = sapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
+    parameters
+  }
+
+  # parse task
+  id = xmlRValI(doc, "/oml:task/oml:task_id")
+  type = xmlRValS(doc, "/oml:task/oml:task_type")
+  targets = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
+  params = getParams("oml:task")
+  tags = xmlOValsMultNsS(doc, "/oml:run/oml:tag", NA_character_)
+
+  # parse data set description
+  data.desc.id = xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id")
+  data.set = NULL
+
+  # parse prediction info
+  ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
+  preds.features = lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
+  names(preds.features) = sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
+  preds = list(
+    format = xmlRValS(doc, "/oml:task/oml:output/oml:predictions/oml:format"),
+    features = preds.features
+  )
+
+  # parse estimation procedure
+  # trim white space around URL to be a bit more robust
+  data.splits.url = str_trim(xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url"))
+  if (is.null(data.splits.url))
+    data.splits.url = "No URL"
+
+  estim.proc = makeOMLEstimationProcedure(
+    type = xmlRValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:type"),
+    data.splits.url = data.splits.url,
+    data.splits = data.frame(),
+    parameters = getParams("/oml:task/oml:input/oml:estimation_procedure")
+  )
+
+  # parse measures
+  measures = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure")
+
+  task = makeOMLTask(
+    id = id,
+    type = type,
+    target.features = targets,
+    tags = tags,
+    pars = params,
+    data.desc.id = data.desc.id,
+    data.set = data.set,
+    estimation.procedure = estim.proc,
+    preds = preds,
+    evaluation.measures = measures
+  )
+  # convert estim params to correct types
+  p = task$estimation.procedure$parameters
+  if (!is.null(p[["number_repeats"]]))
+    p[["number_repeats"]] = as.integer(p[["number_repeats"]])
+  if (!is.null(p[["number_folds"]]))
+    p[["number_folds"]] = as.integer(p[["number_folds"]])
+  task$estimation.procedure$parameters = p
 
   # this is temporarily needed to parse the data splits
   task$data.set = getOMLDataSet(task)
@@ -59,70 +124,6 @@ getOMLTask = function(id, session.hash = getSessionHash(), ignore.cache = FALSE,
     task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
   task$data.set$data = NULL
-  return(task)
-}
-
-parseOMLTask = function(doc) {
-  getParams = function(path) {
-    ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
-    parameters = lapply(ns.parameters, function(x) xmlValue(x))
-    names(parameters) = sapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
-    parameters
-  }
-
-  # task
-  id = xmlRValI(doc, "/oml:task/oml:task_id")
-  type = xmlRValS(doc, "/oml:task/oml:task_type")
-  targets = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
-  params = getParams("oml:task")
-
-  # data set description
-  data.desc.id = xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id")
-  data.set = NULL
-
-  # prediction
-  ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
-  preds.features = lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
-  names(preds.features) = sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
-  preds = list(
-    format = xmlRValS(doc, "/oml:task/oml:output/oml:predictions/oml:format"),
-    features = preds.features
-  )
-
-  # estimation procedure
-  # trim white space around URL to be a bit more robust
-  data.splits.url = str_trim(xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url"))
-  if (is.null(data.splits.url))
-    data.splits.url = "No URL"
-
-  estim.proc = makeOMLEstimationProcedure(
-    type = xmlRValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:type"),
-    data.splits.url = data.splits.url,
-    data.splits = data.frame(),
-    parameters = getParams("/oml:task/oml:input/oml:estimation_procedure")
-  )
-
-  # measures
-  measures = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure")
-
-  task = makeOMLTask(
-    id = id,
-    type = type,
-    target.features = targets,
-    pars = params,
-    data.desc.id = data.desc.id,
-    data.set = data.set,
-    estimation.procedure = estim.proc,
-    preds = preds,
-    evaluation.measures = measures
-  )
-  # convert estim params to correct types
-  p = task$estimation.procedure$parameters
-  if (!is.null(p[["number_repeats"]]))
-    p[["number_repeats"]] = as.integer(p[["number_repeats"]])
-  if (!is.null(p[["number_folds"]]))
-    p[["number_folds"]] = as.integer(p[["number_folds"]])
-  task$estimation.procedure$parameters = p
   return(task)
 }
 

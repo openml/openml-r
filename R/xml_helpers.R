@@ -87,10 +87,10 @@ xmlValsMultNsS = function(doc, path) {
   xmlValsMultNs(doc, path, as.character, character(1))
 }
 
-xmlOValsMultNsS = function(doc, path) {
+xmlOValsMultNsS = function(doc, path, empty.return = NULL) {
   val = xmlValsMultNs(doc, path, as.character, character(1))
   if (length(val) == 0L)
-    return(NULL)
+    return(empty.return)
   else
     return(val)
 }

@@ -87,6 +87,9 @@ getOMLRun = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     do.call(makeOMLRunParameter, args)
   })
 
+  # parse tags
+  run.args[["tags"]] = xmlOValsMultNsS(doc, "/oml:run/oml:tag")
+
   do.call(makeOMLRun, run.args)
 }
 

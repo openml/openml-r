@@ -6,7 +6,7 @@
 \usage{
 makeOMLRun(run.id, uploader, task.id, implementation.id, setup.id,
   setup.string = NA_character_, error.message = NA_character_,
-  parameter.setting = list(), predictions = NULL,
+  parameter.setting = list(), tags = NA_character_, predictions = NULL,
   input.data = makeOMLIOData(), output.data = makeOMLIOData())
 }
 \arguments{
@@ -34,6 +34,8 @@ be reported here.}
 
 \item{parameter.setting}{[\code{list}]\cr A list of \code{\link{OMLRunParameter}s} containing
 information on the parameter settings.}
+
+\item{tags}{[\code{character}]\cr Optional tags describing the run.}
 
 \item{predictions}{[\code{data.frame}]\cr The predictions of the run. These are NOT downloaded
 by \code{\link{getOMLRun}}. To retrieve predictions of an uploaded run, please use

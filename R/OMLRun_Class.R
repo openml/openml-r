@@ -19,6 +19,7 @@
 #'   be reported here.
 #' @param parameter.setting [\code{list}]\cr A list of \code{\link{OMLRunParameter}s} containing
 #'   information on the parameter settings.
+#' @param tags [\code{character}]\cr Optional tags describing the run.
 #' @param predictions [\code{data.frame}]\cr The predictions of the run. These are NOT downloaded
 #'   by \code{\link{getOMLRun}}. To retrieve predictions of an uploaded run, please use
 #'   \code{\link{getOMLPredictions}}.
@@ -32,7 +33,7 @@
 #' @seealso \code{\link{getOMLRun}}, \code{\link{listOMLRunResults}}
 makeOMLRun = function(run.id, uploader, task.id, implementation.id, setup.id,
   setup.string = NA_character_, error.message = NA_character_, parameter.setting = list(),
-  predictions = NULL, input.data = makeOMLIOData(), output.data = makeOMLIOData()) {
+  tags = NA_character_, predictions = NULL, input.data = makeOMLIOData(), output.data = makeOMLIOData()) {
 
   run.id = asCount(run.id)
   uploader = asCount(uploader)
@@ -42,6 +43,7 @@ makeOMLRun = function(run.id, uploader, task.id, implementation.id, setup.id,
   assertString(setup.string, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
   assertList(parameter.setting)
+  assertCharacter(tags, all.missing = TRUE)
   if (!is.null(predictions))
     assertDataFrame(predictions)
   assertClass(input.data, "OMLIOData")
@@ -56,6 +58,7 @@ makeOMLRun = function(run.id, uploader, task.id, implementation.id, setup.id,
       setup.string = setup.string,
       error.message = error.message,
       parameter.setting = parameter.setting,
+      tags = tags,
       predictions = predictions,
       input.data = input.data,
       output.data = output.data
