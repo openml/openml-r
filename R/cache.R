@@ -52,7 +52,6 @@ createDir = function(dir, verbosity = NULL) {
 createCacheSubDirs = function(verbosity = NULL) {
   conf = getOMLConfig()
   cd = conf$cachedir
-  showInfo(verbosity, "Creating chache sub dirs in: %s", cd)
   createDir(getCacheDataSetsDir(), verbosity)
   createDir(getCacheTasksDir(), verbosity)
   createDir(getCacheRunsDir(), verbosity)

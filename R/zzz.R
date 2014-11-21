@@ -18,7 +18,7 @@ if (!exists(".OpenML.session"))
   assignConfigDefaults()
   fn.user = path.expand("~/.openml/config")
   if (!file.exists(fn.user)) {
-    packageStartupMessage("openml-r: No configuration found! Using defaults.")
+    packageStartupMessage("OpenML: No configuration found! Using defaults.")
   } else {
     conf = readConfigFile(fn.user)
     assignConfig(conf)
