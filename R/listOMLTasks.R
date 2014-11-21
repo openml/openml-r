@@ -29,8 +29,7 @@ listOMLTasks = function(type = 1L, session.hash = getSessionHash(), verbosity = 
         did = as.integer(xmlValue(children[["did"]])),
         status = xmlValue(children[["status"]])
     )
-    qualities = lapply(children[is.quality], function(x) as.integer(xmlValue(x)))
-    names(qualities) = vcapply(children[is.quality], xmlGetAttr, "name")
+    qualities = convertNodeSetToList(children[is.quality], as.integer)
     c(info, qualities)
   }), fill = TRUE)
   df$status = factor(df$status, levels = c("active", "deactivated", "in_preparation"))

@@ -137,3 +137,4 @@ parseXMLResponse = function(file, msg, type, as.text = FALSE) {
 
   return(doc)
 }
+
