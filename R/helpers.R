@@ -23,3 +23,11 @@ rename = function(x) {
   }
   x
 }
+
+convertNodeSetToList = function(ns, fun = NULL) {
+  li = lapply(ns, xmlValue)
+  if (!is.null(fun))
+    li = lapply(li, fun)
+  names(li) = lapply(ns, xmlGetAttr, "name")
+  li
+}

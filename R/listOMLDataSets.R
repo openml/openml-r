@@ -17,13 +17,10 @@ listOMLDataSets = function(session.hash = getSessionHash(), verbosity = NULL) {
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   df = as.data.frame(rbindlist(lapply(blocks, function(node) {
     children = xmlChildren(node)
-    qualities = names(children) == "quality"
-    row = c(
-      list(as.integer(xmlValue(children[["did"]]))), status = xmlValue(children[["status"]]),
-      as.list(as.integer(vcapply(children[qualities], xmlValue)))
-    )
-    names(row) = c("did", "status", vcapply(children[qualities], xmlAttrs))
-    row
+    is.quality = names(children) == "quality"
+    info = list(did = as.integer(xmlValue(children[["did"]])), status = xmlValue(children[["status"]]))
+    qualities = convertNodeSetToList(children[is.quality], fun = as.integer)
+    c(info, qualities)
   }), fill = TRUE))
   df$status = factor(df$status, levels = c("active", "deactivated", "in_preparation"))
   return(df)

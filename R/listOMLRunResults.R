@@ -26,13 +26,6 @@ listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity
   input.data = xmlRValI(doc, "/oml:task_evaluations/oml:input_data")
   estim.proc = xmlRValS(doc, "/oml:task_evaluations/oml:estimation_procedure")
 
-  xmlAsList = function(doc, path) {
-    ns = getNodeSet(doc, path)
-    li = lapply(ns, xmlValue)
-    names(li) = lapply(ns, xmlGetAttr, "name")
-    li
-  }
-
   # parse metrics
   ns.runs = getNodeSet(doc, "/oml:task_evaluations/oml:evaluation")
   if (length(ns.runs) == 0L)
@@ -48,7 +41,7 @@ listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity
       implementation.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:implementation_id")),
       implementation = xmlRValS(doc, paste0(path.evals, i, "]/oml:implementation"))
     )
-    metrics[[i]] = xmlAsList(doc, paste0(path.evals, i, "]/oml:measure"))
+    metrics[[i]] = convertNodeSetToList(getNodeSet(doc, paste0(path.evals, i, "]/oml:measure")))
   }
   run.info = rbindlist(run.info)
   task.info = data.table(task.id = task.id, task.type.id = task.type.id, estim.proc = estim.proc)
