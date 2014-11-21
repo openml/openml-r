@@ -14,6 +14,7 @@
 #' @template arg_verbosity
 #' @return [\code{character(1)}]. Invisibly returns session hash.
 #' @export
+#' @family config
 authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   conf = getOMLConfig()
   if (is.null(email)) {
@@ -45,9 +46,10 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   invisible(session.hash)
 }
 
-#' Get the current session's hash
+#' Get the current session's hash.
 #' @return [\code{character(1)}].
 #' @export
+#' @family config
 getSessionHash = function() {
   conf = getOMLConfig()
   hash = conf$session.hash

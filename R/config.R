@@ -7,7 +7,7 @@
 #'
 #' @name configuration
 #' @rdname configuration
-#' @family conf
+#' @family config
 NULL
 
 # sources config file and returns the envir
@@ -108,7 +108,7 @@ print.OMLConfig = function(x, ...) {
 #' @param ... [\code{ANY}]\cr
 #'   Named configuration parameters. Overwrites parameters in \code{conf}, if provided.
 #' @return Invisibly returns a list of configuration settings.
-#' @family conf
+#' @family config
 #' @export
 setOMLConfig = function(conf = list(), ...) {
   if (!is.list(conf) && !inherits(conf, "OMLConfig"))
@@ -127,7 +127,7 @@ setOMLConfig = function(conf = list(), ...) {
 #' Returns a list of OpenML configuration settings
 #'
 #' @return \code{list} of current configuration variables with classs \dQuote{OMLConfig}.
-#' @family conf
+#' @family config
 #' @export
 getOMLConfig = function() {
   addClasses(get(".OpenML.config", envir = getNamespace("OpenML")), "OMLConfig")
