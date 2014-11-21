@@ -11,8 +11,6 @@
 NULL
 
 .OpenML.config = new.env(parent = emptyenv())
-if (!exists(".OpenML.session"))
-  .OpenML.session = list()
 
 .onAttach = function(libname, pkgname) {
   assignConfigDefaults()

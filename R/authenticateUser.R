@@ -1,13 +1,18 @@
-#' Authenticate at server.
+#' @title Authenticate at server.
 #'
-#' Required if you want to upload anything.
+#' @description
+#' Needs to be done once, before you are allowed to do any operation.
+#' Defaults are set via the OpenML config.
+#'
+#' The session hash is stored in your config, so it will be automatically used for all
+#' subsequent package operations.
 #'
 #' @param email [\code{character(1)}]\cr
-#'   Your e-mail address at OpenMl server. Default is set via \code{\link{setOMLConfig}}.
+#'   Your e-mail address at OpenML server.
 #' @param password [\code{character(1)}]\cr
-#'   Your password at OpenML server. Default is set via \code{\link{setOMLConfig}}.
+#'   Your password at OpenML server.
 #' @template arg_verbosity
-#' @return [\code{character(1)}]. Session hash for further communication.
+#' @return [\code{character(1)}]. Invisibly returns session hash.
 #' @export
 authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   conf = getOMLConfig()
@@ -24,17 +29,20 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   }
   showInfo(verbosity, "Authenticating user at server: %s", email)
   url = getAPIURL("openml.authenticate", secure = FALSE)
-
   # FIXME: we might want to use https for this!
-  content = postForm(url, verbosity, username = email, password = md5, .checkParams = FALSE)
+  content = postForm(url, .params = list(username = email, password = md5), .checkParams = FALSE)
   doc = parseXMLResponse(content, "Authenticating user", "authenticate", as.text = TRUE)
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
   valid.until = xmlRValS(doc, "/oml:authenticate/oml:valid_until")
 
   showInfo(verbosity, "Retrieved session hash. Valid until: %s", valid.until)
 
-  .OpenML.session <<- list(hash = session.hash, expires = as.POSIXct(valid.until))
-  return(session.hash)
+  # set auth data in config
+  conf = getOMLConfig()
+  conf$session.hash = session.hash
+  conf$session.hash.expires = as.POSIXct(valid.until)
+
+  invisible(session.hash)
 }
 
 #' Get the current session's hash
