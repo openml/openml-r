@@ -7,7 +7,6 @@
 #' @param id [\code{integer(1)}]\cr
 #'   The task ID.
 #' @template arg_hash
-#' @template arg_ignore.cache
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
 #' @seealso To retrieve the corresponding data set: \code{\link{getOMLDataSet}}
@@ -23,7 +22,7 @@
 #' task$data.set = getOMLDataSet(task)
 #' print(head(task$data.set$data))
 #' }
-getOMLTask = function(id, session.hash = getSessionHash(), ignore.cache = FALSE, verbosity = NULL) {
+getOMLTask = function(id, session.hash = getSessionHash(), verbosity = NULL) {
   id = asCount(id)
 
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
@@ -31,7 +30,7 @@ getOMLTask = function(id, session.hash = getSessionHash(), ignore.cache = FALSE,
   f = findInCacheTask(id, create = TRUE)
 
   # get XML description
-  if (!f$task.found || ignore.cache) {
+  if (!f$task.found) {
     url = getAPIURL("openml.task.get", task_id = id)
     path = getCacheTaskPath(id, "task.xml")
     task.contents = downloadXML(url, path, verbosity, session_hash = session.hash)
@@ -109,7 +108,7 @@ getOMLTask = function(id, session.hash = getSessionHash(), ignore.cache = FALSE,
   task$data.set = getOMLDataSet(task)
 
   # No real error handling. If no data splits are available, just print a warning and go on.
-  if (!f$datasplits.found || ignore.cache) {
+  if (!f$datasplits.found) {
     url.dsplits = task$estimation.procedure$data.splits.url
     if (url.dsplits == "No URL") {
       warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")

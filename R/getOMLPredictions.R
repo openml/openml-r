@@ -6,19 +6,17 @@
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The OpenML run.
 #' @template arg_hash
-#' @template arg_ignore.cache
 #' @template arg_verbosity
 #' @return [\code{data.frame}]
 #' @seealso \code{\link{OMLRun}}, \code{\link{getOMLRun}}
 #' @export
-getOMLPredictions = function(run, session.hash = getSessionHash(), ignore.cache = FALSE, verbosity = NULL) {
+getOMLPredictions = function(run, session.hash = getSessionHash(), verbosity = NULL) {
   assertClass(run, "OMLRun")
-  assertFlag(ignore.cache)
 
   if (is.null(run$predictions)) {
     f = findInCacheRun(run$run.id, create = TRUE)
     path = getCacheRunPath(run$run.id, "predictions.arff")
-    if (!f$predictions.found || ignore.cache) {
+    if (!f$predictions.found) {
       fls = run$output.data$files
       url = fls[fls$name == "predictions", "url"]
       if (is.null(url)) {
