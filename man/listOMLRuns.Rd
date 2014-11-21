@@ -8,13 +8,13 @@ listOMLRuns(task.id = NULL, setup.id = NULL, impl.id = NULL,
 }
 \arguments{
 \item{task.id}{[\code{integer}]\cr
-Id of the task.}
+ID of the task.}
 
 \item{setup.id}{[\code{integer(1)}]\cr
-Id of the parameter setup (?).}
+ID of the parameter setup.}
 
 \item{impl.id}{[\code{integer(1)}]\cr
-Id of the implementation.}
+ID of the implementation.}
 
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is

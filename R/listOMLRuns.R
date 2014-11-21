@@ -5,11 +5,11 @@
 #' \code{task.id}, \code{setup.id} and/or implementation ID \code{impl.id}.
 #'
 #' @param task.id [\code{integer}]\cr
-#'  Id of the task.
+#'  ID of the task.
 #' @param setup.id [\code{integer(1)}]\cr
-#'  Id of the parameter setup (?).
+#'  ID of the parameter setup.
 #' @param impl.id [\code{integer(1)}]\cr
-#'  Id of the implementation.
+#'  ID of the implementation.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
