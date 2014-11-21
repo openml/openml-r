@@ -105,17 +105,23 @@ getOMLDataSet.numeric = function(x, session.hash = getSessionHash(), verbosity =
   )
 }
 
-# @title Construct OMLDataSet.
-#
-# @param desc [\code{\link{OMLDataSetDescription}}]\cr
-#   The data set's description.
-# @param data [\code{data.frame}]\cr
-#   The data set.
-# @param colnames.old [\code{character}]\cr
-#   The original column names of the data set. These might not be valid names in R!
-# @param colnames.new [\code{character}]\cr
-#   New column names that are actually used in R. These are valid and unique and differ from the
-#   original column names only if those are invalid.
+#' @title OMLDataSet.
+#'   
+#' @description An \code{OMLDataSet} consists of an \code{OMLDataSetDescription}, a
+#' \code{data.frame} containing the data set and, finally, old and new column names.
+#'   
+#' The \code{OMLDataSetDescription} provides information on the data set, like the ID, name, 
+#' version, etc. To see a full list of all elements, please see the
+#' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/rest_api/xsd/openml.data.upload.xsd}{XSD}.
+#' 
+#' The slot \code{colnames.old} contains the original names, i.e., the column names that were
+#' uploaded to the server, while \code{colnames.new} contains the names that you will see when
+#' working with the data in R.
+#' Most of the time, old and new column names are identical. Only if the original names are
+#' not valid, the new ones will differ.
+#' @name OMLDataSet
+NULL
+
 makeOMLDataSet = function(desc, data, colnames.old, colnames.new) {
   assertClass(desc, "OMLDataSetDescription")
   assertDataFrame(data)
