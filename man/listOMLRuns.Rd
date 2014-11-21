@@ -7,11 +7,14 @@ listOMLRuns(task.id = NULL, setup.id = NULL, impl.id = NULL,
   session.hash = getSessionHash(), verbosity = NULL)
 }
 \arguments{
-\item{task.id}{[\code{integer}]\cr}
+\item{task.id}{[\code{integer}]\cr
+Id of the task.}
 
-\item{setup.id}{[\code{integer(1)}]\cr}
+\item{setup.id}{[\code{integer(1)}]\cr
+Id of the parameter setup (?).}
 
-\item{impl.id}{[\code{integer(1)}]\cr}
+\item{impl.id}{[\code{integer(1)}]\cr
+Id of the implementation.}
 
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is

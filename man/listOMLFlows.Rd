@@ -21,7 +21,14 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-The returned data.frame contains some describing information like \code{id},
-\code{name} and \code{version} on all registered OpenML flows.
+The returned \code{data.frame} contains the flow id \dQuote{fid},
+the flow name (\dQuote{full.name} and \dQuote{name}), version information
+(\dQuote{version} and \dQuote{external.version}) and the uploader (\dQuote{uploader})
+of all registered OpenML flows.
+}
+\seealso{
+Other list: \code{\link{listOMLDataSets}};
+  \code{\link{listOMLEvaluationMeasures}};
+  \code{\link{listOMLRunResults}}
 }
 

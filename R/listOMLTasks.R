@@ -19,22 +19,20 @@ listOMLTasks = function(type = 1L, session.hash = getSessionHash(), verbosity = 
   xml = parseXMLResponse(content, "Getting task list", "tasks", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  quals = rbindlist(lapply(blocks, function(node) {
+  df = rbindlist(lapply(blocks, function(node) {
     children = xmlChildren(node)
-    qualities = names(children) == "quality"
-    row = c(
-      list(
-        as.integer(xmlValue(children[["task_id"]])),
-        as.factor(xmlValue(children[["task_type"]])),
-        as.integer(xmlValue(children[["did"]])),
-        as.factor(xmlValue(children[["status"]]))
-      ),
-      as.list(as.integer(vcapply(children[qualities], xmlValue)))
-    )
-    names(row) = c("task_id", "task_type", "did", "status",
-      vcapply(children[qualities], xmlAttrs))
-    row
-  }), fill = TRUE)
+    is.quality = names(children) == "quality"
 
-  as.data.frame(quals)
+    info = list(
+        task.id = as.integer(xmlValue(children[["task_id"]])),
+        task.type = xmlValue(children[["task_type"]]),
+        did = as.integer(xmlValue(children[["did"]])),
+        status = xmlValue(children[["status"]])
+    )
+    qualities = lapply(children[is.quality], function(x) as.integer(xmlValue(x)))
+    names(qualities) = vcapply(children[is.quality], xmlGetAttr, "name")
+    c(info, qualities)
+  }), fill = TRUE)
+  df$status = factor(df$status, levels = c("active", "deactivated", "in_preparation"))
+  as.data.frame(rename(df))
 }

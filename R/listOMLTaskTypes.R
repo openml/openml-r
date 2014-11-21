@@ -9,7 +9,7 @@ listOMLTaskTypes = function(session.hash = getSessionHash(), verbosity = NULL) {
   xml = parseXMLResponse(content, "Getting task type list", "task_types", as.text = TRUE)
   data.frame(
     id = xmlValsMultNsI(xml, "/oml:task_types/oml:task_type/oml:id"),
-    name = xmlValsMultNsS(xml, "/oml:task_types/oml:task_type/oml:name")
-    #description = xmlValsMultNsS(xml, "/oml:task_types/oml:task_type/oml:description")
+    name = xmlValsMultNsS(xml, "/oml:task_types/oml:task_type/oml:name"),
+    stringsAsFactors = FALSE
   )
 }

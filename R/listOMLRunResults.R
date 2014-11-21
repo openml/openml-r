@@ -1,10 +1,16 @@
-#' List all run results of a certain task.
+#' @title List run results of a task.
+#'
+#' @description
+#' Retrieves all run results for a task specified by \code{task.id} and returns
+#' it in a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid},
+#' the setup id \dQuote{sid} and the task.id \dQuote{tid}.
 #'
 #' @param task.id [\code{numeric}]\cr
 #'   The task ID.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}]
+#' @family list
 #' @export
 listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
   id = asCount(task.id)
@@ -20,38 +26,34 @@ listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity
   input.data = xmlRValI(doc, "/oml:task_evaluations/oml:input_data")
   estim.proc = xmlRValS(doc, "/oml:task_evaluations/oml:estimation_procedure")
 
+  xmlAsList = function(doc, path) {
+    ns = getNodeSet(doc, path)
+    li = lapply(ns, xmlValue)
+    names(li) = lapply(ns, xmlGetAttr, "name")
+    li
+  }
+
   # parse metrics
   ns.runs = getNodeSet(doc, "/oml:task_evaluations/oml:evaluation")
-  if (length(ns.runs) != 0L) {
-    run.info = c()
-    run.res = vector("list", length(ns.runs))
-    for (i in seq_along(ns.runs)) {
-      path.evals = "/oml:task_evaluations/oml:evaluation["
-      run.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:run_id"))
-      setup.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:setup_id"))
-      impl.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:implementation_id"))
-      impl = xmlRValS(doc, paste0(path.evals, i, "]/oml:implementation"))
-      ns.metrics = getNodeSet(doc, paste0(path.evals, i, "]/oml:measure"))
+  if (length(ns.runs) == 0L)
+    return(data.frame())
 
-      metric.names = unlist(lapply(ns.metrics, function(x) xmlGetAttr(x, "name")))
-      metric.values = sapply(ns.metrics, function(x) xmlValue(x))
-
-      run.info = rbind(run.info, data.frame(run.id, setup.id, impl.id, impl, stringsAsFactors = FALSE))
-      run.res[[i]] = as.data.frame(t(metric.values))
-      colnames(run.res[[i]]) = metric.names
-    }
-    # rbind run results and fill missing measures with <NA>
-    metrics = rbindlist(run.res, use.names = TRUE, fill = TRUE)
-    # cols of metrics are factors now, convert them:
-    # FIXME: convert types better as soon as possible (e.g., via listOMLEvaluationMeasures)
-    metrics = as.data.frame(lapply(metrics, function(x) type.convert(as.character(x), as.is = TRUE)),
-      stringsAsFactors = FALSE)
-
-    task.info = data.frame(task.id, task.type.id, estim.proc, stringsAsFactors = FALSE)
-    task.info = lapply(task.info, rep, times = nrow(metrics))
-    metrics = cbind(run.info, task.info, metrics, stringsAsFactors = FALSE)
-  } else {
-    metrics = data.frame()
+  run.info = vector("list", length(ns.runs))
+  metrics = vector("list", length(ns.runs))
+  for (i in seq_along(ns.runs)) {
+    path.evals = "/oml:task_evaluations/oml:evaluation["
+    run.info[[i]] = list(
+      run.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:run_id")),
+      setup.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:setup_id")),
+      implementation.id = xmlRValI(doc, paste0(path.evals, i, "]/oml:implementation_id")),
+      implementation = xmlRValS(doc, paste0(path.evals, i, "]/oml:implementation"))
+    )
+    metrics[[i]] = xmlAsList(doc, paste0(path.evals, i, "]/oml:measure"))
   }
-  return(metrics)
+  run.info = rbindlist(run.info)
+  task.info = data.table(task.id = task.id, task.type.id = task.type.id, estim.proc = estim.proc)
+  metrics = rbindlist(metrics, use.names = TRUE, fill = TRUE)
+  for (cn in colnames(metrics))
+    metrics[, cn := type.convert(metrics[[cn]], as.is = TRUE), with = FALSE]
+  as.data.frame(rename(cbind(run.info, task.info, metrics)))
 }

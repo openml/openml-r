@@ -6,7 +6,7 @@
 #' @import XML
 #' @import RWeka
 #' @import mlr
-#' @importFrom data.table rbindlist
+#' @import data.table
 #' @importFrom stats setNames
 NULL
 

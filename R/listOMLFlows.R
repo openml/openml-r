@@ -1,11 +1,13 @@
 #' @title List all registered OpenML flows.
-#'
-#' @description The returned data.frame contains some describing information like \code{id},
-#' \code{name} and \code{version} on all registered OpenML flows.
-#'
+#' @description
+#' The returned \code{data.frame} contains the flow id \dQuote{fid},
+#' the flow name (\dQuote{full.name} and \dQuote{name}), version information
+#' (\dQuote{version} and \dQuote{external.version}) and the uploader (\dQuote{uploader})
+#' of all registered OpenML flows.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
+#' @family list
 #' @export
 listOMLFlows = function(session.hash = getSessionHash(), verbosity = NULL) {
   url = getAPIURL("openml.implementations")
@@ -13,23 +15,15 @@ listOMLFlows = function(session.hash = getSessionHash(), verbosity = NULL) {
   xml = parseXMLResponse(content, "Getting flows", "implementations", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  flows = rbindlist(lapply(blocks, function(node) {
+  as.data.frame(rbindlist(lapply(blocks, function(node) {
     children = xmlChildren(node)
-    qualities = names(children) == "implementation"
-    row = c(
-      list(
-        as.integer(xmlValue(children[["id"]])),
-        xmlValue(children[["full_name"]]),
-        xmlValue(children[["name"]]),
-        as.integer(xmlValue(children[["version"]])),
-        xmlValue(children[["external_version"]]),
-        as.integer(xmlValue(children[["uploader"]]))
-      ),
-      as.list(as.integer(vcapply(children[qualities], xmlValue)))
+    list(
+      id = as.integer(xmlValue(children[["id"]])),
+      full.name = xmlValue(children[["full_name"]]),
+      name = xmlValue(children[["name"]]),
+      version = as.integer(xmlValue(children[["version"]])),
+      external.version = xmlValue(children[["external_version"]]),
+      uploader = as.integer(xmlValue(children[["uploader"]]))
     )
-    names(row) = c("id", "full.name", "name", "version", "external.version", "uploader")
-    row
-  }), fill = TRUE)
-
-  as.data.frame(flows)
+  }), fill = TRUE))
 }
