@@ -12,4 +12,6 @@ test_that("listOMLTasks", {
   expect_true(all(tasks.reg$task_type == "Supervised Regression"))
 
   expect_true(length(intersect(tasks.cl$task_id, tasks.reg$task_id)) == 0)
+
+  expect_error(listOMLTasks(0L, session.hash))
 })

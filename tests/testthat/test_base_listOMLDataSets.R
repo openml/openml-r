@@ -5,4 +5,6 @@ test_that("listOMLDataSets", {
   expect_is(dsl, "data.frame")
   expect_true(nrow(dsl) > 100L && ncol(dsl) == 8L)
   expect_true(setequal(names(dsl), c("did", "status", "NumberOfClasses", "NumberOfFeatures", "NumberOfInstances", "NumberOfInstancesWithMissingValues", "NumberOfMissingValues", "NumberOfNumericFeatures")))
+  inds = which(names(dsl) != "status")
+  expect_true(all(apply(dsl[, inds], 2, is.integer)))
 })
