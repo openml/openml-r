@@ -1,5 +1,6 @@
-#' OpenML configuration.
+#' @title OpenML configuration.
 #'
+#' @description
 #' In order to understand how the package should be configured
 #' please read
 #' \url{https://github.com/tudo-r/BatchJobs/wiki/Configuration}.
@@ -82,13 +83,16 @@ printableConfig = function(conf) {
   x[setdiff(getConfigNames(), names(x))] = ""
   fmt = paste(
     "OpenML configuration:",
-    "  server   : %s",
-    "  username : %s",
-    "  cachedir : %s",
-    "  pwdmd5   : ***",
-    "  verbosity: %s\n",
+    "  server           : %s",
+    "  username         : %s",
+    "  cachedir         : %s",
+    "  pwdmd5           : ***",
+    "  session expires  : %s",
+    "  verbosity        : %s\n",
     sep = "\n")
-  sprintf(fmt, x$server, x$username, x$cachedir, x$verbosity)
+  expire = ifelse(is.null(x$session.hash.expires), "<not authenticated>",
+    as.character(x$session.hash.expires))
+  sprintf(fmt, x$server, x$username, x$cachedir, expire, x$verbosity)
 }
 
 

@@ -11,14 +11,12 @@
 NULL
 
 .OpenML.config = new.env(parent = emptyenv())
-if (!exists(".OpenML.session"))
-  .OpenML.session = list()
 
 .onAttach = function(libname, pkgname) {
   assignConfigDefaults()
   fn.user = path.expand("~/.openml/config")
   if (!file.exists(fn.user)) {
-    packageStartupMessage("openml-r: No configuration found! Using defaults.")
+    packageStartupMessage("OpenML: No configuration found! Using defaults.")
   } else {
     conf = readConfigFile(fn.user)
     assignConfig(conf)
