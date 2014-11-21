@@ -14,6 +14,7 @@
 #' @template arg_verbosity
 #' @return [\code{character(1)}]. Invisibly returns session hash.
 #' @export
+#' @family config
 authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   conf = getOMLConfig()
   if (is.null(email)) {
@@ -45,14 +46,17 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   invisible(session.hash)
 }
 
-#' Get the current session's hash
+#' Get the current session's hash.
 #' @return [\code{character(1)}].
 #' @export
+#' @family config
 getSessionHash = function() {
-  session = .OpenML.session
-  if (is.null(session$hash)) # ... session expire, renew authenticaton, etc.
+  conf = getOMLConfig()
+  hash = conf$session.hash
+  expires = conf$session.hash.expires
+  if (is.null(hash)) # ... session expire, renew authenticaton, etc
     stop("Please authenticate first.")
-  if (session$expires < Sys.time() + 60)
+  if (expires < Sys.time() + 60)
     stop("Session hash expired. Please refresh your authentication.")
-  session$hash
+  return(hash)
 }
