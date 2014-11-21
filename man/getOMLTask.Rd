@@ -30,7 +30,9 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
 This function downloads an OpenML task and all associated files from the OpenML repository,
-intermediately stores the files on disk and creates an S3 object which completely specifies the task.
+caches the files on disk and creates an S3 object which completely specifies the task. Note that
+the associated data set is not downloaded, only some information describing it. To retrieve the
+whole \code{OMLDataSet} object, please use \code{\link{getOMLDataSet}}.
 }
 \examples{
 # Download task and access relevant information to start running experiments
