@@ -3,8 +3,7 @@
 \alias{getOMLTask}
 \title{Get an OpenML task.}
 \usage{
-getOMLTask(id, session.hash = getSessionHash(), ignore.cache = FALSE,
-  verbosity = NULL)
+getOMLTask(id, session.hash = getSessionHash(), verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -13,10 +12,6 @@ The task ID.}
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is
 \code{\link{getSessionHash}()}.}
-
-\item{ignore.cache}{[\code{logical(1)}]\cr
-Ignore a possibly cached version and force
-re-download of files? Default is \code{FALSE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

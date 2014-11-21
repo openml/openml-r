@@ -7,10 +7,10 @@ authenticateUser(email = NULL, password = NULL, verbosity = NULL)
 }
 \arguments{
 \item{email}{[\code{character(1)}]\cr
-Your e-mail address at OpenMl server. Default is set via \code{\link{setOMLConfig}}.}
+Your e-mail address at OpenML server.}
 
 \item{password}{[\code{character(1)}]\cr
-Your password at OpenML server. Default is set via \code{\link{setOMLConfig}}.}
+Your password at OpenML server.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -20,9 +20,18 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{character(1)}]. Session hash for further communication.
+[\code{character(1)}]. Invisibly returns session hash.
 }
 \description{
-Required if you want to upload anything.
+Needs to be done once, before you are allowed to do any operation.
+Defaults are set via the OpenML config.
+
+The session hash is stored in your config, so it will be automatically used for all
+subsequent package operations.
+}
+\seealso{
+Other config: \code{\link{configuration}};
+  \code{\link{getOMLConfig}}; \code{\link{getSessionHash}};
+  \code{\link{setOMLConfig}}
 }
 

@@ -8,7 +8,8 @@ please read
 \url{https://github.com/tudo-r/BatchJobs/wiki/Configuration}.
 }
 \seealso{
-Other conf: \code{\link{getOMLConfig}};
+Other config: \code{\link{authenticateUser}};
+  \code{\link{getOMLConfig}}; \code{\link{getSessionHash}};
   \code{\link{setOMLConfig}}
 }
 

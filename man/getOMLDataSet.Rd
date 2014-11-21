@@ -32,17 +32,13 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{\link{OMLDataSet}}]
 }
 \description{
-This function will return an \code{\link{OMLDataSet}}.
-}
-\details{
 Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
-and returned.\cr
+and returned.
+
 Given an \code{\link{OMLTask}}, it is checked if the related data set is already encapsulated in the
-task object. If not, the task's data set ID will be used to download it.\cr
+task object. If not, the task's data set ID will be used to download it.
+
 Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
 Tasks can be downloaded with \code{\link{getOMLTask}}.
-}
-\seealso{
-\code{\link{OMLDataSet}}, \code{\link{getOMLTask}}
 }
 

@@ -19,7 +19,8 @@ Invisibly returns a list of configuration settings.
 Set and overwrite configuration settings
 }
 \seealso{
-Other conf: \code{\link{configuration}};
-  \code{\link{getOMLConfig}}
+Other config: \code{\link{authenticateUser}};
+  \code{\link{configuration}}; \code{\link{getOMLConfig}};
+  \code{\link{getSessionHash}}
 }
 
