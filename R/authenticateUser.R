@@ -49,10 +49,12 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
 #' @return [\code{character(1)}].
 #' @export
 getSessionHash = function() {
-  session = .OpenML.session
-  if (is.null(session$hash)) # ... session expire, renew authenticaton, etc.
+  conf = getOMLConfig()
+  hash = conf$session.hash
+  expires = conf$session.hash.expires
+  if (is.null(hash)) # ... session expire, renew authenticaton, etc
     stop("Please authenticate first.")
-  if (session$expires < Sys.time() + 60)
+  if (expires < Sys.time() + 60)
     stop("Session hash expired. Please refresh your authentication.")
-  session$hash
+  return(hash)
 }
