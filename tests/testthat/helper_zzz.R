@@ -1,4 +1,5 @@
 library(mlr)
+library(stringr)
 setOMLConfig(verbosity = 0L)
 configureMlr(on.learner.warning = "quiet", show.learner.output = FALSE)
 

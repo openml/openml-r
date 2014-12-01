@@ -1,7 +1,7 @@
 context("listOMLRuns")
 
 test_that("listOMLRuns", {
-  exp.names = c("run.id", "task.id", "setup.id", "impl.id", "uploader")
+  exp.names = c("run.id", "task.id", "setup.id", "implementation.id", "uploader")
 
   rl = listOMLRuns(task.id = 1L, session.hash = session.hash)
   expect_is(rl, "data.frame")
