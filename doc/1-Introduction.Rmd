@@ -9,6 +9,22 @@ workflows.
 For general information on what [OpenML](http://openml.org/) is, please have a look at the
 [Readme file](https://github.com/openml/OpenML/blob/master/README.md).
 
+There are different stages when using this package:
+* Stage 0: Listing
+    * function names begin with `listOML`
+    * result is always a data.frame
+    * available for DataSets, Tasks, Flows, Runs, RunResults, EvaluationMeasures and TaskTypes
+* Stage 1: Downloading
+    * function names begin with `getOML`
+    * result is an object of a specific OpenML class
+    * available for DataSets, Tasks, Runs, Predictions and Flows
+* Stage 2: Running Models on Tasks
+    * runTaskMlr, runTaskCustom
+    * input: task and model
+    * output: OMLMlrRunResult, OMLRunResult
+* Stage 3: Uploading
+    * uploadRunResult
+
 ----------------------------------------------------------------------------------------------------
 Jump to:   
 1 Introduction  

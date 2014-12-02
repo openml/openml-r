@@ -1,0 +1,44 @@
+Stage 0 - Listing
+=================
+
+In this stage, we want to list basic information, e.g., about all data sets, tasks, flows, runs, run results, available evaluation measures or task types. For each of these purposes we have a function beginning with "listOML". All of them return a data.frame, even when the result has only one column.
+
+### Get a valid session hash
+To download a task and for most other functions, you will need a so-called session hash. If you created a configuration file containing username and password of your OpenML account, this is very simple:
+```{r}
+session.hash = authenticateUser()
+```
+Else, you have to pass your username und password here. **Your password will appear in plain text in your script/console!**
+```{r}
+session.hash = authenticateUser(email = "openml.rteam@gmail.com", password = "testpassword")
+```
+
+### Listing
+Let's have a look at some examples. Most of the listing-functions do not have any parameters:
+
+```{r}
+datasets = listOMLDataSets()
+head(datasets)
+
+flows = listOMLFlows()
+head(flows)
+
+measures = listOMLEvaluationMeasures()
+head(measures)
+
+tasktypes = listOMLTaskTypes()
+tasktypes
+```
+
+Other functions, however, list only those entities that match one or more criteria:
+
+```{r}
+tasks1 = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
+head(tasks1)
+
+runs = listOMLRuns(task.id = 1L)  # must be restricted to a task, setup and/or implementation ID
+head(runs)
+
+runresults = listOMLRunResults(task.id = 1L)  # a task ID must be supplied
+head(runresults)
+```
