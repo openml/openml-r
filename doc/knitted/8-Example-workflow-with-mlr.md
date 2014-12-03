@@ -12,17 +12,16 @@ feature and not a single missing value. Then, we have to upload the learner, com
 upload these.
 
 
-```r
+```splus
 library(mlr)
 
-dq = getDataQualities()
+tl = listOMLTasks()
 
 # filter data sets and get appropriate data set IDs:
-dids = subset(dq, NumberOfFeatures < 10 & NumberOfInstances < 100 & NumberOfClasses == 2 & 
-  NumberOfMissingValues == 0, select = did, drop = TRUE)
 
-# find tasks using these data set IDs and randomly select 20 of them
-task.ids = getTasksForDataSet(dids)
+# find tasks that match our desires and randomly select 20 of them
+task.ids = = subset(tl, NumberOfFeatures < 10 & NumberOfInstances < 100 & NumberOfClasses == 2 & 
+  NumberOfMissingValues == 0, select = task.id, drop = TRUE)
 task.ids = sample(task.ids, 20)
 
 # get a valid session hash:
@@ -36,14 +35,14 @@ flow.id = uploadMlrLearner(lrn, hash)
 
 run.ids = c()
 for (id in task.ids) {
-  task = downloadOpenMLTask(id)
+  task = getOMLTask(id)
   res = try(runTask(task, lrn))  # try to compute predictions with our learner
   if (is.error(res)) {
     # if an error occured, upload the error message:
-    run.id = uploadOpenMLRun(task, lrn, flow.id, error.msg = res[1], session.hash = hash)
+    run.id = uploadOMLRun(task, lrn, flow.id, error.msg = res[1], session.hash = hash)
   } else {
     # else, upload the predictions:
-    run.id = uploadOpenMLRun(task, lrn, flow.id, predictions = res, session.hash = hash)
+    run.id = uploadOMLRun(task, lrn, flow.id, predictions = res, session.hash = hash)
   } 
   run.ids = c(run.ids, run.id)
 }
@@ -54,7 +53,7 @@ for (id in task.ids) {
 ## "the other flows were better".
 qs = c()
 for (id in task.ids) {
-  metrics = downloadOpenMLTaskResults(id)$metrics
+  metrics = listOMLRunResults(id)$metrics
   if (is.null(metrics$predictive_accuracy))
     next
   f = ecdf(metrics$predictive_accuracy)
@@ -70,11 +69,10 @@ measures were better than the average of all run results on the considered tasks
 
 ----------------------------------------------------------------------------------------------------
 Jump to:   
-[1 Introduction](1-Introduction.md)  
-[2 Configuration](2-Configuration.md)  
-[3 Download a task](3-Download-a-task.md)  
-[4 Upload an implementation](4-Upload-an-implementation.md)  
-[5 Upload predictions](5-Upload-predictions.md)  
-[6 Download performance measures](6-Download-performance-measures.md)  
-[7 Browse the database](7-Browse-the-database.md)  
-8 Example workflow with mlr
+[Introduction](1-Introduction.md)  
+[Configuration](2-Configuration.md)  
+[Stage 0 - Listing](3-Stage-0-Listing.md)  
+[Stage 1 - Downloading](4-Stage-1-Downloading.md)  
+[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
+[Stage 3 - Uploading](6-Stage-3-Uploading.md)  
+Example workflow with mlr

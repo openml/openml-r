@@ -76,13 +76,13 @@ head(measures)
 ```
 
 ```
-##                    name
-## 1  area_under_roc_curve
-## 2          average_cost
-## 3        build_cpu_time
-## 4          build_memory
-## 5      class_complexity
-## 6 class_complexity_gain
+##                   name
+## 1 area_under_roc_curve
+## 2         average_cost
+## 3       build_cpu_time
+## 4         build_memory
+## 5              c_index
+## 6     class_complexity
 ```
 
 ```splus
@@ -98,14 +98,15 @@ tasktypes
 ## 4  4 Supervised Data Stream Classification
 ## 5  5                            Clustering
 ## 6  6            Machine Learning Challenge
+## 7  7                     Survival Analysis
 ```
 
 Other functions, however, list only those entities that match one or more criteria:
 
 
 ```splus
-tasks1 = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
-head(tasks1)
+tasks = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
+head(tasks)
 ```
 
 ```
@@ -149,85 +150,34 @@ head(runs)
 
 ```splus
 runresults = listOMLRunResults(task.id = 1L)  # a task ID must be supplied
-head(runresults)
+colnames(runresults)
 ```
 
 ```
-##   run.id setup.id implementation.id          implementation task.id
-## 1     62       17                76 weka.Bagging_REPTree(1)       1
-## 2    237        4                59            weka.JRip(1)       1
-## 3    359       12                67     weka.BayesNet_K2(1)       1
-## 4    413       10                65    weka.RandomForest(1)       1
-## 5    500       15                74        weka.Logistic(1)       1
-## 6    517       13                70  weka.SMO_PolyKernel(1)       1
-##   task.type.id              estim.proc area.under.roc.curve
-## 1            1 10-fold Crossvalidation               0.9950
-## 2            1 10-fold Crossvalidation               0.9789
-## 3            1 10-fold Crossvalidation               0.9921
-## 4            1 10-fold Crossvalidation               0.9986
-## 5            1 10-fold Crossvalidation               0.9968
-## 6            1 10-fold Crossvalidation               0.9668
-##                                                                              confusion.matrix
-## 1  [[5,0,2,0,1,0],[0,98,1,0,0,0],[2,2,676,0,0,4],[0,0,0,0,0,0],[0,0,0,0,67,0],[0,0,2,0,0,38]]
-## 2  [[3,1,4,0,0,0],[0,99,0,0,0,0],[0,5,677,0,0,2],[0,0,0,0,0,0],[0,0,0,0,67,0],[0,0,2,0,0,38]]
-## 3 [[7,0,1,0,0,0],[1,95,3,0,0,0],[1,7,656,0,0,20],[0,0,0,0,0,0],[0,0,0,0,67,0],[0,0,2,0,0,38]]
-## 4  [[7,0,1,0,0,0],[0,99,0,0,0,0],[0,2,680,0,0,2],[0,0,0,0,0,0],[0,0,0,0,67,0],[0,0,3,0,0,37]]
-## 5  [[6,1,1,0,0,0],[0,99,0,0,0,0],[0,0,678,0,0,6],[0,0,0,0,0,0],[0,0,0,0,67,0],[0,0,1,0,1,38]]
-## 6 [[7,0,1,0,0,0],[0,97,2,0,0,0],[1,7,674,0,0,2],[0,0,0,0,0,0],[0,0,0,0,67,0],[0,0,11,0,0,29]]
-##   f.measure  kappa kb.relative.information.score mean.absolute.error
-## 1    0.9843 0.9612                         830.7            0.009306
-## 2    0.9832 0.9610                         822.7            0.007985
-## 3    0.9632 0.9066                         787.8            0.016386
-## 4    0.9910 0.9777                         830.3            0.011131
-## 5    0.9889 0.9724                         852.9            0.003554
-## 6    0.9725 0.9326                        -451.2            0.222841
-##   mean.prior.absolute.error number.of.instances
-## 1                    0.1343                 898
-## 2                    0.1343                 898
-## 3                    0.1343                 898
-## 4                    0.1343                 898
-## 5                    0.1343                 898
-## 6                    0.1343                 898
-##                                                        os.information
-## 1 [ Oracle Corporation, 1.7.0_51, amd64, Linux, 3.7.10-1.28-desktop ]
-## 2 [ Oracle Corporation, 1.7.0_51, amd64, Linux, 3.7.10-1.28-desktop ]
-## 3 [ Oracle Corporation, 1.7.0_51, amd64, Linux, 3.7.10-1.28-desktop ]
-## 4 [ Oracle Corporation, 1.7.0_51, amd64, Linux, 3.7.10-1.28-desktop ]
-## 5 [ Oracle Corporation, 1.7.0_51, amd64, Linux, 3.7.10-1.28-desktop ]
-## 6 [ Oracle Corporation, 1.7.0_51, amd64, Linux, 3.7.10-1.28-desktop ]
-##   precision predictive.accuracy prior.entropy recall
-## 1    0.9843              0.9844         1.215 0.9844
-## 2    0.9848              0.9844         1.215 0.9844
-## 3    0.9682              0.9610         1.215 0.9610
-## 4    0.9911              0.9911         1.215 0.9911
-## 5    0.9895              0.9889         1.215 0.9889
-## 6    0.9731              0.9733         1.215 0.9733
-##   relative.absolute.error root.mean.prior.squared.error
-## 1                 0.06929                        0.2582
-## 2                 0.05945                        0.2582
-## 3                 0.12201                        0.2582
-## 4                 0.08288                        0.2582
-## 5                 0.02646                        0.2582
-## 6                 1.65921                        0.2582
-##   root.mean.squared.error root.relative.squared.error  scimark.benchmark
-## 1                 0.06371                      0.2467 1990.0545716446845
-## 2                 0.07048                      0.2730 2009.3945079911828
-## 3                 0.09863                      0.3820 2002.6266133146732
-## 4                 0.05893                      0.2282 2008.8406703096214
-## 5                 0.05695                      0.2206  2004.272840984903
-## 6                 0.31115                      1.2050 2009.1159463885701
-##   build.cpu.time build.memory average.cost total.cost
-## 1             NA         <NA>           NA         NA
-## 2             NA         <NA>           NA         NA
-## 3             NA         <NA>           NA         NA
-## 4             NA         <NA>           NA         NA
-## 5             NA         <NA>           NA         NA
-## 6             NA         <NA>           NA         NA
-##   usercpu.time.millis.testing usercpu.time.millis.training
-## 1                          NA                           NA
-## 2                          NA                           NA
-## 3                          NA                           NA
-## 4                          NA                           NA
-## 5                          NA                           NA
-## 6                          NA                           NA
+##  [1] "run.id"                        "setup.id"                     
+##  [3] "implementation.id"             "implementation"               
+##  [5] "task.id"                       "task.type.id"                 
+##  [7] "estim.proc"                    "area.under.roc.curve"         
+##  [9] "confusion.matrix"              "f.measure"                    
+## [11] "kappa"                         "kb.relative.information.score"
+## [13] "mean.absolute.error"           "mean.prior.absolute.error"    
+## [15] "number.of.instances"           "os.information"               
+## [17] "precision"                     "predictive.accuracy"          
+## [19] "prior.entropy"                 "recall"                       
+## [21] "relative.absolute.error"       "root.mean.prior.squared.error"
+## [23] "root.mean.squared.error"       "root.relative.squared.error"  
+## [25] "scimark.benchmark"             "build.cpu.time"               
+## [27] "build.memory"                  "average.cost"                 
+## [29] "total.cost"                    "usercpu.time.millis.testing"  
+## [31] "usercpu.time.millis.training"
 ```
+
+----------------------------------------------------------------------------------------------------
+Jump to:   
+[Introduction](1-Introduction.md)  
+[Configuration](2-Configuration.md)  
+Stage 0 - Listing  
+[Stage 1 - Downloading](4-Stage-1-Downloading.md)  
+[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
+[Stage 3 - Uploading](6-Stage-3-Uploading.md)  
+[8 Example workflow with mlr](8-Example-workflow-with-mlr.md)

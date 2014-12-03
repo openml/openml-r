@@ -33,12 +33,22 @@ tasktypes
 Other functions, however, list only those entities that match one or more criteria:
 
 ```{r}
-tasks1 = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
-head(tasks1)
+tasks = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
+head(tasks)
 
 runs = listOMLRuns(task.id = 1L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
 
 runresults = listOMLRunResults(task.id = 1L)  # a task ID must be supplied
-head(runresults)
+colnames(runresults)
 ```
+
+----------------------------------------------------------------------------------------------------
+Jump to:   
+[Introduction](1-Introduction.md)  
+[Configuration](2-Configuration.md)  
+Stage 0 - Listing  
+[Stage 1 - Downloading](4-Stage-1-Downloading.md)  
+[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
+[Stage 3 - Uploading](6-Stage-3-Uploading.md)  
+[8 Example workflow with mlr](8-Example-workflow-with-mlr.md)

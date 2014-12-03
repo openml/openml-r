@@ -1,0 +1,49 @@
+Stage 1 - Downloading
+=====================
+
+### Download an OpenML task
+Each OpenML task is a bundle of a data set, a target feature, an estimation procedure (e.g.,
+10-fold CV), data splits fitting this estimation procedure and, finally, one or more evaluation measures. Every task has a type, e.g., Supervised Classification or Supervised Regression. A user can download such a task from the OpenML server, compute predictions with an algorithm (called "flow" or "implementation") and upload this algorithm as well as the predictions. The server will then calculate many different measures and add them to the data base.
+
+To download a certain task from the OpenML server, you need to know the task's ID. See
+[section 3](3-Stage-0-Listing.md) to learn how to retrieve a list of all available tasks in R.
+
+The following call returns an OpenML task object: 
+```{r echo = FALSE, warning = FALSE}
+library(OpenML)
+setOMLConfig(verbosity = 0L)
+```
+```{r}
+task = getOMLTask(id = 4L, session.hash)
+task
+```
+Note, that the corresponding data set is not yet retrieved:
+```{r}
+task$data.set$data
+```
+After running the following line, the task is complete:
+```{r}
+task$data.set = getOMLDataSet(task)
+summary(task$data.set$data)
+```
+
+### Download an OpenML data set only
+OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate
+from these fixings. Of course, it is possible to define new tasks that match your desires, but this
+will not always be the means of choice -- e.g., when you want to run a few preliminary experiments.
+For this matter, you can use the function `getOMLDataSet`, which accepts not only tasks (as seen in the section above) but also a data set ID as input:
+
+```{r}
+oml.data = getOMLDataSet(1, session.hash)
+oml.data
+```
+
+----------------------------------------------------------------------------------------------------
+Jump to:   
+[Introduction](1-Introduction.md)  
+[Configuration](2-Configuration.md)  
+[Stage 0 - Listing](3-Stage-0-Listing.md)  
+Stage 1 - Downloading  
+[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
+[Stage 3 - Uploading](6-Stage-3-Uploading.md)  
+[8 Example workflow with mlr](8-Example-workflow-with-mlr.md)
