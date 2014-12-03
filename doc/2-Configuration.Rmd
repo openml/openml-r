@@ -22,11 +22,10 @@ If you have done these two steps, you are ready to go. Have fun!
 
 ----------------------------------------------------------------------------------------------------
 Jump to:    
-[1 Introduction](1-Introduction.md)  
-2 Configuration  
-[3 Download a task](3-Download-a-task.md)  
-[4 Upload an implementation](4-Upload-an-implementation.md)  
-[5 Upload predictions](5-Upload-predictions.md)  
-[6 Download performance measures](6-Download-performance-measures.md)  
-[7 Browse the database](7-Browse-the-database.md)  
-[8 Example workflow with mlr](8-Example-workflow-with-mlr.md)
+[Introduction](1-Introduction.md)  
+Configuration  
+[Stage 0 - Listing](3-Stage-0-Listing.md)  
+[Stage 1 - Downloading](4-Stage-1-Downloading.md)  
+[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
+[Stage 3 - Uploading](6-Stage-3-Uploading.md)  
+[Example workflow with mlr](8-Example-workflow-with-mlr.md)
