@@ -57,7 +57,7 @@ getOMLRun = function(id, session.hash = getSessionHash(), verbosity = NULL) {
         xmlValue(children[["array_data"]]),
         as.integer(xmlValue(children[["sample_size"]]))
       )
-      names(row) = c("did", "name", "impl", "label", "value", "stdev", "array.data", "sample.size")
+      names(row) = c("did", "name", "implementation", "label", "value", "stdev", "array.data", "sample.size")
       row
     }), fill = TRUE)
     makeOMLIOData(datasets = datasets, files = files, evaluations = as.data.frame(evals))
@@ -111,9 +111,9 @@ makeOMLRunParameter = function(name, value, component = NA_character_) {
   assertString(component, na.ok = TRUE)
 
   makeS3Obj("OMLRunParameter",
-            name = name,
-            value = value,
-            component = component
+    name = name,
+    value = value,
+    component = component
   )
 }
 

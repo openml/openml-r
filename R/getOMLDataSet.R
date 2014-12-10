@@ -126,7 +126,7 @@ makeOMLDataSet = function(desc, data, colnames.old, colnames.new) {
   assertClass(desc, "OMLDataSetDescription")
   assertDataFrame(data)
   assertCharacter(colnames.old, any.missing = FALSE)
-  assertCharacter(colnames.old, any.missing = FALSE)
+  assertCharacter(colnames.new, any.missing = FALSE)
 
   makeS3Obj("OMLDataSet",
     desc = desc, data = data, colnames.old = colnames.old, colnames.new = colnames.new)
