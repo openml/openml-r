@@ -17,13 +17,13 @@
 #' @family config
 authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   conf = getOMLConfig()
-  if (is.null(email)) {
+  if (is.null(email))
     email = conf$username
-  } else {
-    assertString(email)
-  }
+  assertString(email)
   if (is.null(password)) {
     md5 = conf$pwdmd5
+    if (is.na(md5))
+      stop("Please provide the password.")
   } else {
     assertString(password)
     md5 = digest(password, algo = "md5", serialize = FALSE)
@@ -31,7 +31,11 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   showInfo(verbosity, "Authenticating user at server: %s", email)
   url = getAPIURL("openml.authenticate", secure = FALSE)
   # FIXME: we might want to use https for this!
-  content = postForm(url, .params = list(username = email, password = md5), .checkParams = FALSE)
+  content = try(postForm(url, .params = list(username = email, password = md5), .checkParams = FALSE), silent = TRUE)
+
+  if (is.error(content))
+    stop("Username/password combination invalid.")
+
   doc = parseXMLResponse(content, "Authenticating user", "authenticate", as.text = TRUE)
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
   valid.until = xmlRValS(doc, "/oml:authenticate/oml:valid_until")
@@ -39,7 +43,6 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
   showInfo(verbosity, "Retrieved session hash. Valid until: %s", valid.until)
 
   # set auth data in config
-  conf = getOMLConfig()
   conf$session.hash = session.hash
   conf$session.hash.expires = as.POSIXct(valid.until)
 
