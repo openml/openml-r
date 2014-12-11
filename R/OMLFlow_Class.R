@@ -39,7 +39,7 @@
 #'   \code{\link{OMLBibRef}s}.
 #' @param parameter [\code{list}]\cr
 #'   The parameters of the flow. A list containing
-#'   \code{\link{OpenMLFlowParameter}s}.
+#'   \code{\link{OMLFlowParameter}s}.
 #' @param components [\code{list}]\cr
 #'   A list containing \code{\link{OMLFlow}s}. Typically components of a workflow or
 #'   subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.
@@ -173,7 +173,7 @@ print.OMLFlow = function(x, ...)  {
 #' @param recommended.range [\code{character(1)}]\cr
 #'   Minimal/maximal value and/or a recommended range of values.
 #' @export
-#' @aliases OMLFLowParameter
+#' @aliases OMLFlowParameter
 makeOMLFlowParameter = function(
   name,
   data.type = NA_character_,

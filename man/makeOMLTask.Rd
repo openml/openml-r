@@ -41,7 +41,4 @@ The evaluation measure(s) that should be used for optimization.}
 \description{
 Construct OMLTask.
 }
-\seealso{
-\code{\link{OMLDataSetDescription}}
-}
 

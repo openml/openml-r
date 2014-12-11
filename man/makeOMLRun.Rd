@@ -4,7 +4,8 @@
 \alias{makeOMLRun}
 \title{Construct OMLRun.}
 \usage{
-makeOMLRun(run.id, uploader, task.id, implementation.id, setup.id,
+makeOMLRun(run.id = NA_integer_, uploader = NA_integer_, task.id,
+  implementation.id = NA_integer_, setup.id = NA_integer_,
   setup.string = NA_character_, error.message = NA_character_,
   parameter.setting = list(), tags = NA_character_, predictions = NULL,
   input.data = makeOMLIOData(), output.data = makeOMLIOData())

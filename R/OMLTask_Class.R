@@ -23,7 +23,6 @@
 #'   The evaluation measure(s) that should be used for optimization.
 #' @export
 #' @aliases OMLTask
-#' @seealso \code{\link{OMLDataSetDescription}}
 makeOMLTask = function(id, type, target.features = NA_character_, tags = NA_character_, pars = list(),
   data.desc.id, data.set = NULL, estimation.procedure, preds = list(), evaluation.measures) {
 

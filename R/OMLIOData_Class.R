@@ -1,16 +1,12 @@
-# @title Construct OMLIOData.
-#
-# @param datasets [\code{data.frame}]\cr
-#   An optional \code{data.frame} with columns "did", "name" and "url".
-#   Default is \code{NULL}, which means there are no data sets.
-# @param files [\code{data.frame}]\cr
-#   An optional \code{data.frame} with columns "did", "name" and "url".
-#   Default is \code{NULL}, which means there are no files.
-# @param evaluations [\code{data.frame}]\cr
-#   An optional list of one or more evaluations.
-#   Default is \code{NULL}, which means there are no data sets.
-# @export
-# @aliases OMLIOData
+#' @title OMLIOData.
+#'   
+#' @description Objects of class \code{OMLIOData} are used to return information about all inputs 
+#'   and outputs of \code{\link{OMLRun}s}. Each object may contain up to three \code{data.frames},
+#'   containing information on \code{datasets} ("did", "name", "url"), \code{files} ("did", "name", "url")
+#'   and/or \code{evaluations}.
+#' @name OMLIOData
+NULL
+
 makeOMLIOData = function(datasets = NULL, files = NULL, evaluations = NULL) {
   if (!is.null(datasets))
     assertDataFrame(datasets)

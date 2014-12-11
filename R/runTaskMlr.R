@@ -12,16 +12,9 @@
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.
 #' @template arg_verbosity
-#' @return List of:
-#'   \item{run.pred}{[\code{\link[mlr]{ResamplePrediction}}]\cr
-#'     Predictions resulting from the run. These are necessary in order to upload a run.}
-#'   \item{mlr.resample.results}{[\code{list}]\cr
-#'     The results of the mlr function \code{\link[mlr]{resample}}.\cr
-#'     \code{NULL} if \code{return.mlr.results == FALSE}.}
-#' @seealso \code{\link{OMLTask}}, \code{\link[mlr]{learners}},
-#'   \code{\link{authenticateUser}}, \code{\link[mlr]{resample}}
+#' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.resample.result}.
+#' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
-# FIXME: if !return.mlr.results, the output is not a list!
 runTaskMlr = function(task, learner, remove.const.feats = TRUE, ..., verbosity = NULL) {
 
   assertClass(task, "OMLTask")

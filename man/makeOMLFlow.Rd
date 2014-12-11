@@ -70,7 +70,7 @@ An optional list containing information on bibliographical references in form of
 
 \item{parameter}{[\code{list}]\cr
 The parameters of the flow. A list containing
-\code{\link{OpenMLFlowParameter}s}.}
+\code{\link{OMLFlowParameter}s}.}
 
 \item{components}{[\code{list}]\cr
 A list containing \code{\link{OMLFlow}s}. Typically components of a workflow or

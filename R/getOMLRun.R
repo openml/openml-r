@@ -67,7 +67,7 @@ getOMLRun = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     run.id = xmlREValI(doc, "/oml:run/oml:run_id"),
     uploader = xmlREValI(doc, "/oml:run/oml:uploader"),
     task.id = xmlREValI(doc, "/oml:run/oml:task_id"),
-    implementation.id = xmlRValS(doc, "/oml:run/oml:implementation_id"),
+    implementation.id = xmlRValI(doc, "/oml:run/oml:implementation_id"),
     setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),
     setup.string = xmlOValS(doc, "/oml:run/oml:setup_string"),
     error.message = xmlOValS(doc, "/oml:run/oml:error_message"),
