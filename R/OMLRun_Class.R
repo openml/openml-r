@@ -31,15 +31,16 @@
 #' @export
 #' @aliases OMLRun
 #' @seealso \code{\link{getOMLRun}}, \code{\link{listOMLRunResults}}
-makeOMLRun = function(run.id, uploader, task.id, implementation.id, setup.id,
-  setup.string = NA_character_, error.message = NA_character_, parameter.setting = list(),
-  tags = NA_character_, predictions = NULL, input.data = makeOMLIOData(), output.data = makeOMLIOData()) {
+makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, task.id, implementation.id = NA_integer_,
+  setup.id = NA_integer_, setup.string = NA_character_, error.message = NA_character_,
+  parameter.setting = list(), tags = NA_character_, predictions = NULL, input.data = makeOMLIOData(),
+  output.data = makeOMLIOData()) {
 
-  run.id = asCount(run.id)
-  uploader = asCount(uploader)
+  run.id = asCount(run.id, na.ok = TRUE)
+  uploader = asCount(uploader, na.ok = TRUE)
   task.id = asCount(task.id)
-  assertString(implementation.id)
-  setup.id = asCount(setup.id)
+  implementation.id = asCount(implementation.id, na.ok = TRUE)
+  setup.id = asCount(setup.id, na.ok = TRUE)
   assertString(setup.string, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
   assertList(parameter.setting)
@@ -71,14 +72,19 @@ makeOMLRun = function(run.id, uploader, task.id, implementation.id, setup.id,
 #' @export
 print.OMLRun = function(x, printMetrics = FALSE, ...)  {
   catNotNA = function(s, val) {
-    if (!is.na(val))
-      catf("%s %s", s, val)
+    if (!all(is.na(val)))
+      catf("%s %s", s, collapse(val, sep = ", "))
   }
 
   ## General info
-  catf('\nRun Results :: (Run ID = %i, Task ID = %i)', x$run.id, x$task.id)
-  catNotNA('\tFlow ID: ', x$implementation.id)
+  catf('\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)', x$run.id, x$task.id, x$implementation.id)
   catNotNA('\tUser ID: ', x$uploader)
+  catNotNA('\tTags   : ', x$tags)
+
+  if (!is.null(x$mlr.resample.result)) {
+    cat('\n')
+    print(x$mlr.resample.result)
+  }
 
   if (printMetrics) {
     cat('\n\tMetrics:\n\n')

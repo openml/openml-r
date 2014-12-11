@@ -41,8 +41,8 @@ toMlr.OMLTask = function(obj, target = obj$data.set$desc$default.target.attribut
   assertFlag(ignore.flagged.attributes)
 
   task.type = obj$type
-  data.set = obj$data.set
-  data = obj$data.set$data
+  data.set = getOMLDataSet(obj)
+  data = data.set$data
   estim.proc = obj$estimation.procedure
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
@@ -62,12 +62,16 @@ toMlr.OMLDataSet = function(obj, target = obj$desc$default.target.attribute,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE, verbosity = NULL) {
 
   desc = obj$desc
+  if (is.null(obj$data)) {
+    obj = getOMLDataSet(desc$id)
+  }
 
   assertSubset(target, obj$colnames.new, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
   assertFlag(ignore.flagged.attributes)
 
   data = obj$data
+
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
     obj$data = subset(data, !tar.na)
