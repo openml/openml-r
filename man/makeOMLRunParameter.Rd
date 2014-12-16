@@ -2,7 +2,7 @@
 \name{makeOMLRunParameter}
 \alias{OMLRunParameter}
 \alias{makeOMLRunParameter}
-\title{Construct OMLRunParameter}
+\title{Construct OMLRunParameter.}
 \usage{
 makeOMLRunParameter(name, value, component = NA_character_)
 }
@@ -14,10 +14,10 @@ The name of the parameter.}
 The value of the parameter.}
 
 \item{component}{[\code{character(1)}]\cr
-   The implementation name of a component, if the parameter belongs to this component.
-   This name must match a component of the implementation.}
+The implementation name of a component, if the parameter belongs to this component.
+This name must match a component of the implementation.}
 }
 \description{
-Construct OMLRunParameter
+Construct OMLRunParameter.
 }
 

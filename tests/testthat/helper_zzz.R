@@ -1,5 +1,6 @@
 library(mlr)
 library(stringr)
+library(checkmate)
 setOMLConfig(verbosity = 0L)
 configureMlr(on.learner.warning = "quiet", show.learner.output = FALSE)
 
