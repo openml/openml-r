@@ -10,7 +10,9 @@ getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
   id = asCount(id)
 
   url = getAPIURL("openml.implementation.get", implementation_id = id)
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
+  content = try(downloadXML(url, NULL, verbosity, session_hash = session.hash), silent = TRUE)
+  if (is.error(content))
+    stop("Flow (temporarily) not available.")
   doc = parseXMLResponse(content, "Getting implementation", "implementation", as.text = TRUE)
   flow = parseOMLFlow(doc)
 
@@ -52,7 +54,7 @@ parseOMLFlow = function(doc) {
     # FIXME: this is not very elegant
     file2 = tempfile("components")
     saveXML(comp_ns[[i]], file = file2)
-    comp[[i]] = parseOMLFlow(file2)
+    comp[[i]] = parseOMLFlow(parseXMLResponse(file2, type = "implementation"))
     names(comp)[i] = xmlRValS(doc, paste0("/oml:implementation/oml:component[", i, "]/oml:identifier"))
     unlink(file2)
   }
