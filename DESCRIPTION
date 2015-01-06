@@ -10,8 +10,8 @@ Suggests:
     randomForest,
     rpart
 Imports:
-    BBmisc,
-    checkmate,
+    BBmisc (>= 1.9),
+    checkmate (>= 1.5.1),
     data.table,
     digest,
     RCurl,
