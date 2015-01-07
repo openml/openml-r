@@ -14,9 +14,14 @@
 #' @export
 listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
   id = asCount(task.id)
+  assertString(session.hash)
 
   url = getAPIURL("openml.task.evaluations", task_id = id)
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
+  content = try(downloadXML(url, NULL, verbosity, session_hash = session.hash), silent = TRUE)
+
+  if (is.error(content))
+    return(data.frame())
+
   doc = parseXMLResponse(content, "Getting task results", "task_evaluations", as.text = TRUE)
 
   # parse general information

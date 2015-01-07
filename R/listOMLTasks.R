@@ -14,8 +14,14 @@
 #' @export
 listOMLTasks = function(type = 1L, session.hash = getSessionHash(), verbosity = NULL) {
   type = asInt(type)
+  assertString(session.hash)
+
   url = getAPIURL("openml.tasks", task_type_id = type)
-  content = downloadXML(url, NULL, verbosity = verbosity, session_hash = session.hash)
+  content = try(downloadXML(url, NULL, verbosity = verbosity, session_hash = session.hash), silent = TRUE)
+
+  if (is.error(content))
+    return(data.frame())
+
   xml = parseXMLResponse(content, "Getting task list", "tasks", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])

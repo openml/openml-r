@@ -12,5 +12,5 @@ listOMLEvaluationMeasures = function(session.hash = getSessionHash(), verbosity 
   content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
   doc = parseXMLResponse(content, "Getting names of evaluation measures", "evaluation_measures",
     as.text = TRUE)
-  data.frame(name = xmlValsMultNsS(doc, "/oml:evaluation_measures/oml:measures/oml:measure"))
+  data.frame(name = xmlValsMultNsS(doc, "/oml:evaluation_measures/oml:measures/oml:measure"), stringsAsFactors = FALSE)
 }
