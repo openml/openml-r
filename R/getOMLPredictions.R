@@ -16,7 +16,7 @@ getOMLPredictions = function(run, session.hash = getSessionHash(), verbosity = N
   if (is.null(run$predictions)) {
     f = findInCacheRun(run$run.id, create = TRUE)
     path = getCacheRunPath(run$run.id, "predictions.arff")
-    if (!f$predictions.found) {
+    if (!f$predictions.arff.found) {
       fls = run$output.data$files
       url = fls[fls$name == "predictions", "url"]
       if (is.null(url)) {

@@ -8,6 +8,7 @@
 #' @export
 getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
   id = asCount(id)
+  assertString(session.hash)
 
   url = getAPIURL("openml.implementation.get", implementation_id = id)
   content = try(downloadXML(url, NULL, verbosity, session_hash = session.hash), silent = TRUE)
@@ -15,6 +16,28 @@ getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     stop("Flow (temporarily) not available.")
   doc = parseXMLResponse(content, "Getting implementation", "implementation", as.text = TRUE)
   flow = parseOMLFlow(doc)
+
+  # download source and/or binary files:
+  downloadFileAndSavePath = function(flow, binOrSource, mode, verbosity) {
+    url = flow[[sprintf("%s.url", binOrSource)]]
+    if (!is.na(url)) {
+      file = unlist(str_split(url, "/"))
+      file = file[length(file)]
+      path = getCacheFlowPath(flow$id, file)
+      flow[[sprintf("%s.path", binOrSource)]] = path  # save path in flow object
+      f = findInCache("flows", flow$id, create = TRUE, elements = file)
+      if (f[[sprintf("%s.found", file)]]) {
+        showInfo(verbosity, "File %s found in cache.", file)
+      } else {
+        showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
+        download.file(flow$binary.url, path, mode = mode, quiet = TRUE)
+      }
+    }
+    return(flow)
+  }
+
+  flow = downloadFileAndSavePath(flow, "binary", "wb", verbosity)
+  flow = downloadFileAndSavePath(flow, "source", "w", verbosity)
 
   return(flow)
 }

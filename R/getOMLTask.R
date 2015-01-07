@@ -32,7 +32,7 @@ getOMLTask = function(id, session.hash = getSessionHash(), verbosity = NULL) {
   f = findInCacheTask(id, create = TRUE)
 
   # get XML description
-  if (!f$task.found) {
+  if (!f$task.xml.found) {
     url = getAPIURL("openml.task.get", task_id = id)
     path = getCacheTaskPath(id, "task.xml")
     task.contents = downloadXML(url, path, verbosity, session_hash = session.hash)
@@ -107,10 +107,10 @@ getOMLTask = function(id, session.hash = getSessionHash(), verbosity = NULL) {
   task$estimation.procedure$parameters = p
 
   # this is temporarily needed to parse the data splits
-  task$data.set = getOMLDataSet(task)
+  task$data.set = getOMLDataSet(task, verbosity = verbosity)
 
   # No real error handling. If no data splits are available, just print a warning and go on.
-  if (!f$datasplits.found) {
+  if (!f$datasplits.arff.found) {
     url.dsplits = task$estimation.procedure$data.splits.url
     if (url.dsplits == "No URL") {
       warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")

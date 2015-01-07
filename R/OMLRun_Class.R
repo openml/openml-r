@@ -78,8 +78,8 @@ print.OMLRun = function(x, printMetrics = FALSE, ...)  {
 
   ## General info
   catf('\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)', x$run.id, x$task.id, x$implementation.id)
-  catNotNA('\tUser ID: ', x$uploader)
-  catNotNA('\tTags   : ', x$tags)
+  catNotNA('\tUser ID:', x$uploader)
+  catNotNA('\tTags   :', x$tags)
 
   if (!is.null(x$mlr.resample.result)) {
     cat('\n')

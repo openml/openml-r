@@ -55,6 +55,10 @@
 #'   MD5 checksum to check if the source code was uploaded correctly.
 #' @param binary.md5 [\code{character(1)}]\cr
 #'   MD5 checksum to check if the binary code was uploaded correctly.
+#' @param source.path [\code{character(1)}]\cr
+#'   The path to the cached source file, once \code{\link{getOMLFlow}} was run.
+#' @param binary.path [\code{character(1)}]\cr
+#'   The path to the cached binary file, once \code{\link{getOMLFlow}} was run.
 #' @export
 #' @aliases OMLFlow
 # @param implements [\code{character}]\cr
@@ -83,7 +87,9 @@ makeOMLFlow = function(
   source.format = NA_character_,
   binary.format = NA_character_,
   source.md5 = NA_character_,
-  binary.md5 = NA_character_
+  binary.md5 = NA_character_,
+  source.path = NA_character_,
+  binary.path = NA_character_
 ) {
 
   assertInt(id, na.ok = TRUE)
@@ -112,6 +118,8 @@ makeOMLFlow = function(
   assertString(binary.format, na.ok = TRUE)
   assertString(source.md5, na.ok = TRUE)
   assertString(binary.md5, na.ok = TRUE)
+  assertString(source.path, na.ok = TRUE)
+  assertString(binary.path, na.ok = TRUE)
 
   makeS3Obj("OMLFlow",
     id = id,
@@ -137,7 +145,9 @@ makeOMLFlow = function(
     source.format = source.format,
     binary.format = binary.format,
     source.md5 = source.md5,
-    binary.md5 = binary.md5
+    binary.md5 = binary.md5,
+    source.path = source.path,
+    binary.path = binary.path
   )
 }
 

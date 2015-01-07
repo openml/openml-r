@@ -50,7 +50,7 @@ assignConfigDefaults = function() {
   conf$username = NA_character_
   conf$pwdmd5 = NA_character_
   conf$openmldir = path.expand("~/.openml")
-  conf$cachedir = file.path(conf$openmldir, "cache")
+  conf$cachedir = file.path(tempdir(), "cache")
   conf$verbosity = 1L
 }
 

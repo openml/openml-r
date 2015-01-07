@@ -40,7 +40,7 @@ getOMLDataSet.numeric = function(x, session.hash = getSessionHash(), verbosity =
   f = findInCacheDataSet(id, create = TRUE)
 
   # get XML description
-  if (!f$description.found) {
+  if (!f$description.xml.found) {
     path = getCacheDataSetPath(id, "description.xml")
     url = getAPIURL("openml.data.description", data.id = id)
     data.desc.contents = downloadXML(url, path, verbosity, session_hash = session.hash)
@@ -78,7 +78,7 @@ getOMLDataSet.numeric = function(x, session.hash = getSessionHash(), verbosity =
   data.desc = do.call(makeOMLDataSetDescription, args)
 
   # now get data file
-  if (!f$dataset.found) {
+  if (!f$dataset.arff.found) {
     path = getCacheDataSetPath(id, "dataset.arff")
     data = downloadARFF(data.desc$url, file = path, verbosity)
   } else {

@@ -27,6 +27,10 @@ getCacheRunsDir = function() {
   getCacheSubDir("runs")
 }
 
+getCacheFlowsDir = function() {
+  getCacheSubDir("flows")
+}
+
 getCacheDataSetPath = function(id, file) {
   getCacheFilePath("datasets", id, file)
 }
@@ -37,6 +41,10 @@ getCacheTaskPath = function(id, file) {
 
 getCacheRunPath = function(id, file) {
   getCacheFilePath("runs", id, file)
+}
+
+getCacheFlowPath = function(id, file) {
+  getCacheFilePath("flows", id, file)
 }
 
 ##### creating stuff on init
@@ -55,6 +63,7 @@ createCacheSubDirs = function(verbosity = NULL) {
   createDir(getCacheDataSetsDir(), verbosity)
   createDir(getCacheTasksDir(), verbosity)
   createDir(getCacheRunsDir(), verbosity)
+  createDir(getCacheFlowsDir(), verbosity)
 }
 
 # tries to find expected elements in cache dir. caller can request to create path if not found.
@@ -63,7 +72,7 @@ createCacheSubDirs = function(verbosity = NULL) {
 #  - whether it was created,
 #  - a flag per element wheter it already existed
 # unsuccessful request to create = exception
-findInCache = function(subdir, id, create, elements) {
+findInCache = function(subdir, id, create, elements = "") {
   created = FALSE
   path = getCacheSubDir(subdir, id)
   found = file.exists(path)
@@ -72,8 +81,7 @@ findInCache = function(subdir, id, create, elements) {
       stopf("Error in creating cache dir: %s", path)
     created = TRUE
   }
-  el = extractSubList(str_split(elements, "[.]"), element = 1L)
-  el = paste0(el, ".found")
+  el = paste0(elements, ".found")
   found.list = as.list(elements %in% list.files(path))
   found.list = setNames(found.list, el)
   c(list(path = path, created = created), found.list)
