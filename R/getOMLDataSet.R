@@ -35,10 +35,17 @@ getOMLDataSet.OMLTask = function(x, session.hash = getSessionHash(), verbosity =
 #' @export
 getOMLDataSet.numeric = function(x, session.hash = getSessionHash(), verbosity = NULL) {
   id = asInt(x, lower = 0)
-  showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
 
+  l = listOMLDataSets(verbosity = 0L)
+  status = l[l$did == id, "status"]
   f = findInCacheDataSet(id, create = TRUE)
 
+  if (status == "deactivated") {
+    stop("Data set has been deactivated.")
+  } else if (status == "in_preparation") {
+    stop("Data set is in preparation. You can download it as soon as it's active.")
+  } 
+  showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
   # get XML description
   if (!f$description.xml.found) {
     path = getCacheDataSetPath(id, "description.xml")
