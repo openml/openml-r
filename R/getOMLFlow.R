@@ -30,7 +30,7 @@ getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
         showInfo(verbosity, "File %s found in cache.", file)
       } else {
         showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
-        download.file(flow$binary.url, path, mode = mode, quiet = TRUE)
+        download.file(url, path, mode = mode, quiet = TRUE)
       }
     }
     return(flow)

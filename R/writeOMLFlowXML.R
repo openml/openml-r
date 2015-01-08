@@ -5,8 +5,8 @@
 # @param file [\code{character(1)}]\cr
 #   Destination path where the XML file should be saved.
 # @return [\code{invisible(NULL)}].
-writeOpenMLImplementationXML = function(description, file) {
-  assertClass(description, "OpenMLImplementation")
+writeOMLFlowXML = function(description, file) {
+  assertClass(description, "OMLFlow")
   assertPathForOutput(file, overwrite = TRUE)
 
   doc = newXMLDoc()
