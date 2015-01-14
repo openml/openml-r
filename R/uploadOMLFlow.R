@@ -47,15 +47,15 @@ uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(), verbosity =
   flow = createOMLFlowForMlrLearner(x)
 
   # create sourcefile
-  sourcefile = file.path(tempdir(), sprintf("%s_source.R", lrn$id))
-  xx = base64encode(serialize(lrn, ascii = TRUE, connection = NULL))
+  sourcefile = file.path(tempdir(), sprintf("%s_source.R", x$id))
+  xx = base64Encode(serialize(x, ascii = TRUE, connection = NULL))
   writeLines(sprintf("
 sourcedFlow = function(task.id) {
-  library(base64enc)
+  library(RCurl)
   library(mlr)
   task = getOMLTask(task.id)
-  lrn = unserialize(base64decode('%s'))
-  runTaskMlr(task, lrn)
+  x = unserialize(base64Decode('%s'))
+  runTaskMlr(task, x)
 }", xx), sourcefile)
   on.exit(unlink(sourcefile))
 
@@ -81,12 +81,12 @@ sourcedFlow = function(task.id) {
 createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ...) {
   assertClass(lrn, "Learner")
   assertString(name)
-  
+
   if (!is.null(description))
     assertString(description)
   else
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
-  
+
   flow = makeOMLFlow(
     name = name,
     # set package version of the "last" learner as the flow's external.version
