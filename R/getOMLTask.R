@@ -2,30 +2,26 @@
 #'
 #' @description
 #' This function downloads an OpenML task and all associated files from the OpenML repository,
-#' caches the files on disk and creates an S3 object which completely specifies the task. Note that
-#' the associated data set is not downloaded, only some information describing it. To retrieve the
-#' whole \code{OMLDataSet} object, please use \code{\link{getOMLDataSet}}.
+#' caches the files on disk and creates an S3 object which completely specifies the task.
 #'
-#' @param id [\code{integer(1)}]\cr
+#' @param task.id [\code{integer(1)}]\cr
 #'   The task ID.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
-#' @seealso To retrieve the corresponding data set: \code{\link{getOMLDataSet}}
 #' @export
 #' @examples
 #' # Download task and access relevant information to start running experiments
 #' \dontrun{
-#' task = getOMLTask(id = 1)
-#' show(task)
+#' task = getOMLTask(1)
+#' print(task)
 #' print(task$type)
 #' print(task$target.features)
-#' print(head(task$data.set$data))
-#' task$data.set = getOMLDataSet(task)
+#' print(task$data.set)
 #' print(head(task$data.set$data))
 #' }
-getOMLTask = function(id, session.hash = getSessionHash(), verbosity = NULL) {
-  id = asCount(id)
+getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
+  id = asCount(task.id)
 
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 
@@ -106,7 +102,7 @@ getOMLTask = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     p[["number_folds"]] = as.integer(p[["number_folds"]])
   task$estimation.procedure$parameters = p
 
-  # this is temporarily needed to parse the data splits
+  # get the data set
   task$data.set = getOMLDataSet(task, verbosity = verbosity)
 
   # No real error handling. If no data splits are available, just print a warning and go on.
@@ -124,7 +120,6 @@ getOMLTask = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     data = read.arff(getCacheTaskPath(id, "datasplits.arff"))
     task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
-  task$data.set$data = NULL
   return(task)
 }
 

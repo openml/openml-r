@@ -17,15 +17,15 @@
 #' @return [\code{\link{OMLDataSet}}]
 #' @family download
 #' @export
-getOMLDataSet = function(x, session.hash, verbosity) {
+getOMLDataSet = function(x, check.status, session.hash, verbosity) {
   UseMethod("getOMLDataSet")
 }
 
 #' @rdname getOMLDataSet
 #' @export
-getOMLDataSet.OMLTask = function(x, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLDataSet.OMLTask = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
   if (is.null(x$data.set$data))
-    data.set = getOMLDataSet(x$data.desc.id, session.hash, verbosity)
+    data.set = getOMLDataSet(x$data.desc.id, check.status, session.hash, verbosity)
   else
     data.set = x$data.set
   return(data.set)
@@ -33,19 +33,20 @@ getOMLDataSet.OMLTask = function(x, session.hash = getSessionHash(), verbosity =
 
 #' @rdname getOMLDataSet
 #' @export
-getOMLDataSet.numeric = function(x, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
   id = asInt(x, lower = 0)
 
-  l = listOMLDataSets(verbosity = 0L)
-  status = l[l$did == id, "status"]
-  f = findInCacheDataSet(id, create = TRUE)
-
-  if (status == "deactivated") {
-    stop("Data set has been deactivated.")
-  } else if (status == "in_preparation") {
-    stop("Data set is in preparation. You can download it as soon as it's active.")
-  } 
+  if (check.status) {
+    l = listOMLDataSets(verbosity = 0L)
+    status = l[l$did == id, "status"]
+    if (status == "deactivated") {
+      stop("Data set has been deactivated.")
+    } else if (status == "in_preparation") {
+      stop("Data set is in preparation. You can download it as soon as it's active.")
+    }
+  }
   showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
+  f = findInCacheDataSet(id, create = TRUE)
   # get XML description
   if (!f$description.xml.found) {
     path = getCacheDataSetPath(id, "description.xml")

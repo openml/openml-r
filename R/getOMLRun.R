@@ -2,17 +2,20 @@
 #'
 #' @description
 #' This function downloads an OpenML run including all server and user computed metrics.
-#' The associated predictions can be retrieved with \code{\link{getOMLPredictions}}.
 #'
-#' @param id [\code{integer(1)}]\cr
-#'   The task ID.
+#' @param run.id [\code{integer(1)}]\cr
+#'   The run's ID.
+#' @param get.predictions [\code{logical(1)}]\cr
+#'   Should the associated predictions be retrieved, too? Default is \code{FALSE}. Note that this does not affect the
+#'   downloading of metrics and other information.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLRun}}]
 #' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
-getOMLRun = function(id, session.hash = getSessionHash(), verbosity = NULL) {
-  id = asCount(id)
+getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
+  id = asCount(run.id)
+  assertFlag(get.predictions)
 
   url = getAPIURL("openml.run.get", run_id = id)
   content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
@@ -71,6 +74,7 @@ getOMLRun = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),
     setup.string = xmlOValS(doc, "/oml:run/oml:setup_string"),
     error.message = xmlOValS(doc, "/oml:run/oml:error_message"),
+    tags = xmlOValsMultNsS(doc, "/oml:run/oml:tag"),
     input.data = parseData("/oml:run/oml:input_data"),
     output.data = parseData("/oml:run/oml:output_data"),
     parameter.setting = list()
@@ -87,8 +91,23 @@ getOMLRun = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     do.call(makeOMLRunParameter, args)
   })
 
-  # parse tags
-  run.args[["tags"]] = xmlOValsMultNsS(doc, "/oml:run/oml:tag")
-
+  if (get.predictions) {
+    f = findInCacheRun(run.args$run.id, create = TRUE)
+    path = getCacheRunPath(run.args$run.id, "predictions.arff")
+    if (!f$predictions.arff.found) {
+      fls = run.args$output.data$files
+      url = fls[fls$name == "predictions", "url"]
+      if (is.null(url)) {
+        warning("No URL found to retrieve predictions from.")
+        pred = NULL
+      } else {
+        pred = downloadARFF(url, path, verbosity)
+      }
+    } else {
+      showInfo(verbosity, "Predictions found in cache.")
+      pred = read.arff(path)
+    }
+    run.args[["predictions"]] = pred
+  }
   do.call(makeOMLRun, run.args)
 }
