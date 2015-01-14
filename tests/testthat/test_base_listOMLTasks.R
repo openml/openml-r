@@ -13,5 +13,5 @@ test_that("listOMLTasks", {
 
   expect_true(length(intersect(tasks.cl$task_id, tasks.reg$task_id)) == 0)
 
-  expect_error(listOMLTasks(0L, session.hash))
+  expect_equal(dim(listOMLTasks(0L, session.hash)), c(0, 0))
 })
