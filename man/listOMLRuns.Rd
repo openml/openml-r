@@ -8,7 +8,7 @@ listOMLRuns(task.id = NULL, setup.id = NULL, impl.id = NULL,
   session.hash = getSessionHash(), verbosity = NULL)
 }
 \arguments{
-\item{task.id}{[\code{integer}]\cr
+\item{task.id}{[\code{integer(1)}]\cr
 ID of the task.}
 
 \item{setup.id}{[\code{integer(1)}]\cr

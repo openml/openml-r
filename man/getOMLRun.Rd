@@ -4,11 +4,16 @@
 \alias{getOMLRun}
 \title{Get an OpenML run.}
 \usage{
-getOMLRun(id, session.hash = getSessionHash(), verbosity = NULL)
+getOMLRun(run.id, get.predictions = FALSE, session.hash = getSessionHash(),
+  verbosity = NULL)
 }
 \arguments{
-\item{id}{[\code{integer(1)}]\cr
-The task ID.}
+\item{run.id}{[\code{integer(1)}]\cr
+The run's ID.}
+
+\item{get.predictions}{[\code{logical(1)}]\cr
+Should the associated predictions be retrieved, too? Default is \code{FALSE}. Note that this does not affect the
+downloading of metrics and other information.}
 
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is
@@ -26,7 +31,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
 This function downloads an OpenML run including all server and user computed metrics.
-The associated predictions can be retrieved with \code{\link{getOMLPredictions}}.
 }
 \seealso{
 To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}

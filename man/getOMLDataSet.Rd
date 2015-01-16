@@ -6,13 +6,13 @@
 \alias{getOMLDataSet.numeric}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(x, session.hash, verbosity)
+getOMLDataSet(x, check.status, session.hash, verbosity)
 
-\method{getOMLDataSet}{OMLTask}(x, session.hash = getSessionHash(),
-  verbosity = NULL)
+\method{getOMLDataSet}{OMLTask}(x, check.status = FALSE,
+  session.hash = getSessionHash(), verbosity = NULL)
 
-\method{getOMLDataSet}{numeric}(x, session.hash = getSessionHash(),
-  verbosity = NULL)
+\method{getOMLDataSet}{numeric}(x, check.status = FALSE,
+  session.hash = getSessionHash(), verbosity = NULL)
 }
 \arguments{
 \item{x}{[\code{integer(1)} | \code{\link{OMLTask}}]\cr

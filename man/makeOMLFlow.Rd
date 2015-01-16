@@ -14,7 +14,8 @@ makeOMLFlow(id = NA_integer_, uploader = NA_integer_, name,
   bibliographical.reference = NULL, parameter = NULL, components = NULL,
   source.url = NA_character_, binary.url = NA_character_,
   source.format = NA_character_, binary.format = NA_character_,
-  source.md5 = NA_character_, binary.md5 = NA_character_)
+  source.md5 = NA_character_, binary.md5 = NA_character_,
+  source.path = NA_character_, binary.path = NA_character_)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -94,6 +95,12 @@ MD5 checksum to check if the source code was uploaded correctly.}
 
 \item{binary.md5}{[\code{character(1)}]\cr
 MD5 checksum to check if the binary code was uploaded correctly.}
+
+\item{source.path}{[\code{character(1)}]\cr
+The path to the cached source file, once \code{\link{getOMLFlow}} was run.}
+
+\item{binary.path}{[\code{character(1)}]\cr
+The path to the cached binary file, once \code{\link{getOMLFlow}} was run.}
 }
 \description{
 Construct OMLFlow.
