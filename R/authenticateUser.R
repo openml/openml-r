@@ -56,10 +56,20 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
 getSessionHash = function() {
   conf = getOMLConfig()
   hash = conf$session.hash
-  expires = conf$session.hash.expires
-  if (is.null(hash)) # ... session expire, renew authenticaton, etc
-    stop("Please authenticate first.")
-  if (expires < Sys.time() + 60)
-    stop("Session hash expired. Please refresh your authentication.")
+  expired = conf$session.hash.expires < Sys.time() + 60L
+  if (is.null(hash) || expired) {
+    auto.login = conf$is.user.config && !is.null(conf$username) && !is.null(conf$pwdmd5)
+    if (is.null(hash)) {
+      if (auto.login)
+        hash = authenticateUser()
+      else
+        stop("Please authenticate first.")
+    } else if (expired) {
+      if (auto.login)
+        hash = authenticateUser()
+      else
+        stop("Session hash expired. Please refresh your authentication.")
+    }
+  }
   return(hash)
 }

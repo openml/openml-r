@@ -53,7 +53,7 @@ createDir = function(dir, verbosity = NULL) {
     if (dir.create(dir, recursive = TRUE))
       showInfo(verbosity, "Created dir: %s", dir)
     else
-      stopf("Error in creating dir: %s", dir)
+      stopf("Error creating dir: %s", dir)
   }
 }
 
