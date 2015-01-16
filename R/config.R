@@ -1,3 +1,5 @@
+.OpenML.config = new.env(parent = emptyenv())
+
 #' @title OpenML configuration.
 #'
 #' @description
@@ -41,6 +43,7 @@ readConfigFile = function(conffile) {
 # assigns a conf to namespace
 assignConfig = function(conf) {
   conf.in.ns = getOMLConfig()
+  conf.in.ns$is.user.config = TRUE
   invisible(lapply(ls(conf), function(x) assign(x, conf[[x]], envir = conf.in.ns)))
 }
 
@@ -52,6 +55,7 @@ assignConfigDefaults = function() {
   conf$openmldir = path.expand("~/.openml")
   conf$cachedir = file.path(tempdir(), "cache")
   conf$verbosity = 1L
+  conf$is.user.config = FALSE
 }
 
 getConfigNames = function() {
@@ -130,5 +134,5 @@ setOMLConfig = function(conf = list(), ...) {
 #' @family config
 #' @export
 getOMLConfig = function() {
-  addClasses(get(".OpenML.config", envir = getNamespace("OpenML")), "OMLConfig")
+  addClasses(.OpenML.config, "OMLConfig")
 }

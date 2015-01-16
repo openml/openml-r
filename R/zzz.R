@@ -10,16 +10,16 @@
 #' @importFrom stats setNames
 NULL
 
-.OpenML.config = new.env(parent = emptyenv())
-
-.onAttach = function(libname, pkgname) {
+.onLoad = function(libname, pkgname) {
   assignConfigDefaults()
   fn.user = path.expand("~/.openml/config")
-  if (!file.exists(fn.user)) {
+  if (file.exists(fn.user))
+    assignConfig(readConfigFile(fn.user))
+  createCacheSubDirs(verbosity = FALSE)
+}
+
+.onAttach = function(libname, pkgname) {
+  conf = getOMLConfig()
+  if (!conf$is.user.config)
     packageStartupMessage("OpenML: No configuration found! Using defaults.")
-  } else {
-    conf = readConfigFile(fn.user)
-    assignConfig(conf)
-  }
-  createCacheSubDirs()
 }
