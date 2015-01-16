@@ -87,12 +87,16 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   else
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
 
+  pkges = c("mlr", lrn$package)
+  pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
+  pkges = collapse(pkges, sep = ", ")
   flow = makeOMLFlow(
     name = name,
     # set package version of the "last" learner as the flow's external.version
     external.version = packageDescription(lrn$package[1L])$Version,
     description = description,
     parameter = makeFlowParameterList(lrn),
+    dependencies = pkges,
     ...
   )
   if (!is.null(lrn$next.learner)) {
