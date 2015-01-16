@@ -25,3 +25,5 @@ src/*.so
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
+
+^attic
