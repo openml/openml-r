@@ -41,7 +41,14 @@ writeOMLFlowXML = function(description, file) {
       mynode("default_value", description$parameter[[i]]$default.value, parent = par)
       mynode("description", description$parameter[[i]]$description, parent = par)
     }
-
+    for (i in seq_along(description$components)) {
+      comp = newXMLNode("component", parent = top, namespace = "oml")
+      identifier = names(description$components)[i]
+      identifier = ifelse(!is.null(identifier), identifier, description$components[[i]]$name)
+      mynode("identifier", identifier, parent = comp)
+      sub.impl = newXMLNode("implementation", parent = comp, namespace = "oml")
+      doc = addNodes(description$components[[i]], doc, parent = sub.impl)
+    }
     mynode("source_format", description$source.format, parent)
     mynode("binary_format", description$binary.format, parent)
     mynode("source_md5", description$source.md5, parent)
@@ -51,14 +58,7 @@ writeOMLFlowXML = function(description, file) {
 
   doc = addNodes(description, doc, top)
 
-  for(i in seq_along(description$components)) {
-    comp = newXMLNode("component", parent = top, namespace = "oml")
-    identifier = names(description$components)[i]
-    identifier = ifelse(!is.null(identifier), identifier, description$components[[i]]$name)
-    mynode("identifier", identifier, parent = comp)
-    sub.impl = newXMLNode("implementation", parent = comp, namespace = "oml")
-    doc = addNodes(description$components[[i]], doc, parent = sub.impl)
-  }
+  
 
   saveXML(top, file = file)
 }
