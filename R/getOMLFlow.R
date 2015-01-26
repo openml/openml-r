@@ -21,16 +21,14 @@ getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
   downloadFileAndSavePath = function(flow, binOrSource, mode, verbosity) {
     url = flow[[sprintf("%s.url", binOrSource)]]
     if (!is.na(url)) {
-      file = unlist(str_split(url, "/"))
-      file = file[length(file)]
-      path = getCacheFlowPath(flow$id, file)
-      flow[[sprintf("%s.path", binOrSource)]] = path  # save path in flow object
-      f = findInCache("flows", flow$id, create = TRUE, elements = file)
-      if (f[[sprintf("%s.found", file)]]) {
+      file = basename(url)
+      f = findCachedFlow(flow$id, file)[[1L]]
+      flow[[sprintf("%s.path", binOrSource)]] = f$path
+      if (f$found) {
         showInfo(verbosity, "File %s found in cache.", file)
       } else {
         showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
-        download.file(url, path, mode = mode, quiet = TRUE)
+        download.file(url, f$path, mode = mode, quiet = TRUE)
       }
     }
     return(flow)

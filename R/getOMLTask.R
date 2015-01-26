@@ -25,16 +25,15 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
 
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 
-  f = findInCacheTask(id, create = TRUE)
+  f = findCachedTask(id)
 
   # get XML description
-  if (!f$task.xml.found) {
+  if (!f$task.xml$found) {
     url = getAPIURL("openml.task.get", task_id = id)
-    path = getCacheTaskPath(id, "task.xml")
-    task.contents = downloadXML(url, path, verbosity, session_hash = session.hash)
+    task.contents = downloadXML(url, f$task.xml$path, verbosity, session_hash = session.hash)
   } else {
     showInfo(verbosity, "Task XML found in cache.")
-    task.contents = readLines(getCacheTaskPath(id, "task.xml"))
+    task.contents = readLines(f$task.xml$path)
   }
   doc = parseXMLResponse(task.contents, "Getting task", "task", as.text = TRUE)
 
@@ -106,18 +105,17 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
   task$data.set = getOMLDataSet(task, verbosity = verbosity)
 
   # No real error handling. If no data splits are available, just print a warning and go on.
-  if (!f$datasplits.arff.found) {
+  if (!f$datasplits.arff$found) {
     url.dsplits = task$estimation.procedure$data.splits.url
     if (url.dsplits == "No URL") {
       warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
     } else {
-      fn.dsplits = getCacheTaskPath(task$id, "datasplits.arff")
-      data = downloadARFF(url.dsplits, fn.dsplits, verbosity)
+      data = downloadARFF(url.dsplits, f$datasplits.arff$path, verbosity)
       task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
     }
   } else {
     showInfo(verbosity, "Data splits found in cache.")
-    data = read.arff(getCacheTaskPath(id, "datasplits.arff"))
+    data = read.arff(f$datasplits.arff$path)
     task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
   return(task)

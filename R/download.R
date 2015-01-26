@@ -32,13 +32,11 @@ getServerURL = function(secure = NULL) {
 
 # download xml from a url / api call to file
 # if the file is NULL, we just retrieve the content, which is returned in any case
+# FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
 downloadXML = function(url, file, verbosity = NULL, ...) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
   ddd = list(...)
-  content = if (length(ddd) > 0L)
-    do.call(postForm, c(list(uri = url), ddd))
-  else
-    getURL(url)
+  content = do.call(postForm, c(list(uri = url), ddd))
   if (!is.null(file)) {
     con = file(file, open = "w")
     on.exit(close(con))
@@ -48,6 +46,7 @@ downloadXML = function(url, file, verbosity = NULL, ...) {
 }
 
 # download an arff to disk
+# FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
 downloadARFF = function(url, file, verbosity = NULL) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
   #FIXME: get real verbosity level here >= info

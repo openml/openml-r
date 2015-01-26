@@ -14,18 +14,17 @@ getOMLPredictions = function(run, session.hash = getSessionHash(), verbosity = N
   assertClass(run, "OMLRun")
 
   if (is.null(run$predictions)) {
-    f = findInCacheRun(run$run.id, create = TRUE)
-    path = getCacheRunPath(run$run.id, "predictions.arff")
-    if (!f$predictions.arff.found) {
+    f = findCachedRun(run$run.id)
+    if (!f$predictions.arff$found) {
       fls = run$output.data$files
       url = fls[fls$name == "predictions", "url"]
       if (is.null(url)) {
         stop("No URL found to retrieve predictions from.")
       }
-      pred = downloadARFF(url, path, verbosity)
+      pred = downloadARFF(url, f$predictions.arff$path, verbosity)
     } else {
       showInfo(verbosity, "Predictions found in cache.")
-      pred = read.arff(path)
+      pred = read.arff(f$predictions.arff$path)
     }
     return(pred)
   } else {

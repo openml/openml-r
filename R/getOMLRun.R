@@ -92,20 +92,19 @@ getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionH
   })
 
   if (get.predictions) {
-    f = findInCacheRun(run.args$run.id, create = TRUE)
-    path = getCacheRunPath(run.args$run.id, "predictions.arff")
-    if (!f$predictions.arff.found) {
+    f = findCachedRun(run.args$run.id)
+    if (!f$predictions.arff$found) {
       fls = run.args$output.data$files
       url = fls[fls$name == "predictions", "url"]
       if (is.null(url)) {
         warning("No URL found to retrieve predictions from.")
         pred = NULL
       } else {
-        pred = downloadARFF(url, path, verbosity)
+        pred = downloadARFF(url, f$predictions.arff$path, verbosity)
       }
     } else {
       showInfo(verbosity, "Predictions found in cache.")
-      pred = read.arff(path)
+      pred = read.arff(f$predictions.arff$path)
     }
     run.args[["predictions"]] = pred
   }

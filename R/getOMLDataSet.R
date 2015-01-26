@@ -46,15 +46,15 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
     }
   }
   showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
-  f = findInCacheDataSet(id, create = TRUE)
+  f = findCachedDataset(id)
+
   # get XML description
-  if (!f$description.xml.found) {
-    path = getCacheDataSetPath(id, "description.xml")
+  if (!f$description.xml$found) {
     url = getAPIURL("openml.data.description", data.id = id)
-    data.desc.contents = downloadXML(url, path, verbosity, session_hash = session.hash)
+    data.desc.contents = downloadXML(url, f$description.xml$path, verbosity, session_hash = session.hash)
   } else {
     showInfo(verbosity, "Data set description found in cache.")
-    data.desc.contents = readLines(getCacheFilePath("datasets", id, "description.xml"))
+    data.desc.contents = readLines(f$description.xml$path)
   }
 
   # parse data set description
@@ -86,12 +86,11 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
   data.desc = do.call(makeOMLDataSetDescription, args)
 
   # now get data file
-  if (!f$dataset.arff.found) {
-    path = getCacheDataSetPath(id, "dataset.arff")
-    data = downloadARFF(data.desc$url, file = path, verbosity)
+  if (!f$dataset.arff$found) {
+    data = downloadARFF(data.desc$url, file = f$dataset.arff$path, verbosity)
   } else {
     showInfo(verbosity, "Data set found in cache.")
-    data = read.arff(getCacheDataSetPath(id, "dataset.arff"))
+    data = read.arff(f$dataset.arff$path)
   }
   data = parseOMLDataFile(data.desc, data)
 
@@ -114,14 +113,14 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
 }
 
 #' @title OMLDataSet.
-#'   
+#'
 #' @description An \code{OMLDataSet} consists of an \code{OMLDataSetDescription}, a
 #' \code{data.frame} containing the data set and, finally, old and new column names.
-#'   
-#' The \code{OMLDataSetDescription} provides information on the data set, like the ID, name, 
+#'
+#' The \code{OMLDataSetDescription} provides information on the data set, like the ID, name,
 #' version, etc. To see a full list of all elements, please see the
 #' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/rest_api/xsd/openml.data.upload.xsd}{XSD}.
-#' 
+#'
 #' The slot \code{colnames.old} contains the original names, i.e., the column names that were
 #' uploaded to the server, while \code{colnames.new} contains the names that you will see when
 #' working with the data in R.
