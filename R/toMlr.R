@@ -94,7 +94,7 @@ createMlrTask = function(data.set, target, task.type, ignore.flagged.attributes,
     orig.lvls = levels(data[, target])
   }
   if (!is.na(desc$ignore.attribute) && ignore.flagged.attributes) {
-    inds = which(data$colnames.new %in% desc$ignore.attribute)
+    inds = which(data.set$colnames.new %in% desc$ignore.attribute)
     data = data[, -inds]
   }
 
