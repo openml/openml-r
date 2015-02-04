@@ -4,7 +4,8 @@
 \alias{listOMLTasks}
 \title{List available OpenML tasks}
 \usage{
-listOMLTasks(type = 1L, session.hash = getSessionHash(), verbosity = NULL)
+listOMLTasks(type = 1L, session.hash = getSessionHash(), verbosity = NULL,
+  status = "active")
 }
 \arguments{
 \item{type}{[\code{integer(1)}]\cr
@@ -22,6 +23,11 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{status}{[\code{character}]\cr
+Subsets the results according to the status, can take one or more values of
+\code{{"active", "deactivated", "in_preparation"}}.
+Default is \code{"active"}.}
 }
 \value{
 [\code{data.frame}].
