@@ -104,6 +104,11 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
   # get the data set
   task$data.set = getOMLDataSet(task, verbosity = verbosity)
 
+  if (type == "Supervised Classification") {
+    task$data.set$data[, targets] = as.factor(as.character(task$data.set$data[, targets]))
+  } else if (type == "Supervised Regression") {
+    task$data.set$data[, targets] = as.numeric(task$data.set$data[, targets])
+  }
   # No real error handling. If no data splits are available, just print a warning and go on.
   if (!f$datasplits.arff$found) {
     url.dsplits = task$estimation.procedure$data.splits.url

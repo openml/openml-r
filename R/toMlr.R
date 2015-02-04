@@ -132,7 +132,11 @@ createMlrResampleInstance = function(estim.proc, mlr.task) {
   } else if (type == "holdout") {
     mlr.rdesc = makeResampleDesc("Holdout", split = 1 - percentage/100)
     mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
-    n.folds = 1
+    n.folds = 1  
+  } else if (type == "leaveoneout") {
+    mlr.rdesc = makeResampleDesc("LOO")
+    mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
+    n.folds = nrow(mlr.task$env$data)
   } else {
     stopf("Unsupported estimation procedure type: %s", type)
   }
