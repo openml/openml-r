@@ -14,7 +14,7 @@ session.hash = authenticateUser()
 ```
 Else, you have to pass your username und password here. **Your password will appear in plain text in your script/console!**
 ```{r}
-session.hash = authenticateUser(email = "openml.rteam@gmail.com", password = "testpassword")
+session.hash = authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword")
 ```
 
 ### Download an OpenML task

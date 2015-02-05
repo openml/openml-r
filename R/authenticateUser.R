@@ -7,19 +7,19 @@
 #' The session hash is stored in your config, so it will be automatically used for all
 #' subsequent package operations.
 #'
-#' @param email [\code{character(1)}]\cr
-#'   Your e-mail address at OpenML server.
+#' @param username [\code{character(1)}]\cr
+#'   The e-mail address you used to register at the OpenML server.
 #' @param password [\code{character(1)}]\cr
 #'   Your password at OpenML server.
 #' @template arg_verbosity
 #' @return [\code{character(1)}]. Invisibly returns session hash.
 #' @export
 #' @family config
-authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
+authenticateUser = function(username = NULL, password = NULL, verbosity = NULL) {
   conf = getOMLConfig()
-  if (is.null(email))
-    email = conf$username
-  assertString(email)
+  if (is.null(username))
+    username = conf$username
+  assertString(username)
   if (is.null(password)) {
     md5 = conf$pwdmd5
     if (is.na(md5))
@@ -28,10 +28,11 @@ authenticateUser = function(email = NULL, password = NULL, verbosity = NULL) {
     assertString(password)
     md5 = digest(password, algo = "md5", serialize = FALSE)
   }
-  showInfo(verbosity, "Authenticating user at server: %s", email)
+  showInfo(verbosity, "Authenticating user at server: %s", username)
   url = getAPIURL("openml.authenticate", secure = FALSE)
   # FIXME: we might want to use https for this!
-  content = try(postForm(url, .params = list(username = email, password = md5), .checkParams = FALSE), silent = TRUE)
+  content = try(postForm(url, .params = list(username = username, password = md5), 
+    .checkParams = FALSE), silent = TRUE)
 
   if (is.error(content))
     stop("Username/password combination invalid.")

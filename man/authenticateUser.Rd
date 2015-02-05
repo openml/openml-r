@@ -4,11 +4,11 @@
 \alias{authenticateUser}
 \title{Authenticate at server.}
 \usage{
-authenticateUser(email = NULL, password = NULL, verbosity = NULL)
+authenticateUser(username = NULL, password = NULL, verbosity = NULL)
 }
 \arguments{
-\item{email}{[\code{character(1)}]\cr
-Your e-mail address at OpenML server.}
+\item{username}{[\code{character(1)}]\cr
+The e-mail address you used to register at the OpenML server.}
 
 \item{password}{[\code{character(1)}]\cr
 Your password at OpenML server.}
