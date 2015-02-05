@@ -32,7 +32,11 @@ readConfigFile = function(conffile) {
 
   if (!is.null(conf$verbosity))
    conf$verbosity = as.integer(conf$verbosity)
-
+  if (!is.null(conf$openmldir))
+    conf$openmldir = normalizePath(conf$openmldir)
+  if (!is.null(conf$cachedir))
+    conf$cachedir = normalizePath(conf$cachedir)
+  
   checkConfig(conf)
   # FIXME: probably horrible security wise....
   if (!is.null(conf$password))
@@ -120,6 +124,10 @@ print.OMLConfig = function(x, ...) {
 setOMLConfig = function(conf = list(), ...) {
   if (!is.list(conf) && !inherits(conf, "OMLConfig"))
     stopf("Argument 'conf' must be of class 'list' or 'Config', not %s", head(conf, 1L))
+  if (!is.null(conf$openmldir))
+    conf$openmldir = normalizePath(conf$openmldir)
+  if (!is.null(conf$cachedir))
+    conf$cachedir = normalizePath(conf$cachedir)
   overwrites = insert(conf, list(...))
   if (length(overwrites) == 0L)
     return(invisible(getOMLConfig()))
