@@ -49,6 +49,8 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
   id = xmlRValI(doc, "/oml:task/oml:task_id")
   type = xmlRValS(doc, "/oml:task/oml:task_type")
   targets = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
+  # replace targets with new column names
+  targets = task$data.set$colnames.new[unlist(lapply(targets, function(x) which(x == task$data.set$colnames.old)))]
   params = getParams("oml:task")
   tags = xmlOValsMultNsS(doc, "/oml:run/oml:tag", NA_character_)
 
