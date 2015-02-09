@@ -1,6 +1,6 @@
 #' @title Delete an OpenML run.
 #'
-#' @description This will delete one of your uploaded \code{\link{OpenMLRun}s}.
+#' @description This will delete one of your uploaded \code{\link{OMLRun}s}.
 #'
 #' @param run.id [\code{integer(1)}]\cr
 #'   The run ID. Of course, you can only delete your own runs.

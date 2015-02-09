@@ -22,6 +22,6 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
-This will delete one of your uploaded \code{\link{OpenMLRun}s}.
+This will delete one of your uploaded \code{\link{OMLRun}s}.
 }
 
