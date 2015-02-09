@@ -33,6 +33,6 @@ subsequent package operations.
 \seealso{
 Other config: \code{\link{configuration}};
   \code{\link{getOMLConfig}}; \code{\link{getSessionHash}};
-  \code{\link{setOMLConfig}}
+  \code{\link{loadOMLConf}}; \code{\link{setOMLConfig}}
 }
 

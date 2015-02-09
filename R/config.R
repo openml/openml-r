@@ -1,4 +1,4 @@
-.OpenML.config = new.env(parent = emptyenv())
+.OpenML.config = addClasses(new.env(parent = emptyenv()), "OMLConfig")
 
 #' @title OpenML configuration.
 #'
@@ -123,7 +123,7 @@ print.OMLConfig = function(x, ...) {
 #' @export
 setOMLConfig = function(conf = list(), ...) {
   if (!is.list(conf) && !inherits(conf, "OMLConfig"))
-    stopf("Argument 'conf' must be of class 'list' or 'Config', not %s", head(conf, 1L))
+    stopf("Argument 'conf' must be of class 'list' or 'OMLConfig', not %s", head(conf, 1L))
   if (!is.null(conf$openmldir))
     conf$openmldir = path.expand(conf$openmldir)
   if (!is.null(conf$cachedir))
@@ -136,7 +136,7 @@ setOMLConfig = function(conf = list(), ...) {
   checkConfig(overwrites)
   conf = insert(as.list(getOMLConfig()), overwrites)
   assignConfig(as.environment(conf))
-  invisible(setClasses(conf, "Config"))
+  invisible(addClasses(conf, "OMLConfig"))
 }
 
 #' Returns a list of OpenML configuration settings
@@ -145,19 +145,22 @@ setOMLConfig = function(conf = list(), ...) {
 #' @family config
 #' @export
 getOMLConfig = function() {
-  addClasses(.OpenML.config, "OMLConfig")
+  return(.OpenML.config)
 }
 
 #' Loads a config file from disk to mem 
 #'
 #' @param path [\code{character(1)}]\cr 
 #'   full path location of the config file to be loaded
-#' @return invisible(NULL)
+#' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 #' @family config
 #' @export
 loadOMLConf = function(path = "~/.openml/config") {
   assertFile(path)
-  assignConfig(readConfigFile(path.expand(path)))
+  # read and assign config file
+  conf = readConfigFile(path.expand(path))
+  assignConfig(conf)
+  # create cache dir from new config file
   createCacheSubDirs(verbosity = FALSE)
-  invisible(NULL)
+  invisible(conf)
 }

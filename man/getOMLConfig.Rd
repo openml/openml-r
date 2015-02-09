@@ -7,7 +7,7 @@
 getOMLConfig()
 }
 \value{
-\code{list} of current configuration variables with classs \dQuote{OMLConfig}.
+\code{list} of current configuration variables with class \dQuote{OMLConfig}.
 }
 \description{
 Returns a list of OpenML configuration settings
@@ -15,6 +15,7 @@ Returns a list of OpenML configuration settings
 \seealso{
 Other config: \code{\link{authenticateUser}};
   \code{\link{configuration}};
-  \code{\link{getSessionHash}}; \code{\link{setOMLConfig}}
+  \code{\link{getSessionHash}}; \code{\link{loadOMLConf}};
+  \code{\link{setOMLConfig}}
 }
 

@@ -15,6 +15,6 @@ Get the current session's hash.
 \seealso{
 Other config: \code{\link{authenticateUser}};
   \code{\link{configuration}}; \code{\link{getOMLConfig}};
-  \code{\link{setOMLConfig}}
+  \code{\link{loadOMLConf}}; \code{\link{setOMLConfig}}
 }
 
