@@ -12,6 +12,9 @@
 #'
 #' @param x [\code{integer(1)} | \code{\link{OMLTask}}]\cr
 #'   Either a data set ID or a task.
+#' @param check.status [\code{logical(1)}]\cr
+#'   If this is set to \code{TRUE}, only data sets with active status are returned. 
+#'   Default is \code{FALSE}.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}]

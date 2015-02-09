@@ -18,6 +18,10 @@ getOMLDataSet(x, check.status, session.hash, verbosity)
 \item{x}{[\code{integer(1)} | \code{\link{OMLTask}}]\cr
 Either a data set ID or a task.}
 
+\item{check.status}{[\code{logical(1)}]\cr
+If this is set to \code{TRUE}, only data sets with active status are returned.
+Default is \code{FALSE}.}
+
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is
 \code{\link{getSessionHash}()}.}
