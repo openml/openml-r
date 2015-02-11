@@ -43,6 +43,7 @@ getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
 parseOMLFlow = function(doc) {
   args = filterNull(list(
     id = xmlRValI(doc, "/oml:implementation/oml:id"),
+    uploader = xmlOValI(doc, "/oml:implementation/oml:uploader"),
     name = xmlRValS(doc, "/oml:implementation/oml:name"),
     version = xmlRValS(doc, "/oml:implementation/oml:version"),
     external.version = xmlOValS(doc, "/oml:implementation/oml:external_version"),
@@ -56,8 +57,10 @@ parseOMLFlow = function(doc) {
     installation.notes = xmlOValS(doc, "/oml:implementation/oml:installation_notes"),
     dependencies = xmlOValS(doc, "/oml:implementation/oml:dependencies"),
     bibliographical.reference = parseOMLBibRef(doc),
+    implements = xmlOValS(doc, "/oml:implementation/oml:implements"),
     parameter = parseOMLParameters(doc),
-    collection.date = xmlOValS(doc, "/oml:implementation/oml:collection_date"),
+    qualities = parseOMLQualities(doc),
+    tags = xmlOValsMultNsS(doc, "/oml:implementation/oml:tag"),
     source.url = xmlOValS(doc, "/oml:implementation/oml:source_url"),
     binary.url = xmlOValS(doc, "/oml:implementation/oml:binary_url"),
     source.format = xmlOValS(doc, "/oml:implementation/oml:source_format"),
@@ -119,5 +122,23 @@ parseOMLBibRef = function(doc) {
   }
   if (length(bib) > 0L)
     return(bib)
+  return(NULL)
+}
+
+parseOMLQualities = function(doc) {
+  path = "/oml:implementation/oml:quality"
+
+  ns = getNodeSet(doc, path)
+
+  name = xmlValsMultNsS(doc, sprintf("%s/oml:name", path))
+  value = xmlValsMultNsS(doc, sprintf("%s/oml:value", path))
+
+  # FIXME: Map()
+  qualities = vector("list", length(name))
+  for (i in seq_along(qualities)) {
+    qualities[[i]] = makeOMLFlowQuality(name[i], value[i])
+  }
+  if (length(qualities) > 0L)
+    return(qualities)
   return(NULL)
 }

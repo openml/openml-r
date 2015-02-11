@@ -11,11 +11,13 @@ makeOMLFlow(id = NA_integer_, uploader = NA_integer_, name,
   upload.date = NA_character_, licence = NA_character_,
   language = "English", full.description = NA_character_,
   installation.notes = NA_character_, dependencies = NA_character_,
-  bibliographical.reference = NULL, parameter = NULL, components = NULL,
-  source.url = NA_character_, binary.url = NA_character_,
-  source.format = NA_character_, binary.format = NA_character_,
-  source.md5 = NA_character_, binary.md5 = NA_character_,
-  source.path = NA_character_, binary.path = NA_character_)
+  bibliographical.reference = NULL, implements = NA_character_,
+  parameter = NULL, components = NULL, qualities = NULL,
+  tags = NA_character_, source.url = NA_character_,
+  binary.url = NA_character_, source.format = NA_character_,
+  binary.format = NA_character_, source.md5 = NA_character_,
+  binary.md5 = NA_character_, source.path = NA_character_,
+  binary.path = NA_character_)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -70,6 +72,9 @@ Optional. The dependencies of the flow.}
 An optional list containing information on bibliographical references in form of
 \code{\link{OMLBibRef}s}.}
 
+\item{implements}{[\code{character(1)}]\cr
+Ontological reference.}
+
 \item{parameter}{[\code{list}]\cr
 The parameters of the flow. A list containing
 \code{\link{OMLFlowParameter}s}.}
@@ -77,6 +82,12 @@ The parameters of the flow. A list containing
 \item{components}{[\code{list}]\cr
 A list containing \code{\link{OMLFlow}s}. Typically components of a workflow or
 subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.}
+
+\item{qualities}{[\code{list}]\cr
+Qualities of the algorithm. Each member of the list is an \code{\link{OMLFlowQuality}}.}
+
+\item{tags}{[\code{character}]\cr
+Tags describing the algorithm.}
 
 \item{source.url}{[\code{character(1)}]\cr
 URL from which the source code can be downloaded. Added by the server. Ignored when uploaded manually.}
