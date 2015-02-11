@@ -1,10 +1,14 @@
 Stage 0 - Listing
 =================
 
-In this stage, we want to list basic information, e.g., about all data sets, tasks, flows, runs, run results, available evaluation measures or task types. For each of these purposes we have a function beginning with "listOML". All of them return a data.frame, even when the result has only one column.
+In this stage, we want to list basic information, e.g., about all [data sets, tasks, flows, runs](http://openml.org/guide#g_start), run results, available evaluation measures or task types. For each of these purposes we have a function beginning with "listOML", where all of them return a data.frame, even when the result has only one column. 
 
 ### Get a valid session hash
 To download a task and for most other functions, you will need a so-called session hash. If you created a configuration file containing username and password of your OpenML account, this is very simple:
+```{r echo = FALSE, warning = FALSE}
+library(OpenML)
+setOMLConfig(verbosity = 0L)
+```
 ```{r}
 session.hash = authenticateUser()
 ```
@@ -14,12 +18,9 @@ session.hash = authenticateUser(username = "openml.rteam@gmail.com", password = 
 ```
 
 ### Listing
-Let's have a look at some examples. Most of the listing-functions do not have any parameters:
+Let's have a look at some examples. Most of the listing-functions do not have any parameters that change the output:
 
 ```{r}
-datasets = listOMLDataSets()
-head(datasets)
-
 flows = listOMLFlows()
 head(flows)
 
@@ -30,18 +31,39 @@ tasktypes = listOMLTaskTypes()
 tasktypes
 ```
 
-Other functions, however, list only those entities that match one or more criteria:
+To browse the OpenML data base for appropriate data sets, you can use `listOMLDataSets()` 
+in order to get basic data characteristics (number of features/instances/classes/missing values etc.)
+each data set. By default, `listOMLDataSets()` returns only data sets that have an active 
+status on OpenML. If you need data sets that are either `"in_preparation"` or `"deactivated"`,
+you can change the `status` parameter:
+
+```{r}
+datasets = listOMLDataSets()  # returns active data sets
+head(datasets)
+
+inactive.data = listOMLDataSets(status = "deactivated")  # returns deactivated data sets
+head(inactive.data)
+```
+
+Other listing-functions list only those entities that match one or more criteria.
+For some data sets, for example, there may be one or more tasks available at the OpenML server. 
+You can look for `Supervised Classification` task IDs that are available for a specific data set as follows:
 
 ```{r}
 tasks = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
-head(tasks)
+head(tasks[tasks$did == "1", ])  # lists tasks for the data set with did == 1 (see: http://openml.org/d/1)
+```
 
+Similarly, you can also list runs and run results for a specific task, setup or implementation:
+
+```{r}
 runs = listOMLRuns(task.id = 1L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
 
 runresults = listOMLRunResults(task.id = 1L)  # a task ID must be supplied
 colnames(runresults)
 ```
+
 
 ----------------------------------------------------------------------------------------------------
 Jump to:   

@@ -14,17 +14,12 @@ library(OpenML)
 setOMLConfig(verbosity = 0L)
 ```
 ```{r}
-task = getOMLTask(id = 4L, session.hash)
+task = getOMLTask(task.id = 1L)
 task
 ```
-Note, that the corresponding data set is not yet retrieved:
+The corresponding data set can be accessed by
 ```{r}
-task$data.set$data
-```
-After running the following line, the task is complete:
-```{r}
-task$data.set = getOMLDataSet(task)
-summary(task$data.set$data)
+str(task$data.set$data)
 ```
 
 ### Download an OpenML data set only
@@ -34,9 +29,41 @@ will not always be the means of choice -- e.g., when you want to run a few preli
 For this matter, you can use the function `getOMLDataSet`, which accepts not only tasks (as seen in the section above) but also a data set ID as input:
 
 ```{r}
-oml.data = getOMLDataSet(1, session.hash)
-oml.data
+anneal.data = getOMLDataSet(x = 1L)  # the anneal data set has the data set ID (did = 1, see also previous section)
+anneal.data
+
+anneal.data = getOMLDataSet(x = task)  # the task defined above (with task.id = 1) uses the anneal data
+anneal.data
 ```
+
+### Download an OpenML run
+To download the results of one run including all server and user computed metrics, you have to know the corresponding run ID. You can download a single OpenML run with the `getOMLRun` function:
+
+```{r}
+run = getOMLRun(run.id = 1L)  # see ?OMLRun for each slot of the OMLRun object
+```
+
+Some important slots for the `OMLRun` object are:
+
+```{r}
+run$parameter.setting  # A list containing information on the parameter settings.
+
+run$input.data  # All data that served as input for the run, including the URL to the data.
+
+run$output.data$evaluations
+```
+
+To retrieve predictions of an uploaded run, you can set the parameter `get.predictions = TRUE` to store the
+predictions in the `$predictions` slot or use the function `getOMLPredictions(run)`:
+
+```{r}
+run.pred = getOMLRun(run.id = 1L, get.predictions = TRUE)
+all.equal(run.pred$predictions, getOMLPredictions(run))
+```
+
+### Download run results
+UNDER CONSTRUCTION
+
 
 ----------------------------------------------------------------------------------------------------
 Jump to:   

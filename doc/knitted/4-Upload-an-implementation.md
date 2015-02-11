@@ -8,7 +8,11 @@ In order to upload anything to the server, you have to authenticate your identit
 
 
 ```r
-hash = authenticateUser(email = "openml.rteam@gmail.com", password = "testpassword")
+hash = authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword")
+```
+
+```
+## Error in authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword"): unbenutztes Argument (username = "openml.rteam@gmail.com")
 ```
 ### Upload an mlr learner
 There are some helper functions in case you are using the package [mlr](https://github.com/berndbischl/mlr). Uploading an mlr learner is easy and quickly done. It doesn't matter if the learner has been

@@ -13,10 +13,18 @@ To download a task and for most other functions, you will need a so-called sessi
 ```r
 session.hash = authenticateUser()
 ```
+
+```
+## Error in eval(expr, envir, enclos): konnte Funktion "authenticateUser" nicht finden
+```
 Else, you have to pass your username und password here. **Your password will appear in plain text in your script/console!**
 
 ```r
-session.hash = authenticateUser(email = "openml.rteam@gmail.com", password = "testpassword")
+session.hash = authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword")
+```
+
+```
+## Error in eval(expr, envir, enclos): konnte Funktion "authenticateUser" nicht finden
 ```
 
 ### Download an OpenML task
@@ -25,19 +33,24 @@ To download a certain task from the OpenML server, you need to know the task's I
 
 The following call returns an OpenML task object: 
 
+```
+## OpenML: No configuration found! Using defaults.
+```
 
 ```r
 task = downloadOMLTask(id = 4, session.hash)
+```
+
+```
+## Error in eval(expr, envir, enclos): konnte Funktion "downloadOMLTask" nicht finden
+```
+
+```r
 task
 ```
 
 ```
-## 
-## 	Task Type            : Supervised Classification
-## 	Data Set             : labor :: (Version = 1, OpenML ID = 4)
-## 	Target Feature(s)    : class
-## 	Estimation Procedure : Stratified crossvalidation (1 x 10 folds)
-## 	Evaluation Measure(s): predictive accuracy
+## Error in eval(expr, envir, enclos): Objekt 'task' nicht gefunden
 ```
 
 ### Download an OpenML data set only
@@ -50,13 +63,18 @@ For this matter, you can use the function `downloadOMLDataSet`, which downloads 
 
 ```r
 oml.data = downloadOMLDataSet(1, session.hash)
+```
+
+```
+## Error in eval(expr, envir, enclos): konnte Funktion "downloadOMLDataSet" nicht finden
+```
+
+```r
 oml.data
 ```
 
 ```
-## 
-## Data Set "anneal" :: (Version = 2, OpenML ID = 1)
-## 	Default Target Attribute: class
+## Error in eval(expr, envir, enclos): Objekt 'oml.data' nicht gefunden
 ```
 
 If you are working with [mlr](https://github.com/berndbischl/mlr) (Machine Learning in R), you can
@@ -65,24 +83,18 @@ now go ahead and convert `oml.data` into an mlr (classification) task. Most data
 
 ```r
 mlr.task = toMlr(oml.data, target = "class")
+```
+
+```
+## Error in toMlr(oml.data, target = "class"): Objekt 'oml.data' nicht gefunden
+```
+
+```r
 mlr.task
 ```
 
 ```
-## Supervised task: data
-## Type: classif
-## Target: class
-## Observations: 898
-## Features:
-## numerics  factors  ordered 
-##        6       32        0 
-## Missings: FALSE
-## Has weights: FALSE
-## Has blocking: FALSE
-## Classes: 5
-##   1   2   3   5   U 
-##   8  99 684  67  40 
-## Positive class: NA
+## Error in eval(expr, envir, enclos): Objekt 'mlr.task' nicht gefunden
 ```
 
 Now you can freely apply any resampling procedure. For further information on how this works, see

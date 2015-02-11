@@ -19,12 +19,13 @@ After the registration you should create a configuration file `~/.openml/config`
 The configuration file is not mandatory. Filling out username and password is recommended, because then you will not have to type it in each time you need a new session hash. Note however, that basically everybody who has access to your computer can read the configuration file and see your password, so please use this password ONLY for OpenML.
 
 An exemplary `config` file may look like
-```
+
+```{r eval = FALSE}
 username = emailregristered@openml.org
 password = yourpassword
 ```
 
-If you have done these two steps, you are ready to go. Have fun!
+If you have done these steps, you are ready to go. Have fun!
 
 ----------------------------------------------------------------------------------------------------
 Jump to:    

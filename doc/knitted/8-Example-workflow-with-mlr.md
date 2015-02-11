@@ -12,7 +12,7 @@ feature and not a single missing value. Then, we have to upload the learner, com
 upload these.
 
 
-```splus
+```r
 library(mlr)
 
 tl = listOMLTasks()

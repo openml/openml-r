@@ -25,8 +25,9 @@ There are different stages when using this package:
 * Stage 3: Uploading
     * uploadRunResult
 
+
 ----------------------------------------------------------------------------------------------------
-Jump to:   
+Jump to:    
 Introduction  
 [Configuration](2-Configuration.md)  
 [Stage 0 - Listing](3-Stage-0-Listing.md)  
