@@ -37,12 +37,18 @@
 #' @param bibliographical.reference [\code{list}]\cr
 #'   An optional list containing information on bibliographical references in form of
 #'   \code{\link{OMLBibRef}s}.
+#' @param implements [\code{character(1)}]\cr
+#'   Ontological reference.
 #' @param parameter [\code{list}]\cr
 #'   The parameters of the flow. A list containing
 #'   \code{\link{OMLFlowParameter}s}.
 #' @param components [\code{list}]\cr
 #'   A list containing \code{\link{OMLFlow}s}. Typically components of a workflow or
 #'   subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.
+#' @param qualities [\code{list}]\cr
+#'   Qualities of the algorithm. Each member of the list is an \code{\link{OMLFlowQuality}}.
+#' @param tags [\code{character}]\cr
+#'   Tags describing the algorithm.
 #' @param source.url [\code{character(1)}]\cr
 #'   URL from which the source code can be downloaded. Added by the server. Ignored when uploaded manually.
 #' @param binary.url [\code{character(1)}]\cr
@@ -79,9 +85,11 @@ makeOMLFlow = function(
   installation.notes = NA_character_,
   dependencies = NA_character_,
   bibliographical.reference = NULL,
-  # implements = NA_character_,
+  implements = NA_character_,
   parameter = NULL,
   components = NULL,
+  qualities = NULL,
+  tags = NA_character_,
   source.url = NA_character_,
   binary.url = NA_character_,
   source.format = NA_character_,
@@ -91,7 +99,7 @@ makeOMLFlow = function(
   source.path = NA_character_,
   binary.path = NA_character_
 ) {
-
+  
   assertInt(id, na.ok = TRUE)
   assertInt(uploader, na.ok = TRUE)
   assertString(name)
@@ -108,10 +116,14 @@ makeOMLFlow = function(
   assertString(dependencies, na.ok = TRUE)
   if (!is.null(bibliographical.reference))
     assertList(bibliographical.reference)
+  assertString(implements, na.ok = TRUE)
   if (!is.null(parameter))
     assertList(parameter)
   if (!is.null(components))
     assertList(components)
+  if (!is.null(qualities))
+    assertList(qualities)
+  assertCharacter(tags)
   assertString(source.url, na.ok = TRUE)
   assertString(binary.url, na.ok = TRUE)
   assertString(source.format, na.ok = TRUE)
@@ -137,9 +149,11 @@ makeOMLFlow = function(
     installation.notes = installation.notes,
     dependencies = dependencies,
     bibliographical.reference = bibliographical.reference,
-    #implements = implements,
+    implements = implements,
     parameter = parameter,
     components = components,
+    qualities = qualities,
+    tags = tags,
     source.url = source.url,
     binary.url = binary.url,
     source.format = source.format,
@@ -191,12 +205,12 @@ makeOMLFlowParameter = function(
   description = NA_character_,
   recommended.range = NA_character_
 ) {
-
+  
   assertString(name)
   assertString(default.value, na.ok = TRUE)
   assertString(description, na.ok = TRUE)
   assertString(recommended.range, na.ok = TRUE)
-
+  
   makeS3Obj("OMLFlowParameter",
     name = name,
     data.type = data.type,
@@ -246,3 +260,28 @@ print.OMLBibRef = function(x, ...) {
     catf("  url :: %s\n", x$url)
 }
 
+#' @title Construct OMLFlowQuality.
+#'
+#' @param name [\code{character(1)}]\cr
+#'   Name of the quality.\cr
+#'   Suggested: LearnerType (classification, regression, cost sensitive classification, survival analysis, clustering),
+#'   HandlesNumericFeatures, HandlesNominalFeatures, HandlesMissingValues, HandlesInstanceWeights, HandlesMultiClass,
+#'   HandlesBinaryClass, HandlesSingleClass, HandlesOrderedFeatures, HandlesCostMatrices, HandlesClassWeights,
+#'   CanOutputProbabilities (classification+clustering), CanOutputStandardError (regression).
+#' @param value [\code{character(1)}]\cr
+#'   The quality's value. E.g., 'true' or 'false'.
+#' @export
+#' @aliases OMLFlowQuality
+makeOMLFlowQuality = function(name, value) {
+  assertString(name)
+  assertString(value)
+  makeS3Obj("OMLFlowQuality",
+    name = name,
+    value = value
+  )
+}
+
+#' @export
+print.OMLFlowQuality = function(x, ...) {
+  sprintf("%s: %s", x$name, x$value)
+}
