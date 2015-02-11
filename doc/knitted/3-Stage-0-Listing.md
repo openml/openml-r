@@ -6,22 +6,18 @@ In this stage, we want to list basic information, e.g., about all [data sets, ta
 ### Get a valid session hash
 To download a task and for most other functions, you will need a so-called session hash. If you created a configuration file containing username and password of your OpenML account, this is very simple:
 
+```
+## Loading OpenML
+## OpenML: No configuration found! Using defaults.
+```
 
 ```r
 session.hash = authenticateUser()
-```
-
-```
-## Error in knit(input = file, output = destination): Assertion on 'email' failed: May not be NA
 ```
 Else, you have to pass your username und password here. **Your password will appear in plain text in your script/console!**
 
 ```r
 session.hash = authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword")
-```
-
-```
-## Error in authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword"): unbenutztes Argument (username = "openml.rteam@gmail.com")
 ```
 
 ### Listing
@@ -30,50 +26,55 @@ Let's have a look at some examples. Most of the listing-functions do not have an
 
 ```r
 flows = listOMLFlows()
-```
-
-```
-## Error in getSessionHash(): Please authenticate first.
-```
-
-```r
 head(flows)
 ```
 
 ```
-## Error in head(flows): Objekt 'flows' nicht gefunden
+##   id                                   full.name
+## 1  1    openml.evaluation.EuclideanDistance(1.0)
+## 2  2     openml.evaluation.PolynomialKernel(1.0)
+## 3  3            openml.evaluation.RBFKernel(1.0)
+## 4  4 openml.evaluation.area_under_roc_curve(1.0)
+## 5  5         openml.evaluation.average_cost(1.0)
+## 6  6       openml.evaluation.build_cpu_time(1.0)
+##                                     name version external.version uploader
+## 1    openml.evaluation.EuclideanDistance       1                        NA
+## 2     openml.evaluation.PolynomialKernel       1                        NA
+## 3            openml.evaluation.RBFKernel       1                        NA
+## 4 openml.evaluation.area_under_roc_curve       1                        NA
+## 5         openml.evaluation.average_cost       1                        NA
+## 6       openml.evaluation.build_cpu_time       1                        NA
 ```
 
 ```r
 measures = listOMLEvaluationMeasures()
-```
-
-```
-## Error in getSessionHash(): Please authenticate first.
-```
-
-```r
 head(measures)
 ```
 
 ```
-## Error in head(measures): Objekt 'measures' nicht gefunden
+##                   name
+## 1 area_under_roc_curve
+## 2         average_cost
+## 3       build_cpu_time
+## 4         build_memory
+## 5              c_index
+## 6     class_complexity
 ```
 
 ```r
 tasktypes = listOMLTaskTypes()
-```
-
-```
-## Error in getSessionHash(): Please authenticate first.
-```
-
-```r
 tasktypes
 ```
 
 ```
-## Error in eval(expr, envir, enclos): Objekt 'tasktypes' nicht gefunden
+##   id                                  name
+## 1  1             Supervised Classification
+## 2  2                 Supervised Regression
+## 3  3                        Learning Curve
+## 4  4 Supervised Data Stream Classification
+## 5  5                            Clustering
+## 6  6            Machine Learning Challenge
+## 7  7                     Survival Analysis
 ```
 
 To browse the OpenML data base for appropriate data sets, you can use `listOMLDataSets()` 
@@ -85,34 +86,60 @@ you can change the `status` parameter:
 
 ```r
 datasets = listOMLDataSets()  # returns active data sets
-```
-
-```
-## Error in getSessionHash(): Please authenticate first.
-```
-
-```r
 head(datasets)
 ```
 
 ```
-## Error in head(datasets): Objekt 'datasets' nicht gefunden
+##   did status NumberOfClasses NumberOfFeatures NumberOfInstances
+## 1   1 active               6               39               898
+## 2   2 active               6               39               898
+## 3   3 active               2               37              3196
+## 4   4 active               2               17                57
+## 5   5 active              16              280               452
+## 6   6 active              26               17             20000
+##   NumberOfInstancesWithMissingValues NumberOfMissingValues
+## 1                                  0                     0
+## 2                                898                 22175
+## 3                                  0                     0
+## 4                                 56                   326
+## 5                                384                   408
+## 6                                  0                     0
+##   NumberOfNumericFeatures
+## 1                       6
+## 2                       6
+## 3                       0
+## 4                       8
+## 5                     206
+## 6                      16
 ```
 
 ```r
 inactive.data = listOMLDataSets(status = "deactivated")  # returns deactivated data sets
-```
-
-```
-## Error in listOMLDataSets(status = "deactivated"): unbenutztes Argument (status = "deactivated")
-```
-
-```r
 head(inactive.data)
 ```
 
 ```
-## Error in head(inactive.data): Objekt 'inactive.data' nicht gefunden
+##   did      status NumberOfClasses NumberOfFeatures NumberOfInstances
+## 1  17 deactivated               6               13               107
+## 2  19 deactivated               6               13               107
+## 3  33 deactivated               2               40               540
+## 4  58 deactivated              11               14               990
+## 5 145 deactivated              11               14           1000000
+## 6 173 deactivated               2               13               323
+##   NumberOfInstancesWithMissingValues NumberOfMissingValues
+## 1                                 37                    73
+## 2                                 37                    73
+## 3                                263                   999
+## 4                                  0                     0
+## 5                                  0                     0
+## 6                                  0                     0
+##   NumberOfNumericFeatures
+## 1                       3
+## 2                       0
+## 3                      18
+## 4                      10
+## 5                       0
+## 6                       0
 ```
 
 Other listing-functions list only those entities that match one or more criteria.
@@ -122,18 +149,31 @@ You can look for `Supervised Classification` task IDs that are available for a s
 
 ```r
 tasks = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
-```
-
-```
-## Error in getSessionHash(): Please authenticate first.
-```
-
-```r
 head(tasks[tasks$did == "1", ])  # lists tasks for the data set with did == 1 (see: http://openml.org/d/1)
 ```
 
 ```
-## Error in head(tasks[tasks$did == "1", ]): Objekt 'tasks' nicht gefunden
+##     task.id                 task.type did status NumberOfClasses
+## 1         1 Supervised Classification   1 active               6
+## 110     231 Supervised Classification   1 active               6
+## 220    1765 Supervised Classification   1 active               6
+## 329    1881 Supervised Classification   1 active               6
+## 386    1944 Supervised Classification   1 active               6
+## 533    2867 Supervised Classification   1 active               6
+##     NumberOfFeatures NumberOfInstances NumberOfInstancesWithMissingValues
+## 1                 39               898                                  0
+## 110               39               898                                  0
+## 220               39               898                                  0
+## 329               39               898                                  0
+## 386               39               898                                  0
+## 533               39               898                                  0
+##     NumberOfMissingValues NumberOfNumericFeatures
+## 1                       0                       6
+## 110                     0                       6
+## 220                     0                       6
+## 329                     0                       6
+## 386                     0                       6
+## 533                     0                       6
 ```
 
 Similarly, you can also list runs and run results for a specific task, setup or implementation:
@@ -141,34 +181,41 @@ Similarly, you can also list runs and run results for a specific task, setup or 
 
 ```r
 runs = listOMLRuns(task.id = 1L)  # must be restricted to a task, setup and/or implementation ID
-```
-
-```
-## Error in getSessionHash(): Please authenticate first.
-```
-
-```r
 head(runs)
 ```
 
 ```
-## Error in head(runs): Objekt 'runs' nicht gefunden
+##   run.id task.id setup.id implementation.id uploader
+## 1    614       1        1                56       16
+## 2   6248       1        1                56       17
+## 3  24094       1        1                56       16
+## 4  24095       1        1                56       16
+## 5  24688       1        1                56        1
+## 6   6246       1        2                57       17
 ```
 
 ```r
 runresults = listOMLRunResults(task.id = 1L)  # a task ID must be supplied
-```
-
-```
-## Error in getSessionHash(): Please authenticate first.
-```
-
-```r
 colnames(runresults)
 ```
 
 ```
-## Error in is.data.frame(x): Objekt 'runresults' nicht gefunden
+##  [1] "run.id"                        "setup.id"                     
+##  [3] "implementation.id"             "implementation"               
+##  [5] "task.id"                       "task.type.id"                 
+##  [7] "estim.proc"                    "area.under.roc.curve"         
+##  [9] "confusion.matrix"              "f.measure"                    
+## [11] "kappa"                         "kb.relative.information.score"
+## [13] "mean.absolute.error"           "mean.prior.absolute.error"    
+## [15] "number.of.instances"           "os.information"               
+## [17] "precision"                     "predictive.accuracy"          
+## [19] "prior.entropy"                 "recall"                       
+## [21] "relative.absolute.error"       "root.mean.prior.squared.error"
+## [23] "root.mean.squared.error"       "root.relative.squared.error"  
+## [25] "scimark.benchmark"             "build.cpu.time"               
+## [27] "build.memory"                  "average.cost"                 
+## [29] "total.cost"                    "usercpu.time.millis.testing"  
+## [31] "usercpu.time.millis.training"  "usercpu.time.millis"
 ```
 
 

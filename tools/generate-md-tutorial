@@ -12,11 +12,17 @@ if (!file.exists(knit_subdir)){
   dir.create(knit_subdir)
 }
 
-files = list.files(recursive=TRUE)
+files = files = c("1-Introduction.Rmd", 
+  "2-Configuration.Rmd", 
+  "3-Stage-0-Listing.Rmd", 
+  "4-Stage-1-Downloading.Rmd",
+  "5-Stage-2-Running.Rmd", 
+  "6-Stage-3-Uploading.Rmd", 
+  "8-Example-workflow-with-mlr.Rmd") # list.files(recursive=TRUE)
 ending = substr(files, nchar(files)-3, nchar(files))
 files = files[ending==".Rmd"]
 for(file in files) {
   destination = file.path(knit_subdir,
-    paste(substr(file,start=0,stop=nchar(file)-3), "md", sep=""))
+                          paste(substr(file,start=0,stop=nchar(file)-3), "md", sep=""))
   knit(input=file,output=destination)
 }

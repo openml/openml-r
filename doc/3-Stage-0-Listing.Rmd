@@ -6,10 +6,11 @@ In this stage, we want to list basic information, e.g., about all [data sets, ta
 ### Get a valid session hash
 To download a task and for most other functions, you will need a so-called session hash. If you created a configuration file containing username and password of your OpenML account, this is very simple:
 ```{r echo = FALSE, warning = FALSE}
-library(OpenML)
+library(devtools)
+load_all()
 setOMLConfig(verbosity = 0L)
 ```
-```{r}
+```{r eval = FALSE}
 session.hash = authenticateUser()
 ```
 Else, you have to pass your username und password here. **Your password will appear in plain text in your script/console!**

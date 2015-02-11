@@ -9,10 +9,6 @@ To download a certain task from the OpenML server, you need to know the task's I
 [section 3](3-Stage-0-Listing.md) to learn how to retrieve a list of all available tasks in R.
 
 The following call returns an OpenML task object: 
-```{r echo = FALSE, warning = FALSE}
-library(OpenML)
-setOMLConfig(verbosity = 0L)
-```
 ```{r}
 task = getOMLTask(task.id = 1L)
 task
