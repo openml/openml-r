@@ -34,12 +34,12 @@ writeOMLFlowXML = function(description, file) {
       mynode("citation", description$bibliographical.reference[[i]]$citation, parent = par)
       mynode("url", description$bibliographical.reference[[i]]$url, parent = par)
     }
-    for (i in seq_along(description$parameter)) {
+    for (i in seq_along(description$parameters)) {
       par = newXMLNode("parameter", parent = parent, namespace = "oml")
-      mynode("name", description$parameter[[i]]$name, parent = par)
-      mynode("data_type", description$parameter[[i]]$data.type, parent = par)
-      mynode("default_value", description$parameter[[i]]$default.value, parent = par)
-      mynode("description", description$parameter[[i]]$description, parent = par)
+      mynode("name", description$parameters[[i]]$name, parent = par)
+      mynode("data_type", description$parameters[[i]]$data.type, parent = par)
+      mynode("default_value", description$parameters[[i]]$default.value, parent = par)
+      mynode("description", description$parameters[[i]]$description, parent = par)
     }
     for (i in seq_along(description$components)) {
       comp = newXMLNode("component", parent = top, namespace = "oml")

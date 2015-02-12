@@ -95,7 +95,7 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
     # set package version of the "last" learner as the flow's external.version
     external.version = packageDescription(lrn$package[1L])$Version,
     description = description,
-    parameter = makeFlowParameterList(lrn),
+    parameters = makeFlowParameterList(lrn),
     dependencies = pkges,
     ...
   )

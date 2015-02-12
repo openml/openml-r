@@ -12,7 +12,7 @@ makeOMLFlow(id = NA_integer_, uploader = NA_integer_, name,
   language = "English", full.description = NA_character_,
   installation.notes = NA_character_, dependencies = NA_character_,
   bibliographical.reference = NULL, implements = NA_character_,
-  parameter = NULL, components = NULL, qualities = NULL,
+  parameters = NULL, components = NULL, qualities = NULL,
   tags = NA_character_, source.url = NA_character_,
   binary.url = NA_character_, source.format = NA_character_,
   binary.format = NA_character_, source.md5 = NA_character_,
@@ -75,7 +75,7 @@ An optional list containing information on bibliographical references in form of
 \item{implements}{[\code{character(1)}]\cr
 Ontological reference.}
 
-\item{parameter}{[\code{list}]\cr
+\item{parameters}{[\code{list}]\cr
 The parameters of the flow. A list containing
 \code{\link{OMLFlowParameter}s}.}
 

@@ -39,7 +39,7 @@
 #'   \code{\link{OMLBibRef}s}.
 #' @param implements [\code{character(1)}]\cr
 #'   Ontological reference.
-#' @param parameter [\code{list}]\cr
+#' @param parameters [\code{list}]\cr
 #'   The parameters of the flow. A list containing
 #'   \code{\link{OMLFlowParameter}s}.
 #' @param components [\code{list}]\cr
@@ -86,7 +86,7 @@ makeOMLFlow = function(
   dependencies = NA_character_,
   bibliographical.reference = NULL,
   implements = NA_character_,
-  parameter = NULL,
+  parameters = NULL,
   components = NULL,
   qualities = NULL,
   tags = NA_character_,
@@ -117,8 +117,8 @@ makeOMLFlow = function(
   if (!is.null(bibliographical.reference))
     assertList(bibliographical.reference)
   assertString(implements, na.ok = TRUE)
-  if (!is.null(parameter))
-    assertList(parameter)
+  if (!is.null(parameters))
+    assertList(parameters)
   if (!is.null(components))
     assertList(components)
   if (!is.null(qualities))
@@ -150,7 +150,7 @@ makeOMLFlow = function(
     dependencies = dependencies,
     bibliographical.reference = bibliographical.reference,
     implements = implements,
-    parameter = parameter,
+    parameters = parameters,
     components = components,
     qualities = qualities,
     tags = tags,
@@ -180,7 +180,7 @@ print.OMLFlow = function(x, ...)  {
   catfNotNA('\tLicence                  : %s', x$licence)
   catfNotNA('\tInstallation Notes       : %s', x$installation.notes)
   catfNotNA('\tDependencies             : %s', x$dependencies)
-  catf('\tNumber of Flow Parameters: %i', length(x$parameter))
+  catf('\tNumber of Flow Parameters: %i', length(x$parameters))
   catf('\tNumber of Flow Components: %i', length(x$components))
 }
 
@@ -228,10 +228,10 @@ print.OMLFlowParameter = function(x, ...) {
       catf(text, collapse(obj, sep = "; "))
   }
   catf('Parameter %s:', x$name)
-  catfNotNA('\ttype             : %s', x$data.type)
-  catfNotNA('\tdefault          : %s', x$default.value)
-  catfNotNA('\trecommended range: %s', x$recommended.range)
-  catfNotNA('\tdescription      :\n\n%s', x$description)
+  catfNotNA('  type             : %s', x$data.type)
+  catfNotNA('  default          : %s', x$default.value)
+  catfNotNA('  recommended range: %s', x$recommended.range)
+  catfNotNA('\n%s', x$description)
 }
 
 #' @title Construct OMLBibRef.
