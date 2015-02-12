@@ -5,16 +5,16 @@ test_that("getOMLTask", {
 
   task = getOMLTask(1L, session.hash)
   expect_is(task, "OMLTask")
-  expect_is(task$data.set, "OMLDataSet")
-  expect_true(is.data.frame(task$data.set$data))
+  expect_is(task$input$data.set, "OMLDataSet")
+  expect_true(is.data.frame(task$input$data.set$data))
 
-  tf = task$target.features
+  tf = task$input$data.set$target.features
   expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
 
-  ems = task$evaluation.measures
+  ems = task$input$evaluation.measures
   expect_true(all(ems %in% measures | str_replace_all(ems, " ", "_") %in% measures))
 
-  expect_is(task$preds, "list")
+  expect_is(task$output$predictions, "list")
 
   expect_error(getOMLTask(1231109283L, session.hash))
 })

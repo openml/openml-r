@@ -33,10 +33,9 @@ caches the files on disk and creates an S3 object which completely specifies the
 \dontrun{
 task = getOMLTask(1)
 print(task)
-print(task$type)
-print(task$target.features)
-print(task$data.set)
-print(head(task$data.set$data))
+print(task$task.type)
+print(task$input$data.set)
+print(head(task$input$data.set$data))
 }
 }
 

@@ -28,7 +28,7 @@ getOMLDataSet = function(x, check.status, session.hash, verbosity) {
 #' @export
 getOMLDataSet.OMLTask = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
   if (is.null(x$data.set$data))
-    data.set = getOMLDataSet(x$data.desc.id, check.status, session.hash, verbosity)
+    data.set = getOMLDataSet(x$input$data.set$desc$id, check.status, session.hash, verbosity)
   else
     data.set = x$data.set
   return(data.set)
@@ -246,9 +246,9 @@ print.OMLDataSetDescription = function(x, ...) {
   }
   # Wrong indentation to see alignment
   catf('\nData Set "%s" :: (Version = %s, OpenML ID = %i)', x$name, x$version, x$id)
-  catfNotNA('\tCollection Date         : %s', x$collection.date)
-  catfNotNA('\tCreator(s)              : %s', x$creator)
-  catfNotNA('\tDefault Target Attribute: %s', x$default.target.attribute)
+  catfNotNA('  Collection Date         : %s', x$collection.date)
+  catfNotNA('  Creator(s)              : %s', x$creator)
+  catfNotNA('  Default Target Attribute: %s', x$default.target.attribute)
 }
 
 parseOMLDataFile = function(desc, data) {

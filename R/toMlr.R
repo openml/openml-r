@@ -33,24 +33,24 @@ toMlr = function(obj, target, remove.target.NAs, ignore.flagged.attributes, verb
 
 #' @rdname toMlr
 #' @export
-toMlr.OMLTask = function(obj, target = obj$data.set$desc$default.target.attribute,
+toMlr.OMLTask = function(obj, target = obj$input$data.set$target.features,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE, verbosity = NULL) {
 
-  assertSubset(target, obj$data.set$colnames.new, empty.ok = FALSE)
+  assertSubset(target, obj$input$data.set$colnames.new, empty.ok = FALSE)
   assertFlag(remove.target.NAs)
   assertFlag(ignore.flagged.attributes)
 
-  task.type = obj$type
+  task.type = obj$task.type
   data.set = getOMLDataSet(obj)
   data = data.set$data
-  estim.proc = obj$estimation.procedure
+  estim.proc = obj$input$estimation.procedure
   if (remove.target.NAs) {
     tar.na = is.na(data[, target])
     data.set$data = subset(data, !tar.na)
   }
   mlr.task = createMlrTask(data.set, target, task.type, ignore.flagged.attributes, verbosity)
   mlr.rin = createMlrResampleInstance(estim.proc, mlr.task$mlr.task)
-  mlr.measures = createMlrMeasures(obj$evaluation.measures, task.type)
+  mlr.measures = createMlrMeasures(obj$input$evaluation.measures, task.type)
   res = list(mlr.task = mlr.task$mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
   res$orig.lvls = mlr.task$orig.lvls
   return(res)

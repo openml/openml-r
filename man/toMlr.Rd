@@ -8,8 +8,7 @@
 \usage{
 toMlr(obj, target, remove.target.NAs, ignore.flagged.attributes, verbosity)
 
-\method{toMlr}{OMLTask}(obj,
-  target = obj$data.set$desc$default.target.attribute,
+\method{toMlr}{OMLTask}(obj, target = obj$input$data.set$target.features,
   remove.target.NAs = TRUE, ignore.flagged.attributes = TRUE,
   verbosity = NULL)
 

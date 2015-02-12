@@ -21,14 +21,14 @@ runTaskMlr = function(task, learner, remove.const.feats = TRUE, ..., verbosity =
   assertClass(learner, "Learner")
   assertFlag(remove.const.feats)
 
-  if ((task$type == "Supervised Classification" && learner$type != "classif") ||
-    (task$type == "Supervised Regression" && learner$type != "regr") ||
-    (task$type == "Survival Analysis" && learner$type != "surv") ||
-    (task$type == "Clustering" && learner$type != "cluster")) {
-    stopf("Learner type ('%s') does not correspond to task type ('%s').", task$type, learner$type)
+  if ((task$task.type == "Supervised Classification" && learner$type != "classif") ||
+    (task$task.type == "Supervised Regression" && learner$type != "regr") ||
+    (task$task.type == "Survival Analysis" && learner$type != "surv") ||
+    (task$task.type == "Clustering" && learner$type != "cluster")) {
+    stopf("Learner type ('%s') does not correspond to task type ('%s').", task$task.type, learner$type)
   }
 
-  run = makeOMLRun(task.id = task$id)
+  run = makeOMLRun(task.id = task$task.id)
   mlr.task = toMlr(task, verbosity = verbosity)
 
   if (is.null(verbosity))
@@ -77,8 +77,8 @@ runTaskMlr = function(task, learner, remove.const.feats = TRUE, ..., verbosity =
 reformatPredictions = function(pred, task, orig.lvls) {
   iter = pred$iter
   n = length(iter)
-  folds = task$estimation.procedure$parameters$number_folds
-  reps = task$estimation.procedure$parameters$number_repeats
+  folds = task$input$estimation.procedure$parameters$number_folds
+  reps = task$input$estimation.procedure$parameters$number_repeats
   rep = rep(seq_len(reps), each = n/reps)
   fold = iter %% folds
   fold[fold == 0L] = folds
@@ -93,7 +93,7 @@ reformatPredictions = function(pred, task, orig.lvls) {
     truth = pred$truth
   )
 
-  if (task$type == "Supervised Classification") {
+  if (task$task.type == "Supervised Classification") {
     probs = c()
     for (lvl in orig.lvls) {
       if (sprintf("prob.%s", lvl) %in% colnames(pred))

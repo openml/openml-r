@@ -15,10 +15,9 @@
 #' \dontrun{
 #' task = getOMLTask(1)
 #' print(task)
-#' print(task$type)
-#' print(task$target.features)
-#' print(task$data.set)
-#' print(head(task$data.set$data))
+#' print(task$task.type)
+#' print(task$input$data.set)
+#' print(head(task$input$data.set$data))
 #' }
 getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
   id = asCount(task.id)
@@ -46,25 +45,14 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
   }
 
   # parse task
-  id = xmlRValI(doc, "/oml:task/oml:task_id")
-  type = xmlRValS(doc, "/oml:task/oml:task_type")
-  targets = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
-  params = getParams("oml:task")
+  task.id = xmlRValI(doc, "/oml:task/oml:task_id")
+  task.type = xmlRValS(doc, "/oml:task/oml:task_type")
+  parameters = getParams("oml:task")
   tags = xmlOValsMultNsS(doc, "/oml:run/oml:tag", NA_character_)
-
-  # parse data set description
-  data.desc.id = xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id")
-  data.set = NULL
-
-  # parse prediction info
-  ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
-  preds.features = lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
-  names(preds.features) = sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
-  preds = list(
-    format = xmlRValS(doc, "/oml:task/oml:output/oml:predictions/oml:format"),
-    features = preds.features
-  )
-
+  data.set.output = filterNull(list(data.set.id = xmlOValI(doc, "/oml:task/oml:output/oml:data_set/oml:data_set_id"),
+    target.features = xmlOValsMultNsS(doc, "/oml:task/oml:output/oml:data_set/oml:target_feature")))
+  if (length(data.set.output) == 0)
+    data.set.output = NULL
   # parse estimation procedure
   # trim white space around URL to be a bit more robust
   data.splits.url = str_trim(xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url"))
@@ -78,57 +66,72 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
     parameters = getParams("/oml:task/oml:input/oml:estimation_procedure")
   )
 
-  # parse measures
-  measures = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure")
+  # get the data set
+  targets = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
+  data.set.input = getOMLDataSet(xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id"), verbosity = verbosity)
+
+  input = list(
+    data.set = data.set.input,
+    estimation.procedure = estim.proc,
+    evaluation.measures = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:evaluation_measures/oml:evaluation_measure"),
+    cost.matrix = xmlOValS(doc, "/oml:task/oml:input/oml:cost_matrix")
+  )
+
+  # parse prediction info
+  ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
+  preds.features = lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
+  names(preds.features) = sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
+  preds = list(
+    format = xmlRValS(doc, "/oml:task/oml:output/oml:predictions/oml:format"),
+    features = preds.features
+  )
+
+  output = list(
+    data.set = data.set.output,
+    predictions = preds
+  )
 
   task = makeOMLTask(
-    id = id,
-    type = type,
-    target.features = targets,
-    tags = tags,
-    pars = params,
-    data.desc.id = data.desc.id,
-    data.set = data.set,
-    estimation.procedure = estim.proc,
-    preds = preds,
-    evaluation.measures = measures
+    task.id = task.id,
+    task.type = task.type,
+    input = input,
+    parameters = parameters,
+    output = output,
+    tags = tags
   )
   # convert estim params to correct types
-  p = task$estimation.procedure$parameters
+  p = task$input$estimation.procedure$parameters
   if (!is.null(p[["number_repeats"]]))
     p[["number_repeats"]] = as.integer(p[["number_repeats"]])
   if (!is.null(p[["number_folds"]]))
     p[["number_folds"]] = as.integer(p[["number_folds"]])
-  task$estimation.procedure$parameters = p
-
-  # get the data set
-  task$data.set = getOMLDataSet(task, verbosity = verbosity)
+  task$input$estimation.procedure$parameters = p
 
   # replace targets with new column names
-  targets = task$data.set$colnames.new[unlist(lapply(targets, function(x) which(x == task$data.set$colnames.old)))]
-  task$target.features = targets
+  targets = task$input$data.set$colnames.new[unlist(lapply(targets, function(x) which(x == task$input$data.set$colnames.old)))]
+  task$input$data.set$target.features = targets
 
-  if (type == "Supervised Classification") {
-    if (!is.factor(task$data.set$data[, targets])) {
+  if (task.type == "Supervised Classification") {
+    if (!is.factor(task$input$data.set$data[, targets])) {
       showInfo(verbosity, "Target column not a factor. Converting and going on.")
-      task$data.set$data[, targets] = as.factor(as.character(task$data.set$data[, targets]))
+      task$input$data.set$data[, targets] = as.factor(as.character(task$input$data.set$data[, targets]))
     }
-  } else if (type == "Supervised Regression") {
-    task$data.set$data[, targets] = as.numeric(task$data.set$data[, targets])
+  } else if (task.type == "Supervised Regression") {
+    task$input$data.set$data[, targets] = as.numeric(task$input$data.set$data[, targets])
   }
   # No real error handling. If no data splits are available, just print a warning and go on.
   if (!f$datasplits.arff$found) {
-    url.dsplits = task$estimation.procedure$data.splits.url
+    url.dsplits = task$input$estimation.procedure$data.splits.url
     if (url.dsplits == "No URL") {
       warning("There is no URL to fetch data splits from.\nEither the task type does not support data splits or the task is defective.")
     } else {
       data = downloadARFF(url.dsplits, f$datasplits.arff$path, verbosity)
-      task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
+      task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
     }
   } else {
     showInfo(verbosity, "Data splits found in cache.")
     data = read.arff(f$datasplits.arff$path)
-    task$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
+    task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
   return(task)
 }
@@ -138,7 +141,7 @@ parseOMLDataSplits = function(task, data) {
   # rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
   colnames(data)[colnames(data) == "repeat"] = "rep"
   ri = data$rowid
-  rns = rownames(task$data.set$data)
+  rns = rownames(task$input$data.set$data)
   # FIXME: use match()!
   data$rowid = sapply(ri, function(x) which(x == rns))
   data$rep = data$rep + 1
