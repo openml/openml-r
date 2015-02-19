@@ -45,7 +45,7 @@ toMlr.OMLTask = function(obj, target = obj$input$data.set$target.features,
   data = data.set$data
   estim.proc = obj$input$estimation.procedure
   if (remove.target.NAs) {
-    tar.na = is.na(data[, target])
+    tar.na = apply(data[, target, drop = FALSE], 1, function(x) any(is.na(x)))
     data.set$data = subset(data, !tar.na)
   }
   mlr.task = createMlrTask(data.set, target, task.type, ignore.flagged.attributes, verbosity)
@@ -106,6 +106,8 @@ createMlrTask = function(data.set, target, task.type, ignore.flagged.attributes,
     mlr.task = makeClassifTask(data = data, target = target, fixup.data = fixup)
   } else if (task.type == "Supervised Regression") {
     mlr.task = makeRegrTask(data = data, target = target, fixup.data = fixup)
+  } else if (task.type == "Survival Analysis") {
+    mlr.task = makeSurvTask(data = data, target = target, fixup.data = fixup)
   } else {
     stopf("Encountered currently unsupported task type: %s", task.type)
   }
@@ -189,11 +191,15 @@ createMlrMeasures = function(measures, type) {
     ppv = "precision",
     acc = "predictiveaccuracy",
     tpr = "recall")
+  surv.list = list(
+    cindex = "cindex")
 
   if (type == "Supervised Classification") {
     return(getMlrMeasures(measures, classif.list))
   } else if (type == "Supervised Regression") {
     return(getMlrMeasures(measures, regr.list))
+  } else if (type == "Survival Analysis") {
+    return(getMlrMeasures(measures, surv.list))
   } else {
     stopf("Unsupported task type: %s", type)
   }

@@ -89,9 +89,12 @@ reformatPredictions = function(pred, task, orig.lvls) {
     rep = rep - 1L,
     fold = fold - 1L,
     row_id = rowid - 1L,
-    prediction = pred$response,
-    truth = pred$truth
+    prediction = pred$response
   )
+
+  if (task$task.type != "Survival Analysis") {
+    new.pred$truth = pred$truth
+  }
 
   if (task$task.type == "Supervised Classification") {
     probs = c()
@@ -102,10 +105,11 @@ reformatPredictions = function(pred, task, orig.lvls) {
     }
     colnames(probs) = sprintf("confidence.%s", orig.lvls)
     new.pred = cbind(new.pred, probs)
+
+    new.pred$prediction = factor(as.character(new.pred$prediction), levels = orig.lvls)
+    new.pred$truth = factor(as.character(new.pred$truth), levels = orig.lvls)
   }
 
-  new.pred$prediction = factor(as.character(new.pred$prediction), levels = orig.lvls)
-  new.pred$truth = factor(as.character(new.pred$truth), levels = orig.lvls)
   colnames(new.pred)[1L] = "repeat"
   return(new.pred)
 }

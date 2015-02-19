@@ -27,11 +27,7 @@ getOMLDataSet = function(x, check.status, session.hash, verbosity) {
 #' @rdname getOMLDataSet
 #' @export
 getOMLDataSet.OMLTask = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
-  if (is.null(x$data.set$data))
-    data.set = getOMLDataSet(x$input$data.set$desc$id, check.status, session.hash, verbosity)
-  else
-    data.set = x$data.set
-  return(data.set)
+  return(x$input$data.set)
 }
 
 #' @rdname getOMLDataSet

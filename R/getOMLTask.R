@@ -68,6 +68,17 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
 
   # get the data set
   targets = xmlValsMultNsS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature")
+  if (length(targets) == 0) {
+    notEmpty = function(string) {
+      if (string == "")
+        return(NULL)
+      return(string)
+    }
+    targets = c(notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_left")),
+      notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_right")),
+      notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_event")))
+  }
+
   data.set.input = getOMLDataSet(xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id"), verbosity = verbosity)
 
   input = list(

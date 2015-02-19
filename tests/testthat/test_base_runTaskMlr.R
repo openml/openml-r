@@ -11,8 +11,8 @@ test_that("runTaskMlr", {
 
   expect_error(runTaskMlr(task, makeLearner("surv.coxph")), "does not correspond")
 
-  task$data.set = getOMLDataSet(task)
-  task$data.set$data[1, 3] = NA
+  task$input$data.set = getOMLDataSet(task)
+  task$input$data.set$data[1, 3] = NA
   run = runTaskMlr(task, makeLearner("classif.randomForest"))
   expect_true(is.null(run$predictions) && testString(run$error.message))
 })
