@@ -13,13 +13,13 @@
 #' @template arg_status
 #' @return [\code{data.frame}].
 #' @export
-listOMLTasks = function(type = 1L, session.hash = getSessionHash(), 
+listOMLTasks = function(type = 1L, session.hash = getSessionHash(),
   verbosity = NULL, status = "active") {
   type = asInt(type)
   assertString(session.hash)
   status.levels = c("active", "deactivated", "in_preparation")
   assertSubset(status, status.levels)
-  
+
   url = getAPIURL("openml.tasks", task_type_id = type)
   content = try(downloadXML(url, NULL, verbosity = verbosity, session_hash = session.hash), silent = TRUE)
 
@@ -32,18 +32,23 @@ listOMLTasks = function(type = 1L, session.hash = getSessionHash(),
   df = rbindlist(lapply(blocks, function(node) {
     children = xmlChildren(node)
     is.quality = names(children) == "quality"
+    is.input = names(children) == "input"
+    inputs = children[is.input]
+    names(inputs) = vcapply(inputs, function(x) xmlAttrs(x)[["name"]])
 
     info = list(
-        task.id = as.integer(xmlValue(children[["task_id"]])),
-        task.type = xmlValue(children[["task_type"]]),
+        task_id = as.integer(xmlValue(children[["task_id"]])),
+        task_type = xmlValue(children[["task_type"]]),
         did = as.integer(xmlValue(children[["did"]])),
-        status = xmlValue(children[["status"]])
+        status = xmlValue(children[["status"]]),
+        name = xmlValue(children[["name"]]),
+        estimation_procedure = as.integer(xmlValue(inputs[["estimation_procedure"]])),
+        evaluation_measures = collapse(as.character(xmlValue(inputs[["evaluation_measures"]])))
     )
     qualities = convertNodeSetToList(children[is.quality], as.integer)
     c(info, qualities)
   }), fill = TRUE)
   df$status = factor(df$status, levels = status.levels)
-  df = as.data.frame(rename(df))
 
   # subset status level
   ret = droplevels(df[df$status%in%status, ])
