@@ -6,8 +6,7 @@ load_all()
 
 authenticateUser()
 
-# FIXME: we need task name / dset name here
-# tchars = listOMLTasks(type = 1L)
+tchars = listOMLTasks(type = 1L)
 tchars2 = subset(tchars, NumberOfInstances <= 500L & NumberOfFeatures <= 10L &
   NumberOfInstancesWithMissingValues == 0L & NumberOfClasses <= 4L)
 
