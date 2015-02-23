@@ -48,13 +48,13 @@ uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(), verbosity =
 
   # create sourcefile
   sourcefile = file.path(tempdir(), sprintf("%s_source.R", x$id))
-  xx = base64Encode(serialize(x, ascii = TRUE, connection = NULL))
+  xx = base64Encode(rawToChar(serialize(x, connection = NULL, ascii = TRUE)))
   writeLines(sprintf("
 sourcedFlow = function(task.id) {
   library(RCurl)
   library(mlr)
   task = getOMLTask(task.id)
-  x = unserialize(base64Decode('%s'))
+  x = unserialize(charToRaw(base64Decode('%s')))
   runTaskMlr(task, x)
 }", xx), sourcefile)
   on.exit(unlink(sourcefile))
