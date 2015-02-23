@@ -34,9 +34,12 @@ authenticateUser = function(username = NULL, password = NULL, verbosity = NULL) 
   content = try(postForm(url, .params = list(username = username, password = md5), 
     .checkParams = FALSE), silent = TRUE)
 
-  if (is.error(content))
-    stop("Username/password combination invalid.")
-
+  if (is.error(content)) {
+    err.msg = simpleError(content)$message
+    if (grepl("Internal", err.msg)) stop("Username/password combination invalid.") else
+      stop(gsub(".* : ", "", err.msg))
+  }
+    
   doc = parseXMLResponse(content, "Authenticating user", "authenticate", as.text = TRUE)
   session.hash = xmlRValS(doc, "/oml:authenticate/oml:session_hash")
   valid.until = xmlRValS(doc, "/oml:authenticate/oml:valid_until")
