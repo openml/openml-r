@@ -1,7 +1,7 @@
 #' @title List available OpenML tasks
 #'
 #' @description
-#' The returned data.frame contains the \code{task_id}, the data set id \code{did},
+#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
 #' the \code{status} and some describing data qualities.
 #'
 #' @param type [\code{integer(1)}]\cr
@@ -51,7 +51,7 @@ listOMLTasks = function(type = 1L, session.hash = getSessionHash(),
   df$status = factor(df$status, levels = status.levels)
 
   # subset status level
-  ret = droplevels(df[df$status%in%status, ])
+  ret = droplevels(as.data.frame(df)[df$status%in%status, ])
   row.names(ret) = NULL
   return(ret)
 }
