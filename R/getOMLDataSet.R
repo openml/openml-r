@@ -91,7 +91,14 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
     showInfo(verbosity, "Data set found in cache.")
     data = read.arff(f$dataset.arff$path)
   }
-  data = parseOMLDataFile(data.desc, data)
+  
+  if (!is.na(data.desc$row.id.attribute)) {
+    if (is.na(data.desc$ignore.attribute))
+      data.desc$ignore.attribute = data.desc$row.id.attribute
+    else
+      data.desc$ignore.attribute = c(data.desc$ignore.attribute, data.desc$row.id.attribute)
+  }
+  data = setRowNames(data, as.character(seq_row(data) - 1L))
 
   def.target = data.desc$default.target.attribute
   target.ind = which(colnames(data) %in% def.target)
@@ -245,14 +252,4 @@ print.OMLDataSetDescription = function(x, ...) {
   catfNotNA('  Collection Date         : %s', x$collection.date)
   catfNotNA('  Creator(s)              : %s', x$creator)
   catfNotNA('  Default Target Attribute: %s', x$default.target.attribute)
-}
-
-parseOMLDataFile = function(desc, data) {
-  if (!is.na(desc$row.id.attribute)) {
-    rowid = data[, desc$row.id.attribute]
-    data[, desc$row.id.attribute] = NULL
-  } else {
-    rowid = seq_row(data) - 1L
-  }
-  setRowNames(data, as.character(rowid))
 }

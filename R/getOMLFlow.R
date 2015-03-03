@@ -37,17 +37,19 @@ getOMLFlow = function(implementation.id, session.hash = getSessionHash(), verbos
   flow = downloadFileAndSavePath(flow, "binary", "wb", verbosity)
   flow = downloadFileAndSavePath(flow, "source", "w", verbosity)
 
-  # fix unserialize in downloaded R file (issue #49)
-#   if(!is.na(flow$source.format) && flow$source.format == "R") {
+  # fix unserialize in downloaded R file (issue #49) and replace downloadOpenMLTask by getOMLTask
+#   if (!is.na(flow$source.format) && flow$source.format == "R") {
 #     source.file = readLines(flow$source.path)
+#     gsub("downloadOpenMLTask", "getOMLTask", source.file)
+#
 #     fix.line = grepl("unserialize", source.file)
-#     if(!grepl("charToRaw", source.file[fix.line])) {
+#     if (any(fix.line) && !grepl("charToRaw", source.file[fix.line])) {
 #       source.file[fix.line] = gsub("unserialize", "unserialize(charToRaw", source.file[fix.line])
 #       source.file[fix.line] = gsub("))", ")))", source.file[fix.line])
 #       writeLines(source.file, flow$source.path)
 #     }
 #   }
-  
+
   return(flow)
 }
 
