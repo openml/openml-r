@@ -4,8 +4,7 @@
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.
-#' @param implementation.id [\code{\link{character}}]\cr
-#'   The ID of the OpenML flow. To have an ID it must be stored on the server.
+#' @template arg_implementation.id
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}]. The run ID.

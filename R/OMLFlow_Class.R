@@ -174,7 +174,7 @@ print.OMLFlow = function(x, ...)  {
   }
   
   ## General flow info
-  catf('\nFlow "%s" :: (Version = %s, OpenML ID = %i)', x$name, x$version, x$implementation.id)
+  catf('\nFlow "%s" :: (Version = %s, Implementation ID = %i)', x$name, x$version, x$implementation.id)
   catfNotNA('\tExternal Version         : %s', x$external.version)
   catfNotNA('\tCreator(s)               : %s', x$creator)
   catfNotNA('\tLicence                  : %s', x$licence)

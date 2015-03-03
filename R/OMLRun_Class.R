@@ -77,7 +77,7 @@ print.OMLRun = function(x, printMetrics = FALSE, ...)  {
   }
 
   ## General info
-  catf('\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)', x$run.id, x$task.id, x$implementation.id)
+  catf('\nOpenML Run %i :: (Task ID = %i, Implementation ID = %i)', x$run.id, x$task.id, x$implementation.id)
   catNotNA('\tUser ID:', x$uploader)
   catNotNA('\tTags   :', x$tags)
 

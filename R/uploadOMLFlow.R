@@ -19,9 +19,9 @@ uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(), verbosity =
   doc = parseXMLResponse(content, "Checking existence of flow", "implementation_exists", as.text = TRUE)
 
   if (as.logical(xmlRValS(doc, "/oml:implementation_exists/oml:exists"))) {
-    id = xmlOValI(doc, "/oml:implementation_exists/oml:id")
-    showInfo(verbosity, "Flow already exists (ID = %i).", id)
-    return(id)
+    implementation.id = xmlOValI(doc, "/oml:implementation_exists/oml:id")
+    showInfo(verbosity, "Flow already exists (Implementation ID = %i).", implementation.id)
+    return(implementation.id)
   }
   file = tempfile()
   on.exit(unlink(file))
@@ -38,9 +38,9 @@ uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(), verbosity =
     params$binary = fileUpload(filename = binaryfile)
   response = postForm(url, .params = params, .checkParams = FALSE)
   doc = parseXMLResponse(response, "Uploading implementation", c("upload_implementation", "response"), as.text = TRUE)
-  id = xmlOValI(doc, "/oml:upload_implementation/oml:id")
-  showInfo(verbosity, "Implementation successfully uploaded. Implementation ID: %i", id)
-  return(id)
+  implementation.id = xmlOValI(doc, "/oml:upload_implementation/oml:id")
+  showInfo(verbosity, "Implementation successfully uploaded. Implementation ID: %i", implementation.id)
+  return(implementation.id)
 }
 
 uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(), verbosity = NULL) {
@@ -59,8 +59,8 @@ sourcedFlow = function(task.id) {
 }", xx), sourcefile)
   on.exit(unlink(sourcefile))
 
-  flow.id = uploadOMLFlow(flow, sourcefile = sourcefile, session.hash = session.hash, verbosity)
-  return(flow.id)
+  implementation.id = uploadOMLFlow(flow, sourcefile = sourcefile, session.hash = session.hash, verbosity)
+  return(implementation.id)
 }
 
 # createOMLFlowForMlrLearner.
