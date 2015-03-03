@@ -18,7 +18,7 @@ listOMLFlows = function(session.hash = getSessionHash(), verbosity = NULL) {
   as.data.frame(rbindlist(lapply(blocks, function(node) {
     children = xmlChildren(node)
     list(
-      id = as.integer(xmlValue(children[["id"]])),
+      implementation.id = as.integer(xmlValue(children[["id"]])),
       full.name = xmlValue(children[["full_name"]]),
       name = xmlValue(children[["name"]]),
       version = as.integer(xmlValue(children[["version"]])),

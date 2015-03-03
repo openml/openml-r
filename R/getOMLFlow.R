@@ -1,16 +1,16 @@
 #' Download an OpenML flow.
 #'
-#' @param id [\code{integer(1)}]\cr
+#' @param implementation.id [\code{integer(1)}]\cr
 #'   The ID of the desired flow.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLFlow}}].
 #' @export
-getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
-  id = asCount(id)
+getOMLFlow = function(implementation.id, session.hash = getSessionHash(), verbosity = NULL) {
+  implementation.id = asCount(implementation.id)
   assertString(session.hash)
 
-  url = getAPIURL("openml.implementation.get", implementation_id = id)
+  url = getAPIURL("openml.implementation.get", implementation_id = implementation.id)
   content = try(downloadXML(url, NULL, verbosity, session_hash = session.hash), silent = TRUE)
   if (is.error(content))
     stop("Flow (temporarily) not available.")
@@ -22,7 +22,7 @@ getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
     url = flow[[sprintf("%s.url", binOrSource)]]
     if (!is.na(url)) {
       file = basename(url)
-      f = findCachedFlow(flow$id, file)[[1L]]
+      f = findCachedFlow(flow$implementation.id, file)[[1L]]
       flow[[sprintf("%s.path", binOrSource)]] = f$path
       if (f$found) {
         showInfo(verbosity, "File %s found in cache.", file)
@@ -53,7 +53,7 @@ getOMLFlow = function(id, session.hash = getSessionHash(), verbosity = NULL) {
 
 parseOMLFlow = function(doc) {
   args = filterNull(list(
-    id = xmlRValI(doc, "/oml:implementation/oml:id"),
+    implementation.id = xmlRValI(doc, "/oml:implementation/oml:id"),
     uploader = xmlOValI(doc, "/oml:implementation/oml:uploader"),
     name = xmlRValS(doc, "/oml:implementation/oml:name"),
     version = xmlRValS(doc, "/oml:implementation/oml:version"),
