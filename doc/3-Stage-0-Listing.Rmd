@@ -5,15 +5,19 @@ In this stage, we want to list basic information, e.g., about all [data sets, ta
 
 ### Get a valid session hash
 To download a task and for most other functions, you will need a so-called session hash. If you created a configuration file containing username and password of your OpenML account, this is very simple:
-```{r echo = FALSE, warning = FALSE}
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
 library(devtools)
 load_all()
 setOMLConfig(verbosity = 0L)
+options(width=125)
 ```
 ```{r eval = FALSE}
 session.hash = authenticateUser()
 ```
+
 Else, you have to pass your username und password here. **Your password will appear in plain text in your script/console!**
+
 ```{r}
 session.hash = authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword")
 ```
@@ -21,7 +25,7 @@ session.hash = authenticateUser(username = "openml.rteam@gmail.com", password = 
 ### Listing
 Let's have a look at some examples. Most of the listing-functions do not have any parameters that change the output:
 
-```{r}
+```{r eval = FALSE}
 flows = listOMLFlows()
 head(flows)
 
@@ -34,11 +38,11 @@ tasktypes
 
 To browse the OpenML data base for appropriate data sets, you can use `listOMLDataSets()` 
 in order to get basic data characteristics (number of features/instances/classes/missing values etc.)
-each data set. By default, `listOMLDataSets()` returns only data sets that have an active 
+for each data set. By default, `listOMLDataSets()` returns only data sets that have an active 
 status on OpenML. If you need data sets that are either `"in_preparation"` or `"deactivated"`,
 you can change the `status` parameter:
 
-```{r}
+```{r eval = FALSE}
 datasets = listOMLDataSets()  # returns active data sets
 head(datasets)
 
@@ -47,17 +51,18 @@ head(inactive.data)
 ```
 
 Other listing-functions list only those entities that match one or more criteria.
-For some data sets, for example, there may be one or more tasks available at the OpenML server. 
-You can look for `Supervised Classification` task IDs that are available for a specific data set as follows:
+For some data sets, there may be one or more tasks available at the OpenML server. 
+For example, you can look for `Supervised Classification` task IDs that are available for a specific data set as follows:
 
-```{r}
-tasks = listOMLTasks(type = 1L)  # lists only tasks of a certain task type (here: "Supervised Classification")
-head(tasks[tasks$did == "1", ])  # lists tasks for the data set with did == 1 (see: http://openml.org/d/1)
+```{r eval = FALSE}
+type.id = with(tasktypes, id[name == "Supervised Classification"]) # lookup id for "Supervised Classification" tasks
+tasks = listOMLTasks(type = type.id)  # list all "Supervised Classification" tasks 
+head(subset(tasks, did == 1L))  # lists tasks for the data set with did == 1 (see: http://openml.org/d/1)
 ```
 
 Similarly, you can also list runs and run results for a specific task, setup or implementation:
 
-```{r}
+```{r eval = FALSE}
 runs = listOMLRuns(task.id = 1L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
 

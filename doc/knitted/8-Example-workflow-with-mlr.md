@@ -13,6 +13,7 @@ upload these.
 
 
 ```r
+set.seed(2315)
 library(mlr)
 
 tl = listOMLTasks()
@@ -20,8 +21,8 @@ tl = listOMLTasks()
 # filter data sets and get appropriate data set IDs:
 
 # find tasks that match our desires and randomly select 20 of them
-task.ids = = subset(tl, NumberOfFeatures < 10 & NumberOfInstances < 100 & NumberOfClasses == 2 & 
-  NumberOfMissingValues == 0, select = task.id, drop = TRUE)
+task.ids = subset(tl, NumberOfFeatures < 10 & NumberOfFeatures > 3 & NumberOfInstances < 100 & NumberOfClasses == 2 & 
+  NumberOfMissingValues == 0, select = task_id, drop = TRUE)
 task.ids = sample(task.ids, 20)
 
 # get a valid session hash:
@@ -30,34 +31,30 @@ hash = authenticateUser("openml.rteam@gmail.com", "testpassword")
 # create the mlr learner for lda:
 lrn = makeLearner("classif.lda")
 
-# upload the learner and retrieve its flow ID:
-flow.id = uploadMlrLearner(lrn, hash) 
+# upload the learner and retrieve its implementation ID:
+implementation.id = uploadOMLFlow(lrn, hash) 
 
 run.ids = c()
 for (id in task.ids) {
   task = getOMLTask(id)
-  res = try(runTask(task, lrn))  # try to compute predictions with our learner
-  if (is.error(res)) {
-    # if an error occured, upload the error message:
-    run.id = uploadOMLRun(task, lrn, flow.id, error.msg = res[1], session.hash = hash)
-  } else {
-    # else, upload the predictions:
-    run.id = uploadOMLRun(task, lrn, flow.id, predictions = res, session.hash = hash)
-  } 
+  res = try(runTaskMlr(task, lrn)) # try to compute predictions with our learner
+  run.id = uploadOMLRun(res, implementation.id = implementation.id, session.hash = hash)
   run.ids = c(run.ids, run.id)
 }
 
-## Compute the quantiles of the measure "predictive_accuracy" of all runs using our lda  
+## Compute the quantiles of the measure "predictive.accuracy" of all runs using our lda  
 ## implementation in comparison to the measures of different implementations. Quantiles next to 1  
 ## correspond to "lda has achieved (one of) the best results", quantiles next to 0 correspond to  
 ## "the other flows were better".
 qs = c()
 for (id in task.ids) {
-  metrics = listOMLRunResults(id)$metrics
-  if (is.null(metrics$predictive_accuracy))
+  metrics = listOMLRunResults(id)
+  if (is.null(metrics$predictive.accuracy)){
+    cat("skip")
     next
-  f = ecdf(metrics$predictive_accuracy)
-  q = f(metrics[metrics$impl.id == flow.id, "predictive_accuracy"])
+  }
+  f = ecdf(metrics$predictive.accuracy)
+  q = f(metrics[metrics$implementation.id == implementation.id, "predictive.accuracy"])
   qs = c(qs, q)
 }
 

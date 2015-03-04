@@ -19,12 +19,12 @@ There are different stages when using this package:
     * result is an object of a specific OpenML class
     * available for DataSets, Tasks, Runs, Predictions and Flows
 * Stage 2: Running Models on Tasks
-    * runTaskMlr, runTaskCustom
+    * runTaskMlr
     * input: task and model
-    * output: OMLMlrRunResult, OMLRunResult
+    * output: OMLMlrRun, OMLRun
 * Stage 3: Uploading
-    * uploadRunResult
-
+    * uploadOMLFlow
+    * uploadOMLRun
 
 ----------------------------------------------------------------------------------------------------
 Jump to:    

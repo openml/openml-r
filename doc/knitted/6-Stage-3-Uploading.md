@@ -1,6 +1,29 @@
 Stage 3 - Uploading
 ===================
 
+### Upload an implementation using mlr
+
+A flows is an implementation of single algorithms or script. To create an implementation, we can use the `mlr` package. Each `mlr` learner can be considered as an implementation of a flow that can be uploaded to the server with the function `uploadOMLFlow`.
+If the implementation is already was already been uploaded to the server, we get a message that the flow already exists and the `implementation.id` is returned from the function. Otherwise, the not existing flow is uploaded and a new `implementation.id` is assigned to it.
+
+
+```r
+library(mlr)
+lrn = makeLearner("classif.randomForest")
+implementation.id = uploadOMLFlow(lrn, session.hash = session.hash) 
+implementation.id
+```
+
+```
+## [1] 1248
+```
+
+### Upload an implementation without using mlr
+
+UNDER CONSTRUCTION
+
+### Upload an OpenML run to the server
+
 UNDER CONSTRUCTION
 
 ----------------------------------------------------------------------------------------------------

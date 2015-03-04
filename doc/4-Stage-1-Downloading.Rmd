@@ -9,20 +9,23 @@ To download a certain task from the OpenML server, you need to know the task's I
 [section 3](3-Stage-0-Listing.md) to learn how to retrieve a list of all available tasks in R.
 
 The following call returns an OpenML task object: 
+
 ```{r}
 task = getOMLTask(task.id = 1L)
 task
 ```
-The corresponding data set can be accessed by
+
+The corresponding `OMLDataSet` can be accessed by
+
 ```{r}
-str(task$data.set$data)
+task$input$data.set
 ```
 
 ### Download an OpenML data set only
 OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate
 from these fixings. Of course, it is possible to define new tasks that match your desires, but this
 will not always be the means of choice -- e.g., when you want to run a few preliminary experiments.
-For this matter, you can use the function `getOMLDataSet`, which accepts not only tasks (as seen in the section above) but also a data set ID as input:
+For this matter, you can use the function `getOMLDataSet`, which accepts not only tasks (as seen in the section above) but also a data set ID as input and returns the corresponding `OMLDataSet`:
 
 ```{r}
 anneal.data = getOMLDataSet(x = 1L)  # the anneal data set has the data set ID (did = 1, see also previous section)
@@ -41,7 +44,7 @@ run = getOMLRun(run.id = 1L)  # see ?OMLRun for each slot of the OMLRun object
 
 Some important slots for the `OMLRun` object are:
 
-```{r}
+```{r, eval = FALSE}
 run$parameter.setting  # A list containing information on the parameter settings.
 
 run$input.data  # All data that served as input for the run, including the URL to the data.
@@ -57,9 +60,14 @@ run.pred = getOMLRun(run.id = 1L, get.predictions = TRUE)
 all.equal(run.pred$predictions, getOMLPredictions(run))
 ```
 
-### Download run results
-UNDER CONSTRUCTION
+### Download an OpenML flow
 
+Flows are implementations of single algorithms, workflows, or scripts. You can download a flow by specifying the `implementation.id` parameter in the `getOMLFlow` function:
+
+```{r}
+flow = getOMLFlow(implementation.id = 1248L)
+flow
+```
 
 ----------------------------------------------------------------------------------------------------
 Jump to:   

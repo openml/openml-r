@@ -25,6 +25,8 @@ username = emailregristered@openml.org
 password = yourpassword
 ```
 
+If you want to modify your configuration only for the current R session and without changing the `config` file, you should have a look at `?setOMLConfig`. For a global configuration, you can modify the `config` file manually and use `loadOMLConf()` to reload the modified `config` file during your current R session.
+
 If you have done these steps, you are ready to go. Have fun!
 
 ----------------------------------------------------------------------------------------------------
