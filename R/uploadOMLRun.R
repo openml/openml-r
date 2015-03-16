@@ -4,13 +4,20 @@
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.
+#' @template arg_implementation.id
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}]. The run ID.
 #' @export
-uploadOMLRun = function(run, session.hash = getSessionHash(), verbosity = NULL) {
+uploadOMLRun = function(run, implementation.id, session.hash = getSessionHash(), verbosity = NULL) {
   assertClass(run, "OMLRun")
-  #run$implementation.id = asCount(implementation.id)
+  if (is.na(run$implementation.id)) {
+    if (!missing(implementation.id)) {
+      run$implementation.id = asCount(implementation.id)
+    } else stop("Please provide an 'implementation.id'")
+  } else {
+    if (!missing(implementation.id)) stop("This run has already an 'implementation.id'.")
+  }
   if (is.na(run$error.message)) {
     assertDataFrame(run$predictions)
   } else {
