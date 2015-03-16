@@ -14,11 +14,10 @@ uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(), verbosity =
     assertFile(sourcefile)
     x$source.md5 = digest(file = sourcefile)
   }
-  url = getAPIURL("openml.implementation.exists", name = x$name, external_version = x$external.version)
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
-  doc = parseXMLResponse(content, "Checking existence of flow", "implementation_exists", as.text = TRUE)
+  check = checkOMLFlow(x, session.hash = session.hash, verbosity = verbosity)
+  doc = check$doc
 
-  if (as.logical(xmlRValS(doc, "/oml:implementation_exists/oml:exists"))) {
+  if (check$exists) {
     implementation.id = xmlOValI(doc, "/oml:implementation_exists/oml:id")
     showInfo(verbosity, "Flow already exists (Implementation ID = %i).", implementation.id)
     return(implementation.id)
@@ -55,12 +54,22 @@ sourcedFlow = function(task.id) {
   library(mlr)
   task = getOMLTask(task.id)
   x = unserialize(charToRaw(base64Decode('%s')))
-  runTaskMlr(task, x)
+  runTaskMlr(task, x, auto.upload = TRUE)
 }", xx), sourcefile)
   on.exit(unlink(sourcefile))
 
   implementation.id = uploadOMLFlow(flow, sourcefile = sourcefile, session.hash = session.hash, verbosity)
   return(implementation.id)
+}
+
+checkOMLFlow = function(x, session.hash = getSessionHash(), verbosity = NULL){
+  if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
+  url = getAPIURL("openml.implementation.exists", name = x$name, external_version = x$external.version)
+  content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
+  doc = parseXMLResponse(content, "Checking existence of flow", "implementation_exists", as.text = TRUE)
+  
+  return(list(exists = as.logical(xmlRValS(doc, "/oml:implementation_exists/oml:exists")),
+    doc = doc))
 }
 
 # createOMLFlowForMlrLearner.
