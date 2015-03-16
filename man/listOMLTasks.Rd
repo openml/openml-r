@@ -33,7 +33,7 @@ Default is \code{"active"}.}
 [\code{data.frame}].
 }
 \description{
-The returned data.frame contains the \code{task_id}, the data set id \code{did},
+The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
 the \code{status} and some describing data qualities.
 }
 

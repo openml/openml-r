@@ -4,11 +4,12 @@
 \alias{getOMLFlow}
 \title{Download an OpenML flow.}
 \usage{
-getOMLFlow(id, session.hash = getSessionHash(), verbosity = NULL)
+getOMLFlow(implementation.id, session.hash = getSessionHash(),
+  verbosity = NULL)
 }
 \arguments{
-\item{id}{[\code{integer(1)}]\cr
-The ID of the desired flow.}
+\item{implementation.id}{[\code{integer(1)}]\cr
+ID of the implementation of an OpenML flow.}
 
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is

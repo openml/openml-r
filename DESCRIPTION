@@ -3,7 +3,8 @@ Title: OpenML
 Description: OpenML
 Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <???>,
     Dominik Kirchhoff <dom.kirchhoff@gmail.com>,
-    Michel Lang <michellang@gmail.com>
+    Michel Lang <michellang@gmail.com>,
+    Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Suggests:

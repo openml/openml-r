@@ -4,7 +4,7 @@
 \alias{listOMLRuns}
 \title{List OpenML runs.}
 \usage{
-listOMLRuns(task.id = NULL, setup.id = NULL, impl.id = NULL,
+listOMLRuns(task.id = NULL, setup.id = NULL, implementation.id = NULL,
   session.hash = getSessionHash(), verbosity = NULL)
 }
 \arguments{
@@ -14,8 +14,8 @@ ID of the task.}
 \item{setup.id}{[\code{integer(1)}]\cr
 ID of the parameter setup.}
 
-\item{impl.id}{[\code{integer(1)}]\cr
-ID of the implementation.}
+\item{implementation.id}{[\code{integer(1)}]\cr
+ID of the implementation of an OpenML flow.}
 
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is
@@ -33,6 +33,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
 This function returns information on all OpenML runs that match a certain
-\code{task.id}, \code{setup.id} and/or implementation ID \code{impl.id}.
+\code{task.id}, \code{setup.id} and/or implementation ID \code{implementation.id}.
 }
 
