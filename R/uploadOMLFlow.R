@@ -64,6 +64,7 @@ sourcedFlow = function(task.id) {
 
 checkOMLFlow = function(x, session.hash = getSessionHash(), verbosity = NULL){
   if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
+  if(is.na(x$external.version)) x$external.version = ifelse(is.na(x$source.md5), x$binary.md5, x$source.md5)
   url = getAPIURL("openml.implementation.exists", name = x$name, external_version = x$external.version)
   content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
   doc = parseXMLResponse(content, "Checking existence of flow", "implementation_exists", as.text = TRUE)
@@ -101,8 +102,6 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   pkges = collapse(pkges, sep = ", ")
   flow = makeOMLFlow(
     name = name,
-    # set package version of the "last" learner as the flow's external.version
-    external.version = packageDescription(lrn$package[1L])$Version,
     description = description,
     parameters = makeFlowParameterList(lrn),
     dependencies = pkges,
