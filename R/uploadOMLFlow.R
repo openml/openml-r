@@ -1,8 +1,25 @@
+#' Upload an OpenML flow to the server.
+#'
+#' Upload an OpenML flow to the server.
+#'
+#' @param x [\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
+#'   The flow that should be uploaded.
+#' @template arg_hash
+#' @template arg_verbosity
+#' @param sourcefile [\code{character(1)}]\cr
+#' the file path to the flow (not needed for \code{\link{Learner}})
+#' @param binaryfile [\code{character(1)}]\cr
+#' the file path to the flow (not needed for \code{\link{Learner}})
+#' @return [\code{invisible(numeric(1))}]. The id of the flow (\code{implementation.id}).
+#' @export
+
 uploadOMLFlow = function(x, session.hash, verbosity, sourcefile, binaryfile) {
   UseMethod("uploadOMLFlow")
 }
 
-uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(), verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
+#' @export
+uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(), 
+  verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   if (is.null(sourcefile) && is.null(binaryfile)) {
     stopf("Please provide source and/or binary file.")
   }
@@ -42,7 +59,9 @@ uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(), verbosity =
   return(implementation.id)
 }
 
-uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(), verbosity = NULL) {
+#' @export
+uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(), 
+  verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = createOMLFlowForMlrLearner(x)
 
   # create sourcefile

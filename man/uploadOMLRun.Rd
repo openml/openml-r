@@ -4,11 +4,15 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run to the server.}
 \usage{
-uploadOMLRun(run, session.hash = getSessionHash(), verbosity = NULL)
+uploadOMLRun(run, implementation.id, session.hash = getSessionHash(),
+  verbosity = NULL)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}]\cr
 The run that should be uploaded.}
+
+\item{implementation.id}{[\code{integer(1)}]\cr
+ID of the implementation of an OpenML flow.}
 
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is
