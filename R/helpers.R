@@ -16,10 +16,10 @@ showMessage = function(verbosity, msg, ..., minlev) {
 }
 
 rename = function(x) {
-  if (is.data.frame(x)) {
-    setnames(x, str_replace_all(names(x), "_", "."))
+  if (is.data.table(x)) {
+    setnames(x, stri_replace_all_fixed(names(x), "_", "."))
   } else {
-    names(x) = str_replace_all(names(x), "_", ".")
+    names(x) = stri_replace_all_fixed(names(x), "_", ".")
   }
   x
 }

@@ -3,10 +3,10 @@
 #' @title OpenML configuration.
 #'
 #' @description
-#' After loading the package, it tries to find a configuration in your home 
+#' After loading the package, it tries to find a configuration in your home
 #' directory. The R command \code{path.expand("~/.openml/config")} gives you the
 #' full path to the configuration file on your operating system.
-#' 
+#'
 #' For further information please read the configuration section in
 #' \url{https://github.com/openml/r/wiki}.
 #'
@@ -22,9 +22,9 @@ readConfigFile = function(conffile) {
   conf = new.env(parent = emptyenv())
   # FIXME: we need to check the format of the conf file
   # the format is <name> = <value>
-  lines = Filter(nzchar, str_trim(readLines(conffile)))
-  lines = str_split(lines, "=")
-  lines = lapply(lines, str_trim)
+  lines = Filter(nzchar, stri_trim_both(readLines(conffile)))
+  lines = stri_split_fixed(lines, "=")
+  lines = lapply(lines, stri_trim_both)
   lines = do.call(rbind, lines)
   conf = as.environment(setNames(as.list(lines[, 2L]), lines[, 1L]))
   # if (is.error(x))
@@ -36,7 +36,7 @@ readConfigFile = function(conffile) {
     conf$openmldir = path.expand(conf$openmldir)
   if (!is.null(conf$cachedir))
     conf$cachedir = path.expand(conf$cachedir)
-  
+
   checkConfig(conf)
   # FIXME: probably horrible security wise....
   if (!is.null(conf$password))
@@ -148,9 +148,9 @@ getOMLConfig = function() {
   return(.OpenML.config)
 }
 
-#' Loads a config file from disk to mem 
+#' Loads a config file from disk to mem
 #'
-#' @param path [\code{character(1)}]\cr 
+#' @param path [\code{character(1)}]\cr
 #'   full path location of the config file to be loaded
 #' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 #' @family config

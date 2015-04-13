@@ -55,7 +55,7 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
     data.set.output = NULL
   # parse estimation procedure
   # trim white space around URL to be a bit more robust
-  data.splits.url = str_trim(xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url"))
+  data.splits.url = stri_trim_both(xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url"))
   if (is.null(data.splits.url))
     data.splits.url = "No URL"
 

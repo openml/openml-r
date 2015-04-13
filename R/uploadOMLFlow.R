@@ -18,7 +18,7 @@ uploadOMLFlow = function(x, session.hash, verbosity, sourcefile, binaryfile) {
 }
 
 #' @export
-uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(), 
+uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(),
   verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   if (is.null(sourcefile) && is.null(binaryfile)) {
     stopf("Please provide source and/or binary file.")
@@ -60,7 +60,7 @@ uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(),
 }
 
 #' @export
-uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(), 
+uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(),
   verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = createOMLFlowForMlrLearner(x)
 
@@ -87,7 +87,7 @@ checkOMLFlow = function(x, session.hash = getSessionHash(), verbosity = NULL){
   url = getAPIURL("openml.implementation.exists", name = x$name, external_version = x$external.version)
   content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
   doc = parseXMLResponse(content, "Checking existence of flow", "implementation_exists", as.text = TRUE)
-  
+
   return(list(exists = as.logical(xmlRValS(doc, "/oml:implementation_exists/oml:exists")),
     doc = doc))
 }
@@ -127,7 +127,7 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
     ...
   )
   if (!is.null(lrn$next.learner)) {
-    identifier = str_split(lrn$next.learner$id, '[.]')[[1L]][2L]
+    identifier = stri_split_fixed(lrn$next.learner$id, ".")[[1L]][2L]
     flow$components = list(createOMLFlowForMlrLearner(lrn$next.learner))
     names(flow$components) = identifier
   }

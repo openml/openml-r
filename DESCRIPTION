@@ -16,7 +16,7 @@ Imports:
     data.table,
     digest,
     RCurl,
-    stringr,
+    stringi,
     XML,
     RWeka,
     mlr,

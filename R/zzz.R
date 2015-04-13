@@ -2,7 +2,7 @@
 #' @import checkmate
 #' @import digest
 #' @import RCurl
-#' @import stringr
+#' @import stringi
 #' @import XML
 #' @import RWeka
 #' @import mlr

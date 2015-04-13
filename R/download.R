@@ -14,7 +14,7 @@ getServerURL = function(secure = NULL) {
   url = getOMLConfig()$server
   if (!is.null(secure)) {
     pr = ifelse(secure, "https://", "http://")
-    split = unlist(str_split(url, pattern = "://"))
+    split = unlist(stri_split_fixed(url, "://"))
     if (length(split) == 1L) {
       url = paste0(pr, split)
     } else if (length(split) == 2L) {
@@ -24,10 +24,10 @@ getServerURL = function(secure = NULL) {
       stop("The server URL in your config file looks strange. Try 'http://www.openml.org'.")
     }
   }
-  last.char = str_sub(url, str_length(url), str_length(url))
+  n = nchar(url)
+  last.char = stri_sub(url, n, n)
   api = ifelse(last.char == "/", "api", "/api")
-  url = paste0(url, api)
-  return(url)
+  paste0(url, api)
 }
 
 # download xml from a url / api call to file
