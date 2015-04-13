@@ -5,27 +5,27 @@ context("download all tasks")
 test_that("download all tasks", {
   skip_on_cran()
   skip_on_travis()
-  measures = getOMLEvaluationMeasures(session.hash)
-  ttypes = extractSubList(getOMLTaskTypeList(session.hash), "id", use.names = FALSE)
+  measures = listOMLEvaluationMeasures(session.hash)$name
+  ttypes = listOMLTaskTypes(session.hash)$id
   
   dlAllTasksOfType = function(type) {
-    tl = getOMLTaskList(type = type, session.hash = session.hash)
+    tl = listOMLTasks(type = type, session.hash = session.hash)
     tids = tl[tl$status == "active" & tl$NumberOfInstances <= 10000 & tl$NumberOfFeatures <= 100, "task_id"]
     
     for (id in tids) {
       print(id)
-      task = downloadOMLTask(id, session.hash)
-      tf = task$target.features
+      task = getOMLTask(id, session.hash)
+      tf = task$input$data.set$target.features
       expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
-      ds = task$data.set$data
+      ds = task$input$data.set$data
       expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) >= 1)
-      ems = task$evaluation.measures
+      ems = task$input$evaluation.measures
       # expect_true(ems %in% measures)
       # FIXME: Delete next line when measure spelling is fixed (regarding spaces and underscores)
       expect_true(all(ems %in% measures | str_replace_all(ems, " ", "_") %in% measures))
     }
   }
-
+  
   for (i in ttypes) {
     dlAllTasksOfType(i)
   }

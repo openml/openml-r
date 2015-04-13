@@ -6,12 +6,12 @@ test_that("download all data sets", {
   skip_on_cran()
   skip_on_travis()
   
-  dsl = getOMLDataSetList(session.hash = session.hash)
+  dsl = listOMLDataSets()
   dids = dsl[dsl$status == "active" & dsl$NumberOfInstances <= 10000 & dsl$NumberOfFeatures <= 100, "did"]
   
   for (id in dids) {
     print(id)
-    oml.data = downloadOMLDataSet(id, session.hash)
+    oml.data = getOMLDataSet(id)
     expect_is(oml.data, "OMLDataSet")
     expect_is(oml.data$desc, "OMLDataSetDescription")
     expect_identical(length(oml.data$colnames.new), length(oml.data$colnames.old))
