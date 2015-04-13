@@ -12,7 +12,7 @@ test_that("listOMLRuns", {
   expect_true(all(rl$setup.id == 1L))
   expect_true(setequal(names(rl), exp.names))
 
-  rl = listOMLRuns(impl.id = 56L, session.hash = session.hash)
-  expect_true(all(rl$impl.id == 56L))
+  rl = listOMLRuns(implementation.id = 56L, session.hash = session.hash)
+  expect_true(all(rl$implementation.id == 56L))
   expect_true(setequal(names(rl), exp.names))
 })
