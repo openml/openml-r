@@ -5,16 +5,16 @@ context("download all tasks")
 test_that("download all tasks", {
   skip_on_cran()
   skip_on_travis()
-  measures = getOMLEvaluationMeasures(session.hash)
-  ttypes = extractSubList(getOMLTaskTypeList(session.hash), "id", use.names = FALSE)
+  measures = listOMLEvaluationMeasures(session.hash)
+  ttypes = extractSubList(listOMLTaskTypes(session.hash), "id", use.names = FALSE)
   
   dlAllTasksOfType = function(type) {
-    tl = getOMLTaskList(type = type, session.hash = session.hash)
+    tl = listOMLTask(type = type, session.hash = session.hash)
     tids = tl[tl$status == "active" & tl$NumberOfInstances <= 10000 & tl$NumberOfFeatures <= 100, "task_id"]
     
     for (id in tids) {
       print(id)
-      task = downloadOMLTask(id, session.hash)
+      task = getOMLTask(id, session.hash)
       tf = task$target.features
       expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
       ds = task$data.set$data

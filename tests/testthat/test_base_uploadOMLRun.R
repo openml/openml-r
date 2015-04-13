@@ -5,7 +5,7 @@ test_that("uploadOMLRun", {
   lrn = makeLearner("classif.J48")
   run = runTaskMlr(task, lrn)
   impl.id = uploadOMLFlow(lrn)
-  run.id = uploadOMLRun(run, impl.id)
+  run.id = uploadOMLRun(run)
   expect_is(run.id, "integer")
   deleteOMLRun(run.id)
 })
