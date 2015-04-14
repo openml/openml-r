@@ -29,7 +29,8 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
   # get XML description
   if (!f$task.xml$found) {
     url = getAPIURL("openml.task.get", task_id = id)
-    task.contents = downloadXML(url, f$task.xml$path, verbosity, session_hash = session.hash)
+    task.contents = downloadXML(url, f$task.xml$path, 
+      verbosity, post = FALSE, session_hash = session.hash)
   } else {
     showInfo(verbosity, "Task XML found in cache.")
     task.contents = readLines(f$task.xml$path)

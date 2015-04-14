@@ -16,5 +16,5 @@ test_that("getOMLTask", {
 
   expect_is(task$output$predictions, "list")
 
-  expect_error(getOMLTask(1231109283L, session.hash))
+  expect_error(getOMLTask(1231109283L, session.hash),  "Unknown task")
 })

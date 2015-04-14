@@ -50,7 +50,8 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
   # get XML description
   if (!f$description.xml$found) {
     url = getAPIURL("openml.data.description", data.id = id)
-    data.desc.contents = downloadXML(url, f$description.xml$path, verbosity, session_hash = session.hash)
+    data.desc.contents = downloadXML(url, f$description.xml$path, verbosity, 
+      post = FALSE, session_hash = session.hash)
   } else {
     showInfo(verbosity, "Data set description found in cache.")
     data.desc.contents = readLines(f$description.xml$path)

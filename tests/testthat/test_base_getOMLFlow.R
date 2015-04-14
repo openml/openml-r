@@ -5,5 +5,5 @@ test_that("getOMLFlow", {
   expect_is(flow, "OMLFlow")
   expect_true(flow$implementation.id == 2L)
 
-  expect_error(getOMLFlow(id = -1L))
+  expect_error(getOMLFlow(implementation.id = -1L))
 })

@@ -18,7 +18,7 @@ getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionH
   assertFlag(get.predictions)
 
   url = getAPIURL("openml.run.get", run_id = id)
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
+  content = downloadXML(url, NULL, verbosity, session_hash = session.hash, post = FALSE)
   doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
 
   parseData = function(path) {

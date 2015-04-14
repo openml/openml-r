@@ -33,15 +33,25 @@ getServerURL = function(secure = NULL) {
 # download xml from a url / api call to file
 # if the file is NULL, we just retrieve the content, which is returned in any case
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
-downloadXML = function(url, file, verbosity = NULL, ...) {
+downloadXML = function(url, file, verbosity = NULL, post = TRUE, ...) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
   ddd = list(...)
-  content = do.call(postForm, c(list(uri = url), ddd))
+  
+  if (post) {
+    content = do.call(postForm, c(list(uri = url), ddd))
+  } else {
+    if (length(ddd) > 0L) {
+      ddd = collapse(paste(names(ddd), ddd, sep = "="), sep = "&")
+      url = paste(url, ddd, sep = "&")
+    }
+    content = do.call(getURL, list(url = url))
+  }
+  
   if (!is.null(file)) {
     con = file(file, open = "w")
     on.exit(close(con))
     writeLines(content, con = con)
-  }
+  } 
   return(content)
 }
 
