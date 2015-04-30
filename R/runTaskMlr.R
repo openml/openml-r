@@ -62,12 +62,14 @@ runTaskMlr = function(task, learner, remove.const.feats = TRUE,
   class(run) = c("OMLMlrRun", "OMLRun")
 
   run$parameter.setting = makeOMLRunParList(learner)
-  if(auto.upload) {
-    run$implementation.id = uploadOMLFlow(learner, verbosity = verbosity)
+  
+  check = checkOMLFlow(learner, verbosity = verbosity)
+  
+  if(check$exists) {
+    run$implementation.id = xmlOValI(check$doc, "/oml:implementation_exists/oml:id")
   } else {
-    check = checkOMLFlow(learner, verbosity = verbosity)
-    if(check$exists) {
-      run$implementation.id = xmlOValI(check$doc, "/oml:implementation_exists/oml:id")
+    if(auto.upload) {
+      run$implementation.id = uploadOMLFlow(learner, verbosity = verbosity)
     } else {
       stopf("Flow does not exist, use 'auto.upload = TRUE' to upload it.")
     }
