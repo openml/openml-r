@@ -115,7 +115,8 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
     desc = data.desc,
     data = data,
     colnames.old = colnames.old,
-    colnames.new = colnames.new
+    colnames.new = colnames.new,
+    target.features = data.desc$default.target.attribute
   )
 }
 
@@ -136,14 +137,19 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
 #' @name OMLDataSet
 NULL
 
-makeOMLDataSet = function(desc, data, colnames.old, colnames.new) {
+makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.features) {
   assertClass(desc, "OMLDataSetDescription")
   assertDataFrame(data)
   assertCharacter(colnames.old, any.missing = FALSE)
   assertCharacter(colnames.new, any.missing = FALSE)
+  assertCharacter(target.features, any.missing = FALSE)
 
   makeS3Obj("OMLDataSet",
-    desc = desc, data = data, colnames.old = colnames.old, colnames.new = colnames.new)
+    desc = desc, 
+    data = data, 
+    colnames.old = colnames.old, 
+    colnames.new = colnames.new,
+    target.features = target.features)
 }
 
 #' @export
