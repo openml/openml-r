@@ -31,7 +31,9 @@ it in a \code{data.frame}. Each row contains, among others, the run id \dQuote{r
 the setup id \dQuote{sid} and the task.id \dQuote{tid}.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSets}};
+Other list: \code{\link{listOMLDataSetQualitiesList}};
+  \code{\link{listOMLDataSetQualities}};
+  \code{\link{listOMLDataSets}};
   \code{\link{listOMLEvaluationMeasures}};
   \code{\link{listOMLFlows}}
 }

@@ -8,7 +8,7 @@
 #' @template arg_hash
 #' @template arg_verbosity
 #' @param name [\code{character}]\cr
-#'   Retruns only the data qualities from \dQuote{name} (see also \link{\link{listOMLDataSetQualitiesList}}).
+#'   Retruns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualitiesList}}).
 #'   Default is \code{NULL} and uses all available data qualities.
 #' @return [\code{data.frame}].
 #' @family list
