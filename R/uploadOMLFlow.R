@@ -65,6 +65,14 @@ uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(),
   flow = createOMLFlowForMlrLearner(x)
 
   # create sourcefile
+  sourcefile = createLearnerSourcefile(x)
+  on.exit(unlink(sourcefile))
+  
+  implementation.id = uploadOMLFlow(flow, sourcefile = sourcefile, session.hash = session.hash, verbosity)
+  return(implementation.id)
+}
+
+createLearnerSourcefile = function(x){
   sourcefile = file.path(tempdir(), sprintf("%s_source.R", x$id))
   xx = base64Encode(rawToChar(serialize(x, connection = NULL, ascii = TRUE)))
   writeLines(sprintf("
@@ -75,15 +83,12 @@ sourcedFlow = function(task.id) {
   x = unserialize(charToRaw(base64Decode('%s')))
   runTaskMlr(task, x, auto.upload = TRUE)
 }", xx), sourcefile)
-  on.exit(unlink(sourcefile))
-
-  implementation.id = uploadOMLFlow(flow, sourcefile = sourcefile, session.hash = session.hash, verbosity)
-  return(implementation.id)
+  return(sourcefile)
 }
 
 checkOMLFlow = function(x, session.hash = getSessionHash(), verbosity = NULL){
   if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
-  if(is.na(x$external.version)) x$external.version = ifelse(is.na(x$source.md5), x$binary.md5, x$source.md5)
+
   url = getAPIURL("openml.implementation.exists", name = x$name, external_version = x$external.version)
   content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
   doc = parseXMLResponse(content, "Checking existence of flow", "implementation_exists", as.text = TRUE)
@@ -116,14 +121,21 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   else
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
 
+  # create sourcefile
+  sourcefile = createLearnerSourcefile(lrn)
+  external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
+  on.exit(unlink(sourcefile))
+  
   pkges = c("mlr", lrn$package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = collapse(pkges, sep = ", ")
+
   flow = makeOMLFlow(
     name = name,
     description = description,
     parameters = makeFlowParameterList(lrn),
     dependencies = pkges,
+    external.version = external.version,
     ...
   )
   if (!is.null(lrn$next.learner)) {
