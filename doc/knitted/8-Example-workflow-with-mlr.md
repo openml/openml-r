@@ -38,7 +38,7 @@ run.ids = c()
 for (id in task.ids) {
   task = getOMLTask(id)
   res = try(runTaskMlr(task, lrn)) # try to compute predictions with our learner
-  run.id = uploadOMLRun(res, implementation.id = implementation.id, session.hash = hash)
+  run.id = uploadOMLRun(res, session.hash = hash)
   run.ids = c(run.ids, run.id)
 }
 
