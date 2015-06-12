@@ -8,7 +8,7 @@ test_that("download all tasks", {
   measures = listOMLEvaluationMeasures(session.hash)$name
   ttypes = listOMLTaskTypes(session.hash)$id
 
-  dlAllTasksOfType = function(type) {
+  for (type in ttypes) {
     tl = listOMLTasks(type = type, session.hash = session.hash)
     tids = tl[tl$status == "active" & tl$NumberOfInstances <= 10000 & tl$NumberOfFeatures <= 100, "task_id"]
 
@@ -18,15 +18,9 @@ test_that("download all tasks", {
       tf = task$input$data.set$target.features
       expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
       ds = task$input$data.set$data
-      expect_true(is.data.frame(ds) && nrow(ds) > 1  && ncol(ds) >= 1)
+      expect_true(is.data.frame(ds) && nrow(ds) > 1 && ncol(ds) >= 1)
       ems = task$input$evaluation.measures
-      # expect_true(ems %in% measures)
-      # FIXME: Delete next line when measure spelling is fixed (regarding spaces and underscores)
-      expect_true(all(ems %in% measures | stri_replace_all_fixed(ems, " ", "_") %in% measures))
+      expect_true(ems %in% measures)
     }
-  }
-
-  for (i in ttypes) {
-    dlAllTasksOfType(i)
   }
 })
