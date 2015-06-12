@@ -1,12 +1,15 @@
 Package: OpenML
-Title: OpenML
-Description: OpenML
-Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <???>,
+Title: Exploring machine learning better, together
+Description: An R interface to OpenML to download and upload data sets, tasks,
+    flows and runs.
+Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <ftorgo@fc.up.pt>,
     Dominik Kirchhoff <dom.kirchhoff@gmail.com>,
     Michel Lang <michellang@gmail.com>,
     Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
+URL: https://github.com/openml/r
+BugReports: https://github.com/openml/r/issues
 Suggests:
     testthat,
     randomForest,
