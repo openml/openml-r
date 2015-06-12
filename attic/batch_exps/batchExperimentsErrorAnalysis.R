@@ -1,11 +1,11 @@
-library(BatchExperiments)
 library(mlr)
+library(BatchExperiments)
 library(stringr)
 devtools::load_all("OpenML")
 
 reg <- makeExperimentRegistry(id="OpenML_with_mlr", packages=c("mlr", "RCurl", "XML", "stringr"))
 
-all.res <- reduceResults(reg, 
+all.res <- reduceResults(reg,
   fun = function(aggr, job, res) rbind(aggr, c(job$algo.pars, job$prob.pars, res)), init = c())
 
 sep.res <- list()
@@ -23,7 +23,7 @@ factor.inputs <- which(!is.na(str_match(error.msges, "factor inputs")))  # ok. (
 missing.values <- which(!is.na(str_match(error.msges, "missing values")))  # ok.
 factor.mismatch <- which(!is.na(str_match(error.msges, "factors of new data do not match")))  # only blackboost
 special.chars <- which(!is.na(str_match(error.msges, "special characters")))  # Issue-tracker.
-pseudo.factor <- which(!is.na(str_match(error.msges, "factors with 2 or more")))  # Issue-tracker.  
+pseudo.factor <- which(!is.na(str_match(error.msges, "factors with 2 or more")))  # Issue-tracker.
 missing.arg <- which(!is.na(str_match(error.msges, "argument of length 0")))  # only boosting
 error.code.1 <- which(!is.na(str_match(error.msges, "error code 1")))  # only ctree
 ds.small.ssrate.large <- which(!is.na(str_match(error.msges, "dataset size is too small")))  # only gbm

@@ -1,27 +1,15 @@
+^attic
 doc
-notes
-tests
-todo-files
-TODOS
-tools
-
 .gitignore
 .travis.yml
 .editorconfig
 
 ^.*tar.gz$
-install_dependencies.R
 man-roxygen
-batch_exps
 README.md
-test_all.R
-test_src.R
-todo.txt
 
 src/*.o
 src/*.so
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
-
-^attic
