@@ -1,6 +1,5 @@
 library(OpenML)
 library(mlr)
-library(stringr)
 
 # download open ml task via ID
 # actually this is iris, with 10CV and 2 reps
@@ -26,8 +25,8 @@ impl = createOpenMLImplementationForMLRLearner(learner)
 uploadOpenMLImplementation(impl, session.hash = hash)
 
 run.desc <- OpenMLRun(
-  task.id = as.character(omltask@task.id), 
-  implementation.id = sprintf("%s(%s)", impl@name, impl@version), 
+  task.id = as.character(omltask@task.id),
+  implementation.id = sprintf("%s(%s)", impl@name, impl@version),
   parameter.settings = makeRunParameterList(learner))
 
 uploadOpenMLRun(run.desc = run.desc, predictions = result, session.hash = hash)

@@ -7,11 +7,11 @@ test_that("download all tasks", {
   skip_on_travis()
   measures = listOMLEvaluationMeasures(session.hash)$name
   ttypes = listOMLTaskTypes(session.hash)$id
-  
+
   dlAllTasksOfType = function(type) {
     tl = listOMLTasks(type = type, session.hash = session.hash)
     tids = tl[tl$status == "active" & tl$NumberOfInstances <= 10000 & tl$NumberOfFeatures <= 100, "task_id"]
-    
+
     for (id in tids) {
       print(id)
       task = getOMLTask(id, session.hash)
@@ -22,10 +22,10 @@ test_that("download all tasks", {
       ems = task$input$evaluation.measures
       # expect_true(ems %in% measures)
       # FIXME: Delete next line when measure spelling is fixed (regarding spaces and underscores)
-      expect_true(all(ems %in% measures | str_replace_all(ems, " ", "_") %in% measures))
+      expect_true(all(ems %in% measures | stri_replace_all_fixed(ems, " ", "_") %in% measures))
     }
   }
-  
+
   for (i in ttypes) {
     dlAllTasksOfType(i)
   }

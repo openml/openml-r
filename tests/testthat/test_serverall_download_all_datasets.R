@@ -5,10 +5,12 @@ context("download all data sets")
 test_that("download all data sets", {
   skip_on_cran()
   skip_on_travis()
-  
+
   dsl = listOMLDataSets()
   dids = dsl[dsl$status == "active" & dsl$NumberOfInstances <= 10000 & dsl$NumberOfFeatures <= 100, "did"]
-  
+  # fix for private data sets
+  dids = dids[!is.na(dids)]
+
   for (id in dids) {
     print(id)
     oml.data = getOMLDataSet(id)

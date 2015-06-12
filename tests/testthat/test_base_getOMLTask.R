@@ -12,7 +12,7 @@ test_that("getOMLTask", {
   expect_true(is.character(tf) && length(tf) %in% 0:1 && !is.na(tf))
 
   ems = task$input$evaluation.measures
-  expect_true(all(ems %in% measures | str_replace_all(ems, " ", "_") %in% measures))
+  expect_true(all(ems %in% measures | stri_replace_all_fixed(ems, " ", "_") %in% measures))
 
   expect_is(task$output$predictions, "list")
 
