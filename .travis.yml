@@ -1,29 +1,19 @@
-# travis config, based on https://github.com/craigcitro/r-travis
+language: r
 
-language: c
-script: ./travis-tool.sh run_tests
-env:
-  global:
-  - _R_CHECK_TIMINGS_=0
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-install:
-  - ./travis-tool.sh aptget_install r-cran-rjava
-  - sudo R CMD javareconf
-  - ./travis-tool.sh github_package mllg/checkmate
-  - ./travis-tool.sh github_package berndbischl/BBmisc
-  - ./travis-tool.sh github_package berndbischl/ParamHelpers
-  - ./travis-tool.sh github_package berndbischl/parallelMap
-  - ./travis-tool.sh github_package berndbischl/mlr
-  - ./travis-tool.sh install_deps
-branches:
-  only:
-   - master
+r_github_packages:
+    - jimhester/covr
+
+r_binary_packages:
+    - testthat
+    - knitr
+
+after_success:
+  - Rscript -e 'library(covr);coveralls()'
+
 notifications:
   email:
+    recipients:
+        - michellang@gmail.com
+        - bernd_bischl@gmx.net
     on_success: change
-    on_failure: change
-after_failure:
-  - ./travis-tool.sh dump_logs
+    on_failure: always
