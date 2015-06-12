@@ -7,11 +7,11 @@ Allows to interface the OpenML server to download tasks and upload results.
 Work in progress.
 
 ### Installation of the package
-* Install the latest versions of all dependencies from CRAN:  
+* Install the latest versions of all dependencies from CRAN:
 ```r
-install.packages(c("mlr", "checkmate", "data.table", "digest", "RCurl", "stringr", "XML", "RWeka", "devtools"))
+install.packages(c("mlr", "checkmate", "data.table", "digest", "RCurl", "stringi", "XML", "RWeka", "devtools"))
 ```
-* Install OpenML's current development version from Github:  
+* Install OpenML's current development version from Github:
 ```r
 devtools::install_github("openml/r")
 ```

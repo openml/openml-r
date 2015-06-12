@@ -8,11 +8,12 @@ Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <???>,
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Suggests:
+    testthat,
     randomForest,
     rpart
 Imports:
     BBmisc (>= 1.9),
-    checkmate (>= 1.5.1),
+    checkmate (>= 1.5.3),
     data.table,
     digest,
     RCurl,
