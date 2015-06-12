@@ -2,14 +2,13 @@ language: r
 
 r_github_packages:
     - jimhester/covr
-
 r_binary_packages:
     - testthat
     - knitr
-
 after_success:
   - Rscript -e 'library(covr);coveralls()'
-
+before_script:
+    - sudo R CMD javareconf
 notifications:
   email:
     recipients:
