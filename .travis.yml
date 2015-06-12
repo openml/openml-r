@@ -2,6 +2,8 @@ language: r
 
 r_github_packages:
     - jimhester/covr
+apt_packages:
+    - r-cran-rjava
 r_binary_packages:
     - testthat
     - knitr
