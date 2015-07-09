@@ -4,11 +4,11 @@
 \alias{listOMLDataSetQualities}
 \title{List available OpenML qualities with values for given data set.}
 \usage{
-listOMLDataSetQualities(data.id, session.hash = getSessionHash(),
+listOMLDataSetQualities(did, session.hash = getSessionHash(),
   verbosity = NULL, name = NULL)
 }
 \arguments{
-\item{data.id}{[\code{integer(1)}]\cr
+\item{did}{[\code{integer(1)}]\cr
 The data set ID}
 
 \item{session.hash}{[\code{character(1)}]\cr
