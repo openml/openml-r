@@ -48,6 +48,10 @@ listOMLTasks = function(type = 1L, session.hash = getSessionHash(),
     qualities = convertNodeSetToList(children[is.quality], as.integer)
     c(info, qualities)
   }), fill = TRUE)
+  
+  estproc = listOMLEstimProcs()
+  row.names(estproc) = estproc$est.id
+  df$estimation_procedure = estproc[as.character(df$estimation_procedure), "name"]
   df$status = factor(df$status, levels = status.levels)
 
   # subset status level

@@ -23,6 +23,7 @@ Imports:
     stringi,
     XML,
     RWeka,
+    rjson,
     mlr,
     stats
 LazyData: yes
