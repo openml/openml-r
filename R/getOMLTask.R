@@ -155,7 +155,7 @@ parseOMLDataSplits = function(task, data) {
   ri = data$rowid
   rns = rownames(task$input$data.set$data)
   # FIXME: use match()!
-  data$rowid = sapply(ri, function(x) which(x == rns))
+  data$rowid = as.vector(sapply(ri, function(x) which(x == rns)))
   data$rep = data$rep + 1
   data$fold = data$fold + 1
   return(data)
