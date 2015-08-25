@@ -36,6 +36,9 @@ readConfigFile = function(conffile) {
     conf$openmldir = path.expand(conf$openmldir)
   if (!is.null(conf$cachedir))
     conf$cachedir = path.expand(conf$cachedir)
+  if (!is.null(conf$arff.reader))
+    requireNamespace(conf$arff.reader) else 
+      requireNamespace("RWeka")
 
   checkConfig(conf)
   # FIXME: probably horrible security wise....
@@ -62,11 +65,12 @@ assignConfigDefaults = function() {
   conf$openmldir = path.expand("~/.openml")
   conf$cachedir = file.path(tempdir(), "cache")
   conf$verbosity = 1L
+  conf$arff.reader = "RWeka"
   conf$is.user.config = FALSE
 }
 
 getConfigNames = function() {
-  c("server", "username", "password", "cachedir", "verbosity")
+  c("server", "username", "password", "cachedir", "verbosity", "arff.reader")
 }
 
 checkConfig = function(conf) {
@@ -85,6 +89,8 @@ checkConfig = function(conf) {
     verbosity = asInt(conf$verbosity)
   if (!is.null(conf$cachedir))
     assertString(conf$cachedir)
+  if (!is.null(conf$arff.reader))
+    assertString(conf$arff.reader)
 }
 
 # Function which returns a printable string describing the config
@@ -99,11 +105,12 @@ printableConfig = function(conf) {
     "  cachedir         : %s",
     "  pwdmd5           : ***",
     "  session expires  : %s",
-    "  verbosity        : %s\n",
+    "  verbosity        : %s",
+    "  arff.reader      : %s\n",
     sep = "\n")
   expire = ifelse(is.null(x$session.hash.expires), "<not authenticated>",
     as.character(x$session.hash.expires))
-  sprintf(fmt, x$server, x$username, x$cachedir, expire, x$verbosity)
+  sprintf(fmt, x$server, x$username, x$cachedir, expire, x$verbosity, x$arff.reader)
 }
 
 

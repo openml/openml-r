@@ -21,7 +21,6 @@
 #' }
 getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
   id = asCount(task.id)
-
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 
   f = findCachedTask(id)
@@ -142,7 +141,7 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
     }
   } else {
     showInfo(verbosity, "Data splits found in cache.")
-    data = read.arff(f$datasplits.arff$path)
+    data = arff.reader(f$datasplits.arff$path)
     task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
   return(task)

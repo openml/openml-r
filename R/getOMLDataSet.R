@@ -90,8 +90,8 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
     data = downloadARFF(data.desc$url, file = f$dataset.arff$path, verbosity)
   } else {
     showInfo(verbosity, "Data set found in cache.")
-    data = read.arff(f$dataset.arff$path)
-  }
+      data = arff.reader(f$dataset.arff$path)
+    }
   
   if (!is.na(data.desc$row.id.attribute)) {
     if (is.na(data.desc$ignore.attribute))

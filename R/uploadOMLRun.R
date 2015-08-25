@@ -11,6 +11,7 @@
 #' @export
 uploadOMLRun = function(run, implementation.id, session.hash = getSessionHash(), verbosity = NULL) {
   assertClass(run, "OMLRun")
+  
   if (is.na(run$implementation.id)) {
     if (!missing(implementation.id)) {
       run$implementation.id = asCount(implementation.id)
@@ -33,7 +34,8 @@ uploadOMLRun = function(run, implementation.id, session.hash = getSessionHash(),
   if (!is.null(run$predictions)) {
     output = tempfile()
     on.exit(unlink(output), add = TRUE)
-    write.arff(run$predictions, file = output)
+    if(getOMLConfig()$arff.reader == "RWeka") 
+      RWeka::write.arff(run$predictions, file = output) else farff::writeARFF(run$predictions, path = output)
 
     content = downloadXML(url, NULL, verbosity,
       description = fileUpload(filename = description),

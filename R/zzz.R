@@ -4,7 +4,6 @@
 #' @import RCurl
 #' @import stringi
 #' @import XML
-#' @import RWeka
 #' @import mlr
 #' @import data.table
 #' @importFrom stats setNames

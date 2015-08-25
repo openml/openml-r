@@ -104,7 +104,7 @@ getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionH
       }
     } else {
       showInfo(verbosity, "Predictions found in cache.")
-      pred = read.arff(f$predictions.arff$path)
+      pred = arff.reader(f$predictions.arff$path)
     }
     run.args[["predictions"]] = pred
   }

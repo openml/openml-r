@@ -61,5 +61,5 @@ downloadARFF = function(url, file, verbosity = NULL) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
   #FIXME: get real verbosity level here >= info
   download.file(url, file, mode = "w", quiet = TRUE)
-  read.arff(file)
+  arff.reader(file)
 }

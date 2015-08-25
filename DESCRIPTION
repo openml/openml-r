@@ -13,7 +13,9 @@ BugReports: https://github.com/openml/r/issues
 Suggests:
     testthat,
     randomForest,
-    rpart
+    rpart,
+    RWeka,
+    farff
 Imports:
     BBmisc (>= 1.9),
     checkmate (>= 1.5.3),
@@ -22,7 +24,6 @@ Imports:
     RCurl,
     stringi,
     XML,
-    RWeka,
     rjson,
     mlr,
     stats
