@@ -23,6 +23,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
 The returned \code{data.frame} contains the \code{est.id} and the corresponding
-name of the estimation procedure
+name of the estimation procedure.
 }
 

@@ -9,7 +9,7 @@ listOMLDataSetQualities(did, session.hash = getSessionHash(),
 }
 \arguments{
 \item{did}{[\code{integer(1)}]\cr
-The data set ID}
+The data set ID.}
 
 \item{session.hash}{[\code{character(1)}]\cr
 A session token returned by \code{\link{authenticateUser}}. Default is

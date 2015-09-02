@@ -16,7 +16,7 @@
 #'   If this is set to \code{TRUE}, only data sets with active status are returned.
 #'   Default is \code{FALSE}.
 #' @template arg_verbosity
-#' @return [\code{\link{OMLDataSet}}]
+#' @return [\code{\link{OMLDataSet}}].
 #' @family download
 #' @export
 getOMLDataSet = function(x, check.status, verbosity) {

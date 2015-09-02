@@ -1,4 +1,8 @@
-#' Download an OpenML flow.
+#' @title Get an OpenML flow.
+#'
+#' @description
+#' Given an implementation ID, the corresponding \code{\link{OMLFlow}} is downloaded
+#' if not already available in cache.
 #'
 #' @template arg_implementation.id
 #' @template arg_verbosity
@@ -44,7 +48,7 @@ getOMLFlow = function(implementation.id, verbosity = NULL) {
 #       writeLines(source.file, flow$source.path)
 #     }
 #   }
-  
+
   return(flow)
 }
 

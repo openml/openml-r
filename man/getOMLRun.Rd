@@ -4,8 +4,7 @@
 \alias{getOMLRun}
 \title{Get an OpenML run.}
 \usage{
-getOMLRun(run.id, get.predictions = FALSE, session.hash = getSessionHash(),
-  verbosity = NULL)
+getOMLRun(run.id, get.predictions = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{run.id}{[\code{integer(1)}]\cr
@@ -14,10 +13,6 @@ The run's ID.}
 \item{get.predictions}{[\code{logical(1)}]\cr
 Should the associated predictions be retrieved, too? Default is \code{FALSE}. Note that this does not affect the
 downloading of metrics and other information.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
