@@ -4,15 +4,11 @@
 \alias{getOMLTask}
 \title{Get an OpenML task.}
 \usage{
-getOMLTask(task.id, session.hash = getSessionHash(), verbosity = NULL)
+getOMLTask(task.id, verbosity = NULL)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
 The task ID.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -20,6 +16,10 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{session.hash}{[\code{character(1)}]\cr
+A session token returned by \code{\link{authenticateUser}}. Default is
+\code{\link{getSessionHash}()}.}
 }
 \value{
 [\code{\link{OMLTask}}]

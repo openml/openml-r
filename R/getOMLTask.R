@@ -19,7 +19,7 @@
 #' print(task$input$data.set)
 #' print(head(task$input$data.set$data))
 #' }
-getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLTask = function(task.id, verbosity = NULL) {
   id = asCount(task.id)
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 
@@ -27,9 +27,9 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
 
   # get XML description
   if (!f$task.xml$found) {
-    url = getAPIURL("openml.task.get", task_id = id)
-    task.contents = downloadXML(url, f$task.xml$path, 
-      verbosity, post = FALSE, session_hash = session.hash)
+    url = getAPIURL("task", get.arg = id)
+    task.contents = downloadXML(url, f$task.xml$path,
+      verbosity, post = FALSE)
   } else {
     showInfo(verbosity, "Task XML found in cache.")
     task.contents = readLines(f$task.xml$path)

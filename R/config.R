@@ -37,7 +37,7 @@ readConfigFile = function(conffile) {
   if (!is.null(conf$cachedir))
     conf$cachedir = path.expand(conf$cachedir)
   if (!is.null(conf$arff.reader))
-    requireNamespace(conf$arff.reader) else 
+    requireNamespace(conf$arff.reader) else
       requireNamespace("RWeka")
 
   checkConfig(conf)
@@ -59,7 +59,7 @@ assignConfig = function(conf) {
 
 assignConfigDefaults = function() {
   conf = getOMLConfig()
-  conf$server = "http://www.openml.org"
+  conf$server = "http://api_new.openml.org/v1"
   conf$username = NA_character_
   conf$pwdmd5 = NA_character_
   conf$openmldir = path.expand("~/.openml")
@@ -67,6 +67,7 @@ assignConfigDefaults = function() {
   conf$verbosity = 1L
   conf$arff.reader = "RWeka"
   conf$is.user.config = FALSE
+  conf$session.hash = "testtest"
 }
 
 getConfigNames = function() {
