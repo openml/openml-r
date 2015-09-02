@@ -1,7 +1,7 @@
 context("listOMLDataSets")
 
 test_that("listOMLDataSets", {
-  dsl = listOMLDataSets(session.hash)
+  dsl = listOMLDataSets()
   expect_is(dsl, "data.frame")
   expect_true(nrow(dsl) > 100L && ncol(dsl) == 10L)
   expect_true(setequal(names(dsl), c("did", "status", "name", "NumberOfClasses", "NumberOfFeatures",

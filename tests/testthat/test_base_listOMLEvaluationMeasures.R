@@ -1,7 +1,7 @@
 context("listOMLEvaluationMeasures")
 
 test_that("listOMLEvaluationMeasures", {
-  df = listOMLEvaluationMeasures(session.hash)
+  df = listOMLEvaluationMeasures()
   expect_is(df, "data.frame")
   expect_true(nrow(df) > 30L)
   expect_true(ncol(df) == 1L)
