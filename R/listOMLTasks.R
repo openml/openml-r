@@ -4,24 +4,17 @@
 #' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
 #' the \code{status} and some describing data qualities.
 #'
-#' @param type [\code{integer(1)}]\cr
-#'   The task type you want to list tasks for.
-#'   See code \link{listOMLTaskTypes}.
-#'   Default is \code{1} for classification.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @template arg_status
 #' @return [\code{data.frame}].
 #' @export
-listOMLTasks = function(type = 1L, session.hash = getSessionHash(),
-  verbosity = NULL, status = "active") {
-  type = asInt(type)
-  assertString(session.hash)
+listOMLTasks = function(verbosity = NULL, status = "active") {
+  #type = asInt(type)
   status.levels = c("active", "deactivated", "in_preparation")
   assertSubset(status, status.levels)
 
-  url = getAPIURL("openml.tasks", task_type_id = type)
-  content = try(downloadXML(url, NULL, verbosity = verbosity, session_hash = session.hash), silent = TRUE)
+  url = getAPIURL("task/list", get.arg = NULL)
+  content = try(downloadXML(url, NULL, verbosity = verbosity), silent = TRUE)
 
   if (is.error(content))
     return(data.frame())

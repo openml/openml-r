@@ -4,14 +4,13 @@
 #' the flow name (\dQuote{full.name} and \dQuote{name}), version information
 #' (\dQuote{version} and \dQuote{external.version}) and the uploader (\dQuote{uploader})
 #' of all registered OpenML flows.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
-listOMLFlows = function(session.hash = getSessionHash(), verbosity = NULL) {
-  url = getAPIURL("openml.implementations")
-  content = downloadXML(url, NULL, verbosity = verbosity, session_hash = session.hash)
+listOMLFlows = function(verbosity = NULL) {
+  url = getAPIURL("flow/list")
+  content = downloadXML(url, NULL, verbosity = verbosity)
   xml = parseXMLResponse(content, "Getting flows", "implementations", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])

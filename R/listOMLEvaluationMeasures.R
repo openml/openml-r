@@ -8,8 +8,7 @@
 #' @family list
 #' @export
 listOMLEvaluationMeasures = function(verbosity = NULL) {
-  # FIXME: API v1 does not work?
-  url = getAPIURL("evaluationmeasures/list")
+  url = getAPIURL("evaluationmeasure/list")
   content = downloadXML(url, NULL, verbosity)
   doc = parseXMLResponse(content, "Getting names of evaluation measures", "evaluation_measures",
     as.text = TRUE)

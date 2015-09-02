@@ -9,7 +9,7 @@
 #' @return [\code{data.frame}].
 #' @export
 #' 
-listOMLEstimProcs = function(session.hash = getSessionHash(), verbosity = NULL) {
+listOMLEstimProcs = function(verbosity = NULL) {
   query = "SELECT DISTINCT id,name FROM estimation_procedure"
   # FIXME: remove rjson from DESCRIPTION when API is available
   parsed.doc = rjson::fromJSON(file = sprintf("http://www.openml.org/api_query/?q=%s", URLencode(query)))
