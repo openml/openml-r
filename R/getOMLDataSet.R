@@ -13,7 +13,7 @@
 #' @param x [\code{integer(1)} | \code{\link{OMLTask}}]\cr
 #'   Either a data set ID or a task.
 #' @param check.status [\code{logical(1)}]\cr
-#'   If this is set to \code{TRUE}, only data sets with active status are returned. 
+#'   If this is set to \code{TRUE}, only data sets with active status are returned.
 #'   Default is \code{FALSE}.
 #' @template arg_hash
 #' @template arg_verbosity
@@ -49,9 +49,8 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
 
   # get XML description
   if (!f$description.xml$found) {
-    url = getAPIURL("openml.data.description", data.id = id)
-    data.desc.contents = downloadXML(url, f$description.xml$path, verbosity, 
-      post = FALSE, session_hash = session.hash)
+    url = getAPIURL("data", get.arg = id)
+    data.desc.contents = downloadXML(url, f$description.xml$path, verbosity, post = FALSE)
   } else {
     showInfo(verbosity, "Data set description found in cache.")
     data.desc.contents = readLines(f$description.xml$path)
@@ -92,7 +91,7 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
     showInfo(verbosity, "Data set found in cache.")
       data = arff.reader(f$dataset.arff$path)
     }
-  
+
   if (!is.na(data.desc$row.id.attribute)) {
     if (is.na(data.desc$ignore.attribute))
       data.desc$ignore.attribute = data.desc$row.id.attribute
@@ -145,9 +144,9 @@ makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.feature
   assertCharacter(target.features, any.missing = FALSE)
 
   makeS3Obj("OMLDataSet",
-    desc = desc, 
-    data = data, 
-    colnames.old = colnames.old, 
+    desc = desc,
+    data = data,
+    colnames.old = colnames.old,
     colnames.new = colnames.new,
     target.features = target.features)
 }
