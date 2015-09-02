@@ -8,7 +8,7 @@ Each OpenML task is a bundle of a data set, a target feature, an estimation proc
 To download a certain task from the OpenML server, you need to know the task's ID. See
 [section 3](3-Stage-0-Listing.md) to learn how to retrieve a list of all available tasks in R.
 
-The following call returns an OpenML task object: 
+The following call returns an OpenML task object:
 
 ```{r}
 task = getOMLTask(task.id = 1L)
@@ -24,7 +24,7 @@ task$input$data.set
 ### Download an OpenML data set only
 OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate
 from these fixings. Of course, it is possible to define new tasks that match your desires, but this
-will not always be the means of choice -- e.g., when you want to run a few preliminary experiments.
+will not always be the means of choice - e.g., when you want to run a few preliminary experiments.
 For this matter, you can use the function `getOMLDataSet`, which accepts not only tasks (as seen in the section above) but also a data set ID as input and returns the corresponding `OMLDataSet`:
 
 ```{r}
@@ -42,15 +42,9 @@ To download the results of one run including all server and user computed metric
 run = getOMLRun(run.id = 1L)  # see ?OMLRun for each slot of the OMLRun object
 ```
 
-Some important slots for the `OMLRun` object are:
-
-```{r, eval = FALSE}
-run$parameter.setting  # A list containing information on the parameter settings.
-
-run$input.data  # All data that served as input for the run, including the URL to the data.
-
-run$output.data$evaluations
-```
+There are some slots of major intereset for the `OMLRun` object. A list containing the parameter settings
+can be obtained by `run$parameter.setting`. All data that served as input for the run, including the
+URL to the data is stored in `run$input.data`.
 
 To retrieve predictions of an uploaded run, you can set the parameter `get.predictions = TRUE` to store the
 predictions in the `$predictions` slot or use the function `getOMLPredictions(run)`:
@@ -70,11 +64,11 @@ flow
 ```
 
 ----------------------------------------------------------------------------------------------------
-Jump to:   
-[Introduction](1-Introduction.md)  
-[Configuration](2-Configuration.md)  
-[Stage 0 - Listing](3-Stage-0-Listing.md)  
-Stage 1 - Downloading  
-[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
-[Stage 3 - Uploading](6-Stage-3-Uploading.md)  
+Jump to:
+[Introduction](1-Introduction.md)
+[Configuration](2-Configuration.md)
+[Stage 0 - Listing](3-Stage-0-Listing.md)
+Stage 1 - Downloading
+[Stage 2 - Running models on tasks](5-Stage-2-Running.md)
+[Stage 3 - Uploading](6-Stage-3-Uploading.md)
 [8 Example workflow with mlr](8-Example-workflow-with-mlr.md)
