@@ -17,8 +17,7 @@ full path location of the config file to be loaded}
 Loads a config file from disk to mem
 }
 \seealso{
-Other config: \code{\link{authenticateUser}};
-  \code{\link{configuration}}; \code{\link{getOMLConfig}};
-  \code{\link{getSessionHash}}; \code{\link{setOMLConfig}}
+Other config: \code{\link{configuration}};
+  \code{\link{getOMLConfig}}; \code{\link{setOMLConfig}}
 }
 

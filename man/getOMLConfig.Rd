@@ -13,9 +13,7 @@ getOMLConfig()
 Returns a list of OpenML configuration settings
 }
 \seealso{
-Other config: \code{\link{authenticateUser}};
-  \code{\link{configuration}};
-  \code{\link{getSessionHash}}; \code{\link{loadOMLConf}};
-  \code{\link{setOMLConfig}}
+Other config: \code{\link{configuration}};
+  \code{\link{loadOMLConf}}; \code{\link{setOMLConfig}}
 }
 

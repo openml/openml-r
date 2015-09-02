@@ -67,6 +67,7 @@ assignConfigDefaults = function() {
   conf$verbosity = 1L
   conf$arff.reader = "RWeka"
   conf$is.user.config = FALSE
+  conf$session.hash = "testtest"
 }
 
 getConfigNames = function() {
