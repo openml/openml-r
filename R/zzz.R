@@ -9,16 +9,14 @@
 #' @importFrom stats setNames
 NULL
 
+.OpenML.config = addClasses(new.env(parent = emptyenv()), "OMLConfig")
+
 .onLoad = function(libname, pkgname) {
-  assignConfigDefaults()
-  fn.user = path.expand("~/.openml/config")
-  if (file.exists(fn.user))
-    assignConfig(readConfigFile(fn.user))
-  createCacheSubDirs(verbosity = FALSE)
+  # assignConfigDefaults()
+  # fn.user = path.expand("~/.openml/config")
+  # if (file.exists(fn.user))
+    # assignConfig(readConfigFile(fn.user))
+  # FIXME: this is probably forbidden on cran?
+  # createCacheSubDirs(verbosity = FALSE)
 }
 
-.onAttach = function(libname, pkgname) {
-  conf = getOMLConfig()
-  if (!conf$is.user.config)
-    packageStartupMessage("OpenML: No configuration found! Using defaults.")
-}
