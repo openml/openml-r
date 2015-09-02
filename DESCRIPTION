@@ -1,5 +1,5 @@
 Package: OpenML
-Title: Exploring machine learning better, together
+Title: Exploring Machine Learning Better, Together
 Description: An R interface to OpenML to download and upload data sets, tasks,
     flows and runs.
 Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <ftorgo@fc.up.pt>,
