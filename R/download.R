@@ -12,7 +12,7 @@ getAPIURL = function(fname, get.arg = NULL) {
 # if the file is NULL, we just retrieve the content, which is returned in any case
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
 # FIXME: do we need post mode
-downloadXML = function(url, file, verbosity = NULL, post = TRUE) {
+downloadXML = function(url, file, verbosity = NULL, post = FALSE) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
   # ddd = list(...)
   if (post) {

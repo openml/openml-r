@@ -5,12 +5,11 @@
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The OpenML run.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}]
 #' @seealso \code{\link{OMLRun}}, \code{\link{getOMLRun}}
 #' @export
-getOMLPredictions = function(run, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLPredictions = function(run, verbosity = NULL) {
   assertClass(run, "OMLRun")
   
   if (is.null(run$predictions)) {

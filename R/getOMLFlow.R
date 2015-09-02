@@ -1,16 +1,14 @@
 #' Download an OpenML flow.
 #'
 #' @template arg_implementation.id
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLFlow}}].
 #' @export
-getOMLFlow = function(implementation.id, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLFlow = function(implementation.id, verbosity = NULL) {
   implementation.id = asCount(implementation.id)
-  assertString(session.hash)
 
-  url = getAPIURL("openml.implementation.get", implementation_id = implementation.id)
-  content = try(downloadXML(url, NULL, verbosity, session_hash = session.hash), silent = TRUE)
+  url = getAPIURL("flow", get.arg = implementation.id)
+  content = try(downloadXML(url, NULL, verbosity, post = FALSE), silent = TRUE)
   if (is.error(content))
     stop("Flow (temporarily) not available.")
   doc = parseXMLResponse(content, "Getting implementation", "implementation", as.text = TRUE)

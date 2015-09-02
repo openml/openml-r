@@ -7,9 +7,10 @@
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
-listOMLEvaluationMeasures = function(session.hash = getSessionHash(), verbosity = NULL) {
-  url = getAPIURL("openml.evaluation.measures")
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
+listOMLEvaluationMeasures = function(verbosity = NULL) {
+  # FIXME: API v1 does not work?
+  url = getAPIURL("evaluationmeasures/list")
+  content = downloadXML(url, NULL, verbosity)
   doc = parseXMLResponse(content, "Getting names of evaluation measures", "evaluation_measures",
     as.text = TRUE)
   data.frame(name = xmlValsMultNsS(doc, "/oml:evaluation_measures/oml:measures/oml:measure"), stringsAsFactors = FALSE)

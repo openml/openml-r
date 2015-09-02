@@ -15,24 +15,23 @@
 #' @param check.status [\code{logical(1)}]\cr
 #'   If this is set to \code{TRUE}, only data sets with active status are returned.
 #'   Default is \code{FALSE}.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}]
 #' @family download
 #' @export
-getOMLDataSet = function(x, check.status, session.hash, verbosity) {
+getOMLDataSet = function(x, check.status, verbosity) {
   UseMethod("getOMLDataSet")
 }
 
 #' @rdname getOMLDataSet
 #' @export
-getOMLDataSet.OMLTask = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLDataSet.OMLTask = function(x, check.status = FALSE, verbosity = NULL) {
   return(x$input$data.set)
 }
 
 #' @rdname getOMLDataSet
 #' @export
-getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLDataSet.numeric = function(x, check.status = FALSE, verbosity = NULL) {
   id = asInt(x, lower = 0)
 
   if (check.status) {

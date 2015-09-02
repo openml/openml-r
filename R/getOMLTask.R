@@ -6,7 +6,6 @@
 #'
 #' @param task.id [\code{integer(1)}]\cr
 #'   The task ID.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
 #' @export

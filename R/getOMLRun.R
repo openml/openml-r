@@ -8,17 +8,16 @@
 #' @param get.predictions [\code{logical(1)}]\cr
 #'   Should the associated predictions be retrieved, too? Default is \code{FALSE}. Note that this does not affect the
 #'   downloading of metrics and other information.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{\link{OMLRun}}]
 #' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
-getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLRun = function(run.id, get.predictions = FALSE, verbosity = NULL) {
   id = asCount(run.id)
   assertFlag(get.predictions)
 
-  url = getAPIURL("openml.run.get", run_id = id)
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash, post = FALSE)
+  url = getAPIURL("run", get.arg = id)
+  content = downloadXML(url, NULL, verbosity, post = FALSE)
   doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
 
   parseData = function(path) {
