@@ -4,8 +4,7 @@
 #' This function returns information on all OpenML runs that match a certain
 #' \code{task.id}, \code{setup.id} and/or implementation ID \code{implementation.id}.
 #'
-#' @param task.id [\code{integer(1)}]\cr
-#'  ID of the task.
+#' @template arg_task_id
 #' @param setup.id [\code{integer(1)}]\cr
 #'  ID of the parameter setup.
 #' @template arg_implementation.id

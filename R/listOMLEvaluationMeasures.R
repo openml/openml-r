@@ -1,8 +1,9 @@
 #' @title List available OpenML evaluation measures.
+#'
 #' @description
 #' The names of all evaluation measures which are used in at least one run are returned
 #' in a \code{data.frame}.
-#' @template arg_hash
+#'
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family list

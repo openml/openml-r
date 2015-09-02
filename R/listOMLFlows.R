@@ -1,4 +1,5 @@
 #' @title List all registered OpenML flows.
+#'
 #' @description
 #' The returned \code{data.frame} contains the flow id \dQuote{fid},
 #' the flow name (\dQuote{full.name} and \dQuote{name}), version information

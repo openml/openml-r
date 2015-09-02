@@ -5,11 +5,10 @@
 #' it in a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid},
 #' the setup id \dQuote{sid} and the task.id \dQuote{tid}.
 #'
-#' @param task.id [\code{numeric}]\cr
-#'   The task ID.
+#' @template arg_task_id
 #' @template arg_hash
 #' @template arg_verbosity
-#' @return [\code{data.frame}]
+#' @return [\code{data.frame}].
 #' @family list
 #' @export
 listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {

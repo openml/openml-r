@@ -30,8 +30,8 @@ listOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
       value = as.numeric(xmlValue(children[["value"]]))
     )
   }), fill = TRUE))
-  
-  if(is.null(name)) return(ret) 
-  if(any(ret$name%in%name)) return(ret[ret$name%in%name, ]) else 
+
+  if(is.null(name)) return(ret)
+  if(any(ret$name%in%name)) return(ret[ret$name%in%name, ]) else
     stop("Data quality in 'name' not found.")
 }

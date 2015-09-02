@@ -1,4 +1,5 @@
 #' @title List available OpenML data sets.
+#'
 #' @description
 #' The returned \code{data.frame} contains the data set id \dQuote{did},
 #' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
