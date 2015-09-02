@@ -8,26 +8,24 @@
 #' @param setup.id [\code{integer(1)}]\cr
 #'  ID of the parameter setup.
 #' @template arg_implementation.id
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @export
-listOMLRuns = function(task.id = NULL, setup.id = NULL, implementation.id = NULL, session.hash = getSessionHash(),
-  verbosity = NULL) {
-
+listOMLRuns = function(task.id = NULL, setup.id = NULL, implementation.id = NULL, verbosity = NULL) {
   if (!is.null(task.id)) assertInt(task.id)
   if (!is.null(setup.id)) assertInt(setup.id)
   if (!is.null(implementation.id)) assertInt(implementation.id)
   if (is.null(task.id) && is.null(setup.id) && is.null(implementation.id))
     stop("Please hand over at least one of the following: task.id, setup.id, implementation.id")
-  assertString(session.hash)
 
-  url = getAPIURL("openml.runs")
-  content = try(downloadXML(url, NULL, verbosity = verbosity,
-    session_hash = session.hash,
-    task_id = task.id,
-    setup_id = setup.id,
-    implementation_id = implementation.id), silent = TRUE)
+  #FIXME: JB: this stuff should be done in getAPIURL. Waiting for answers to my issue
+  get.args = list(task.id = task.id, setup.id = setup.id, implementation.id = implementation.id)
+  get.args = Filter(function(x) !is.null(x), get.args)
+  get.args = collapse(paste(names(get.args), get.args, sep = "="), sep = "&")
+  url = getAPIURL("run/list")
+  url = paste(url, get.args, sep = "&")
+
+  content = try(downloadXML(url, NULL, verbosity = verbosity), silent = TRUE)
 
   if (is.error(content))
     return(data.frame())
