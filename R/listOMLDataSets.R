@@ -1,8 +1,10 @@
 #' @title List available OpenML data sets.
+#'
 #' @description
 #' The returned \code{data.frame} contains the data set id \dQuote{did},
 #' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
 #' and describing data qualities.
+#'
 #' @template arg_hash
 #' @template arg_verbosity
 #' @template arg_status

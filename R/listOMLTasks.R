@@ -6,7 +6,7 @@
 #'
 #' @param type [\code{integer(1)}]\cr
 #'   The task type you want to list tasks for.
-#'   See code \link{listOMLTaskTypes}.
+#'   See code \code{\link{listOMLTaskTypes}}.
 #'   Default is \code{1} for classification.
 #' @template arg_hash
 #' @template arg_verbosity
@@ -48,7 +48,7 @@ listOMLTasks = function(type = 1L, session.hash = getSessionHash(),
     qualities = convertNodeSetToList(children[is.quality], as.integer)
     c(info, qualities)
   }), fill = TRUE)
-  
+
   estproc = listOMLEstimProcs()
   row.names(estproc) = estproc$est.id
   df$estimation_procedure = estproc[as.character(df$estimation_procedure), "name"]

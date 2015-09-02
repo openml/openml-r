@@ -10,7 +10,7 @@ listOMLTasks(type = 1L, session.hash = getSessionHash(), verbosity = NULL,
 \arguments{
 \item{type}{[\code{integer(1)}]\cr
 The task type you want to list tasks for.
-See code \link{listOMLTaskTypes}.
+See code \code{\link{listOMLTaskTypes}}.
 Default is \code{1} for classification.}
 
 \item{session.hash}{[\code{character(1)}]\cr

@@ -16,10 +16,6 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 }
 \value{
 [\code{\link{OMLTask}}]

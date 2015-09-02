@@ -2,18 +2,13 @@
 % Please edit documentation in R/getOMLFlow.R
 \name{getOMLFlow}
 \alias{getOMLFlow}
-\title{Download an OpenML flow.}
+\title{Get an OpenML flow.}
 \usage{
-getOMLFlow(implementation.id, session.hash = getSessionHash(),
-  verbosity = NULL)
+getOMLFlow(implementation.id, verbosity = NULL)
 }
 \arguments{
 \item{implementation.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -26,6 +21,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{\link{OMLFlow}}].
 }
 \description{
-Download an OpenML flow.
+Given an implementation ID, the corresponding \code{\link{OMLFlow}} is downloaded
+if not already available in cache.
 }
 

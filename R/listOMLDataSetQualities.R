@@ -4,7 +4,7 @@
 #' The returned \code{data.frame} contains data set quality \dQuote{name} and value \dQuote{value}.
 #'
 #' @param did [\code{integer(1)}]\cr
-#'   The data set ID
+#'   The data set ID.
 #' @template arg_hash
 #' @template arg_verbosity
 #' @param name [\code{character}]\cr
@@ -13,14 +13,13 @@
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
-#'
 listOMLDataSetQualities = function(did, session.hash = getSessionHash(),
     verbosity = NULL, name = NULL) {
   assertString(session.hash)
 #   qualities = listOMLDataSetQualitiesList()$name
 #   if(is.null(name)) name = qualities
 #   assertSubset(name, qualities)
-  
+
   url = getAPIURL("openml.data.qualities", data_id = did)
   content = downloadXML(url, NULL, verbosity = verbosity, session_hash = session.hash, post = FALSE)
   xml = parseXMLResponse(content, "Getting data set qualities", "data_qualities", as.text = TRUE)
@@ -33,8 +32,8 @@ listOMLDataSetQualities = function(did, session.hash = getSessionHash(),
       value = as.numeric(xmlValue(children[["value"]]))
     )
   }), fill = TRUE))
-  
-  if(is.null(name)) return(ret) 
-  if(any(ret$name%in%name)) return(ret[ret$name%in%name, ]) else 
+
+  if(is.null(name)) return(ret)
+  if(any(ret$name%in%name)) return(ret[ret$name%in%name, ]) else
     stop("Data quality in 'name' not found.")
 }

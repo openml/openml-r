@@ -1,7 +1,12 @@
-#' List available OpenML task types
+#' @title List available OpenML task types.
+#'
+#' @description
+#' The returned \code{data.frame} contains the type \code{id} and the character
+#' name of the OpenML task type.
+#'
 #' @template arg_hash
 #' @template arg_verbosity
-#' @return [\code{data.frame}] with columns \dQuote{id} and \dQuote{name}.
+#' @return [\code{data.frame}].
 #' @export
 listOMLTaskTypes = function(session.hash = getSessionHash(), verbosity = NULL) {
   url = getAPIURL("openml.task.type")

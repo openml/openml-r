@@ -8,7 +8,6 @@
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
-#'
 listOMLDataSetQualitiesList = function(session.hash = getSessionHash(),
     verbosity = NULL) {
   assertString(session.hash)

@@ -8,7 +8,7 @@ listOMLRunResults(task.id, session.hash = getSessionHash(),
   verbosity = NULL)
 }
 \arguments{
-\item{task.id}{[\code{numeric}]\cr
+\item{task.id}{[\code{integer(1)}]\cr
 The task ID.}
 
 \item{session.hash}{[\code{character(1)}]\cr
@@ -23,7 +23,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{data.frame}]
+[\code{data.frame}].
 }
 \description{
 Retrieves all run results for a task specified by \code{task.id} and returns

@@ -2,7 +2,7 @@
 % Please edit documentation in R/listOMLTaskTypes.R
 \name{listOMLTaskTypes}
 \alias{listOMLTaskTypes}
-\title{List available OpenML task types}
+\title{List available OpenML task types.}
 \usage{
 listOMLTaskTypes(session.hash = getSessionHash(), verbosity = NULL)
 }
@@ -19,9 +19,10 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{data.frame}] with columns \dQuote{id} and \dQuote{name}.
+[\code{data.frame}].
 }
 \description{
-List available OpenML task types
+The returned \code{data.frame} contains the type \code{id} and the character
+name of the OpenML task type.
 }
 

@@ -4,8 +4,7 @@
 #' This function downloads an OpenML task and all associated files from the OpenML repository,
 #' caches the files on disk and creates an S3 object which completely specifies the task.
 #'
-#' @param task.id [\code{integer(1)}]\cr
-#'   The task ID.
+#' @template arg_task_id
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
 #' @export
