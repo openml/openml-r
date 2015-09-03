@@ -1,65 +1,62 @@
 Stage 0 - Listing
 =================
 
-In this stage, we want to list basic information, e.g., about all [data sets, tasks, flows, runs](http://openml.org/guide#g_start), run results, available evaluation measures or task types. For each of these purposes we have a function beginning with "listOML", where all of them return a data.frame, even when the result has only one column.
+In this stage, we want to list basic information about the various OpenML objects such as data sets, tasks, flows, runs, run results, evaluation measures or task types. See the [OpenML introduction](http://openml.org/guide) for an overview on and explanations of the different objects. 
 
-### Get a valid session hash
-To download a task and for most other functions, you will need a so-called session hash. If you created a configuration file containing username and password of your OpenML account, this is very simple:
+For each of these objects we have a function to query the information beginning with `listOML`. All of these functions return a `data.frame`, even when the result has only one column.
 
-```{r echo = FALSE, warning = FALSE, message = FALSE}
-library(devtools)
-load_all()
-setOMLConfig(verbosity = 0L)
-options(width=125)
-```
-```{r eval = FALSE}
-session.hash = authenticateUser()
+First, load the package:
+```{r results="hide"}
+library("OpenML")
+setOMLConfig(verbosity = 0) # switch of status output
 ```
 
-Else, you have to pass your username und password here. **Your password will appear in plain text in your script/console!**
-
-```{r}
-session.hash = authenticateUser(username = "openml.rteam@gmail.com", password = "testpassword")
-```
-
-### Listing
-Let's have a look at some examples. Most of the listing-functions do not have any parameters that change the output:
-
-```{r eval = FALSE}
-flows = listOMLFlows()
-head(flows)
-
-measures = listOMLEvaluationMeasures()
-head(measures)
-
-tasktypes = listOMLTaskTypes()
-tasktypes
-```
-
+### List data sets 
 To browse the OpenML data base for appropriate data sets, you can use `listOMLDataSets()`
 in order to get basic data characteristics (number of features/instances/classes/missing values etc.)
 for each data set. By default, `listOMLDataSets()` returns only data sets that have an active
 status on OpenML. If you need data sets that are either `"in_preparation"` or `"deactivated"`,
 you can change the `status` parameter:
 
-```{r eval = FALSE}
+```{r}
 datasets = listOMLDataSets()  # returns active data sets
-head(datasets)
+datasets[1:3, 3:6]
 
 inactive.data = listOMLDataSets(status = "deactivated")  # returns deactivated data sets
-head(inactive.data)
+inactive.data[1:3, 3:6]
 ```
 
-Other listing-functions list only those entities that match one or more criteria.
-For some data sets, there may be one or more tasks available at the OpenML server.
-For example, you can look for `Supervised Classification` task IDs that are available for a specific data set as follows:
+To find a specific data set, one can now query the resulting `datasets` object. Let's use
+the `iris` data set.
 
-```{r eval = FALSE}
-type.id = with(tasktypes, id[name == "Supervised Classification"]) # lookup id for "Supervised Classification" tasks
-tasks = listOMLTasks(type = type.id)  # list all "Supervised Classification" tasks
-head(subset(tasks, did == 1L))  # lists tasks for the data set with did == 1 (see: http://openml.org/d/1)
+```{r}
+subset(datasets, name == "iris")[, 1:6]
 ```
 
+As one can see that there are two data sets called `iris`. We use the original three class
+data set. It has the data set ID `did` = `r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`. 
+One can also look at the data set on the OpenML web page http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`.
+
+### List tasks
+To list tasks one can use
+```{r}
+tasks = listOMLTasks()
+tasks[1:6, 1:5]
+```
+
+For some data sets, there may be more than one task available at the OpenML server. 
+For example, you can look for `"Supervised Classification"` tasks that are available 
+for a specific data set as follows:
+
+```{r}
+tasks = listOMLTasks()
+# subset tasks to "Supervised Classification" for the iris data (did == 61)
+subset(tasks, task_type == "Supervised Classification" & did == 61L)[, c(1, 6)]
+```
+
+### List runs and run results
+
+**FIXME: How is listOMLRuns**
 Similarly, you can also list runs and run results for a specific task, setup or implementation:
 
 ```{r eval = FALSE}
@@ -68,6 +65,21 @@ head(runs)
 
 runresults = listOMLRunResults(task.id = 1L)  # a task ID must be supplied
 colnames(runresults)
+```
+
+### List flows, evaluation measures and task types
+To list further objects such as flows, evaluation measures and task types one can simply use 
+the respective functions.
+
+```{r}
+flows = listOMLFlows()
+flows[1:7, 1:2]
+
+measures = listOMLEvaluationMeasures()
+measures[1:7, , drop = FALSE]
+
+tasktypes = listOMLTaskTypes()
+tasktypes
 ```
 
 
