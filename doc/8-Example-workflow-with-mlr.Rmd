@@ -6,7 +6,7 @@ further information about the package and its functions, please have a look at t
 of this tutorial or the [detailed documentation](http://www.rdocumentation.org/packages/OpenML).
 
 For this example, let's assume we wanted to test how good the R implementation of `lda` (from package 
-*MASS*) is, in comparison with all uploaded runs on 20 randomly selected tasks. We only want to consider tasks
+**MASS**) is, in comparison with all uploaded runs on 20 randomly selected tasks. We only want to consider tasks
 that have less than 10 features, not more than 100 instances, exactly 2 classes in the target
 feature and not a single missing value. 
 
