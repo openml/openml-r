@@ -8,7 +8,7 @@ For each of these objects we have a function to query the information beginning 
 First, load the package:
 ```{r results="hide"}
 library("OpenML")
-setOMLConfig(verbosity = 0) # switch of status output
+setOMLConfig(verbosity = 0) # switch off status output
 ```
 
 ### List data sets 
