@@ -11,7 +11,7 @@
 #' @export
 listOMLFlows = function(verbosity = NULL) {
   content = doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET")
-  xml = parseXMLResponse(content, "Getting flows", "implementations", as.text = TRUE)
+  xml = parseXMLResponse(content, "Getting flows", "flows", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   as.data.frame(rbindlist(lapply(blocks, function(node) {

@@ -16,8 +16,7 @@ getOMLRun = function(run.id, get.predictions = FALSE, verbosity = NULL) {
   id = asCount(run.id)
   assertFlag(get.predictions)
 
-  url = getAPIURL("run", api.arg = id)
-  content = doAPICallGET(url, NULL, verbosity)
+  content = doAPICall("run", id = id, file = NULL, verbosity, method = "GET")
   doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
 
   parseData = function(path) {
@@ -52,14 +51,14 @@ getOMLRun = function(run.id, get.predictions = FALSE, verbosity = NULL) {
       row = list(
         as.integer(xmlValue(children[["did"]])),
         xmlValue(children[["name"]]),
-        xmlValue(children[["implementation"]]),
+        xmlValue(children[["flow_id"]]),
         xmlValue(children[["label"]]),
         as.numeric(xmlValue(children[["value"]])),
         as.numeric(xmlValue(children[["stdev"]])),
         xmlValue(children[["array_data"]]),
         as.integer(xmlValue(children[["sample_size"]]))
       )
-      names(row) = c("did", "name", "implementation", "label", "value", "stdev", "array.data", "sample.size")
+      names(row) = c("did", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size")
       row
     }), fill = TRUE)
     makeOMLIOData(datasets = datasets, files = files, evaluations = as.data.frame(evals))
@@ -69,7 +68,7 @@ getOMLRun = function(run.id, get.predictions = FALSE, verbosity = NULL) {
     run.id = xmlREValI(doc, "/oml:run/oml:run_id"),
     uploader = xmlREValI(doc, "/oml:run/oml:uploader"),
     task.id = xmlREValI(doc, "/oml:run/oml:task_id"),
-    implementation.id = xmlRValI(doc, "/oml:run/oml:implementation_id"),
+    flow.id = xmlRValI(doc, "/oml:run/oml:flow_id"),
     setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),
     setup.string = xmlOValS(doc, "/oml:run/oml:setup_string"),
     error.message = xmlOValS(doc, "/oml:run/oml:error_message"),

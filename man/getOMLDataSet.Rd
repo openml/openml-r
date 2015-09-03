@@ -22,7 +22,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{\link{OMLDataSet}}]
+[\code{\link{OMLDataSet}}].
 }
 \description{
 Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
