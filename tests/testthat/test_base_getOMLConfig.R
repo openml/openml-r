@@ -18,21 +18,18 @@ test_that("reading and writing config files", {
   writeAndReadConfig = function(...) {
     conf.file = tempfile("config")
     writeConfigFile(conf.file, ...)
-    conf = readConfigFile(conf.file)
+    conf = loadOMLConfig(conf.file)
     unlink(conf.file)
     return(conf)
   }
 
-  # write a valid basic config file with username and password
-  conf = writeAndReadConfig(username = "testuser", password = "1234", verbosity = 2)
+  # write a valid basic config file
+  conf = writeAndReadConfig(apikey = "test", verbosity = 2)
   expect_identical(class(conf), class(getOMLConfig()))
-  expect_equal(conf$username, "testuser")
-  expect_null(conf$password)
-  expect_true(!is.null(conf$pwdmd5))
   expect_true(is.integer(conf$verbosity))
   expect_output(print(conf), "configuration")
 
   # pass some invalid 'keys'
   expect_error(writeAndReadConfig(invalidProperty = "invalid"), "only allowed")
-  expect_error(writeAndReadConfig(usernamee = "testuser"))
+  expect_error(writeAndReadConfig(xxx = "testuser"))
 })

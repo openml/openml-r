@@ -18,7 +18,7 @@ getDefaultConfig = function() {
     verbosity = 1L,
     arff.reader = "RWeka",
     # FIXME: this is the test session hash, we need to remove this soon
-    session.hash = "testtest"
+    apikey = "testtest"
   ))
   addClasses(x, "OMLConfig")
 }
@@ -27,20 +27,19 @@ getDefaultConfig = function() {
 # also subtly change some values to a better, standard format
 checkConfig = function(conf) {
   ns = ls(conf, all.names = TRUE)
-  ns2 = c("openmldir", "server", "session.hash", "cachedir", "verbosity", "arff.reader")
+  ns2 = c("openmldir", "server", "apikey", "cachedir", "verbosity", "arff.reader")
   if (any(ns %nin% ns2))
     stopf("You are only allowed to define the following names in your config:\n%s\nBut you also had:\n%s",
       collapse(ns2, sep = ", "), collapse(setdiff(ns, ns2), sep = ", "))
   assertString(conf$server)
-  conf$verbosity = assertInteger(conf$verbosity, lower = 0L, upper = 3L)
+  assert(checkChoice(conf$verbosity, 0:3), checkChoice(conf$verbosity, as.character(0:3)))
+  conf$verbosity = as.integer(conf$verbosity)
   assertString(conf$cachedir)
   assertChoice(conf$arff.reader, c("RWeka", "farff"))
 }
 
 # get a printable string describing the config
 printableConfig = function(conf) {
-  x = as.list(conf)
-  x[setdiff(getConfigNames(), names(x))] = ""
   fmt = paste(
     "OpenML configuration:",
     "  server           : %s",
@@ -48,9 +47,7 @@ printableConfig = function(conf) {
     "  verbosity        : %s",
     "  arff.reader      : %s\n",
     sep = "\n")
-  expire = ifelse(is.null(x$session.hash.expires), "<not authenticated>",
-    as.character(x$session.hash.expires))
-  sprintf(fmt, x$server, x$cachedir, expire, x$verbosity, x$arff.reader)
+  sprintf(fmt, conf$server, conf$cachedir, conf$verbosity, conf$arff.reader)
 }
 
 #' @export
