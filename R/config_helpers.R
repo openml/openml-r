@@ -1,103 +1,68 @@
-#' @export
-print.OMLConfig = function(x, ...) {
-  cat(printableConfig(x))
+# assign element in src conf to dest conf
+# if src is NULL, do nothing
+assignConfToConf = function(src, dest) {
+  if (!is.null(src))
+    assertClass(src, "OMLConfig")
+  assertClass(dest, "OMLConfig")
+  if (is.null(src))
+    return()
+  lapply(ls(src), function(x) assign(x, src[[x]], envir = dest))
 }
 
-# sources config file and returns the envir
-readConfigFile = function(conffile) {
-  assertFile(conffile)
-
-  conf = new.env(parent = emptyenv())
-  # FIXME: we need to check the format of the conf file
-  # the format is <name> = <value>
-  lines = Filter(nzchar, stri_trim_both(readLines(conffile)))
-  lines = stri_split_fixed(lines, "=")
-  lines = lapply(lines, stri_trim_both)
-  lines = do.call(rbind, lines)
-  conf = as.environment(setNames(as.list(lines[, 2L]), lines[, 1L]))
-  # if (is.error(x))
-    # stopf("There was an error in sourcing your configuration file '%s': %s!", conffile, as.character(x))
-
-  if (!is.null(conf$verbosity))
-    conf$verbosity = as.integer(conf$verbosity)
-  if (!is.null(conf$openmldir))
-    conf$openmldir = path.expand(conf$openmldir)
-  if (!is.null(conf$cachedir))
-    conf$cachedir = path.expand(conf$cachedir)
-  if (!is.null(conf$arff.reader))
-    requireNamespace(conf$arff.reader) else
-      requireNamespace("RWeka")
-
-  checkConfig(conf)
-  # FIXME: probably horrible security wise....
-  if (!is.null(conf$password))
-    conf$pwdmd5 = digest(conf$password, serialize = FALSE)
-  conf$password = NULL
-
-  conf = addClasses(conf, "OMLConfig")
-  return(conf)
+# get default entries for all fields in the config, as envir
+getDefaultConfig = function() {
+  x = as.environment(list(
+    server = "http://api_new.openml.org/v1",
+    openmldir = path.expand("~/.openml"),
+    cachedir = file.path(tempdir(), "cache"),
+    verbosity = 1L,
+    arff.reader = "RWeka",
+    # FIXME: this is the test session hash, we need to remove this soon
+    session.hash = "testtest"
+  ))
+  addClasses(x, "OMLConfig")
 }
 
-# assigns a conf to namespace
-assignConfig = function(conf) {
-  conf.in.ns = getOMLConfig()
-  conf.in.ns$is.user.config = TRUE
-  invisible(lapply(ls(conf), function(x) assign(x, conf[[x]], envir = conf.in.ns)))
-}
-
-assignConfigDefaults = function() {
-  conf = getOMLConfig()
-  conf$server = "http://api_new.openml.org/v1"
-  conf$username = NA_character_
-  conf$pwdmd5 = NA_character_
-  conf$openmldir = path.expand("~/.openml")
-  conf$cachedir = file.path(tempdir(), "cache")
-  conf$verbosity = 1L
-  conf$arff.reader = "RWeka"
-  conf$is.user.config = FALSE
-  conf$session.hash = "testtest"
-}
-
-getConfigNames = function() {
-  c("server", "username", "password", "cachedir", "verbosity", "arff.reader")
-}
-
+# check that the config only contains valid entries
+# also subtly change some values to a better, standard format
 checkConfig = function(conf) {
-  ns = if (is.list(conf)) names(conf) else ls(conf, all.names = TRUE)
-  ns2 = getConfigNames()
+  ns = ls(conf, all.names = TRUE)
+  ns2 = c("openmldir", "server", "session.hash", "cachedir", "verbosity", "arff.reader")
   if (any(ns %nin% ns2))
-    stopf("You are only allowed to define the following R variables in your config:\n%s\nBut you also had:\n%s",
+    stopf("You are only allowed to define the following names in your config:\n%s\nBut you also had:\n%s",
       collapse(ns2, sep = ", "), collapse(setdiff(ns, ns2), sep = ", "))
-  if (!is.null(conf$server))
-    assertString(conf$server)
-  if (!is.null(conf$username))
-    assertString(conf$username)
-  if (!is.null(conf$password))
-    assertString(conf$password)
-  if (!is.null(conf$verbosity))
-    verbosity = asInt(conf$verbosity)
-  if (!is.null(conf$cachedir))
-    assertString(conf$cachedir)
-  if (!is.null(conf$arff.reader))
-    assertString(conf$arff.reader)
+  assertString(conf$server)
+  conf$verbosity = assertInteger(conf$verbosity, lower = 0L, upper = 3L)
+  assertString(conf$cachedir)
+  assertChoice(conf$arff.reader, c("RWeka", "farff"))
 }
 
-# Function which returns a printable string describing the config
-# Used in packageStartupMessage and in print.Config
+# get a printable string describing the config
 printableConfig = function(conf) {
   x = as.list(conf)
   x[setdiff(getConfigNames(), names(x))] = ""
   fmt = paste(
     "OpenML configuration:",
     "  server           : %s",
-    "  username         : %s",
     "  cachedir         : %s",
-    "  pwdmd5           : ***",
-    "  session expires  : %s",
     "  verbosity        : %s",
     "  arff.reader      : %s\n",
     sep = "\n")
   expire = ifelse(is.null(x$session.hash.expires), "<not authenticated>",
     as.character(x$session.hash.expires))
-  sprintf(fmt, x$server, x$username, x$cachedir, expire, x$verbosity, x$arff.reader)
+  sprintf(fmt, x$server, x$cachedir, expire, x$verbosity, x$arff.reader)
+}
+
+#' @export
+print.OMLConfig = function(x, ...) {
+  cat(printableConfig(x))
+}
+
+#' @title Returns a list of OpenML configuration settings.
+#'
+#' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
+#' @family config
+#' @export
+getOMLConfig = function() {
+  return(.OpenML.config)
 }

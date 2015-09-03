@@ -21,6 +21,7 @@ Imports:
     checkmate (>= 1.5.3),
     data.table,
     digest,
+    httr,
     RCurl,
     stringi,
     XML,

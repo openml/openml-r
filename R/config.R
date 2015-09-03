@@ -1,5 +1,3 @@
-.OpenML.config = addClasses(new.env(parent = emptyenv()), "OMLConfig")
-
 #' @title OpenML configuration.
 #'
 #' @description

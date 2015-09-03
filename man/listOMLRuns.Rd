@@ -29,6 +29,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
 This function returns information on all OpenML runs that match a certain
-\code{task.id}, \code{setup.id} and/or implementation ID \code{implementation.id}.
+\code{task.id}, \code{setup.id} and/or implementation ID \code{flow.id}.
 }
 

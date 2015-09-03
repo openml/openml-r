@@ -4,8 +4,8 @@
 \alias{runTaskMlr}
 \title{Run mlr learner on OpenML task.}
 \usage{
-runTaskMlr(task, learner, remove.const.feats = TRUE, drop.levels = TRUE,
-  verbosity = NULL, auto.upload = TRUE, resample.extract, ...)
+runTaskMlr(task, learner, verbosity = NULL, auto.upload = TRUE,
+  resample.extract, ...)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr

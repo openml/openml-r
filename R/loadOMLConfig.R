@@ -1,16 +1,35 @@
-#' Loads a config file from disk to mem
+#' @title Loads a config file from disk.
 #'
 #' @param path [\code{character(1)}]\cr
 #'   full path location of the config file to be loaded
 #' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 #' @family config
 #' @export
-loadOMLConfig = function(path = "~/.openml/config") {
-  assertFile(path)
-  # read and assign config file
-  conf = readConfigFile(path.expand(path))
-  assignConfig(conf)
-  # create cache dir from new config file
-  createCacheSubDirs(verbosity = FALSE)
-  invisible(conf)
+loadOMLConfig = function(path = "~/.openml/config", assign = TRUE) {
+  assertFile(path, access = "r")
+  conf = new.env(parent = emptyenv())
+
+  # get all lines, trimmed, and remove empty lines
+  lines = Filter(nzchar, stri_trim_both(readLines(path)))
+
+  # check: the format is <name> = <value>
+  pattern.check = stri_match(lines, regex = "\\s*\\S+\\s*=\\s*\\S+\\s*")
+  pattern.check = !is.na(pattern.check[, 1L])
+  first.err = which.first(!pattern.check)
+  if (length(first.err) > 0L)
+    stopf("You have a format error in your config in line:\n%s", lines[first.err])
+
+  # get names and values from config, convert to named evir
+  lines = stri_split_fixed(lines, "=")
+  lines = lapply(lines, stri_trim_both)
+  lines = do.call(rbind, lines)
+  conf = as.environment(setNames(as.list(lines[, 2L]), lines[, 1L]))
+  conf = addClasses(conf, "OMLConfig")
+
+  # contruct default config envir, assign the parsed values into it, then check
+  conf2 = getDefaultConfig()
+  assignConfToConf(conf, conf2)
+  checkConfig(conf2)
+
+  return(conf2)
 }

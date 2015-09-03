@@ -4,14 +4,14 @@
 \alias{setOMLConfig}
 \title{Set and overwrite configuration settings}
 \usage{
-setOMLConfig(conf = list(), ...)
+setOMLConfig(..., conf = NULL)
 }
 \arguments{
-\item{conf}{[\code{OMLConfig} or \code{list}]\cr
-List of configuration parameters as returned by \code{\link{getOMLConfig}}.}
-
 \item{...}{[\code{ANY}]\cr
 Named configuration parameters. Overwrites parameters in \code{conf}, if provided.}
+
+\item{conf}{[\code{OMLConfig} or \code{list}]\cr
+List of configuration parameters as returned by \code{\link{getOMLConfig}}.}
 }
 \value{
 Invisibly returns a list of configuration settings.
@@ -21,7 +21,7 @@ Set and overwrite configuration settings
 }
 \seealso{
 Other config: \code{\link{configuration}};
-  \code{\link{getOMLConfig}}; \code{\link{loadOMLConfig}};
-  \code{\link{saveOMLConfig}}
+  \code{\link{getOMLConfig}}, \code{\link{getOMLConfig}};
+  \code{\link{loadOMLConfig}}; \code{\link{saveOMLConfig}}
 }
 

@@ -24,7 +24,7 @@ the flow name (\dQuote{full.name} and \dQuote{name}), version information
 of all registered OpenML flows.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}},
+Other list: \code{\link{getOMLDataSetQualities}};
   \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEvaluationMeasures}};

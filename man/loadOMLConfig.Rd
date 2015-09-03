@@ -2,9 +2,9 @@
 % Please edit documentation in R/loadOMLConfig.R
 \name{loadOMLConfig}
 \alias{loadOMLConfig}
-\title{Loads a config file from disk to mem}
+\title{Loads a config file from disk.}
 \usage{
-loadOMLConfig(path = "~/.openml/config")
+loadOMLConfig(path = "~/.openml/config", assign = TRUE)
 }
 \arguments{
 \item{path}{[\code{character(1)}]\cr
@@ -14,11 +14,11 @@ full path location of the config file to be loaded}
 \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 }
 \description{
-Loads a config file from disk to mem
+Loads a config file from disk.
 }
 \seealso{
 Other config: \code{\link{configuration}};
-  \code{\link{getOMLConfig}}; \code{\link{saveOMLConfig}};
-  \code{\link{setOMLConfig}}
+  \code{\link{getOMLConfig}}, \code{\link{getOMLConfig}};
+  \code{\link{saveOMLConfig}}; \code{\link{setOMLConfig}}
 }
 
