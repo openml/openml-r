@@ -10,8 +10,7 @@
 #' @family list
 #' @export
 listOMLFlows = function(verbosity = NULL) {
-  url = getAPIURL("flow/list")
-  content = doAPICallGET(url, NULL, verbosity = verbosity)
+  content = doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting flows", "implementations", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])

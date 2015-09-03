@@ -8,8 +8,8 @@
 #' @return [\code{data.frame}].
 #' @export
 listOMLEstimationProcedures = function(verbosity = NULL) {
-  url = getAPIURL("estimationprocedure/list")
-  content = try(doAPICallGET(url, NULL, verbosity = verbosity))
+  content = try(doAPICall(api.call = "estimationprocedure/list", file = NULL, 
+    verbosity = verbosity, method = "GET"))
   doc = parseXMLResponse(content, "Getting names of estimation procedures", "estimationprocedures",
     as.text = TRUE)
   data.frame(

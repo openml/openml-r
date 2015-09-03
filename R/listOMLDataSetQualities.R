@@ -8,8 +8,7 @@
 #' @family list
 #' @export
 listOMLDataSetQualities = function(verbosity = NULL) {
-  url = getAPIURL("data/qualities/list")
-  content = doAPICallGET(url, NULL, verbosity)
+  content = doAPICall(api.call = "data/qualities/list", file = NULL, verbosity = verbosity, method = "GET")
   doc = parseXMLResponse(content, "Getting names of available data set qualities", "data_qualities_list",
                          as.text = TRUE)
   data.frame(name = xmlValsMultNsS(doc, "/oml:data_qualities_list/oml:quality"), stringsAsFactors = FALSE)

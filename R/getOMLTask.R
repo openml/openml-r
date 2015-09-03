@@ -26,8 +26,8 @@ getOMLTask = function(task.id, verbosity = NULL) {
 
   # get XML description
   if (!f$task.xml$found) {
-    url = getAPIURL("task", api.arg = id)
-    task.contents = doAPICallGET(url, f$task.xml$path, verbosity)
+    task.contents = doAPICall(api.call = "task", id = id, 
+      file = f$task.xml$path, verbosity = verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Task XML found in cache.")
     task.contents = readLines(f$task.xml$path)

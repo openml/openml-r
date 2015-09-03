@@ -55,11 +55,24 @@ namedListToHTTPGETParamList = function(args) {
 #   Use HTTP POST? Default is FALSE.
 # @return [character(1)] Unparsed content of the XML file.
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
-doAPICall = function(url, file, verbosity = NULL, method = c("GET", "POST", "DELETE"), ...) {
+doAPICall = function(api.call, id = NULL, url.args = NULL, file, verbosity = NULL, 
+                     method = c("GET", "POST", "DELETE"), 
+                     ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
+  # get config infos
+  conf = getOMLConfig()
+  
+  # occasionally we need to pass a single API arg, such as the data id, additionally
+  id = if (!is.null(id)) paste0("/", id) else ""
+  
+  # create url
+  url = sprintf("%s/%s%s?%s", conf$server, api.call, id, paste0("session.hash=", conf$session.hash))
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
-  api.args = append(list(...), "session.hash" = getOMLConfig()$session.hash)
-  content = do.call(method, list(url = url, query = api.args))
+  
+  if (method == "GET") {
+    content = GET(url = url) #do.call(method, list(url = url, query = api.args))
+  }
+  content = rawToChar(content$content)
 
   if (!is.null(file)) {
     con = file(file, open = "w")
@@ -67,16 +80,6 @@ doAPICall = function(url, file, verbosity = NULL, method = c("GET", "POST", "DEL
     writeLines(content, con = con)
   }
   return(content)
-}
-
-# Helper to do a GET request to API. See doAPICall for the signature.
-doAPICallGET = function(url, file, verbosity = NULL) {
-  doAPICall(url, file, verbosity, post = FALSE)
-}
-
-# Helper to do a POST request to API. See doAPICall for the signature.
-doAPICallPOST = function(url, file, verbosity = NULL) {
-  doAPICall(url, file, verbosity, post = TRUE)
 }
 
 # @title Download an arff file to disk.

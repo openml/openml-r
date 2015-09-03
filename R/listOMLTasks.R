@@ -13,8 +13,7 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
   status.levels = c("active", "deactivated", "in_preparation")
   assertSubset(status, status.levels)
 
-  url = getAPIURL("task/list")
-  content = try(doAPICallGET(url, NULL, verbosity = verbosity), silent = TRUE)
+  content = try(doAPICall(api.call = "task/list", file = NULL, verbosity = verbosity, method = "GET"))
 
   if (is.error(content))
     return(data.frame())

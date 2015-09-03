@@ -33,8 +33,10 @@ getOMLDataSet = function(did, check.status = FALSE, verbosity = NULL) {
 
   # get XML description
   if (!f$description.xml$found) {
-    url = getAPIURL("data", api.arg = did)
-    data.desc.contents = doAPICallGET(url, f$description.xml$path, verbosity)
+    #url = getAPIURL("data", api.arg = did)
+    #data.desc.contents = doAPICall(url, f$description.xml$path, verbosity, method = "GET")
+    data.desc.contents = doAPICall(api.call = "data", id = did, file = f$description.xml$path,
+      verbosity = verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Data set description found in cache.")
     data.desc.contents = readLines(f$description.xml$path)
