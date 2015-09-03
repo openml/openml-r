@@ -42,7 +42,7 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
     c(info, qualities)
   }), fill = TRUE)
 
-  estproc = listOMLEstimProcs()
+  estproc = listOMLEstimationProcedures()
   row.names(estproc) = estproc$est.id
   df$estimation_procedure = estproc[as.character(df$estimation_procedure), "name"]
   df$status = factor(df$status, levels = status.levels)

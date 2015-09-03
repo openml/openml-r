@@ -1,0 +1,20 @@
+#' @title List available Estimation Procedures
+#'
+#' @description
+#' The returned \code{data.frame} contains the \code{est.id} and the corresponding
+#' name of the estimation procedure.
+#'
+#' @template arg_verbosity
+#' @return [\code{data.frame}].
+#' @export
+listOMLEstimationProcedures = function(verbosity = NULL) {
+  url = getAPIURL("estimationprocedure/list")
+  content = try(doAPICallGET(url, NULL, verbosity = verbosity))
+  doc = parseXMLResponse(content, "Getting names of estimation procedures", "estimationprocedures",
+    as.text = TRUE)
+  data.frame(
+    est.id = xmlValsMultNsS(doc, "/oml:estimationprocedures/oml:estimationprocedure/oml:id"),
+    name = xmlValsMultNsS(doc, "/oml:estimationprocedures/oml:estimationprocedure/oml:name"),
+    stringsAsFactors = TRUE
+  )
+}
