@@ -13,6 +13,7 @@ For further information please read the configuration section in
 }
 \seealso{
 Other config: \code{\link{getOMLConfig}};
-  \code{\link{loadOMLConf}}; \code{\link{setOMLConfig}}
+  \code{\link{loadOMLConf}}; \code{\link{saveOMLConfig}};
+  \code{\link{setOMLConfig}}
 }
 
