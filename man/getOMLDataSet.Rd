@@ -4,7 +4,7 @@
 \alias{getOMLDataSet}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(did, check.status, verbosity)
+getOMLDataSet(did, check.status = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{did}{[\code{integer(1)}]\cr
