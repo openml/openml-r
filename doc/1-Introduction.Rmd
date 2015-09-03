@@ -12,7 +12,7 @@ For general information on what OpenML is, please have a look at the
 the [official OpenML website](http://openml.org/).
 
 Before making practical use of the package in most cases it is desirable to
-[setup a configuration file]((2-Configuration.md) to simplify further steps.
+[setup a configuration file](2-Configuration.md) to simplify further steps.
 
 Basically there are different stages when using this package respectively OpenML:
 * Stage 0: Listing
