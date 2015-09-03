@@ -1,45 +1,3 @@
-# Creates an API call url of the form server/get.arg?session_hash=myhash
-#
-# @param api.call [character(1)]
-#   API method.
-# @param api.arg [any]
-#   Further unnamed parameter. This is often neccessary for getter API calls, e.g.
-#   server/data/{data_id}/?key1=value1&key2=value2. Default is NULL.
-# @param ... [any]
-#   List of key value pairs.
-# @param get.args [list]
-#   Named list of key-value pairs.
-# @return [character(1)] Full URL respectively API call.
-getAPIURL = function(api.call, api.arg = NULL, ..., get.args = NULL) {
-  # combine the two ways to pass HTTP GET key value pairs
-  args = list(...)
-  if (!is.null(get.args)) {
-    args = insert(args, get.args)
-  }
-  # append obligatory session hash
-  conf = getOMLConfig()
-  args$session.hash = conf$session.hash
-
-  # collapse list to string of form a=z&b=y&c=x
-  api.args = namedListToHTTPGETParamList(args)
-
-  # occasionally we need to pass a single API arg additionally
-  api.arg = if (!is.null(api.arg)) paste0("/", api.arg) else ""
-
-  url = sprintf("%s/%s%s?%s", conf$server, api.call, api.arg, api.args)
-  return(url)
-}
-
-# Helper to collapse named list of key-value pairs to the
-# HTTP GET list form, i.e., key1=value1&key2=value2.
-#
-# @param args [list]
-#   Named list of arguments.
-# @return [character(1)]
-namedListToHTTPGETParamList = function(args) {
-  collapse(paste(names(args), args, sep = "="), "&")
-}
-
 # @title Perform an API call to the OpenML server
 #
 # @description The function always returns the XML file content provided by the
@@ -55,20 +13,19 @@ namedListToHTTPGETParamList = function(args) {
 #   Use HTTP POST? Default is FALSE.
 # @return [character(1)] Unparsed content of the XML file.
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
-doAPICall = function(api.call, id = NULL, url.args = NULL, file, verbosity = NULL, 
-                     method = c("GET", "POST", "DELETE"), 
+doAPICall = function(api.call, id = NULL, url.args = NULL, file, verbosity = NULL,
+                     method = c("GET", "POST", "DELETE"),
                      ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
   # get config infos
   conf = getOMLConfig()
-  
+
   # occasionally we need to pass a single API arg, such as the data id, additionally
   id = if (!is.null(id)) paste0("/", id) else ""
-  
   # create url
-  url = sprintf("%s/%s%s?%s", conf$server, api.call, id, paste0("session.hash=", conf$session.hash))
+  url = sprintf("%s/%s%s?%s", conf$server, api.call, id, paste0("api_key=", conf$apikey))
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
-  
+
   if (method == "GET") {
     content = GET(url = url) #do.call(method, list(url = url, query = api.args))
   }

@@ -17,8 +17,7 @@ getDefaultConfig = function() {
     cachedir = file.path(tempdir(), "cache"),
     verbosity = 1L,
     arff.reader = "RWeka",
-    # FIXME: this is the test session hash, we need to remove this soon
-    apikey = "testtest"
+    apikey = NA_character_
   ))
   addClasses(x, "OMLConfig")
 }
