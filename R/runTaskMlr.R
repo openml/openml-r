@@ -29,12 +29,10 @@
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.resample.result}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
-runTaskMlr = function(task, learner, remove.const.feats = TRUE, drop.levels = TRUE,
-  verbosity = NULL, auto.upload = TRUE, resample.extract, ...) {
+runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, resample.extract, ...) {
 
   assertClass(task, "OMLTask")
   assertClass(learner, "Learner")
-  assertFlag(remove.const.feats)
 
   run = makeOMLRun(task.id = task$task.id)
   z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
