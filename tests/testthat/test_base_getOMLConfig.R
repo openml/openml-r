@@ -18,7 +18,7 @@ test_that("reading and writing config files", {
   writeAndReadConfig = function(...) {
     conf.file = tempfile("config")
     writeConfigFile(conf.file, ...)
-    conf = loadOMLConfig(conf.file)
+    conf = loadOMLConfig(conf.file, assign = FALSE)
     unlink(conf.file)
     return(conf)
   }

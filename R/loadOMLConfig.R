@@ -1,12 +1,16 @@
 #' @title Loads a config file from disk.
 #'
 #' @param path [\code{character(1)}]\cr
-#'   full path location of the config file to be loaded
+#'   Full path location of the config file to be loaded.
+#' @param assign [\code{logical(1)}]\cr
+#'   Use the loaded configuration as the current configuration? Default is \code{TRUE}.
+#'   If set to \code{FALSE}, the configuration is just returned by the function.
 #' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 #' @family config
 #' @export
 loadOMLConfig = function(path = "~/.openml/config", assign = TRUE) {
   assertFile(path, access = "r")
+  assertFlag(assign)
   conf = new.env(parent = emptyenv())
 
   # get all lines, trimmed, and remove empty lines
@@ -30,6 +34,10 @@ loadOMLConfig = function(path = "~/.openml/config", assign = TRUE) {
   conf2 = getDefaultConfig()
   assignConfToConf(conf, conf2)
   checkConfig(conf2)
+
+  if (assign) {
+    assignConfToConf(conf2, getOMLConfig())
+  }
 
   return(conf2)
 }

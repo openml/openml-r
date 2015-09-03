@@ -8,7 +8,11 @@ loadOMLConfig(path = "~/.openml/config", assign = TRUE)
 }
 \arguments{
 \item{path}{[\code{character(1)}]\cr
-full path location of the config file to be loaded}
+Full path location of the config file to be loaded.}
+
+\item{assign}{[\code{logical(1)}]\cr
+Use the loaded configuration as the current configuration? Default is \code{TRUE}.
+If set to \code{FALSE}, the configuration is just returned by the function.}
 }
 \value{
 \code{list} of current configuration variables with class \dQuote{OMLConfig}.
