@@ -9,7 +9,7 @@ First, load the package:
 
 ```r
 library("OpenML")
-setOMLConfig(verbosity = 0) # switch of status output
+setOMLConfig(verbosity = 0) # switch off status output
 ```
 
 ### List data sets 
