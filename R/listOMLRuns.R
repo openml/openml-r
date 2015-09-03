@@ -18,12 +18,9 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, implementation.id = NULL
   if (is.null(task.id) && is.null(setup.id) && is.null(implementation.id))
     stop("Please hand over at least one of the following: task.id, setup.id, implementation.id")
 
-  #FIXME: JB: this stuff should be done in getAPIURL. Waiting for answers to my issue
   get.args = list(task.id = task.id, setup.id = setup.id, implementation.id = implementation.id)
   get.args = Filter(function(x) !is.null(x), get.args)
-  get.args = collapse(paste(names(get.args), get.args, sep = "="), sep = "&")
-  url = getAPIURL("run/list")
-  url = paste(url, get.args, sep = "&")
+  url = getAPIURL("run/list", get.args = get.args)
 
   content = try(downloadXML(url, NULL, verbosity = verbosity), silent = TRUE)
 
