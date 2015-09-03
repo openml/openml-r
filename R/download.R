@@ -40,21 +40,26 @@ namedListToHTTPGETParamList = function(args) {
   collapse(paste(names(args), args, sep = "="), "&")
 }
 
-# download xml from a url / api call to file
-# if the file is NULL, we just retrieve the content, which is returned in any case
+# @title Download xml from a url / api call to file
+#
+# @description If the file is NULL, we just retrieve the content, which is returned in any case.
+#
+# @param url [character(1)]
+#   URL to API call.
+# @param file [character(1)]
+#   Optional filename to write the XML content to.
+# @param verbosity [logical(1)]
+#   Be verbose and show info messages?
+# @param post [logical(1)]
+#   Use HTTP POST? Default is FALSE.
+# @return [character(1)] Unparsed content of the XML file.
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
-# FIXME: do we need post mode
 downloadXML = function(url, file, verbosity = NULL, post = FALSE) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
-  # ddd = list(...)
-  if (post) {
-    content = do.call(postForm, c(list(uri = url), ddd))
+  content = if (post) {
+    do.call(postForm, list(uri = url))
   } else {
-    # if (length(ddd) > 0L) {
-      # ddd = collapse(paste(names(ddd), ddd, sep = "="), sep = "&")
-      # url = paste(url, ddd, sep = "&")
-    # }
-    content = do.call(getURL, list(url = url))
+    do.call(getURL, list(url = url))
   }
 
   if (!is.null(file)) {
