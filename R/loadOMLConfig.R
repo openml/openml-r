@@ -5,7 +5,7 @@
 #' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 #' @family config
 #' @export
-loadOMLConf = function(path = "~/.openml/config") {
+loadOMLConfig = function(path = "~/.openml/config") {
   assertFile(path)
   # read and assign config file
   conf = readConfigFile(path.expand(path))

@@ -14,7 +14,7 @@ Returns a list of OpenML configuration settings
 }
 \seealso{
 Other config: \code{\link{configuration}};
-  \code{\link{loadOMLConf}}; \code{\link{saveOMLConfig}};
+  \code{\link{loadOMLConfig}}; \code{\link{saveOMLConfig}};
   \code{\link{setOMLConfig}}
 }
 
