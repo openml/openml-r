@@ -55,13 +55,11 @@ namedListToHTTPGETParamList = function(args) {
 #   Use HTTP POST? Default is FALSE.
 # @return [character(1)] Unparsed content of the XML file.
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
-doAPICall = function(url, file, verbosity = NULL, post = FALSE) {
+doAPICall = function(url, file, verbosity = NULL, method = c("GET", "POST", "DELETE"), ...) {
+  assertChoice(method, choices = c("GET", "POST", "DELETE"))
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
-  content = if (post) {
-    do.call(postForm, list(uri = url))
-  } else {
-    do.call(getURL, list(url = url))
-  }
+  api.args = append(list(...), "session.hash" = getOMLConfig()$session.hash)
+  content = do.call(method, list(url = url, query = api.args))
 
   if (!is.null(file)) {
     con = file(file, open = "w")
