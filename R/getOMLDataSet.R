@@ -49,7 +49,7 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, verbosity = NULL) {
   # get XML description
   if (!f$description.xml$found) {
     url = getAPIURL("data", api.arg = id)
-    data.desc.contents = downloadXML(url, f$description.xml$path, verbosity, post = FALSE)
+    data.desc.contents = doAPICallGET(url, f$description.xml$path, verbosity)
   } else {
     showInfo(verbosity, "Data set description found in cache.")
     data.desc.contents = readLines(f$description.xml$path)

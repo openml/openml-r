@@ -8,7 +8,7 @@ getOMLFlow = function(implementation.id, verbosity = NULL) {
   implementation.id = asCount(implementation.id)
 
   url = getAPIURL("flow", api.arg = implementation.id)
-  content = try(downloadXML(url, NULL, verbosity, post = FALSE), silent = TRUE)
+  content = try(doAPICallGET(url, NULL, verbosity), silent = TRUE)
   if (is.error(content))
     stop("Flow (temporarily) not available.")
   doc = parseXMLResponse(content, "Getting implementation", "implementation", as.text = TRUE)

@@ -22,7 +22,7 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, implementation.id = NULL
   get.args = Filter(function(x) !is.null(x), get.args)
   url = getAPIURL("run/list", get.args = get.args)
 
-  content = try(downloadXML(url, NULL, verbosity = verbosity), silent = TRUE)
+  content = try(doAPICallGET(url, NULL, verbosity = verbosity), silent = TRUE)
 
   if (is.error(content))
     return(data.frame())

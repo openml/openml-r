@@ -11,7 +11,7 @@
 #' @export
 listOMLFlows = function(verbosity = NULL) {
   url = getAPIURL("flow/list")
-  content = downloadXML(url, NULL, verbosity = verbosity)
+  content = doAPICallGET(url, NULL, verbosity = verbosity)
   xml = parseXMLResponse(content, "Getting flows", "implementations", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])

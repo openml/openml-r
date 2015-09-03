@@ -40,9 +40,10 @@ namedListToHTTPGETParamList = function(args) {
   collapse(paste(names(args), args, sep = "="), "&")
 }
 
-# @title Download xml from a url / api call to file
+# @title Perform an API call to the OpenML server
 #
-# @description If the file is NULL, we just retrieve the content, which is returned in any case.
+# @description The function always returns the XML file content provided by the
+# server.
 #
 # @param url [character(1)]
 #   URL to API call.
@@ -54,7 +55,7 @@ namedListToHTTPGETParamList = function(args) {
 #   Use HTTP POST? Default is FALSE.
 # @return [character(1)] Unparsed content of the XML file.
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
-downloadXML = function(url, file, verbosity = NULL, post = FALSE) {
+doAPICall = function(url, file, verbosity = NULL, post = FALSE) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
   content = if (post) {
     do.call(postForm, list(uri = url))
@@ -68,6 +69,16 @@ downloadXML = function(url, file, verbosity = NULL, post = FALSE) {
     writeLines(content, con = con)
   }
   return(content)
+}
+
+# Helper to do a GET request to API. See doAPICall for the signature.
+doAPICallGET = function(url, file, verbosity = NULL) {
+  doAPICall(url, file, verbosity, post = FALSE)
+}
+
+# Helper to do a POST request to API. See doAPICall for the signature.
+doAPICallPOST = function(url, file, verbosity = NULL) {
+  doAPICall(url, file, verbosity, post = TRUE)
 }
 
 # @title Download an arff file to disk.

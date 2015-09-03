@@ -15,7 +15,7 @@ listOMLRunResults = function(task.id, verbosity = NULL) {
 
   #FIXME: openml.task.evaluations removed in API v1
   url = getAPIURL("openml.task.evaluations", task_id = id)
-  content = try(downloadXML(url, NULL, verbosity), silent = TRUE)
+  content = try(doAPICallGET(url, NULL, verbosity), silent = TRUE)
 
   if (is.error(content))
     return(data.frame())

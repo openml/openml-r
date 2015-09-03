@@ -10,7 +10,7 @@
 #' @export
 listOMLEvaluationMeasures = function(verbosity = NULL) {
   url = getAPIURL("evaluationmeasure/list")
-  content = downloadXML(url, NULL, verbosity)
+  content = doAPICallGET(url, NULL, verbosity)
   doc = parseXMLResponse(content, "Getting names of evaluation measures", "evaluation_measures",
     as.text = TRUE)
   data.frame(name = xmlValsMultNsS(doc, "/oml:evaluation_measures/oml:measures/oml:measure"), stringsAsFactors = FALSE)

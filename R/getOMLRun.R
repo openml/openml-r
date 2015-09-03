@@ -17,7 +17,7 @@ getOMLRun = function(run.id, get.predictions = FALSE, verbosity = NULL) {
   assertFlag(get.predictions)
 
   url = getAPIURL("run", api.arg = id)
-  content = downloadXML(url, NULL, verbosity, post = FALSE)
+  content = doAPICallGET(url, NULL, verbosity)
   doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
 
   parseData = function(path) {

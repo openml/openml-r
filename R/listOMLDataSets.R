@@ -11,7 +11,7 @@
 #' @export
 listOMLDataSets = function(verbosity = NULL, status = "active") {
   url = getAPIURL("data/list")
-  content = downloadXML(url, NULL, verbosity)
+  content = doAPICallGET(url, NULL, verbosity)
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
   status.levels = c("active", "deactivated", "in_preparation")
   assertSubset(status, status.levels)

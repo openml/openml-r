@@ -19,7 +19,7 @@ listOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
 #   assertSubset(name, qualities)
 
   url = getAPIURL("data/qualities/", api.arg = did)
-  content = downloadXML(url, NULL, verbosity = verbosity, post = FALSE)
+  content = doAPICallGET(url, NULL, verbosity = verbosity)
   xml = parseXMLResponse(content, "Getting data set qualities", "data_qualities", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])

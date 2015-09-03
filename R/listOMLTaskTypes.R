@@ -10,7 +10,7 @@
 #' @export
 listOMLTaskTypes = function(verbosity = NULL) {
   url = getAPIURL("tasktype/list")
-  content = downloadXML(url, NULL, verbosity)
+  content = doAPICallGET(url, NULL, verbosity)
   xml = parseXMLResponse(content, "Getting task type list", "task_types", as.text = TRUE)
   data.frame(
     id = xmlValsMultNsI(xml, "/oml:task_types/oml:task_type/oml:id"),
