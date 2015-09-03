@@ -1,4 +1,8 @@
-#' Download an OpenML flow.
+#' @title Download an OpenML flow.
+#'
+#' @description
+#' Given an flow id, the corresponding \code{\link{OMLFlow}} is downloaded if
+#' not already available in cache.
 #'
 #' @template arg_flow.id
 #' @template arg_verbosity
@@ -7,7 +11,7 @@
 getOMLFlow = function(flow.id, verbosity = NULL) {
   flow.id = asCount(flow.id)
 
-  content = try(doAPICall(api.call = "flow", id = flow.id, 
+  content = try(doAPICall(api.call = "flow", id = flow.id,
     file = NULL, verbosity = verbosity, method = "GET"), silent = TRUE)
   if (is.error(content))
     stop("Flow (temporarily) not available.")

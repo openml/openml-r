@@ -4,8 +4,7 @@
 #' This function downloads an OpenML task and all associated files from the OpenML repository,
 #' caches the files on disk and creates an S3 object which completely specifies the task.
 #'
-#' @param task.id [\code{integer(1)}]\cr
-#'   The task ID.
+#' @template arg_task_id
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
 #' @export
@@ -26,7 +25,7 @@ getOMLTask = function(task.id, verbosity = NULL) {
 
   # get XML description
   if (!f$task.xml$found) {
-    task.contents = doAPICall(api.call = "task", id = id, 
+    task.contents = doAPICall(api.call = "task", id = id,
       file = f$task.xml$path, verbosity = verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Task XML found in cache.")
