@@ -70,7 +70,15 @@ downloadXML = function(url, file, verbosity = NULL, post = FALSE) {
   return(content)
 }
 
-# download an arff to disk
+# @title Download an arff file to disk.
+#
+# @param url [character(1)]
+#   URL to arff file.
+# @param file [character(1)]
+#   Destination file.
+# @verbosity [logical(1)]
+#   Be verbose and show info messages?
+# @return Parsed arff file.
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
 downloadARFF = function(url, file, verbosity = NULL) {
   showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
