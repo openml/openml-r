@@ -18,12 +18,11 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL, verbosit
   if (is.null(task.id) && is.null(setup.id) && is.null(flow.id))
     stop("Please hand over at least one of the following: task.id, setup.id, flow.id")
 
-  #FIXME: API expects implementation.id here instead of flow.id
-  get.args = list(task.id = task.id, setup.id = setup.id, implementation.id = flow.id)
-  get.args = Filter(function(x) !is.null(x), get.args)
-  url = getAPIURL("run/list", get.args = get.args)
+  url.args = list(task_id = task.id, setup_id = setup.id, flow_id = flow.id)
+  url.args = Filter(function(x) !is.null(x), url.args)
 
-  content = try(doAPICallGET(url, NULL, verbosity = verbosity), silent = TRUE)
+  content = try(doAPICall("run/list", url.args = url.args, file = NULL, method = "GET",
+   verbosity = verbosity))
 
   if (is.error(content))
     return(data.frame())
