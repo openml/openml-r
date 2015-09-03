@@ -4,16 +4,11 @@
 \alias{listOMLRunResults}
 \title{List run results of a task.}
 \usage{
-listOMLRunResults(task.id, session.hash = getSessionHash(),
-  verbosity = NULL)
+listOMLRunResults(task.id, verbosity = NULL)
 }
 \arguments{
-\item{task.id}{[\code{numeric}]\cr
+\item{task.id}{[\code{integer(1)}]\cr
 The task ID.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -23,7 +18,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{data.frame}]
+[\code{data.frame}].
 }
 \description{
 Retrieves all run results for a task specified by \code{task.id} and returns

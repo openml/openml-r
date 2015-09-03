@@ -4,14 +4,9 @@
 \alias{listOMLDataSetQualitiesList}
 \title{List available OpenML qualities names.}
 \usage{
-listOMLDataSetQualitiesList(session.hash = getSessionHash(),
-  verbosity = NULL)
+listOMLDataSetQualitiesList(verbosity = NULL)
 }
 \arguments{
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
-
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr

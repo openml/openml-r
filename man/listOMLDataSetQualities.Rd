@@ -4,16 +4,11 @@
 \alias{listOMLDataSetQualities}
 \title{List available OpenML qualities with values for given data set.}
 \usage{
-listOMLDataSetQualities(did, session.hash = getSessionHash(),
-  verbosity = NULL, name = NULL)
+listOMLDataSetQualities(did, verbosity = NULL, name = NULL)
 }
 \arguments{
 \item{did}{[\code{integer(1)}]\cr
 The data set ID}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

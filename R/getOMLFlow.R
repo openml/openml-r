@@ -7,7 +7,7 @@
 getOMLFlow = function(implementation.id, verbosity = NULL) {
   implementation.id = asCount(implementation.id)
 
-  url = getAPIURL("flow", get.arg = implementation.id)
+  url = getAPIURL("flow", api.arg = implementation.id)
   content = try(downloadXML(url, NULL, verbosity, post = FALSE), silent = TRUE)
   if (is.error(content))
     stop("Flow (temporarily) not available.")
@@ -44,7 +44,7 @@ getOMLFlow = function(implementation.id, verbosity = NULL) {
 #       writeLines(source.file, flow$source.path)
 #     }
 #   }
-  
+
   return(flow)
 }
 

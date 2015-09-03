@@ -3,7 +3,6 @@
 #' @description
 #' The returned \code{data.frame} contains quality name \dQuote{name}.
 #'
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family list

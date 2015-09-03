@@ -2,9 +2,7 @@
 % Please edit documentation in R/runTaskMlr.R
 \name{runTaskMlr}
 \alias{runTaskMlr}
-\title{Run mlr learner on OpenML task.
-
-Run task with a specified learner from mlr and produce predictions.}
+\title{Run mlr learner on OpenML task.}
 \usage{
 runTaskMlr(task, learner, remove.const.feats = TRUE, verbosity = NULL,
   auto.upload = TRUE, resample.extract, ...)
@@ -53,8 +51,6 @@ Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.}
 [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.resample.result}.
 }
 \description{
-Run mlr learner on OpenML task.
-
 Run task with a specified learner from mlr and produce predictions.
 }
 \seealso{

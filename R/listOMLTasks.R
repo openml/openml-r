@@ -13,7 +13,7 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
   status.levels = c("active", "deactivated", "in_preparation")
   assertSubset(status, status.levels)
 
-  url = getAPIURL("task/list", get.arg = NULL)
+  url = getAPIURL("task/list")
   content = try(downloadXML(url, NULL, verbosity = verbosity), silent = TRUE)
 
   if (is.error(content))
@@ -48,7 +48,7 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
   df$status = factor(df$status, levels = status.levels)
 
   # subset status level
-  ret = droplevels(as.data.frame(df)[df$status%in%status, ])
+  ret = droplevels(as.data.frame(df)[df$status %in% status, ])
   row.names(ret) = NULL
   return(ret)
 }

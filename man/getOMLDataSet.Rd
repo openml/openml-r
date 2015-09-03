@@ -6,13 +6,11 @@
 \alias{getOMLDataSet.numeric}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(x, check.status, session.hash, verbosity)
+getOMLDataSet(x, check.status, verbosity)
 
-\method{getOMLDataSet}{OMLTask}(x, check.status = FALSE,
-  session.hash = getSessionHash(), verbosity = NULL)
+\method{getOMLDataSet}{OMLTask}(x, check.status = FALSE, verbosity = NULL)
 
-\method{getOMLDataSet}{numeric}(x, check.status = FALSE,
-  session.hash = getSessionHash(), verbosity = NULL)
+\method{getOMLDataSet}{numeric}(x, check.status = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{x}{[\code{integer(1)} | \code{\link{OMLTask}}]\cr
@@ -21,10 +19,6 @@ Either a data set ID or a task.}
 \item{check.status}{[\code{logical(1)}]\cr
 If this is set to \code{TRUE}, only data sets with active status are returned.
 Default is \code{FALSE}.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

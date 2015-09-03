@@ -26,7 +26,7 @@ getOMLTask = function(task.id, verbosity = NULL) {
 
   # get XML description
   if (!f$task.xml$found) {
-    url = getAPIURL("task", get.arg = id)
+    url = getAPIURL("task", api.arg = id)
     task.contents = downloadXML(url, f$task.xml$path,
       verbosity, post = FALSE)
   } else {

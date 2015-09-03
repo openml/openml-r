@@ -6,17 +6,16 @@
 #' the setup id \dQuote{sid} and the task.id \dQuote{tid}.
 #'
 #' @template arg_task_id
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
-listOMLRunResults = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
+listOMLRunResults = function(task.id, verbosity = NULL) {
   id = asCount(task.id)
-  assertString(session.hash)
 
+  #FIXME: openml.task.evaluations removed in API v1
   url = getAPIURL("openml.task.evaluations", task_id = id)
-  content = try(downloadXML(url, NULL, verbosity, session_hash = session.hash), silent = TRUE)
+  content = try(downloadXML(url, NULL, verbosity), silent = TRUE)
 
   if (is.error(content))
     return(data.frame())

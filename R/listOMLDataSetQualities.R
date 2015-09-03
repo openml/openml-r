@@ -17,8 +17,8 @@ listOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
 #   qualities = listOMLDataSetQualitiesList()$name
 #   if(is.null(name)) name = qualities
 #   assertSubset(name, qualities)
-  
-  url = getAPIURL("data/qualities/", get.arg = did)
+
+  url = getAPIURL("data/qualities/", api.arg = did)
   content = downloadXML(url, NULL, verbosity = verbosity, post = FALSE)
   xml = parseXMLResponse(content, "Getting data set qualities", "data_qualities", as.text = TRUE)
 
