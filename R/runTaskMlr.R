@@ -6,12 +6,6 @@
 #' @template arg_task
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   Learner from package mlr to run the task.
-#' @param remove.const.feats [\code{logical(1)}]\cr
-#'   Should constant features be removed?
-#'   Default is \code{TRUE}.
-#' @param drop.levels [\code{logical(1)}]\cr
-#'   Drop all empty factor levels in the data?
-#'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @param auto.upload [\code{logical(1)}]\cr
 #'   Checks whether an \code{\link{OMLFlow}} object containing the passed \code{learner}
@@ -42,32 +36,19 @@ runTaskMlr = function(task, learner, remove.const.feats = TRUE, drop.levels = TR
   assertClass(learner, "Learner")
   assertFlag(remove.const.feats)
 
-  if ((task$task.type == "Supervised Classification" && learner$type != "classif") ||
-    (task$task.type == "Supervised Regression" && learner$type != "regr") ||
-    (task$task.type == "Survival Analysis" && learner$type != "surv") ||
-    (task$task.type == "Clustering" && learner$type != "cluster")) {
-    stopf("Learner type ('%s') does not correspond to task type ('%s').", task$task.type, learner$type)
-  }
-
   run = makeOMLRun(task.id = task$task.id)
-  mlr.task = toMlr(task, verbosity = verbosity)
+  z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
 
+  # get mlr show.info from verbosity level
   if (is.null(verbosity))
     verbosity = getOMLConfig()$verbosity
   show.info = (verbosity > 0L)
 
-  if (remove.const.feats)
-    mlr.task$mlr.task = removeConstantFeatures(mlr.task$mlr.task, show.info = show.info, ...)
-
-  res = try(resample(learner, mlr.task$mlr.task, mlr.task$mlr.rin, measures = mlr.task$mlr.measures,
-    extract = resample.extract, show.info = show.info), silent = TRUE)
-  if (!is.error(res)) {
-    run$predictions = reformatPredictions(pred = res$pred$data, task = task, orig.lvls = mlr.task$orig.lvls)
-    run$mlr.resample.result = res
-  } else {
-    run$error.message = res[1]
-  }
-  class(run) = c("OMLMlrRun", "OMLRun")
+  res = resample(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures,
+    extract = resample.extract, show.info = show.info)
+  run$predictions = reformatPredictions(res$pred$data, task)
+  run$mlr.resample.result = res
+  run = addClasses(run, "OMLMlrRun")
 
   run$parameter.setting = makeOMLRunParList(learner)
 

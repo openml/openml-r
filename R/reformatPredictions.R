@@ -29,6 +29,10 @@ reformatPredictions = function(pred, task) {
   fold = iter %% folds
   fold[fold == 0L] = folds
   rowid = pred$id
+  if (task$task.type == "Supervised Classification")
+    orig.lvls = levels(task$input$data.set$data[, task$input$target.features])
+  else
+    orig.lvls = NULL
 
   # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
   new.pred = data.frame(

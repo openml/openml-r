@@ -4,7 +4,6 @@
 convertOMLMeasuresToMlr = function(measures, task.type) {
   assertCharacter(measures, any.missing = FALSE)
 
-
   lookup = list(
     "meanabsoluteerror" = mmce,
     "rootmeansquarederror" = rmse,
@@ -13,11 +12,13 @@ convertOMLMeasuresToMlr = function(measures, task.type) {
     "fmeasure" = f1,
     "matthewscorrelationcoefficient" = mcc,
     "precision" = ppv,
-    "predictiveaccuracy" = acc,
+    "predictive_accuracy" = acc,
     "recall" = tpr,
     "cindex" = cindex
   )
-  lookup[measures]
 
+  assertSubset(measures, names(lookup))
+
+  lookup[measures]
 }
 
