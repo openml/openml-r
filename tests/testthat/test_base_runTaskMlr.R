@@ -2,7 +2,7 @@ context("runTaskMlr")
 
 test_that("runTaskMlr", {
   task = getOMLTask(1)
-  lrn = makeLearner("classif.J48")
+  lrn = makeLearner("classif.rpart")
   run = runTaskMlr(task, lrn)
 
   expect_is(run, "OMLMlrRun")

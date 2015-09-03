@@ -1,9 +1,9 @@
 #' @title Run mlr learner on OpenML task.
 #'
+#' @description
 #' Run task with a specified learner from mlr and produce predictions.
 #'
-#' @param task [\code{\link{OMLTask}}]\cr
-#'   An OpenML task.
+#' @template arg_task
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   Learner from package mlr to run the task.
 #' @param remove.const.feats [\code{logical(1)}]\cr
@@ -11,16 +11,16 @@
 #'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @param auto.upload [\code{logical(1)}]\cr
-#'   Checks whether an \code{\link{OMLFlow}} object containing the passed \code{learner} 
-#'   was already uploaded to the server. 
-#'   
-#'   If it has not been found on the server and \code{auto.upload = TRUE}, 
-#'   a new \code{implementation.id} is assigned and the \code{\link{OMLFlow}} is 
-#'   automatically uploaded. If the \code{learner} was already uploaded, the 
+#'   Checks whether an \code{\link{OMLFlow}} object containing the passed \code{learner}
+#'   was already uploaded to the server.
+#'
+#'   If it has not been found on the server and \code{auto.upload = TRUE},
+#'   a new \code{implementation.id} is assigned and the \code{\link{OMLFlow}} is
+#'   automatically uploaded. If the \code{learner} was already uploaded, the
 #'   \code{implementation.id} of the respective \code{\link{OMLFlow}} is used.
-#'   
-#'   If \code{auto.upload = FALSE}, only the \code{implementation.id} of an 
-#'   already uploaded \code{learner} is used and an error is returned if the 
+#'
+#'   If \code{auto.upload = FALSE}, only the \code{implementation.id} of an
+#'   already uploaded \code{learner} is used and an error is returned if the
 #'   \code{learner} was not found on the server.
 #' @param resample.extract [\code{function}]\cr
 #'   Function used to extract information from a fitted model during the resampling done by \code{mlr}.
@@ -32,7 +32,7 @@
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.resample.result}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
-runTaskMlr = function(task, learner, remove.const.feats = TRUE, 
+runTaskMlr = function(task, learner, remove.const.feats = TRUE,
   verbosity = NULL, auto.upload = TRUE, resample.extract, ...) {
 
   assertClass(task, "OMLTask")
@@ -67,18 +67,18 @@ runTaskMlr = function(task, learner, remove.const.feats = TRUE,
   class(run) = c("OMLMlrRun", "OMLRun")
 
   run$parameter.setting = makeOMLRunParList(learner)
-  
-  check = checkOMLFlow(learner, verbosity = verbosity)
-  
-  if(check$exists) {
-    run$implementation.id = xmlOValI(check$doc, "/oml:implementation_exists/oml:id")
-  } else {
-    if(auto.upload) {
-      run$implementation.id = uploadOMLFlow(learner, verbosity = verbosity)
-    } else {
-      stopf("Flow does not exist, use 'auto.upload = TRUE' to upload it.")
-    }
-  }
+
+  # check = checkOMLFlow(learner, verbosity = verbosity)
+
+  # if(check$exists) {
+  #   run$implementation.id = xmlOValI(check$doc, "/oml:implementation_exists/oml:id")
+  # } else {
+  #   if(auto.upload) {
+  #     run$implementation.id = uploadOMLFlow(learner, verbosity = verbosity)
+  #   } else {
+  #     stopf("Flow does not exist, use 'auto.upload = TRUE' to upload it.")
+  #   }
+  # }
   return(run)
 }
 
@@ -164,7 +164,7 @@ reformatPredictions = function(pred, task, orig.lvls) {
 makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
-  
+
   par.vals = mlr.lrn$par.vals
   par.names = names(mlr.lrn$par.vals)
   par.settings = vector("list", length(par.vals))
