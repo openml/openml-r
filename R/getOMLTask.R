@@ -118,7 +118,7 @@ getOMLTask = function(task.id, verbosity = NULL) {
 
   # replace targets with new column names
   targets = task$input$data.set$colnames.new[unlist(lapply(targets, function(x) which(x == task$input$data.set$colnames.old)))]
-  task$input$data.set$target.features = targets
+  task$input$target.features = targets
 
   if (task.type == "Supervised Classification") {
     if (!is.factor(task$input$data.set$data[, targets])) {
