@@ -11,30 +11,33 @@ To download a certain task from the OpenML server, you need to know the task's I
 The following call returns an OpenML task object:
 
 ```{r}
-task = getOMLTask(task.id = 1L)
+task = getOMLTask(task.id = 59L)
 task
 ```
 
-The corresponding `OMLDataSet` can be accessed by
+The corresponding `"OMLDataSet"` object can be accessed by
 
 ```{r}
 task$input$data.set
 ```
 
-**FIXME: Add further information here**
+A special print function gives the basic information on the data set. To extract the data itself 
+one can use
+
+```{r}
+iris.data = task$input$data.set$data
+head(iris.data)
+```
 
 ### Download an OpenML data set only
-OpenML tasks have predefined estimation procedures and measures. Sometimes you might want to deviate
-from these fixings. Of course, it is possible to define new tasks that match your desires, but this
+**FIXME: Change this** OpenML tasks have predefined performance estimation procedures and performance measures. Sometimes you might want to deviate
+from these fixings. Of course, it is possible to define new tasks via the OpenML web page that match your desires, but this
 will not always be the means of choice - e.g., when you want to run a few preliminary experiments.
 For this matter, you can use the function `getOMLDataSet`, which accepts not only tasks (as seen in the section above) but also a data set ID as input and returns the corresponding `OMLDataSet`:
 
 ```{r}
-anneal.data = getOMLDataSet(x = 1L)  # the anneal data set has the data set ID (did = 1, see also previous section)
-anneal.data
-
-anneal.data = getOMLDataSet(x = task)  # the task defined above (with task.id = 1) uses the anneal data
-anneal.data
+iris.data2 = getOMLDataSet(did = 1L)  # the iris data set has the data set ID (did = 1, see also previous section)
+iris.data2
 ```
 
 ### Download an OpenML run
