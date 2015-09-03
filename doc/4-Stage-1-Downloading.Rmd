@@ -2,11 +2,9 @@ Stage 1 - Downloading
 =====================
 
 ### Download an OpenML task
-Each OpenML task is a bundle of a data set, a target feature, a (performance) estimation procedure (e.g.,
-10-fold CV), data splits for this estimation procedure and, finally, one or more (performance) evaluation measures. Every task has a type, e.g., `"Supervised Classification"` or `"Supervised Regression"`. A user can download such a task from the OpenML server, compute predictions with an algorithm (called "flow" or "implementation") and upload this algorithm as well as the predictions. The server will then calculate many different measures and add them to the data base.
-
-To download a certain task from the OpenML server, you need to know the task's ID. See
-[section 3](3-Stage-0-Listing.md) to learn how to retrieve a list of all available tasks in R.
+A user can download a task from the OpenML server, compute predictions with an algorithm (i.e., with a specific setup)
+and upload this algorithm as well as the predictions. The server will then calculate many different performance measures 
+and add them to the data base.
 
 The following call returns an OpenML task object:
 
@@ -30,24 +28,36 @@ head(iris.data)
 ```
 
 ### Download an OpenML data set only
-**FIXME: Change this** OpenML tasks have predefined performance estimation procedures and performance measures. Sometimes you might want to deviate
-from these fixings. Of course, it is possible to define new tasks via the OpenML web page that match your desires, but this
-will not always be the means of choice - e.g., when you want to run a few preliminary experiments.
-For this matter, you can use the function `getOMLDataSet`, which accepts not only tasks (as seen in the section above) but also a data set ID as input and returns the corresponding `OMLDataSet`:
+To directly download a data set, e.g., when you want to run a few preliminary experiments, one can
+use the function `getOMLDataSet`. The function accepts a data set ID as input and returns the corresponding `OMLDataSet`:
 
 ```{r}
-iris.data2 = getOMLDataSet(did = 1L)  # the iris data set has the data set ID (did = 1, see also previous section)
+iris.data2 = getOMLDataSet(did = 61L)  # the iris data set has the data set ID 61
 iris.data2
 ```
 
-### Download an OpenML run
-To download the results of one run including all server and user computed metrics, you have to know the corresponding run ID. You can download a single OpenML run with the `getOMLRun` function:
+### Download an OpenML flow
+
+**FIXME: `implementation.id` should be called `flow.id`**
+
+You can download a flow by specifying the `implementation.id` parameter in the `getOMLFlow` function:
 
 ```{r}
-run = getOMLRun(run.id = 1L)  # see ?OMLRun for each slot of the OMLRun object
+flow = getOMLFlow(implementation.id = 1248L)
+flow
 ```
 
-There are some slots of major intereset for the `OMLRun` object. A list containing the parameter settings
+### Download an OpenML run
+To download the results of one run including all server and user computed metrics, you have to know 
+the corresponding run ID. These IDs can be extracted from the `runs` object, which was created in the
+previous section. Here we use the first run of task 59, which has the `run.id` 234.
+You can download a single OpenML run with the `getOMLRun` function:
+
+```{r}
+run = getOMLRun(run.id = 234L)  # see ?OMLRun for each slot of the OMLRun object
+```
+
+There are some slots which are of major intereset for the `OMLRun` object. A list containing the parameter settings
 can be obtained by `run$parameter.setting`. All data that served as input for the run, including the
 URL to the data is stored in `run$input.data`.
 
@@ -55,17 +65,8 @@ To retrieve predictions of an uploaded run, you can set the parameter `get.predi
 predictions in the `$predictions` slot or use the function `getOMLPredictions(run)`:
 
 ```{r}
-run.pred = getOMLRun(run.id = 1L, get.predictions = TRUE)
+run.pred = getOMLRun(run.id = 234L, get.predictions = TRUE)
 all.equal(run.pred$predictions, getOMLPredictions(run))
-```
-
-### Download an OpenML flow
-
-Flows are implementations of single algorithms, workflows, or scripts. You can download a flow by specifying the `implementation.id` parameter in the `getOMLFlow` function:
-
-```{r}
-flow = getOMLFlow(implementation.id = 1248L)
-flow
 ```
 
 ----------------------------------------------------------------------------------------------------

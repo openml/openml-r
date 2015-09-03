@@ -33,13 +33,15 @@ to find the `iris` data set.
 subset(datasets, name == "iris")[, 1:6]
 ```
 
-As one can see that there are two data sets called `iris`. We use the original three class
-data set. It has the data set ID `did` = `r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`. 
+As one can see there are two data sets called `iris`. We want to use the original data set
+with three classes. It has the data set ID `did` = `r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`. 
 One can also look at the data set on the OpenML web page 
 http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`.
 
 ### List tasks
-To list tasks one can use
+Each OpenML task is a bundle of a data set, a target feature, a (performance) estimation procedure (e.g.,
+10-fold CV), data splits for this estimation procedure and, finally, one or more (performance) evaluation measures. 
+Every task has a type, e.g., `"Supervised Classification"` or `"Supervised Regression"`. To list tasks one can use
 ```{r}
 tasks = listOMLTasks()
 tasks[1:6, 1:5]
@@ -54,10 +56,26 @@ tasks = listOMLTasks()
 # subset tasks to "Supervised Classification" for the iris data (did == 61)
 subset(tasks, task_type == "Supervised Classification" & did == 61L)[, c(1, 6)]
 ```
+### List flows
+
+A flow is the definition and implementation of a specific algorithm workflow or script. 
+I.e., a flow is essentially the code that implements the algorithm.
+
+```{r}
+flows = listOMLFlows()
+flows[1:7, 1:2]
+```
+
+### List setups
+
+A setup is the combination of a flow with specific parameter settings.
+
+**FIXME: Add this once it is up and running**
 
 ### List runs and run results
 
-Similarly, you can also list runs and run results. Here one has additional arguments to subset
+A run is a combination of a setup and a task. The results are stored as a run result.
+Both, runs and run results can be listed. Here one has additional arguments to subset
 the result. For example one can search for a specific `task.id`, `setup.id` or `implementation.id`.
 To list all runs for [task 59](http://www.openml.org/t/59).
 
@@ -69,14 +87,11 @@ runresults = listOMLRunResults(task.id = 59L)  # a task ID must be supplied
 colnames(runresults)
 ```
 
-### List flows, evaluation measures and task types
-To list further objects such as flows, evaluation measures and task types one can simply use 
+### List evaluation measures and task types
+To list further objects such as evaluation measures and task types one can simply use 
 the respective functions.
 
 ```{r}
-flows = listOMLFlows()
-flows[1:7, 1:2]
-
 measures = listOMLEvaluationMeasures()
 measures[1:7, , drop = FALSE]
 
