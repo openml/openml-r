@@ -4,7 +4,7 @@
 \alias{listOMLRuns}
 \title{List OpenML runs.}
 \usage{
-listOMLRuns(task.id = NULL, setup.id = NULL, implementation.id = NULL,
+listOMLRuns(task.id = NULL, setup.id = NULL, flow.id = NULL,
   verbosity = NULL)
 }
 \arguments{
@@ -14,7 +14,7 @@ The task ID.}
 \item{setup.id}{[\code{integer(1)}]\cr
 ID of the parameter setup.}
 
-\item{implementation.id}{[\code{integer(1)}]\cr
+\item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
 
 \item{verbosity}{[\code{integer(1)}]\cr

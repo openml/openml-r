@@ -4,10 +4,10 @@
 \alias{getOMLFlow}
 \title{Download an OpenML flow.}
 \usage{
-getOMLFlow(implementation.id, verbosity = NULL)
+getOMLFlow(flow.id, verbosity = NULL)
 }
 \arguments{
-\item{implementation.id}{[\code{integer(1)}]\cr
+\item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
 
 \item{verbosity}{[\code{integer(1)}]\cr

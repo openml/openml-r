@@ -2,23 +2,24 @@
 #'
 #' @description
 #' This function returns information on all OpenML runs that match a certain
-#' \code{task.id}, \code{setup.id} and/or implementation ID \code{implementation.id}.
+#' \code{task.id}, \code{setup.id} and/or implementation ID \code{flow.id}.
 #'
 #' @template arg_task_id
 #' @param setup.id [\code{integer(1)}]\cr
 #'  ID of the parameter setup.
-#' @template arg_implementation.id
+#' @template arg_flow.id
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @export
-listOMLRuns = function(task.id = NULL, setup.id = NULL, implementation.id = NULL, verbosity = NULL) {
+listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL, verbosity = NULL) {
   if (!is.null(task.id)) assertInt(task.id)
   if (!is.null(setup.id)) assertInt(setup.id)
-  if (!is.null(implementation.id)) assertInt(implementation.id)
-  if (is.null(task.id) && is.null(setup.id) && is.null(implementation.id))
-    stop("Please hand over at least one of the following: task.id, setup.id, implementation.id")
+  if (!is.null(flow.id)) assertInt(flow.id)
+  if (is.null(task.id) && is.null(setup.id) && is.null(flow.id))
+    stop("Please hand over at least one of the following: task.id, setup.id, flow.id")
 
-  get.args = list(task.id = task.id, setup.id = setup.id, implementation.id = implementation.id)
+  #FIXME: API expects implementation.id here instead of flow.id
+  get.args = list(task.id = task.id, setup.id = setup.id, implementation.id = flow.id)
   get.args = Filter(function(x) !is.null(x), get.args)
   url = getAPIURL("run/list", get.args = get.args)
 

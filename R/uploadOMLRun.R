@@ -4,20 +4,20 @@
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.
-#' @template arg_implementation.id
+#' @template arg_flow.id
 #' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}]. The run ID.
 #' @export
-uploadOMLRun = function(run, implementation.id, session.hash = getSessionHash(), verbosity = NULL) {
+uploadOMLRun = function(run, flow.id, session.hash = getSessionHash(), verbosity = NULL) {
   assertClass(run, "OMLRun")
-  
-  if (is.na(run$implementation.id)) {
-    if (!missing(implementation.id)) {
-      run$implementation.id = asCount(implementation.id)
-    } else stop("Please provide an 'implementation.id'")
+
+  if (is.na(run$flow.id)) {
+    if (!missing(flow.id)) {
+      run$flow.id = asCount(flow.id)
+    } else stop("Please provide an 'flow.id'")
   } else {
-    if (!missing(implementation.id)) stop("This run has already an 'implementation.id'.")
+    if (!missing(flow.id)) stop("This run has already an 'flow.id'.")
   }
   if (is.na(run$error.message)) {
     assertDataFrame(run$predictions)
@@ -34,7 +34,7 @@ uploadOMLRun = function(run, implementation.id, session.hash = getSessionHash(),
   if (!is.null(run$predictions)) {
     output = tempfile()
     on.exit(unlink(output), add = TRUE)
-    if(getOMLConfig()$arff.reader == "RWeka") 
+    if(getOMLConfig()$arff.reader == "RWeka")
       RWeka::write.arff(run$predictions, file = output) else farff::writeARFF(run$predictions, path = output)
 
     content = downloadXML(url, NULL, verbosity,
@@ -50,7 +50,7 @@ uploadOMLRun = function(run, implementation.id, session.hash = getSessionHash(),
   }
   # was uploading successful?
   doc = try(parseXMLResponse(content, "Uploading run", "upload_run", as.text = TRUE), silent = TRUE)
-  
+
   # if not, print the error.
   if (is.error(doc)) {
     parseXMLResponse(content, "Uploading run", "response")

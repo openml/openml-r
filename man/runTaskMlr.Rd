@@ -4,8 +4,8 @@
 \alias{runTaskMlr}
 \title{Run mlr learner on OpenML task.}
 \usage{
-runTaskMlr(task, learner, remove.const.feats = TRUE, verbosity = NULL,
-  auto.upload = TRUE, resample.extract, ...)
+runTaskMlr(task, learner, remove.const.feats = TRUE, drop.levels = TRUE,
+  verbosity = NULL, auto.upload = TRUE, resample.extract, ...)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr
@@ -13,10 +13,6 @@ An OpenML task.}
 
 \item{learner}{[\code{\link[mlr]{Learner}}]\cr
 Learner from package mlr to run the task.}
-
-\item{remove.const.feats}{[\code{logical(1)}]\cr
-Should constant features be removed?
-Default is \code{TRUE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

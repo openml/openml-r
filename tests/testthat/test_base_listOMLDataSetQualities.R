@@ -1,13 +1,9 @@
 context("listOMLDataSetQualities")
 
 test_that("listOMLDataSetQualities", {
-  for (id in 1:2) {
-    qual = listOMLDataSetQualities(id)
-    expect_is(qual, "data.frame")
-    #FIXME: listOMLDataSetQualities(2) contains only 9 qualities (none of them is ClassCount, ClassEntropy or NoiseToSignalRatio)
-    #expect_true(all(c("ClassCount", "ClassEntropy", "NoiseToSignalRatio") %in% qual$name))
-    expect_true(is.character(qual[, 1L]))
-    expect_true(is.numeric(qual[, 2L]))
-    expect_equal(names(qual), c("name", "value"))
-  }
+  qualities_list = listOMLDataSetQualities()
+  expect_is(qualities_list, "data.frame")
+  expect_true(nrow(qualities_list) >= 64L && ncol(qualities_list) == 1L)
+  expect_true(setequal(names(qualities_list), c("name")))
+  expect_true(all(apply(qualities_list[1], 2, is.character)))
 })
