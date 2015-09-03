@@ -41,7 +41,7 @@ toMlr.OMLTask = function(obj, target = obj$input$data.set$target.features,
   assertFlag(ignore.flagged.attributes)
 
   task.type = obj$task.type
-  data.set = getOMLDataSet(obj)
+  data.set = obj$input$data.set
   data = data.set$data
   estim.proc = obj$input$estimation.procedure
   if (remove.target.NAs) {
@@ -134,7 +134,7 @@ createMlrResampleInstance = function(estim.proc, mlr.task) {
   } else if (type == "holdout") {
     mlr.rdesc = makeResampleDesc("Holdout", split = 1 - percentage/100)
     mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
-    n.folds = 1  
+    n.folds = 1
   } else if (type == "leaveoneout") {
     mlr.rdesc = makeResampleDesc("LOO")
     mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
