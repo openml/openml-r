@@ -2,19 +2,13 @@
 % Please edit documentation in R/getOMLDataSet.R
 \name{getOMLDataSet}
 \alias{getOMLDataSet}
-\alias{getOMLDataSet.OMLTask}
-\alias{getOMLDataSet.numeric}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(x, check.status, verbosity)
-
-\method{getOMLDataSet}{OMLTask}(x, check.status = FALSE, verbosity = NULL)
-
-\method{getOMLDataSet}{numeric}(x, check.status = FALSE, verbosity = NULL)
+getOMLDataSet(did, check.status, verbosity)
 }
 \arguments{
-\item{x}{[\code{integer(1)} | \code{\link{OMLTask}}]\cr
-Either a data set ID or a task.}
+\item{did}{[\code{integer(1)}]\cr
+Data set ID.}
 
 \item{check.status}{[\code{logical(1)}]\cr
 If this is set to \code{TRUE}, only data sets with active status are returned.
@@ -33,9 +27,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 \description{
 Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
 and returned.
-
-Given an \code{\link{OMLTask}}, it is checked if the related data set is already encapsulated in the
-task object. If not, the task's data set ID will be used to download it.
 
 Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
 Tasks can be downloaded with \code{\link{getOMLTask}}.

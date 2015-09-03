@@ -4,14 +4,11 @@
 #' Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
 #' and returned.
 #'
-#' Given an \code{\link{OMLTask}}, it is checked if the related data set is already encapsulated in the
-#' task object. If not, the task's data set ID will be used to download it.
-#'
 #' Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
 #' Tasks can be downloaded with \code{\link{getOMLTask}}.
 #'
-#' @param x [\code{integer(1)} | \code{\link{OMLTask}}]\cr
-#'   Either a data set ID or a task.
+#' @param did [\code{integer(1)}]\cr
+#'   Data set ID.
 #' @param check.status [\code{logical(1)}]\cr
 #'   If this is set to \code{TRUE}, only data sets with active status are returned.
 #'   Default is \code{FALSE}.
@@ -19,36 +16,24 @@
 #' @return [\code{\link{OMLDataSet}}]
 #' @family download
 #' @export
-getOMLDataSet = function(x, check.status, verbosity) {
-  UseMethod("getOMLDataSet")
-}
-
-#' @rdname getOMLDataSet
-#' @export
-getOMLDataSet.OMLTask = function(x, check.status = FALSE, verbosity = NULL) {
-  return(x$input$data.set)
-}
-
-#' @rdname getOMLDataSet
-#' @export
-getOMLDataSet.numeric = function(x, check.status = FALSE, verbosity = NULL) {
-  id = asInt(x, lower = 0)
+getOMLDataSet = function(did, check.status = FALSE, verbosity = NULL) {
+  did = asInt(did, lower = 0)
 
   if (check.status) {
     l = listOMLDataSets(verbosity = 0L)
-    status = l[l$did == id, "status"]
+    status = l[l$did == did, "status"]
     if (status == "deactivated") {
       stop("Data set has been deactivated.")
     } else if (status == "in_preparation") {
       stop("Data set is in preparation. You can download it as soon as it's active.")
     }
   }
-  showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
-  f = findCachedDataset(id)
+  showInfo(verbosity, "Getting data set '%i' from OpenML repository.", did)
+  f = findCachedDataset(did)
 
   # get XML description
   if (!f$description.xml$found) {
-    url = getAPIURL("data", api.arg = id)
+    url = getAPIURL("data", api.arg = did)
     data.desc.contents = doAPICallGET(url, f$description.xml$path, verbosity)
   } else {
     showInfo(verbosity, "Data set description found in cache.")

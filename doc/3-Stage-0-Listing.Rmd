@@ -26,8 +26,8 @@ inactive.data = listOMLDataSets(status = "deactivated")  # returns deactivated d
 inactive.data[1:3, 3:6]
 ```
 
-To find a specific data set, one can now query the resulting `datasets` object. Let's use
-the `iris` data set.
+To find a specific data set, one can now query the resulting `datasets` object. Suppose we want
+to find the `iris` data set.
 
 ```{r}
 subset(datasets, name == "iris")[, 1:6]
@@ -35,7 +35,8 @@ subset(datasets, name == "iris")[, 1:6]
 
 As one can see that there are two data sets called `iris`. We use the original three class
 data set. It has the data set ID `did` = `r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`. 
-One can also look at the data set on the OpenML web page http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`.
+One can also look at the data set on the OpenML web page 
+http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`.
 
 ### List tasks
 To list tasks one can use
@@ -56,14 +57,15 @@ subset(tasks, task_type == "Supervised Classification" & did == 61L)[, c(1, 6)]
 
 ### List runs and run results
 
-**FIXME: How is listOMLRuns**
-Similarly, you can also list runs and run results for a specific task, setup or implementation:
+Similarly, you can also list runs and run results. Here one has additional arguments to subset
+the result. For example one can search for a specific `task.id`, `setup.id` or `implementation.id`.
+To list all runs for [task 59](http://www.openml.org/t/59).
 
 ```{r eval = FALSE}
-runs = listOMLRuns(task.id = 1L)  # must be restricted to a task, setup and/or implementation ID
+runs = listOMLRuns(task.id = 59L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
 
-runresults = listOMLRunResults(task.id = 1L)  # a task ID must be supplied
+runresults = listOMLRunResults(task.id = 59L)  # a task ID must be supplied
 colnames(runresults)
 ```
 
