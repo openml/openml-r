@@ -24,7 +24,6 @@ The returned \code{data.frame} contains quality name \dQuote{name}.
 Other list: \code{\link{getOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEvaluationMeasures}};
-  \code{\link{listOMLFlows}};
-  \code{\link{listOMLRunResults}}
+  \code{\link{listOMLFlows}}
 }
 

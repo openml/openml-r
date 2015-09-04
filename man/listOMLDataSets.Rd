@@ -31,7 +31,6 @@ and describing data qualities.
 Other list: \code{\link{getOMLDataSetQualities}};
   \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLEvaluationMeasures}};
-  \code{\link{listOMLFlows}};
-  \code{\link{listOMLRunResults}}
+  \code{\link{listOMLFlows}}
 }
 

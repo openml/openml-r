@@ -31,7 +31,6 @@ The returned \code{data.frame} contains data set quality \dQuote{name} and value
 Other list: \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEvaluationMeasures}};
-  \code{\link{listOMLFlows}};
-  \code{\link{listOMLRunResults}}
+  \code{\link{listOMLFlows}}
 }
 

@@ -67,8 +67,12 @@ getOMLRun = function(run.id, get.predictions = TRUE, verbosity = NULL) {
   run.args = filterNull(list(
     run.id = xmlREValI(doc, "/oml:run/oml:run_id"),
     uploader = xmlREValI(doc, "/oml:run/oml:uploader"),
+    uploader.name = xmlOValS(doc, "/oml:run/oml:uploader.name"),
     task.id = xmlREValI(doc, "/oml:run/oml:task_id"),
+    task.type = xmlOValS(doc, "/oml:run/oml:task_type"),
+    task.evaluation.measure = xmlOValS(doc, "/oml:task_evaluation_measure"),
     flow.id = xmlRValI(doc, "/oml:run/oml:flow_id"),
+    flow.name = xmlOValS(doc, "/oml:run/oml:flow.name"),
     setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),
     setup.string = xmlOValS(doc, "/oml:run/oml:setup_string"),
     error.message = xmlOValS(doc, "/oml:run/oml:error_message"),
