@@ -1,4 +1,11 @@
 ##### creating stuff on init
+
+# @title Create a directory recursively.
+#
+# @param dir [character(1)]
+#   Directory name.
+# @param verbosity [logical(1)]
+#   Should the function be verbose?
 createDir = function(dir, verbosity = NULL) {
   if (!file.exists(dir)) {
     if (dir.create(dir, recursive = TRUE))
@@ -8,6 +15,13 @@ createDir = function(dir, verbosity = NULL) {
   }
 }
 
+# @title Create cache subdirectories for task, datasets, ...
+#
+# @description Stuff is stored as follows: cache_dir/type/id/, e.g.,
+# path_to_my_cache_dir/datasets/134/
+#
+# @param verbosity [logical(1)]
+#   Should the function be verbose?
 createCacheSubDirs = function(verbosity = NULL) {
   conf = getOMLConfig()
   cd = conf$cachedir
@@ -17,6 +31,15 @@ createCacheSubDirs = function(verbosity = NULL) {
   createDir(file.path(cd, "flows"), verbosity)
 }
 
+# @title Get cache directory.
+#
+# @param subdir [character(1)]
+#   Subdirectory indicating the type of cache, e.g, datasets.
+# @param id [integer(1)]
+#   ID of the cached element.
+# @param elements [character]
+#   List of files which are stored in the cache file.
+# @return [list]
 getCacheURI = function(subdir, id, elements) {
   path = file.path(getOMLConfig()$cachedir, subdir, id)
   if (!isDirectory(path) && !dir.create(path, recursive = TRUE))
@@ -46,6 +69,7 @@ findCachedFlow = function(id, elements) {
   getCacheURI("flows", id, elements)
 }
 
+# @title Clear cache directories
 clearOMLCache = function() {
   conf = getOMLConfig()
   cd = conf$cachedir
