@@ -5,7 +5,8 @@ Description: An R interface to OpenML to download and upload data sets, tasks,
 Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <ftorgo@fc.up.pt>,
     Dominik Kirchhoff <dom.kirchhoff@gmail.com>,
     Michel Lang <michellang@gmail.com>,
-    Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>
+    Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
+    Benjamin Hofner <benjamin.hofner@fau.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 URL: https://github.com/openml/r
