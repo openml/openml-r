@@ -4,22 +4,20 @@
 #'
 #' @param x [\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
 #'   The flow that should be uploaded.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @param sourcefile [\code{character(1)}]\cr
 #' the file path to the flow (not needed for \code{\link{Learner}})
 #' @param binaryfile [\code{character(1)}]\cr
 #' the file path to the flow (not needed for \code{\link{Learner}})
-#' @return [\code{invisible(numeric(1))}]. The id of the flow (\code{implementation.id}).
+#' @return [\code{invisible(numeric(1))}]. The id of the flow (\code{flow.id}).
 #' @export
 
-uploadOMLFlow = function(x, session.hash, verbosity, sourcefile, binaryfile) {
+uploadOMLFlow = function(x, verbosity, sourcefile, binaryfile) {
   UseMethod("uploadOMLFlow")
 }
 
 #' @export
-uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(),
-  verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
+uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   if (is.null(sourcefile) && is.null(binaryfile)) {
     stopf("Please provide source and/or binary file.")
   }
@@ -31,36 +29,40 @@ uploadOMLFlow.OMLFlow = function(x, session.hash = getSessionHash(),
     assertFile(sourcefile)
     x$source.md5 = digest(file = sourcefile)
   }
-  check = checkOMLFlow(x, session.hash = session.hash, verbosity = verbosity)
+  check = checkOMLFlow(x, verbosity = verbosity)
   doc = check$doc
 
   if (check$exists) {
-    implementation.id = xmlOValI(doc, "/oml:implementation_exists/oml:id")
-    showInfo(verbosity, "Flow already exists (Implementation ID = %i).", implementation.id)
-    return(implementation.id)
+    flow.id = xmlOValI(doc, "/oml:flow_exists/oml:id")
+    showInfo(verbosity, "Flow already exists (Flow ID = %i).", flow.id)
+    return(flow.id)
   }
   file = tempfile()
   on.exit(unlink(file))
   writeOMLFlowXML(x, file)
 
-  showInfo(verbosity, "Uploading implementation to server.")
+  showInfo(verbosity, "Uploading flow to server.")
   showInfo(verbosity, "Downloading response to: %s", file)
 
-  url = getAPIURL("openml.implementation.upload")
-  params = list(session_hash = session.hash, description = fileUpload(filename = file))
+  #url = getAPIURL("flow/")
+  params = list(description = upload_file(path = file))
   if (!is.null(sourcefile))
-    params$source = fileUpload(filename = sourcefile)
+    params$source = upload_file(path = sourcefile)
   if (!is.null(binaryfile))
-    params$binary = fileUpload(filename = binaryfile)
-  response = postForm(url, .params = params, .checkParams = FALSE)
-  doc = parseXMLResponse(response, "Uploading implementation", c("upload_implementation", "response"), as.text = TRUE)
-  implementation.id = xmlOValI(doc, "/oml:upload_implementation/oml:id")
-  showInfo(verbosity, "Implementation successfully uploaded. Implementation ID: %i", implementation.id)
-  return(implementation.id)
+    params$binary = upload_file(path = binaryfile)
+  
+  response = doAPICall(api.call = "run", method = "POST", file = NULL, 
+    verbosity = verbosity, post.arg = params)
+  
+  # response = postForm(url, .params = params, .checkParams = FALSE)
+  doc = parseXMLResponse(response, "Uploading flow", c("upload_flow", "response"), as.text = TRUE)
+  flow.id = xmlOValI(doc, "/oml:upload_flow/oml:id")
+  showInfo(verbosity, "Flow successfully uploaded. Flow ID: %i", flow.id)
+  return(flow.id)
 }
 
 #' @export
-uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(),
+uploadOMLFlow.Learner = function(x, 
   verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = createOMLFlowForMlrLearner(x)
 
@@ -68,8 +70,8 @@ uploadOMLFlow.Learner = function(x, session.hash = getSessionHash(),
   sourcefile = createLearnerSourcefile(x)
   on.exit(unlink(sourcefile))
   
-  implementation.id = uploadOMLFlow(flow, sourcefile = sourcefile, session.hash = session.hash, verbosity)
-  return(implementation.id)
+  flow.id = uploadOMLFlow(flow, sourcefile = sourcefile, verbosity)
+  return(flow.id)
 }
 
 createLearnerSourcefile = function(x){
@@ -86,14 +88,14 @@ sourcedFlow = function(task.id) {
   return(sourcefile)
 }
 
-checkOMLFlow = function(x, session.hash = getSessionHash(), verbosity = NULL){
+checkOMLFlow = function(x, verbosity = NULL){
   if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
 
-  url = getAPIURL("openml.implementation.exists", name = x$name, external_version = x$external.version)
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash)
-  doc = parseXMLResponse(content, "Checking existence of flow", "implementation_exists", as.text = TRUE)
+  content = doAPICall(api.call = "flow/exists/", method = "GET", file = NULL, verbosity = verbosity,
+    url.args = list(name = x$name, external_version = x$external.version))
+  doc = parseXMLResponse(content, "Checking existence of flow", "flow_exists", as.text = TRUE)
 
-  return(list(exists = as.logical(xmlRValS(doc, "/oml:implementation_exists/oml:exists")),
+  return(list(exists = as.logical(xmlRValS(doc, "/oml:flow_exists/oml:exists")),
     doc = doc))
 }
 
@@ -105,7 +107,7 @@ checkOMLFlow = function(x, session.hash = getSessionHash(), verbosity = NULL){
 # @param lrn [\code{\link[mlr]{Learner}}]\cr
 #   The mlr learner.
 # @param name [\code{character(1)}]\cr
-#   The name of the implementation object. Default is the learner's ID.
+#   The name of the flow object. Default is the learner's ID.
 # @param description [\code{character(1)}]\cr
 #   An optional description of the learner.
 #   Default is a short specification of the learner and the associated package.
@@ -146,15 +148,15 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   return(flow)
 }
 
-# Generate a list of OpenML implementation parameters for a given mlr learner.
+# Generate a list of OpenML flow parameters for a given mlr learner.
 #
 # @param mlr.lrn [\code{\link[mlr]{Learner}}]\cr
 #   The mlr learner.
-# @return A list of \code{\link{OpenMLImplementationParameter}s}.
+# @return A list of \code{\link{OpenMLFlowParameter}s}.
 # @examples
 # library(mlr)
 # lrn = makeLearner("classif.randomForest")
-# pars = makeImplementationParameterList(lrn)
+# pars = makeFlowParameterList(lrn)
 # pars
 makeFlowParameterList = function(mlr.lrn) {
   pars = mlr.lrn$par.set$pars

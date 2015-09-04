@@ -18,7 +18,7 @@ writeOMLRunXML = function(run, file) {
   }
 
   mynode("task_id", run$task.id)
-  mynode("implementation_id", run$implementation.id)
+  mynode("flow_id", run$flow.id)
   mynode("error_message", run$error.message)
 
   for (i in seq_along(run$parameter.setting)) {
@@ -32,7 +32,7 @@ writeOMLRunXML = function(run, file) {
     output = newXMLNode("output_data", parent = top, namespace = "oml")
     eval = newXMLNode("evaluation", parent = output, namespace = "oml")
     mynode("name", "c_index", parent = eval)
-    mynode("implementation", "openml.evaluation.c_index(1.0)", parent = eval)
+    mynode("flow", "openml.evaluation.c_index(1.0)", parent = eval)
     mynode("value", aggr, parent = eval)
     ind = which(colnames(run$mlr.resample.result$measures.test) == "cindex")
     mynode("stdev", sd(run$mlr.resample.result$measures.test[, ind]), parent = eval)
