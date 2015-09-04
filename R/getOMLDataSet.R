@@ -29,6 +29,10 @@ getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
       verbosity = verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Data set description found in cache.")
+    # maybe the dataset was given the status 'deactivated' and the cached status tag is outdated.
+    data.sets = listOMLDataSets(status = "deactivated", verbosity = verbosity)
+    if (did %in% data.sets$did)
+      stop("Data set has been deactivated.")
     data.desc.contents = readLines(f$description.xml$path)
   }
 
