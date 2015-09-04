@@ -1,6 +1,9 @@
 context("getOMLTask")
 
 test_that("getOMLTask", {
+  clearOMLCache()
+  expect_error(getOMLTask(1L, cache.only = TRUE), "not found in cache")
+
   measures = listOMLEvaluationMeasures()$name
 
   task = getOMLTask(1L)
