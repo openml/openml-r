@@ -9,25 +9,13 @@
 #'
 #' @param did [\code{integer(1)}]\cr
 #'   Data set ID.
-#' @param check.status [\code{logical(1)}]\cr
-#'   If this is set to \code{TRUE}, only data sets with active status are returned.
-#'   Default is \code{FALSE}.
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}].
 #' @family download
 #' @export
-getOMLDataSet = function(did, check.status = FALSE, verbosity = NULL) {
+getOMLDataSet = function(did, verbosity = NULL) {
   did = asInt(did, lower = 0)
 
-  if (check.status) {
-    l = listOMLDataSets(verbosity = 0L)
-    status = l[l$did == did, "status"]
-    if (status == "deactivated") {
-      stop("Data set has been deactivated.")
-    } else if (status == "in_preparation") {
-      stop("Data set is in preparation. You can download it as soon as it's active.")
-    }
-  }
   showInfo(verbosity, "Getting data set '%i' from OpenML repository.", did)
   f = findCachedDataset(did)
 
@@ -66,9 +54,16 @@ getOMLDataSet = function(did, check.status = FALSE, verbosity = NULL) {
     original.data.url = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:original_data_url"),
     paper.url = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:paper.url"),
     update.comment = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:update.comment"),
-    md5.checksum = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:md5_checksum")
+    md5.checksum = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:md5_checksum"),
+    status = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:status")
   ))
   data.desc = do.call(makeOMLDataSetDescription, args)
+
+  if (data.desc$status == "deactivated") {
+    stop("Data set has been deactivated.")
+  } else if (data.desc$status == "in_preparation") {
+    stop("Data set is in preparation. You can download it as soon as it's active.")
+  }
 
   # now get data file
   if (!f$dataset.arff$found) {
@@ -198,7 +193,8 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
   language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_,
   row.id.attribute = NA_character_, ignore.attribute = NA_character_, version.label = NA_character_,
   citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
-  paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_) {
+  paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_,
+  status = NA_character_) {
 
   assertInt(id)
   assertString(name)
@@ -222,6 +218,7 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
   assertString(paper.url, na.ok = TRUE)
   assertString(update.comment, na.ok = TRUE)
   assertString(md5.checksum, na.ok = TRUE)
+  assertString(status, na.ok = TRUE)
 
   makeS3Obj("OMLDataSetDescription",
     id = id, name = name, version = version, description = description, format = format,
@@ -230,7 +227,7 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
     default.target.attribute = default.target.attribute, row.id.attribute = row.id.attribute,
     ignore.attribute = ignore.attribute, version.label = version.label, citation = citation,
     visibility = visibility, original.data.url = original.data.url, paper.url = paper.url,
-    update.comment = update.comment, md5.checksum = md5.checksum)
+    update.comment = update.comment, md5.checksum = md5.checksum, status = status)
 }
 
 #' @export

@@ -4,15 +4,11 @@
 \alias{getOMLDataSet}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(did, check.status = FALSE, verbosity = NULL)
+getOMLDataSet(did, verbosity = NULL)
 }
 \arguments{
 \item{did}{[\code{integer(1)}]\cr
 Data set ID.}
-
-\item{check.status}{[\code{logical(1)}]\cr
-If this is set to \code{TRUE}, only data sets with active status are returned.
-Default is \code{FALSE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
