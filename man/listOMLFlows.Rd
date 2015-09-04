@@ -27,7 +27,6 @@ of all registered OpenML flows.
 Other list: \code{\link{getOMLDataSetQualities}};
   \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
-  \code{\link{listOMLEvaluationMeasures}};
-  \code{\link{listOMLRunResults}}
+  \code{\link{listOMLEvaluationMeasures}}
 }
 

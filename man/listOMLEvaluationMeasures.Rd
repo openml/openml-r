@@ -24,8 +24,6 @@ in a \code{data.frame}.
 \seealso{
 Other list: \code{\link{getOMLDataSetQualities}};
   \code{\link{listOMLDataSetQualities}};
-  \code{\link{listOMLDataSets}};
-  \code{\link{listOMLFlows}};
-  \code{\link{listOMLRunResults}}
+  \code{\link{listOMLDataSets}}; \code{\link{listOMLFlows}}
 }
 
