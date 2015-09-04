@@ -28,6 +28,8 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
 
   # get XML description
   if (!f$task.xml$found) {
+    if (cache.only)
+      stopf("Task '%i' not found in cache with option 'cache.only'", id)
     task.contents = doAPICall(api.call = "task", id = id,
       file = f$task.xml$path, verbosity = verbosity, method = "GET")
   } else {

@@ -17,7 +17,7 @@ getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
 
   if (!f$flow.xml$found) {
     if (cache.only)
-      stopf("Data set '%i' not found in cache with option 'cache.only'", did)
+      stopf("Flow '%i' not found in cache with option 'cache.only'", flow.id)
     flow.desc.contents = doAPICall(api.call = "flow", id = flow.id, file = f$flow.xml$path,
       verbosity = verbosity, method = "GET")
   } else {
