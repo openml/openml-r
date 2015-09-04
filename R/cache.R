@@ -62,11 +62,18 @@ findCachedTask = function(id) {
 
 findCachedRun = function(id) {
   getCacheURI("runs", id,
-    elements = "predictions.arff")
+    elements = c("predictions.arff", "description.xml"))
 }
 
 findCachedFlow = function(id, elements) {
   getCacheURI("flows", id, elements)
+}
+
+# @title Check if stuff is cached.
+isCached = function(subdir, id) {
+  path = file.path(getOMLConfig()$cachedir, subdir, id)
+  size = file.info(path)$size
+  return(isDirectory(path) && !is.na(size) && size > 0L)
 }
 
 # @title Clear cache directories
