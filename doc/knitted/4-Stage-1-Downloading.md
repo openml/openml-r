@@ -77,19 +77,17 @@ iris.data2
 
 ### Download an OpenML flow
 
-**FIXME: `implementation.id` should be called `flow.id`**
-
-You can download a flow by specifying the `implementation.id` parameter in the `getOMLFlow` function:
+You can download a flow by specifying the `flow.id` parameter in the `getOMLFlow` function:
 
 
 ```r
-flow = getOMLFlow(implementation.id = 1248L)
+flow = getOMLFlow(flow.id = 1248L)
 flow
 ```
 
 ```
 ## 
-## Flow "classif.randomForest" :: (Version = 1, Implementation ID = 1248)
+## Flow "classif.randomForest" :: (Version = 1, Flow ID = 1248)
 ## 	External Version         : 4.6-10
 ## 	Dependencies             : mlr_2.3, randomForest_4.6.10
 ## 	Number of Flow Parameters: 12
