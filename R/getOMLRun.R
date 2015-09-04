@@ -16,7 +16,14 @@ getOMLRun = function(run.id, get.predictions = TRUE, verbosity = NULL) {
   id = asCount(run.id)
   assertFlag(get.predictions)
 
-  content = doAPICall("run", id = id, file = NULL, verbosity, method = "GET")
+  f = findCachedRun(id)
+
+  if (!f$description.xml$found) {
+    content = doAPICall("run", id = id, file = f$description.xml$path, verbosity, method = "GET")
+  } else {
+    showInfo(verbosity, "Run description found in cache.")
+    content = readLines(f$description.xml$path)
+  }
   doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
 
   parseData = function(path) {
