@@ -3,6 +3,7 @@ context("populateOMLCache")
 test_that("populateOMLCache", {
   # initial cleanup
   clearOMLCache()
+
   # Helper to check if cached files exist
   #
   # @param type [character(1)]
@@ -13,7 +14,8 @@ test_that("populateOMLCache", {
     finder = switch(type,
       tasks = findCachedTask,
       datasets = findCachedDataset,
-      runs = findCachedRun
+      runs = findCachedRun,
+      flows = findCachedFlow
     )
     for (id in ids) {
       res = finder(id)
@@ -33,6 +35,8 @@ test_that("populateOMLCache", {
   expect_exists_in_cache("tasks", 1:2)
   populateOMLCache(run.ids = 1:2)
   expect_exists_in_cache("runs", 1:2)
+  populateOMLCache(flow.ids = 2:3)
+  expect_exists_in_cache("flows", 2:3)
 
   # cleanup
   clearOMLCache()
