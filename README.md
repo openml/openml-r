@@ -2,9 +2,11 @@ OpenML plugin for R
 ===================
 
 [![Build Status](https://travis-ci.org/openml/r.svg)](https://travis-ci.org/openml/r)
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
+[![Coverage Status](https://img.shields.io/coveralls/berndbischl/OpenML.svg)](https://coveralls.io/r/berndbischl/OpenML?branch=master)
 
-Allows to interface the OpenML server to download tasks and upload results.
-Work in progress.
+Allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download tasks and upload results. This package is still *work in progress*.
 
 ### Installation of the package
 * Install the latest versions of all dependencies from CRAN:
@@ -21,5 +23,5 @@ library(OpenML)
 ```
 
 ### Tutorial
-There's a short [tutorial](https://github.com/openml/r/blob/master/doc/knitted/1-Introduction.md) with which we want to help you get started. If you have further questions or issues, please use the [issue tracker](https://github.com/openml/r/issues).
+There's a short [tutorial](https://github.com/openml/r/blob/master/doc/knitted/1-Introduction.md) with which we want to help you to get started. If you have further questions or issues, please use the [issue tracker](https://github.com/openml/r/issues).
 
