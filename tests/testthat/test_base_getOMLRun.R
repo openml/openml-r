@@ -1,7 +1,7 @@
 context("getOMLRun")
 
 test_that("getOMLRun", {
-  run = getOMLRun(1L, get.predictions = TRUE)
+  run = getOMLRun(1L)
   expect_is(run, "OMLRun")
   expect_true(run$run.id == 1L)
 

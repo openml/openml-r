@@ -5,3 +5,4 @@
 OpenML.Rcheck
 OpenML/tests/downloadUploadTest/downloadAllImplementations/Downloads/
 OpenML*.tar.gz
+OPENMLAPIKEY.R

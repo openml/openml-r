@@ -9,5 +9,7 @@ setOMLConfig(verbosity = 1L, cachedir = tempdir())
 if (identical(Sys.getenv("TRAVIS"), "true")) {
   apikey = Sys.getenv("OPENMLAPIKEY")
   setOMLConfig(apikey = apikey)
+} else {
+  source("../../OPENMLAPIKEY.R")
 }
 configureMlr(on.learner.warning = "quiet", show.learner.output = FALSE)
