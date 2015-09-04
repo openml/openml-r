@@ -16,11 +16,13 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
 
   f = findCachedRun(id)
 
-  if (!f$description.xml$found) {
-    content = doAPICall("run", id = id, file = f$description.xml$path, verbosity, method = "GET")
+  if (!f$run.xml$found) {
+    if (cache.only)
+      stopf("Run '%i' not found in cache with option 'cache.only'", did)
+    content = doAPICall("run", id = id, file = f$run.xml$path, verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Run description found in cache.")
-    content = readLines(f$description.xml$path)
+    content = readLines(f$run.xml$path)
   }
   doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
 

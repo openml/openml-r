@@ -62,7 +62,7 @@ findCachedTask = function(id) {
 
 findCachedRun = function(id) {
   getCacheURI("runs", id,
-    elements = c("predictions.arff", "description.xml"))
+    elements = c("predictions.arff", "run.xml"))
 }
 
 findCachedFlow = function(id, elements = list()) {
