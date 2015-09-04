@@ -6,6 +6,7 @@
 #'
 #' @template arg_task_id
 #' @template arg_cache_only
+#' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
 #' @export
 #' @examples

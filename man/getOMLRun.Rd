@@ -4,15 +4,16 @@
 \alias{getOMLRun}
 \title{Get an OpenML run.}
 \usage{
-getOMLRun(run.id, get.predictions = TRUE, verbosity = NULL)
+getOMLRun(run.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{run.id}{[\code{integer(1)}]\cr
 The run's ID.}
 
-\item{get.predictions}{[\code{logical(1)}]\cr
-Should the associated prediction ARFF be retrieved as well?
-Default is \code{TRUE}.}
+\item{cache.only}{[\code{logical(1)}]\cr
+Only try to retrieve the object from cache.
+Will result in error if the object is not found.
+Default is \code{FALSE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

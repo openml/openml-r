@@ -9,7 +9,7 @@ listOMLRuns(task.id = NULL, setup.id = NULL, flow.id = NULL,
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
-The task ID.}
+Task ID.}
 
 \item{setup.id}{[\code{integer(1)}]\cr
 ID of the parameter setup.}

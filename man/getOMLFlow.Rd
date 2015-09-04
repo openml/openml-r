@@ -4,11 +4,16 @@
 \alias{getOMLFlow}
 \title{Download an OpenML flow.}
 \usage{
-getOMLFlow(flow.id, verbosity = NULL)
+getOMLFlow(flow.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
+
+\item{cache.only}{[\code{logical(1)}]\cr
+Only try to retrieve the object from cache.
+Will result in error if the object is not found.
+Default is \code{FALSE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

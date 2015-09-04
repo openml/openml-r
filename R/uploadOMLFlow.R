@@ -50,10 +50,10 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
     params$source = upload_file(path = sourcefile)
   if (!is.null(binaryfile))
     params$binary = upload_file(path = binaryfile)
-  
-  response = doAPICall(api.call = "flow", method = "POST", file = NULL, 
-    verbosity = verbosity, post.arg = params)
-  
+
+  response = doAPICall(api.call = "flow", method = "POST", file = NULL,
+    verbosity = verbosity, post.args = params)
+
   # response = postForm(url, .params = params, .checkParams = FALSE)
   doc = parseXMLResponse(response, "Uploading flow", c("upload_flow", "response"), as.text = TRUE)
   flow.id = xmlOValI(doc, "/oml:upload_flow/oml:id")
@@ -62,14 +62,14 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
 }
 
 #' @export
-uploadOMLFlow.Learner = function(x, 
+uploadOMLFlow.Learner = function(x,
   verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = createOMLFlowForMlrLearner(x)
 
   # create sourcefile
   sourcefile = createLearnerSourcefile(x)
   on.exit(unlink(sourcefile))
-  
+
   flow.id = uploadOMLFlow(flow, sourcefile = sourcefile, verbosity)
   return(flow.id)
 }
@@ -127,7 +127,7 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   sourcefile = createLearnerSourcefile(lrn)
   external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
   on.exit(unlink(sourcefile))
-  
+
   pkges = c("mlr", lrn$package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = collapse(pkges, sep = ", ")

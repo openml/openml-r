@@ -74,6 +74,6 @@ provide evaluation scores for their own evaluation measures.}
 OMLRun
 }
 \seealso{
-\code{\link{getOMLRun}}, \code{\link{listOMLRunResults}}
+\code{\link{getOMLRun}}
 }
 

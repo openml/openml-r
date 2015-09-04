@@ -44,7 +44,7 @@
 #'   provide evaluation scores for their own evaluation measures.
 #' @export
 #' @aliases OMLRun
-#' @seealso \code{\link{getOMLRun}}, \code{\link{listOMLRunResults}}
+#' @seealso \code{\link{getOMLRun}}
 makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, uploader.name = NA_character_,
   task.id, task.type = NA_character_,
   task.evaluation.measure = NA_character_, flow.id = NA_integer_, flow.name = NA_character_,

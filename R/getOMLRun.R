@@ -100,7 +100,6 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
 
   # get the predictions
   f = findCachedRun(run.args$run.id)
-  ff <<- f
 
   if (!f$predictions.arff$found) {
     fls = run.args$output.data$files
