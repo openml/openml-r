@@ -9,20 +9,22 @@
 #'
 #' @param did [\code{integer(1)}]\cr
 #'   Data set ID.
+#' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}].
 #' @family download
 #' @export
-getOMLDataSet = function(did, verbosity = NULL) {
+getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
   did = asInt(did, lower = 0)
+  assertFlag(cache.only)
 
   showInfo(verbosity, "Getting data set '%i' from OpenML repository.", did)
   f = findCachedDataset(did)
 
   # get XML description
   if (!f$description.xml$found) {
-    #url = getAPIURL("data", api.arg = did)
-    #data.desc.contents = doAPICall(url, f$description.xml$path, verbosity, method = "GET")
+    if (cache.only)
+      stopf("Data set '%i' not found in cache with option 'cache.only'", did)
     data.desc.contents = doAPICall(api.call = "data", id = did, file = f$description.xml$path,
       verbosity = verbosity, method = "GET")
   } else {
@@ -67,6 +69,8 @@ getOMLDataSet = function(did, verbosity = NULL) {
 
   # now get data file
   if (!f$dataset.arff$found) {
+    if (cache.only)
+      stopf("Data set '%i' not found in cache with option 'cache.only'", did)
     data = downloadARFF(data.desc$url, file = f$dataset.arff$path, verbosity)
   } else {
     showInfo(verbosity, "Data set found in cache.")

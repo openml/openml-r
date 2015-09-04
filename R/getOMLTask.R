@@ -5,7 +5,7 @@
 #' caches the files on disk and creates an S3 object which completely specifies the task.
 #'
 #' @template arg_task_id
-#' @template arg_verbosity
+#' @template arg_cache_only
 #' @return [\code{\link{OMLTask}}]
 #' @export
 #' @examples
@@ -17,8 +17,10 @@
 #' print(task$input$data.set)
 #' print(head(task$input$data.set$data))
 #' }
-getOMLTask = function(task.id, verbosity = NULL) {
+getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(task.id)
+  assertFlag(cache.only)
+
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 
   f = findCachedTask(id)

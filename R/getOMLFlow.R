@@ -5,14 +5,16 @@
 #' not already available in cache.
 #'
 #' @template arg_flow.id
+#' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLFlow}}].
 #' @export
-getOMLFlow = function(flow.id, verbosity = NULL) {
+getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow.id = asCount(flow.id)
 
-  content = try(doAPICall(api.call = "flow", id = flow.id,
-    file = NULL, verbosity = verbosity, method = "GET"), silent = TRUE)
+  content = doAPICall(api.call = "flow", id = flow.id,
+    file = NULL, verbosity = verbosity, method = "GET")
+  # FIXME: what is this here?
   if (is.error(content))
     stop("Flow (temporarily) not available.")
   doc = parseXMLResponse(content, "Getting flow", "flow", as.text = TRUE)

@@ -5,16 +5,14 @@
 #'
 #' @param run.id [\code{integer(1)}]\cr
 #'   The run's ID.
-#' @param get.predictions [\code{logical(1)}]\cr
-#'   Should the associated prediction ARFF be retrieved as well?
-#'   Default is \code{TRUE}.
+#' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLRun}}]
 #' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
-getOMLRun = function(run.id, get.predictions = TRUE, verbosity = NULL) {
+getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(run.id)
-  assertFlag(get.predictions)
+  assertFlag(cache.only)
 
   f = findCachedRun(id)
 
@@ -100,22 +98,24 @@ getOMLRun = function(run.id, get.predictions = TRUE, verbosity = NULL) {
     do.call(makeOMLRunParameter, args)
   })
 
-  if (get.predictions) {
-    f = findCachedRun(run.args$run.id)
-    if (!f$predictions.arff$found) {
-      fls = run.args$output.data$files
-      url = fls[fls$name == "predictions", "url"]
-      if (is.null(url)) {
-        warning("No URL found to retrieve predictions from.")
-        pred = NULL
-      } else {
-        pred = downloadARFF(url, f$predictions.arff$path, verbosity)
-      }
+  # get the predictions
+  f = findCachedRun(run.args$run.id)
+  ff <<- f
+
+  if (!f$predictions.arff$found) {
+    fls = run.args$output.data$files
+    url = fls[fls$name == "predictions", "url"]
+    if (is.null(url)) {
+      warning("No URL found to retrieve predictions from.")
+      pred = NULL
     } else {
-      showInfo(verbosity, "Predictions found in cache.")
-      pred = arff.reader(f$predictions.arff$path)
+      pred = downloadARFF(url, f$predictions.arff$path, verbosity)
     }
-    run.args[["predictions"]] = pred
+  } else {
+    showInfo(verbosity, "Predictions found in cache.")
+    pred = arff.reader(f$predictions.arff$path)
   }
+  run.args[["predictions"]] = pred
+
   do.call(makeOMLRun, run.args)
 }
