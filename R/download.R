@@ -21,7 +21,7 @@
 # @return [character(1)] Unparsed content of the returned XML file.
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
 doAPICall = function(api.call, id = NULL,
-  url.args = list(), file = NULL,
+  url.args = list(), post.args = list(), file = NULL,
   verbosity = NULL, method, ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
 
@@ -46,6 +46,8 @@ doAPICall = function(api.call, id = NULL,
 
   if (method == "GET") {
     content = GET(url = url) #do.call(method, list(url = url, query = api.args))
+  } else if (method == "POST") {
+    content = POST(url = url, body = post.args)
   }
   content = rawToChar(content$content)
 
