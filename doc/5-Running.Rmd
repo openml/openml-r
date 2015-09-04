@@ -65,8 +65,6 @@ run.par.a = makeOMLRunParameter(name = "a", value = "300")
 run.pars = list(run.par.a)
 ```
 
-** FIXME: The following text needs improvement**
-
 Now you can create your `OMLRun` object using the `makeOMLRun` function. If you want to upload the run later, you will need to pass a `data.frame` for the `predictions` parameter, which have to be in a standardized form. The call `task$output$predictions` gives us the expected column names and their types. For supervised classification and regression tasks, these are:
 * `repeat` (integer)
 * `fold` (integer)
