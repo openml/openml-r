@@ -18,7 +18,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
 
   if (!f$run.xml$found) {
     if (cache.only)
-      stopf("Run '%i' not found in cache with option 'cache.only'", did)
+      stopf("Run '%i' not found in cache with option 'cache.only'", id)
     content = doAPICall("run", id = id, file = f$run.xml$path, verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Run description found in cache.")
