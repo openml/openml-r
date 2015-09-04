@@ -20,7 +20,7 @@ run.mlr
 
 ```
 ## 
-## OpenML Run NA :: (Task ID = 59, Implementation ID = NA)
+## OpenML Run NA :: (Task ID = 59, Flow ID = NA)
 ## 
 ## Resample Result
 ## Task: data
@@ -28,7 +28,7 @@ run.mlr
 ## acc.aggr: 0.94
 ## acc.mean: 0.94
 ## acc.sd: 0.05
-## Runtime: 0.161099
+## Runtime: 0.150495
 ```
 
 

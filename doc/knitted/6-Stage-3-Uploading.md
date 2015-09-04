@@ -11,11 +11,18 @@ If the implementation has already been uploaded to the server, we get a message 
 library(mlr)
 lrn = makeLearner("classif.randomForest")
 implementation.id = uploadOMLFlow(lrn, session.hash = session.hash) 
+```
+
+```
+## Error in uploadOMLFlow(lrn, session.hash = session.hash): unbenutztes Argument (session.hash = session.hash)
+```
+
+```r
 implementation.id
 ```
 
 ```
-## [1] 1248
+## Error in eval(expr, envir, enclos): Objekt 'implementation.id' nicht gefunden
 ```
 
 ### Upload an implementation without using mlr
@@ -34,6 +41,10 @@ Runs that have been created using `mlr` should have an `implementation.id` so th
 
 ```r
 run.id = uploadOMLRun(run.mlr)
+```
+
+```
+## Error in uploadOMLRun(run.mlr): Please provide an 'flow.id'
 ```
 
 A manually created run might not contain an `implementation.id` so that you can upload the run and manually assign a `implementation.id`:
