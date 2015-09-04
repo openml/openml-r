@@ -25,7 +25,11 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
     children = xmlChildren(node)
     is.quality = names(children) == "quality"
     is.input = names(children) == "input"
+    is.tag = names(children) == "tag"
     inputs = children[is.input]
+    tags = children[is.tag]
+    tags = lapply(tags, xmlValue)
+    tags = collapse(tags, sep = ", ")
     names(inputs) = vcapply(inputs, function(x) xmlAttrs(x)[["name"]])
 
     info = list(
@@ -34,6 +38,7 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
         did = as.integer(xmlValue(children[["did"]])),
         status = xmlValue(children[["status"]]),
         name = xmlValue(children[["name"]]),
+        tags = tags,
         estimation_procedure = as.integer(xmlValue(inputs[["estimation_procedure"]])),
         evaluation_measures = collapse(as.character(xmlValue(inputs[["evaluation_measures"]])))
     )
