@@ -51,7 +51,7 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
   if (!is.null(binaryfile))
     params$binary = upload_file(path = binaryfile)
   
-  response = doAPICall(api.call = "run", method = "POST", file = NULL, 
+  response = doAPICall(api.call = "flow", method = "POST", file = NULL, 
     verbosity = verbosity, post.arg = params)
   
   # response = postForm(url, .params = params, .checkParams = FALSE)
@@ -91,8 +91,8 @@ sourcedFlow = function(task.id) {
 checkOMLFlow = function(x, verbosity = NULL){
   if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
 
-  content = doAPICall(api.call = "flow/exists/", method = "GET", file = NULL, verbosity = verbosity,
-    url.args = list(name = x$name, external_version = x$external.version))
+  content = doAPICall(api.call = "flow/exists/", method = "POST", file = NULL, verbosity = verbosity,
+    post.args = list(name = x$name, external_version = x$external.version))
   doc = parseXMLResponse(content, "Checking existence of flow", "flow_exists", as.text = TRUE)
 
   return(list(exists = as.logical(xmlRValS(doc, "/oml:flow_exists/oml:exists")),
