@@ -1,5 +1,8 @@
 #' @title Saves a list of OpenML configuration settings to file
 #'
+#' @description The new configuration is automatically assigned via
+#' \code{\link{setOMLConfig}} if all checks pass.
+#'
 #' @param server [\code{character(1)}]\cr
 #'   URL of the XML API endpoint.
 #' @param verbosity [\code{integer(1)}]\cr

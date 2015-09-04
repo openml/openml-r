@@ -33,7 +33,8 @@ Path to OpenML config file. Default is \dQuote{~/.openml/config}.}
 Should an existing file be overwritten? Default is \code{FALSE}.}
 }
 \description{
-Saves a list of OpenML configuration settings to file
+The new configuration is automatically assigned via
+\code{\link{setOMLConfig}} if all checks pass.
 }
 \seealso{
 Other config: \code{\link{configuration}};
