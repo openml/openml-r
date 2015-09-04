@@ -11,13 +11,21 @@
 #' @export
 getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow.id = asCount(flow.id)
+  assertFlag(cache.only)
 
-  content = doAPICall(api.call = "flow", id = flow.id,
-    file = NULL, verbosity = verbosity, method = "GET")
-  # FIXME: what is this here?
-  if (is.error(content))
-    stop("Flow (temporarily) not available.")
-  doc = parseXMLResponse(content, "Getting flow", "flow", as.text = TRUE)
+  f = findCachedFlow(flow.id)
+
+  if (!f$flow.xml$found) {
+    if (cache.only)
+      stopf("Data set '%i' not found in cache with option 'cache.only'", did)
+    flow.desc.contents = doAPICall(api.call = "flow", id = flow.id, file = f$flow.xml$path,
+      verbosity = verbosity, method = "GET")
+  } else {
+    showInfo(verbosity, "Flow description found in cache.")
+    flow.desc.contents = readLines(f$flow.xml$path)
+  }
+
+  doc = parseXMLResponse(flow.desc.contents, "Getting flow", "flow", as.text = TRUE)
   flow = parseOMLFlow(doc)
 
   # download source and/or binary files:

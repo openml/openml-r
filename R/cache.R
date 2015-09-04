@@ -65,8 +65,8 @@ findCachedRun = function(id) {
     elements = c("predictions.arff", "description.xml"))
 }
 
-findCachedFlow = function(id, elements) {
-  getCacheURI("flows", id, elements)
+findCachedFlow = function(id, elements = list()) {
+  getCacheURI("flows", id, c(elements, list("flow.xml")))
 }
 
 # @title Check if stuff is cached.
