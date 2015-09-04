@@ -4,14 +4,9 @@
 \alias{listOMLDataSets}
 \title{List available OpenML data sets.}
 \usage{
-listOMLDataSets(session.hash = getSessionHash(), verbosity = NULL,
-  status = "active")
+listOMLDataSets(verbosity = NULL, status = "active")
 }
 \arguments{
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
-
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr
@@ -33,10 +28,9 @@ the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparati
 and describing data qualities.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualitiesList}};
+Other list: \code{\link{getOMLDataSetQualities}};
   \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLEvaluationMeasures}};
-  \code{\link{listOMLFlows}};
-  \code{\link{listOMLRunResults}}
+  \code{\link{listOMLFlows}}
 }
 

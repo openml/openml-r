@@ -4,16 +4,16 @@
 \alias{getOMLFlow}
 \title{Download an OpenML flow.}
 \usage{
-getOMLFlow(implementation.id, session.hash = getSessionHash(),
-  verbosity = NULL)
+getOMLFlow(flow.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
-\item{implementation.id}{[\code{integer(1)}]\cr
+\item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
 
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
+\item{cache.only}{[\code{logical(1)}]\cr
+Only try to retrieve the object from cache.
+Will result in error if the object is not found.
+Default is \code{FALSE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -26,6 +26,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{\link{OMLFlow}}].
 }
 \description{
-Download an OpenML flow.
+Given an flow id, the corresponding \code{\link{OMLFlow}} is downloaded if
+not already available in cache.
 }
 

@@ -5,48 +5,68 @@
 \alias{makeOMLRun}
 \title{Construct OMLRun.}
 \usage{
-makeOMLRun(run.id = NA_integer_, uploader = NA_integer_, task.id,
-  implementation.id = NA_integer_, setup.id = NA_integer_,
+makeOMLRun(run.id = NA_integer_, uploader = NA_integer_,
+  uploader.name = NA_character_, task.id, task.type = NA_character_,
+  task.evaluation.measure = NA_character_, flow.id = NA_integer_,
+  flow.name = NA_character_, setup.id = NA_integer_,
   setup.string = NA_character_, error.message = NA_character_,
   parameter.setting = list(), tags = NA_character_, predictions = NULL,
   input.data = makeOMLIOData(), output.data = makeOMLIOData())
 }
 \arguments{
-\item{run.id}{[\code{numeric(1)}]\cr ID of the run. Added by server. Ignored when uploading a
-run.}
+\item{run.id}{[\code{numeric(1)}]\cr
+ID of the run. Added by server. Ignored when uploading a run.}
 
-\item{uploader}{[\code{numeric(1)}]\cr ID of the user that uploaded the run. Added by server.
-Ignored when uploading a run.}
+\item{uploader}{[\code{numeric(1)}]\cr
+ID of the user that uploaded the run. Added by server. Ignored when uploading a run.}
 
-\item{task.id}{[\code{numeric(1)}]\cr ID of the task that is solved in this run. This ID is given
-in the task description.}
+\item{uploader.name}{[\code{character(1)}]\cr
+Name of the user that uploaded the run. Ignored when uploading a run.}
 
-\item{implementation.id}{[\code{character(1)}]\cr ID of the implementation used to solve the
-task. Returned by the API when you upload the implementation, or given in the implementation
-description when you download an existing implementation.}
+\item{task.id}{[\code{numeric(1)}]\cr
+ID of the task that is solved in this run. This ID is given in the task description.}
 
-\item{setup.id}{[\code{numeric(1)}]\cr Unique ID of the used setup. Ignored when uploading a run
-(i.e., it will be searched based on the parameter settings).}
+\item{task.type}{[\code{character(1)}]\cr
+Task type of the run. See \code{\link{listOMLTaskTypes}} for all possible types.}
 
-\item{setup.string}{[\code{character(1)}]\cr The CLI string that can invoke the learner with the
-correct parameter settings. Optional.}
+\item{task.evaluation.measure}{[\code{character(1)}]\cr
+Evaluation measure used in the run.}
 
-\item{error.message}{[\code{character(1)}]\cr Whenever an error occurs during the run, this can
-be reported here.}
+\item{flow.id}{[\code{character(1)}]\cr
+ID of the flow used to solve the task. Returned by the API when you upload the
+flow, or given in the flow description when you download an existing flow.}
 
-\item{parameter.setting}{[\code{list}]\cr A list of \code{\link{OMLRunParameter}s} containing
-information on the parameter settings.}
+\item{flow.name}{[\code{character(1)}]\cr
+Name of the flow.}
 
-\item{tags}{[\code{character}]\cr Optional tags describing the run.}
+\item{setup.id}{[\code{numeric(1)}]\cr
+Unique ID of the used setup. Ignored when uploading a run (i.e., it will be
+searched based on the parameter settings).}
 
-\item{predictions}{[\code{data.frame}]\cr The predictions of the run. These are NOT downloaded
+\item{setup.string}{[\code{character(1)}]\cr
+The CLI string that can invoke the learner with the correct parameter settings.
+This argument is optional.}
+
+\item{error.message}{[\code{character(1)}]\cr
+Whenever an error occurs during the run, this can be reported here.}
+
+\item{parameter.setting}{[\code{list}]\cr
+A list of \code{\link{OMLRunParameter}s} containing information on the parameter
+settings.}
+
+\item{tags}{[\code{character}]\cr
+Optional tags describing the run.}
+
+\item{predictions}{[\code{data.frame}]\cr
+The predictions of the run. These are NOT downloaded
 by \code{\link{getOMLRun}}. To retrieve predictions of an uploaded run, please use
 \code{\link{getOMLPredictions}}.}
 
-\item{input.data}{[\code{\link{OMLIOData}}]\cr All data that served as input for the run. Added
-by server. Ignored when uploading.}
+\item{input.data}{[\code{\link{OMLIOData}}]\cr
+All data that served as input for the run. Added by server. Ignored when uploading.}
 
-\item{output.data}{[\code{\link{OMLIOData}}]\cr All data that was the output of this run, i.e.,
+\item{output.data}{[\code{\link{OMLIOData}}]\cr
+All data that was the output of this run, i.e.,
 predictions, evaluation scores. Most of this will be added by the server, but users can also
 provide evaluation scores for their own evaluation measures.}
 }
@@ -54,6 +74,6 @@ provide evaluation scores for their own evaluation measures.}
 OMLRun
 }
 \seealso{
-\code{\link{getOMLRun}}, \code{\link{listOMLRunResults}}
+\code{\link{getOMLRun}}
 }
 

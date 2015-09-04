@@ -21,13 +21,13 @@ makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.feature
   assertCharacter(colnames.old, any.missing = FALSE)
   assertCharacter(colnames.new, any.missing = FALSE)
   assertCharacter(target.features, any.missing = FALSE)
-  
+
   makeS3Obj("OMLDataSet",
-            desc = desc, 
-            data = data, 
-            colnames.old = colnames.old, 
-            colnames.new = colnames.new,
-            target.features = target.features)
+    desc = desc,
+    data = data,
+    colnames.old = colnames.old,
+    colnames.new = colnames.new,
+    target.features = target.features)
 }
 
 #' @export
@@ -87,12 +87,13 @@ print.OMLDataSet = function(x, ...) {
 # @param md5.checksum [\code{character(1)}]\cr
 #   MD5 checksum to check if the data set is downloaded without corruption.
 makeOMLDataSetDescription = function(id, name, version, description, format,
-                                     creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,
-                                     language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_,
-                                     row.id.attribute = NA_character_, ignore.attribute = NA_character_, version.label = NA_character_,
-                                     citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
-                                     paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_) {
-  
+  creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,
+  language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_,
+  row.id.attribute = NA_character_, ignore.attribute = NA_character_, version.label = NA_character_,
+  citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
+  paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_,
+  status = NA_character_) {
+
   assertInt(id)
   assertString(name)
   assertString(version)
@@ -115,15 +116,16 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
   assertString(paper.url, na.ok = TRUE)
   assertString(update.comment, na.ok = TRUE)
   assertString(md5.checksum, na.ok = TRUE)
-  
+  assertString(status, na.ok = TRUE)
+
   makeS3Obj("OMLDataSetDescription",
-            id = id, name = name, version = version, description = description, format = format,
-            creator = creator, contributor = contributor, collection.date = collection.date,
-            upload.date = upload.date, language = language, licence = licence, url = url,
-            default.target.attribute = default.target.attribute, row.id.attribute = row.id.attribute,
-            ignore.attribute = ignore.attribute, version.label = version.label, citation = citation,
-            visibility = visibility, original.data.url = original.data.url, paper.url = paper.url,
-            update.comment = update.comment, md5.checksum = md5.checksum)
+    id = id, name = name, version = version, description = description, format = format,
+    creator = creator, contributor = contributor, collection.date = collection.date,
+    upload.date = upload.date, language = language, licence = licence, url = url,
+    default.target.attribute = default.target.attribute, row.id.attribute = row.id.attribute,
+    ignore.attribute = ignore.attribute, version.label = version.label, citation = citation,
+    visibility = visibility, original.data.url = original.data.url, paper.url = paper.url,
+    update.comment = update.comment, md5.checksum = md5.checksum, status = status)
 }
 
 #' @export

@@ -1,0 +1,46 @@
+Uploading
+=========
+
+### Upload an implementation using mlr
+
+A flows is an implementation of single algorithms or scripts. To create an implementation, we can use the `mlr` package. Each `mlr` learner can be considered as an implementation of a flow that can be uploaded to the server with the function `uploadOMLFlow`.
+If the implementation has already been uploaded to the server, we get a message that the flow already exists and the `implementation.id` is returned from the function. Otherwise, the not existing flow is uploaded and a new `implementation.id` is assigned to it.
+
+```{r eval = TRUE, warning = FALSE, message = TRUE}
+library(mlr)
+lrn = makeLearner("classif.randomForest")
+implementation.id = uploadOMLFlow(lrn, session.hash = session.hash)
+implementation.id
+```
+
+### Upload an implementation without using mlr
+
+In the previous section, we explained how to create an `OMLFlow` manually and created the object `oml.flow`, which reflects implementation description object. Before you can upload this flow to the server, you have to write an R-script containing the algorithm you want to use as flow. Let's assume you have done this and have a string `sourcefile` containing the path to your R-script. Your flow can now be uploaded as follows:
+
+```{r eval = FALSE}
+oml.flow.id = uploadOMLFlow(oml.flow, sourcefile = sourcefile)
+```
+
+### Upload an OpenML run to the server
+
+Runs that have been created using `mlr` should have an `implementation.id` so that you can upload the run using:
+
+```{r eval = TRUE, warning = FALSE, message = TRUE}
+run.id = uploadOMLRun(run.mlr)
+```
+
+A manually created run might not contain an `implementation.id` so that you can upload the run and manually assign a `implementation.id`:
+
+```{r eval = FALSE}
+run.id = uploadOMLRun(run, implementation.id = oml.flow.id)
+```
+
+----------------------------------------------------------------------------------------------------
+Jump to:
+- [Introduction](1-Introduction.md)
+- [Configuration](2-Configuration.md)
+- [Listing](3-Listing.md)
+- [Downloading](4-Downloading.md)
+- [Running models on tasks](5-Running.md)
+- Uploading
+- [Example workflow with mlr](7-Example-workflow-with-mlr.md)

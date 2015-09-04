@@ -1,25 +1,24 @@
 #' @import BBmisc
 #' @import checkmate
 #' @import digest
+#' @import httr
 #' @import RCurl
 #' @import stringi
 #' @import XML
-#' @import RWeka
 #' @import mlr
 #' @import data.table
 #' @importFrom stats setNames
 NULL
 
+.OpenML.config = getDefaultConfig()
+
 .onLoad = function(libname, pkgname) {
-  assignConfigDefaults()
+  # assignConfigDefaults()
   fn.user = path.expand("~/.openml/config")
   if (file.exists(fn.user))
-    assignConfig(readConfigFile(fn.user))
+    loadOMLConfig(fn.user, assign = TRUE)
+  # FIXME: this is probably forbidden on cran?
   createCacheSubDirs(verbosity = FALSE)
 }
 
-.onAttach = function(libname, pkgname) {
-  conf = getOMLConfig()
-  if (!conf$is.user.config)
-    packageStartupMessage("OpenML: No configuration found! Using defaults.")
-}
+

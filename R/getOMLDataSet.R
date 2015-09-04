@@ -4,54 +4,29 @@
 #' Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
 #' and returned.
 #'
-#' Given an \code{\link{OMLTask}}, it is checked if the related data set is already encapsulated in the
-#' task object. If not, the task's data set ID will be used to download it.
-#'
 #' Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
 #' Tasks can be downloaded with \code{\link{getOMLTask}}.
 #'
-#' @param x [\code{integer(1)} | \code{\link{OMLTask}}]\cr
-#'   Either a data set ID or a task.
-#' @param check.status [\code{logical(1)}]\cr
-#'   If this is set to \code{TRUE}, only data sets with active status are returned. 
-#'   Default is \code{FALSE}.
-#' @template arg_hash
+#' @param did [\code{integer(1)}]\cr
+#'   Data set ID.
+#' @template arg_cache_only
 #' @template arg_verbosity
-#' @return [\code{\link{OMLDataSet}}]
+#' @return [\code{\link{OMLDataSet}}].
 #' @family download
 #' @export
-getOMLDataSet = function(x, check.status, session.hash, verbosity) {
-  UseMethod("getOMLDataSet")
-}
+getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
+  did = asInt(did, lower = 0)
+  assertFlag(cache.only)
 
-#' @rdname getOMLDataSet
-#' @export
-getOMLDataSet.OMLTask = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
-  return(x$input$data.set)
-}
-
-#' @rdname getOMLDataSet
-#' @export
-getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
-  id = asInt(x, lower = 0)
-
-  if (check.status) {
-    l = listOMLDataSets(verbosity = 0L)
-    status = l[l$did == id, "status"]
-    if (status == "deactivated") {
-      stop("Data set has been deactivated.")
-    } else if (status == "in_preparation") {
-      stop("Data set is in preparation. You can download it as soon as it's active.")
-    }
-  }
-  showInfo(verbosity, "Getting data set '%i' from OpenML repository.", id)
-  f = findCachedDataset(id)
+  showInfo(verbosity, "Getting data set '%i' from OpenML repository.", did)
+  f = findCachedDataset(did)
 
   # get XML description
   if (!f$description.xml$found) {
-    url = getAPIURL("openml.data.description", data.id = id)
-    data.desc.contents = downloadXML(url, f$description.xml$path, verbosity, 
-      post = FALSE, session_hash = session.hash)
+    if (cache.only)
+      stopf("Data set '%i' not found in cache with option 'cache.only'", did)
+    data.desc.contents = doAPICall(api.call = "data", id = did, file = f$description.xml$path,
+      verbosity = verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Data set description found in cache.")
     data.desc.contents = readLines(f$description.xml$path)
@@ -81,18 +56,27 @@ getOMLDataSet.numeric = function(x, check.status = FALSE, session.hash = getSess
     original.data.url = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:original_data_url"),
     paper.url = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:paper.url"),
     update.comment = xmlOValS(data.desc.xml, "/oml:data_set_description/oml:update.comment"),
-    md5.checksum = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:md5_checksum")
+    md5.checksum = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:md5_checksum"),
+    status = xmlRValS(data.desc.xml, "/oml:data_set_description/oml:status")
   ))
   data.desc = do.call(makeOMLDataSetDescription, args)
 
+  if (data.desc$status == "deactivated") {
+    stop("Data set has been deactivated.")
+  } else if (data.desc$status == "in_preparation") {
+    stop("Data set is in preparation. You can download it as soon as it's active.")
+  }
+
   # now get data file
   if (!f$dataset.arff$found) {
+    if (cache.only)
+      stopf("Data set '%i' not found in cache with option 'cache.only'", did)
     data = downloadARFF(data.desc$url, file = f$dataset.arff$path, verbosity)
   } else {
     showInfo(verbosity, "Data set found in cache.")
-    data = read.arff(f$dataset.arff$path)
-  }
-  
+      data = arff.reader(f$dataset.arff$path)
+    }
+
   if (!is.na(data.desc$row.id.attribute)) {
     if (is.na(data.desc$ignore.attribute))
       data.desc$ignore.attribute = data.desc$row.id.attribute

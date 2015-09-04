@@ -4,15 +4,16 @@
 \alias{getOMLTask}
 \title{Get an OpenML task.}
 \usage{
-getOMLTask(task.id, session.hash = getSessionHash(), verbosity = NULL)
+getOMLTask(task.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
-The task ID.}
+Task ID.}
 
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
+\item{cache.only}{[\code{logical(1)}]\cr
+Only try to retrieve the object from cache.
+Will result in error if the object is not found.
+Default is \code{FALSE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

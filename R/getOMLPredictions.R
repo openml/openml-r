@@ -5,14 +5,13 @@
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The OpenML run.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}]
 #' @seealso \code{\link{OMLRun}}, \code{\link{getOMLRun}}
 #' @export
-getOMLPredictions = function(run, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLPredictions = function(run, verbosity = NULL) {
   assertClass(run, "OMLRun")
-
+  
   if (is.null(run$predictions)) {
     f = findCachedRun(run$run.id)
     if (!f$predictions.arff$found) {
@@ -24,7 +23,7 @@ getOMLPredictions = function(run, session.hash = getSessionHash(), verbosity = N
       pred = downloadARFF(url, f$predictions.arff$path, verbosity)
     } else {
       showInfo(verbosity, "Predictions found in cache.")
-      pred = read.arff(f$predictions.arff$path)
+      pred = arff.reader(f$predictions.arff$path)
     }
     return(pred)
   } else {

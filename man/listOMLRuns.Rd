@@ -4,22 +4,18 @@
 \alias{listOMLRuns}
 \title{List OpenML runs.}
 \usage{
-listOMLRuns(task.id = NULL, setup.id = NULL, implementation.id = NULL,
-  session.hash = getSessionHash(), verbosity = NULL)
+listOMLRuns(task.id = NULL, setup.id = NULL, flow.id = NULL,
+  verbosity = NULL)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
-ID of the task.}
+Task ID.}
 
 \item{setup.id}{[\code{integer(1)}]\cr
 ID of the parameter setup.}
 
-\item{implementation.id}{[\code{integer(1)}]\cr
+\item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -33,6 +29,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
 This function returns information on all OpenML runs that match a certain
-\code{task.id}, \code{setup.id} and/or implementation ID \code{implementation.id}.
+\code{task.id}, \code{setup.id} and/or implementation ID \code{flow.id}.
 }
 

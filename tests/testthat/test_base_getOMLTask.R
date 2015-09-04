@@ -1,9 +1,9 @@
 context("getOMLTask")
 
 test_that("getOMLTask", {
-  measures = listOMLEvaluationMeasures(session.hash)$name
+  measures = listOMLEvaluationMeasures()$name
 
-  task = getOMLTask(1L, session.hash)
+  task = getOMLTask(1L)
   expect_is(task, "OMLTask")
   expect_is(task$input$data.set, "OMLDataSet")
   expect_true(is.data.frame(task$input$data.set$data))
@@ -16,5 +16,5 @@ test_that("getOMLTask", {
 
   expect_is(task$output$predictions, "list")
 
-  expect_error(getOMLTask(1231109283L, session.hash),  "Unknown task")
+  expect_error(getOMLTask(1231109283L),  "Unknown task")
 })

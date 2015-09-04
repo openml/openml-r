@@ -2,6 +2,7 @@ language: r
 
 r_github_packages:
     - jimhester/covr
+    - mlr-org/farff
 apt_packages:
     - r-cran-rjava
 r_binary_packages:
@@ -18,3 +19,7 @@ notifications:
         - bernd_bischl@gmx.net
     on_success: change
     on_failure: always
+
+env:
+  global:
+    secure: FXpyq4vsM7ZUV83Jxq7rtSCFjVfJ2kx6uPBocHfTm/ZMHfjvqHux+Uk2gX0ei8gUSC6iMLEolagwbOLIIPpQfCfjBQa+KEto4GW+cPNnTXEZBtiNiVDeBq3nsLGFY05Ojo/SK5Ign50fTPRZvfzPiAqVMVeruwKA9rVLknv2dSg=

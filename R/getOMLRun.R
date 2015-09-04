@@ -5,20 +5,23 @@
 #'
 #' @param run.id [\code{integer(1)}]\cr
 #'   The run's ID.
-#' @param get.predictions [\code{logical(1)}]\cr
-#'   Should the associated predictions be retrieved, too? Default is \code{FALSE}. Note that this does not affect the
-#'   downloading of metrics and other information.
-#' @template arg_hash
+#' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLRun}}]
 #' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
-getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(run.id)
-  assertFlag(get.predictions)
+  assertFlag(cache.only)
 
-  url = getAPIURL("openml.run.get", run_id = id)
-  content = downloadXML(url, NULL, verbosity, session_hash = session.hash, post = FALSE)
+  f = findCachedRun(id)
+
+  if (!f$description.xml$found) {
+    content = doAPICall("run", id = id, file = f$description.xml$path, verbosity, method = "GET")
+  } else {
+    showInfo(verbosity, "Run description found in cache.")
+    content = readLines(f$description.xml$path)
+  }
   doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
 
   parseData = function(path) {
@@ -53,14 +56,14 @@ getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionH
       row = list(
         as.integer(xmlValue(children[["did"]])),
         xmlValue(children[["name"]]),
-        xmlValue(children[["implementation"]]),
+        xmlValue(children[["flow_id"]]),
         xmlValue(children[["label"]]),
         as.numeric(xmlValue(children[["value"]])),
         as.numeric(xmlValue(children[["stdev"]])),
         xmlValue(children[["array_data"]]),
         as.integer(xmlValue(children[["sample_size"]]))
       )
-      names(row) = c("did", "name", "implementation", "label", "value", "stdev", "array.data", "sample.size")
+      names(row) = c("did", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size")
       row
     }), fill = TRUE)
     makeOMLIOData(datasets = datasets, files = files, evaluations = as.data.frame(evals))
@@ -69,8 +72,12 @@ getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionH
   run.args = filterNull(list(
     run.id = xmlREValI(doc, "/oml:run/oml:run_id"),
     uploader = xmlREValI(doc, "/oml:run/oml:uploader"),
+    uploader.name = xmlOValS(doc, "/oml:run/oml:uploader.name"),
     task.id = xmlREValI(doc, "/oml:run/oml:task_id"),
-    implementation.id = xmlRValI(doc, "/oml:run/oml:implementation_id"),
+    task.type = xmlOValS(doc, "/oml:run/oml:task_type"),
+    task.evaluation.measure = xmlOValS(doc, "/oml:task_evaluation_measure"),
+    flow.id = xmlRValI(doc, "/oml:run/oml:flow_id"),
+    flow.name = xmlOValS(doc, "/oml:run/oml:flow.name"),
     setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),
     setup.string = xmlOValS(doc, "/oml:run/oml:setup_string"),
     error.message = xmlOValS(doc, "/oml:run/oml:error_message"),
@@ -91,22 +98,23 @@ getOMLRun = function(run.id, get.predictions = FALSE, session.hash = getSessionH
     do.call(makeOMLRunParameter, args)
   })
 
-  if (get.predictions) {
-    f = findCachedRun(run.args$run.id)
-    if (!f$predictions.arff$found) {
-      fls = run.args$output.data$files
-      url = fls[fls$name == "predictions", "url"]
-      if (is.null(url)) {
-        warning("No URL found to retrieve predictions from.")
-        pred = NULL
-      } else {
-        pred = downloadARFF(url, f$predictions.arff$path, verbosity)
-      }
+  # get the predictions
+  f = findCachedRun(run.args$run.id)
+
+  if (!f$predictions.arff$found) {
+    fls = run.args$output.data$files
+    url = fls[fls$name == "predictions", "url"]
+    if (is.null(url)) {
+      warning("No URL found to retrieve predictions from.")
+      pred = NULL
     } else {
-      showInfo(verbosity, "Predictions found in cache.")
-      pred = read.arff(f$predictions.arff$path)
+      pred = downloadARFF(url, f$predictions.arff$path, verbosity)
     }
-    run.args[["predictions"]] = pred
+  } else {
+    showInfo(verbosity, "Predictions found in cache.")
+    pred = arff.reader(f$predictions.arff$path)
   }
+  run.args[["predictions"]] = pred
+
   do.call(makeOMLRun, run.args)
 }

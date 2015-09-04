@@ -1,24 +1,23 @@
 #' @title List all registered OpenML flows.
+#'
 #' @description
 #' The returned \code{data.frame} contains the flow id \dQuote{fid},
 #' the flow name (\dQuote{full.name} and \dQuote{name}), version information
 #' (\dQuote{version} and \dQuote{external.version}) and the uploader (\dQuote{uploader})
 #' of all registered OpenML flows.
-#' @template arg_hash
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
-listOMLFlows = function(session.hash = getSessionHash(), verbosity = NULL) {
-  url = getAPIURL("openml.implementations")
-  content = downloadXML(url, NULL, verbosity = verbosity, session_hash = session.hash)
-  xml = parseXMLResponse(content, "Getting flows", "implementations", as.text = TRUE)
+listOMLFlows = function(verbosity = NULL) {
+  content = doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET")
+  xml = parseXMLResponse(content, "Getting flows", "flows", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   as.data.frame(rbindlist(lapply(blocks, function(node) {
     children = xmlChildren(node)
     list(
-      implementation.id = as.integer(xmlValue(children[["id"]])),
+      flow.id = as.integer(xmlValue(children[["id"]])),
       full.name = xmlValue(children[["full_name"]]),
       name = xmlValue(children[["name"]]),
       version = as.integer(xmlValue(children[["version"]])),

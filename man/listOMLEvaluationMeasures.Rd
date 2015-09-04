@@ -4,13 +4,9 @@
 \alias{listOMLEvaluationMeasures}
 \title{List available OpenML evaluation measures.}
 \usage{
-listOMLEvaluationMeasures(session.hash = getSessionHash(), verbosity = NULL)
+listOMLEvaluationMeasures(verbosity = NULL)
 }
 \arguments{
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
-
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr
@@ -26,10 +22,8 @@ The names of all evaluation measures which are used in at least one run are retu
 in a \code{data.frame}.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualitiesList}};
+Other list: \code{\link{getOMLDataSetQualities}};
   \code{\link{listOMLDataSetQualities}};
-  \code{\link{listOMLDataSets}};
-  \code{\link{listOMLFlows}};
-  \code{\link{listOMLRunResults}}
+  \code{\link{listOMLDataSets}}; \code{\link{listOMLFlows}}
 }
 

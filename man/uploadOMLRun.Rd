@@ -4,19 +4,14 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run to the server.}
 \usage{
-uploadOMLRun(run, implementation.id, session.hash = getSessionHash(),
-  verbosity = NULL)
+uploadOMLRun(run, flow.id, verbosity = NULL)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}]\cr
 The run that should be uploaded.}
 
-\item{implementation.id}{[\code{integer(1)}]\cr
+\item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -29,6 +24,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{invisible(numeric(1))}]. The run ID.
 }
 \description{
-Share a run of an implementation on a given OpenML task.
+Share a run of an flow on a given OpenML task.
 }
 

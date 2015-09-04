@@ -1,0 +1,78 @@
+Downloading
+===========
+
+### Download an OpenML task
+A user can download a task from the OpenML server, compute predictions with an algorithm (i.e., with a specific setup)
+and upload this algorithm as well as the predictions. The server will then calculate many different performance measures
+and add them to the data base.
+
+The following call returns an OpenML task object:
+
+```{r}
+task = getOMLTask(task.id = 59L)
+task
+```
+
+The corresponding `"OMLDataSet"` object can be accessed by
+
+```{r}
+task$input$data.set
+```
+
+A special print function gives the basic information on the data set. To extract the data itself
+one can use
+
+```{r}
+iris.data = task$input$data.set$data
+head(iris.data)
+```
+
+### Download an OpenML data set only
+To directly download a data set, e.g., when you want to run a few preliminary experiments, one can
+use the function `getOMLDataSet`. The function accepts a data set ID as input and returns the corresponding `OMLDataSet`:
+
+```{r}
+iris.data2 = getOMLDataSet(did = 61L)  # the iris data set has the data set ID 61
+iris.data2
+```
+
+### Download an OpenML flow
+
+You can download a flow by specifying the `flow.id` parameter in the `getOMLFlow` function:
+
+```{r}
+flow = getOMLFlow(flow.id = 1248L)
+flow
+```
+
+### Download an OpenML run
+To download the results of one run including all server and user computed metrics, you have to know
+the corresponding run ID. These IDs can be extracted from the `runs` object, which was created in the
+previous section. Here we use the first run of task 59, which has the `run.id` 234.
+You can download a single OpenML run with the `getOMLRun` function:
+
+```{r}
+run = getOMLRun(run.id = 234L)  # see ?OMLRun for each slot of the OMLRun object
+```
+
+There are some slots which are of major intereset for the `OMLRun` object. A list containing the parameter settings
+can be obtained by `run$parameter.setting`. All data that served as input for the run, including the
+URL to the data is stored in `run$input.data`.
+
+To retrieve predictions of an uploaded run, you can set the parameter `get.predictions = TRUE` to store the
+predictions in the `$predictions` slot or use the function `getOMLPredictions(run)`:
+
+```{r}
+run.pred = getOMLRun(run.id = 234L, get.predictions = TRUE)
+all.equal(run.pred$predictions, getOMLPredictions(run))
+```
+
+----------------------------------------------------------------------------------------------------
+Jump to:
+- [Introduction](1-Introduction.md)
+- [Configuration](2-Configuration.md)
+- [Listing](3-Listing.md)
+- Downloading
+- [Running models on tasks](5-Running.md)
+- [Uploading](6-Uploading.md)
+- [Example workflow with mlr](7-Example-workflow-with-mlr.md)

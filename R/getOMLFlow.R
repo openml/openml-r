@@ -1,19 +1,23 @@
-#' Download an OpenML flow.
+#' @title Download an OpenML flow.
 #'
-#' @template arg_implementation.id
-#' @template arg_hash
+#' @description
+#' Given an flow id, the corresponding \code{\link{OMLFlow}} is downloaded if
+#' not already available in cache.
+#'
+#' @template arg_flow.id
+#' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLFlow}}].
 #' @export
-getOMLFlow = function(implementation.id, session.hash = getSessionHash(), verbosity = NULL) {
-  implementation.id = asCount(implementation.id)
-  assertString(session.hash)
+getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
+  flow.id = asCount(flow.id)
 
-  url = getAPIURL("openml.implementation.get", implementation_id = implementation.id)
-  content = try(downloadXML(url, NULL, verbosity, session_hash = session.hash), silent = TRUE)
+  content = doAPICall(api.call = "flow", id = flow.id,
+    file = NULL, verbosity = verbosity, method = "GET")
+  # FIXME: what is this here?
   if (is.error(content))
     stop("Flow (temporarily) not available.")
-  doc = parseXMLResponse(content, "Getting implementation", "implementation", as.text = TRUE)
+  doc = parseXMLResponse(content, "Getting flow", "flow", as.text = TRUE)
   flow = parseOMLFlow(doc)
 
   # download source and/or binary files:
@@ -21,7 +25,7 @@ getOMLFlow = function(implementation.id, session.hash = getSessionHash(), verbos
     url = flow[[sprintf("%s.url", binOrSource)]]
     if (!is.na(url)) {
       file = basename(url)
-      f = findCachedFlow(flow$implementation.id, file)[[1L]]
+      f = findCachedFlow(flow$flow.id, file)[[1L]]
       flow[[sprintf("%s.path", binOrSource)]] = f$path
       if (f$found) {
         showInfo(verbosity, "File %s found in cache.", file)
@@ -46,50 +50,50 @@ getOMLFlow = function(implementation.id, session.hash = getSessionHash(), verbos
 #       writeLines(source.file, flow$source.path)
 #     }
 #   }
-  
+
   return(flow)
 }
 
 parseOMLFlow = function(doc) {
   args = filterNull(list(
-    implementation.id = xmlRValI(doc, "/oml:implementation/oml:id"),
-    uploader = xmlOValI(doc, "/oml:implementation/oml:uploader"),
-    name = xmlRValS(doc, "/oml:implementation/oml:name"),
-    version = xmlRValS(doc, "/oml:implementation/oml:version"),
-    external.version = xmlOValS(doc, "/oml:implementation/oml:external_version"),
-    description = xmlRValS(doc, "/oml:implementation/oml:description"),
-    creator = xmlOValsMultNsS(doc, "/oml:implementation/oml:creator"),
-    contributor = xmlOValsMultNsS(doc, "/oml:implementation/oml:contributor"),
-    upload.date = xmlRValS(doc, "/oml:implementation/oml:upload_date"),
-    licence = xmlOValS(doc, "/oml:implementation/oml:licence"),
-    language = xmlOValS(doc, "/oml:implementation/oml:language"),
-    full.description = xmlOValS(doc, "/oml:implementation/oml:full_description"),
-    installation.notes = xmlOValS(doc, "/oml:implementation/oml:installation_notes"),
-    dependencies = xmlOValS(doc, "/oml:implementation/oml:dependencies"),
+    flow.id = xmlRValI(doc, "/oml:flow/oml:id"),
+    uploader = xmlOValI(doc, "/oml:flow/oml:uploader"),
+    name = xmlRValS(doc, "/oml:flow/oml:name"),
+    version = xmlRValS(doc, "/oml:flow/oml:version"),
+    external.version = xmlOValS(doc, "/oml:flow/oml:external_version"),
+    description = xmlRValS(doc, "/oml:flow/oml:description"),
+    creator = xmlOValsMultNsS(doc, "/oml:flow/oml:creator"),
+    contributor = xmlOValsMultNsS(doc, "/oml:flow/oml:contributor"),
+    upload.date = xmlRValS(doc, "/oml:flow/oml:upload_date"),
+    licence = xmlOValS(doc, "/oml:flow/oml:licence"),
+    language = xmlOValS(doc, "/oml:flow/oml:language"),
+    full.description = xmlOValS(doc, "/oml:flow/oml:full_description"),
+    installation.notes = xmlOValS(doc, "/oml:flow/oml:installation_notes"),
+    dependencies = xmlOValS(doc, "/oml:flow/oml:dependencies"),
     bibliographical.reference = parseOMLBibRef(doc),
-    implements = xmlOValS(doc, "/oml:implementation/oml:implements"),
+    implements = xmlOValS(doc, "/oml:flow/oml:implements"),
     parameters = parseOMLParameters(doc),
     qualities = parseOMLQualities(doc),
-    tags = xmlOValsMultNsS(doc, "/oml:implementation/oml:tag"),
-    source.url = xmlOValS(doc, "/oml:implementation/oml:source_url"),
-    binary.url = xmlOValS(doc, "/oml:implementation/oml:binary_url"),
-    source.format = xmlOValS(doc, "/oml:implementation/oml:source_format"),
-    binary.format = xmlOValS(doc, "/oml:implementation/oml:binary_format"),
-    source.md5 = xmlOValS(doc, "/oml:implementation/oml:source_md5"),
-    binary.md5 = xmlOValS(doc, "/oml:implementation/oml:binary_md5"),
+    tags = xmlOValsMultNsS(doc, "/oml:flow/oml:tag"),
+    source.url = xmlOValS(doc, "/oml:flow/oml:source_url"),
+    binary.url = xmlOValS(doc, "/oml:flow/oml:binary_url"),
+    source.format = xmlOValS(doc, "/oml:flow/oml:source_format"),
+    binary.format = xmlOValS(doc, "/oml:flow/oml:binary_format"),
+    source.md5 = xmlOValS(doc, "/oml:flow/oml:source_md5"),
+    binary.md5 = xmlOValS(doc, "/oml:flow/oml:binary_md5"),
     components = list()
   ))
 
   ## components section
-  comp_ns = getNodeSet(doc, "/oml:implementation/oml:component/oml:implementation")
+  comp_ns = getNodeSet(doc, "/oml:flow/oml:component/oml:flow")
   comp = vector("list", length = length(comp_ns))
   for (i in seq_along(comp_ns)) {
     # save subcomponent temporarily on disk
     # FIXME: this is not very elegant
     file2 = tempfile("components")
     saveXML(comp_ns[[i]], file = file2)
-    comp[[i]] = parseOMLFlow(parseXMLResponse(file2, type = "implementation"))
-    names(comp)[i] = xmlRValS(doc, paste0("/oml:implementation/oml:component[", i, "]/oml:identifier"))
+    comp[[i]] = parseOMLFlow(parseXMLResponse(file2, type = "flow"))
+    names(comp)[i] = xmlRValS(doc, paste0("/oml:flow/oml:component[", i, "]/oml:identifier"))
     unlink(file2)
   }
   args[["components"]] = comp
@@ -98,7 +102,7 @@ parseOMLFlow = function(doc) {
 }
 
 parseOMLParameters = function(doc) {
-  path = "/oml:implementation/oml:parameter"
+  path = "/oml:flow/oml:parameter"
 
   ns = getNodeSet(doc, path)
   nr.pars = length(ns)
@@ -118,7 +122,7 @@ parseOMLParameters = function(doc) {
 }
 
 parseOMLBibRef = function(doc) {
-  path = "/oml:implementation/oml:bibliographical_reference"
+  path = "/oml:flow/oml:bibliographical_reference"
 
   ns = getNodeSet(doc, path)
 
@@ -136,7 +140,7 @@ parseOMLBibRef = function(doc) {
 }
 
 parseOMLQualities = function(doc) {
-  path = "/oml:implementation/oml:quality"
+  path = "/oml:flow/oml:quality"
 
   ns = getNodeSet(doc, path)
 

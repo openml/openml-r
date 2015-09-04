@@ -12,8 +12,8 @@ For further information please read the configuration section in
 \url{https://github.com/openml/r/wiki}.
 }
 \seealso{
-Other config: \code{\link{authenticateUser}};
-  \code{\link{getOMLConfig}}; \code{\link{getSessionHash}};
-  \code{\link{loadOMLConf}}; \code{\link{setOMLConfig}}
+Other config: \code{\link{getOMLConfig}},
+  \code{\link{getOMLConfig}}; \code{\link{loadOMLConfig}};
+  \code{\link{saveOMLConfig}}; \code{\link{setOMLConfig}}
 }
 

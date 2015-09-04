@@ -1,37 +1,42 @@
 Introduction
 ============
 
-The R package OpenML is an interface to make interactions with the OpenML server as comfortable as possible. Users can download and upload files, run their implementations on specific tasks, get
+The R package OpenML is an interface to make interactions with the [OpenML](http://openml.org/) server
+as comfortable as possible. Users can download and upload files, run their implementations on specific tasks, get
 predictions in the correct form, run SQL queries, etc. directly via R commands. In this tutorial, we
 will show you the most important functions of this package and give you examples on standard
 workflows.
 
-For general information on what [OpenML](http://openml.org/) is, please have a look at the
-[Readme file](https://github.com/openml/OpenML/blob/master/README.md).
+For general information on what OpenML is, please have a look at the
+[README file](https://github.com/openml/OpenML/blob/master/README.md) or visit
+the [official OpenML website](http://openml.org/).
 
-There are different stages when using this package:
-* Stage 0: Listing
+Before making practical use of the package in most cases it is desirable to
+[setup a configuration file](2-Configuration.md) to simplify further steps.
+
+Basically there are different stages when using this package respectively OpenML:
+* [Listing](3-Listing.md)
     * function names begin with `listOML`
     * result is always a data.frame
     * available for DataSets, Tasks, Flows, Runs, RunResults, EvaluationMeasures and TaskTypes
-* Stage 1: Downloading
+* [Downloading](4-Downloading.md)
     * function names begin with `getOML`
     * result is an object of a specific OpenML class
     * available for DataSets, Tasks, Runs, Predictions and Flows
-* Stage 2: Running Models on Tasks
+* [Running models on tasks](5-Running.md)
     * runTaskMlr
     * input: task and model
     * output: OMLMlrRun, OMLRun
-* Stage 3: Uploading
+* [Uploading](6-Uploading.md)
     * uploadOMLFlow
     * uploadOMLRun
 
 ----------------------------------------------------------------------------------------------------
-Jump to:    
-Introduction  
-[Configuration](2-Configuration.md)  
-[Stage 0 - Listing](3-Stage-0-Listing.md)  
-[Stage 1 - Downloading](4-Stage-1-Downloading.md)  
-[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
-[Stage 3 - Uploading](6-Stage-3-Uploading.md)  
-[Example workflow with mlr](8-Example-workflow-with-mlr.md)
+Jump to:
+- Introduction
+- [Configuration](2-Configuration.md)
+- [Listing](3-Listing.md)
+- [Downloading](4-Downloading.md)
+- [Running models on tasks](5-Running.md)
+- [Uploading](6-Uploading.md)
+- [Example workflow with mlr](7-Example-workflow-with-mlr.md)

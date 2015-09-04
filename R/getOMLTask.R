@@ -4,9 +4,8 @@
 #' This function downloads an OpenML task and all associated files from the OpenML repository,
 #' caches the files on disk and creates an S3 object which completely specifies the task.
 #'
-#' @param task.id [\code{integer(1)}]\cr
-#'   The task ID.
-#' @template arg_hash
+#' @template arg_task_id
+#' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}]
 #' @export
@@ -19,8 +18,9 @@
 #' print(task$input$data.set)
 #' print(head(task$input$data.set$data))
 #' }
-getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL) {
+getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(task.id)
+  assertFlag(cache.only)
 
   showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
 
@@ -28,9 +28,8 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
 
   # get XML description
   if (!f$task.xml$found) {
-    url = getAPIURL("openml.task.get", task_id = id)
-    task.contents = downloadXML(url, f$task.xml$path, 
-      verbosity, post = FALSE, session_hash = session.hash)
+    task.contents = doAPICall(api.call = "task", id = id,
+      file = f$task.xml$path, verbosity = verbosity, method = "GET")
   } else {
     showInfo(verbosity, "Task XML found in cache.")
     task.contents = readLines(f$task.xml$path)
@@ -121,7 +120,7 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
 
   # replace targets with new column names
   targets = task$input$data.set$colnames.new[unlist(lapply(targets, function(x) which(x == task$input$data.set$colnames.old)))]
-  task$input$data.set$target.features = targets
+  task$input$target.features = targets
 
   if (task.type == "Supervised Classification") {
     if (!is.factor(task$input$data.set$data[, targets])) {
@@ -142,7 +141,7 @@ getOMLTask = function(task.id, session.hash = getSessionHash(), verbosity = NULL
     }
   } else {
     showInfo(verbosity, "Data splits found in cache.")
-    data = read.arff(f$datasplits.arff$path)
+    data = arff.reader(f$datasplits.arff$path)
     task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   }
   return(task)
@@ -155,7 +154,7 @@ parseOMLDataSplits = function(task, data) {
   ri = data$rowid
   rns = rownames(task$input$data.set$data)
   # FIXME: use match()!
-  data$rowid = sapply(ri, function(x) which(x == rns))
+  data$rowid = as.vector(sapply(ri, function(x) which(x == rns)))
   data$rep = data$rep + 1
   data$fold = data$fold + 1
   return(data)

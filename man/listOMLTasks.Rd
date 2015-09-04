@@ -4,19 +4,9 @@
 \alias{listOMLTasks}
 \title{List available OpenML tasks}
 \usage{
-listOMLTasks(type = 1L, session.hash = getSessionHash(), verbosity = NULL,
-  status = "active")
+listOMLTasks(verbosity = NULL, status = "active")
 }
 \arguments{
-\item{type}{[\code{integer(1)}]\cr
-The task type you want to list tasks for.
-See code \link{listOMLTaskTypes}.
-Default is \code{1} for classification.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
-
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr

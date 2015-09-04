@@ -2,15 +2,11 @@
 % Please edit documentation in R/listOMLTaskTypes.R
 \name{listOMLTaskTypes}
 \alias{listOMLTaskTypes}
-\title{List available OpenML task types}
+\title{List available OpenML task types.}
 \usage{
-listOMLTaskTypes(session.hash = getSessionHash(), verbosity = NULL)
+listOMLTaskTypes(verbosity = NULL)
 }
 \arguments{
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
-
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr
@@ -19,9 +15,13 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{data.frame}] with columns \dQuote{id} and \dQuote{name}.
+[\code{data.frame}].
 }
 \description{
+The returned \code{data.frame} contains the type \code{id} and the character
+name of the OpenML task type.
+}
+\details{
 List available OpenML task types
 }
 

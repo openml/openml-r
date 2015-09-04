@@ -4,15 +4,11 @@
 \alias{uploadOMLFlow}
 \title{Upload an OpenML flow to the server.}
 \usage{
-uploadOMLFlow(x, session.hash, verbosity, sourcefile, binaryfile)
+uploadOMLFlow(x, verbosity, sourcefile, binaryfile)
 }
 \arguments{
 \item{x}{[\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
 The flow that should be uploaded.}
-
-\item{session.hash}{[\code{character(1)}]\cr
-A session token returned by \code{\link{authenticateUser}}. Default is
-\code{\link{getSessionHash}()}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -28,7 +24,7 @@ the file path to the flow (not needed for \code{\link{Learner}})}
 the file path to the flow (not needed for \code{\link{Learner}})}
 }
 \value{
-[\code{invisible(numeric(1))}]. The id of the flow (\code{implementation.id}).
+[\code{invisible(numeric(1))}]. The id of the flow (\code{flow.id}).
 }
 \description{
 Upload an OpenML flow to the server.
