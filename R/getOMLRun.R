@@ -6,13 +6,13 @@
 #' @param run.id [\code{integer(1)}]\cr
 #'   The run's ID.
 #' @param get.predictions [\code{logical(1)}]\cr
-#'   Should the associated predictions be retrieved, too? Default is \code{FALSE}. Note that this does not affect the
-#'   downloading of metrics and other information.
+#'   Should the associated prediction ARFF be retrieved as well?
+#'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{\link{OMLRun}}]
 #' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
-getOMLRun = function(run.id, get.predictions = FALSE, verbosity = NULL) {
+getOMLRun = function(run.id, get.predictions = TRUE, verbosity = NULL) {
   id = asCount(run.id)
   assertFlag(get.predictions)
 
