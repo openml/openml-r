@@ -3,8 +3,8 @@
 #' @param server [\code{character(1)}]\cr
 #'   URL of the XML API endpoint.
 #' @param verbosity [\code{integer(1)}]\cr
-#'   Verbosity level. Possible values are 0 (no output), 1 (), 2() and 3 ().
-#'   Default is 1.
+#'   Verbosity level. Possible values are 0 (normal output), 1 (info output),
+#'   2(debug output). Default is 1.
 #' @param apikey [\code{character(1)}]\cr
 #'   Your OpenML API key. Log in to OpenML, move to your profile to get it.
 #' @param cachedir [\code{character(1)}]\cr
