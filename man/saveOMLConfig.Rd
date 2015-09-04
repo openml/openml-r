@@ -4,15 +4,27 @@
 \alias{saveOMLConfig}
 \title{Saves a list of OpenML configuration settings to file}
 \usage{
-saveOMLConfig(conf = list(), ..., path = "~/.openml/config",
+saveOMLConfig(server = NULL, verbosity = NULL, apikey = NA,
+  cachedir = NULL, arff.reader = "RWeka", path = "~/.openml/config",
   overwrite = FALSE)
 }
 \arguments{
-\item{conf}{[\code{list}]\cr
-Named list of configuration values.}
+\item{server}{[\code{character(1)}]\cr
+URL of the XML API endpoint.}
 
-\item{...}{[any]\cr
-Another possibility to pass configuration options.}
+\item{verbosity}{[\code{integer(1)}]\cr
+Verbosity level. Possible values are 0 (no output), 1 (), 2() and 3 ().
+Default is 1.}
+
+\item{apikey}{[\code{character(1)}]\cr
+Your OpenML API key. Log in to OpenML, move to your profile to get it.}
+
+\item{cachedir}{[\code{character(1)}]\cr
+Path the the cache directory.}
+
+\item{arff.reader}{[\code{character(1)}]\cr
+Name of the package which should be used to parse arff files. Possible are
+\dQuote{RWeka}, which is the default and \dQuote{farff}.}
 
 \item{path}{[\code{character(1)}]\cr
 Path to OpenML config file. Default is \dQuote{~/.openml/config}.}
