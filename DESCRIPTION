@@ -25,7 +25,6 @@ Imports:
     RCurl,
     stringi,
     XML,
-    rjson,
     mlr,
     stats
 LazyData: yes
