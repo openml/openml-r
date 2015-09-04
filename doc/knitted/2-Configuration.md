@@ -2,10 +2,14 @@ Configuration
 =============
 
 ## Registration
-The first step of working with OpenML should be to register yourself at the [OpenML website](http://www.openml.org). Most of the package's functions require a API authentication key which is only accessible with a (free) account. You can access that key after logging into your account when you go to http://www.openml.org/u/YOUR_USER_ID#!api.
+The first step of working with OpenML should be to register yourself at the [OpenML website](http://www.openml.org). 
+Most of the package's functions require a API authentication key which is only accessible with a (free) account. 
+To access the API key
+* log into your account 
+* and then go to http://www.openml.org/u#!api.
 
 ## Permanently setting configuration
-After the registration you should create a configuration file. You can easily create this file using the command `saveOMLConfig`.
+After registration you should create a configuration file. You can easily create this file using the command `saveOMLConfig`.
 
 The `config` file may contain the following information:
 * apikey
@@ -31,10 +35,11 @@ saveOMLConfig(apikey = "ADD_THE_PUBLIC_READONLY_API_KEY_HERE")
     
 The configuration file is not mandatory. Permanently setting your API key via the `config` is recommended, 
 as this key is required to access the OpenML server. Note however, that basically everybody who has access 
-to your computer can read the configuration file and see your password, so please use this password **only** for OpenML.
+to your computer can read the configuration file and see your API key. With your API key other users have full
+access to your account via the API, so please handle the API key with care.
 
-### Manually creating the config file
-Alternatively you can manually create a file `~/.openml/config` in your home directory (you can use the R command 
+### Manually creating the configuration file
+Alternatively, you can manually create a file `~/.openml/config` in your home directory (you can use the R command 
 `path.expand("~/.openml/config")` to get the full path to the configuration file on your operating system).
 
 An exemplary minimal `config` file may look like
