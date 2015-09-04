@@ -10,7 +10,7 @@ writeOMLFlowXML = function(description, file) {
   assertPathForOutput(file, overwrite = TRUE)
 
   doc = newXMLDoc()
-  top = newXMLNode("oml:implementation", parent = doc, namespace = c(oml = "http://openml.org/openml"))
+  top = newXMLNode("oml:flow", parent = doc, namespace = c(oml = "http://openml.org/openml"))
 
   mynode = function(name, val, parent = top){
     if (!is.na(val))
@@ -46,7 +46,7 @@ writeOMLFlowXML = function(description, file) {
       identifier = names(description$components)[i]
       identifier = ifelse(!is.null(identifier), identifier, description$components[[i]]$name)
       mynode("identifier", identifier, parent = comp)
-      sub.impl = newXMLNode("implementation", parent = comp, namespace = "oml")
+      sub.impl = newXMLNode("flow", parent = comp, namespace = "oml")
       doc = addNodes(description$components[[i]], doc, parent = sub.impl)
     }
     mynode("source_format", description$source.format, parent)

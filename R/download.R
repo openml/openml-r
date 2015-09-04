@@ -31,12 +31,10 @@ doAPICall = function(api.call, id = NULL,
   # occasionally we need to pass a single API arg, such as the data id, additionally
   id = if (!is.null(id)) paste0("/", id) else ""
 
-  namedArgsListToHTTPQuery = function(args) {
-    collapse(paste(names(args), args, sep = "="), "&")
-  }
-
   # create HTTP GET args list
-  url.args = insert(url.args, list(...))
+  if (method == "GET") {
+    url.args = insert(url.args, list(...))
+  }
   url.args$api_key = conf$apikey
   url.args = namedArgsListToHTTPQuery(url.args)
 
@@ -45,11 +43,12 @@ doAPICall = function(api.call, id = NULL,
   showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
 
   if (method == "GET") {
-    content = GET(url = url) #do.call(method, list(url = url, query = api.args))
+    content = GET(url = url)
+    content = rawToChar(content$content)
   } else if (method == "POST") {
     content = POST(url = url, body = post.args)
-  }
-  content = rawToChar(content$content)
+  } else if (method == "DELETE")
+    content = DELETE(url = url)
 
   if (!is.null(file)) {
     con = file(file, open = "w")
@@ -57,6 +56,10 @@ doAPICall = function(api.call, id = NULL,
     writeLines(content, con = con)
   }
   return(content)
+}
+
+namedArgsListToHTTPQuery = function(args) {
+  collapse(paste(names(args), args, sep = "="), "&")
 }
 
 # @title Download an arff file to disk.

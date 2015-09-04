@@ -36,10 +36,11 @@ uploadOMLRun = function(run, flow.id, verbosity = NULL) {
       RWeka::write.arff(run$predictions, file = output) else farff::writeARFF(run$predictions, path = output)
     
     content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity, 
-      post.arg = list(description = upload_file(path = description), output = upload_file(path = output)) )
+      post.args = list(description = upload_file(path = description), 
+                       predictions = upload_file(path = output)))
   } else {
     content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity, 
-      post.arg = list(description = upload_file(path = description)) )
+      post.args = list(description = upload_file(path = description)) )
   }
   # was uploading successful?
   doc = try(parseXMLResponse(content, "Uploading run", "upload_run", as.text = TRUE), silent = TRUE)
