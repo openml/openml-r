@@ -1,9 +1,9 @@
-Stage 1 - Downloading
-=====================
+Downloading
+===========
 
 ### Download an OpenML task
 A user can download a task from the OpenML server, compute predictions with an algorithm (i.e., with a specific setup)
-and upload this algorithm as well as the predictions. The server will then calculate many different performance measures 
+and upload this algorithm as well as the predictions. The server will then calculate many different performance measures
 and add them to the data base.
 
 The following call returns an OpenML task object:
@@ -19,7 +19,7 @@ The corresponding `"OMLDataSet"` object can be accessed by
 task$input$data.set
 ```
 
-A special print function gives the basic information on the data set. To extract the data itself 
+A special print function gives the basic information on the data set. To extract the data itself
 one can use
 
 ```{r}
@@ -46,7 +46,7 @@ flow
 ```
 
 ### Download an OpenML run
-To download the results of one run including all server and user computed metrics, you have to know 
+To download the results of one run including all server and user computed metrics, you have to know
 the corresponding run ID. These IDs can be extracted from the `runs` object, which was created in the
 previous section. Here we use the first run of task 59, which has the `run.id` 234.
 You can download a single OpenML run with the `getOMLRun` function:
@@ -69,10 +69,10 @@ all.equal(run.pred$predictions, getOMLPredictions(run))
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
-[Introduction](1-Introduction.md)
-[Configuration](2-Configuration.md)
-[Stage 0 - Listing](3-Stage-0-Listing.md)
-Stage 1 - Downloading
-[Stage 2 - Running models on tasks](5-Stage-2-Running.md)
-[Stage 3 - Uploading](6-Stage-3-Uploading.md)
-[8 Example workflow with mlr](8-Example-workflow-with-mlr.md)
+- [Introduction](1-Introduction.md)
+- [Configuration](2-Configuration.md)
+- [Listing](3-Listing.md)
+- Downloading
+- [Running models on tasks](5-Running.md)
+- [Uploading](6-Uploading.md)
+- [Example workflow with mlr](7-Example-workflow-with-mlr.md)

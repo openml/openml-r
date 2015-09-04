@@ -1,7 +1,7 @@
-Stage 0 - Listing
-=================
+Listing
+=======
 
-In this stage, we want to list basic information about the various OpenML objects such as data sets, tasks, flows, runs, run results, evaluation measures or task types. See the [OpenML introduction](http://openml.org/guide) for an overview on and explanations of the different objects. 
+In this stage, we want to list basic information about the various OpenML objects such as data sets, tasks, flows, runs, run results, evaluation measures or task types. See the [OpenML introduction](http://openml.org/guide) for an overview on and explanations of the different objects.
 
 For each of these objects we have a function to query the information beginning with `listOML`. All of these functions return a `data.frame`, even when the result has only one column.
 
@@ -12,7 +12,7 @@ library("OpenML")
 setOMLConfig(verbosity = 0) # switch off status output
 ```
 
-### List data sets 
+### List data sets
 To browse the OpenML data base for appropriate data sets, you can use `listOMLDataSets()`
 in order to get basic data characteristics (number of features/instances/classes/missing values etc.)
 for each data set. By default, `listOMLDataSets()` returns only data sets that have an active
@@ -59,13 +59,13 @@ subset(datasets, name == "iris")[, 1:6]
 ```
 
 As one can see there are two data sets called `iris`. We want to use the original data set
-with three classes. It has the data set ID `did` = 61. 
-One can also look at the data set on the OpenML web page 
+with three classes. It has the data set ID `did` = 61.
+One can also look at the data set on the OpenML web page
 http://openml.org/d/61.
 
 ### List tasks
 Each OpenML task is a bundle of a data set, a target feature, a (performance) estimation procedure (e.g.,
-10-fold CV), data splits for this estimation procedure and, finally, one or more (performance) evaluation measures. 
+10-fold CV), data splits for this estimation procedure and, finally, one or more (performance) evaluation measures.
 Every task has a type, e.g., `"Supervised Classification"` or `"Supervised Regression"`. To list tasks one can use
 
 ```r
@@ -83,8 +83,8 @@ tasks[1:6, 1:5]
 ## 6       6 Supervised Classification   6 active     letter
 ```
 
-For some data sets, there may be more than one task available at the OpenML server. 
-For example, you can look for `"Supervised Classification"` tasks that are available 
+For some data sets, there may be more than one task available at the OpenML server.
+For example, you can look for `"Supervised Classification"` tasks that are available
 for a specific data set as follows:
 
 
@@ -108,7 +108,7 @@ subset(tasks, task_type == "Supervised Classification" & did == 61L)[, c(1, 6)]
 ```
 ### List flows
 
-A flow is the definition and implementation of a specific algorithm workflow or script. 
+A flow is the definition and implementation of a specific algorithm workflow or script.
 I.e., a flow is essentially the code that implements the algorithm.
 
 
@@ -151,7 +151,7 @@ colnames(runresults)
 ```
 
 ### List evaluation measures and task types
-To list further objects such as evaluation measures and task types one can simply use 
+To list further objects such as evaluation measures and task types one can simply use
 the respective functions.
 
 
@@ -190,10 +190,10 @@ tasktypes
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
-[Introduction](1-Introduction.md)
-[Configuration](2-Configuration.md)
-Stage 0 - Listing
-[Stage 1 - Downloading](4-Stage-1-Downloading.md)
-[Stage 2 - Running models on tasks](5-Stage-2-Running.md)
-[Stage 3 - Uploading](6-Stage-3-Uploading.md)
-[8 Example workflow with mlr](8-Example-workflow-with-mlr.md)
+- [Introduction](1-Introduction.md)
+- [Configuration](2-Configuration.md)
+- Listing
+- [Downloading](4-Downloading.md)
+- [Running models on tasks](5-Running.md)
+- [Uploading](6-Uploading.md)
+- [Example workflow with mlr](7-Example-workflow-with-mlr.md)

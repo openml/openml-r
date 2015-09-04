@@ -1,5 +1,5 @@
-Stage 3 - Uploading
-===================
+Uploading
+=========
 
 ### Upload an implementation using mlr
 
@@ -9,13 +9,13 @@ If the implementation has already been uploaded to the server, we get a message 
 ```{r eval = TRUE, warning = FALSE, message = TRUE}
 library(mlr)
 lrn = makeLearner("classif.randomForest")
-implementation.id = uploadOMLFlow(lrn, session.hash = session.hash) 
+implementation.id = uploadOMLFlow(lrn, session.hash = session.hash)
 implementation.id
 ```
 
 ### Upload an implementation without using mlr
 
-In the previous section, we explained how to create an `OMLFlow` manually and created the object `oml.flow`, which reflects implementation description object. Before you can upload this flow to the server, you have to write an R-script containing the algorithm you want to use as flow. Let's assume you have done this and have a string `sourcefile` containing the path to your R-script. Your flow can now be uploaded as follows: 
+In the previous section, we explained how to create an `OMLFlow` manually and created the object `oml.flow`, which reflects implementation description object. Before you can upload this flow to the server, you have to write an R-script containing the algorithm you want to use as flow. Let's assume you have done this and have a string `sourcefile` containing the path to your R-script. Your flow can now be uploaded as follows:
 
 ```{r eval = FALSE}
 oml.flow.id = uploadOMLFlow(oml.flow, sourcefile = sourcefile)
@@ -36,11 +36,11 @@ run.id = uploadOMLRun(run, implementation.id = oml.flow.id)
 ```
 
 ----------------------------------------------------------------------------------------------------
-Jump to:   
-[Introduction](1-Introduction.md)  
-[Configuration](2-Configuration.md)  
-[Stage 0 - Listing](3-Stage-0-Listing.md)  
-[Stage 1 - Downloading](4-Stage-1-Downloading.md)  
-[Stage 2 - Running models on tasks](5-Stage-2-Running.md)  
-Stage 3 - Uploading  
-[Example workflow with mlr](8-Example-workflow-with-mlr.md)
+Jump to:
+- [Introduction](1-Introduction.md)
+- [Configuration](2-Configuration.md)
+- [Listing](3-Listing.md)
+- [Downloading](4-Downloading.md)
+- [Running models on tasks](5-Running.md)
+- Uploading
+- [Example workflow with mlr](7-Example-workflow-with-mlr.md)
