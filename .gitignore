@@ -8,4 +8,4 @@ OpenML*.tar.gz
 OPENMLAPIKEY.R
 doc/?-*.md
 doc/?-*.html
-
+test*.R
