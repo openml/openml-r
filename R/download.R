@@ -40,7 +40,9 @@ doAPICall = function(api.call, id = NULL,
 
   # create url
   url = sprintf("%s/%s%s?%s", conf$server, api.call, id, url.args)
-  showInfo(verbosity, "Downloading '%s' to '%s'", url, ifelse(is.null(file), "<mem>", file))
+  from.url = ifelse(method == "GET", "Downloading from", 
+    ifelse(method == "POST", "Uploading to", "Deleting from"))
+  showInfo(verbosity, "%s '%s' to '%s'", from.url, url, ifelse(is.null(file), "<mem>", file))
 
   if (method == "GET") {
     content = GET(url = url)

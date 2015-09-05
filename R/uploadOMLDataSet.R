@@ -18,17 +18,16 @@ uploadOMLDataSet = function(data.set, data.file, verbosity = NULL) {
   assertFile(file)
   data.set$file.md5 = digest(file = data.file)
 
-  # TODO: check if dataset already exists on server?
+  #FIXME: check if dataset already exists on server?
 
   tmp.file = tempfile()
   on.exit(unlink(tmp.file))
   writeOMLDataSetXML(data.set, tmp.file)
 
   showInfo(verbosity, "Uploading data set to server.")
-  #showInfo(verbosity, "Downloading response to: %s", file)
 
   response = doAPICall(api.call = "data", method = "POST", file = NULL, verbosity = verbosity,
-      post.args = list(description = upload_file(path = tmp.file)))
+    post.args = list(description = upload_file(path = tmp.file)))
   response = parseXMLResponse(response, "Uploading dataset", c("upload_dataset", "response"), as.text = TRUE)
   data.id = xmlOValI(doc, "/oml:upload_dataset/oml:id")
   showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", data.id)

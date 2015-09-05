@@ -31,7 +31,7 @@ uploadOMLRun = function(run, flow.id, verbosity = NULL) {
   if (!is.null(run$predictions)) {
     output = tempfile()
     on.exit(unlink(output), add = TRUE)
-    if(getOMLConfig()$arff.reader == "RWeka")
+    if (getOMLConfig()$arff.reader == "RWeka")
       RWeka::write.arff(run$predictions, file = output) else farff::writeARFF(run$predictions, path = output)
 
     content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity,

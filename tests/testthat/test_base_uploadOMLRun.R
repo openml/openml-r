@@ -6,8 +6,10 @@ test_that("uploadOMLRun", {
   lrn = makeLearner("classif.rpart")
   run = runTaskMlr(task, lrn)
   flow.id = uploadOMLFlow(lrn)
+  expect_is(flow.id, "integer")
   run$flow.id = flow.id
   run.id = uploadOMLRun(run)
   expect_is(run.id, "integer")
-  deleteOMLRun(run.id)
+  deleteOMLObject(run.id, object = "run")
+  deleteOMLObject(flow.id, object = "flow")
 })

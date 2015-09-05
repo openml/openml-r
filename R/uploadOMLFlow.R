@@ -29,7 +29,7 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
     assertFile(sourcefile)
     x$source.md5 = digest(file = sourcefile)
   }
-  check = checkOMLFlow(x, verbosity = verbosity)
+  check = checkOMLFlow(x, verbosity = FALSE)
   doc = check$doc
 
   if (check$exists) {
