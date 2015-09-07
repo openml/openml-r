@@ -1,35 +1,59 @@
-#' @title Upload an OpenML dataset to the server.
+#' Upload a dataset to the OpenML server.
 #'
-#' @note
-#' Assumes that the given dataset is ARFF.
-#' Maybe we can add dataframe to ARFF conversion here?
+#' Share a dataset.
 #'
-#' @param data.set [\code{\link{data.frame}}]\cr
-#'   The dataset that should be uploaded.
-#' @param data.file [\code{character(1)}]\cr
-#'   Data file.
+#' @param x [\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
+#'   Contains the dataset that should be uploaded.
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}]. The id of the data (\code{did}).
 #' @export
-uploadOMLDataSet = function(data.set, data.file, verbosity = NULL) {
-  if (is.null(data.file)) {
-    stopf("Please provide dataset file.")
-  }
-  assertFile(file)
-  data.set$file.md5 = digest(file = data.file)
+#' 
+uploadOMLDataSet = function(x, verbosity = NULL, ...) {
+  UseMethod("uploadOMLDataSet")
+}
 
-  #FIXME: check if dataset already exists on server?
+#' @export
+uploadOMLDataSet.OMLDataSet = function(x, verbosity = NULL, ...) {
+  description = tempfile()
+  on.exit(unlink(description))
+  writeOMLDataSetXML(x$desc, description)
 
-  tmp.file = tempfile()
-  on.exit(unlink(tmp.file))
-  writeOMLDataSetXML(data.set, tmp.file)
-
+  output = tempfile()
+  on.exit(unlink(output), add = TRUE)
+  if (getOMLConfig()$arff.reader == "RWeka")
+    RWeka::write.arff(x$data, file = output) else farff::writeARFF(x$data, path = output)
+  
   showInfo(verbosity, "Uploading data set to server.")
 
   response = doAPICall(api.call = "data", method = "POST", file = NULL, verbosity = verbosity,
-    post.args = list(description = upload_file(path = tmp.file)))
-  response = parseXMLResponse(response, "Uploading dataset", c("upload_dataset", "response"), as.text = TRUE)
-  data.id = xmlOValI(doc, "/oml:upload_dataset/oml:id")
-  showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", data.id)
-  return(invisible(data.id))
+    post.args = list(description = upload_file(path = description),
+                     dataset = upload_file(path = output)))
+  doc = parseXMLResponse(response, "Uploading dataset", c("upload_data_set", "response"), as.text = TRUE)
+  did = xmlOValI(doc, "/oml:upload_data_set/oml:id")
+  showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", did)
+  return(invisible(did))
+}
+
+#' @export
+uploadOMLDataSet.Task = function(x, verbosity = NULL, ...) {
+  x = createOMLDataSetFromMlrTask(x)
+  uploadOMLDataSet.OMLDataSet(x)
+}
+
+createOMLDataSetFromMlrTask = function(task){
+  desc = makeOMLDataSetDescription(id = 1L, 
+    name = task$task.desc$id, 
+    version = "1", 
+    description = task$task.desc$id, 
+    format = "ARFF", 
+    upload.date = as.POSIXct(Sys.time())
+  )
+  
+  oml.data = makeOMLDataSet(desc = desc,
+    data = mlr::getTaskData(task),
+    colnames.old = mlr::getTaskFeatureNames(task),
+    colnames.new = mlr::getTaskFeatureNames(task),
+    target.features = mlr::getTaskTargetNames(task)
+  )
+  return(oml.data)
 }

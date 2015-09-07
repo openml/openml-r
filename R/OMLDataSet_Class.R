@@ -94,7 +94,7 @@ print.OMLDataSet = function(x, ...) {
 #' @aliases OMLDataSetDescription.
 makeOMLDataSetDescription = function(id, name, version, description, format,
   creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,
-  language = NA_character_, licence = NA_character_, url, default.target.attribute = NA_character_,
+  language = NA_character_, licence = NA_character_, url = NA_character_, default.target.attribute = NA_character_,
   row.id.attribute = NA_character_, ignore.attribute = NA_character_, version.label = NA_character_,
   citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
   paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_,
@@ -111,7 +111,7 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
   assertClass(upload.date, "POSIXt")
   assertString(language, na.ok = TRUE)
   assertString(licence, na.ok = TRUE)
-  assertString(url)
+  assertString(url, na.ok = TRUE)
   assertString(default.target.attribute, na.ok = TRUE)
   assertString(row.id.attribute, na.ok = TRUE)
   assertCharacter(ignore.attribute)

@@ -2,16 +2,13 @@
 % Please edit documentation in R/uploadOMLDataSet.R
 \name{uploadOMLDataSet}
 \alias{uploadOMLDataSet}
-\title{Upload an OpenML dataset to the server.}
+\title{Upload a dataset to the OpenML server.}
 \usage{
-uploadOMLDataSet(data.set, data.file, verbosity = NULL)
+uploadOMLDataSet(x, verbosity = NULL, ...)
 }
 \arguments{
-\item{data.set}{[\code{\link{data.frame}}]\cr
-The dataset that should be uploaded.}
-
-\item{data.file}{[\code{character(1)}]\cr
-Data file.}
+\item{x}{[\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
+Contains the dataset that should be uploaded.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -24,10 +21,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{invisible(numeric(1))}]. The id of the data (\code{did}).
 }
 \description{
-Upload an OpenML dataset to the server.
-}
-\note{
-Assumes that the given dataset is ARFF.
-Maybe we can add dataframe to ARFF conversion here?
+Share a dataset.
 }
 

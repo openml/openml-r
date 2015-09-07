@@ -19,7 +19,7 @@ writeOMLDataSetXML = function(description, file) {
 
   addNodes = function(description, doc, parent = top) {
     mynode("name", description$name, parent)
-    mynode("version_label", description$eversion.label, parent)
+    mynode("version", description$version, parent)
     mynode("description", description$description, parent)
     mynode("format", description$format, parent)
     mynode("creator", description$creator, parent)
