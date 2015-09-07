@@ -1,15 +1,16 @@
 context("uploadOMLRun")
 
 test_that("uploadOMLRun", {
-  # FIXME: reenable test
-  task = getOMLTask(1)
-  lrn = makeLearner("classif.rpart")
-  run = runTaskMlr(task, lrn)
-  flow.id = uploadOMLFlow(lrn)
-  expect_is(flow.id, "integer")
-  run$flow.id = flow.id
+  # download a run and reupload it
+  run = getOMLRun(1)
+  expect_is(run, "OMLRun")
+  expect_is(run$flow.id, "integer")
+  expect_is(run$run.id, "integer")
+  expect_is(run$task.id, "integer")
+  maxrun = max(listOMLRuns(task.id = run$task.id)$run.id)
   run.id = uploadOMLRun(run)
   expect_is(run.id, "integer")
-  deleteOMLObject(run.id, object = "run")
-  deleteOMLObject(flow.id, object = "flow")
+  expect_true(maxrun < run.id)
+  run$flow.id = NA
+  expect_error(uploadOMLRun(run), "Please provide an 'flow.id'")
 })
