@@ -11,10 +11,11 @@ assignConfToConf = function(src, dest) {
 
 # get default entries for all fields in the config, as envir
 getDefaultConfig = function() {
+  openmldir = path.expand("~/.openml")
   x = as.environment(list(
     server = "http://api_new.openml.org/v1",
-    openmldir = path.expand("~/.openml"),
-    cachedir = file.path(tempdir(), "cache"),
+    openmldir = openmldir,
+    cachedir = file.path(openmldir, "cache"),
     verbosity = 1L,
     arff.reader = "RWeka",
     apikey = NA_character_
