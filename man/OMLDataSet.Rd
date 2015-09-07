@@ -2,19 +2,27 @@
 % Please edit documentation in R/OMLDataSet_Class.R
 \name{OMLDataSet}
 \alias{OMLDataSet}
+\alias{OMLDataSet.}
+\alias{makeOMLDataSet}
 \title{OMLDataSet.}
+\usage{
+makeOMLDataSet(desc, data, colnames.old, colnames.new, target.features)
+}
 \description{
 An \code{OMLDataSet} consists of an \code{OMLDataSetDescription}, a
-\code{data.frame} containing the data set and, finally, old and new column names.
+\code{data.frame} containing the data set, the old and new column names and, finally, the target features.
 
-The \code{OMLDataSetDescription} provides information on the data set, like the ID, name,
+The \code{\link{OMLDataSetDescription}} provides information on the data set, like the ID, name,
 version, etc. To see a full list of all elements, please see the
-\href{https://github.com/openml/website/blob/master/openml_OS/views/pages/rest_api/xsd/openml.data.upload.xsd}{XSD}.
+\href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.data.upload.xsd}{XSD}.
 
 The slot \code{colnames.old} contains the original names, i.e., the column names that were
 uploaded to the server, while \code{colnames.new} contains the names that you will see when
 working with the data in R.
 Most of the time, old and new column names are identical. Only if the original names are
 not valid, the new ones will differ.
+
+The slot \code{target.features} contains the column name(s) from the \code{data.frame} of the \code{OMLDataSet}
+that refer to the target feature(s).
 }
 

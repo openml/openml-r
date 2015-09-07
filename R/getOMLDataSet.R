@@ -13,6 +13,7 @@
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}].
 #' @family download
+#' @seealso \code{\link{OMLDataSet}}, \code{\link{OMLDataSetDescription}}
 #' @export
 getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
   did = asInt(did, lower = 0)

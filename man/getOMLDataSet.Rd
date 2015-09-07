@@ -32,4 +32,7 @@ and returned.
 Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
 Tasks can be downloaded with \code{\link{getOMLTask}}.
 }
+\seealso{
+\code{\link{OMLDataSet}}, \code{\link{OMLDataSetDescription}}
+}
 
