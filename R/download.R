@@ -35,22 +35,27 @@ doAPICall = function(api.call, id = NULL,
   if (method == "GET") {
     url.args = insert(url.args, list(...))
   }
-  url.args$api_key = conf$apikey
+  #url.args$api_key = conf$apikey
   url.args = namedArgsListToHTTPQuery(url.args)
 
   # create url
-  url = sprintf("%s/%s%s?%s", conf$server, api.call, id, url.args)
+  if (url.args == "") 
+    url = sprintf("%s/%s%s", conf$server, api.call, id) 
+  else
+    url = sprintf("%s/%s%s?%s", conf$server, api.call, id, url.args)
+  
   from.url = ifelse(method == "GET", "Downloading from", 
     ifelse(method == "POST", "Uploading to", "Deleting from"))
   showInfo(verbosity, "%s '%s' to '%s'", from.url, url, ifelse(is.null(file), "<mem>", file))
 
   if (method == "GET") {
-    content = GET(url = url)
+    #content = GET(url = url)
+    content = GET(url = url, query = list(api_key = conf$apikey))
     content = rawToChar(content$content)
   } else if (method == "POST") {
-    content = POST(url = url, body = post.args)
+    content = POST(url = url, body = post.args, query = list(api_key = conf$apikey))
   } else if (method == "DELETE")
-    content = DELETE(url = url)
+    content = DELETE(url = url, query = list(api_key = conf$apikey))
 
   if (!is.null(file)) {
     con = file(file, open = "w")
