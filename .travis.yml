@@ -4,6 +4,7 @@ r_github_packages:
     - jimhester/covr
     - mlr-org/farff
     - mlr-org/mlr
+    - berndbischl/ParamHelpers
 apt_packages:
     - r-cran-rjava
 r_binary_packages:
