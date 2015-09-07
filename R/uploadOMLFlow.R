@@ -168,7 +168,8 @@ makeFlowParameterList = function(mlr.lrn) {
     # if(data.type == "discrete") data.type = "string"      ?
     # if(data.type == "numericvector") data.type = "vector" ?
     # ...
-    if (pars[[i]]$has.default)
+    # FIXME: can default value be a function, if yes we should fix this
+    if (pars[[i]]$has.default & length(pars[[i]]$default) != 0)
       default.value = as.character(pars[[i]]$default)
     else
       default.value = NA_character_
