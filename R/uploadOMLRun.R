@@ -6,7 +6,9 @@
 #'   The run that should be uploaded.
 #' @template arg_flow.id
 #' @template arg_verbosity
-#' @return [\code{invisible(numeric(1))}]. The run ID.
+#' @return [\code{invisible(numeric(1))}] \cr 
+#'   The run ID.
+#' @family uploading functions
 #' @export
 uploadOMLRun = function(run, flow.id, verbosity = NULL) {
   assertClass(run, "OMLRun")

@@ -6,10 +6,12 @@
 #'   The flow that should be uploaded.
 #' @template arg_verbosity
 #' @param sourcefile [\code{character(1)}]\cr
-#' the file path to the flow (not needed for \code{\link{Learner}})
+#'   The file path to the flow (not needed for \code{\link{Learner}})
 #' @param binaryfile [\code{character(1)}]\cr
-#' the file path to the flow (not needed for \code{\link{Learner}})
-#' @return [\code{invisible(numeric(1))}]. The id of the flow (\code{flow.id}).
+#'   The file path to the flow (not needed for \code{\link{Learner}})
+#' @return [\code{invisible(numeric(1))}]\cr
+#'   The id of the flow (\code{flow.id}).
+#' @family uploading functions
 #' @export
 
 uploadOMLFlow = function(x, verbosity, sourcefile, binaryfile) {

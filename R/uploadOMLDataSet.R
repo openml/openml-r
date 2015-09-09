@@ -5,15 +5,17 @@
 #' @param x [\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
 #'   Contains the dataset that should be uploaded.
 #' @template arg_verbosity
-#' @return [\code{invisible(numeric(1))}]. The id of the data (\code{did}).
+#' @return [\code{invisible(numeric(1))}]\cr
+#'   The id of the data (\code{did}).
+#' @family uploading functions
 #' @export
 #' 
-uploadOMLDataSet = function(x, verbosity = NULL, ...) {
+uploadOMLDataSet = function(x, verbosity = NULL) {
   UseMethod("uploadOMLDataSet")
 }
 
 #' @export
-uploadOMLDataSet.OMLDataSet = function(x, verbosity = NULL, ...) {
+uploadOMLDataSet.OMLDataSet = function(x, verbosity = NULL) {
   description = tempfile()
   on.exit(unlink(description))
   writeOMLDataSetXML(x$desc, description)
@@ -35,7 +37,7 @@ uploadOMLDataSet.OMLDataSet = function(x, verbosity = NULL, ...) {
 }
 
 #' @export
-uploadOMLDataSet.Task = function(x, verbosity = NULL, ...) {
+uploadOMLDataSet.Task = function(x, verbosity = NULL) {
   x = createOMLDataSetFromMlrTask(x)
   uploadOMLDataSet.OMLDataSet(x)
 }

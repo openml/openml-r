@@ -6,7 +6,7 @@
 #'
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
-#' @family list
+#' @family listing functions
 #' @export
 listOMLEvaluationMeasures = function(verbosity = NULL) {
   content = doAPICall(api.call = "evaluationmeasure/list", file = NULL, verbosity = verbosity, method = "GET")

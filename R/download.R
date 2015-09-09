@@ -1,24 +1,27 @@
-# @title Perform an API call to the OpenML server
-#
-# @description The function always returns the XML file content provided by the
-# server.
-#
-# @param url [character(1)]
-#   URL to API call.
-# @param id [integer(1)]
-#   Optional integer ID we pass to the API, like runs/list/1.
-# @param url.args [list]
-#   Named list of key value pairs passed as a GET parameter list, e.g.,
-#   key1=value1&key2=value2 to the API call.
-# @param file [character(1)]
-#   Optional filename to write the XML content to.
-# @param verbosity [logical(1)]
-#   Be verbose and show info messages?
-# @param method [character(1)]
-#   HTTP request method. Currently one of GET, POST or DELETE.
-# @param ... [any]
-#   Another possibility to pass key-value pairs for the HTTP request query.
-# @return [character(1)] Unparsed content of the returned XML file.
+#' @title Perform an API call to the OpenML server
+#'
+#' @description The function always returns the XML file content provided by the
+#' server.
+#'
+#' @param api.call [\code{character(1)}]\cr
+#'   API endpoints listed in \href{https://github.com/openml/OpenML/wiki/API-v1}{APIv1}
+#' @param id [\code{integer(1)}]\cr
+#'   Optional ID we pass to the API, like runs/list/1.
+#' @param url.args [\code{list}]\cr
+#'   Named list of key value pairs passed as a GET parameter list, e.g.,
+#'   key1=value1&key2=value2 to the API call.
+#' @param post.args [\code{list}]\cr
+#'   Optional. A list passed to the \code{body}-arg for \code{\link[httr]{POST}} requests.
+#' @param file [\code{character(1)}]\cr
+#'   Optional filename to write the XML content to.
+#' @template arg_verbosity
+#' @param method [\code{character(1)}]\cr
+#'   HTTP request method. Currently one of GET, POST or DELETE.
+#' @param ... 
+#'   Another possibility to pass key-value pairs for the HTTP request query.
+#' @return [\code{character(1)}]\cr Unparsed content of the returned XML file.
+#' @export
+#' @keywords internal
 # FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
 doAPICall = function(api.call, id = NULL,
   url.args = list(), post.args = list(), file = NULL,

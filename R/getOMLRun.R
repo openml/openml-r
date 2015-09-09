@@ -7,7 +7,8 @@
 #'   The run's ID.
 #' @template arg_cache_only
 #' @template arg_verbosity
-#' @return [\code{\link{OMLRun}}]
+#' @return [\code{\link{OMLRun}}].
+#' @family downloading functions
 #' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
 getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {

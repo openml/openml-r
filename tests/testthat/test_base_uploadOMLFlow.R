@@ -13,7 +13,7 @@ test_that("uploadOMLFlow", {
   expect_message(uploadOMLFlow(flow, sourcefile = flow$source.path), "Flow already exists")
  
   # create a own flow
-  lrn = makeLearner("classif.xgboost")
+  lrn = makeLearner("classif.rpart")
   flow.id = uploadOMLFlow(lrn)
   expect_is(flow.id, "integer")
 })

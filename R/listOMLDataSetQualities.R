@@ -5,7 +5,7 @@
 #'
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
-#' @family list
+#' @family listing functions
 #' @export
 listOMLDataSetQualities = function(verbosity = NULL) {
   content = doAPICall(api.call = "data/qualities/list", file = NULL, verbosity = verbosity, method = "GET")

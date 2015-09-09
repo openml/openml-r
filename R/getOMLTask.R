@@ -7,7 +7,8 @@
 #' @template arg_task_id
 #' @template arg_cache_only
 #' @template arg_verbosity
-#' @return [\code{\link{OMLTask}}]
+#' @return [\code{\link{OMLTask}}].
+#' @family downloading functions
 #' @export
 #' @examples
 #' # Download task and access relevant information to start running experiments

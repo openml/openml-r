@@ -7,6 +7,7 @@
 #'
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
+#' @family listing functions
 #' @export
 listOMLTaskTypes = function(verbosity = NULL) {
   content = doAPICall(api.call = "tasktype/list", file = NULL, verbosity = verbosity, method = "GET")

@@ -10,7 +10,7 @@
 #'   Retruns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).
 #'   Default is \code{NULL} and uses all available data qualities.
 #' @return [\code{data.frame}].
-#' @family list
+#' @family downloading functions
 #' @export
 #'
 getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {

@@ -241,6 +241,7 @@ print.OMLFlowParameter = function(x, ...) {
 #' @param url [\code{character(1)}]\cr
 #'   URL to an online version of the paper, e.g. PDF.
 #' @export
+#' @keywords internal
 #' @aliases OMLBibRef
 makeOMLBibRef = function(citation, url) {
   assertString(citation)

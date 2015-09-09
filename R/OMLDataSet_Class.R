@@ -1,5 +1,16 @@
 #' @title OMLDataSet.
 #'
+#' @param desc [\code{OMLDataSetDescription}]\cr
+#'   provides information on the data set.
+#' @param data [\code{data.frame}]\cr
+#'   the data set.   
+#' @param colnames.old [\code{character}]\cr
+#'   Names of the features that were uploaded to the server.
+#' @param colnames.new [\code{character}]\cr
+#'   Names of the features that are displayed.
+#' @param target.features [\code{character}]\cr
+#'   Name of the target feature(s).
+#' 
 #' @description An \code{OMLDataSet} consists of an \code{OMLDataSetDescription}, a
 #' \code{data.frame} containing the data set, the old and new column names and, finally, the target features.
 #'
@@ -18,7 +29,7 @@
 #' 
 #' @name OMLDataSet
 #' @export
-#' @aliases OMLDataSet.
+#' @aliases OMLDataSet
 makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.features) {
   assertClass(desc, "OMLDataSetDescription")
   assertDataFrame(data)
@@ -90,8 +101,12 @@ print.OMLDataSet = function(x, ...) {
 #'   When the data set is updated, add an explanation here.
 #' @param md5.checksum [\code{character(1)}]\cr
 #'   MD5 checksum to check if the data set is downloaded without corruption.
+#' @param status [\code{character(1)}]\cr
+#'   The status of the data set.
+#'   
+#' @name OMLDataSetDescription
 #' @export
-#' @aliases OMLDataSetDescription.
+#' @aliases OMLDataSetDescription
 makeOMLDataSetDescription = function(id, name, version, description, format,
   creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,
   language = NA_character_, licence = NA_character_, url = NA_character_, default.target.attribute = NA_character_,

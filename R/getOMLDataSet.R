@@ -12,7 +12,7 @@
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}].
-#' @family download
+#' @family downloading functions
 #' @seealso \code{\link{OMLDataSet}}, \code{\link{OMLDataSetDescription}}
 #' @export
 getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {

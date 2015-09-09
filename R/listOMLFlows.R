@@ -7,7 +7,7 @@
 #' of all registered OpenML flows.
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
-#' @family list
+#' @family listing functions
 #' @export
 listOMLFlows = function(verbosity = NULL) {
   content = doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET")

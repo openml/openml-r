@@ -6,6 +6,7 @@
 #'
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
+#' @family listing functions
 #' @export
 listOMLEstimationProcedures = function(verbosity = NULL) {
   content = try(doAPICall(api.call = "estimationprocedure/list", file = NULL, 

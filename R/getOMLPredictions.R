@@ -6,7 +6,7 @@
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The OpenML run.
 #' @template arg_verbosity
-#' @return [\code{data.frame}]
+#' @return [\code{data.frame}].
 #' @seealso \code{\link{OMLRun}}, \code{\link{getOMLRun}}
 #' @export
 getOMLPredictions = function(run, verbosity = NULL) {
