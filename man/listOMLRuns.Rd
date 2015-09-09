@@ -31,4 +31,13 @@ Default is set via \code{\link{setOMLConfig}}.}
 This function returns information on all OpenML runs that match a certain
 \code{task.id}, \code{setup.id} and/or implementation ID \code{flow.id}.
 }
+\seealso{
+Other list: \code{\link{listOMLDataSetQualities}};
+  \code{\link{listOMLDataSets}};
+  \code{\link{listOMLEstimationProcedures}};
+  \code{\link{listOMLEvaluationMeasures}};
+  \code{\link{listOMLFlows}};
+  \code{\link{listOMLTaskTypes}};
+  \code{\link{listOMLTasks}}
+}
 

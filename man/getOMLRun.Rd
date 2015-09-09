@@ -23,12 +23,16 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{\link{OMLRun}}]
+[\code{\link{OMLRun}}].
 }
 \description{
 This function downloads an OpenML run including all server and user computed metrics.
 }
 \seealso{
 To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
+
+Other downloading functions: \code{\link{getOMLDataSetQualities}};
+  \code{\link{getOMLDataSet}}; \code{\link{getOMLFlow}};
+  \code{\link{getOMLTask}}
 }
 

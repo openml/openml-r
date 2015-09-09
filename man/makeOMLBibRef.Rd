@@ -17,4 +17,5 @@ URL to an online version of the paper, e.g. PDF.}
 \description{
 Construct OMLBibRef.
 }
+\keyword{internal}
 

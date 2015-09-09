@@ -18,7 +18,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{data.frame}]
+[\code{data.frame}].
 }
 \description{
 This function will return the predictions of a certain OpenML run.

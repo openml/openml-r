@@ -4,7 +4,7 @@
 \alias{uploadOMLDataSet}
 \title{Upload a dataset to the OpenML server.}
 \usage{
-uploadOMLDataSet(x, verbosity = NULL, ...)
+uploadOMLDataSet(x, verbosity = NULL)
 }
 \arguments{
 \item{x}{[\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr

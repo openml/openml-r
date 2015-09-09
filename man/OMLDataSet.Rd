@@ -2,11 +2,26 @@
 % Please edit documentation in R/OMLDataSet_Class.R
 \name{OMLDataSet}
 \alias{OMLDataSet}
-\alias{OMLDataSet.}
 \alias{makeOMLDataSet}
 \title{OMLDataSet.}
 \usage{
 makeOMLDataSet(desc, data, colnames.old, colnames.new, target.features)
+}
+\arguments{
+\item{desc}{[\code{OMLDataSetDescription}]\cr
+provides information on the data set.}
+
+\item{data}{[\code{data.frame}]\cr
+the data set.}
+
+\item{colnames.old}{[\code{character}]\cr
+Names of the features that were uploaded to the server.}
+
+\item{colnames.new}{[\code{character}]\cr
+Names of the features that are displayed.}
+
+\item{target.features}{[\code{character}]\cr
+  Name of the target feature(s).}
 }
 \description{
 An \code{OMLDataSet} consists of an \code{OMLDataSetDescription}, a

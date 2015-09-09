@@ -29,4 +29,9 @@ Default is set via \code{\link{setOMLConfig}}.}
 Given an flow id, the corresponding \code{\link{OMLFlow}} is downloaded if
 not already available in cache.
 }
+\seealso{
+Other downloading functions: \code{\link{getOMLDataSetQualities}};
+  \code{\link{getOMLDataSet}}; \code{\link{getOMLRun}};
+  \code{\link{getOMLTask}}
+}
 

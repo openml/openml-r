@@ -26,4 +26,12 @@ Default is \code{"active"}.}
 The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
 the \code{status} and some describing data qualities.
 }
+\seealso{
+Other list: \code{\link{listOMLDataSetQualities}};
+  \code{\link{listOMLDataSets}};
+  \code{\link{listOMLEstimationProcedures}};
+  \code{\link{listOMLEvaluationMeasures}};
+  \code{\link{listOMLFlows}}; \code{\link{listOMLRuns}};
+  \code{\link{listOMLTaskTypes}}
+}
 

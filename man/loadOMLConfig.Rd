@@ -22,7 +22,7 @@ Loads a config file from disk.
 }
 \seealso{
 Other config: \code{\link{configuration}};
-  \code{\link{getOMLConfig}}, \code{\link{getOMLConfig}};
-  \code{\link{saveOMLConfig}}; \code{\link{setOMLConfig}}
+  \code{\link{getOMLConfig}}; \code{\link{saveOMLConfig}};
+  \code{\link{setOMLConfig}}
 }
 

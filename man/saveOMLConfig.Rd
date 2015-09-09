@@ -38,7 +38,7 @@ The new configuration is automatically assigned via
 }
 \seealso{
 Other config: \code{\link{configuration}};
-  \code{\link{getOMLConfig}}, \code{\link{getOMLConfig}};
-  \code{\link{loadOMLConfig}}; \code{\link{setOMLConfig}}
+  \code{\link{getOMLConfig}}; \code{\link{loadOMLConfig}};
+  \code{\link{setOMLConfig}}
 }
 

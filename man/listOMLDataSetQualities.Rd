@@ -21,9 +21,11 @@ Default is set via \code{\link{setOMLConfig}}.}
 The returned \code{data.frame} contains quality name \dQuote{name}.
 }
 \seealso{
-Other list: \code{\link{getOMLDataSetQualities}};
-  \code{\link{listOMLDataSets}};
+Other list: \code{\link{listOMLDataSets}};
+  \code{\link{listOMLEstimationProcedures}};
   \code{\link{listOMLEvaluationMeasures}};
-  \code{\link{listOMLFlows}}
+  \code{\link{listOMLFlows}}; \code{\link{listOMLRuns}};
+  \code{\link{listOMLTaskTypes}};
+  \code{\link{listOMLTasks}}
 }
 

@@ -28,9 +28,8 @@ Default is \code{NULL} and uses all available data qualities.}
 The returned \code{data.frame} contains data set quality \dQuote{name} and value \dQuote{value}.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}};
-  \code{\link{listOMLDataSets}};
-  \code{\link{listOMLEvaluationMeasures}};
-  \code{\link{listOMLFlows}}
+Other downloading functions: \code{\link{getOMLDataSet}};
+  \code{\link{getOMLFlow}}; \code{\link{getOMLRun}};
+  \code{\link{getOMLTask}}
 }
 

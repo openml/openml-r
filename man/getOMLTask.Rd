@@ -23,7 +23,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{\link{OMLTask}}]
+[\code{\link{OMLTask}}].
 }
 \description{
 This function downloads an OpenML task and all associated files from the OpenML repository,
@@ -38,5 +38,10 @@ print(task$task.type)
 print(task$input$data.set)
 print(head(task$input$data.set$data))
 }
+}
+\seealso{
+Other downloading functions: \code{\link{getOMLDataSetQualities}};
+  \code{\link{getOMLDataSet}}; \code{\link{getOMLFlow}};
+  \code{\link{getOMLRun}}
 }
 

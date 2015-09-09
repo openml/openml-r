@@ -34,5 +34,9 @@ Tasks can be downloaded with \code{\link{getOMLTask}}.
 }
 \seealso{
 \code{\link{OMLDataSet}}, \code{\link{OMLDataSetDescription}}
+
+Other downloading functions: \code{\link{getOMLDataSetQualities}};
+  \code{\link{getOMLFlow}}; \code{\link{getOMLRun}};
+  \code{\link{getOMLTask}}
 }
 
