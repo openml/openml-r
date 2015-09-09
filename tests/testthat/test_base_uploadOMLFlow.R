@@ -8,13 +8,12 @@ test_that("uploadOMLFlow", {
   # FIXME: sourcefiles and/or binaryfiles should be automatically set 
   # (downloaded from flow$source.url) if they are available
   
-# FIXME: enable this test again
-#   flow.id = uploadOMLFlow(flow, sourcefile = flow$source.path)
-#   # upload it again
-#   expect_message(uploadOMLFlow(flow, sourcefile = flow$source.path), "Flow already exists")
-#   
-#   # create a own flow
-#   lrn = makeLearner("classif.xgboost")
-#   flow.id = uploadOMLFlow(lrn)
-#   expect_is(flow.id, "integer")
+  flow.id = uploadOMLFlow(flow, sourcefile = flow$source.path)
+  # upload it again
+  expect_message(uploadOMLFlow(flow, sourcefile = flow$source.path), "Flow already exists")
+ 
+  # create a own flow
+  lrn = makeLearner("classif.xgboost")
+  flow.id = uploadOMLFlow(lrn)
+  expect_is(flow.id, "integer")
 })
