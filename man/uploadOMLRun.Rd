@@ -21,9 +21,20 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{invisible(numeric(1))}]. The run ID.
+[\code{invisible(numeric(1))}] \cr
+  The run ID.
 }
 \description{
 Share a run of an flow on a given OpenML task.
+}
+\seealso{
+Other run related functions: \code{\link{OMLRunParameter}},
+  \code{\link{makeOMLRunParameter}}; \code{\link{OMLRun}},
+  \code{\link{makeOMLRun}}; \code{\link{deleteOMLObject}};
+  \code{\link{getOMLPredictions}}; \code{\link{getOMLRun}};
+  \code{\link{listOMLRuns}}
+
+Other uploading functions: \code{\link{uploadOMLDataSet}};
+  \code{\link{uploadOMLFlow}}
 }
 

@@ -2,6 +2,10 @@
 #'
 #' @title Construct OMLRun.
 #'
+#' @description 
+#' More details about the elements of a \code{OMLRun} can be found in the
+#' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
+#'
 #' @param run.id [\code{numeric(1)}]\cr
 #'   ID of the run. Added by server. Ignored when uploading a run.
 #' @param uploader [\code{numeric(1)}]\cr
@@ -44,7 +48,7 @@
 #'   provide evaluation scores for their own evaluation measures.
 #' @export
 #' @aliases OMLRun
-#' @seealso \code{\link{getOMLRun}}
+#' @family run related functions
 makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, uploader.name = NA_character_,
   task.id, task.type = NA_character_,
   task.evaluation.measure = NA_character_, flow.id = NA_integer_, flow.name = NA_character_,

@@ -11,6 +11,7 @@
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
+#' @family run related functions
 #' @export
 listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL, verbosity = NULL) {
   if (!is.null(task.id)) assertInt(task.id)

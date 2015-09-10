@@ -71,9 +71,17 @@ predictions, evaluation scores. Most of this will be added by the server, but us
 provide evaluation scores for their own evaluation measures.}
 }
 \description{
+More details about the elements of a \code{OMLRun} can be found in the
+\href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
+}
+\details{
 OMLRun
 }
 \seealso{
-\code{\link{getOMLRun}}
+Other run related functions: \code{\link{OMLRunParameter}},
+  \code{\link{makeOMLRunParameter}};
+  \code{\link{deleteOMLObject}};
+  \code{\link{getOMLPredictions}}; \code{\link{getOMLRun}};
+  \code{\link{listOMLRuns}}; \code{\link{uploadOMLRun}}
 }
 

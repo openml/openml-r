@@ -9,6 +9,7 @@
 #'    This name must match a component of the implementation.
 #' @export
 #' @aliases OMLRunParameter
+#' @family run related functions
 makeOMLRunParameter = function(name, value, component = NA_character_) {
   assertString(name)
   assertString(value)

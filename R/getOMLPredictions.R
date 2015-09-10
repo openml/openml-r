@@ -7,7 +7,7 @@
 #'   The OpenML run.
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
-#' @seealso \code{\link{OMLRun}}, \code{\link{getOMLRun}}
+#' @family run related functions
 #' @export
 getOMLPredictions = function(run, verbosity = NULL) {
   assertClass(run, "OMLRun")

@@ -32,12 +32,18 @@ This function returns information on all OpenML runs that match a certain
 \code{task.id}, \code{setup.id} and/or implementation ID \code{flow.id}.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}};
+Other listing functions: \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEstimationProcedures}};
   \code{\link{listOMLEvaluationMeasures}};
   \code{\link{listOMLFlows}};
   \code{\link{listOMLTaskTypes}};
   \code{\link{listOMLTasks}}
+
+Other run related functions: \code{\link{OMLRunParameter}},
+  \code{\link{makeOMLRunParameter}}; \code{\link{OMLRun}},
+  \code{\link{makeOMLRun}}; \code{\link{deleteOMLObject}};
+  \code{\link{getOMLPredictions}}; \code{\link{getOMLRun}};
+  \code{\link{uploadOMLRun}}
 }
 

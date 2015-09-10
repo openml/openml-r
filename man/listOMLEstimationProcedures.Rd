@@ -22,7 +22,7 @@ The returned \code{data.frame} contains the \code{est.id} and the corresponding
 name of the estimation procedure.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}};
+Other listing functions: \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEvaluationMeasures}};
   \code{\link{listOMLFlows}}; \code{\link{listOMLRuns}};

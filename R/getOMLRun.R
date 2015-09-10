@@ -1,7 +1,8 @@
 #' @title Get an OpenML run.
 #'
 #' @description
-#' This function downloads an OpenML run including all server and user computed metrics.
+#' Given an run id, the corresponding \code{\link{OMLRun}} including all server 
+#' and user computed metrics is downloaded if not already available in cache.
 #'
 #' @param run.id [\code{integer(1)}]\cr
 #'   The run's ID.
@@ -9,6 +10,7 @@
 #' @template arg_verbosity
 #' @return [\code{\link{OMLRun}}].
 #' @family downloading functions
+#' @family run related functions
 #' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
 getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {

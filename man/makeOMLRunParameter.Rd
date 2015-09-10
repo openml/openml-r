@@ -21,4 +21,10 @@ This name must match a component of the implementation.}
 \description{
 Construct OMLRunParameter.
 }
+\seealso{
+Other run related functions: \code{\link{OMLRun}},
+  \code{\link{makeOMLRun}}; \code{\link{deleteOMLObject}};
+  \code{\link{getOMLPredictions}}; \code{\link{getOMLRun}};
+  \code{\link{listOMLRuns}}; \code{\link{uploadOMLRun}}
+}
 

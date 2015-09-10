@@ -8,6 +8,10 @@
 #'   A character that specifies the object you want to delete from the server. Can be either
 #'   \code{"data"}, \code{"task"}, \code{"flow"} or \code{"run"}.
 #' @template arg_verbosity
+#' @family dataset related functions
+#' @family task related functions
+#' @family flow related functions
+#' @family run related functions
 #' @export
 #' 
 deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbosity = NULL){

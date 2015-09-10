@@ -22,7 +22,7 @@ The names of all evaluation measures which are used in at least one run are retu
 in a \code{data.frame}.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}};
+Other listing functions: \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEstimationProcedures}};
   \code{\link{listOMLFlows}}; \code{\link{listOMLRuns}};

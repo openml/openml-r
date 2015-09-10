@@ -25,4 +25,32 @@ Default is set via \code{\link{setOMLConfig}}.}
 \description{
 This will delete one of your uploaded datasets, tasks, flows or runs.
 }
+\seealso{
+Other dataset related functions: \code{\link{OMLDataSetDescription}},
+  \code{\link{makeOMLDataSetDescription}};
+  \code{\link{OMLDataSet}}, \code{\link{makeOMLDataSet}};
+  \code{\link{convertOMLDataSetToMlr}};
+  \code{\link{getOMLDataSet}};
+  \code{\link{listOMLDataSets}};
+  \code{\link{uploadOMLDataSet}}
+
+Other flow related functions: \code{\link{OMLFlowParameter}},
+  \code{\link{makeOMLFlowParameter}};
+  \code{\link{OMLFlowQuality}},
+  \code{\link{makeOMLFlowQuality}}; \code{\link{OMLFlow}},
+  \code{\link{makeOMLFlow}}; \code{\link{getOMLFlow}};
+  \code{\link{listOMLFlows}}
+
+Other run related functions: \code{\link{OMLRunParameter}},
+  \code{\link{makeOMLRunParameter}}; \code{\link{OMLRun}},
+  \code{\link{makeOMLRun}};
+  \code{\link{getOMLPredictions}}; \code{\link{getOMLRun}};
+  \code{\link{listOMLRuns}}; \code{\link{uploadOMLRun}}
+
+Other task related functions: \code{\link{OMLTask}},
+  \code{\link{makeOMLTask}};
+  \code{\link{convertOMLTaskToMlr}};
+  \code{\link{getOMLTask}}; \code{\link{listOMLTaskTypes}};
+  \code{\link{listOMLTasks}}
+}
 

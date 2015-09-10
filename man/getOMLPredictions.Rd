@@ -24,6 +24,10 @@ Default is set via \code{\link{setOMLConfig}}.}
 This function will return the predictions of a certain OpenML run.
 }
 \seealso{
-\code{\link{OMLRun}}, \code{\link{getOMLRun}}
+Other run related functions: \code{\link{OMLRunParameter}},
+  \code{\link{makeOMLRunParameter}}; \code{\link{OMLRun}},
+  \code{\link{makeOMLRun}}; \code{\link{deleteOMLObject}};
+  \code{\link{getOMLRun}}; \code{\link{listOMLRuns}};
+  \code{\link{uploadOMLRun}}
 }
 

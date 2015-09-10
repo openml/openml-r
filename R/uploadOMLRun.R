@@ -9,6 +9,7 @@
 #' @return [\code{invisible(numeric(1))}] \cr 
 #'   The run ID.
 #' @family uploading functions
+#' @family run related functions
 #' @export
 uploadOMLRun = function(run, flow.id, verbosity = NULL) {
   assertClass(run, "OMLRun")
