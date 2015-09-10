@@ -17,7 +17,7 @@ getDefaultConfig = function() {
     cachedir = file.path(tempdir(), "cache"),
     verbosity = 1L,
     arff.reader = "RWeka",
-    apikey = NA_character_
+    apikey = "PLEASE CHANGE ME"
   ))
   addClasses(x, "OMLConfig")
 }
@@ -34,6 +34,7 @@ checkConfig = function(conf) {
   assert(checkChoice(conf$verbosity, 0:3), checkChoice(conf$verbosity, as.character(0:3)))
   conf$verbosity = as.integer(conf$verbosity)
   assertString(conf$cachedir)
+  assertString(conf$apikey)
   assertChoice(conf$arff.reader, c("RWeka", "farff"))
 }
 
