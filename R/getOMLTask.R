@@ -1,14 +1,15 @@
 #' @title Get an OpenML task.
 #'
 #' @description
-#' This function downloads an OpenML task and all associated files from the OpenML repository,
-#' caches the files on disk and creates an S3 object which completely specifies the task.
+#' Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded (if not in cache)
+#' and returned. 
 #'
 #' @template arg_task_id
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}].
 #' @family downloading functions
+#' @family task related functions
 #' @export
 #' @examples
 #' # Download task and access relevant information to start running experiments

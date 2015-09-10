@@ -25,11 +25,17 @@ name of the OpenML task type.
 List available OpenML task types
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}};
+Other listing functions: \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEstimationProcedures}};
   \code{\link{listOMLEvaluationMeasures}};
   \code{\link{listOMLFlows}}; \code{\link{listOMLRuns}};
+  \code{\link{listOMLTasks}}
+
+Other task related functions: \code{\link{OMLTask}},
+  \code{\link{makeOMLTask}};
+  \code{\link{convertOMLTaskToMlr}};
+  \code{\link{deleteOMLObject}}; \code{\link{getOMLTask}};
   \code{\link{listOMLTasks}}
 }
 

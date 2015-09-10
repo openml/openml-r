@@ -8,6 +8,7 @@
 #' @template arg_status
 #' @return [\code{data.frame}].
 #' @family listing functions
+#' @family task related functions
 #' @export
 listOMLTasks = function(verbosity = NULL, status = "active") {
   status.levels = c("active", "deactivated", "in_preparation")

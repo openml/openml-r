@@ -27,11 +27,17 @@ The returned \code{data.frame} contains the \code{task_id}, the data set id \cod
 the \code{status} and some describing data qualities.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}};
+Other listing functions: \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLDataSets}};
   \code{\link{listOMLEstimationProcedures}};
   \code{\link{listOMLEvaluationMeasures}};
   \code{\link{listOMLFlows}}; \code{\link{listOMLRuns}};
+  \code{\link{listOMLTaskTypes}}
+
+Other task related functions: \code{\link{OMLTask}},
+  \code{\link{makeOMLTask}};
+  \code{\link{convertOMLTaskToMlr}};
+  \code{\link{deleteOMLObject}}; \code{\link{getOMLTask}};
   \code{\link{listOMLTaskTypes}}
 }
 

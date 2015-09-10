@@ -36,4 +36,10 @@ A list of:
 \description{
 Convert an OpenML task to mlr.
 }
+\seealso{
+Other task related functions: \code{\link{OMLTask}},
+  \code{\link{makeOMLTask}}; \code{\link{deleteOMLObject}};
+  \code{\link{getOMLTask}}; \code{\link{listOMLTaskTypes}};
+  \code{\link{listOMLTasks}}
+}
 

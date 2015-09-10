@@ -26,8 +26,8 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{\link{OMLTask}}].
 }
 \description{
-This function downloads an OpenML task and all associated files from the OpenML repository,
-caches the files on disk and creates an S3 object which completely specifies the task.
+Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded (if not in cache)
+and returned.
 }
 \examples{
 # Download task and access relevant information to start running experiments
@@ -43,5 +43,12 @@ print(head(task$input$data.set$data))
 Other downloading functions: \code{\link{getOMLDataSetQualities}};
   \code{\link{getOMLDataSet}}; \code{\link{getOMLFlow}};
   \code{\link{getOMLRun}}
+
+Other task related functions: \code{\link{OMLTask}},
+  \code{\link{makeOMLTask}};
+  \code{\link{convertOMLTaskToMlr}};
+  \code{\link{deleteOMLObject}};
+  \code{\link{listOMLTaskTypes}};
+  \code{\link{listOMLTasks}}
 }
 

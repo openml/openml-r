@@ -7,6 +7,7 @@
 #'   \item{mlr.rin}{[\code{\link[mlr]{ResampleInstance}}]}
 #'   \item{mlr.measures}{[list of \code{\link[mlr]{Measure}s} to optimize for.}
 #' @inheritParams convertOMLDataSetToMlr
+#' @family task related functions
 #' @export
 convertOMLTaskToMlr = function(obj, ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL) {
   assertClass(obj, "OMLTask")
