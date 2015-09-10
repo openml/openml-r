@@ -24,4 +24,5 @@ notifications:
 
 env:
   global:
-    secure: FXpyq4vsM7ZUV83Jxq7rtSCFjVfJ2kx6uPBocHfTm/ZMHfjvqHux+Uk2gX0ei8gUSC6iMLEolagwbOLIIPpQfCfjBQa+KEto4GW+cPNnTXEZBtiNiVDeBq3nsLGFY05Ojo/SK5Ign50fTPRZvfzPiAqVMVeruwKA9rVLknv2dSg=
+  - secure: qjyCVnnmMIhu39W2CJ0QmdpIyVRqzGnAhMtch4SaV3udz0eWWx7o9QCLBS5JiLYAqv1HXAa4zr+ZTQbZ3NZBwfA6BVMGCqqnJac4U10fU/3cVYPem8PB/ZLOHILUHDl284nvsARxL6UK5eUPZzHpMtLzVUBeWg2ASLjJPRaUPHk=
+   
