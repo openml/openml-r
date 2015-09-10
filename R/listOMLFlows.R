@@ -8,6 +8,7 @@
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
+#' @family flow related functions
 #' @export
 listOMLFlows = function(verbosity = NULL) {
   content = doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET")

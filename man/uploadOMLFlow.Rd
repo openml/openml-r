@@ -18,15 +18,20 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
 \item{sourcefile}{[\code{character(1)}]\cr
-the file path to the flow (not needed for \code{\link{Learner}})}
+The file path to the flow (not needed for \code{\link{Learner}})}
 
 \item{binaryfile}{[\code{character(1)}]\cr
-the file path to the flow (not needed for \code{\link{Learner}})}
+The file path to the flow (not needed for \code{\link{Learner}})}
 }
 \value{
-[\code{invisible(numeric(1))}]. The id of the flow (\code{flow.id}).
+[\code{invisible(numeric(1))}]\cr
+  The id of the flow (\code{flow.id}).
 }
 \description{
 Upload an OpenML flow to the server.
+}
+\seealso{
+Other uploading functions: \code{\link{uploadOMLDataSet}};
+  \code{\link{uploadOMLRun}}
 }
 

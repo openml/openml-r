@@ -21,4 +21,11 @@ The quality's value. E.g., 'true' or 'false'.}
 \description{
 Construct OMLFlowQuality.
 }
+\seealso{
+Other flow related functions: \code{\link{OMLFlowParameter}},
+  \code{\link{makeOMLFlowParameter}};
+  \code{\link{OMLFlow}}, \code{\link{makeOMLFlow}};
+  \code{\link{deleteOMLObject}}; \code{\link{getOMLFlow}};
+  \code{\link{listOMLFlows}}
+}
 

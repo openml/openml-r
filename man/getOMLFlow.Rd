@@ -33,5 +33,12 @@ not already available in cache.
 Other downloading functions: \code{\link{getOMLDataSetQualities}};
   \code{\link{getOMLDataSet}}; \code{\link{getOMLRun}};
   \code{\link{getOMLTask}}
+
+Other flow related functions: \code{\link{OMLFlowParameter}},
+  \code{\link{makeOMLFlowParameter}};
+  \code{\link{OMLFlowQuality}},
+  \code{\link{makeOMLFlowQuality}}; \code{\link{OMLFlow}},
+  \code{\link{makeOMLFlow}}; \code{\link{deleteOMLObject}};
+  \code{\link{listOMLFlows}}
 }
 

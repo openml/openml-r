@@ -9,6 +9,7 @@
 #' @template arg_verbosity
 #' @return [\code{\link{OMLFlow}}].
 #' @family downloading functions
+#' @family flow related functions
 #' @export
 getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow.id = asCount(flow.id)

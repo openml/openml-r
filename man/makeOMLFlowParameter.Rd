@@ -28,4 +28,10 @@ Minimal/maximal value and/or a recommended range of values.}
 \description{
 Construct OMLFlowParameter.
 }
+\seealso{
+Other flow related functions: \code{\link{OMLFlowQuality}},
+  \code{\link{makeOMLFlowQuality}}; \code{\link{OMLFlow}},
+  \code{\link{makeOMLFlow}}; \code{\link{deleteOMLObject}};
+  \code{\link{getOMLFlow}}; \code{\link{listOMLFlows}}
+}
 
