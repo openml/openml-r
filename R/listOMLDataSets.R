@@ -8,6 +8,7 @@
 #' @template arg_status
 #' @return [\code{data.frame}].
 #' @family listing functions
+#' @family dataset related functions
 #' @export
 listOMLDataSets = function(verbosity = NULL, status = "active") {
   content = doAPICall(api.call = "data/list", file = NULL, verbosity = verbosity, method = "GET")

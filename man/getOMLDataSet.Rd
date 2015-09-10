@@ -33,7 +33,13 @@ Note that data splits and other task-related information are not included in an 
 Tasks can be downloaded with \code{\link{getOMLTask}}.
 }
 \seealso{
-\code{\link{OMLDataSet}}, \code{\link{OMLDataSetDescription}}
+Other dataset related functions: \code{\link{OMLDataSetDescription}},
+  \code{\link{makeOMLDataSetDescription}};
+  \code{\link{OMLDataSet}}, \code{\link{makeOMLDataSet}};
+  \code{\link{convertOMLDataSetToMlr}};
+  \code{\link{deleteOMLObject}};
+  \code{\link{listOMLDataSets}};
+  \code{\link{uploadOMLDataSet}}
 
 Other downloading functions: \code{\link{getOMLDataSetQualities}};
   \code{\link{getOMLFlow}}; \code{\link{getOMLRun}};

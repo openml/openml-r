@@ -28,7 +28,15 @@ the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparati
 and describing data qualities.
 }
 \seealso{
-Other list: \code{\link{listOMLDataSetQualities}};
+Other dataset related functions: \code{\link{OMLDataSetDescription}},
+  \code{\link{makeOMLDataSetDescription}};
+  \code{\link{OMLDataSet}}, \code{\link{makeOMLDataSet}};
+  \code{\link{convertOMLDataSetToMlr}};
+  \code{\link{deleteOMLObject}};
+  \code{\link{getOMLDataSet}};
+  \code{\link{uploadOMLDataSet}}
+
+Other listing functions: \code{\link{listOMLDataSetQualities}};
   \code{\link{listOMLEstimationProcedures}};
   \code{\link{listOMLEvaluationMeasures}};
   \code{\link{listOMLFlows}}; \code{\link{listOMLRuns}};

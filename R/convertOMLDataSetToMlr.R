@@ -10,7 +10,7 @@
 #'   we choose classification, if it is numberic we choose regression.
 #' @param target [\code{character}]\cr
 #'   The target for the classification/regression task.
-#'   Default is the \code{default.target.attribute} of the \code{DataSetDescription}.
+#'   Default is the \code{default.target.attribute} of the \code{\link{DataSetDescription}}.
 #' @param ignore.flagged.attributes [\code{logical(1)}]\cr
 #'   Should those features that are listed in the data set description slot \dQuote{ignore.attribute}
 #'   be removed?
@@ -20,6 +20,7 @@
 #'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{\link[mlr]{Task}}].
+#' @family dataset related functions
 #' @export
 convertOMLDataSetToMlr = function(obj, task.type = NULL, target = obj$desc$default.target.attribute,
   ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL) {

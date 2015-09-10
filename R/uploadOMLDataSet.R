@@ -8,8 +8,8 @@
 #' @return [\code{invisible(numeric(1))}]\cr
 #'   The id of the data (\code{did}).
 #' @family uploading functions
+#' @family dataset related functions
 #' @export
-#' 
 uploadOMLDataSet = function(x, verbosity = NULL) {
   UseMethod("uploadOMLDataSet")
 }
@@ -48,7 +48,9 @@ createOMLDataSetFromMlrTask = function(task){
     version = "1", 
     description = task$task.desc$id, 
     format = "ARFF", 
-    upload.date = as.POSIXct(Sys.time())
+    upload.date = as.POSIXct(Sys.time()),
+    default.target.attribute = task$task.desc$target,
+    status = "active"
   )
   
   oml.data = makeOMLDataSet(desc = desc,

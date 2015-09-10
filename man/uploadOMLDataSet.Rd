@@ -18,9 +18,22 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{invisible(numeric(1))}]. The id of the data (\code{did}).
+[\code{invisible(numeric(1))}]\cr
+  The id of the data (\code{did}).
 }
 \description{
 Share a dataset.
+}
+\seealso{
+Other dataset related functions: \code{\link{OMLDataSetDescription}},
+  \code{\link{makeOMLDataSetDescription}};
+  \code{\link{OMLDataSet}}, \code{\link{makeOMLDataSet}};
+  \code{\link{convertOMLDataSetToMlr}};
+  \code{\link{deleteOMLObject}};
+  \code{\link{getOMLDataSet}};
+  \code{\link{listOMLDataSets}}
+
+Other uploading functions: \code{\link{uploadOMLFlow}};
+  \code{\link{uploadOMLRun}}
 }
 

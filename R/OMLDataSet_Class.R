@@ -29,6 +29,7 @@
 #' 
 #' @name OMLDataSet
 #' @export
+#' @family dataset related functions
 #' @aliases OMLDataSet
 makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.features) {
   assertClass(desc, "OMLDataSetDescription")
@@ -106,6 +107,7 @@ print.OMLDataSet = function(x, ...) {
 #'   
 #' @name OMLDataSetDescription
 #' @export
+#' @family dataset related functions
 #' @aliases OMLDataSetDescription
 makeOMLDataSetDescription = function(id, name, version, description, format,
   creator = NA_character_, contributor = NA_character_, collection.date = NA_character_, upload.date,

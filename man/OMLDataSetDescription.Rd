@@ -94,4 +94,13 @@ MD5 checksum to check if the data set is downloaded without corruption.}
 \description{
 Construct OMLDataSetDescription.
 }
+\seealso{
+Other dataset related functions: \code{\link{OMLDataSet}},
+  \code{\link{makeOMLDataSet}};
+  \code{\link{convertOMLDataSetToMlr}};
+  \code{\link{deleteOMLObject}};
+  \code{\link{getOMLDataSet}};
+  \code{\link{listOMLDataSets}};
+  \code{\link{uploadOMLDataSet}}
+}
 

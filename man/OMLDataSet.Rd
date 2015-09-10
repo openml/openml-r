@@ -40,4 +40,13 @@ not valid, the new ones will differ.
 The slot \code{target.features} contains the column name(s) from the \code{data.frame} of the \code{OMLDataSet}
 that refer to the target feature(s).
 }
+\seealso{
+Other dataset related functions: \code{\link{OMLDataSetDescription}},
+  \code{\link{makeOMLDataSetDescription}};
+  \code{\link{convertOMLDataSetToMlr}};
+  \code{\link{deleteOMLObject}};
+  \code{\link{getOMLDataSet}};
+  \code{\link{listOMLDataSets}};
+  \code{\link{uploadOMLDataSet}}
+}
 
