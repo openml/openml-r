@@ -15,6 +15,7 @@ convertOMLTaskToMlr = function(obj, ignore.flagged.attributes = TRUE, drop.level
   # FIXME: here it is wrong that we take the taget from the dset, must be from task!
   mlr.task = convertOMLDataSetToMlr(obj$input$data.set, obj$task.type,
     obj$input$data.set$target.features, ignore.flagged.attributes, drop.levels, verbosity)
+  mlr.task$task.desc$id = paste0("OpenML-Task-", obj$task.id)
   mlr.rin = convertOMLSplitsToMlr(obj$input$estimation.procedure, mlr.task)
   mlr.measures = convertOMLMeasuresToMlr(obj$input$evaluation.measures, mlr.task)
   list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)

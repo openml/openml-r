@@ -27,15 +27,15 @@ writeOMLRunXML = function(run, file) {
     mynode("value", run$parameter.setting[[i]]$value, parent = par.setting)
     mynode("component", run$parameter.setting[[i]]$component, parent = par.setting)
   }
-  aggr = run$mlr.resample.result$aggr
+  aggr = run$mlr.benchmark.result$results[[1]][[1]]$aggr
   if ("cindex.test.mean" %in% names(aggr)) {
     output = newXMLNode("output_data", parent = top, namespace = "oml")
     eval = newXMLNode("evaluation", parent = output, namespace = "oml")
     mynode("name", "c_index", parent = eval)
     mynode("flow", "openml.evaluation.c_index(1.0)", parent = eval)
     mynode("value", aggr, parent = eval)
-    ind = which(colnames(run$mlr.resample.result$measures.test) == "cindex")
-    mynode("stdev", sd(run$mlr.resample.result$measures.test[, ind]), parent = eval)
+    ind = which(colnames(run$mlr.benchmark.result$results[[1]][[1]]$measures.test) == "cindex")
+    mynode("stdev", sd(run$mlr.benchmark.result$results[[1]][[1]]$measures.test[, ind]), parent = eval)
   }
   saveXML(top, file = file)
 }

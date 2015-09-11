@@ -109,9 +109,9 @@ print.OMLRun = function(x, printMetrics = FALSE, ...)  {
   catNotNA('\tUser ID:', x$uploader)
   catNotNA('\tTags   :', x$tags)
 
-  if (!is.null(x$mlr.resample.result)) {
+  if (!is.null(x$mlr.benchmark.result$results[[1]][[1]])) {
     cat('\n')
-    print(x$mlr.resample.result)
+    print(x$mlr.benchmark.result$results[[1]][[1]])
   }
 
   if (printMetrics) {

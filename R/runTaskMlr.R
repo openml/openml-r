@@ -26,7 +26,7 @@
 #'   Default is to extract nothing.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.
-#' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.resample.result}.
+#' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.benchmark}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, resample.extract = NULL, ...) {
@@ -42,10 +42,10 @@ runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, resam
     verbosity = getOMLConfig()$verbosity
   show.info = (verbosity > 0L)
 
-  res = resample(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures,
+  res = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures,
     extract = resample.extract, show.info = show.info)
-  run$predictions = reformatPredictions(res$pred$data, task)
-  run$mlr.resample.result = res
+  run$predictions = reformatPredictions(res$results[[1]][[1]]$pred$data, task)
+  run$mlr.benchmark.result = res
   run = addClasses(run, "OMLMlrRun")
 
   run$parameter.setting = makeOMLRunParList(learner)
