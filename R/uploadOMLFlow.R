@@ -9,7 +9,7 @@
 #'   The file path to the flow (not needed for \code{\link{Learner}})
 #' @param binaryfile [\code{character(1)}]\cr
 #'   The file path to the flow (not needed for \code{\link{Learner}})
-#' @return [\code{invisible(numeric(1))}]\cr
+#' @return [\code{invisible(numeric(1))}].
 #'   The id of the flow (\code{flow.id}).
 #' @family uploading functions
 #' @export
@@ -93,8 +93,9 @@ sourcedFlow = function(task.id) {
 checkOMLFlow = function(x, verbosity = NULL){
   if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
 
-  content = doAPICall(api.call = "flow/exists/", method = "POST", file = NULL, verbosity = verbosity,
-    post.args = list(name = x$name, external_version = x$external.version))
+  content = doAPICall(api.call = paste0("flow/exists/", x$name, "/", x$external.version), 
+                      method = "GET", file = NULL, verbosity = verbosity)
+  
   doc = parseXMLResponse(content, "Checking existence of flow", "flow_exists", as.text = TRUE)
 
   return(list(exists = as.logical(xmlRValS(doc, "/oml:flow_exists/oml:exists")),

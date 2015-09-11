@@ -18,7 +18,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{invisible(numeric(1))}]\cr
+[\code{invisible(numeric(1))}].
   The id of the data (\code{did}).
 }
 \description{

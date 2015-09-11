@@ -5,7 +5,7 @@
 #' @param x [\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
 #'   Contains the dataset that should be uploaded.
 #' @template arg_verbosity
-#' @return [\code{invisible(numeric(1))}]\cr
+#' @return [\code{invisible(numeric(1))}].
 #'   The id of the data (\code{did}).
 #' @family uploading functions
 #' @family dataset related functions

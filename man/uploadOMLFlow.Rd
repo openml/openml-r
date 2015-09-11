@@ -24,7 +24,7 @@ The file path to the flow (not needed for \code{\link{Learner}})}
 The file path to the flow (not needed for \code{\link{Learner}})}
 }
 \value{
-[\code{invisible(numeric(1))}]\cr
+[\code{invisible(numeric(1))}].
   The id of the flow (\code{flow.id}).
 }
 \description{

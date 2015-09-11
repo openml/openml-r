@@ -44,7 +44,7 @@ Default is to extract nothing.}
 Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.}
 }
 \value{
-[\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.resample.result}.
+[\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.benchmark}.
 }
 \description{
 Run task with a specified learner from mlr and produce predictions.

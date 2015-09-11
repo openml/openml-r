@@ -6,7 +6,7 @@
 #'   The run that should be uploaded.
 #' @template arg_flow.id
 #' @template arg_verbosity
-#' @return [\code{invisible(numeric(1))}] \cr 
+#' @return [\code{invisible(numeric(1))}]. 
 #'   The run ID.
 #' @family uploading functions
 #' @family run related functions

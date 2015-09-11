@@ -10,7 +10,7 @@
 #'   we choose classification, if it is numberic we choose regression.
 #' @param target [\code{character}]\cr
 #'   The target for the classification/regression task.
-#'   Default is the \code{default.target.attribute} of the \code{\link{DataSetDescription}}.
+#'   Default is the \code{default.target.attribute} of the \code{\link{OMLDataSetDescription}}.
 #' @param ignore.flagged.attributes [\code{logical(1)}]\cr
 #'   Should those features that are listed in the data set description slot \dQuote{ignore.attribute}
 #'   be removed?
