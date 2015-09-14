@@ -14,53 +14,17 @@
 getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow.id = asCount(flow.id)
   assertFlag(cache.only)
-
-  f = findCachedFlow(flow.id)
-
-  if (!f$flow.xml$found) {
-    if (cache.only)
-      stopf("Flow '%i' not found in cache with option 'cache.only'", flow.id)
-    flow.desc.contents = doAPICall(api.call = "flow", id = flow.id, file = f$flow.xml$path,
-      verbosity = verbosity, method = "GET")
-  } else {
-    showInfo(verbosity, "Flow description found in cache.")
-    flow.desc.contents = readLines(f$flow.xml$path)
+  
+  down = downloadOMLObject(flow.id, object = "flow", cache.only = cache.only, verbosity = verbosity)
+  flow = parseOMLFlow(down$doc)
+  
+  # is there another file except the flow.xml?
+  file.exist = !names(down$files)%in%"flow.xml"
+  if (any(file.exist)) {
+    file = down$files[[which(file.exist)]]
+    if(file$binary) flow$binary.path = file$path else flow$source.path = file$path
   }
-
-  doc = parseXMLResponse(flow.desc.contents, "Getting flow", "flow", as.text = TRUE)
-  flow = parseOMLFlow(doc)
-
-  # download source and/or binary files:
-  downloadFileAndSavePath = function(flow, binOrSource, mode, verbosity) {
-    url = flow[[sprintf("%s.url", binOrSource)]]
-    if (!is.na(url)) {
-      file = basename(url)
-      f = findCachedFlow(flow$flow.id, file)[[1L]]
-      flow[[sprintf("%s.path", binOrSource)]] = f$path
-      if (f$found) {
-        showInfo(verbosity, "File %s found in cache.", file)
-      } else {
-        showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
-        download.file(url, f$path, mode = mode, quiet = TRUE)
-      }
-    }
-    return(flow)
-  }
-
-  flow = downloadFileAndSavePath(flow, "binary", "wb", verbosity)
-  flow = downloadFileAndSavePath(flow, "source", "w", verbosity)
-
-  # fix unserialize in downloaded R file (issue #49)
-#   if(!is.na(flow$source.format) && flow$source.format == "R") {
-#     source.file = readLines(flow$source.path)
-#     fix.line = grepl("unserialize", source.file)
-#     if(!grepl("charToRaw", source.file[fix.line])) {
-#       source.file[fix.line] = gsub("unserialize", "unserialize(charToRaw", source.file[fix.line])
-#       source.file[fix.line] = gsub("))", ")))", source.file[fix.line])
-#       writeLines(source.file, flow$source.path)
-#     }
-#   }
-
+  
   return(flow)
 }
 

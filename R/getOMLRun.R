@@ -17,17 +17,9 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(run.id)
   assertFlag(cache.only)
 
-  f = findCachedRun(id)
-
-  if (!f$run.xml$found) {
-    if (cache.only)
-      stopf("Run '%i' not found in cache with option 'cache.only'", id)
-    content = doAPICall("run", id = id, file = f$run.xml$path, verbosity, method = "GET")
-  } else {
-    showInfo(verbosity, "Run description found in cache.")
-    content = readLines(f$run.xml$path)
-  }
-  doc = parseXMLResponse(content, "Getting run", "run", as.text = TRUE)
+  down = downloadOMLObject(id, object = "run", cache.only = cache.only, verbosity = verbosity)
+  f = down$files
+  doc = down$doc
 
   parseData = function(path) {
     # parse datasets
@@ -107,16 +99,16 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   f = findCachedRun(run.args$run.id)
 
   if (!f$predictions.arff$found) {
-    fls = run.args$output.data$files
-    url = fls[fls$name == "predictions", "url"]
-    if (is.null(url)) {
+#     fls = run.args$output.data$files
+#     url = fls[fls$name == "predictions", "url"]
+#     if (is.null(url)) {
       warning("No URL found to retrieve predictions from.")
       pred = NULL
-    } else {
-      pred = downloadARFF(url, f$predictions.arff$path, verbosity)
-    }
+#     } else {
+#       pred = downloadARFF(url, f$predictions.arff$path, verbosity)
+#     }
   } else {
-    showInfo(verbosity, "Predictions found in cache.")
+    #showInfo(verbosity, "Predictions found in cache.")
     pred = arff.reader(f$predictions.arff$path)
   }
   run.args[["predictions"]] = pred
