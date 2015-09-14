@@ -13,7 +13,7 @@ test_that("populateOMLCache", {
   expect_exists_in_cache = function(type, ids) {
     finder = switch(type,
       tasks = findCachedTask,
-      datasets = findCachedDataset,
+      datasets = findCachedData,
       runs = findCachedRun,
       flows = findCachedFlow
     )

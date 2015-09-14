@@ -5,7 +5,8 @@
 \title{Download a bunch of OpenML objects to cache.}
 \usage{
 populateOMLCache(dids = integer(0L), task.ids = integer(0L),
-  flow.ids = integer(0L), run.ids = integer(0L), verbosity = NULL)
+  flow.ids = integer(0L), run.ids = integer(0L), verbosity = NULL,
+  overwrite = FALSE)
 }
 \arguments{
 \item{dids}{[\code{integer}]\cr
@@ -30,6 +31,9 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{overwrite}{[\code{integer(1)}]\cr
+Should files that are already in cache be overwritten?}
 }
 \value{
 [\code{invisible(NULL)}]

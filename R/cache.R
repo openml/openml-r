@@ -50,7 +50,7 @@ getCacheURI = function(subdir, id, elements) {
   setNames(Map(list, path = path, found = found), elements)
 }
 
-findCachedDataset = function(id) {
+findCachedData = function(id) {
   getCacheURI("datasets", id,
     elements = c("dataset.arff", "description.xml"))
 }
@@ -80,7 +80,7 @@ isCached = function(subdir, id) {
 clearOMLCache = function() {
   conf = getOMLConfig()
   cd = conf$cachedir
-  unlink(cd, recursive = TRUE)
+  unlink(cd, recursive = TRUE, force = TRUE)
   createDir(cd)
   createCacheSubDirs()
 }
