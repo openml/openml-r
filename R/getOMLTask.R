@@ -70,10 +70,13 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
   # No real error handling. If no data splits are available, just print a warning and go on.
   url.dsplits = task$input$estimation.procedure$data.splits.url
   if (url.dsplits != "No URL") {
-    data = try(arff.reader(f$datasplits.arff$path), silent = TRUE) #downloadARFF(url.dsplits, f$datasplits.arff$path, verbosity)
-    if (is.error(data)) 
-      warning(gsub(".*:\n", "", as.character(attr(data, "condition")))) else
-        task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
+    #data = try(arff.reader(f$datasplits.arff$path), silent = TRUE) #downloadARFF(url.dsplits, f$datasplits.arff$path, verbosity)
+    #if (is.error(data)) 
+    #  warning(gsub(".*:\n", "", as.character(attr(data, "condition")))) else
+    #    task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
+    # FIXME: see https://github.com/openml/website/issues/25 when this is solved, we might change this line:
+    data = tryCatch(suppressWarnings(arff.reader(f$datasplits.arff$path)), error = function(e) NULL)
+    if (!is.null(data)) task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   } #else warning("Task not providing datasplits.")
 
   return(task)
