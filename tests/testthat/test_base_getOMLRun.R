@@ -14,7 +14,7 @@ test_that("getOMLRun", {
   expect_is(run$predictions, "data.frame")
   
   # try different runs of different task types
-  #tasks = listOMLTasks()
+  tasks = listOMLTasks()
   tasks = tasks[with(tasks, NumberOfInstances < 1000 & NumberOfFeatures < 1000 &
                        (NumberOfSymbolicFeatures==0 | is.na(NumberOfSymbolicFeatures))), ]
   task.ids = split(tasks$task_id, tasks$task_type)
