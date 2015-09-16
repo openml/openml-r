@@ -28,15 +28,24 @@ test_that("populateOMLCache", {
     }
   }
 
+  # long test:
+  #dids = listOMLDataSets()$did
+  #task.ids = listOMLTasks()$task_id
+  #flows = listOMLFlows()
+  #flow.ids = flows[!grepl("openml.evaluation", flows$name), "flow.id"]
+  dids = 1:2
+  task.ids = 1:2
+  flow.ids = 2:3
+  
   # check if stuff is stored
-  populateOMLCache(dids = 1:2)
-  expect_exists_in_cache("datasets", 1:2)
-  populateOMLCache(task.ids = 1:2)
-  expect_exists_in_cache("tasks", 1:2)
+  populateOMLCache(dids = dids)
+  expect_exists_in_cache("datasets", dids)
+  populateOMLCache(task.ids = task.ids)
+  expect_exists_in_cache("tasks", task.ids)
   populateOMLCache(run.ids = 1:2)
   expect_exists_in_cache("runs", 1:2)
-  populateOMLCache(flow.ids = 2:3)
-  expect_exists_in_cache("flows", 2:3)
+  populateOMLCache(flow.ids = flow.ids)
+  expect_exists_in_cache("flows", flow.ids)
 
   # cleanup
   clearOMLCache()

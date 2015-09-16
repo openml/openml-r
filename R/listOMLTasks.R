@@ -56,5 +56,6 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
   li$estimation_procedure = droplevels(estproc[as.character(li$estimation_procedure), "name"])
   li$status = as.factor(li$status)
   
+  #FIXME: do we want to replace _ by . in colnames?
   return(li)
 }

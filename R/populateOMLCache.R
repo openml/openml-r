@@ -61,6 +61,9 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   substr(cap.obj, 1,1) = toupper(substr(object, 1,1))
   f = do.call(paste0("findCached", cap.obj), list(id))
   
+  # if cache.only option is active and there is a file which is not in cache, stop with an error
+  # FIXME: This does not work if there is flow.xml but the corresponding source or binary files were removed; 
+  #   can be fixed if findCachedFlow outputs the file from source_url or binary_url if there is one
   if (all(vlapply(f, function(X) !X$found)) & cache.only)
     stopf("%s '%i' not found in cache with option 'cache.only'", cap.obj, id)
   
@@ -69,7 +72,7 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   file.ind = seq_along(f)[!seq_along(f)%in%xml.ind]
   if (f[[xml.ind]]$found & !overwrite) {
     # parse info
-    showInfo(verbosity, paste0(cap.obj, " description found in cache."))
+    showInfo(verbosity, sprintf("%s '%i' description found in cache.", cap.obj, id))
     content = readLines(f[[xml.ind]]$path)
   } else {
     content = doAPICall(api.call = object, id = id, file = f[[xml.ind]]$path,
@@ -84,13 +87,19 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   if (object == "data") url = xmlRValS(doc, "/oml:data_set_description/oml:url") else
     if (object == "task") url = xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url") else
       if (object == "flow") {
+        #FIXME: Do this in findCachedFlow to find the filename of the flow (and if its binary or source)
         # flows have either a source.url, a binary.url or nothing to be downloaded
         source.url = xmlOValS(doc, "/oml:flow/oml:source_url")
         binary.url = xmlOValS(doc, "/oml:flow/oml:binary_url")
+        if (!is.null(source.url) & !is.null(binary.url)) {
+          source.file = readLines(source.url, warn = FALSE)
+          binary.file = readLines(binary.url, warn = FALSE)
+          # if they are identical, we can go on and download just one of them
+          if (!identical(source.file, binary.file))
+            stopf("Flow '%i' contains both source.url and binary.url, which is currently not supported.", id)
+        } 
         # get url if there is either a source.url or a binary.url
         url = if (is.null(binary.url)) source.url else binary.url
-        # FIXME: can there be a source AND a binary url?
-        if(!is.null(source.url) & !is.null(binary.url)) stop("source.url and binary.url found")
         # if there is a url
         if (!is.null(url)) {
           # get name of the file that has to be downloaded 
@@ -113,7 +122,7 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   # download files if there is an url
   if (!is.null(url) & length(url) != 0) {
     if (f[[file.ind]]$found & !overwrite) {
-      showInfo(verbosity, paste0(cap.obj, " file found in cache."))
+      showInfo(verbosity, sprintf("%s '%i' file found in cache.", cap.obj, id))
     } else {
       url = stri_trim_both(url)
       showInfo(verbosity, "Downloading from '%s' to '%s'", url, f[[file.ind]]$path)
@@ -121,6 +130,8 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
         mode = ifelse(!is.null(f[[file.ind]]$binary), ifelse(f[[file.ind]]$binary, "wb", "w"), "w"),
         #FIXME: do we want to get real verbosity level here >= info ?
         quiet = TRUE) #!as.logical(getOMLConfig()$verbosity))
+        #FIXME: set f[[file.ind]]$found = TRUE after it has been downloaded from the line above 
+        #  or use findCached* function to look if the files are now in cache and print error if not
     }
   }
   return(list(doc = doc, files = f))
