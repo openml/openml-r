@@ -77,6 +77,8 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   } else {
     content = doAPICall(api.call = object, id = id, file = f[[xml.ind]]$path,
       verbosity = verbosity, method = "GET")
+    # set found = TRUE if downloaded file is in cache
+    if (file.exists(f[[xml.ind]]$path)) f[[xml.ind]]$found = TRUE
   }
   # look for an error in xml and stop if there is one
   xml.type = ifelse(object == "data", "data_set_description", object)
@@ -87,7 +89,7 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   if (object == "data") url = xmlRValS(doc, "/oml:data_set_description/oml:url") else
     if (object == "task") url = xmlOValS(doc, "/oml:task/oml:input/oml:estimation_procedure/oml:data_splits_url") else
       if (object == "flow") {
-        #FIXME: Do this in findCachedFlow to find the filename of the flow (and if its binary or source)
+        #FIXME: Do this in findCachedFlow to find the filename of the flow (and if its binary or source)?
         # flows have either a source.url, a binary.url or nothing to be downloaded
         source.url = xmlOValS(doc, "/oml:flow/oml:source_url")
         binary.url = xmlOValS(doc, "/oml:flow/oml:binary_url")
@@ -130,8 +132,8 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
         mode = ifelse(!is.null(f[[file.ind]]$binary), ifelse(f[[file.ind]]$binary, "wb", "w"), "w"),
         #FIXME: do we want to get real verbosity level here >= info ?
         quiet = TRUE) #!as.logical(getOMLConfig()$verbosity))
-        #FIXME: set f[[file.ind]]$found = TRUE after it has been downloaded from the line above 
-        #  or use findCached* function to look if the files are now in cache and print error if not
+      # set found = TRUE if downloaded file is in cache
+      if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
     }
   }
   return(list(doc = doc, files = f))

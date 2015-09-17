@@ -130,7 +130,10 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   sourcefile = createLearnerSourcefile(lrn)
   external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
   on.exit(unlink(sourcefile))
-
+  
+  # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
+  #external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), "-", digest(pkges, "crc32"))
+  
   pkges = c("mlr", lrn$package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = collapse(pkges, sep = ", ")
