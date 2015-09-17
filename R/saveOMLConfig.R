@@ -1,13 +1,15 @@
-#' @title Saves a list of OpenML configuration settings to file
+#' @title Saves a list of OpenML configuration settings to file.
 #'
 #' @description The new configuration is automatically assigned via
-#' \code{\link{setOMLConfig}} if all checks pass.
+#' \code{\link{setOMLConfig}} if all checks pass. If you don't set a certain option, package
+#' defaults will be inserted into the file.
 #'
 #' @param server [\code{character(1)}]\cr
 #'   URL of the XML API endpoint.
 #' @param verbosity [\code{integer(1)}]\cr
 #'   Verbosity level. Possible values are 0 (normal output), 1 (info output),
-#'   2(debug output). Default is 1.
+#'   2(debug output).
+#'   Default is 1.
 #' @param apikey [\code{character(1)}]\cr
 #'   Your OpenML API key. Log in to OpenML, move to your profile to get it.
 #' @param cachedir [\code{character(1)}]\cr
@@ -16,14 +18,41 @@
 #'   Name of the package which should be used to parse arff files. Possible are
 #'   \dQuote{RWeka}, which is the default and \dQuote{farff}.
 #' @param path [\code{character(1)}]\cr
-#'   Path to OpenML config file. Default is \dQuote{~/.openml/config}.
+#'   Path to OpenML config file.
+#'   Default is \dQuote{~/.openml/config}.
 #' @param overwrite [\code{logical(1)}]\cr
-#'   Should an existing file be overwritten? Default is \code{FALSE}.
+#'   Should an existing file be overwritten?
+#'   Default is \code{FALSE}.
 #' @family config
 #' @export
 saveOMLConfig = function(server = NULL, verbosity = NULL,
-  apikey = NA, cachedir = NULL, arff.reader = "RWeka", path = "~/.openml/config",
+  apikey = NA, cachedir = NULL, arff.reader = NULL, path = "~/.openml/config",
   overwrite = FALSE) {
+
+  if (is.null(server))
+    server = getDefaultConfig()$server
+  else
+    assertString(server)
+  if (is.null(verbosity))
+    verbosity = getDefaultConfig()$verbosity
+  else
+    verbosity = asInt(verbosity)
+  if (is.null(apikey))
+    apikey = getDefaultConfig()$apikey
+  else
+    assertString(apikey)
+  if (is.null(cachedir))
+    cachedir = getDefaultConfig()$cachedir
+  else
+    assertString(cachedir)
+  if (is.null(server))
+    server = getDefaultConfig()$server
+  else
+    assertString(server)
+  if (is.null(arff.reader))
+    arff.reader = getDefaultConfig()$arff.reader
+  else
+    assertChoice(arff.reader, c("RWeka", "farff"))
   assertFlag(overwrite)
 
   if (file.exists(path) && !overwrite) {
