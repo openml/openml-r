@@ -41,8 +41,8 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
       return(string)
     }
     targets = c(notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_left")),
-      notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_right")),
-      notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_event")))
+                notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_right")),
+                notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_event")))
   }
   
   # convert estim params to correct types
@@ -78,7 +78,7 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
     data = tryCatch(suppressWarnings(arff.reader(f$datasplits.arff$path)), error = function(e) NULL)
     if (!is.null(data)) task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   } #else warning("Task not providing datasplits.")
-
+  
   return(task)
 }
 
@@ -113,7 +113,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   
   # get the data set
   data.set.input = getOMLDataSet(xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id"), 
-    verbosity = verbosity, cache.only = cache.only)
+                                 verbosity = verbosity, cache.only = cache.only)
   
   input = list(
     data.set = data.set.input,
@@ -150,13 +150,15 @@ parseOMLDataSplits = function(task, data) {
   # slightly converts the splits data frame
   # rename the "repeat" column to "rep" + and make all indices 1-based, they are 0-based on the server
   colnames(data)[colnames(data) == "repeat"] = "rep"
-  ri = data$rowid
-  rns = rownames(task$input$data.set$data)
   # FIXME: use match()!
+  #ri = data$rowid
+  #rns = rownames(task$input$data.set$data)
   #data$rowid = as.vector(sapply(ri, function(x) which(x == rns)))
   #data$rowid = match(ri, rns)
-  # FIXME: even match() is slow for big data sets... i think we can use ri+1
-  data$rowid = as.integer(ifelse(min(ri) == 0, ri+1, ri))
+  # FIXME: even match() is too slow for big data sets... 
+  #   The unit test in getOMLTask suggests taht we can use this instead (no need to use task in function-arg):
+  rowid = if (min(data$rowid) == 0) (data$rowid+1) else data$rowid
+  data$rowid = as.integer(rowid)
   data$rep = data$rep + 1
   data$fold = data$fold + 1
   return(data)
