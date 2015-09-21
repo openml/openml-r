@@ -37,9 +37,7 @@
 #' @param tags [\code{character}]\cr
 #'   Optional tags describing the run.
 #' @param predictions [\code{data.frame}]\cr
-#'   The predictions of the run. These are NOT downloaded
-#'   by \code{\link{getOMLRun}}. To retrieve predictions of an uploaded run, please use
-#'   \code{\link{getOMLPredictions}}.
+#'   The predictions of the run. 
 #' @param input.data [\code{\link{OMLIOData}}]\cr
 #'   All data that served as input for the run. Added by server. Ignored when uploading.
 #' @param output.data [\code{\link{OMLIOData}}]\cr

@@ -43,7 +43,6 @@ Other listing functions: \code{\link{listOMLDataSetQualities}};
 Other run related functions: \code{\link{OMLRunParameter}},
   \code{\link{makeOMLRunParameter}}; \code{\link{OMLRun}},
   \code{\link{makeOMLRun}}; \code{\link{deleteOMLObject}};
-  \code{\link{getOMLPredictions}}; \code{\link{getOMLRun}};
-  \code{\link{uploadOMLRun}}
+  \code{\link{getOMLRun}}; \code{\link{uploadOMLRun}}
 }
 

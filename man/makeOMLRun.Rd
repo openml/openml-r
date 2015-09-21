@@ -58,9 +58,7 @@ settings.}
 Optional tags describing the run.}
 
 \item{predictions}{[\code{data.frame}]\cr
-The predictions of the run. These are NOT downloaded
-by \code{\link{getOMLRun}}. To retrieve predictions of an uploaded run, please use
-\code{\link{getOMLPredictions}}.}
+The predictions of the run.}
 
 \item{input.data}{[\code{\link{OMLIOData}}]\cr
 All data that served as input for the run. Added by server. Ignored when uploading.}
@@ -80,8 +78,7 @@ OMLRun
 \seealso{
 Other run related functions: \code{\link{OMLRunParameter}},
   \code{\link{makeOMLRunParameter}};
-  \code{\link{deleteOMLObject}};
-  \code{\link{getOMLPredictions}}; \code{\link{getOMLRun}};
+  \code{\link{deleteOMLObject}}; \code{\link{getOMLRun}};
   \code{\link{listOMLRuns}}; \code{\link{uploadOMLRun}}
 }
 

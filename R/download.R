@@ -71,20 +71,3 @@ doAPICall = function(api.call, id = NULL,
 namedArgsListToHTTPQuery = function(args) {
   collapse(paste(names(args), args, sep = "="), "&")
 }
-
-# @title Download an arff file to disk.
-#
-# @param url [character(1)]
-#   URL to arff file.
-# @param file [character(1)]
-#   Destination file.
-# @verbosity [logical(1)]
-#   Be verbose and show info messages?
-# @return Parsed arff file.
-# FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
-downloadARFF = function(url, file, verbosity = NULL) {
-  showInfo(verbosity, "Downloading '%s' to '%s'", url, file)
-  #FIXME: get real verbosity level here >= info
-  download.file(url, file, mode = "w", quiet = TRUE)
-  arff.reader(file)
-}

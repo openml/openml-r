@@ -11,7 +11,6 @@
 #' @return [\code{\link{OMLRun}}].
 #' @family downloading functions
 #' @family run related functions
-#' @seealso To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
 #' @export
 getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(run.id)
@@ -99,14 +98,8 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   f = findCachedRun(run.args$run.id)
 
   if (!f$predictions.arff$found) {
-#     fls = run.args$output.data$files
-#     url = fls[fls$name == "predictions", "url"]
-#     if (is.null(url)) {
-      warning("No URL found to retrieve predictions from.")
+      message("No URL found to retrieve predictions from.")
       pred = NULL
-#     } else {
-#       pred = downloadARFF(url, f$predictions.arff$path, verbosity)
-#     }
   } else {
     #showInfo(verbosity, "Predictions found in cache.")
     pred = arff.reader(f$predictions.arff$path)

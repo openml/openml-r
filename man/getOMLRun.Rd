@@ -30,8 +30,6 @@ Given an run id, the corresponding \code{\link{OMLRun}} including all server
 and user computed metrics is downloaded if not already available in cache.
 }
 \seealso{
-To retrieve the corresponding predictions: \code{\link{getOMLPredictions}}
-
 Other downloading functions: \code{\link{getOMLDataSetQualities}};
   \code{\link{getOMLDataSet}}; \code{\link{getOMLFlow}};
   \code{\link{getOMLTask}}
@@ -39,7 +37,6 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}};
 Other run related functions: \code{\link{OMLRunParameter}},
   \code{\link{makeOMLRunParameter}}; \code{\link{OMLRun}},
   \code{\link{makeOMLRun}}; \code{\link{deleteOMLObject}};
-  \code{\link{getOMLPredictions}};
   \code{\link{listOMLRuns}}; \code{\link{uploadOMLRun}}
 }
 
