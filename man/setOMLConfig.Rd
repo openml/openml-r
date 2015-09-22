@@ -4,14 +4,26 @@
 \alias{setOMLConfig}
 \title{Set and overwrite configuration settings}
 \usage{
-setOMLConfig(..., conf = NULL)
+setOMLConfig(server = NULL, verbosity = NULL, apikey = NULL,
+  cachedir = NULL, arff.reader = NULL)
 }
 \arguments{
-\item{...}{[\code{ANY}]\cr
-Named configuration parameters. Overwrites parameters in \code{conf}, if provided.}
+\item{server}{[\code{character(1)}]\cr
+URL of the XML API endpoint.}
 
-\item{conf}{[\code{OMLConfig} or \code{list}]\cr
-List of configuration parameters as returned by \code{\link{getOMLConfig}}.}
+\item{verbosity}{[\code{integer(1)}]\cr
+Verbosity level. Possible values are 0 (normal output), 1 (info output),
+2 (debug output).}
+
+\item{apikey}{[\code{character(1)}]\cr
+Your OpenML API key. Log in to OpenML, move to your profile to get it.}
+
+\item{cachedir}{[\code{character(1)}]\cr
+Path the the cache directory.}
+
+\item{arff.reader}{[\code{character(1)}]\cr
+Name of the package which should be used to parse arff files. Possible are
+\dQuote{RWeka}, which is the default and \dQuote{farff}.}
 }
 \value{
 Invisibly returns a list of configuration settings.

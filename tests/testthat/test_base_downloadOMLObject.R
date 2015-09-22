@@ -18,7 +18,7 @@ test_that("downloadOMLObject", {
   clearOMLCache()
   # change apikey temporairly
   apikey = getOMLConfig()$apikey
-  setOMLConfig(apikey = "a")
+  setOMLConfig(apikey = collapse(rep("a", 32), ""))
   for (i in 1:nrow(grid)) {
     # check if error is print when xml contains an error node
     expect_error(downloadOMLObject(id = grid[i, "id"], object = grid[i, "object"]), "Authentication failed")

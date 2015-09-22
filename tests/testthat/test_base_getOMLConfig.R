@@ -24,7 +24,7 @@ test_that("reading and writing config files", {
   }
 
   # write a valid basic config file
-  conf = writeAndReadConfig(apikey = "test", verbosity = 2)
+  conf = writeAndReadConfig(apikey = collapse(rep("x", 32), ""), verbosity = 2)
   expect_identical(class(conf), class(getOMLConfig()))
   expect_true(is.integer(conf$verbosity))
   expect_output(print(conf), "configuration")
