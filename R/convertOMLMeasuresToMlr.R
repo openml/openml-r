@@ -5,16 +5,16 @@ convertOMLMeasuresToMlr = function(measures, task.type) {
   assertCharacter(measures, any.missing = FALSE)
 
   lookup = list(
-    "meanabsoluteerror" = mmce,
-    "rootmeansquarederror" = rmse,
-    "areaunderroccurve" = auc,
-    "buildcputime" = timetrain,
-    "fmeasure" = f1,
-    "matthewscorrelationcoefficient" = mcc,
+    "mean_absolute_error" = mae,
+    "root_mean_squared_error" = rmse,
+    "area_under_roc_curve" = auc,
+    "build_cpu_time" = timetrain,
+    "f_measure" = f1,
+    "matthews_correlation_coefficient" = mcc,
     "precision" = ppv,
     "predictive_accuracy" = acc,
     "recall" = tpr,
-    "cindex" = cindex
+    "c_index" = cindex
   )
 
   assertSubset(measures, names(lookup))
