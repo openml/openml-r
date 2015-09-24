@@ -9,7 +9,11 @@ setOMLConfig(verbosity = 1L, cachedir = tempdir())
 if (identical(Sys.getenv("TRAVIS"), "true")) {
   apikey = Sys.getenv("OPENMLAPIKEY")
   setOMLConfig(apikey = apikey)
-} else {
-  source("../../OPENMLAPIKEY.R")
 }
+
 configureMlr(on.learner.warning = "quiet", show.learner.output = FALSE)
+
+# get a list of tasks, whose ids are used for testing
+tasks = listOMLTasks()
+tasks = tasks[with(tasks, NumberOfInstances < 1000 & NumberOfFeatures < 1000 &
+  (NumberOfSymbolicFeatures==0 | is.na(NumberOfSymbolicFeatures))), ]

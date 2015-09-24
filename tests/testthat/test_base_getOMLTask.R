@@ -9,9 +9,6 @@ test_that("getOMLTask", {
   expect_error(getOMLTask(1231109283L),  "Unknown task")
   
   # try different tasks of different task types
-  tasks = listOMLTasks()
-  tasks = tasks[with(tasks, NumberOfInstances < 1000 & NumberOfFeatures < 1000 &
-                       (NumberOfSymbolicFeatures==0 | is.na(NumberOfSymbolicFeatures))), ]
   task.ids = split(tasks$task_id, tasks$task_type)
   task.ids = lapply(task.ids, function(X) tail(X, 3))
   
