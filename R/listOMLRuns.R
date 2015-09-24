@@ -23,13 +23,14 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL, verbosit
   url.args = list(task_id = task.id, setup_id = setup.id, flow_id = flow.id)
   url.args = Filter(function(x) !is.null(x), url.args)
 
-  content = try(doAPICall("run/list", url.args = url.args, file = NULL, method = "GET",
-   verbosity = verbosity))
+  content = doAPICall("run/list", url.args = url.args, file = NULL, method = "GET",
+   verbosity = verbosity)
 
-  if (is.error(content))
+  xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE), silent = TRUE)
+  
+  if (is.error(xml))
     return(data.frame())
-
-  xml = parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE)
+  
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   as.data.frame(rename(rbindlist(lapply(blocks, function(node) {
     lapply(xmlChildren(node), function(x) as.integer(xmlValue(x)))
