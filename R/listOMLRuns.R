@@ -20,11 +20,12 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL, verbosit
   if (is.null(task.id) && is.null(setup.id) && is.null(flow.id))
     stop("Please hand over at least one of the following: task.id, setup.id, flow.id")
 
-  url.args = list(task_id = task.id, setup_id = setup.id, flow_id = flow.id)
+  #url.args = list(task_id = task.id, setup_id = setup.id, flow_id = flow.id)
+  url.args = list(task = task.id, setup = setup.id, flow = flow.id)
   url.args = Filter(function(x) !is.null(x), url.args)
 
-  content = doAPICall("run/list", url.args = url.args, file = NULL, method = "GET",
-   verbosity = verbosity)
+  api.call = paste0("run/list/", collapseNamedList(url.args, sep = "/", collapse = "/"))
+  content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
 
   xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE), silent = TRUE)
   
@@ -32,7 +33,11 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL, verbosit
     return(data.frame())
   
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  as.data.frame(rename(rbindlist(lapply(blocks, function(node) {
-    lapply(xmlChildren(node), function(x) as.integer(xmlValue(x)))
+  ret = as.data.frame(rename(rbindlist(lapply(blocks, function(node) {
+    lapply(xmlChildren(node), function(x) (xmlValue(x)))
   }), fill = TRUE)))
+  int.vars = colnames(ret)[1:5]
+  ret[, int.vars] = lapply(int.vars, function(x) as.integer(ret[, x]))
+  ret$error.message = ifelse(ret$error.message == "", NA, as.character(ret$error.message))
+  return(ret)
 }

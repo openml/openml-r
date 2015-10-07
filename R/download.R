@@ -39,7 +39,7 @@ doAPICall = function(api.call, id = NULL,
     url.args = insert(url.args, list(...))
   }
   #url.args$api_key = conf$apikey
-  url.args = namedArgsListToHTTPQuery(url.args)
+  url.args = collapseNamedList(url.args)
 
   # create url
   if (url.args == "") 
@@ -68,6 +68,6 @@ doAPICall = function(api.call, id = NULL,
   return(content)
 }
 
-namedArgsListToHTTPQuery = function(args) {
-  collapse(paste(names(args), args, sep = "="), "&")
+collapseNamedList = function(args, sep = "=", collapse = "&") {
+  collapse(paste(names(args), args, sep = sep), collapse)
 }
