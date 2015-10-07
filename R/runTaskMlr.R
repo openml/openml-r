@@ -19,17 +19,12 @@
 #'   If \code{auto.upload = FALSE}, only the \code{implementation.id} of an
 #'   already uploaded \code{learner} is used and an error is returned if the
 #'   \code{learner} was not found on the server.
-#' @param resample.extract [\code{function}]\cr
-#'   Function used to extract information from a fitted model during the resampling done by \code{mlr}.
-#'   Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
-#'   during resampling.
-#'   Default is to extract nothing.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.benchmark}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
-runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, resample.extract = NULL, ...) {
+runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, ...) {
 
   assertClass(task, "OMLTask")
   assertClass(learner, "Learner")
@@ -43,7 +38,8 @@ runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, resam
   show.info = (verbosity > 0L)
 
   res = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures,
-    extract = resample.extract, show.info = show.info)
+    #extract = resample.extract, 
+    show.info = show.info)
   run$predictions = reformatPredictions(res$results[[1]][[1]]$pred$data, task)
   run$mlr.benchmark.result = res
   run = addClasses(run, "OMLMlrRun")

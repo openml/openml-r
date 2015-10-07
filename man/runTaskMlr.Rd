@@ -4,8 +4,7 @@
 \alias{runTaskMlr}
 \title{Run mlr learner on OpenML task.}
 \usage{
-runTaskMlr(task, learner, verbosity = NULL, auto.upload = TRUE,
-  resample.extract = NULL, ...)
+runTaskMlr(task, learner, verbosity = NULL, auto.upload = TRUE, ...)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr
@@ -33,12 +32,6 @@ Default is set via \code{\link{setOMLConfig}}.}
   If \code{auto.upload = FALSE}, only the \code{implementation.id} of an
   already uploaded \code{learner} is used and an error is returned if the
   \code{learner} was not found on the server.}
-
-\item{resample.extract}{[\code{function}]\cr
-Function used to extract information from a fitted model during the resampling done by \code{mlr}.
-Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
-during resampling.
-Default is to extract nothing.}
 
 \item{...}{[any]\cr
 Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.}

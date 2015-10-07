@@ -4,11 +4,34 @@ test_that("runTaskMlr", {
   task = getOMLTask(1)
   lrn = makeLearner("classif.rpart")
   run = runTaskMlr(task, lrn)
-
+  
   expect_is(run, "OMLMlrRun")
   expect_is(run$predictions, "data.frame")
   expect_true(run$task.id == 1L)
-
+  expect_is(run$mlr.benchmark.result, "BenchmarkResult")
+  # results for splits must be the same
+  run.again = runTaskMlr(task, lrn)
+  expect_identical(run$mlr.benchmark.result$results[[1]][[1]]$pred$data,
+    run.again$mlr.benchmark.result$results[[1]][[1]]$pred$data)
+  
+  # check converting OML measures to Mlr measures
+  task$input$evaluation.measures = "predictive_accuracy"
+  expect_true(convertOMLMeasuresToMlr(task$input$evaluation.measures)[[1]]$id == "acc")
+  task$input$evaluation.measures = "mean_absolute_error"
+  expect_true(convertOMLMeasuresToMlr(task$input$evaluation.measures)[[1]]$id == "mae")
+  
+  # check converting datasets to mlr Tasks
+  mlr.task = convertOMLDataSetToMlr(task$input$data.set, task$task.type)
+  expect_is(mlr.task, "Task")
+  
+  # check if data splits are converted properly
+  rin = convertOMLSplitsToMlr(task$input$estimation.procedure, mlr.task)
+  expect_is(rin, "ResampleInstance")
+  ds = task$input$estimation.procedure$data.splits
+  splits = lapply(split(ds, ds$type), function(X) split(X$rowid, X$fold))
+  expect_identical(rin$train.inds, unname(splits[[1]]))
+  expect_identical(rin$test.inds, unname(splits[[2]]))
+  
   expect_error(runTaskMlr(task, makeLearner("regr.rpart")), "regr")
 
   # FIXME: disabled for now. bad test also.
