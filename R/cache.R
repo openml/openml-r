@@ -45,7 +45,8 @@ getCacheURI = function(subdir, id, elements) {
   if (!isDirectory(path) && !dir.create(path, recursive = TRUE))
     stopf("Unable to create directory '%s'", path)
   path = file.path(path, elements)
-  size = file.size(path)
+  # FIXME: use file.size, which is a bit faster, but depends on R-3.2.0
+  size = file.info(path)$size
   found = !is.na(size) & size > 0L
   setNames(Map(list, path = path, found = found), elements)
 }
@@ -72,7 +73,8 @@ findCachedFlow = function(id, elements = list()) {
 # @title Check if stuff is cached.
 isCached = function(subdir, id) {
   path = file.path(getOMLConfig()$cachedir, subdir, id)
-  size = file.size(path)
+  # FIXME: use file.size, which is a bit faster, but depends on R-3.2.0
+  size = file.info(path)$size
   return(isDirectory(path) && !is.na(size) && size > 0L)
 }
 
