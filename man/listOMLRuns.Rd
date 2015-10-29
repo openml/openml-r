@@ -5,7 +5,7 @@
 \title{List OpenML runs.}
 \usage{
 listOMLRuns(task.id = NULL, setup.id = NULL, flow.id = NULL,
-  verbosity = NULL)
+  run.id = NULL, uploader.id = NULL, verbosity = NULL)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
@@ -16,6 +16,12 @@ ID of the parameter setup.}
 
 \item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
+
+\item{run.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of the runs.}
+
+\item{uploader.id}{[\code{integer(1)}]\cr
+ID of the uploader.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

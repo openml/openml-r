@@ -22,6 +22,19 @@ xmlVal = function(doc, path, optional, fun) {
   }
 }
 
+xmlValueNA = function(x, ...) {
+  val = xmlValue(x, ...)
+  setNA = ifelse(val == "", NA, val)
+  return(setNA)
+}
+
+getChildrenStringsNA = function(x, ...) {
+  val = getChildrenStrings(x, ...)
+  #if (attr.rm) attributes(val) = NULL
+  setNA = ifelse(val == "", NA, val)
+  return(setNA)
+}
+
 xmlOValS = function(doc, path) {
   xmlVal(doc, path, TRUE, as.character)
 }
@@ -113,7 +126,7 @@ xmlValsMultNsN = function(doc, path) {
   xmlValsMultNs(doc, path, as.numeric, numeric(1L))
 }
 
-parseXMLResponse = function(file, msg, type, as.text = FALSE) {
+parseXMLResponse = function(file, msg, type, as.text = FALSE, return.doc = TRUE) {
   doc = try(xmlParse(file, asText = as.text))
   fp = ifelse(as.text, "<TEXT>", file)
   if (is.error(doc))
@@ -135,6 +148,5 @@ parseXMLResponse = function(file, msg, type, as.text = FALSE) {
   if (rootname %nin% type)
     stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, fp)
 
-  return(doc)
+  if (return.doc) return(doc) else return(r)
 }
-

@@ -17,3 +17,13 @@ configureMlr(on.learner.warning = "quiet", show.learner.output = FALSE)
 tasks = listOMLTasks()
 tasks = tasks[with(tasks, NumberOfInstances < 1000 & NumberOfFeatures < 1000 &
   (NumberOfSymbolicFeatures==0 | is.na(NumberOfSymbolicFeatures))), ]
+
+# try different runs of different task types
+task.ids = split(tasks$task_id, tasks$task_type)
+task.ids = lapply(task.ids, function(X) tail(X, 3))
+
+task.clean = lapply(unlist(task.ids), function(X) {
+  r = try(listOMLRuns(task.id = X), silent = TRUE)
+  if (!is.error(r)) return(r) else return(NULL)
+} )
+task.clean = sapply(filterNull(task.clean), function(X) tail(X$run.id, 3))

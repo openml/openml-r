@@ -47,6 +47,9 @@ doAPICall = function(api.call, id = NULL,
   else
     url = sprintf("%s/%s%s?%s", conf$server, api.call, id, url.args)
   
+  if (nchar(url) > 4068)
+    stopf("'%s' has %s characters, the maximum allowed url length is 4068.", url, nchar(url))
+    
   from.url = ifelse(method == "GET", "Downloading from", 
     ifelse(method == "POST", "Uploading to", "Deleting from"))
   showInfo(verbosity, "%s '%s' to '%s'", from.url, url, ifelse(is.null(file), "<mem>", file))
