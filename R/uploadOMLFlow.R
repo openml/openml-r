@@ -126,17 +126,18 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   else
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
 
-  # create sourcefile
-  sourcefile = createLearnerSourcefile(lrn)
-  external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
-  on.exit(unlink(sourcefile))
-  
-  # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
-  #external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), "-", digest(pkges, "crc32"))
-  
+  # dependencies
   pkges = c("mlr", lrn$package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = collapse(pkges, sep = ", ")
+  
+  # create sourcefile
+  sourcefile = createLearnerSourcefile(lrn)
+  #external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
+  on.exit(unlink(sourcefile))
+  
+  # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
+  external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), "-", digest(pkges, "crc32"))
 
   flow = makeOMLFlow(
     name = name,
@@ -185,5 +186,13 @@ makeFlowParameterList = function(mlr.lrn) {
       default.value = default.value)
     par.list[[i]] = flow.par
   }
+  # FIXME: append seed parameters to par.list
+  seed.pars = setNames(c(1, RNGkind()), c("seed", "kind", "normal.kind"))
+  par.list = append(par.list, lapply(seq_along(seed.pars), function(x) {
+    makeOMLFlowParameter(
+      name = names(seed.pars[x]),
+      data.type = ifelse(is.numeric(seed.pars[x]), "integer", "discrete"),
+      default.value = seed.pars[x]
+    )}))
   return(par.list)
 }

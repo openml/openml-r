@@ -24,28 +24,47 @@
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.benchmark}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
-runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, ...) {
-
-  assertClass(task, "OMLTask")
+runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, seed = 1, ...) {
+  
   assertClass(learner, "Learner")
-
-  run = makeOMLRun(task.id = task$task.id)
-  z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
-
+  assertClass(task, "OMLTask")
+  assertChoice(task$task.type, c("Supervised Classification", "Supervised Regression"))
+  
+  # set default evaluation measure for classification and regression
+  if (task$input$evaluation.measures == "") {
+    if (task$task.type == "Supervised Classification") 
+      task$input$evaluation.measures = "predictive_accuracy" else 
+        task$input$evaluation.measures =  "root_mean_squared_error"
+  }
+  
   # get mlr show.info from verbosity level
   if (is.null(verbosity))
     verbosity = getOMLConfig()$verbosity
   show.info = (verbosity > 0L)
 
-  res = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures,
-    #extract = resample.extract, 
-    show.info = show.info)
+  # Create mlr task with estimation procedure and evaluation measure
+  z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
+  
+  # Create seed info and set this seed
+  seed.pars = setNames(c(seed, RNGkind()), c("seed", "kind", "normal.kind"))
+  do.call("set.seed", as.list(seed.pars))
+  
+  # Create OMLRun
+  run = makeOMLRun(task.id = task$task.id)
+  res = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
+  # FIXME: allow list of results?
   run$predictions = reformatPredictions(res$results[[1]][[1]]$pred$data, task)
   run$mlr.benchmark.result = res
-  run = addClasses(run, "OMLMlrRun")
-
-  run$parameter.setting = makeOMLRunParList(learner)
-
+  # Add parameter settings and seed
+  parameter.setting = makeOMLRunParList(learner)
+  seed.setting = lapply(seq_along(seed.pars), function(x) {  
+    makeOMLRunParameter(
+      name = names(seed.pars[x]),
+      value = as.character(seed.pars[x]),
+      component = NA_character_)
+  }
+  )
+  run$parameter.setting = append(parameter.setting, seed.setting)
   # check = checkOMLFlow(learner, verbosity = verbosity)
 
   # if(check$exists) {
@@ -57,6 +76,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, ...) 
   #     stopf("Flow does not exist, use 'auto.upload = TRUE' to upload it.")
   #   }
   # }
+  run = addClasses(run, "OMLMlrRun")
   return(run)
 }
 
