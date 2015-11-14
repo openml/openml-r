@@ -22,7 +22,9 @@ deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbos
   if (is.error(response)) {
     stopf("Unknown %1$s. Please check the %1$s id", object)
   }
-  doc = parseXMLResponse(response, paste("Deleting", object), 
-    paste0(object, "_delete"), as.text = TRUE)
+  if (!is.null(content(response))) {
+    doc = parseXMLResponse(response, paste("Deleting", object), 
+     paste0(object, "_delete"), as.text = TRUE)
+  }
   showInfo(verbosity, "The %s with id %s was succesfully deleted.", object, id)
 }
