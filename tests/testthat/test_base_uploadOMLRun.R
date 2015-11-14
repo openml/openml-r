@@ -13,4 +13,14 @@ test_that("uploadOMLRun", {
   expect_true(maxrun < run.id)
   run$flow.id = NA
   expect_error(uploadOMLRun(run), "Please provide an 'flow.id'")
+  
+  # upload self-created run
+  lrn = makeLearner("classif.rpart")
+  flow = uploadOMLFlow(lrn)
+  task = getOMLTask(1L)
+  run = runTaskMlr(task, lrn)
+  run = uploadOMLRun(run, flow)
+  deleteOMLObject(run, object = "run")
+  # FIXME: flow should be deletable if no runs are associated to it
+  #deleteOMLObject(flow, object = "flow")
 })

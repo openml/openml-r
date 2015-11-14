@@ -10,7 +10,7 @@ test_that("getOMLTask", {
   
   # try different tasks of different task types
   task.ids = split(tasks$task_id, tasks$task_type)
-  task.ids = lapply(task.ids, function(X) tail(X, 3))
+  task.ids = lapply(task.ids, function(X) head(X, 2))
   
   setOMLConfig(arff.reader = "RWeka")
   

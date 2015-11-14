@@ -16,4 +16,5 @@ test_that("uploadOMLFlow", {
   lrn = makeLearner("classif.rpart")
   flow.id = uploadOMLFlow(lrn)
   expect_is(flow.id, "integer")
+  #deleteOMLObject(flow.id, object = "flow")
 })

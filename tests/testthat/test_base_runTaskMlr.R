@@ -1,14 +1,23 @@
 context("runTaskMlr")
 
 test_that("runTaskMlr", {
-  task = getOMLTask(1)
-  lrn = makeLearner("classif.rpart")
-  run = runTaskMlr(task, lrn)
+  checkRun = function(run) {
+    expect_is(run, "OMLMlrRun")
+    expect_is(run$predictions, "data.frame")
+    expect_is(run$mlr.benchmark.result, "BenchmarkResult")
+  }
   
-  expect_is(run, "OMLMlrRun")
-  expect_is(run$predictions, "data.frame")
+  lrn = makeLearner("classif.rpart")
+  task = getOMLTask(1L)
+  run = runTaskMlr(task, lrn)
   expect_true(run$task.id == 1L)
-  expect_is(run$mlr.benchmark.result, "BenchmarkResult")
+  checkRun(run)
+  
+  task = getOMLTask(9991L)
+  run = runTaskMlr(task, lrn)
+  expect_true(run$task.id == 9991L)
+  checkRun(run)
+  
   # results for splits must be the same
   run.again = runTaskMlr(task, lrn)
   expect_identical(run$mlr.benchmark.result$results[[1]][[1]]$pred$data,

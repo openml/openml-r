@@ -12,7 +12,7 @@ test_that("getOMLDataSet", {
   
   # try different datasets from different task types
   dids = split(tasks$did, tasks$task_type)
-  dids = lapply(dids, function(X) tail(X, 3))
+  dids = lapply(dids, function(X) head(X, 3))
   
   for(i in unlist(dids)) expect_is(getOMLDataSet(i), "OMLDataSet")
 })
