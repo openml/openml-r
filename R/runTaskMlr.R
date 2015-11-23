@@ -7,24 +7,15 @@
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   Learner from package mlr to run the task.
 #' @template arg_verbosity
-#' @param auto.upload [\code{logical(1)}]\cr
-#'   Checks whether an \code{\link{OMLFlow}} object containing the passed \code{learner}
-#'   was already uploaded to the server.
-#'
-#'   If it has not been found on the server and \code{auto.upload = TRUE},
-#'   a new \code{implementation.id} is assigned and the \code{\link{OMLFlow}} is
-#'   automatically uploaded. If the \code{learner} was already uploaded, the
-#'   \code{implementation.id} of the respective \code{\link{OMLFlow}} is used.
-#'
-#'   If \code{auto.upload = FALSE}, only the \code{implementation.id} of an
-#'   already uploaded \code{learner} is used and an error is returned if the
-#'   \code{learner} was not found on the server.
+#' @param seed [\code{numeric(1)}]\cr
+#'   Set a seed to reproduce this run. 
+#'   Default is \code{1}.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.benchmark}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
-runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, seed = 1, ...) {
+runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
   
   assertClass(learner, "Learner")
   assertClass(task, "OMLTask")
@@ -65,6 +56,8 @@ runTaskMlr = function(task, learner, verbosity = NULL, auto.upload = TRUE, seed 
   }
   )
   run$parameter.setting = append(parameter.setting, seed.setting)
+  run$flow = createOMLFlowForMlrLearner(learner)
+  run$flow$source.path = createLearnerSourcefile(learner)
   # check = checkOMLFlow(learner, verbosity = verbosity)
 
   # if(check$exists) {

@@ -12,7 +12,7 @@ test_that("uploadOMLRun", {
   expect_is(run.id, "integer")
   expect_true(maxrun < run.id)
   run$flow.id = NA
-  expect_error(uploadOMLRun(run), "Please provide an 'flow.id'")
+  expect_error(uploadOMLRun(run), "Please provide a 'flow.id'")
   
   # upload self-created run
   lrn = makeLearner("classif.rpart")

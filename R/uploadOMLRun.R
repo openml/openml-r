@@ -4,23 +4,25 @@
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.
-#' @template arg_flow.id
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}]. 
 #'   The run ID.
 #' @family uploading functions
 #' @family run related functions
 #' @export
-uploadOMLRun = function(run, flow.id, verbosity = NULL) {
+uploadOMLRun = function(run, verbosity = NULL) {
   assertClass(run, "OMLRun")
-
+  
   if (is.na(run$flow.id)) {
-    if (!missing(flow.id)) {
-      run$flow.id = asCount(flow.id)
-    } else stop("Please provide an 'flow.id'")
-  } else {
-    if (!missing(flow.id)) stop("This run has already an 'flow.id'.")
-  }
+    if (!is.null(run$flow)) 
+      run$flow.id = uploadOMLFlow(run$flow, sourcefile = run$flow$source.path) else 
+        stop("Please provide a 'flow.id'")
+#     if (!missing(flow.id)) {
+#       run$flow.id = asCount(flow.id)
+#     } else stop("Please provide a 'flow.id'")
+  } #else {
+#    if (!missing(flow.id)) stop("This run has already a 'flow.id'.")
+#  } 
   if (is.na(run$error.message)) {
     assertDataFrame(run$predictions)
   } else {

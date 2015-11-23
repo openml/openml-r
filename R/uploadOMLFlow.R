@@ -76,6 +76,7 @@ uploadOMLFlow.Learner = function(x,
   return(flow.id)
 }
 
+# FIXME: remove this when uploading flows without sourcefile are possible (and use setup.string instead)
 createLearnerSourcefile = function(x){
   sourcefile = file.path(tempdir(), sprintf("%s_source.R", x$id))
   xx = base64Encode(rawToChar(serialize(x, connection = NULL, ascii = TRUE)))
@@ -85,7 +86,7 @@ sourcedFlow = function(task.id) {
   library(mlr)
   task = getOMLTask(task.id)
   x = unserialize(charToRaw(base64Decode('%s')))
-  runTaskMlr(task, x, auto.upload = TRUE)
+  runTaskMlr(task, x)
 }", xx), sourcefile)
   return(sourcefile)
 }
@@ -102,21 +103,21 @@ checkOMLFlow = function(x, verbosity = NULL){
     doc = doc))
 }
 
-# createOMLFlowForMlrLearner.
-#
-# Create an OMLFlow for an mlr learner.
-# Required if you want to upload an mlr learner.
-#
-# @param lrn [\code{\link[mlr]{Learner}}]\cr
-#   The mlr learner.
-# @param name [\code{character(1)}]\cr
-#   The name of the flow object. Default is the learner's ID.
-# @param description [\code{character(1)}]\cr
-#   An optional description of the learner.
-#   Default is a short specification of the learner and the associated package.
-# @param ... [\code{any}]\cr
-#   Further optional parameters that are passed to \code{\link{makeOMLFlow}}.
-# @return [\code{\link{OMLFlow}}].
+#' @title createOMLFlowForMlrLearner.
+#'
+#' @description Creates an OMLFlow for an mlr learner.
+#'   Required if you want to upload an mlr learner.
+#'
+#' @param lrn [\code{\link[mlr]{Learner}}]\cr
+#'   The mlr learner.
+#' @param name [\code{character(1)}]\cr
+#'   The name of the flow object. Default is the learner's ID.
+#' @param description [\code{character(1)}]\cr
+#'   An optional description of the learner.
+#'   Default is a short specification of the learner and the associated package.
+#' @param ... [\code{any}]\cr
+#'   Further optional parameters that are passed to \code{\link{makeOMLFlow}}.
+#' @return [\code{\link{OMLFlow}}].
 createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ...) {
   assertClass(lrn, "Learner")
   assertString(name)
