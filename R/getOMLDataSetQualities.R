@@ -12,7 +12,6 @@
 #' @return [\code{data.frame}].
 #' @family downloading functions
 #' @export
-#'
 getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
 #   qualities = listOMLDataSetQualities()$name
 #   if(is.null(name)) name = qualities

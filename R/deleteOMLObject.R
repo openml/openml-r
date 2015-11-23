@@ -13,7 +13,6 @@
 #' @family flow related functions
 #' @family run related functions
 #' @export
-#' 
 deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbosity = NULL){
   id = asCount(id)
   assertChoice(object, choices = c("data", "task", "flow", "run"))

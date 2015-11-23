@@ -32,7 +32,7 @@
 #' @param error.message [\code{character(1)}]\cr
 #'   Whenever an error occurs during the run, this can be reported here.
 #' @param parameter.setting [\code{list}]\cr
-#'   A list of \code{\link{OMLRunParameter}s} containing information on the parameter
+#'   A list of \code{OMLRunParameter}s containing information on the parameter
 #'   settings.
 #' @param tags [\code{character}]\cr
 #'   Optional tags describing the run.

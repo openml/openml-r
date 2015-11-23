@@ -1,4 +1,6 @@
-#' @title Loads a config file from disk.
+#' @title load OpenML configuration
+#' 
+#' @description Loads the openml config file from the disk and overwrites the current OpenML config.
 #'
 #' @param path [\code{character(1)}]\cr
 #'   Full path location of the config file to be loaded.

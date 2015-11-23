@@ -39,7 +39,7 @@
 #'   Optional. The dependencies of the flow.
 #' @param bibliographical.reference [\code{list}]\cr
 #'   An optional list containing information on bibliographical references in form of
-#'   \code{\link{OMLBibRef}s}.
+#'   \code{OMLBibRef}.
 #' @param implements [\code{character(1)}]\cr
 #'   Ontological reference.
 #' @param parameters [\code{list}]\cr
@@ -49,7 +49,7 @@
 #'   A list containing \code{\link{OMLFlow}s}. Typically components of a workflow or
 #'   subfunctions of an algorithm (e.g. kernels). Components can have their own parameters.
 #' @param qualities [\code{list}]\cr
-#'   Qualities of the algorithm. Each member of the list is an \code{\link{OMLFlowQuality}}.
+#'   Qualities of the algorithm. Each member of the list is an \code{OMLFlowQuality}.
 #' @param tags [\code{character}]\cr
 #'   Tags describing the algorithm.
 #' @param source.url [\code{character(1)}]\cr
@@ -239,15 +239,14 @@ print.OMLFlowParameter = function(x, ...) {
   catfNotNA('\n%s', x$description)
 }
 
-#' @title Construct OMLBibRef.
-#'
-#' @param citation [\code{character(1)}]\cr
-#'    Free form reference for this implementation.
-#' @param url [\code{character(1)}]\cr
-#'   URL to an online version of the paper, e.g. PDF.
-#' @export
-#' @keywords internal
-#' @aliases OMLBibRef
+# @title Construct OMLBibRef.
+#
+# @param citation [\code{character(1)}]\cr
+#    Free form reference for this implementation.
+# @param url [\code{character(1)}]\cr
+#   URL to an online version of the paper, e.g. PDF.
+# @keywords internal
+# @aliases OMLBibRef
 makeOMLBibRef = function(citation, url) {
   assertString(citation)
   assertString(url)
@@ -259,26 +258,25 @@ makeOMLBibRef = function(citation, url) {
 
 # show
 # FIXME: how should missing values be represented? here, character(0) AND "" are possible.
-#' @export
 print.OMLBibRef = function(x, ...) {
   catf("  %s", x$citation)
   if (length(x$url) > 0L && nzchar(x$url))
     catf("  url :: %s\n", x$url)
 }
 
-#' @title Construct OMLFlowQuality.
-#'
-#' @param name [\code{character(1)}]\cr
-#'   Name of the quality.\cr
-#'   Suggested: LearnerType (classification, regression, cost sensitive classification, survival analysis, clustering),
-#'   HandlesNumericFeatures, HandlesNominalFeatures, HandlesMissingValues, HandlesInstanceWeights, HandlesMultiClass,
-#'   HandlesBinaryClass, HandlesSingleClass, HandlesOrderedFeatures, HandlesCostMatrices, HandlesClassWeights,
-#'   CanOutputProbabilities (classification+clustering), CanOutputStandardError (regression).
-#' @param value [\code{character(1)}]\cr
-#'   The quality's value. E.g., 'true' or 'false'.
-#' @export
-#' @family flow related functions
-#' @aliases OMLFlowQuality
+# @title Construct OMLFlowQuality.
+#
+# @param name [\code{character(1)}]\cr
+#   Name of the quality.\cr
+#   Suggested: LearnerType (classification, regression, cost sensitive classification, survival analysis, clustering),
+#   HandlesNumericFeatures, HandlesNominalFeatures, HandlesMissingValues, HandlesInstanceWeights, HandlesMultiClass,
+#   HandlesBinaryClass, HandlesSingleClass, HandlesOrderedFeatures, HandlesCostMatrices, HandlesClassWeights,
+#   CanOutputProbabilities (classification+clustering), CanOutputStandardError (regression).
+# @param value [\code{character(1)}]\cr
+#   The quality's value. E.g., 'true' or 'false'.
+# @export
+# @family flow related functions
+# @aliases OMLFlowQuality
 makeOMLFlowQuality = function(name, value) {
   assertString(name)
   assertString(value)
@@ -288,7 +286,7 @@ makeOMLFlowQuality = function(name, value) {
   )
 }
 
-#' @export
+# @export
 print.OMLFlowQuality = function(x, ...) {
   sprintf("%s: %s", x$name, x$value)
 }

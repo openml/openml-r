@@ -1,4 +1,6 @@
-#' @title Convert an  data set to mlr.
+#' @title Convert an OpenML data set to mlr task.
+#'
+#' @description Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 #'
 #' @param obj [\code{\link{OMLDataSet}}]\cr
 #'   The object that should be converted.

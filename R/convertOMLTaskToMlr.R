@@ -1,4 +1,7 @@
 #' @title Convert an OpenML task to mlr.
+#' 
+#' @description Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},
+#' \code{\link[mlr]{ResampleInstance}} and \code{\link[mlr]{Measure}}.
 #'
 #' @param obj [\code{\link{OMLTask}}]\cr
 #'   The object that should be converted.
