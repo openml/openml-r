@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/openml/r.png?label=ready&title=Ready)](https://waffle.io/openml/r)
 OpenML plugin for R
 ===================
 
