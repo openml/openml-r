@@ -70,19 +70,20 @@ findCachedFlow = function(id, elements = list()) {
   getCacheURI("flows", id, c(elements, list("flow.xml")))
 }
 
-# @title Check if stuff is cached.
-isCached = function(subdir, id) {
-  path = file.path(getOMLConfig()$cachedir, subdir, id)
-  # FIXME: use file.size, which is a bit faster, but depends on R-3.2.0
-  size = file.info(path)$size
-  return(isDirectory(path) && !is.na(size) && size > 0L)
-}
-
-# @title Clear cache directories
+#' @title Clear cache directories
+#'
+#' @description Delete all cached objects and recreate cache directories.
+#' @export
 clearOMLCache = function() {
   conf = getOMLConfig()
   cd = conf$cachedir
+  # delete cache directory and try to set permissions (if possible)
   unlink(cd, recursive = TRUE, force = TRUE)
+  # Sometimes it might fail, e.g., if files are locked
+  if (dir.exists(cd)) {
+    warningf("Cache directory '%s' could not be deleted. Check for permissions
+      and locked files.", cd)
+  }
   createDir(cd)
   createCacheSubDirs()
 }
