@@ -70,14 +70,6 @@ findCachedFlow = function(id, elements = list()) {
   getCacheURI("flows", id, c(elements, list("flow.xml")))
 }
 
-# @title Check if stuff is cached.
-isCached = function(subdir, id) {
-  path = file.path(getOMLConfig()$cachedir, subdir, id)
-  # FIXME: use file.size, which is a bit faster, but depends on R-3.2.0
-  size = file.info(path)$size
-  return(isDirectory(path) && !is.na(size) && size > 0L)
-}
-
 # @title Clear cache directories
 clearOMLCache = function() {
   conf = getOMLConfig()
