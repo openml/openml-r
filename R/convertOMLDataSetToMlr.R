@@ -29,6 +29,12 @@ convertOMLDataSetToMlr = function(obj, task.type = NULL, target = obj$desc$defau
 
   assertClass(obj, "OMLDataSet")
   assertChoice(target, obj$colnames.new)
+  assertFlag(ignore.flagged.attributes)
+  assertFlag(drop.levels)
+
+  data = obj$data
+  desc = obj$desc
+  
   # no task type? guess it by looking at target
   if (is.null(task.type)) {
     if (is.factor(data[, target]))
@@ -40,11 +46,6 @@ convertOMLDataSetToMlr = function(obj, task.type = NULL, target = obj$desc$defau
   } else {
     assertChoice(task.type, c("Supervised Classification", "Supervised Regression", "Survival Analysis"))
   }
-  assertFlag(ignore.flagged.attributes)
-  assertFlag(drop.levels)
-
-  data = obj$data
-  desc = obj$desc
 
   #  remove ignored attributes from data
   if (!is.na(desc$ignore.attribute) && ignore.flagged.attributes) {
