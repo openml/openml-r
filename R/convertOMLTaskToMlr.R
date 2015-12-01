@@ -19,8 +19,9 @@ convertOMLTaskToMlr = function(obj, ignore.flagged.attributes = TRUE, drop.level
   mlr.task = convertOMLDataSetToMlr(obj$input$data.set, obj$task.type,
     obj$input$data.set$target.features, ignore.flagged.attributes, drop.levels, verbosity)
   mlr.task$task.desc$id = paste0("OpenML-Task-", obj$task.id)
-  mlr.rin = convertOMLSplitsToMlr(obj$input$estimation.procedure, mlr.task)
-  mlr.measures = convertOMLMeasuresToMlr(obj$input$evaluation.measures, mlr.task)
+  mlr.rin = convertOMLSplitsToMlr(obj$input$estimation.procedure, mlr.task, predict = "test")
+  mlr.measures = append(convertOMLMeasuresToMlr(obj$input$evaluation.measures, mlr.task), 
+    list(usercpu_time_millis_training = timetrain, usercpu_time_millis_testing = timepredict)) 
   list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
 }
 

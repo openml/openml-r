@@ -28,12 +28,24 @@ writeOMLRunXML = function(run, file) {
     mynode("component", run$parameter.setting[[i]]$component, parent = par.setting)
   }
   aggr = run$mlr.benchmark.result$results[[1]][[1]]$aggr
+  
+  output = newXMLNode("output_data", parent = top, namespace = "oml")
+  
+  # FIXME: maybe add time info for each resample iteration from `measures.test` slot
+  eval.testtime = newXMLNode("evaluation", parent = output, namespace = "oml")
+  mynode("name", "usercpu_time_millis_testing", parent = eval.testtime)
+  mynode("flow", "openml.evaluation.usercpu_time_millis_testing(1.0)", parent = eval.testtime)
+  mynode("value", aggr["timepredict.test.mean"], parent = eval.testtime)
+  eval.traintime = newXMLNode("evaluation", parent = output, namespace = "oml")
+  mynode("name", "usercpu_time_millis_training", parent = eval.traintime)
+  mynode("flow", "openml.evaluation.usercpu_time_millis_training(1.0)", parent = eval.traintime)
+  mynode("value", aggr["timetrain.test.mean"], parent = eval.traintime)
+  
   if ("cindex.test.mean" %in% names(aggr)) {
-    output = newXMLNode("output_data", parent = top, namespace = "oml")
     eval = newXMLNode("evaluation", parent = output, namespace = "oml")
     mynode("name", "c_index", parent = eval)
     mynode("flow", "openml.evaluation.c_index(1.0)", parent = eval)
-    mynode("value", aggr, parent = eval)
+    mynode("value", aggr["cindex.test.mean"], parent = eval)
     ind = which(colnames(run$mlr.benchmark.result$results[[1]][[1]]$measures.test) == "cindex")
     mynode("stdev", sd(run$mlr.benchmark.result$results[[1]][[1]]$measures.test[, ind]), parent = eval)
   }
