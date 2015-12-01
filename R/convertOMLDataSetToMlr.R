@@ -5,11 +5,12 @@
 #' @param obj [\code{\link{OMLDataSet}}]\cr
 #'   The object that should be converted.
 #' @param task.type [\code{character(1)}]\cr
-#'   As we only pass the data set, we need define the task type manually.
+#'   As we only pass the data set, we need to define the task type manually.
 #'   Possible are : \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
 #'   \dQuote{Survival Analysis}
-#'   Default is to guess it from the target column in the data set, if that is a factor,
-#'   we choose classification, if it is numberic we choose regression.
+#'   Default is \code{NULL} which means to guess it from the target column in the
+#'   data set. If that is a factor, we choose classification. If it is numeric we
+#'   choose regression.
 #' @param target [\code{character}]\cr
 #'   The target for the classification/regression task.
 #'   Default is the \code{default.target.attribute} of the \code{\link{OMLDataSetDescription}}.
@@ -34,7 +35,7 @@ convertOMLDataSetToMlr = function(obj, task.type = NULL, target = obj$desc$defau
 
   data = obj$data
   desc = obj$desc
-  
+
   # no task type? guess it by looking at target
   if (is.null(task.type)) {
     if (is.factor(data[, target]))
