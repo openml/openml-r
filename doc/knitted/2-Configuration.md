@@ -41,10 +41,10 @@ access to your account via the API, so please handle the API key with care.
 ### Manually creating the configuration file
 Alternatively, you can manually create a file `~/.openml/config` in your home directory (you can use the R command
 `path.expand("~/.openml/config")` to get the full path to the configuration file on your operating system). The
-`config` file consists of `key = value` pairs. An exemplary minimal `config` file might look as follows
+`config` file consists of `key = value` pairs (without quotes). An exemplary minimal `config` file might look as follows:
 
 ```r
-apikey = "ADD_THE_PUBLIC_READONLY_API_KEY_HERE"
+apikey = ADD_THE_PUBLIC_READONLY_API_KEY_HERE
 ```
 
 If one manually modifies the `config` file  one needs to reload the modified `config` file to your current R session
