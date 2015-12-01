@@ -145,8 +145,9 @@ parseXMLResponse = function(file, msg, type, as.text = FALSE, return.doc = TRUE)
     )
   }
 
-  if (rootname %nin% type)
-    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, fp)
+#  FIXME: do we need this here?
+#  if (rootname %nin% type)
+#    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, fp)
 
   if (return.doc) return(doc) else return(r)
 }

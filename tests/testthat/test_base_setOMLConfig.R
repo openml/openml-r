@@ -21,4 +21,15 @@ test_that("setOMLConfig", {
   # everything else is equal
   expect_identical(conf.set[!grepl("verbosity", names(conf.set))], 
     conf.set2[!grepl("verbosity", names(conf.set2))])
+  
+  # Issue #123: XML files with error messages get saved to the cache
+  clearOMLCache()
+  key = getOMLConfig()$apikey
+  setOMLConfig(apikey = paste(rep("a", 32), collapse = ""))
+  expect_error(getOMLDataSet(1), "Authentication failed") # should fail
+  
+  setOMLConfig(apikey = key)
+  ds = getOMLDataSet(1) # should work again
+  expect_is(ds, "OMLDataSet")
+  expect_true(ds$desc$id == 1L)
 })

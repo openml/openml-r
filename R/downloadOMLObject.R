@@ -15,7 +15,7 @@
 #' @template arg_cache_only
 #' @template arg_verbosity
 downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), 
-                             overwrite = FALSE, cache.only = FALSE, verbosity = NULL) {
+  overwrite = FALSE, cache.only = FALSE, verbosity = NULL) {
   
   id = asCount(id)
   assertChoice(object, choices = c("data", "task", "flow", "run"))
@@ -40,13 +40,21 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
     content = readLines(f[[xml.ind]]$path)
   } else {
     content = doAPICall(api.call = object, id = id, file = f[[xml.ind]]$path,
-                        verbosity = verbosity, method = "GET")
+      verbosity = verbosity, method = "GET")
     # set found = TRUE if downloaded file is in cache
     if (file.exists(f[[xml.ind]]$path)) f[[xml.ind]]$found = TRUE
   }
   # look for an error in xml and stop if there is one
   xml.type = ifelse(object == "data", "data_set_description", object)
-  doc = parseXMLResponse(content, msg = paste0("Getting ", gsub("_", " ", xml.type)), type = xml.type, as.text = TRUE)
+  doc = tryCatch(parseXMLResponse(content, msg = paste0("Getting ", gsub("_", " ", xml.type)), type = xml.type, as.text = TRUE),
+    error = function(e) {
+      unlink(f[[xml.ind]]$path, recursive = TRUE, force = TRUE) 
+      stop(e)
+    })
+#   if (is.error(doc)) { 
+#     unlink(f[[xml.ind]]$path, recursive = TRUE, force = TRUE) 
+#     stop(doc)
+#   }
   
   ## now download files
   # get url of files
@@ -78,10 +86,10 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
       } else if (object == "run") {
         # get url of runs
         url = vcapply(getNodeSet(doc, "/oml:run/oml:output_data/oml:file"),
-                      function(X) {
-                        child = getChildrenStrings(X)
-                        if (child["name"] == "predictions") return(child["url"]) else ""
-                      })
+          function(X) {
+            child = getChildrenStrings(X)
+            if (child["name"] == "predictions") return(child["url"]) else ""
+            })
         url = url[url!=""]
       }
   
@@ -93,9 +101,9 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
       url = stri_trim_both(url)
       showInfo(verbosity, "Downloading from '%s' to '%s'", url, f[[file.ind]]$path)
       download.file(url, destfile = f[[file.ind]]$path, 
-                    mode = ifelse(!is.null(f[[file.ind]]$binary), ifelse(f[[file.ind]]$binary, "wb", "w"), "w"),
-                    #FIXME: do we want to get real verbosity level here >= info ?
-                    quiet = TRUE) #!as.logical(getOMLConfig()$verbosity))
+        mode = ifelse(!is.null(f[[file.ind]]$binary), ifelse(f[[file.ind]]$binary, "wb", "w"), "w"),
+        #FIXME: do we want to get real verbosity level here >= info ?
+        quiet = TRUE) #!as.logical(getOMLConfig()$verbosity))
       # set found = TRUE if downloaded file is in cache
       if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
     }
