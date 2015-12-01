@@ -11,8 +11,8 @@
 #'   Set a seed to reproduce this run. 
 #'   Default is \code{1}.
 #' @param ... [any]\cr
-#'   Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.
-#' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.benchmark}.
+#'   Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.
+#' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with additional slots: \code{mlr.benchmark.result} and \code{flow}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {

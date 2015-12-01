@@ -25,10 +25,10 @@ Set a seed to reproduce this run.
 Default is \code{1}.}
 
 \item{...}{[any]\cr
-Further arguments that are passed to \code{\link[mlr]{removeConstantFeatures}}.}
+Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.}
 }
 \value{
-[\code{OMLMlrRun}], an \code{\link{OMLRun}} with an additional slot \code{mlr.benchmark}.
+[\code{OMLMlrRun}], an \code{\link{OMLRun}} with additional slots: \code{mlr.benchmark.result} and \code{flow}.
 }
 \description{
 Run task with a specified learner from mlr and produce predictions.
