@@ -26,10 +26,13 @@ getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
   # parse data set description
   data.desc = parseOMLDataSetDescription(down$doc)
 
-  if (data.desc$status == "deactivated") {
-    stop("Data set has been deactivated.")
-  } else if (data.desc$status == "in_preparation") {
-    stop("Data set is in preparation. You can download it as soon as it's active.")
+  # warn if dataset not cached and deactivated
+  if (!cache.only) {
+    if (data.desc$status == "deactivated") {
+      stop("Data set has been deactivated.")
+    } else if (data.desc$status == "in_preparation") {
+      stop("Data set is in preparation. You can download it as soon as it's active.")
+    }
   }
 
   # now read data file
