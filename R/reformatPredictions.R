@@ -19,7 +19,6 @@
 #     The predicted probability for class "classname". One column for each class.
 #     If no probabilities are provided, the predicted class gets probability 1 and each other class
 #     gets probability 0.}
-
 reformatPredictions = function(pred, task) {
   iter = pred$iter
   n = length(iter)
@@ -63,4 +62,3 @@ reformatPredictions = function(pred, task) {
   colnames(new.pred)[1L] = "repeat"
   return(new.pred)
 }
-

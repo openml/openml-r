@@ -1,7 +1,7 @@
 #' @title Get an OpenML run.
 #'
 #' @description
-#' Given an run id, the corresponding \code{\link{OMLRun}} including all server 
+#' Given an run id, the corresponding \code{\link{OMLRun}} including all server
 #' and user computed metrics is downloaded if not already available in cache.
 #'
 #' @param run.id [\code{integer(1)}]\cr

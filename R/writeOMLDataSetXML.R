@@ -38,6 +38,6 @@ writeOMLDataSetXML = function(description, file) {
   }
 
   doc = addNodes(description, doc, top)
-  
+
   saveXML(top, file = file)
 }

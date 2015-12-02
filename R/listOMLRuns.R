@@ -28,7 +28,6 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL,
     stop("Please hand over at least one of the following: task.id, setup.id, flow.id, run.id, uploader.id")
 
   if (length(run.id) > 1) run.id = collapse(run.id)
-  #url.args = list(task_id = task.id, setup_id = setup.id, flow_id = flow.id)
   url.args = list(task = task.id, setup = setup.id, flow = flow.id, run = run.id, uploader = uploader.id)
   url.args = Filter(function(x) !is.null(x), url.args)
 
@@ -37,11 +36,11 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL,
 
   # FIXME: speedup using return.doc = FALSE (see also listOMLRunResults)
   xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE), silent = TRUE)
-  
+
   if (is.error(xml)) {
     return(NULL)
   }
-  
+
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   ret = as.data.frame(rename(rbindlist(lapply(blocks, function(node) {
     lapply(xmlChildren(node), function(x) (xmlValueNA(x)))
@@ -49,8 +48,6 @@ listOMLRuns = function(task.id = NULL, setup.id = NULL, flow.id = NULL,
   #int.vars = colnames(ret)[1:5]
   #ret[, int.vars] = lapply(int.vars, function(x) as.integer(ret[, x]))
   ret$error.message = as.character(ifelse(ret$error.message == "", NA, ret$error.message))
-  
-  ret = as.data.frame(lapply(ret, type.convert, numerals = "no.loss", as.is = TRUE))
-  
-  return(ret)
+
+  as.data.frame(lapply(ret, type.convert, numerals = "no.loss", as.is = TRUE))
 }

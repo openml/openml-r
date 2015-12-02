@@ -34,4 +34,4 @@ Imports:
 LazyData: yes
 ByteCompile: yes
 Version: 1.0
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1

@@ -24,7 +24,7 @@ uploadOMLDataSet.OMLDataSet = function(x, verbosity = NULL) {
   on.exit(unlink(output), add = TRUE)
   if (getOMLConfig()$arff.reader == "RWeka")
     RWeka::write.arff(x$data, file = output) else farff::writeARFF(x$data, path = output)
-  
+
   showInfo(verbosity, "Uploading data set to server.")
 
   response = doAPICall(api.call = "data", method = "POST", file = NULL, verbosity = verbosity,
@@ -43,16 +43,16 @@ uploadOMLDataSet.Task = function(x, verbosity = NULL) {
 }
 
 createOMLDataSetFromMlrTask = function(task){
-  desc = makeOMLDataSetDescription(id = 1L, 
-    name = task$task.desc$id, 
-    version = "1", 
-    description = task$task.desc$id, 
-    format = "ARFF", 
+  desc = makeOMLDataSetDescription(id = 1L,
+    name = task$task.desc$id,
+    version = "1",
+    description = task$task.desc$id,
+    format = "ARFF",
     upload.date = as.POSIXct(Sys.time()),
     default.target.attribute = task$task.desc$target,
     status = "active"
   )
-  
+
   oml.data = makeOMLDataSet(desc = desc,
     data = mlr::getTaskData(task),
     colnames.old = mlr::getTaskFeatureNames(task),

@@ -17,7 +17,7 @@
 #' @export
 setOMLConfig = function(server = NULL, verbosity = NULL,
   apikey = NULL, cachedir = NULL, arff.reader = NULL) {
-  
+
   if (is.null(server))
     server = getOMLConfig()$server
   else
@@ -42,8 +42,8 @@ setOMLConfig = function(server = NULL, verbosity = NULL,
     arff.reader = getOMLConfig()$arff.reader
   else
     assertChoice(arff.reader, c("RWeka", "farff"))
-  
-  conf = list(server = server, verbosity = verbosity, apikey = apikey, 
+
+  conf = list(server = server, verbosity = verbosity, apikey = apikey,
     cachedir = cachedir, arff.reader = arff.reader)
   conf2 = addClasses(as.environment(conf), "OMLConfig")
   checkConfig(conf2)
@@ -51,6 +51,6 @@ setOMLConfig = function(server = NULL, verbosity = NULL,
   conf.cur = getOMLConfig()
   checkConfig(conf.cur)
   assignConfToConf(conf2, conf.cur)
-  
+
   return(conf.cur)
- }
+}

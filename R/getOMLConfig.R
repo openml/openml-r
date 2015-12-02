@@ -1,5 +1,5 @@
 #' @title get OpenML configuration
-#' 
+#'
 #' @description Returns a list of OpenML configuration settings
 #'
 #' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.

@@ -17,7 +17,7 @@ getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
 #   if(is.null(name)) name = qualities
 #   assertSubset(name, qualities)
 
-  content = doAPICall(api.call = "data/qualities", id = did, 
+  content = doAPICall(api.call = "data/qualities", id = did,
     file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting data set qualities", "data_qualities", as.text = TRUE)
 
@@ -30,7 +30,9 @@ getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
     )
   }), fill = TRUE))
 
-  if(is.null(name)) return(ret)
-  if(any(ret$name%in%name)) return(ret[ret$name%in%name, ]) else
-    stop("Data quality in 'name' not found.")
+  if(is.null(name))
+    return(ret)
+  if(any(ret$name%in%name))
+    return(ret[ret$name%in%name, ])
+  stop("Data quality in 'name' not found.")
 }

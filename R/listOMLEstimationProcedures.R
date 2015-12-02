@@ -9,7 +9,7 @@
 #' @family listing functions
 #' @export
 listOMLEstimationProcedures = function(verbosity = NULL) {
-  content = try(doAPICall(api.call = "estimationprocedure/list", file = NULL, 
+  content = try(doAPICall(api.call = "estimationprocedure/list", file = NULL,
     verbosity = verbosity, method = "GET"))
   doc = parseXMLResponse(content, "Getting names of estimation procedures", "estimationprocedures",
     as.text = TRUE)

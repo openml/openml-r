@@ -14,17 +14,17 @@
 getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow.id = asCount(flow.id)
   assertFlag(cache.only)
-  
+
   down = downloadOMLObject(flow.id, object = "flow", cache.only = cache.only, verbosity = verbosity)
   flow = parseOMLFlow(down$doc)
-  
+
   # is there another file except the flow.xml?
   file.exist = !names(down$files)%in%"flow.xml"
   if (any(file.exist)) {
     file = down$files[[which(file.exist)]]
     if(file$binary) flow$binary.path = file$path else flow$source.path = file$path
   }
-  
+
   return(flow)
 }
 
@@ -98,8 +98,6 @@ parseOMLParameters = function(doc) {
 parseOMLBibRef = function(doc) {
   path = "/oml:flow/oml:bibliographical_reference"
 
-  ns = getNodeSet(doc, path)
-
   bib.citation = xmlValsMultNsS(doc, sprintf("%s/oml:citation", path))
   bib.url = xmlValsMultNsS(doc, sprintf("%s/oml:url", path))
 
@@ -115,8 +113,6 @@ parseOMLBibRef = function(doc) {
 
 parseOMLQualities = function(doc) {
   path = "/oml:flow/oml:quality"
-
-  ns = getNodeSet(doc, path)
 
   name = xmlValsMultNsS(doc, sprintf("%s/oml:name", path))
   value = xmlValsMultNsS(doc, sprintf("%s/oml:value", path))

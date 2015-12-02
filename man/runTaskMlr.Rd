@@ -21,7 +21,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
 \item{seed}{[\code{numeric(1)}]\cr
-Set a seed to reproduce this run. 
+Set a seed to reproduce this run.
 Default is \code{1}.}
 
 \item{...}{[any]\cr

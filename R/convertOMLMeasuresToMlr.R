@@ -18,7 +18,5 @@ convertOMLMeasuresToMlr = function(measures, task.type) {
   )
 
   assertSubset(measures, names(lookup))
-
   lookup[measures]
 }
-

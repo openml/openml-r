@@ -94,9 +94,9 @@ sourcedFlow = function(task.id) {
 checkOMLFlow = function(x, verbosity = NULL){
   if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
 
-  content = doAPICall(api.call = paste0("flow/exists/", x$name, "/", x$external.version), 
+  content = doAPICall(api.call = paste0("flow/exists/", x$name, "/", x$external.version),
                       method = "GET", file = NULL, verbosity = verbosity)
-  
+
   doc = parseXMLResponse(content, "Checking existence of flow", "flow_exists", as.text = TRUE)
 
   return(list(exists = as.logical(xmlRValS(doc, "/oml:flow_exists/oml:exists")),
@@ -131,12 +131,12 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   pkges = c("mlr", lrn$package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = collapse(pkges, sep = ", ")
-  
+
   # create sourcefile
   sourcefile = createLearnerSourcefile(lrn)
   #external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
   on.exit(unlink(sourcefile))
-  
+
   # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
   external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), "-", digest(pkges, "crc32"))
 

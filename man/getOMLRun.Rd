@@ -26,7 +26,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{\link{OMLRun}}].
 }
 \description{
-Given an run id, the corresponding \code{\link{OMLRun}} including all server 
+Given an run id, the corresponding \code{\link{OMLRun}} including all server
 and user computed metrics is downloaded if not already available in cache.
 }
 \seealso{

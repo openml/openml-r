@@ -20,5 +20,3 @@ NULL
   # FIXME: this is probably forbidden on cran?
   createCacheSubDirs(verbosity = FALSE)
 }
-
-

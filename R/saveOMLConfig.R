@@ -15,7 +15,7 @@
 #' @export
 saveOMLConfig = function(server = NULL, verbosity = NULL, apikey = NULL, cachedir = NULL,
   arff.reader = NULL, path = "~/.openml/config", overwrite = FALSE) {
-  
+
   assertString(path)
   assertFlag(overwrite)
 

@@ -13,22 +13,22 @@
 listOMLTasks = function(verbosity = NULL, status = "active") {
   status.levels = c("active", "deactivated", "in_preparation")
   assertSubset(status, status.levels)
-  
+
   content = try(doAPICall(api.call = "task/list", file = NULL, verbosity = verbosity, method = "GET"))
-  
+
   if (is.error(content)) return(data.frame())
-  
+
   d = xmlRoot(xmlParse(content))
-  
+
   # get values from each XML string
   string.list = xmlSApply(d, getChildrenStrings)
   # get indices where string.status is included in status
   string.ind = which(vcapply(string.list, function(X) X["status"])%in%status)
-  
+
   # subset with respect to 'status' (speedup)
   string.list = string.list[string.ind]
   child.list = sapply(d[string.ind], xmlChildren)
-  
+
   info = lapply(1:length(string.list), function(X) {
     strings = string.list[[X]]
     child = child.list[[X]]
@@ -42,7 +42,7 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
     # get the tag indices and paste them together as single column
     tag.ind = names(strings) == "tag"
     strings = c(strings[!tag.ind], "tags" = collapse(strings[tag.ind], sep = ", "))
-    out.vars = c("task_id", "task_type", "did", "status", "name", "tags", 
+    out.vars = c("task_id", "task_type", "did", "status", "name", "tags",
                  "estimation_procedure", "evaluation_measures", names[names(names)%in%"quality"])
     return(as.list(strings[out.vars]))
   } )
@@ -50,12 +50,12 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
   li = li[, !is.na(colnames(li))]
   int.vars = setdiff(colnames(li), c("task_type", "status", "name", "tags", "evaluation_measures"))
   li[, int.vars] = lapply(int.vars, function(x) as.integer(li[, x])) #sapply(li[,int.vars], as.integer)
-  
+
   estproc = listOMLEstimationProcedures(verbosity = FALSE)
   row.names(estproc) = estproc$est.id
   li$estimation_procedure = droplevels(estproc[as.character(li$estimation_procedure), "name"])
   li$status = as.factor(li$status)
-  
+
   #FIXME: do we want to replace _ by . in colnames?
   return(li)
 }

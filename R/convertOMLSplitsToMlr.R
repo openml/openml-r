@@ -7,8 +7,7 @@ convertOMLSplitsToMlr = function(estim.proc, mlr.task, predict = "both") {
   #FIXME: I think the server always prdoced stratified resampling for classif? we need to check this.
   # if so, we need to set that property, but only after the split sets for mlr have been overwritten.
   # otherwise in some case some mlr sanity check apparently gets triggered.
-  stratify = (mlr.task$task.desc$type == "classif")
-  # FIXME : more resampling
+  # FIXME: more resampling
   if (type == "crossvalidation") {
     if (n.repeats == 1L)
       mlr.rdesc = makeResampleDesc("CV", iters = n.folds, predict = predict)
@@ -27,9 +26,9 @@ convertOMLSplitsToMlr = function(estim.proc, mlr.task, predict = "both") {
     stopf("Unsupported estimation procedure type: %s", type)
   }
   iter = 1L
-  for (r in 1:n.repeats) {
-    for (f in 1:n.folds) {
-      d = subset(data.splits, rep ==  r & data.splits$fold == f)
+  for (r in seq_len(n.repeats)) {
+    for (f in seq_len(n.folds)) {
+      d = subset(data.splits, rep == r & data.splits$fold == f)
       mlr.rin$train.inds[[iter]] = subset(d, type == "TRAIN")$rowid
       mlr.rin$test.inds[[iter]] = subset(d, type == "TEST")$rowid
       iter = iter + 1L
@@ -37,4 +36,3 @@ convertOMLSplitsToMlr = function(estim.proc, mlr.task, predict = "both") {
   }
   return(mlr.rin)
 }
-

@@ -1,5 +1,5 @@
 #' @title load OpenML configuration
-#' 
+#'
 #' @description Loads the openml config file from the disk and overwrites the current OpenML config.
 #'
 #' @param path [\code{character(1)}]\cr

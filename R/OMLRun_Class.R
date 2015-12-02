@@ -2,7 +2,7 @@
 #'
 #' @title Construct OMLRun.
 #'
-#' @description 
+#' @description
 #' More details about the elements of a \code{OMLRun} can be found in the
 #' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
 #'
@@ -37,7 +37,7 @@
 #' @param tags [\code{character}]\cr
 #'   Optional tags describing the run.
 #' @param predictions [\code{data.frame}]\cr
-#'   The predictions of the run. 
+#'   The predictions of the run.
 #' @param input.data [\code{\link{OMLIOData}}]\cr
 #'   All data that served as input for the run. Added by server. Ignored when uploading.
 #' @param output.data [\code{\link{OMLIOData}}]\cr

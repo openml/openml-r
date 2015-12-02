@@ -18,7 +18,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[\code{invisible(numeric(1))}]. 
+[\code{invisible(numeric(1))}].
   The run ID.
 }
 \description{

@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
-#' and returned. 
+#' and returned.
 #'
 #' Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
 #' Tasks can be downloaded with \code{\link{getOMLTask}}.
@@ -18,23 +18,23 @@
 getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
   did = asInt(did, lower = 0)
   assertFlag(cache.only)
-  
+
   #showInfo(verbosity, "Getting data set '%i' from OpenML repository.", did)
   down = downloadOMLObject(did, object = "data", cache.only = cache.only, verbosity = verbosity)
   f = down$files
-  
+
   # parse data set description
   data.desc = parseOMLDataSetDescription(down$doc)
-  
+
   if (data.desc$status == "deactivated") {
     stop("Data set has been deactivated.")
   } else if (data.desc$status == "in_preparation") {
     stop("Data set is in preparation. You can download it as soon as it's active.")
   }
-  
+
   # now read data file
   data = arff.reader(f$dataset.arff$path)
-  
+
   if (!is.na(data.desc$row.id.attribute)) {
     if (is.na(data.desc$ignore.attribute))
       data.desc$ignore.attribute = data.desc$row.id.attribute
@@ -42,17 +42,17 @@ getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
       data.desc$ignore.attribute = c(data.desc$ignore.attribute, data.desc$row.id.attribute)
   }
   data = setRowNames(data, as.character(seq_row(data) - 1L))
-  
+
   def.target = data.desc$default.target.attribute
   target.ind = which(colnames(data) %in% def.target)
-  
+
   colnames.old = colnames(data)
   colnames(data) = make.names(colnames(data), unique = TRUE)
   colnames.new = colnames(data)
-  
+
   # overwrite default target attribute to make sure that it's the actual name of the column
   data.desc$default.target.attribute = colnames.new[target.ind]
-  
+
   makeOMLDataSet(
     desc = data.desc,
     data = data,
@@ -88,5 +88,5 @@ parseOMLDataSetDescription = function(doc) {
     md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum"),
     status = xmlRValS(doc, "/oml:data_set_description/oml:status")
   ))
-  data.desc = do.call(makeOMLDataSetDescription, args)
+  do.call(makeOMLDataSetDescription, args)
 }

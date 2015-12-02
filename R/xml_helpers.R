@@ -128,7 +128,6 @@ xmlValsMultNsN = function(doc, path) {
 
 parseXMLResponse = function(file, msg, type, as.text = FALSE, return.doc = TRUE) {
   doc = try(xmlParse(file, asText = as.text))
-  fp = ifelse(as.text, "<TEXT>", file)
   if (is.error(doc))
     stopf("Error in parsing XML for type %s in file: %s", type, file)
 
@@ -138,16 +137,16 @@ parseXMLResponse = function(file, msg, type, as.text = FALSE, return.doc = TRUE)
     extra = xmlOValS(doc, "/oml:error/oml:additional_information")
     code = xmlRValI(doc, "/oml:error/oml:code")
     stopf("Error (code = %i) in server / XML response for: %s\n\t\t%s.\n\t\t%s",
-      code,
-      msg,
-      xmlRValS(doc, "/oml:error/oml:message"),
-      ifelse(is.null(extra), "", extra)
+      code, msg, xmlRValS(doc, "/oml:error/oml:message"), ifelse(is.null(extra), "", extra)
     )
   }
 
-#  FIXME: do we need this here?
-#  if (rootname %nin% type)
-#    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, fp)
+  #  FIXME: do we need this here?
+  # fp = ifelse(as.text, "<TEXT>", file)
+  #  if (rootname %nin% type)
+  #    stopf("Expected to find XML type %s, not %s, in file %s", collapse(type, " or "), rootname, fp)
 
-  if (return.doc) return(doc) else return(r)
+  if (return.doc)
+    return(doc)
+  return(r)
 }

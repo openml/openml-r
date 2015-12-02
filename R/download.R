@@ -17,7 +17,7 @@
 #' @template arg_verbosity
 #' @param method [\code{character(1)}]\cr
 #'   HTTP request method. Currently one of GET, POST or DELETE.
-#' @param ... 
+#' @param ...
 #'   Another possibility to pass key-value pairs for the HTTP request query.
 #' @return [\code{character(1)}]\cr Unparsed content of the returned XML file.
 #' @export
@@ -42,15 +42,15 @@ doAPICall = function(api.call, id = NULL,
   url.args = collapseNamedList(url.args)
 
   # create url
-  if (url.args == "") 
-    url = sprintf("%s/%s%s", conf$server, api.call, id) 
+  if (url.args == "")
+    url = sprintf("%s/%s%s", conf$server, api.call, id)
   else
     url = sprintf("%s/%s%s?%s", conf$server, api.call, id, url.args)
-  
+
   if (nchar(url) > 4068)
     stopf("'%s' has %s characters, the maximum allowed url length is 4068.", url, nchar(url))
-    
-  from.url = ifelse(method == "GET", "Downloading from", 
+
+  from.url = ifelse(method == "GET", "Downloading from",
     ifelse(method == "POST", "Uploading to", "Deleting from"))
   showInfo(verbosity, "%s '%s' to '%s'", from.url, url, ifelse(is.null(file), "<mem>", file))
 

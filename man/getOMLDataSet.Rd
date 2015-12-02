@@ -27,7 +27,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
 Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
-and returned. 
+and returned.
 
 Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
 Tasks can be downloaded with \code{\link{getOMLTask}}.

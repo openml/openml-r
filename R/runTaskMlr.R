@@ -8,7 +8,7 @@
 #'   Learner from package mlr to run the task.
 #' @template arg_verbosity
 #' @param seed [\code{numeric(1)}]\cr
-#'   Set a seed to reproduce this run. 
+#'   Set a seed to reproduce this run.
 #'   Default is \code{1}.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.
@@ -16,18 +16,18 @@
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
-  
+
   assertClass(learner, "Learner")
   assertClass(task, "OMLTask")
   assertChoice(task$task.type, c("Supervised Classification", "Supervised Regression"))
-  
+
   # set default evaluation measure for classification and regression
   if (task$input$evaluation.measures == "") {
-    if (task$task.type == "Supervised Classification") 
-      task$input$evaluation.measures = "predictive_accuracy" else 
+    if (task$task.type == "Supervised Classification")
+      task$input$evaluation.measures = "predictive_accuracy" else
         task$input$evaluation.measures =  "root_mean_squared_error"
   }
-  
+
   # get mlr show.info from verbosity level
   if (is.null(verbosity))
     verbosity = getOMLConfig()$verbosity
@@ -35,11 +35,11 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
 
   # Create mlr task with estimation procedure and evaluation measure
   z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
-  
+
   # Create seed info and set this seed
   seed.pars = setNames(c(seed, RNGkind()), c("seed", "kind", "normal.kind"))
   do.call("set.seed", as.list(seed.pars))
-  
+
   # Create OMLRun
   run = makeOMLRun(task.id = task$task.id)
   res = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
@@ -48,7 +48,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
   run$mlr.benchmark.result = res
   # Add parameter settings and seed
   parameter.setting = makeOMLRunParList(learner)
-  seed.setting = lapply(seq_along(seed.pars), function(x) {  
+  seed.setting = lapply(seq_along(seed.pars), function(x) {
     makeOMLRunParameter(
       name = names(seed.pars[x]),
       value = as.character(seed.pars[x]),

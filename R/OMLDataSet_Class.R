@@ -3,14 +3,14 @@
 #' @param desc [\code{OMLDataSetDescription}]\cr
 #'   provides information on the data set.
 #' @param data [\code{data.frame}]\cr
-#'   the data set.   
+#'   the data set.
 #' @param colnames.old [\code{character}]\cr
 #'   Names of the features that were uploaded to the server.
 #' @param colnames.new [\code{character}]\cr
 #'   Names of the features that are displayed.
 #' @param target.features [\code{character}]\cr
 #'   Name of the target feature(s).
-#' 
+#'
 #' @description An \code{OMLDataSet} consists of an \code{OMLDataSetDescription}, a
 #' \code{data.frame} containing the data set, the old and new column names and, finally, the target features.
 #'
@@ -23,10 +23,10 @@
 #' working with the data in R.
 #' Most of the time, old and new column names are identical. Only if the original names are
 #' not valid, the new ones will differ.
-#' 
+#'
 #' The slot \code{target.features} contains the column name(s) from the \code{data.frame} of the \code{OMLDataSet}
 #' that refer to the target feature(s).
-#' 
+#'
 #' @name OMLDataSet
 #' @export
 #' @family dataset related functions
@@ -52,7 +52,7 @@ print.OMLDataSet = function(x, ...) {
 }
 
 #' @title Construct OMLDataSetDescription.
-#' 
+#'
 #' @description Creates a description for an OMLDataSet
 #'
 #' @param id [\code{integer(1)}]\cr
@@ -106,7 +106,7 @@ print.OMLDataSet = function(x, ...) {
 #'   MD5 checksum to check if the data set is downloaded without corruption.
 #' @param status [\code{character(1)}]\cr
 #'   The status of the data set.
-#'   
+#'
 #' @name OMLDataSetDescription
 #' @export
 #' @family dataset related functions

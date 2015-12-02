@@ -16,14 +16,11 @@
 deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbosity = NULL){
   id = asCount(id)
   assertChoice(object, choices = c("data", "task", "flow", "run"))
-  
+
   response = try(doAPICall(api.call = object, method = "DELETE", id = id))
-  if (is.error(response)) {
+  if (is.error(response))
     stopf("Unknown %1$s. Please check the %1$s id", object)
-  }
-  if (!is.null(content(response))) {
-    doc = parseXMLResponse(response, paste("Deleting", object), 
-     paste0(object, "_delete"), as.text = TRUE)
-  }
+  if (!is.null(content(response)))
+    parseXMLResponse(response, paste("Deleting", object), paste0(object, "_delete"), as.text = TRUE)
   showInfo(verbosity, "The %s with id %s was succesfully deleted.", object, id)
 }

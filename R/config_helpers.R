@@ -36,7 +36,7 @@ checkConfig = function(conf) {
   conf$verbosity = as.integer(conf$verbosity)
   assertString(conf$cachedir)
   assertString(conf$apikey)
-  if (nchar(conf$apikey) != 32 & conf$apikey != "PLEASE CHANGE ME") 
+  if (nchar(conf$apikey) != 32 & conf$apikey != "PLEASE CHANGE ME")
     stopf("The apikey must contain 32 characters, currently it has %i characters", nchar(conf$apikey))
   assertChoice(conf$arff.reader, c("RWeka", "farff"))
 }
