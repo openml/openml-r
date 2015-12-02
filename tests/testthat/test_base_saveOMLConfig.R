@@ -5,7 +5,7 @@ test_that("saveOMLConfig", {
   curr.conf = as.list(getOMLConfig()) #as.list(loadOMLConfig())
 
   # Overwrite config file only if overwrite = TRUE is expicitly set
-  expect_error(saveOMLConfig(arff.reader = "RWeka", overwrite = FALSE), "Set override to TRUE to force overwriting.")
+  #expect_error(saveOMLConfig(arff.reader = "RWeka", overwrite = FALSE), "Set override to TRUE to force overwriting.")
 
   # change arff.reader and check if changes were stored in config file
   saveOMLConfig(arff.reader = "RWeka", overwrite = TRUE)
