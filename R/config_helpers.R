@@ -13,7 +13,6 @@ assignConfToConf = function(src, dest) {
 getDefaultConfig = function() {
   x = as.environment(list(
     server = "http://api_new.openml.org/v1",
-    #openmldir = path.expand("~/.openml"),
     cachedir = file.path(tempdir(), "cache"),
     verbosity = 1L,
     arff.reader = "RWeka",

@@ -5,18 +5,17 @@
 #' defaults will be inserted into the file.
 #'
 #' @inheritParams setOMLConfig
-#' @param path [\code{character(1)}]\cr
-#'   Path to OpenML config file.
-#'   Default is \dQuote{~/.openml/config}.
 #' @param overwrite [\code{logical(1)}]\cr
 #'   Should an existing file be overwritten?
 #'   Default is \code{FALSE}.
 #' @family config
 #' @export
 saveOMLConfig = function(server = NULL, verbosity = NULL, apikey = NULL, cachedir = NULL,
-  arff.reader = NULL, path = "~/.openml/config", overwrite = FALSE) {
+  arff.reader = NULL, overwrite = FALSE) {
 
-  assertString(path)
+  # we always store the config in the same place
+  path = "~/.openml/config"
+
   assertFlag(overwrite)
 
   if (file.exists(path) && !overwrite) {
