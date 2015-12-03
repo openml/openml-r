@@ -9,6 +9,13 @@ writeOMLRunXML = function(run, file) {
   assertClass(run, "OMLRun")
   assertPathForOutput(file, overwrite = TRUE)
 
+  # FIXME: We currently support only parameter values that can be converted to character
+  par.mode = vcapply(run$parameter.setting, function(x) mode(x$value))
+  is.supported = par.mode %in% c("character", "logical", "numeric")
+  if (any(!is.supported)) 
+    stopf("parameters '%s' have mode '%s' which is currently not supported",
+      collapse(names(par.mode[!is.supported]), ", "), collapse(par.mode[!is.supported], ", "))
+  
   doc = newXMLDoc()
   top = newXMLNode("oml:run", parent = doc, namespace = c(oml = "http://openml.org/openml"))
 

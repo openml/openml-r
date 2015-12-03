@@ -99,9 +99,12 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   par.names = names(mlr.lrn$par.vals)
   par.settings = vector("list", length(par.vals))
   for (i in seq_along(par.vals)) {
+    # FIXME: if it is possible to convert parameter to character, do this. What happens with vectors?
+    val = try(as.character(par.vals[[i]]), silent = TRUE)
+    if (is.error(val)) val = par.vals[[i]] 
     par.settings[[i]] = makeOMLRunParameter(
       name = par.names[i],
-      value = as.character(par.vals[[i]]),
+      value = val, #par.vals[[i]],
       component = component)
   }
   if (!is.null(mlr.lrn$next.learner)) {

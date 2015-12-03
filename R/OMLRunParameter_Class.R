@@ -12,8 +12,9 @@
 # @family run related functions
 makeOMLRunParameter = function(name, value, component = NA_character_) {
   assertString(name)
-  assertString(value)
+#  assertString(value)
   assertString(component, na.ok = TRUE)
+  if (length(value) > 1) stopf("length of parameter '%s' is more than one", name)
 
   makeS3Obj("OMLRunParameter",
     name = name,
@@ -29,5 +30,7 @@ print.OMLRunParameter = function(x, ...)  {
     s = sprintf(' (parameter of component %s)', x$component)
   else
     s = ""
-  catf("%s %s = %s", s, x$name, x$value)
+  # FIXME: make it better
+  val = try(as.character(x$value))
+  catf("%s %s = %s", s, x$name, ifelse(is.error(val), "can't print this data type", x$value))
 }
