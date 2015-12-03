@@ -7,15 +7,17 @@ test_that("getOMLTask", {
   measures = listOMLEvaluationMeasures()$name
 
   expect_error(getOMLTask(1231109283L),  "Unknown task")
-  
+
   # try different tasks of different task types
   task.ids = split(tasks$task_id, tasks$task_type)
   task.ids = lapply(task.ids, function(X) head(X, 2))
-  
+
   setOMLConfig(arff.reader = "RWeka")
-  
+
   for (i in unlist(task.ids)) {
     task = getOMLTask(i)
+    # there is some output
+    expect_output(print(task), "OpenML Task")
     expect_is(task, "OMLTask")
     # check if there is dataset
     expect_is(task$input$data.set, "OMLDataSet")
@@ -25,21 +27,21 @@ test_that("getOMLTask", {
     expect_true(sum(is.na(as.numeric(rns))) == 0)
     # rownames should be zero-based
     expect_true(min(as.numeric(rns)) == 0)
-    expect_true(max(as.numeric(rns)) == length(rns)-1)
-    
+    expect_true(max(as.numeric(rns)) == length(rns) - 1)
+
     # check target
     tf = task$input$data.set$target.features
     expect_true(is.character(tf) && length(tf) %in% 0:1)
     if (length(tf) != 0) expect_true(!is.na(tf))
-    
+
     # check evaluation measures
     ems = task$input$evaluation.measures
-    if (ems != "") 
+    if (ems != "")
       expect_true(all(ems %in% measures | stri_replace_all_fixed(ems, " ", "_") %in% measures))
-    
+
     # check prediction
     expect_is(task$output$predictions, "list")
-    
+
     # check data splits
     ds = task$input$estimation.procedure$data.splits
     expect_is(ds, "data.frame")
@@ -47,7 +49,7 @@ test_that("getOMLTask", {
       expect_true(min(ds$rowid) == 1)
       expect_true(max(ds$rowid) == nrow(task$input$data.set$data))
     }
-    
+
     # FIXME: this test should be in a separate file called parseOMLDataSplits
     # check if we can avoid using the slower match function in parseOMLDataSplits
     url.dsplits = task$input$estimation.procedure$data.splits.url
@@ -59,7 +61,7 @@ test_that("getOMLTask", {
         ri = data$rowid
         rns = rownames(task$input$data.set$data)
         rowid = if (min(data$rowid) == 0) (data$rowid+1) else data$rowid
-        expect_equal(rowid, match(ri, rns)) 
+        expect_equal(rowid, match(ri, rns))
       }
     }
   }
