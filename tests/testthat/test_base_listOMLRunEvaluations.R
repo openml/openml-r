@@ -1,43 +1,35 @@
-# context("listOMLRunEvaluations")
+context("listOMLRunEvaluations")
 
-# test_that("listOMLRunEvaluations", {
-#   tasks = listOMLTasks()[1:300, ]
-#   error = vector("list", length(tasks$task_id))
-#   for(i in 1:length(tasks$task_id)){
-#     run = listOMLRuns(task.id = tasks$task_id[i])
-#     run = run[is.na(run$error.message),]
-#     runres = listOMLRunEvaluations(task.id = tasks$task_id[i])
+test_that("listOMLRunEvaluations", {
+  clearOMLCache()
 
-#     error[[i]] = run$run.id[!run$run.id%in%runres$run.id]
-#   }
-#   names(error) = unique(tasks$task_id)
-#   error[sapply(error, function(x) length(x) != 0)]
+  task.id = 3L
+  run = listOMLRuns(task.id = task.id)
 
+  # filter only successful runs
+  run = run[is.na(run$error.message), , drop = FALSE]
+  run.evals = listOMLRunEvaluations(task.id = task.id)
+  expect_is(run.evals, "data.frame")
+  expect_true(isSubset(run.evals$run.id, run$run.id))
 
-#   expect_equal(sort(runres$run.id), sort(run$run.id))
+  # now check stuff for runs
+  run.ids = 1:100
+  runs = listOMLRuns(run.id = run.ids)
+  run.evals = listOMLRunEvaluations(run.id = run.ids)
 
-#   run.id = run[run$flow.id%in%flow[grepl("R", flow$external.version),"flow.id"],"run.id"]
-#   rl = listOMLRunEvaluations(run.id = run.id)
+  # subset only runs without error
+  runs = runs[is.na(runs$error.message),]
+  run.id = unique(runs$run.id)
+  setup.id = unique(runs$setup.id)
+  flow.id = unique(runs$flow.id)
+  uploader.id = unique(runs$uploader)
 
-#   # subset only runs without error
-#   rl = rl[is.na(rl$error.message),]
-#   run.id = unique(rl$run.id)
-#   setup.id = unique(rl$setup.id)
-#   flow.id = unique(rl$flow.id)
-#   uploader.id = unique(rl$uploader)
-#   # get minimum length of ids
-#   min.len = min(c(length(uploader.id), length(flow.id), length(setup.id), length(run.id)))
+  expect_equal(sort(runs$run.id), sort(run.evals$run.id))
 
-#   runs = listOMLRunEvaluations(run.id = run.id[1:100])
-#   expect_equal(sort(run.id[1:100]), sort(runs$run.id))
-#   expect_equal(colnames(runs), exp.names)
-
-#   for (i in c("run.id", "setup.id", "flow.id", "uploader.id")) {
-#     id = get(i)[length(get(i))]
-#     if (i == "uploader.id") i = "uploader"
-#     rl = do.call("listOMLRunEvaluations", setNames(list(id), i))
-#     expect_true(all(rl[,i] == id))
-#     expect_true(setequal(names(rl), exp.names))
-#   }
-
-# })
+  # for (i in c("run.id", "setup.id", "flow.id", "uploader.id")) {
+  #   id = get(i)[length(get(i))]
+  #   if (i == "uploader.id") i = "uploader"
+  #   rl = do.call("listOMLRunEvaluations", setNames(list(id), i))
+  #   expect_true(all(rl[, i] == id))
+  # }
+})
