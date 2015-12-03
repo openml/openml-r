@@ -176,18 +176,17 @@ makeFlowParameterList = function(mlr.lrn) {
     # if(data.type == "discrete") data.type = "string"      ?
     # if(data.type == "numericvector") data.type = "vector" ?
     # ...
-    # FIXME: can default value be a function, if yes we should fix this
-    if (pars[[i]]$has.default & length(pars[[i]]$default) != 0)
-      default.value = as.character(pars[[i]]$default)
-    else
-      default.value = NA_character_
+    # FIXME: For now, we don't want to store default values on the server.
+#     if (pars[[i]]$has.default & length(pars[[i]]$default) != 0)
+#       default.value = as.character(pars[[i]]$default)
+#     else
+   default.value = NA_character_
     flow.par = makeOMLFlowParameter(
       name = name,
       data.type = data.type,
       default.value = default.value)
     par.list[[i]] = flow.par
   }
-  # FIXME: append seed parameters to par.list
   seed.pars = setNames(c(1, RNGkind()), c("seed", "kind", "normal.kind"))
   par.list = append(par.list, lapply(seq_along(seed.pars), function(x) {
     makeOMLFlowParameter(
