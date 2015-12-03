@@ -2,15 +2,14 @@
 % Please edit documentation in R/downloadOMLObject.R
 \name{downloadOMLObject}
 \alias{downloadOMLObject}
-\title{Download an OpenML Object}
+\title{Download an OpenML Object.}
 \usage{
 downloadOMLObject(id, object = c("data", "task", "flow", "run"),
   overwrite = FALSE, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
-The id of the OpenML Object.
-Default is none.}
+The ID of the OpenML Object.}
 
 \item{object}{[\code{character(1)}]\cr
 The data, task, flow or run that should be downloaded.
@@ -32,7 +31,11 @@ Print verbose output on console? Possible values are:\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
+\value{
+[list]
+}
 \description{
-Download all files that refer to data, task, flow or run and returns the corresponding parsed xml.
+Download all files that refer to data, task, flow or run and
+returns the corresponding parsed XML.
 }
 

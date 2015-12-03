@@ -1,16 +1,17 @@
 #' @title Convert an OpenML data set to mlr task.
 #'
-#' @description Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
+#' @description
+#' Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 #'
 #' @param obj [\code{\link{OMLDataSet}}]\cr
 #'   The object that should be converted.
 #' @param task.type [\code{character(1)}]\cr
 #'   As we only pass the data set, we need to define the task type manually.
-#'   Possible are : \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
-#'   \dQuote{Survival Analysis}
+#'   Possible are: \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
+#'   \dQuote{Survival Analysis}.
 #'   Default is \code{NULL} which means to guess it from the target column in the
 #'   data set. If that is a factor, we choose classification. If it is numeric we
-#'   choose regression.
+#'   choose regression. In all other cases an error is thrown.
 #' @param target [\code{character}]\cr
 #'   The target for the classification/regression task.
 #'   Default is the \code{default.target.attribute} of the \code{\link{OMLDataSetDescription}}.
@@ -19,14 +20,19 @@
 #'   be removed?
 #'   Default is \code{TRUE}.
 #' @param drop.levels [\code{logical(1)}]\cr
-#'   Drop empty factor levels in data?
+#'   Should empty factor levels be dropped in the data?
 #'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{\link[mlr]{Task}}].
 #' @family dataset related functions
 #' @export
-convertOMLDataSetToMlr = function(obj, task.type = NULL, target = obj$desc$default.target.attribute,
-  ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL) {
+convertOMLDataSetToMlr = function(
+  obj,
+  task.type = NULL,
+  target = obj$desc$default.target.attribute,
+  ignore.flagged.attributes = TRUE,
+  drop.levels = TRUE,
+  verbosity = NULL) {
 
   assertClass(obj, "OMLDataSet")
   assertChoice(target, obj$colnames.new)

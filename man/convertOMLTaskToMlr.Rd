@@ -9,7 +9,7 @@ convertOMLTaskToMlr(obj, ignore.flagged.attributes = TRUE,
 }
 \arguments{
 \item{obj}{[\code{\link{OMLTask}}]\cr
-The object that should be converted.}
+The OML task object that should be converted.}
 
 \item{ignore.flagged.attributes}{[\code{logical(1)}]\cr
 Should those features that are listed in the data set description slot \dQuote{ignore.attribute}
@@ -17,7 +17,7 @@ be removed?
 Default is \code{TRUE}.}
 
 \item{drop.levels}{[\code{logical(1)}]\cr
-Drop empty factor levels in data?
+Should empty factor levels be dropped in the data?
 Default is \code{TRUE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -28,10 +28,12 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-A list of:
+[list] A list with the following components:
+\describe{
   \item{mlr.task}{[\code{\link[mlr]{Task}}]}
   \item{mlr.rin}{[\code{\link[mlr]{ResampleInstance}}]}
   \item{mlr.measures}{[list of \code{\link[mlr]{Measure}s} to optimize for.}
+}
 }
 \description{
 Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},

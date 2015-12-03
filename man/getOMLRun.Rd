@@ -8,7 +8,7 @@ getOMLRun(run.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{run.id}{[\code{integer(1)}]\cr
-The run's ID.}
+The run ID.}
 
 \item{cache.only}{[\code{logical(1)}]\cr
 Only try to retrieve the object from cache.

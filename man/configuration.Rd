@@ -8,8 +8,8 @@ After loading the package, it tries to find a configuration in your home
 directory. The R command \code{path.expand("~/.openml/config")} gives you the
 full path to the configuration file on your operating system.
 
-For further information please read the configuration section in
-\url{https://github.com/openml/r/wiki}.
+For further information please read the \href{https://github.com/openml/r/blob/master/doc/knitted/2-Configuration.md}{configuration section}
+of the tutorial.
 }
 \seealso{
 Other config: \code{\link{getOMLConfig}},

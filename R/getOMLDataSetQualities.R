@@ -1,10 +1,10 @@
 #' @title List available OpenML qualities with values for given data set.
 #'
-#' @description
-#' The returned \code{data.frame} contains data set quality \dQuote{name} and value \dQuote{value}.
+#' @description The returned \code{data.frame} contains data set quality
+#' \dQuote{name} and value \dQuote{value}.
 #'
 #' @param did [\code{integer(1)}]\cr
-#'   The data set ID
+#'   The data set ID.
 #' @template arg_verbosity
 #' @param name [\code{character}]\cr
 #'   Retruns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).
@@ -30,9 +30,9 @@ getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
     )
   }), fill = TRUE))
 
-  if(is.null(name))
+  if (is.null(name))
     return(ret)
-  if(any(ret$name%in%name))
+  if (any(ret$name%in%name))
     return(ret[ret$name%in%name, ])
   stop("Data quality in 'name' not found.")
 }

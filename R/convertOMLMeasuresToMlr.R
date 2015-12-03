@@ -1,9 +1,17 @@
 # FIXME: add more metrics/measures.
+# FIXME: task.type not used at the moment
 
-# convert OML measure to mlr objects
+# @title Convert OML measure to mlr objects.
+#
+# @description Simple mapping from OML measures to
+# mlr measure functions.
+#
+# @param measures [character]
+#   Measure names.
+# @param task.type [character]
+#   Task type.
+# @return [list]
 convertOMLMeasuresToMlr = function(measures, task.type) {
-  assertCharacter(measures, any.missing = FALSE)
-
   lookup = list(
     "mean_absolute_error" = mae,
     "root_mean_squared_error" = rmse,
@@ -18,5 +26,5 @@ convertOMLMeasuresToMlr = function(measures, task.type) {
   )
 
   assertSubset(measures, names(lookup))
-  lookup[measures]
+  return(lookup[measures])
 }

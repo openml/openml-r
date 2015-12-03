@@ -1,6 +1,7 @@
-#' @title Delete an OpenML object
+#' @title Delete an OpenML object.
 #'
-#' @description This will delete one of your uploaded datasets, tasks, flows or runs.
+#' @description
+#' This will delete one of your uploaded datasets, tasks, flows or runs.
 #'
 #' @param id [\code{integer(1)}]\cr
 #'   The ID of the respective object. Note that you can only delete the objects you uploaded.
@@ -13,11 +14,12 @@
 #' @family flow related functions
 #' @family run related functions
 #' @export
-deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbosity = NULL){
+deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbosity = NULL) {
   id = asCount(id)
   assertChoice(object, choices = c("data", "task", "flow", "run"))
 
   response = try(doAPICall(api.call = object, method = "DELETE", id = id))
+
   if (is.error(response))
     stopf("Unknown %1$s. Please check the %1$s id", object)
   if (!is.null(content(response)))

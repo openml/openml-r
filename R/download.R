@@ -1,14 +1,14 @@
-#' @title Perform an API call to the OpenML server
+#' @title Perform an API call to the OpenML server.
 #'
-#' @description The function always returns the XML file content provided by the
-#' server.
+#' @description
+#' The function always returns the XML file content provided by the server.
 #'
 #' @param api.call [\code{character(1)}]\cr
-#'   API endpoints listed in \href{https://github.com/openml/OpenML/wiki/API-v1}{APIv1}
+#'   API endpoints listed in \href{https://github.com/openml/OpenML/wiki/API-v1}{APIv1}.
 #' @param id [\code{integer(1)}]\cr
 #'   Optional ID we pass to the API, like runs/list/1.
 #' @param url.args [\code{list}]\cr
-#'   Named list of key value pairs passed as a GET parameter list, e.g.,
+#'   Named list of key-value pairs passed as HTTP GET parameters, e.g.,
 #'   key1=value1&key2=value2 to the API call.
 #' @param post.args [\code{list}]\cr
 #'   Optional. A list passed to the \code{body}-arg for \code{\link[httr]{POST}} requests.
@@ -22,7 +22,6 @@
 #' @return [\code{character(1)}]\cr Unparsed content of the returned XML file.
 #' @export
 #' @keywords internal
-# FIXME: we should try to hit the cache here to avoid the repetitive if-else statements
 doAPICall = function(api.call, id = NULL,
   url.args = list(), post.args = list(), file = NULL,
   verbosity = NULL, method, ...) {
@@ -55,7 +54,6 @@ doAPICall = function(api.call, id = NULL,
   showInfo(verbosity, "%s '%s' to '%s'", from.url, url, ifelse(is.null(file), "<mem>", file))
 
   if (method == "GET") {
-    #content = GET(url = url)
     content = GET(url = url, query = list(api_key = conf$apikey))
     content = rawToChar(content$content)
   } else if (method == "POST") {

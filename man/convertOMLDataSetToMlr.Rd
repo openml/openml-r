@@ -14,11 +14,11 @@ The object that should be converted.}
 
 \item{task.type}{[\code{character(1)}]\cr
 As we only pass the data set, we need to define the task type manually.
-Possible are : \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
-\dQuote{Survival Analysis}
+Possible are: \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
+\dQuote{Survival Analysis}.
 Default is \code{NULL} which means to guess it from the target column in the
 data set. If that is a factor, we choose classification. If it is numeric we
-choose regression.}
+choose regression. In all other cases an error is thrown.}
 
 \item{target}{[\code{character}]\cr
 The target for the classification/regression task.
@@ -30,7 +30,7 @@ be removed?
 Default is \code{TRUE}.}
 
 \item{drop.levels}{[\code{logical(1)}]\cr
-Drop empty factor levels in data?
+Should empty factor levels be dropped in the data?
 Default is \code{TRUE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr

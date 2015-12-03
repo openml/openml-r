@@ -4,6 +4,7 @@
 #' The returned \code{data.frame} contains the data set id \dQuote{did},
 #' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
 #' and describing data qualities.
+#'
 #' @template arg_verbosity
 #' @template arg_status
 #' @return [\code{data.frame}].
@@ -32,7 +33,7 @@ listOMLDataSets = function(verbosity = NULL, status = "active") {
   df$status = factor(df$status, levels = status.levels)
 
   # subset status level
-  ret = droplevels(df[df$status%in%status, ])
+  ret = droplevels(df[df$status%in%status, , drop = FALSE])
   row.names(ret) = NULL
   return(ret)
 }

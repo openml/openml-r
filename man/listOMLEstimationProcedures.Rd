@@ -2,7 +2,7 @@
 % Please edit documentation in R/listOMLEstimationProcedures.R
 \name{listOMLEstimationProcedures}
 \alias{listOMLEstimationProcedures}
-\title{List available Estimation Procedures}
+\title{List available estimation procedures.}
 \usage{
 listOMLEstimationProcedures(verbosity = NULL)
 }

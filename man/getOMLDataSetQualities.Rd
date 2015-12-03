@@ -8,7 +8,7 @@ getOMLDataSetQualities(did, verbosity = NULL, name = NULL)
 }
 \arguments{
 \item{did}{[\code{integer(1)}]\cr
-The data set ID}
+The data set ID.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -25,7 +25,8 @@ Default is \code{NULL} and uses all available data qualities.}
 [\code{data.frame}].
 }
 \description{
-The returned \code{data.frame} contains data set quality \dQuote{name} and value \dQuote{value}.
+The returned \code{data.frame} contains data set quality
+\dQuote{name} and value \dQuote{value}.
 }
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSet}},

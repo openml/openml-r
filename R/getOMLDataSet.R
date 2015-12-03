@@ -1,11 +1,10 @@
 #' @title Get an OpenML data set.
 #'
-#' @description
-#' Given a data set ID, the corresponding \code{\link{OMLDataSet}} will be downloaded (if not in cache)
-#' and returned.
+#' @description Given a data set ID, the corresponding \code{\link{OMLDataSet}}
+#' will be downloaded (if not in cache) and returned.
 #'
-#' Note that data splits and other task-related information are not included in an \code{\link{OMLDataSet}}.
-#' Tasks can be downloaded with \code{\link{getOMLTask}}.
+#' Note that data splits and other task-related information are not included in
+#' an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask}}.
 #'
 #' @param did [\code{integer(1)}]\cr
 #'   Data set ID.

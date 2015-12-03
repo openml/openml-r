@@ -1,18 +1,25 @@
 #' @title Convert an OpenML task to mlr.
 #'
-#' @description Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},
+#' @description
+#' Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},
 #' \code{\link[mlr]{ResampleInstance}} and \code{\link[mlr]{Measure}}.
 #'
 #' @param obj [\code{\link{OMLTask}}]\cr
-#'   The object that should be converted.
-#' @return A list of:
+#'   The OML task object that should be converted.
+#' @return [list] A list with the following components:
+#' \describe{
 #'   \item{mlr.task}{[\code{\link[mlr]{Task}}]}
 #'   \item{mlr.rin}{[\code{\link[mlr]{ResampleInstance}}]}
 #'   \item{mlr.measures}{[list of \code{\link[mlr]{Measure}s} to optimize for.}
+#' }
 #' @inheritParams convertOMLDataSetToMlr
 #' @family task related functions
 #' @export
-convertOMLTaskToMlr = function(obj, ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL) {
+convertOMLTaskToMlr = function(
+  obj,
+  ignore.flagged.attributes = TRUE,
+  drop.levels = TRUE,
+  verbosity = NULL) {
   assertClass(obj, "OMLTask")
 
   # FIXME: here it is wrong that we take the taget from the dset, must be from task!

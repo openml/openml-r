@@ -1,4 +1,4 @@
-#' @title List available Estimation Procedures
+#' @title List available estimation procedures.
 #'
 #' @description
 #' The returned \code{data.frame} contains the \code{est.id} and the corresponding

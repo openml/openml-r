@@ -5,7 +5,7 @@
 #' and user computed metrics is downloaded if not already available in cache.
 #'
 #' @param run.id [\code{integer(1)}]\cr
-#'   The run's ID.
+#'   The run ID.
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLRun}}].
@@ -26,9 +26,9 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     ns.datasets = getNodeSet(doc, path.ds)
     datasets = lapply(seq_along(ns.datasets), function(i) {
       list(
-        did = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep='')),
-        name = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep='')),
-        url = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep=''))
+        did = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep = '')),
+        name = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep = '')),
+        url = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep = ''))
       )})
     datasets = convertListOfRowsToDataFrame(datasets, strings.as.factors = FALSE)
 
@@ -87,9 +87,9 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   ns.pars = getNodeSet(doc, "/oml:run/oml:parameter_setting")
   run.args[["parameter.setting"]] = lapply(seq_along(ns.pars), function(i) {
     args = filterNull(list(
-      name = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:name", sep='')),
-      value = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:value", sep='')),
-      component = xmlOValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:component", sep=''))
+      name = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:name", sep = '')),
+      value = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:value", sep = '')),
+      component = xmlOValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:component", sep = ''))
     ))
     do.call(makeOMLRunParameter, args)
   })
@@ -106,5 +106,5 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   }
   run.args[["predictions"]] = pred
 
-  do.call(makeOMLRun, run.args)
+  return(do.call(makeOMLRun, run.args))
 }

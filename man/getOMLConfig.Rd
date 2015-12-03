@@ -2,7 +2,7 @@
 % Please edit documentation in R/getOMLConfig.R
 \name{getOMLConfig}
 \alias{getOMLConfig}
-\title{get OpenML configuration}
+\title{Get OpenML configuration.}
 \usage{
 getOMLConfig()
 }
@@ -10,7 +10,7 @@ getOMLConfig()
 \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 }
 \description{
-Returns a list of OpenML configuration settings
+Returns a list of OpenML configuration settings.
 }
 \seealso{
 Other config: \code{\link{configuration}},

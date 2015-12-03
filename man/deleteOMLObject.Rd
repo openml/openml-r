@@ -2,7 +2,7 @@
 % Please edit documentation in R/deleteOMLObject.R
 \name{deleteOMLObject}
 \alias{deleteOMLObject}
-\title{Delete an OpenML object}
+\title{Delete an OpenML object.}
 \usage{
 deleteOMLObject(id, object = c("data", "task", "flow", "run"),
   verbosity = NULL)

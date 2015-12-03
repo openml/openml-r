@@ -1,8 +1,8 @@
 #' @title Get an OpenML task.
 #'
 #' @description
-#' Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded (if not in cache)
-#' and returned.
+#' Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded
+#' (if not in cache) and returned.
 #'
 #' @template arg_task_id
 #' @template arg_cache_only

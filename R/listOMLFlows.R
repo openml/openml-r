@@ -5,6 +5,7 @@
 #' the flow name (\dQuote{full.name} and \dQuote{name}), version information
 #' (\dQuote{version} and \dQuote{external.version}) and the uploader (\dQuote{uploader})
 #' of all registered OpenML flows.
+#'
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions

@@ -2,20 +2,20 @@
 % Please edit documentation in R/download.R
 \name{doAPICall}
 \alias{doAPICall}
-\title{Perform an API call to the OpenML server}
+\title{Perform an API call to the OpenML server.}
 \usage{
 doAPICall(api.call, id = NULL, url.args = list(), post.args = list(),
   file = NULL, verbosity = NULL, method, ...)
 }
 \arguments{
 \item{api.call}{[\code{character(1)}]\cr
-API endpoints listed in \href{https://github.com/openml/OpenML/wiki/API-v1}{APIv1}}
+API endpoints listed in \href{https://github.com/openml/OpenML/wiki/API-v1}{APIv1}.}
 
 \item{id}{[\code{integer(1)}]\cr
 Optional ID we pass to the API, like runs/list/1.}
 
 \item{url.args}{[\code{list}]\cr
-Named list of key value pairs passed as a GET parameter list, e.g.,
+Named list of key-value pairs passed as HTTP GET parameters, e.g.,
 key1=value1&key2=value2 to the API call.}
 
 \item{post.args}{[\code{list}]\cr
@@ -40,8 +40,7 @@ HTTP request method. Currently one of GET, POST or DELETE.}
 [\code{character(1)}]\cr Unparsed content of the returned XML file.
 }
 \description{
-The function always returns the XML file content provided by the
-server.
+The function always returns the XML file content provided by the server.
 }
 \keyword{internal}
 

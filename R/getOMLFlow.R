@@ -1,8 +1,8 @@
 #' @title Download an OpenML flow.
 #'
 #' @description
-#' Given an flow id, the corresponding \code{\link{OMLFlow}} is downloaded if
-#' not already available in cache.
+#' Given an flow id, the corresponding \code{\link{OMLFlow}} is
+#' downloaded if not already available in cache.
 #'
 #' @template arg_flow.id
 #' @template arg_cache_only
@@ -19,7 +19,7 @@ getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow = parseOMLFlow(down$doc)
 
   # is there another file except the flow.xml?
-  file.exist = !names(down$files)%in%"flow.xml"
+  file.exist = !names(down$files) %in%"flow.xml"
   if (any(file.exist)) {
     file = down$files[[which(file.exist)]]
     if(file$binary) flow$binary.path = file$path else flow$source.path = file$path
@@ -72,7 +72,7 @@ parseOMLFlow = function(doc) {
   }
   args[["components"]] = comp
 
-  do.call(makeOMLFlow, args)
+  return(do.call(makeOMLFlow, args))
 }
 
 parseOMLParameters = function(doc) {
@@ -101,11 +101,10 @@ parseOMLBibRef = function(doc) {
   bib.citation = xmlValsMultNsS(doc, sprintf("%s/oml:citation", path))
   bib.url = xmlValsMultNsS(doc, sprintf("%s/oml:url", path))
 
-  # FIXME: Map()
-  bib = vector("list", length(bib.citation))
-  for (i in seq_along(bib.citation)) {
-    bib[[i]] = makeOMLBibRef(bib.citation[i], bib.url[i])
-  }
+  bib = Map(function(i) {
+    makeOMLBibRef(bib.citation[i], bib.url[i])
+  }, seq_along(bib.citation))
+
   if (length(bib) > 0L)
     return(bib)
   return(NULL)
@@ -117,11 +116,10 @@ parseOMLQualities = function(doc) {
   name = xmlValsMultNsS(doc, sprintf("%s/oml:name", path))
   value = xmlValsMultNsS(doc, sprintf("%s/oml:value", path))
 
-  # FIXME: Map()
-  qualities = vector("list", length(name))
-  for (i in seq_along(qualities)) {
-    qualities[[i]] = makeOMLFlowQuality(name[i], value[i])
-  }
+  qualities = Map(function(i) {
+    makeOMLFlowQuality(name[i], value[i])
+  }, seq_along(name))
+
   if (length(qualities) > 0L)
     return(qualities)
   return(NULL)
