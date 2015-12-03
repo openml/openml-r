@@ -1,7 +1,7 @@
 #' @title Download a bunch of OpenML objects to cache.
 #'
 #' @description
-#' Given a set of OML object ids,  the function populates the cache directory by downloading the
+#' Given a set of OML object ids, the function populates the cache directory by downloading the
 #' corresponding objects. This can avoid network access in later experiments, as you can retrieve
 #' all objects from the cache on disk.
 #' This is of particular interest in highly parallel computations on

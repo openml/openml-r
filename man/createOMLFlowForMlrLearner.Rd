@@ -11,7 +11,7 @@ createOMLFlowForMlrLearner(lrn, name = lrn$id, description = NULL, ...)
 The mlr learner.}
 
 \item{name}{[\code{character(1)}]\cr
-The name of the flow object. Default is the learner's ID.}
+The name of the flow object. Default is the learner ID.}
 
 \item{description}{[\code{character(1)}]\cr
 An optional description of the learner.
@@ -25,6 +25,6 @@ Further optional parameters that are passed to \code{\link{makeOMLFlow}}.}
 }
 \description{
 Creates an OMLFlow for an mlr learner.
-  Required if you want to upload an mlr learner.
+Required if you want to upload an mlr learner.
 }
 

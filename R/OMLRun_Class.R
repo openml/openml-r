@@ -1,5 +1,3 @@
-#' OMLRun
-#'
 #' @title Construct OMLRun.
 #'
 #' @description
@@ -73,26 +71,24 @@ makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, uploader.nam
   assertClass(output.data, "OMLIOData")
 
   makeS3Obj("OMLRun",
-      run.id = run.id,
-      uploader = uploader,
-      uploader.name = uploader.name,
-      task.id = task.id,
-      task.type = task.type,
-      task.evaluation.measure = task.evaluation.measure,
-      flow.id = flow.id,
-      flow.name = flow.name,
-      setup.id = setup.id,
-      setup.string = setup.string,
-      error.message = error.message,
-      parameter.setting = parameter.setting,
-      tags = tags,
-      predictions = predictions,
-      input.data = input.data,
-      output.data = output.data
+    run.id = run.id,
+    uploader = uploader,
+    uploader.name = uploader.name,
+    task.id = task.id,
+    task.type = task.type,
+    task.evaluation.measure = task.evaluation.measure,
+    flow.id = flow.id,
+    flow.name = flow.name,
+    setup.id = setup.id,
+    setup.string = setup.string,
+    error.message = error.message,
+    parameter.setting = parameter.setting,
+    tags = tags,
+    predictions = predictions,
+    input.data = input.data,
+    output.data = output.data
   )
 }
-
-# ***** Methods *****
 
 # show
 #' @export

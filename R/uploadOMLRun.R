@@ -1,6 +1,7 @@
-#' Upload an OpenML run to the server.
+#' @title Upload an OpenML run.
 #'
-#' Share a run of an flow on a given OpenML task.
+#' @description
+#' Share a run of an flow on a given OpenML task by uploading it to the OpenML server.
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.

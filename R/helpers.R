@@ -37,3 +37,12 @@ arff.reader = function(file){
   if(reader == "RWeka") RWeka::read.arff(file) else
     farff::readARFF(file, show.info = FALSE)
 }
+
+getValidOMLDataSetStatusLevels = function() {
+  c("active", "deactivated", "in_preparation")
+}
+
+catfNotNA = function(text, obj) {
+  if (!all(is.na(obj)))
+    catf(text, collapse(obj, sep = "; "))
+}

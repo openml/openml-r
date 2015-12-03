@@ -1,8 +1,9 @@
 #' @title Saves a list of OpenML configuration settings to file.
 #'
-#' @description The new configuration is automatically assigned via
-#' \code{\link{setOMLConfig}} if all checks pass. If you don't set a certain option, package
-#' defaults will be inserted into the file.
+#' @description
+#' The new configuration is automatically assigned via
+#' \code{\link{setOMLConfig}} if all checks pass. If you don't set a certain option,
+#' package defaults will be inserted into the file.
 #'
 #' @inheritParams setOMLConfig
 #' @param overwrite [\code{logical(1)}]\cr

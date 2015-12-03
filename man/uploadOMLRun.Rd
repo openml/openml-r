@@ -2,7 +2,7 @@
 % Please edit documentation in R/uploadOMLRun.R
 \name{uploadOMLRun}
 \alias{uploadOMLRun}
-\title{Upload an OpenML run to the server.}
+\title{Upload an OpenML run.}
 \usage{
 uploadOMLRun(run, verbosity = NULL)
 }
@@ -22,11 +22,12 @@ Default is set via \code{\link{setOMLConfig}}.}
   The run ID.
 }
 \description{
-Share a run of an flow on a given OpenML task.
+Share a run of an flow on a given OpenML task by uploading it to the OpenML server.
 }
 \seealso{
 Other run related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
+  \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}
 
 Other uploading functions: \code{\link{uploadOMLDataSet}},

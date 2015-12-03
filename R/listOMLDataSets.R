@@ -14,8 +14,7 @@
 listOMLDataSets = function(verbosity = NULL, status = "active") {
   content = doAPICall(api.call = "data/list", file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
-  status.levels = c("active", "deactivated", "in_preparation")
-  assertSubset(status, status.levels)
+  assertSubset(status, getValidOMLDataSetStatusLevels())
 
   # get list of blocks for data sets
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
@@ -30,7 +29,7 @@ listOMLDataSets = function(verbosity = NULL, status = "active") {
     qualities = convertNodeSetToList(children[is.quality], fun = as.integer)
     c(info, qualities)
   }), fill = TRUE))
-  df$status = factor(df$status, levels = status.levels)
+  df$status = factor(df$status, levels = getValidOMLDataSetStatusLevels())
 
   # subset status level
   ret = droplevels(df[df$status%in%status, , drop = FALSE])

@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadOMLConfig.R
 \name{loadOMLConfig}
 \alias{loadOMLConfig}
-\title{load OpenML configuration}
+\title{Load OpenML configuration.}
 \usage{
 loadOMLConfig(path = "~/.openml/config", assign = TRUE)
 }
@@ -11,14 +11,16 @@ loadOMLConfig(path = "~/.openml/config", assign = TRUE)
 Full path location of the config file to be loaded.}
 
 \item{assign}{[\code{logical(1)}]\cr
-Use the loaded configuration as the current configuration? Default is \code{TRUE}.
-If set to \code{FALSE}, the configuration is just returned by the function.}
+Use the loaded configuration as the current configuration?
+If set to \code{FALSE}, the configuration is just returned by the function.
+Default is \code{TRUE}.}
 }
 \value{
 \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 }
 \description{
-Loads the openml config file from the disk and overwrites the current OpenML config.
+Loads the OpenML config file from the disk and overwrites the
+current OpenML config.
 }
 \seealso{
 Other config: \code{\link{configuration}},

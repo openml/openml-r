@@ -9,10 +9,10 @@ makeOMLDataSet(desc, data, colnames.old, colnames.new, target.features)
 }
 \arguments{
 \item{desc}{[\code{OMLDataSetDescription}]\cr
-provides information on the data set.}
+Data set description.}
 
 \item{data}{[\code{data.frame}]\cr
-the data set.}
+The data set.}
 
 \item{colnames.old}{[\code{character}]\cr
 Names of the features that were uploaded to the server.}
@@ -23,12 +23,16 @@ Names of the features that are displayed.}
 \item{target.features}{[\code{character}]\cr
 Name of the target feature(s).}
 }
+\value{
+[\code{OMLDataSet}]
+}
 \description{
 An \code{OMLDataSet} consists of an \code{OMLDataSetDescription}, a
-\code{data.frame} containing the data set, the old and new column names and, finally, the target features.
+\code{data.frame} containing the data set, the old and new column names and,
+finally, the target features.
 
-The \code{\link{OMLDataSetDescription}} provides information on the data set, like the ID, name,
-version, etc. To see a full list of all elements, please see the
+The \code{\link{OMLDataSetDescription}} provides information on the data set,
+like the ID, name, version, etc. To see a full list of all elements, please see the
 \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.data.upload.xsd}{XSD}.
 
 The slot \code{colnames.old} contains the original names, i.e., the column names that were
@@ -37,8 +41,8 @@ working with the data in R.
 Most of the time, old and new column names are identical. Only if the original names are
 not valid, the new ones will differ.
 
-The slot \code{target.features} contains the column name(s) from the \code{data.frame} of the \code{OMLDataSet}
-that refer to the target feature(s).
+The slot \code{target.features} contains the column name(s) from the \code{data.frame}
+of the \code{OMLDataSet} that refer to the target feature(s).
 }
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},

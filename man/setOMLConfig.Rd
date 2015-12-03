@@ -2,7 +2,7 @@
 % Please edit documentation in R/setOMLConfig.R
 \name{setOMLConfig}
 \alias{setOMLConfig}
-\title{Set and overwrite configuration settings}
+\title{Settter for configuration settings.}
 \usage{
 setOMLConfig(server = NULL, verbosity = NULL, apikey = NULL,
   cachedir = NULL, arff.reader = NULL)
@@ -29,7 +29,7 @@ Name of the package which should be used to parse arff files. Possible are
 Invisibly returns a list of configuration settings.
 }
 \description{
-Set and overwrite configuration settings
+Set and overwrite configuration settings.
 }
 \seealso{
 Other config: \code{\link{configuration}},

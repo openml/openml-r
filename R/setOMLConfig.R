@@ -1,4 +1,7 @@
-#' Set and overwrite configuration settings
+#' @title Settter for configuration settings.
+#'
+#' @description
+#' Set and overwrite configuration settings.
 #'
 #' @param server [\code{character(1)}]\cr
 #'   URL of the XML API endpoint.

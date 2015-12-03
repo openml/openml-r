@@ -22,7 +22,7 @@ Default is set via \code{\link{setOMLConfig}}.}
   The id of the data (\code{did}).
 }
 \description{
-Share a dataset.
+Share a dataset by uploading it to the OpenML server.
 }
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},

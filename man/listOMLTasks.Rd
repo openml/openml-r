@@ -2,7 +2,7 @@
 % Please edit documentation in R/listOMLTasks.R
 \name{listOMLTasks}
 \alias{listOMLTasks}
-\title{List available OpenML tasks}
+\title{List available OpenML tasks.}
 \usage{
 listOMLTasks(verbosity = NULL, status = "active")
 }

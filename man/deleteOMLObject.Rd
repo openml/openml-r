@@ -39,8 +39,9 @@ Other flow related functions: \code{\link{getOMLFlow}},
   \code{\link{makeOMLFlow}}
 
 Other run related functions: \code{\link{getOMLRun}},
-  \code{\link{listOMLRuns}}, \code{\link{makeOMLRun}},
-  \code{\link{uploadOMLRun}}
+  \code{\link{listOMLRuns}},
+  \code{\link{makeOMLRunParameter}},
+  \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
 
 Other task related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{getOMLTask}}, \code{\link{listOMLTaskTypes}},

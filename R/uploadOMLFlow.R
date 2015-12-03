@@ -1,19 +1,19 @@
-#' Upload an OpenML flow to the server.
+#' @title Upload an OpenML.
 #'
-#' Upload an OpenML flow to the server.
+#' @description
+#' Share a flow by uploading it to the OpenML server.
 #'
 #' @param x [\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
 #'   The flow that should be uploaded.
 #' @template arg_verbosity
 #' @param sourcefile [\code{character(1)}]\cr
-#'   The file path to the flow (not needed for \code{\link{Learner}})
+#'   The file path to the flow (not needed for \code{\link{Learner}}).
 #' @param binaryfile [\code{character(1)}]\cr
-#'   The file path to the flow (not needed for \code{\link{Learner}})
+#'   The file path to the flow (not needed for \code{\link{Learner}}).
 #' @return [\code{invisible(numeric(1))}].
-#'   The id of the flow (\code{flow.id}).
+#'   The ID of the flow (\code{flow.id}).
 #' @family uploading functions
 #' @export
-
 uploadOMLFlow = function(x, verbosity, sourcefile, binaryfile) {
   UseMethod("uploadOMLFlow")
 }
@@ -99,19 +99,24 @@ checkOMLFlow = function(x, verbosity = NULL){
 
   doc = parseXMLResponse(content, "Checking existence of flow", "flow_exists", as.text = TRUE)
 
-  return(list(exists = as.logical(xmlRValS(doc, "/oml:flow_exists/oml:exists")),
-    doc = doc))
+  return(
+    list(
+      exists = as.logical(xmlRValS(doc, "/oml:flow_exists/oml:exists")),
+      doc = doc
+    )
+  )
 }
 
 #' @title createOMLFlowForMlrLearner.
 #'
-#' @description Creates an OMLFlow for an mlr learner.
-#'   Required if you want to upload an mlr learner.
+#' @description
+#' Creates an OMLFlow for an mlr learner.
+#' Required if you want to upload an mlr learner.
 #'
 #' @param lrn [\code{\link[mlr]{Learner}}]\cr
 #'   The mlr learner.
 #' @param name [\code{character(1)}]\cr
-#'   The name of the flow object. Default is the learner's ID.
+#'   The name of the flow object. Default is the learner ID.
 #' @param description [\code{character(1)}]\cr
 #'   An optional description of the learner.
 #'   Default is a short specification of the learner and the associated package.

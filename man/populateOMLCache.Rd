@@ -39,7 +39,7 @@ Should files that are already in cache be overwritten?}
 [\code{invisible(NULL)}]
 }
 \description{
-Given a set of OML object ids,  the function populates the cache directory by downloading the
+Given a set of OML object ids, the function populates the cache directory by downloading the
 corresponding objects. This can avoid network access in later experiments, as you can retrieve
 all objects from the cache on disk.
 This is of particular interest in highly parallel computations on

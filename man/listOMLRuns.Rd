@@ -47,7 +47,8 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLTasks}}
 
 Other run related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLRun}}, \code{\link{makeOMLRun}},
-  \code{\link{uploadOMLRun}}
+  \code{\link{getOMLRun}},
+  \code{\link{makeOMLRunParameter}},
+  \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
 }
 

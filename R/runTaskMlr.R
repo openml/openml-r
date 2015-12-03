@@ -52,9 +52,9 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
     makeOMLRunParameter(
       name = names(seed.pars[x]),
       value = as.character(seed.pars[x]),
-      component = NA_character_)
-  }
-  )
+      component = NA_character_
+    )
+  })
   run$parameter.setting = append(parameter.setting, seed.setting)
   run$flow = createOMLFlowForMlrLearner(learner)
   run$flow$source.path = createLearnerSourcefile(learner)
@@ -101,7 +101,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   for (i in seq_along(par.vals)) {
     # FIXME: if it is possible to convert parameter to character, do this. What happens with vectors?
     val = try(as.character(par.vals[[i]]), silent = TRUE)
-    if (is.error(val)) val = par.vals[[i]] 
+    if (is.error(val)) val = par.vals[[i]]
     par.settings[[i]] = makeOMLRunParameter(
       name = par.names[i],
       value = val, #par.vals[[i]],

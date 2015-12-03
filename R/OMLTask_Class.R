@@ -1,5 +1,3 @@
-# FIXME: @method show \code{signature(object = "OMLTask")}: method used to show the contents of a OMLTask object.
-
 #' @title Construct OMLTask.
 #'
 #' @description
@@ -32,7 +30,12 @@ makeOMLTask = function(task.id, task.type, input, parameters = list(), output, t
   assertCharacter(tags, all.missing = TRUE)
 
   makeS3Obj("OMLTask",
-    task.id = task.id, task.type = task.type, input = input, parameters = parameters, output = output, tags = tags
+    task.id = task.id,
+    task.type = task.type,
+    input = input,
+    parameters = parameters,
+    output = output,
+    tags = tags
   )
 }
 

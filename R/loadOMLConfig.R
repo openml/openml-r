@@ -1,12 +1,14 @@
-#' @title load OpenML configuration
+#' @title Load OpenML configuration.
 #'
-#' @description Loads the openml config file from the disk and overwrites the current OpenML config.
+#' @description Loads the OpenML config file from the disk and overwrites the
+#' current OpenML config.
 #'
 #' @param path [\code{character(1)}]\cr
 #'   Full path location of the config file to be loaded.
 #' @param assign [\code{logical(1)}]\cr
-#'   Use the loaded configuration as the current configuration? Default is \code{TRUE}.
+#'   Use the loaded configuration as the current configuration?
 #'   If set to \code{FALSE}, the configuration is just returned by the function.
+#'   Default is \code{TRUE}.
 #' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 #' @family config
 #' @export

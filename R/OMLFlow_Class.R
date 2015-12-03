@@ -172,11 +172,6 @@ makeOMLFlow = function(
 # show
 #' @export
 print.OMLFlow = function(x, ...)  {
-  catfNotNA = function(text, obj) {
-    if (!all(is.na(obj)))
-      catf(text, collapse(obj, sep = "; "))
-  }
-
   ## General flow info
   catf('\nFlow "%s" :: (Version = %s, Flow ID = %i)', x$name, x$version, x$flow.id)
   catfNotNA('\tExternal Version         : %s', x$external.version)
@@ -228,10 +223,6 @@ makeOMLFlowParameter = function(
 # show
 #' @export
 print.OMLFlowParameter = function(x, ...) {
-  catfNotNA = function(text, obj) {
-    if (!all(is.na(obj)))
-      catf(text, collapse(obj, sep = "; "))
-  }
   catf('Parameter %s:', x$name)
   catfNotNA('  type             : %s', x$data.type)
   catfNotNA('  default          : %s', x$default.value)

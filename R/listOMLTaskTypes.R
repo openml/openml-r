@@ -1,4 +1,3 @@
-#' List available OpenML task types
 #' @title List available OpenML task types.
 #'
 #' @description

@@ -1,6 +1,7 @@
-#' Upload a dataset to the OpenML server.
+#' @title Upload a dataset to the OpenML server.
 #'
-#' Share a dataset.
+#' @description
+#' Share a dataset by uploading it to the OpenML server.
 #'
 #' @param x [\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
 #'   Contains the dataset that should be uploaded.

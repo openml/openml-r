@@ -21,9 +21,6 @@ Default is set via \code{\link{setOMLConfig}}.}
 The returned \code{data.frame} contains the type \code{id} and the character
 name of the OpenML task type.
 }
-\details{
-List available OpenML task types
-}
 \seealso{
 Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},

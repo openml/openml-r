@@ -35,7 +35,8 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLTask}}
 
 Other run related functions: \code{\link{deleteOMLObject}},
-  \code{\link{listOMLRuns}}, \code{\link{makeOMLRun}},
-  \code{\link{uploadOMLRun}}
+  \code{\link{listOMLRuns}},
+  \code{\link{makeOMLRunParameter}},
+  \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
 }
 

@@ -31,8 +31,8 @@ Default is \code{FALSE}.}
 }
 \description{
 The new configuration is automatically assigned via
-\code{\link{setOMLConfig}} if all checks pass. If you don't set a certain option, package
-defaults will be inserted into the file.
+\code{\link{setOMLConfig}} if all checks pass. If you don't set a certain option,
+package defaults will be inserted into the file.
 }
 \seealso{
 Other config: \code{\link{configuration}},
