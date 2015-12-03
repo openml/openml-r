@@ -7,8 +7,20 @@ test_that("getOMLRun", {
   run = getOMLRun(1L)
   expect_output(print(run), "OpenML Run")
   expect_output(print(run, printMetrics = TRUE), "OpenML Run")
+
   expect_is(run, "OMLRun")
   expect_true(run$run.id == 1L)
+
+  # check IO data
+  run.IOdata = run$output.data
+  expect_is(run.IOdata, "OMLIOData")
+  expect_output(print(run.IOdata), "Data Sets")
+
+  # check parameter settings (get first parameter only)
+  param.setting = run$parameter.setting[[1L]]
+  param.setting$component = "Component" # just to trigger the codeblock
+  expect_is(param.setting, "OMLRunParameter")
+  expect_output(print(param.setting), "Component")
 
   expect_error(getOMLRun(run.id = -1L))
   expect_error(getOMLRun(run.id = 1464351321L), "Run not found")
