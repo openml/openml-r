@@ -23,10 +23,11 @@ notifications:
     recipients:
         - michellang@gmail.com
         - bernd_bischl@gmx.net
+        - j.bossek@gmail.com
     on_success: change
     on_failure: always
 
 env:
   global:
   - secure: oBSw3lt+e3/iEEhYHXEAJpZWmITbC6HtqRVXIKQsVpaGfQ6zxxoIKeUOpSUGSGvG+CLBqie97a7eWDq2Z21md6wr+jBnmAoHlrUckQdw7GF8aT3aOmZzQ6cZbQniTn5nRJ8GlfYi/nkhxIDQ0bUY3KBBUak27uHvNEY4wqSdCxE=
-   
+
