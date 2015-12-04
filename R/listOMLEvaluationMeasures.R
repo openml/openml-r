@@ -9,7 +9,13 @@
 #' @family listing functions
 #' @export
 listOMLEvaluationMeasures = function(verbosity = NULL) {
-  content = doAPICall(api.call = "evaluationmeasure/list", file = NULL, verbosity = verbosity, method = "GET")
+  content = doAPICall(
+    api.call = "evaluationmeasure/list", file = NULL,
+    verbosity = verbosity, method = "GET"
+  )
   doc = parseXMLResponse(content, "Getting names of evaluation measures", "evaluation_measures", as.text = TRUE)
-  data.frame(name = xmlValsMultNsS(doc, "/oml:evaluation_measures/oml:measures/oml:measure"), stringsAsFactors = FALSE)
+  data.frame(
+    name = xmlValsMultNsS(doc, "/oml:evaluation_measures/oml:measures/oml:measure"),
+    stringsAsFactors = FALSE
+  )
 }

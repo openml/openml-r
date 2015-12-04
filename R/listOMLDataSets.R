@@ -32,7 +32,7 @@ listOMLDataSets = function(verbosity = NULL, status = "active") {
   df$status = factor(df$status, levels = getValidOMLDataSetStatusLevels())
 
   # subset status level
-  ret = droplevels(df[df$status%in%status, , drop = FALSE])
+  ret = droplevels(df[df$status %in% status, , drop = FALSE])
   row.names(ret) = NULL
   return(ret)
 }

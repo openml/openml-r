@@ -8,8 +8,14 @@
 #' @family listing functions
 #' @export
 listOMLDataSetQualities = function(verbosity = NULL) {
-  content = doAPICall(api.call = "data/qualities/list", file = NULL, verbosity = verbosity, method = "GET")
-  doc = parseXMLResponse(content, "Getting names of available data set qualities", "data_qualities_list",
-                         as.text = TRUE)
-  data.frame(name = xmlValsMultNsS(doc, "/oml:data_qualities_list/oml:quality"), stringsAsFactors = FALSE)
+  content = doAPICall(
+    api.call = "data/qualities/list", file = NULL,
+    verbosity = verbosity, method = "GET"
+  )
+  doc = parseXMLResponse(content, "Getting names of available data set qualities",
+    "data_qualities_list", as.text = TRUE)
+  data.frame(
+    name = xmlValsMultNsS(doc, "/oml:data_qualities_list/oml:quality"),
+    stringsAsFactors = FALSE
+  )
 }

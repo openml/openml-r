@@ -34,8 +34,8 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-Retrieves all run results for a task specified by \code{task.id} and returns
-it in a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid},
-the setup id \dQuote{sid} and the task.id \dQuote{tid}.
+Retrieves all run results for a task (\code{task.id}), a setup
+(\code{setup.id}), a flow (\code{flow.id}) or a run (\code{run.id}) and returns
+a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid}.
 }
 
