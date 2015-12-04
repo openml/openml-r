@@ -16,7 +16,6 @@
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
-
   assertClass(learner, "Learner")
   assertClass(task, "OMLTask")
   assertChoice(task$task.type, c("Supervised Classification", "Supervised Regression"))
@@ -24,8 +23,9 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
   # set default evaluation measure for classification and regression
   if (task$input$evaluation.measures == "") {
     if (task$task.type == "Supervised Classification")
-      task$input$evaluation.measures = "predictive_accuracy" else
-        task$input$evaluation.measures =  "root_mean_squared_error"
+      task$input$evaluation.measures = "predictive_accuracy"
+    else
+      task$input$evaluation.measures =  "root_mean_squared_error"
   }
 
   # get mlr show.info from verbosity level

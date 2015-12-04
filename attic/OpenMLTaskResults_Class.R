@@ -44,7 +44,7 @@ makeOpenMLTaskResults = function(task.id, task.name, task.type.id = NA_integer_,
 
 # show
 #' @export
-print.OpenMLTaskResults = function(x, printMetrics = FALSE, ...)  {
+print.OpenMLTaskResults = function(x, print.metrics = FALSE, ...)  {
   catNotNA = function(s, val) {
     if (!is.na(val))
       catf("%s %s", s, val)
@@ -55,7 +55,7 @@ print.OpenMLTaskResults = function(x, printMetrics = FALSE, ...)  {
   catNotNA('\tTask Type ID        : ', x$task.type.id)
   catNotNA('\tEstimation Procedure: ', x$estimation.procedure)
 
-  if (printMetrics) {
+  if (print.metrics) {
     cat('\n\tMetrics             :\n\n')
     print(x$metrics[, colnames(x$metrics) %nin% c("confusion_matrix", "os_information")])
   }
