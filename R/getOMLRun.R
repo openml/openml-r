@@ -98,8 +98,8 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   f = findCachedRun(run.args$run.id)
 
   if (!f$predictions.arff$found) {
-      message("No URL found to retrieve predictions from.")
-      pred = NULL
+    message("No URL found to retrieve predictions from.")
+    pred = NULL
   } else {
     #showInfo(verbosity, "Predictions found in cache.")
     pred = arff.reader(f$predictions.arff$path)

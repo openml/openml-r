@@ -15,7 +15,7 @@ convertOMLSplitsToMlr = function(estim.proc, mlr.task, predict = "both") {
       mlr.rdesc = makeResampleDesc("RepCV", reps = n.repeats, folds = n.folds, predict = predict)
     mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
   } else if (type == "holdout") {
-    mlr.rdesc = makeResampleDesc("Holdout", split = 1 - percentage/100, predict = predict)
+    mlr.rdesc = makeResampleDesc("Holdout", split = 1 - percentage / 100, predict = predict)
     mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
     n.folds = 1
   } else if (type == "leaveoneout") {

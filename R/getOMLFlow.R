@@ -19,7 +19,7 @@ getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow = parseOMLFlow(down$doc)
 
   # is there another file except the flow.xml?
-  file.exist = !names(down$files) %in%"flow.xml"
+  file.exist = !(names(down$files) %in% "flow.xml")
   if (any(file.exist)) {
     file = down$files[[which(file.exist)]]
     if(file$binary) flow$binary.path = file$path else flow$source.path = file$path

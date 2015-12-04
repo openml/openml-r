@@ -18,7 +18,6 @@ getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
   did = asInt(did, lower = 0)
   assertFlag(cache.only)
 
-  #showInfo(verbosity, "Getting data set '%i' from OpenML repository.", did)
   down = downloadOMLObject(did, object = "data", cache.only = cache.only, verbosity = verbosity)
   f = down$files
 

@@ -21,7 +21,7 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   id = asCount(id)
   assertChoice(object, choices = c("data", "task", "flow", "run"))
 
-  ## look if desired file(s) are already in cache
+  # look if desired file(s) are already in cache
   cap.obj = object
   substr(cap.obj, 1, 1) = toupper(substr(object, 1, 1))
   f = do.call(paste0("findCached", cap.obj), list(id))
@@ -30,11 +30,11 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
   # FIXME: This does not work if there is flow.xml but the corresponding source or binary files were removed;
   #   can be fixed if findCachedFlow outputs the file from source_url or binary_url if there is one
   if (all(vlapply(f, function(X) !X$found)) & cache.only)
-    stopf("%s '%i' files not found in cache with option 'cache.only'", cap.obj, id)
+    stopf("%s '%i' files not found in cache with option 'cache.only'.", cap.obj, id)
 
-  ## download and write xml if not found in cache (and if overwrite is true)
+  # download and write xml if not found in cache (and if overwrite is true)
   xml.ind = grep("xml", names(f))
-  file.ind = seq_along(f)[!seq_along(f)%in%xml.ind]
+  file.ind = seq_along(f)[!seq_along(f) %in% xml.ind]
   if (f[[xml.ind]]$found & !overwrite) {
     # parse info
     showInfo(verbosity, sprintf("%s '%i' file '%s' found in cache.", cap.obj, id, basename(f[[xml.ind]]$path)))
@@ -106,7 +106,8 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
       download.file(url, destfile = f[[file.ind]]$path,
         mode = ifelse(!is.null(f[[file.ind]]$binary), ifelse(f[[file.ind]]$binary, "wb", "w"), "w"),
         #FIXME: do we want to get real verbosity level here >= info ?
-        quiet = TRUE) #!as.logical(getOMLConfig()$verbosity))
+        quiet = TRUE
+      ) #!as.logical(getOMLConfig()$verbosity))
       # set found = TRUE if downloaded file is in cache
       if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
     }
