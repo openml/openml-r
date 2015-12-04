@@ -13,12 +13,15 @@
 #' @family downloading functions
 #' @export
 getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
-#   qualities = listOMLDataSetQualities()$name
-#   if(is.null(name)) name = qualities
-#   assertSubset(name, qualities)
+  qualities = listOMLDataSetQualities()$name
+  if (is.null(name))
+    name = qualities
+  assertSubset(name, qualities)
 
-  content = doAPICall(api.call = "data/qualities", id = did,
-    file = NULL, verbosity = verbosity, method = "GET")
+  content = doAPICall(
+    api.call = "data/qualities", id = did,
+    file = NULL, verbosity = verbosity, method = "GET"
+  )
   xml = parseXMLResponse(content, "Getting data set qualities", "data_qualities", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
@@ -32,7 +35,7 @@ getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
 
   if (is.null(name))
     return(ret)
-  if (any(ret$name%in%name))
-    return(ret[ret$name%in%name, ])
+  if (any(ret$name %in% name))
+    return(ret[ret$name %in% name, , drop = FALSE])
   stop("Data quality in 'name' not found.")
 }
