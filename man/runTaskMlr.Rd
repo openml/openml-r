@@ -4,7 +4,8 @@
 \alias{runTaskMlr}
 \title{Run mlr learner on OpenML task.}
 \usage{
-runTaskMlr(task, learner, verbosity = NULL, seed = 1, ...)
+runTaskMlr(task, learner, verbosity = NULL, seed = 1,
+  scimark.vector = NULL, ...)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr
@@ -23,6 +24,11 @@ Default is set via \code{\link{setOMLConfig}}.}
 \item{seed}{[\code{numeric(1)}]\cr
 Set a seed to reproduce this run.
 Default is \code{1}.}
+
+\item{scimark.vector}{[\code{numeric(6)}]\cr
+Optional vector of performance measurements computed by the scientific SciMark
+benchmark. May be computed using the \pkg{rscimark} R package.
+Default is \code{NULL}, which means no performance measurements.}
 
 \item{...}{[any]\cr
 Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.}

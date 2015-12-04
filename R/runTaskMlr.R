@@ -10,15 +10,21 @@
 #' @param seed [\code{numeric(1)}]\cr
 #'   Set a seed to reproduce this run.
 #'   Default is \code{1}.
+#' @param scimark.vector [\code{numeric(6)}]\cr
+#'   Optional vector of performance measurements computed by the scientific SciMark
+#'   benchmark. May be computed using the \pkg{rscimark} R package.
+#'   Default is \code{NULL}, which means no performance measurements.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with additional slots: \code{mlr.benchmark.result} and \code{flow}.
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
-runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
+runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
   assertClass(learner, "Learner")
   assertClass(task, "OMLTask")
   assertChoice(task$task.type, c("Supervised Classification", "Supervised Regression"))
+  if (!is.null(scimark.vector))
+    assertNumeric(scimark.vector, lower = 0, len = 6, finite = TRUE, any.missing = FALSE, all.missing = FALSE)
 
   # set default evaluation measure for classification and regression
   if (task$input$evaluation.measures == "") {
@@ -70,6 +76,11 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
   #   }
   # }
   run = addClasses(run, "OMLMlrRun")
+  # append scimark result to
+  # FIXME: this is kind of a dirty hack
+  if (!is.null(scimark.vector)) {
+    run$scimark.vector = scimark.vector
+  }
   return(run)
 }
 

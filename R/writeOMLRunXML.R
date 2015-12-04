@@ -12,10 +12,10 @@ writeOMLRunXML = function(run, file) {
   # FIXME: We currently support only parameter values that can be converted to character
   par.mode = vcapply(run$parameter.setting, function(x) mode(x$value))
   is.supported = par.mode %in% c("character", "logical", "numeric")
-  if (any(!is.supported)) 
+  if (any(!is.supported))
     stopf("parameters '%s' have mode '%s' which is currently not supported",
       collapse(names(par.mode[!is.supported]), ", "), collapse(par.mode[!is.supported], ", "))
-  
+
   doc = newXMLDoc()
   top = newXMLNode("oml:run", parent = doc, namespace = c(oml = "http://openml.org/openml"))
 
@@ -53,7 +53,14 @@ writeOMLRunXML = function(run, file) {
     mynode("name", "usercpu_time_millis", parent = eval.total)
     mynode("flow", "openml.evaluation.usercpu_time_millis(1.0)", parent = eval.total)
     mynode("value", sum(aggr[c("timetrain.test.sum", "timepredict.test.sum")]), parent = eval.total)
-
+    # add scimark information
+    if (!is.null(run$scimark.vector)) {
+      eval.scimark = newXMLNode("evaluation", parent = output, namespace = "oml")
+      mynode("name", "scimark_benchmark", parent = eval.scimark)
+      mynode("flow", "openml.userdefined.scimark_benchmark(1.0)", parent = eval.scimark)
+      mynode("value", run$scimark.vector[1L], parent = eval.scimark) # composite value
+      mynode("array_data", paste0("[ ", collapse(run$scimark.vector[-1], sep = ", "), " ]"), parent = eval.scimark)
+    }
     if ("cindex.test.mean" %in% names(aggr)) {
       eval = newXMLNode("evaluation", parent = output, namespace = "oml")
       mynode("name", "c_index", parent = eval)
