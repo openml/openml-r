@@ -15,7 +15,8 @@
 #' @family run related functions
 makeOMLRunParameter = function(name, value, component = NA_character_) {
   assertString(name)
-  assertString(value)
+  # FIXME: we currently need to allow non-character strings
+  #assertString(value)
   assertString(component, na.ok = TRUE)
   if (length(value) > 1)
     stopf("length of parameter '%s' is more than one", name)

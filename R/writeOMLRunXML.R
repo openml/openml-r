@@ -44,15 +44,15 @@ writeOMLRunXML = function(run, file) {
     eval.testtime = newXMLNode("evaluation", parent = output, namespace = "oml")
     mynode("name", "usercpu_time_millis_testing", parent = eval.testtime)
     mynode("flow", "openml.evaluation.usercpu_time_millis_testing(1.0)", parent = eval.testtime)
-    mynode("value", aggr["timepredict.test.mean"], parent = eval.testtime)
+    mynode("value", aggr["timepredict.test.sum"], parent = eval.testtime)
     eval.traintime = newXMLNode("evaluation", parent = output, namespace = "oml")
     mynode("name", "usercpu_time_millis_training", parent = eval.traintime)
     mynode("flow", "openml.evaluation.usercpu_time_millis_training(1.0)", parent = eval.traintime)
-    mynode("value", aggr["timetrain.test.mean"], parent = eval.traintime)
+    mynode("value", aggr["timetrain.test.sum"], parent = eval.traintime)
     eval.total = newXMLNode("evaluation", parent = output, namespace = "oml")
     mynode("name", "usercpu_time_millis", parent = eval.total)
     mynode("flow", "openml.evaluation.usercpu_time_millis(1.0)", parent = eval.total)
-    mynode("value", sum(aggr[c("timetrain.test.mean", "timepredict.test.mean")]), parent = eval.total)
+    mynode("value", sum(aggr[c("timetrain.test.sum", "timepredict.test.sum")]), parent = eval.total)
 
     if ("cindex.test.mean" %in% names(aggr)) {
       eval = newXMLNode("evaluation", parent = output, namespace = "oml")
