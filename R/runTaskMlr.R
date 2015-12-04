@@ -57,7 +57,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, ...) {
   })
   run$parameter.setting = append(parameter.setting, seed.setting)
   run$flow = createOMLFlowForMlrLearner(learner)
-  run$flow$source.path = createLearnerSourcefile(learner)
+  # run$flow$source.path = createLearnerSourcefile(learner)
   # check = checkOMLFlow(learner, verbosity = verbosity)
 
   # if(check$exists) {

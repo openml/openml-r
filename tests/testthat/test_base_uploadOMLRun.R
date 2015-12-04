@@ -19,7 +19,7 @@ test_that("uploadOMLRun", {
   flow = uploadOMLFlow(lrn)
   task = getOMLTask(1L)
   run = runTaskMlr(task, lrn)
-  run = uploadOMLRun(run, flow)
+  run = uploadOMLRun(run)
   deleteOMLObject(run, object = "run")
   # FIXME: flow should be deletable if no runs are associated to it
   #deleteOMLObject(flow, object = "flow")

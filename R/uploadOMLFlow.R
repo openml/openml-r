@@ -20,26 +20,17 @@ uploadOMLFlow = function(x, verbosity, sourcefile, binaryfile) {
 
 #' @export
 uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
-  if (is.null(sourcefile) && is.null(binaryfile)) {
-    stopf("Please provide source and/or binary file.")
-  }
-  if (!is.null(binaryfile)) {
-    assertFile(binaryfile)
-    x$binary.md5 = digest(file = binaryfile)
-  }
-  if (!is.null(sourcefile)) {
-    assertFile(sourcefile)
-    x$source.md5 = digest(file = sourcefile)
-  }
+#   if (is.null(sourcefile) && is.null(binaryfile)) {
+#     stopf("Please provide source and/or binary file.")
+#   }
   check = checkOMLFlow(x, verbosity = FALSE)
   doc = check$doc
-
   if (check$exists) {
     flow.id = xmlOValI(doc, "/oml:flow_exists/oml:id")
     showInfo(verbosity, "Flow already exists (Flow ID = %i).", flow.id)
     return(flow.id)
   }
-  file = tempfile()
+  file = tempfile(fileext = ".xml")
   on.exit(unlink(file))
   writeOMLFlowXML(x, file)
 
@@ -48,10 +39,26 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
 
   #url = getAPIURL("flow/")
   params = list(description = upload_file(path = file))
-  if (!is.null(sourcefile))
-    params$source = upload_file(path = sourcefile)
-  if (!is.null(binaryfile))
+  
+  # if binary.path is given (and binaryfile is empty), upload binary.path, otherwise upload binaryfile
+  if (testFile(x$binary.path) & !testFile(binaryfile)) binaryfile = x$binary.path
+  if (testFile(binaryfile)) {
+    x$binary.md5 = digest(file = binaryfile)
     params$binary = upload_file(path = binaryfile)
+  }
+  if (testFile(x$source.path) & !testFile(sourcefile)) sourcefile = x$source.path
+  if (testFile(sourcefile)) {
+    x$source.md5 = digest(file = sourcefile)
+    params$source = upload_file(path = sourcefile)
+  }
+#   sourcefile.exists = !(is.null(sourcefile) || is.na(sourcefile))
+#   if (!(is.null(x$source.path) || is.na(x$source.path)) & !sourcefile.exists)
+#     sourcefile = x$source.path
+#   if (!(is.null(sourcefile) || is.na(sourcefile))){
+#     assertFile(sourcefile)
+#     x$source.md5 = digest(file = sourcefile)
+#     params$source = upload_file(path = sourcefile)
+#   }
 
   response = doAPICall(api.call = "flow", method = "POST", file = NULL,
     verbosity = verbosity, post.args = params)
@@ -69,27 +76,27 @@ uploadOMLFlow.Learner = function(x,
   flow = createOMLFlowForMlrLearner(x)
 
   # create sourcefile
-  sourcefile = createLearnerSourcefile(x)
-  on.exit(unlink(sourcefile))
+  #sourcefile = createLearnerSourcefile(x)
+  #on.exit(unlink(sourcefile))
 
-  flow.id = uploadOMLFlow(flow, sourcefile = sourcefile, verbosity)
+  flow.id = uploadOMLFlow(flow, sourcefile = sourcefile, binaryfile = binaryfile, verbosity = verbosity)
   return(flow.id)
 }
 
 # FIXME: remove this when uploading flows without sourcefile are possible (and use setup.string instead)
-createLearnerSourcefile = function(x){
-  sourcefile = file.path(tempdir(), sprintf("%s_source.R", x$id))
-  xx = base64Encode(rawToChar(serialize(x, connection = NULL, ascii = TRUE)))
-  writeLines(sprintf("
-sourcedFlow = function(task.id) {
-  library(RCurl)
-  library(mlr)
-  task = getOMLTask(task.id)
-  x = unserialize(charToRaw(base64Decode('%s')))
-  runTaskMlr(task, x)
-}", xx), sourcefile)
-  return(sourcefile)
-}
+# createLearnerSourcefile = function(x){
+#   sourcefile = file.path(tempdir(), sprintf("%s_source.R", x$id))
+#   xx = base64Encode(rawToChar(serialize(x, connection = NULL, ascii = TRUE)))
+#   writeLines(sprintf("
+# sourcedFlow = function(task.id) {
+#   library(RCurl)
+#   library(mlr)
+#   task = getOMLTask(task.id)
+#   x = unserialize(charToRaw(base64Decode('%s')))
+#   runTaskMlr(task, x)
+# }", xx), sourcefile)
+#   return(sourcefile)
+# }
 
 checkOMLFlow = function(x, verbosity = NULL){
   if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
@@ -138,9 +145,9 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   pkges = collapse(pkges, sep = ", ")
 
   # create sourcefile
-  sourcefile = createLearnerSourcefile(lrn)
+  #sourcefile = createLearnerSourcefile(lrn)
   #external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
-  on.exit(unlink(sourcefile))
+  #on.exit(unlink(sourcefile))
 
   # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
   external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), "-", digest(pkges, "crc32"))

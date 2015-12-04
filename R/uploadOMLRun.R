@@ -16,7 +16,7 @@ uploadOMLRun = function(run, verbosity = NULL) {
 
   if (is.na(run$flow.id)) {
     if (!is.null(run$flow))
-      run$flow.id = uploadOMLFlow(run$flow, sourcefile = run$flow$source.path) else
+      run$flow.id = uploadOMLFlow(run$flow) else
         stop("Please provide a 'flow.id'")
 #     if (!missing(flow.id)) {
 #       run$flow.id = asCount(flow.id)
