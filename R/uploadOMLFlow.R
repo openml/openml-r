@@ -138,9 +138,10 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
     assertString(description)
   else
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
-
+  
   # dependencies
-  pkges = c("mlr", lrn$package)
+  lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
+  pkges = c("mlr", lrn.package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = collapse(pkges, sep = ", ")
 
