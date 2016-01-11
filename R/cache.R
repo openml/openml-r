@@ -44,7 +44,7 @@ getCacheURI = function(subdir, id, elements) {
   path = file.path(getOMLConfig()$cachedir, subdir, id)
   if (!isDirectory(path) && !dir.create(path, recursive = TRUE))
     stopf("Unable to create directory '%s'", path)
-  path = file.path(path, elements)
+  path = normalizePath(file.path(path, elements))
   # FIXME: use file.size, which is a bit faster, but depends on R-3.2.0
   size = file.info(path)$size
   found = !is.na(size) & size > 0L
