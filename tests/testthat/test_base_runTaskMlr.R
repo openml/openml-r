@@ -26,8 +26,8 @@ test_that("runTaskMlr", {
   # check converting OML measures to Mlr measures
   task$input$evaluation.measures = "predictive_accuracy"
   expect_true(convertOMLMeasuresToMlr(task$input$evaluation.measures)[[1]]$id == "acc")
-  task$input$evaluation.measures = "mean_absolute_error"
-  expect_true(convertOMLMeasuresToMlr(task$input$evaluation.measures)[[1]]$id == "mae")
+  task$input$evaluation.measures = "area_under_roc_curve"
+  expect_true(convertOMLMeasuresToMlr(task$input$evaluation.measures)[[1]]$id == "auc")
   
   # check converting datasets to mlr Tasks
   mlr.task = convertOMLDataSetToMlr(task$input$data.set, task$task.type)
@@ -43,6 +43,14 @@ test_that("runTaskMlr", {
   
   expect_error(runTaskMlr(task, makeLearner("regr.rpart")), "regr")
 
+  # check if all parameter values are strings
+  lrn = makeLearner("classif.glmboost", family = mboost::Binomial())
+  task = getOMLTask(37)
+  run = runTaskMlr(task, lrn)
+  ps.vals = lapply(run$parameter.setting, function(x) x$value)
+  for (i in seq_along(ps.vals)) 
+    expect_character(ps.vals[[i]])
+  
   # FIXME: disabled for now. bad test also.
   # a test should be with a learner that breaks for UNFORSEEABLE reasons on data
   # task$input$data.set$data[1, 3] = NA

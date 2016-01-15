@@ -105,14 +105,19 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
 makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
-
+  
+  ps = mlr.lrn$par.set$pars
   par.vals = mlr.lrn$par.vals
   par.names = names(mlr.lrn$par.vals)
   par.settings = vector("list", length(par.vals))
   for (i in seq_along(par.vals)) {
+    psi = ps[[par.names[i]]]
     # FIXME: if it is possible to convert parameter to character, do this. What happens with vectors?
-    val = try(as.character(par.vals[[i]]), silent = TRUE)
-    if (is.error(val)) val = par.vals[[i]]
+#     val = try(as.character(par.vals[[i]]), silent = TRUE)
+#     if (is.error(val) & psi$type == "discrete") {
+#       val = discreteValueToName(x = par.vals[[i]], par = psi) 
+#     } else val = par.vals[[i]]
+    val = paramValueToString(psi, par.vals[[i]])
     par.settings[[i]] = makeOMLRunParameter(
       name = par.names[i],
       value = val, #par.vals[[i]],
