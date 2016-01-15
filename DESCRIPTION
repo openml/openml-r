@@ -19,7 +19,8 @@ Suggests:
     randomForest,
     rpart,
     RWeka,
-    farff
+    farff,
+    mboost
 Imports:
     BBmisc (>= 1.9),
     checkmate (>= 1.6.3),

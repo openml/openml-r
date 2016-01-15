@@ -1,8 +1,6 @@
 context("listOMLRunEvaluations")
 
 test_that("listOMLRunEvaluations", {
-  clearOMLCache()
-
   task.id = 3L
   run = listOMLRuns(task.id = task.id)
 

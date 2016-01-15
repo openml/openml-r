@@ -1,9 +1,10 @@
 library(mlr)
+library(mboost)
 library(stringi)
 library(checkmate)
 
 # please no annoying messages, and dont use the user's cache dir
-setOMLConfig(verbosity = 1L, cachedir = tempdir(), arff.reader = "RWeka")
+setOMLConfig(verbosity = 1L, cachedir = tempdir(), arff.reader = "farff")
 
 # if on travis, use our encrypted key, which is now in an OS envir var
 if (identical(Sys.getenv("TRAVIS"), "true")) {
