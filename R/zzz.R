@@ -1,5 +1,6 @@
 #' @import BBmisc
 #' @import checkmate
+#' @import ParamHelpers
 #' @import digest
 #' @import httr
 #' @import RCurl

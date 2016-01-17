@@ -24,6 +24,7 @@ Suggests:
 Imports:
     BBmisc (>= 1.9),
     checkmate (>= 1.6.3),
+    ParamHelpers (>= 1.6),
     data.table,
     digest,
     httr,
