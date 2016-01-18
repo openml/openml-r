@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/openml/r.svg)](https://travis-ci.org/openml/r)
 [![Coverage Status](https://coveralls.io/repos/openml/r/badge.svg?branch=master&service=github)](https://coveralls.io/github/openml/r?branch=master)
 [![Issues in Ready](https://badge.waffle.io/openml/r.png?label=ready&title=Ready)](https://waffle.io/openml/r)
+[![Issues in Progress](https://badge.waffle.io/openml/r.png?label=in%20progress&title=In%20Progress)](https://waffle.io/openml/r)
 
 Allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download tasks and upload results. 
 
