@@ -56,4 +56,31 @@ test_that("runTaskMlr", {
   # task$input$data.set$data[1, 3] = NA
   # run = runTaskMlr(task, makeLearner("classif.randomForest"))
   # expect_true(is.null(run$predictions) && testString(run$error.message))
+  
+  # check for error message / failed runs
+  configureMlr(on.learner.error = "warn")
+  task = getOMLTask(261)
+  lrn = makeLearner("classif.randomForest")
+  lrn$properties = c(lrn$properties, c("missings", "factors"))
+  # should not produce an error message
+  run = runTaskMlr(task, lrn)
+  expect_true(is.na(run$error.message))
+  # introduce NAs: should produce an error message
+  task$input$data.set$data[1:2, 1] = NA
+  run = runTaskMlr(task, lrn)
+  expect_false(is.na(run$error.message))
+  
+  # local sanity check (account needs read-write permissions)
+  if (!identical(Sys.getenv("TRAVIS"), "true")) {
+  # upload the run that contains the error message
+  run.id = uploadOMLRun(run)
+  # download it again and check for error message
+  run.down = getOMLRun(run.id)
+  # FIXME: serverapi does not return error.message field although it is in the xml
+  #expect_false(is.na(run.down$error.message))
+  run.list = listOMLRuns(run.id = run.id)
+  expect_equal(as.character(run.list$error.message),
+    gsub("\n$", "", run$error.message))
+  deleteOMLObject(id = run.id, object = "run")
+  }
 })

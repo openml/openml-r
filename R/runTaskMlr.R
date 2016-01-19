@@ -47,11 +47,29 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   do.call("set.seed", as.list(seed.pars))
 
   # Create OMLRun
-  run = makeOMLRun(task.id = task$task.id)
-  res = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
+  bench = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
+  res = bench$results[[1]][[1]]
+  
+  # add error message
+  tr.err = unique(res$err.msgs$train)
+  pr.err = unique(res$err.msgs$predict)
+  if (any(!is.na(tr.err))) {
+    tr.msg = paste0("Error in training the model: \n ", collapse(tr.err, sep = "\n ")) 
+  } else {
+    tr.msg = NULL
+  }
+  if (any(!is.na(pr.err))) {
+    pr.msg = paste0("Error in making predictions: \n ", collapse(pr.err, sep = "\n ")) 
+  } else {
+    pr.msg = NULL
+  } 
+  msg = paste0(tr.msg, pr.msg)
+  
+  # create run
+  run = makeOMLRun(task.id = task$task.id, error.message = ifelse(length(msg) == 0, NA_character_, msg))
   # FIXME: allow list of results?
-  run$predictions = reformatPredictions(res$results[[1]][[1]]$pred$data, task)
-  run$mlr.benchmark.result = res
+  run$predictions = reformatPredictions(res$pred$data, task)
+  run$mlr.benchmark.result = bench
   # Add parameter settings and seed
   parameter.setting = makeOMLRunParList(learner)
   seed.setting = lapply(seq_along(seed.pars), function(x) {
