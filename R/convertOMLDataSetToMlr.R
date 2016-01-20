@@ -44,7 +44,7 @@ convertOMLDataSetToMlr = function(
 
   # no task type? guess it by looking at target
   if (is.null(task.type)) {
-    if (is.factor(data[, target]))
+    if (is.factor(data[, target]) | is.logical(data[, target]))
       task.type = "Supervised Classification"
     else if (is.numeric(data[, target]))
       task.type = "Supervised Regression"
