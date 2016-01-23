@@ -12,7 +12,7 @@ test_that("getOMLTask", {
   task.ids = split(tasks$task_id, tasks$task_type)
   task.ids = lapply(task.ids, function(X) head(X, 2))
 
-  setOMLConfig(arff.reader = "RWeka")
+  #setOMLConfig(arff.reader = "RWeka")
 
   for (i in unlist(task.ids)) {
     task = getOMLTask(i)

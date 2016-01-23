@@ -1,13 +1,11 @@
 #' @title Delete an OpenML object.
 #'
 #' @description
-#' This will delete one of your uploaded datasets, tasks, flows or runs.
-#'
-#' @param id [\code{integer(1)}]\cr
-#'   The ID of the respective object. Note that you can only delete the objects you uploaded.
-#' @param object [\code{character(1)}]\cr
-#'   A character that specifies the object you want to delete from the server. Can be either
-#'   \code{"data"}, \code{"task"}, \code{"flow"} or \code{"run"}.
+#' This will delete one of your uploaded datasets, tasks, flows or runs. 
+#' Note that you can only delete the objects you uploaded.
+#' 
+#' @template arg_id 
+#' @template arg_object
 #' @template arg_verbosity
 #' @family dataset related functions
 #' @family task related functions
@@ -25,4 +23,6 @@ deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbos
   if (!is.null(content(response)))
     parseXMLResponse(response, paste("Deleting", object), paste0(object, "_delete"), as.text = TRUE)
   showInfo(verbosity, "The %s with id %s was succesfully deleted.", object, id)
+  
+  return(invisible(response))
 }

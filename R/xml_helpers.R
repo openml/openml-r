@@ -126,7 +126,9 @@ xmlValsMultNsN = function(doc, path) {
   xmlValsMultNs(doc, path, as.numeric, numeric(1L))
 }
 
-parseXMLResponse = function(file, msg, type, as.text = FALSE, return.doc = TRUE) {
+parseXMLResponse = function(file, msg = NA_character_, 
+  type = NA_character_, as.text = FALSE, return.doc = TRUE) {
+  
   doc = try(xmlParse(file, asText = as.text))
   if (is.error(doc))
     stopf("Error in parsing XML for type %s in file: %s", type, file)
