@@ -76,6 +76,6 @@ More details about the elements of a \code{OMLRun} can be found in the
 Other run related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
-  \code{\link{uploadOMLRun}}
+  \code{\link{tagOMLObject}}, \code{\link{uploadOMLRun}}
 }
 

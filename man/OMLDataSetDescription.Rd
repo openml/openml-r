@@ -100,6 +100,7 @@ Other dataset related functions: \code{\link{OMLDataSet}},
   \code{\link{deleteOMLObject}},
   \code{\link{getOMLDataSet}},
   \code{\link{listOMLDataSets}},
+  \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
 

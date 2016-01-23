@@ -49,6 +49,7 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
 Other run related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}},
   \code{\link{makeOMLRunParameter}},
-  \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
+  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
+  \code{\link{uploadOMLRun}}
 }
 

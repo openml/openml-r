@@ -51,6 +51,7 @@ Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}}, \code{\link{deleteOMLObject}},
   \code{\link{getOMLDataSet}},
   \code{\link{listOMLDataSets}},
+  \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
 

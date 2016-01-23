@@ -28,7 +28,7 @@ Share a run of an flow on a given OpenML task by uploading it to the OpenML serv
 Other run related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
-  \code{\link{makeOMLRun}}
+  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}}
 
 Other uploading functions: \code{\link{uploadOMLDataSet}},
   \code{\link{uploadOMLFlow}}

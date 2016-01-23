@@ -120,6 +120,7 @@ More details about the elements of a \code{OMLFlow} can be found in the
 \seealso{
 Other flow related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
-  \code{\link{makeOMLFlowParameter}}
+  \code{\link{makeOMLFlowParameter}},
+  \code{\link{tagOMLObject}}
 }
 

@@ -24,6 +24,7 @@ Construct a run parameter object for a run.
 \seealso{
 Other run related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
-  \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
+  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
+  \code{\link{uploadOMLRun}}
 }
 

@@ -31,6 +31,6 @@ Construct OMLFlowParameter.
 \seealso{
 Other flow related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
-  \code{\link{makeOMLFlow}}
+  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }
 

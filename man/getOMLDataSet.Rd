@@ -38,6 +38,7 @@ Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{deleteOMLObject}},
   \code{\link{listOMLDataSets}},
+  \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 
 Other downloading functions: \code{\link{getOMLDataSetQualities}},

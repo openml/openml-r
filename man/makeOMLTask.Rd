@@ -36,6 +36,6 @@ More details about the elements of a \code{OMLTask} can be found in the
 Other task related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLTask}},
   \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+  \code{\link{listOMLTasks}}, \code{\link{tagOMLObject}}
 }
 

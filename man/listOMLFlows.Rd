@@ -27,7 +27,7 @@ of all registered OpenML flows.
 Other flow related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}},
   \code{\link{makeOMLFlowParameter}},
-  \code{\link{makeOMLFlow}}
+  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 
 Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},

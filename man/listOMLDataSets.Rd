@@ -32,7 +32,7 @@ Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{deleteOMLObject}},
-  \code{\link{getOMLDataSet}},
+  \code{\link{getOMLDataSet}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 
 Other listing functions: \code{\link{listOMLDataSetQualities}},

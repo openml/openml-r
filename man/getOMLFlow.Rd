@@ -37,6 +37,6 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
 Other flow related functions: \code{\link{deleteOMLObject}},
   \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
-  \code{\link{makeOMLFlow}}
+  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }
 
