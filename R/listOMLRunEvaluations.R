@@ -38,7 +38,7 @@ listOMLRunEvaluations = function(task.id = NULL, setup.id = NULL, flow.id = NULL
 
   mat = t(xmlSApply(d, getChildrenStringsNA))
   ret = setNames(as.data.frame(unname(mat), stringsAsFactors = FALSE), colnames(mat))
-  ret = reshape(ret, timevar = "function", idvar = "run_id", direction = "wide")
+  ret = reshape(ret, timevar = "function", idvar = c("run_id", "task_id", "flow_id"), direction = "wide")
   # remove NA columns
   ret = ret[,vlapply(ret, function(x) !all(is.na(x)))]
 
