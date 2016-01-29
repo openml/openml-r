@@ -9,7 +9,7 @@ test_that("getOMLTask", {
   expect_error(getOMLTask(1231109283L),  "Unknown task")
 
   # try different tasks of different task types
-  task.ids = split(tasks$task_id, tasks$task_type)
+  task.ids = split(tasks$task.id, tasks$task.type)
   task.ids = lapply(task.ids, function(X) head(X, 2))
 
   #setOMLConfig(arff.reader = "RWeka")

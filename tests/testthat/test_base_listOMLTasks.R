@@ -1,8 +1,8 @@
 context("listOMLTasks")
 
 test_that("listOMLTasks", {
-  exp.names = c("task_id", "task_type", "did", "status", "name", "target_feature", "tags",
-    "estimation_procedure", "evaluation_measures", "MajorityClassSize",
+  exp.names = c("task.id", "task.type", "did", "status", "name", "target.feature", "tags",
+    "estimation.procedure", "evaluation.measures", "MajorityClassSize",
     "MaxNominalAttDistinctValues", "MinorityClassSize", "NumBinaryAtts", 
     "NumberOfClasses", "NumberOfFeatures", "NumberOfInstances", 
     "NumberOfInstancesWithMissingValues", "NumberOfMissingValues",
@@ -22,7 +22,7 @@ test_that("listOMLTasks", {
   tasks2 = subset(tasks, NumberOfClasses == 2)
   expect_true(all(rowSums(tasks2[, c("MinorityClassSize", "MajorityClassSize")]) == tasks2$NumberOfInstances))
   
-  tasksClass = subset(tasks, task_type == "Supervised Classification")
+  tasksClass = subset(tasks, task.type == "Supervised Classification")
   sumMinMajClass = rowSums(tasksClass[, c("MinorityClassSize", "MajorityClassSize")])
   expect_true(all(sumMinMajClass <= tasksClass$NumberOfInstances, na.rm = na.rm))
   
@@ -30,16 +30,16 @@ test_that("listOMLTasks", {
   expect_true(all(tasks$NumBinaryAtts <= tasks$NumberOfSymbolicFeatures, na.rm = na.rm))
   
   sumNumSymFeat = rowSums(tasks[, c("NumberOfNumericFeatures", "NumberOfSymbolicFeatures")])
-  expect_true(all(tasks$NumberOfFeatures >= sumNumSymFeat))
+  expect_true(all(tasks$NumberOfFeatures >= sumNumSymFeat, na.rm = na.rm))
   
   # FIXME: sometimes NumFeat + SymFeat = AllFeat and sometimes NumFeat + SymFeat + 1 = AllFeat 
 #   sumNumSymFeat = rowSums(tasks[, c("NumberOfNumericFeatures", "NumberOfSymbolicFeatures")]) + 1
 #   expect_true(all(tasks$NumberOfFeatures == sumNumSymFeat))
-#   cols = c("task_id", "NumberOfNumericFeatures", "NumberOfSymbolicFeatures", "NumberOfFeatures", "task_type")
+#   cols = c("task.id", "NumberOfNumericFeatures", "NumberOfSymbolicFeatures", "NumberOfFeatures", "task.type")
 #   summary(tasks[(tasks$NumberOfFeatures != sumNumSymFeat), cols])
 #   summary(tasks[(tasks$NumberOfFeatures == sumNumSymFeat), cols])
   
   # check missings
-  expect_true(all(tasks$NumberOfInstancesWithMissingValues <= tasks$NumberOfInstances))
-  expect_true(all(tasks$NumberOfMissingValues <= tasks$NumberOfInstances*tasks$NumberOfFeatures))
+  expect_true(all(tasks$NumberOfInstancesWithMissingValues <= tasks$NumberOfInstances, na.rm = na.rm))
+  expect_true(all(tasks$NumberOfMissingValues <= tasks$NumberOfInstances*tasks$NumberOfFeatures, na.rm = na.rm))
 })

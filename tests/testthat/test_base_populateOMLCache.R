@@ -30,7 +30,7 @@ test_that("populateOMLCache", {
 
   # long test:
   #dids = listOMLDataSets()$did
-  #task.ids = listOMLTasks()$task_id
+  #task.ids = listOMLTasks()$task.id
   #flows = listOMLFlows()
   #flow.ids = flows[!grepl("openml.evaluation", flows$name), "flow.id"]
   dids = 1:2

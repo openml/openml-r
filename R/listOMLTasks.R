@@ -56,5 +56,6 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
   li$status = as.factor(li$status)
 
   #FIXME: do we want to replace _ by . in colnames?
+  colnames(li) = gsub("_", ".", colnames(li))
   return(li)
 }

@@ -20,7 +20,7 @@ tasks = tasks[with(tasks, NumberOfInstances < 1000 & NumberOfFeatures < 1000 &
   (NumberOfSymbolicFeatures==0 | is.na(NumberOfSymbolicFeatures))), ]
 
 # try different runs of different task types
-task.ids = split(tasks$task_id, tasks$task_type)
+task.ids = split(tasks$task.id, tasks$task.type)
 task.ids = lapply(task.ids, function(X) head(X, 3))
 
 task.clean = lapply(unlist(task.ids), function(X) {
