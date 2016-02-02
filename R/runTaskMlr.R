@@ -20,7 +20,9 @@
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
-  assertClass(learner, "Learner")
+  assert(checkString(learner), checkClass(learner, "Learner"))
+  if (is.character(learner))
+    learner = makeLearner(learner)
   assertClass(task, "OMLTask")
   assertChoice(task$task.type, c("Supervised Classification", "Supervised Regression"))
   if (!is.null(scimark.vector))
@@ -49,22 +51,22 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   # Create OMLRun
   bench = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
   res = bench$results[[1]][[1]]
-  
+
   # add error message
   tr.err = unique(res$err.msgs$train)
   pr.err = unique(res$err.msgs$predict)
   if (any(!is.na(tr.err))) {
-    tr.msg = paste0("Error in training the model: \n ", collapse(tr.err, sep = "\n ")) 
+    tr.msg = paste0("Error in training the model: \n ", collapse(tr.err, sep = "\n "))
   } else {
     tr.msg = NULL
   }
   if (any(!is.na(pr.err))) {
-    pr.msg = paste0("Error in making predictions: \n ", collapse(pr.err, sep = "\n ")) 
+    pr.msg = paste0("Error in making predictions: \n ", collapse(pr.err, sep = "\n "))
   } else {
     pr.msg = NULL
-  } 
+  }
   msg = paste0(tr.msg, pr.msg)
-  
+
   # create run
   run = makeOMLRun(task.id = task$task.id, error.message = ifelse(length(msg) == 0, NA_character_, msg))
   # FIXME: allow list of results?
@@ -123,7 +125,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
 makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
-  
+
   ps = mlr.lrn$par.set$pars
   par.vals = mlr.lrn$par.vals
   par.names = names(mlr.lrn$par.vals)
@@ -133,7 +135,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
     # FIXME: if it is possible to convert parameter to character, do this. What happens with vectors?
 #     val = try(as.character(par.vals[[i]]), silent = TRUE)
 #     if (is.error(val) & psi$type == "discrete") {
-#       val = discreteValueToName(x = par.vals[[i]], par = psi) 
+#       val = discreteValueToName(x = par.vals[[i]], par = psi)
 #     } else val = par.vals[[i]]
     val = paramValueToString(psi, par.vals[[i]])
     par.settings[[i]] = makeOMLRunParameter(
