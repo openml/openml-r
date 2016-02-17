@@ -10,6 +10,7 @@ r_github_packages:
     - mlr-org/farff
 
 cache:
+  packages: true
   directories:
     - $HOME/.openml/cache
 
