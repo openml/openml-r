@@ -15,6 +15,9 @@ cache:
   directories:
     - $HOME/.openml/cache
 
+before_script:
+  - find $HOME/.openml/cache
+
 after_success:
   - Rscript -e 'library(covr);coveralls()'
 
