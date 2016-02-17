@@ -1,14 +1,4 @@
-#' @title List available estimation procedures.
-#'
-#' @description
-#' The returned \code{data.frame} contains the \code{est.id} and the corresponding
-#' name of the estimation procedure.
-#'
-#' @template arg_verbosity
-#' @return [\code{data.frame}].
-#' @family listing functions
-#' @export
-listOMLEstimationProcedures = function(verbosity = NULL) {
+.listOMLEstimationProcedures = function(verbosity = NULL) {
   content = try(doAPICall(api.call = "estimationprocedure/list", file = NULL,
     verbosity = verbosity, method = "GET"))
   doc = parseXMLResponse(content, "Getting names of estimation procedures", "estimationprocedures",
@@ -19,3 +9,17 @@ listOMLEstimationProcedures = function(verbosity = NULL) {
     stringsAsFactors = TRUE
   )
 }
+
+#' @title List available estimation procedures.
+#'
+#' @description
+#' The returned \code{data.frame} contains the \code{est.id} and the corresponding
+#' name of the estimation procedure.
+#'
+#' @template note_memoise
+#'
+#' @template arg_verbosity
+#' @return [\code{data.frame}].
+#' @family listing functions
+#' @export
+listOMLEstimationProcedures = memoise(.listOMLEstimationProcedures, ~timeout(300L))

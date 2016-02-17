@@ -1,15 +1,4 @@
-#' @title List run results of a task.
-#'
-#' @description
-#' Retrieves all run results for a task (\code{task.id}), a setup
-#' (\code{setup.id}), a flow (\code{flow.id}) or a run (\code{run.id}) and returns
-#' a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid}.
-#'
-#' @inheritParams listOMLRuns
-#' @return [\code{data.frame}].
-#' @family list
-#' @export
-listOMLRunEvaluations = function(task.id = NULL, setup.id = NULL, flow.id = NULL,
+.listOMLRunEvaluations = function(task.id = NULL, setup.id = NULL, flow.id = NULL,
   run.id = NULL, uploader.id = NULL, verbosity = NULL) {
   if (!is.null(task.id)) assertInt(task.id)
   if (!is.null(setup.id)) assertInt(setup.id)
@@ -50,3 +39,18 @@ listOMLRunEvaluations = function(task.id = NULL, setup.id = NULL, flow.id = NULL
   colnames(ret) = gsub("_", ".", colnames(ret))
   return(ret)
 }
+
+#' @title List run results of a task.
+#'
+#' @description
+#' Retrieves all run results for a task (\code{task.id}), a setup
+#' (\code{setup.id}), a flow (\code{flow.id}) or a run (\code{run.id}) and returns
+#' a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid}.
+#'
+#' @template note_memoise
+#'
+#' @inheritParams listOMLRuns
+#' @return [\code{data.frame}].
+#' @family list
+#' @export
+listOMLRunEvaluations = memoise(.listOMLRunEvaluations, ~timeout(300L))

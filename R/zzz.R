@@ -6,6 +6,7 @@
 #' @import XML
 #' @import mlr
 #' @import data.table
+#' @importFrom memoise memoise timeout
 #' @importFrom stats setNames
 #' @importFrom httr POST GET DELETE content upload_file status_code
 NULL

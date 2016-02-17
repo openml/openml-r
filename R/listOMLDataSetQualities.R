@@ -1,13 +1,4 @@
-#' @title List available OpenML qualities names.
-#'
-#' @description
-#' The returned \code{data.frame} contains quality name \dQuote{name}.
-#'
-#' @template arg_verbosity
-#' @return [\code{data.frame}].
-#' @family listing functions
-#' @export
-listOMLDataSetQualities = function(verbosity = NULL) {
+.listOMLDataSetQualities = function(verbosity = NULL) {
   content = doAPICall(
     api.call = "data/qualities/list", file = NULL,
     verbosity = verbosity, method = "GET"
@@ -19,3 +10,16 @@ listOMLDataSetQualities = function(verbosity = NULL) {
     stringsAsFactors = FALSE
   )
 }
+
+#' @title List available OpenML qualities names.
+#'
+#' @description
+#' The returned \code{data.frame} contains quality name \dQuote{name}.
+#'
+#' @template note_memoise
+#'
+#' @template arg_verbosity
+#' @return [\code{data.frame}].
+#' @family listing functions
+#' @export
+listOMLDataSetQualities = memoise(.listOMLDataSetQualities, ~timeout(300L))
