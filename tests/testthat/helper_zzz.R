@@ -7,9 +7,11 @@ library(checkmate)
 setOMLConfig(verbosity = 1L, cachedir = tempdir(), arff.reader = "farff")
 
 # if on travis, use our encrypted key, which is now in an OS envir var
+# furthermore, use a cached directory on travis
 if (identical(Sys.getenv("TRAVIS"), "true")) {
-  apikey = Sys.getenv("OPENMLAPIKEY")
-  setOMLConfig(apikey = apikey)
+  p = normalizePath("~/.openml/cache", mustWork = FALSE)
+  dir.create(p, recursive = TRUE, showWarnings = FALSE)
+  setOMLConfig(apikey = Sys.getenv("OPENMLAPIKEY"), cachedir = p)
 }
 
 configureMlr(on.learner.warning = "quiet", show.learner.output = FALSE)
