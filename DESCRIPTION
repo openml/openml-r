@@ -28,7 +28,6 @@ Imports:
     data.table,
     digest,
     httr,
-    RCurl,
     stringi,
     XML,
     mlr (>= 2.5),

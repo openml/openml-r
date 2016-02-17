@@ -2,13 +2,12 @@
 #' @import checkmate
 #' @import ParamHelpers
 #' @import digest
-#' @import httr
-#' @import RCurl
 #' @import stringi
 #' @import XML
 #' @import mlr
 #' @import data.table
 #' @importFrom stats setNames
+#' @importFrom httr POST GET DELETE content upload_file status_code
 NULL
 
 .OpenML.config = getDefaultConfig()
