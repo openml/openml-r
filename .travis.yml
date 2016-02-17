@@ -1,23 +1,17 @@
 language: r
+sudo: false
 
+env:
+  global:
+  - secure: oBSw3lt+e3/iEEhYHXEAJpZWmITbC6HtqRVXIKQsVpaGfQ6zxxoIKeUOpSUGSGvG+CLBqie97a7eWDq2Z21md6wr+jBnmAoHlrUckQdw7GF8aT3aOmZzQ6cZbQniTn5nRJ8GlfYi/nkhxIDQ0bUY3KBBUak27uHvNEY4wqSdCxE=
+  - secure: "UOXrFQRyK/l9AUBxpoEq3DkOaBGmml+gChxwla8Y9Z5xacCM46DhY2yob5BSqtD1EI+aKGe/1WwN/dqPeuJhwSSPFggP+RJ26Kyf8jWSxHPbZSOsULGVcfgtl/kgozlrj8alG26WUjcbA+c7GlvbSZXu3OWRZHW0aTnx9IIda+A="
 r_github_packages:
     - jimhester/covr
-    - berndbischl/ParamHelpers
     - mlr-org/farff
-    - mlr-org/mlr
-apt_packages:
-    - r-cran-rjava
-r_binary_packages:
-    - testthat
-    - knitr
-before_install:
-    - sudo R CMD javareconf
-before_script:
-    - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
-    - Rscript /tmp/update-packages.r
-    - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+
 after_success:
   - Rscript -e 'library(covr);coveralls()'
+
 notifications:
   email:
     recipients:
@@ -26,8 +20,3 @@ notifications:
         - j.bossek@gmail.com
     on_success: change
     on_failure: always
-
-env:
-  global:
-  - secure: oBSw3lt+e3/iEEhYHXEAJpZWmITbC6HtqRVXIKQsVpaGfQ6zxxoIKeUOpSUGSGvG+CLBqie97a7eWDq2Z21md6wr+jBnmAoHlrUckQdw7GF8aT3aOmZzQ6cZbQniTn5nRJ8GlfYi/nkhxIDQ0bUY3KBBUak27uHvNEY4wqSdCxE=
-

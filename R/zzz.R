@@ -1,12 +1,12 @@
 #' @import BBmisc
 #' @import checkmate
 #' @import ParamHelpers
-#' @import digest
 #' @import stringi
 #' @import XML
 #' @import mlr
 #' @import data.table
 #' @importFrom memoise memoise timeout
+#' @importFrom digest digest
 #' @importFrom stats setNames
 #' @importFrom httr POST GET DELETE content upload_file status_code
 NULL

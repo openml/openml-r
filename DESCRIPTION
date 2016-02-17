@@ -30,6 +30,7 @@ Imports:
     httr,
     stringi,
     XML,
+    xml2,
     mlr (>= 2.5),
     memoise (>= 1.0.0),
     stats
