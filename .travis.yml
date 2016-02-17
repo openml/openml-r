@@ -5,9 +5,15 @@ env:
   global:
   - secure: oBSw3lt+e3/iEEhYHXEAJpZWmITbC6HtqRVXIKQsVpaGfQ6zxxoIKeUOpSUGSGvG+CLBqie97a7eWDq2Z21md6wr+jBnmAoHlrUckQdw7GF8aT3aOmZzQ6cZbQniTn5nRJ8GlfYi/nkhxIDQ0bUY3KBBUak27uHvNEY4wqSdCxE=
   - secure: "UOXrFQRyK/l9AUBxpoEq3DkOaBGmml+gChxwla8Y9Z5xacCM46DhY2yob5BSqtD1EI+aKGe/1WwN/dqPeuJhwSSPFggP+RJ26Kyf8jWSxHPbZSOsULGVcfgtl/kgozlrj8alG26WUjcbA+c7GlvbSZXu3OWRZHW0aTnx9IIda+A="
+
 r_github_packages:
     - jimhester/covr
     - mlr-org/farff
+
+cache:
+  packages: true
+  directories:
+    - $HOME/.openml/cache
 
 after_success:
   - Rscript -e 'library(covr);coveralls()'

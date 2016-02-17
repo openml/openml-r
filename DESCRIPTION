@@ -20,7 +20,8 @@ Suggests:
     rpart,
     RWeka,
     farff,
-    mboost
+    mboost,
+    xml2
 Imports:
     BBmisc (>= 1.9),
     checkmate (>= 1.6.3),
