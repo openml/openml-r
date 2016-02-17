@@ -30,6 +30,7 @@ Imports:
     httr,
     stringi,
     XML,
+    xml2,
     mlr (>= 2.5),
     stats
 LazyData: yes
