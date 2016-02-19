@@ -3,6 +3,9 @@
 #' @description
 #' Share a dataset by uploading it to the OpenML server.
 #'
+#' @note
+#' This function will reset the cache of \code{link{listOMLDataSets}} on success.
+#'
 #' @param x [\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
 #'   Contains the dataset that should be uploaded.
 #' @template arg_verbosity
@@ -36,6 +39,7 @@ uploadOMLDataSet.OMLDataSet = function(x, verbosity = NULL) {
   doc = parseXMLResponse(response, "Uploading dataset", c("upload_data_set", "response"), as.text = TRUE)
   did = xmlOValI(doc, "/oml:upload_data_set/oml:id")
   showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", did)
+  forget(listOMLDataSets)
   return(invisible(did))
 }
 

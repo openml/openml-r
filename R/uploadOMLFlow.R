@@ -3,6 +3,9 @@
 #' @description
 #' Share a flow by uploading it to the OpenML server.
 #'
+#' @note
+#' This function will reset the cache of \code{link{listOMLFlows}} on success.
+#'
 #' @param x [\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
 #'   The flow that should be uploaded.
 #' @template arg_verbosity
@@ -39,7 +42,7 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
 
   #url = getAPIURL("flow/")
   params = list(description = upload_file(path = file))
-  
+
   # if binary.path is given (and binaryfile is empty), upload binary.path, otherwise upload binaryfile
   if (testFile(x$binary.path) & !testFile(binaryfile)) binaryfile = x$binary.path
   if (testFile(binaryfile)) {
@@ -67,6 +70,7 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
   doc = parseXMLResponse(response, "Uploading flow", c("upload_flow", "response"), as.text = TRUE)
   flow.id = xmlOValI(doc, "/oml:upload_flow/oml:id")
   showInfo(verbosity, "Flow successfully uploaded. Flow ID: %i", flow.id)
+  forget(listOMLFlows)
   return(flow.id)
 }
 
@@ -138,7 +142,7 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
     assertString(description)
   else
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
-  
+
   # dependencies
   lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
   pkges = c("mlr", lrn.package)

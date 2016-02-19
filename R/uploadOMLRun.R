@@ -3,6 +3,10 @@
 #' @description
 #' Share a run of an flow on a given OpenML task by uploading it to the OpenML server.
 #'
+#' @note
+#' This function will reset the cache of \code{link{listOMLRuns}} and
+#' \code{\link{listOMLRunEvaluations}} on success.
+#'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.
 #' @template arg_verbosity
@@ -57,6 +61,8 @@ uploadOMLRun = function(run, verbosity = NULL) {
   run.id = xmlRValI(doc, "/oml:upload_run/oml:run_id")
   # else, return the run.id invisibly
   showInfo(verbosity, "Run successfully uploaded. Run ID: %i", run.id)
+  forget(listOMLRuns)
+  forget(listOMLRunEvaluations)
 
   return(run.id)
 }

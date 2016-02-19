@@ -24,6 +24,9 @@ Default is set via \code{\link{setOMLConfig}}.}
 \description{
 Share a dataset by uploading it to the OpenML server.
 }
+\note{
+This function will reset the cache of \code{link{listOMLDataSets}} on success.
+}
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
