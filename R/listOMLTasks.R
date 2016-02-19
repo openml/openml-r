@@ -1,16 +1,4 @@
-#' @title List available OpenML tasks.
-#'
-#' @description
-#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
-#' the \code{status} and some describing data qualities.
-#'
-#' @template arg_verbosity
-#' @template arg_status
-#' @return [\code{data.frame}].
-#' @family listing functions
-#' @family task related functions
-#' @export
-listOMLTasks = function(verbosity = NULL, status = "active") {
+.listOMLTasks = function(verbosity = NULL, status = "active") {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
   content = try(doAPICall(api.call = "task/list", file = NULL, verbosity = verbosity, method = "GET"))
@@ -59,3 +47,19 @@ listOMLTasks = function(verbosity = NULL, status = "active") {
   colnames(li) = gsub("_", ".", colnames(li))
   return(li)
 }
+
+#' @title List available OpenML tasks.
+#'
+#' @description
+#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
+#' the \code{status} and some describing data qualities.
+#'
+#' @template note_memoise
+#'
+#' @template arg_verbosity
+#' @template arg_status
+#' @return [\code{data.frame}].
+#' @family listing functions
+#' @family task related functions
+#' @export
+listOMLTasks = memoise(.listOMLTasks, ~timeout(300L))

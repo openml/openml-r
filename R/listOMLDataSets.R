@@ -1,17 +1,4 @@
-#' @title List available OpenML data sets.
-#'
-#' @description
-#' The returned \code{data.frame} contains the data set id \dQuote{did},
-#' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
-#' and describing data qualities.
-#'
-#' @template arg_verbosity
-#' @template arg_status
-#' @return [\code{data.frame}].
-#' @family listing functions
-#' @family dataset related functions
-#' @export
-listOMLDataSets = function(verbosity = NULL, status = "active") {
+.listOMLDataSets = function(verbosity = NULL, status = "active") {
   content = doAPICall(api.call = "data/list", file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
   assertSubset(status, getValidOMLDataSetStatusLevels())
@@ -36,3 +23,19 @@ listOMLDataSets = function(verbosity = NULL, status = "active") {
   row.names(ret) = NULL
   return(ret)
 }
+
+#' @title List available OpenML data sets.
+#'
+#' @description
+#' The returned \code{data.frame} contains the data set id \dQuote{did},
+#' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
+#' and describing data qualities.
+#'
+#' @template note_memoise
+#' @template arg_verbosity
+#' @template arg_status
+#' @return [\code{data.frame}].
+#' @family listing functions
+#' @family dataset related functions
+#' @export
+listOMLDataSets = memoise(.listOMLDataSets, ~timeout(300L))
