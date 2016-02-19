@@ -54,4 +54,4 @@
 #' @family listing functions
 #' @family run related functions
 #' @export
-listOMLRuns = memoise(.listOMLRuns, ~timeout(300L))
+listOMLRuns = memoise(.listOMLRuns)

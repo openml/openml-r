@@ -22,4 +22,4 @@
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @export
-listOMLEvaluationMeasures = memoise(.listOMLEvaluationMeasures, ~timeout(300L))
+listOMLEvaluationMeasures = memoise(.listOMLEvaluationMeasures)

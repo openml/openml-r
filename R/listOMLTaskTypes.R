@@ -21,4 +21,4 @@
 #' @family listing functions
 #' @family task related functions
 #' @export
-listOMLTaskTypes = memoise(.listOMLTaskTypes, ~timeout(300L))
+listOMLTaskTypes = memoise(.listOMLTaskTypes)

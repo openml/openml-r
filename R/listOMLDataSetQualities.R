@@ -22,4 +22,4 @@
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @export
-listOMLDataSetQualities = memoise(.listOMLDataSetQualities, ~timeout(300L))
+listOMLDataSetQualities = memoise(.listOMLDataSetQualities)

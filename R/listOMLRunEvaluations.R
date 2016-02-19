@@ -53,4 +53,4 @@
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
-listOMLRunEvaluations = memoise(.listOMLRunEvaluations, ~timeout(300L))
+listOMLRunEvaluations = memoise(.listOMLRunEvaluations)

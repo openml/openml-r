@@ -31,4 +31,4 @@
 #' @family listing functions
 #' @family flow related functions
 #' @export
-listOMLFlows = memoise(.listOMLFlows, ~timeout(300L))
+listOMLFlows = memoise(.listOMLFlows)

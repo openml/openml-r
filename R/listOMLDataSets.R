@@ -32,10 +32,11 @@
 #' and describing data qualities.
 #'
 #' @template note_memoise
+#'
 #' @template arg_verbosity
 #' @template arg_status
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family dataset related functions
 #' @export
-listOMLDataSets = memoise(.listOMLDataSets, ~timeout(300L))
+listOMLDataSets = memoise(.listOMLDataSets)
