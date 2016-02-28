@@ -1,6 +1,12 @@
 Listing
 =======
 
+```{r init, include=FALSE}
+library("OpenML")
+## temporarily set API key to read only key
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+```
+
 In this stage, we want to list basic information about the various OpenML objects such as data sets, tasks, flows, runs, run results, evaluation measures or task types. See the [OpenML introduction](http://openml.org/guide) for an overview on and explanations of the different objects.
 
 For each of these objects we have a function to query the information beginning with `listOML`. All of these functions return a `data.frame`, even when the result has only one column.
@@ -54,7 +60,7 @@ for a specific data set as follows:
 ```{r}
 tasks = listOMLTasks()
 # subset tasks to "Supervised Classification" for the iris data (did == 61)
-subset(tasks, task_type == "Supervised Classification" & did == 61L)[, c(1, 6)]
+subset(tasks, task.type == "Supervised Classification" & did == 61L)[, c(1, 6)]
 ```
 ### List flows
 
@@ -66,25 +72,20 @@ flows = listOMLFlows()
 flows[56:63, 1:2]
 ```
 
-### List setups
-
-A setup is the combination of a flow with specific parameter settings.
-
-**FIXME: Add this once it is up and running**
-
 ### List runs and run results
 
-A run is a combination of a setup and a task. The results are stored as a run result.
+A run is a combination of a setup (**??? FIXME??? Setup is not explained (ans why should one use it if it cannot be queried?**) and a task. The results are stored as a run result.
 Both, runs and run results can be listed. Here one has additional arguments to subset
 the result. For example one can search for a specific `task.id`, `setup.id` or `implementation.id`.
-To list all runs for [task 59](http://www.openml.org/t/59).
+To list all runs for [task 59](http://www.openml.org/t/59) one can use
 
-```{r eval = FALSE}
+```{r}
 runs = listOMLRuns(task.id = 59L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
-
-runresults = listOMLRunResults(task.id = 59L)  # a task ID must be supplied
-colnames(runresults)
+## <FIXME:>
+# runresults = listOMLRunEvaluations(task.id = 59L)  # a task ID must be supplied
+# colnames(runresults)
+## </FIXME>
 ```
 
 ### List evaluation measures and task types
@@ -102,6 +103,7 @@ tasktypes
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
+
 - [Introduction](1-Introduction.md)
 - [Configuration](2-Configuration.md)
 - Listing
