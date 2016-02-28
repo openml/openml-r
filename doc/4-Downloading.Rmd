@@ -1,6 +1,13 @@
 Downloading
 ===========
 
+```{r init, include=FALSE}
+library("OpenML")
+## temporarily set API key to read only key
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+setOMLConfig(verbosity = 0) # switch off status output
+```
+
 ### Download an OpenML task
 A user can download a task from the OpenML server, compute predictions with an algorithm (i.e., with a specific setup)
 and upload this algorithm as well as the predictions. The server will then calculate many different performance measures
@@ -55,20 +62,28 @@ You can download a single OpenML run with the `getOMLRun` function:
 run = getOMLRun(run.id = 234L)  # see ?OMLRun for each slot of the OMLRun object
 ```
 
-There are some slots which are of major intereset for the `OMLRun` object. A list containing the parameter settings
-can be obtained by `run$parameter.setting`. All data that served as input for the run, including the
-URL to the data is stored in `run$input.data`.
+There are some slots which are of major intereset for the `OMLRun` object. A list containing the parameter settings can be obtained by `run$parameter.setting`:
+```{r}
+run$parameter.setting[[1]]  ## retrieve first parameter setting
+```
+(**??? FIXME: WHAT DOES THIS REPRESENT???**)
 
-To retrieve predictions of an uploaded run, you can set the parameter `get.predictions = TRUE` to store the
-predictions in the `$predictions` slot or use the function `getOMLPredictions(run)`:
+All data that served as input for the run, including the URL to the data is stored in 
+```{r}
+run$input.data
+```
+(**??? FIXME: STRANGE???**)
+
+To retrieve predictions of an uploaded run, you can use:
 
 ```{r}
-run.pred = getOMLRun(run.id = 234L, get.predictions = TRUE)
-all.equal(run.pred$predictions, getOMLPredictions(run))
+head(run$predictions)
 ```
+(**??? FIXME: STRANGE???**)
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
+
 - [Introduction](1-Introduction.md)
 - [Configuration](2-Configuration.md)
 - [Listing](3-Listing.md)
