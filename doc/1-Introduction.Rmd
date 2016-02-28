@@ -14,12 +14,12 @@ Afterwards, there are different basic stages when using this package or OpenML, 
 
 * [Listing](3-Listing.md)
     * function names begin with `listOML`
-    * result is always a data.frame
-    * available for DataSets, Tasks, Flows, Runs, RunResults, EvaluationMeasures and TaskTypes
+    * result is always a `data.frame`
+    * available for `DataSets`, `Tasks`, `Flows`, `Runs`, `RunEvaluations`, `EvaluationMeasures` and `TaskTypes`
 * [Downloading](4-Downloading.md)
     * function names begin with `getOML`
     * result is an object of a specific OpenML class
-    * available for DataSets, Tasks, Runs, Predictions and Flows
+    * available for `DataSets`, `Tasks`, `Runs`, `Predictions` and `Flows`
 * [Running models on tasks](5-Running.md)
     * function `runTaskMlr`
     * input: task and model
