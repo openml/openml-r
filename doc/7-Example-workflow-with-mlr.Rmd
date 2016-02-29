@@ -1,6 +1,13 @@
 Example workflow with mlr
 =========================
 
+```{r init, include=FALSE}
+library("OpenML")
+## temporarily set API key to read only key
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+setOMLConfig(verbosity = 0) # switch off status output
+```
+
 Here we will show you how a standard workflow could look like. This just a small example, to get
 further information about the package and its functions, please have a look at the other sections
 of this tutorial or the [detailed documentation](http://www.rdocumentation.org/packages/OpenML).
@@ -25,19 +32,16 @@ task.ids = subset(tl, NumberOfFeatures < 10 & NumberOfFeatures > 3 &
   NumberOfInstances < 100 & NumberOfClasses == 2 &
   NumberOfMissingValues == 0, select = task_id, drop = TRUE)
 task.ids = sample(task.ids, 20)
-
-# get a valid session hash:
-hash = authenticateUser("openml.rteam@gmail.com", "testpassword")
 ```
 
 Next, we create and upload the learner, compute predictions and upload these.
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 # create the mlr learner for lda:
 lrn = makeLearner("classif.lda")
 
 # upload the learner and retrieve its implementation ID:
-implementation.id = uploadOMLFlow(lrn, hash)
+implementation.id = uploadOMLFlow(lrn)
 
 run.ids = c()
 for (id in task.ids) {
@@ -55,7 +59,7 @@ implementation in comparison to the measures of different implementations. Quant
 correspond to "lda has achieved (one of) the best results", quantiles close to zero correspond to
 "the other flows were better".
 
-```{r eval = FALSE}
+```{r boxplot_pred_accuracy, eval = TRUE}
 qs = c()
 for (id in task.ids) {
   metrics = listOMLRunResults(id)
@@ -70,13 +74,12 @@ for (id in task.ids) {
 
 boxplot(qs, ylim = c(0, 1), main = "Quantiles of lda measures")
 ```
-![Boxplot of the quantiles](../figures/boxplot_example.png)
-As we can see in the boxplot, the performance of lda varies quite strongly. Mostly, though, the lda
-measures were better than the average of all run results on the considered tasks.
+As we can see in the boxplot, the performance of `lda` varies quite strongly. Mostly, though, the `lda` measures were better than the average of all run results on the considered tasks.
 **FIXME: Really? It looks like the meadian is approx. 0.5**
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
+
 - [Introduction](1-Introduction.md)
 - [Configuration](2-Configuration.md)
 - [Listing](3-Listing.md)

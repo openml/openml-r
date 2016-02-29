@@ -26,8 +26,7 @@ The corresponding `"OMLDataSet"` object can be accessed by
 task$input$data.set
 ```
 
-A special print function gives the basic information on the data set. To extract the data itself
-one can use
+A special print function gives the basic information on the data set. To extract the data itself one can use
 
 ```{r}
 iris.data = task$input$data.set$data
