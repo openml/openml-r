@@ -25,9 +25,18 @@
   d = try(parseXMLResponse(content, "Getting task results", "evaluations", as.text = TRUE, return.doc = FALSE), silent = TRUE)
   if (is.error(d)) return(NULL)
 
-  mat = t(xmlSApply(d, getChildrenStringsNA))
+  mat = xmlSApply(d, function(x) {
+    line = getChildrenStringsNA(x)
+    if ("array_data" %nin% names(line)) 
+      line = c(line, "array_data" = NA)
+    if ("value" %nin% names(line))
+      line = c(line, "value" = NA)
+    return(line)
+  })
+  
+  mat = t(mat)
   ret = setNames(as.data.frame(unname(mat), stringsAsFactors = FALSE), colnames(mat))
-  ret = reshape(ret, timevar = "function", idvar = c("run_id", "task_id", "flow_id"), direction = "wide")
+  ret = reshape(ret, timevar = "function", idvar = c("run_id", "task_id", "setup_id", "flow_id"), direction = "wide")
   # remove NA columns
   ret = ret[,vlapply(ret, function(x) !all(is.na(x)))]
 
