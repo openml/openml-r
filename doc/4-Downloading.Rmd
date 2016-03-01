@@ -47,7 +47,7 @@ iris.data2
 You can download a flow by specifying the `flow.id` parameter in the `getOMLFlow` function:
 
 ```{r}
-flow = getOMLFlow(flow.id = 1248L)
+flow = getOMLFlow(flow.id = 2700L)
 flow
 ```
 
@@ -58,14 +58,15 @@ previous section. Here we use the first run of task 59, which has the `run.id` 2
 You can download a single OpenML run with the `getOMLRun` function:
 
 ```{r}
-run = getOMLRun(run.id = 234L)  # see ?OMLRun for each slot of the OMLRun object
+run = getOMLRun(run.id = 525534L)  # see ?OMLRun for each slot of the OMLRun object
 ```
 
 There are some slots which are of major intereset for the `OMLRun` object. A list containing the parameter settings can be obtained by `run$parameter.setting`:
 ```{r}
-run$parameter.setting[[1]]  ## retrieve first parameter setting
+run$parameter.setting  ## retrieve first parameter setting
 ```
 (**??? FIXME: WHAT DOES THIS REPRESENT???**)
+The first three parameters refer to the RNG settings, e.g. the seed, which will help you to reproduce the run. It the flow that created this run has hyperparameters that are different from the default values of the corresponding learner, they are also shown, otherwise the default hyperparameters are used. 
 
 All data that served as input for the run, including the URL to the data is stored in 
 ```{r}

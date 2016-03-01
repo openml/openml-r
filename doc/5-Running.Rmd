@@ -26,6 +26,7 @@ run.mlr
 ```
 
 (**??? Fixme: Why is it `OpenML Run NA :: ` and why is the flow ID missing as well???**)
+Note that locally created runs don't have an ID. Maybe we should change the print function here?
 
 ### Run a task without using mlr
 

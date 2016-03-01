@@ -50,7 +50,7 @@ Each OpenML task is a bundle of a data set, a target feature, a (performance) es
 Every task has a type, e.g., `"Supervised Classification"` or `"Supervised Regression"`. To list tasks one can use
 ```{r}
 tasks = listOMLTasks()
-tasks[1:6, 1:5]
+head(tasks[, 1:5])
 ```
 
 For some data sets, there may be more than one task available at the OpenML server.
@@ -60,7 +60,7 @@ for a specific data set as follows:
 ```{r}
 tasks = listOMLTasks()
 # subset tasks to "Supervised Classification" for the iris data (did == 61)
-subset(tasks, task.type == "Supervised Classification" & did == 61L)[, c(1, 6)]
+head(subset(tasks, task.type == "Supervised Classification" & did == 61L)[, 1:5])
 ```
 ### List flows
 
@@ -82,10 +82,9 @@ To list all runs for [task 59](http://www.openml.org/t/59) one can use
 ```{r}
 runs = listOMLRuns(task.id = 59L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
-## <FIXME:>
-# runresults = listOMLRunEvaluations(task.id = 59L)  # a task ID must be supplied
-# colnames(runresults)
-## </FIXME>
+
+runresults = listOMLRunEvaluations(task.id = 59L)  # a task ID must be supplied
+colnames(runresults)
 ```
 
 ### List evaluation measures and task types

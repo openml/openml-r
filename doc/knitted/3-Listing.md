@@ -1,6 +1,8 @@
 Listing
 =======
 
+
+
 In this stage, we want to list basic information about the various OpenML objects such as data sets, tasks, flows, runs, run results, evaluation measures or task types. See the [OpenML introduction](http://openml.org/guide) for an overview on and explanations of the different objects.
 
 For each of these objects we have a function to query the information beginning with `listOML`. All of these functions return a `data.frame`, even when the result has only one column.
@@ -26,10 +28,10 @@ datasets[1:3, 3:6]
 ```
 
 ```
-##       name NumberOfClasses NumberOfFeatures NumberOfInstances
-## 1   anneal               6               39               898
-## 2   anneal               6               39               898
-## 3 kr-vs-kp               2               37              3196
+##       name MajorityClassSize MaxNominalAttDistinctValues MinorityClassSize
+## 1   anneal               684                          10                 0
+## 2   anneal               684                           9                 0
+## 3 kr-vs-kp              1669                           3              1527
 ```
 
 ```r
@@ -38,10 +40,10 @@ inactive.data[1:3, 3:6]
 ```
 
 ```
-##             name NumberOfClasses NumberOfFeatures NumberOfInstances
-## 1        bridges               6               13               107
-## 2        bridges               6               13               107
-## 3 cylinder-bands               2               40               540
+##      name MajorityClassSize MaxNominalAttDistinctValues MinorityClassSize
+## NA   <NA>                NA                          NA                NA
+## NA.1 <NA>                NA                          NA                NA
+## NA.2 <NA>                NA                          NA                NA
 ```
 
 To find a specific data set, one can now query the resulting `datasets` object. Suppose we want
@@ -53,9 +55,12 @@ subset(datasets, name == "iris")[, 1:6]
 ```
 
 ```
-##     did status name NumberOfClasses NumberOfFeatures NumberOfInstances
-## 55   61 active iris               3                5               150
-## 822 969 active iris               2                5               150
+##     did status name MajorityClassSize MaxNominalAttDistinctValues
+## 55   61 active iris                50                          -1
+## 821 969 active iris               100                          -1
+##     MinorityClassSize
+## 55                 50
+## 821                50
 ```
 
 As one can see there are two data sets called `iris`. We want to use the original data set
@@ -70,11 +75,11 @@ Every task has a type, e.g., `"Supervised Classification"` or `"Supervised Regre
 
 ```r
 tasks = listOMLTasks()
-tasks[1:6, 1:5]
+head(tasks[, 1:5])
 ```
 
 ```
-##   task_id                 task_type did status       name
+##   task.id                 task.type did status       name
 ## 1       1 Supervised Classification   1 active     anneal
 ## 2       2 Supervised Classification   2 active     anneal
 ## 3       3 Supervised Classification   3 active   kr-vs-kp
@@ -91,20 +96,17 @@ for a specific data set as follows:
 ```r
 tasks = listOMLTasks()
 # subset tasks to "Supervised Classification" for the iris data (did == 61)
-subset(tasks, task_type == "Supervised Classification" & did == 61L)[, c(1, 6)]
+head(subset(tasks, task.type == "Supervised Classification" & did == 61L)[, 1:5])
 ```
 
 ```
-##      task_id             estimation_procedure
-## 53        59          10-fold Crossvalidation
-## 271      289                  33% Holdout set
-## 442     1823   5 times 2-fold Crossvalidation
-## 551     1939 10 times 10-fold Crossvalidation
-## 598     1992                    Leave one out
-## 3892    6564          10-fold Crossvalidation
-## 4436    7306          10-fold Crossvalidation
-## 4451    7531          10-fold Crossvalidation
-## 4459    7555          10-fold Crossvalidation
+##      task.id                 task.type did status name
+## 53        59 Supervised Classification  61 active iris
+## 271      289 Supervised Classification  61 active iris
+## 442     1823 Supervised Classification  61 active iris
+## 551     1939 Supervised Classification  61 active iris
+## 598     1992 Supervised Classification  61 active iris
+## 4445    7306 Supervised Classification  61 active iris
 ```
 ### List flows
 
@@ -114,40 +116,67 @@ I.e., a flow is essentially the code that implements the algorithm.
 
 ```r
 flows = listOMLFlows()
-flows[1:7, 1:2]
+flows[56:63, 1:2]
 ```
 
 ```
-##   implementation.id                                   full.name
-## 1                 1    openml.evaluation.EuclideanDistance(1.0)
-## 2                 2     openml.evaluation.PolynomialKernel(1.0)
-## 3                 3            openml.evaluation.RBFKernel(1.0)
-## 4                 4 openml.evaluation.area_under_roc_curve(1.0)
-## 5                 5         openml.evaluation.average_cost(1.0)
-## 6                 6       openml.evaluation.build_cpu_time(1.0)
-## 7                 7         openml.evaluation.build_memory(1.0)
+##    flow.id             full.name
+## 56      56         weka.ZeroR(1)
+## 57      57          weka.OneR(1)
+## 58      58    weka.NaiveBayes(1)
+## 59      59          weka.JRip(1)
+## 60      60           weka.J48(1)
+## 61      61       weka.REPTree(1)
+## 62      62 weka.DecisionStump(1)
+## 63      63 weka.HoeffdingTree(1)
 ```
-
-### List setups
-
-A setup is the combination of a flow with specific parameter settings.
-
-**FIXME: Add this once it is up and running**
 
 ### List runs and run results
 
-A run is a combination of a setup and a task. The results are stored as a run result.
+A run is a combination of a setup (**??? FIXME??? Setup is not explained (ans why should one use it if it cannot be queried?**) and a task. The results are stored as a run result.
 Both, runs and run results can be listed. Here one has additional arguments to subset
 the result. For example one can search for a specific `task.id`, `setup.id` or `implementation.id`.
-To list all runs for [task 59](http://www.openml.org/t/59).
+To list all runs for [task 59](http://www.openml.org/t/59) one can use
 
 
 ```r
 runs = listOMLRuns(task.id = 59L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
+```
 
-runresults = listOMLRunResults(task.id = 59L)  # a task ID must be supplied
+```
+##   run.id task.id setup.id flow.id uploader error.message
+## 1 478830      59     2417    1817       64            NA
+## 2 479006      59     2417    1817       64            NA
+## 3 479036      59     2417    1817       64            NA
+## 4 479464      59     2417    1817       64            NA
+## 5 479642      59     2417    1817       64            NA
+## 6 479643      59     2417    1817       64            NA
+```
+
+```r
+runresults = listOMLRunEvaluations(task.id = 59L)  # a task ID must be supplied
 colnames(runresults)
+```
+
+```
+##  [1] "run.id"                        "task.id"                      
+##  [3] "setup.id"                      "flow.id"                      
+##  [5] "area.under.roc.curve"          "area.under.roc.curve.array"   
+##  [7] "average.cost"                  "confusion.matrix"             
+##  [9] "f.measure"                     "f.measure.array"              
+## [11] "kappa"                         "kb.relative.information.score"
+## [13] "mean.absolute.error"           "mean.prior.absolute.error"    
+## [15] "number.of.instances"           "number.of.instances.array"    
+## [17] "precision"                     "precision.array"              
+## [19] "predictive.accuracy"           "prior.entropy"                
+## [21] "recall"                        "recall.array"                 
+## [23] "relative.absolute.error"       "root.mean.prior.squared.error"
+## [25] "root.mean.squared.error"       "root.relative.squared.error"  
+## [27] "total.cost"                    "os.information"               
+## [29] "scimark.benchmark"             "scimark.benchmark.array"      
+## [31] "usercpu.time.millis"           "usercpu.time.millis.testing"  
+## [33] "usercpu.time.millis.training"
 ```
 
 ### List evaluation measures and task types
@@ -190,6 +219,7 @@ tasktypes
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
+
 - [Introduction](1-Introduction.md)
 - [Configuration](2-Configuration.md)
 - Listing

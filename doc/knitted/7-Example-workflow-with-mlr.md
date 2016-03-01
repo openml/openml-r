@@ -1,6 +1,8 @@
 Example workflow with mlr
 =========================
 
+
+
 Here we will show you how a standard workflow could look like. This just a small example, to get
 further information about the package and its functions, please have a look at the other sections
 of this tutorial or the [detailed documentation](http://www.rdocumentation.org/packages/OpenML).
@@ -26,9 +28,6 @@ task.ids = subset(tl, NumberOfFeatures < 10 & NumberOfFeatures > 3 &
   NumberOfInstances < 100 & NumberOfClasses == 2 &
   NumberOfMissingValues == 0, select = task_id, drop = TRUE)
 task.ids = sample(task.ids, 20)
-
-# get a valid session hash:
-hash = authenticateUser("openml.rteam@gmail.com", "testpassword")
 ```
 
 Next, we create and upload the learner, compute predictions and upload these.
@@ -39,7 +38,7 @@ Next, we create and upload the learner, compute predictions and upload these.
 lrn = makeLearner("classif.lda")
 
 # upload the learner and retrieve its implementation ID:
-implementation.id = uploadOMLFlow(lrn, hash)
+implementation.id = uploadOMLFlow(lrn)
 
 run.ids = c()
 for (id in task.ids) {
@@ -48,6 +47,10 @@ for (id in task.ids) {
   run.id = uploadOMLRun(res, implementation.id = implementation.id, session.hash = hash)
   run.ids = c(run.ids, run.id)
 }
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'task.ids' not found
 ```
 
 **FIXME: Check if flow/task/... already exists on server? Download run results?**
@@ -70,16 +73,31 @@ for (id in task.ids) {
   q = f(metrics[metrics$implementation.id == implementation.id, "predictive.accuracy"])
   qs = c(qs, q)
 }
+```
 
+```
+## Error in eval(expr, envir, enclos): object 'task.ids' not found
+```
+
+```r
 boxplot(qs, ylim = c(0, 1), main = "Quantiles of lda measures")
 ```
-![Boxplot of the quantiles](../figures/boxplot_example.png)
-As we can see in the boxplot, the performance of lda varies quite strongly. Mostly, though, the lda
-measures were better than the average of all run results on the considered tasks.
+
+```
+## Warning in is.na(x): is.na() applied to non-(list or vector) of type 'NULL'
+
+## Warning in is.na(x): is.na() applied to non-(list or vector) of type 'NULL'
+
+## Warning in is.na(x): is.na() applied to non-(list or vector) of type 'NULL'
+```
+
+![plot of chunk boxplot_pred_accuracy](figure/boxplot_pred_accuracy-1.png)
+As we can see in the boxplot, the performance of `lda` varies quite strongly. Mostly, though, the `lda` measures were better than the average of all run results on the considered tasks.
 **FIXME: Really? It looks like the meadian is approx. 0.5**
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
+
 - [Introduction](1-Introduction.md)
 - [Configuration](2-Configuration.md)
 - [Listing](3-Listing.md)

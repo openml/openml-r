@@ -1,6 +1,8 @@
 Downloading
 ===========
 
+
+
 ### Download an OpenML task
 A user can download a task from the OpenML server, compute predictions with an algorithm (i.e., with a specific setup)
 and upload this algorithm as well as the predictions. The server will then calculate many different performance measures
@@ -38,8 +40,7 @@ task$input$data.set
 ##   Default Target Attribute: class
 ```
 
-A special print function gives the basic information on the data set. To extract the data itself
-one can use
+A special print function gives the basic information on the data set. To extract the data itself one can use
 
 
 ```r
@@ -81,16 +82,16 @@ You can download a flow by specifying the `flow.id` parameter in the `getOMLFlow
 
 
 ```r
-flow = getOMLFlow(flow.id = 1248L)
+flow = getOMLFlow(flow.id = 2700L)
 flow
 ```
 
 ```
 ## 
-## Flow "classif.randomForest" :: (Version = 1, Flow ID = 1248)
-## 	External Version         : 4.6-10
-## 	Dependencies             : mlr_2.3, randomForest_4.6.10
-## 	Number of Flow Parameters: 12
+## Flow "classif.randomForest" :: (Version = 47, Flow ID = 2700)
+## 	External Version         : R_3.1.2-734b029d
+## 	Dependencies             : mlr_2.9, randomForest_4.6.12
+## 	Number of Flow Parameters: 16
 ## 	Number of Flow Components: 0
 ```
 
@@ -102,28 +103,83 @@ You can download a single OpenML run with the `getOMLRun` function:
 
 
 ```r
-run = getOMLRun(run.id = 234L)  # see ?OMLRun for each slot of the OMLRun object
+run = getOMLRun(run.id = 525534L)  # see ?OMLRun for each slot of the OMLRun object
 ```
 
-There are some slots which are of major intereset for the `OMLRun` object. A list containing the parameter settings
-can be obtained by `run$parameter.setting`. All data that served as input for the run, including the
-URL to the data is stored in `run$input.data`.
+There are some slots which are of major intereset for the `OMLRun` object. A list containing the parameter settings can be obtained by `run$parameter.setting`:
 
-To retrieve predictions of an uploaded run, you can set the parameter `get.predictions = TRUE` to store the
-predictions in the `$predictions` slot or use the function `getOMLPredictions(run)`:
+```r
+run$parameter.setting  ## retrieve first parameter setting
+```
+
+```
+## [[1]]
+##  seed = 1
+## 
+## [[2]]
+##  kind = Mersenne-Twister
+## 
+## [[3]]
+##  normal.kind = Inversion
+```
+(**??? FIXME: WHAT DOES THIS REPRESENT???**)
+The first three parameters refer to the RNG settings, e.g. the seed, which will help you to reproduce the run. It the flow that created this run has hyperparameters that are different from the default values of the corresponding learner, they are also shown, otherwise the default hyperparameters are used. 
+
+All data that served as input for the run, including the URL to the data is stored in 
+
+```r
+run$input.data
+```
+
+```
+## 
+## ** Data Sets **
+##   did name                                                         url
+## 1  61 iris http://www.openml.org/data/download/61/dataset_61_iris.arff
+## 
+## ** Files **
+## Dataframe mit 0 Spalten und 0 Zeilen
+## 
+## ** Evaluations **
+## Dataframe mit 0 Spalten und 0 Zeilen
+```
+(**??? FIXME: STRANGE???**)
+
+To retrieve predictions of an uploaded run, you can use:
 
 
 ```r
-run.pred = getOMLRun(run.id = 234L, get.predictions = TRUE)
-all.equal(run.pred$predictions, getOMLPredictions(run))
+head(run$predictions)
 ```
 
 ```
-## [1] TRUE
+##   repeat fold row_id      prediction           truth
+## 1      0    0     43     Iris-setosa     Iris-setosa
+## 2      0    0     14     Iris-setosa     Iris-setosa
+## 3      0    0     37     Iris-setosa     Iris-setosa
+## 4      0    0     23     Iris-setosa     Iris-setosa
+## 5      0    0     10     Iris-setosa     Iris-setosa
+## 6      0    0     99 Iris-versicolor Iris-versicolor
+##   confidence.Iris-setosa confidence.Iris-versicolor
+## 1                      1                          0
+## 2                      1                          0
+## 3                      1                          0
+## 4                      1                          0
+## 5                      1                          0
+## 6                      0                          1
+##   confidence.Iris-virginica
+## 1                         0
+## 2                         0
+## 3                         0
+## 4                         0
+## 5                         0
+## 6                         0
 ```
+(**??? FIXME: STRANGE???**)
 
 ----------------------------------------------------------------------------------------------------
 Jump to:
+
 - [Introduction](1-Introduction.md)
 - [Configuration](2-Configuration.md)
 - [Listing](3-Listing.md)
