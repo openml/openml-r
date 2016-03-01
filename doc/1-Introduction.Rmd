@@ -22,7 +22,7 @@ Afterwards, there are different basic stages when using this package or OpenML, 
     * available for `DataSets`, `Tasks`, `Runs`, `Predictions` and `Flows`
 * [Running models on tasks](5-Running.md)
     * function `runTaskMlr`
-    * input: task and model
+    * input: `OMLTask` and [`Learner`](https://mlr-org.github.io/mlr-tutorial/release/html/learner/index.html)
     * output: `OMLMlrRun`, `OMLRun`
 * [Uploading](6-Uploading.md)
     * function `uploadOMLRun`
