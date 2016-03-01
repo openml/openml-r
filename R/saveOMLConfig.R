@@ -20,7 +20,7 @@ saveOMLConfig = function(server = NULL, verbosity = NULL, apikey = NULL, cachedi
   assertFlag(overwrite)
 
   if (file.exists(path) && !overwrite) {
-    stopf("Configuration file %s already exists. Set override to TRUE to force overwriting.", path)
+    stopf("Configuration file %s already exists. Set overwrite to TRUE to force overwriting.", path)
   }
 
   if (!file.exists(dirname(path))) {
