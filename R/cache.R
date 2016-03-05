@@ -45,8 +45,7 @@ getCacheURI = function(subdir, id, elements) {
   if (!isDirectory(path) && !dir.create(path, recursive = TRUE))
     stopf("Unable to create directory '%s'", path)
   path = normalizePath(file.path(path, elements), mustWork = FALSE)
-  # FIXME: use file.size, which is a bit faster, but depends on R-3.2.0
-  size = file.info(path)$size
+  size = file.size(path) # file.info(path)$size
   found = !is.na(size) & size > 0L
   setNames(Map(list, path = path, found = found), elements)
 }
