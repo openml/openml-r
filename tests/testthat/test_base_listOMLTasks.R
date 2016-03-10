@@ -41,5 +41,5 @@ test_that("listOMLTasks", {
   
   # check missings
   expect_true(all(tasks$NumberOfInstancesWithMissingValues <= tasks$NumberOfInstances, na.rm = na.rm))
-  expect_true(all(tasks$NumberOfMissingValues <= tasks$NumberOfInstances*tasks$NumberOfFeatures, na.rm = na.rm))
+  expect_true(all(tasks$NumberOfMissingValues <= as.numeric(tasks$NumberOfInstances)*as.numeric(tasks$NumberOfFeatures), na.rm = na.rm))
 })

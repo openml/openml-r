@@ -58,8 +58,7 @@ test_that("runTaskMlr", {
   # expect_true(is.null(run$predictions) && testString(run$error.message))
   
   # check for error message / failed runs
-  configureMlr(on.learner.error = "warn")
-  task = getOMLTask(261)
+  #task = getOMLTask(261)
   lrn = makeLearner("classif.randomForest")
   lrn$properties = c(lrn$properties, c("missings", "factors"))
   # should not produce an error message
@@ -67,7 +66,9 @@ test_that("runTaskMlr", {
   expect_true(is.na(run$error.message))
   # introduce NAs: should produce an error message
   task$input$data.set$data[1:2, 1] = NA
+  configureMlr(on.learner.error = "quiet")
   run = runTaskMlr(task, lrn)
+  configureMlr(on.learner.error = "stop")
   expect_false(is.na(run$error.message))
   
   # local sanity check (account needs read-write permissions)
