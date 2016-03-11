@@ -74,6 +74,8 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   run$mlr.benchmark.result = bench
   # Add parameter settings and seed
   parameter.setting = makeOMLRunParList(learner)
+  # FIXME: modify seed.pars names because there are learners that have "seed" as parameter setting (e.g. classif.randomForestSRC)?
+  # names(seed.pars) = paste0("R.", names(seed.pars))
   seed.setting = lapply(seq_along(seed.pars), function(x) {
     makeOMLRunParameter(
       name = names(seed.pars[x]),
@@ -82,6 +84,9 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
     )
   })
   run$parameter.setting = append(parameter.setting, seed.setting)
+  par.names = extractSubList(run$parameter.setting, "name")
+  if (length(par.names) != length(unique(par.names))) 
+    stop("duplicated names in 'parameter.setting' and/or 'seed.setting'")
   run$flow = createOMLFlowForMlrLearner(learner)
   # run$flow$source.path = createLearnerSourcefile(learner)
   # check = checkOMLFlow(learner, verbosity = verbosity)
@@ -129,14 +134,17 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   ps = mlr.lrn$par.set$pars
   par.vals = mlr.lrn$par.vals
   par.names = names(mlr.lrn$par.vals)
+  # get defaults for par.vals that have been set
+  par.defaults = getDefaults(mlr.lrn$par.set)
+  # store only par.vals that are different from default values
+  par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
+  par.vals = par.vals[par.ind]
+  par.names = par.names[par.ind]
+  
   par.settings = vector("list", length(par.vals))
   for (i in seq_along(par.vals)) {
     psi = ps[[par.names[i]]]
-    # FIXME: if it is possible to convert parameter to character, do this. What happens with vectors?
-#     val = try(as.character(par.vals[[i]]), silent = TRUE)
-#     if (is.error(val) & psi$type == "discrete") {
-#       val = discreteValueToName(x = par.vals[[i]], par = psi)
-#     } else val = par.vals[[i]]
+    # FIXME: what happens with parameters that are vectors (or not scalars, e.g. deeplearning)?
     val = paramValueToString(psi, par.vals[[i]])
     par.settings[[i]] = makeOMLRunParameter(
       name = par.names[i],

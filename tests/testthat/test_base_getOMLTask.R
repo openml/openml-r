@@ -13,7 +13,7 @@ test_that("getOMLTask", {
   task.ids = lapply(task.ids, function(X) head(X, 2))
   
   #setOMLConfig(arff.reader = "RWeka")
-  expect_error(getOMLTask(261), "For input string")
+  #expect_error(getOMLTask(261), "For input string")
   
   for (i in unlist(task.ids)) {
     # FIXME: change this after https://github.com/openml/OpenML/issues/240 is fixed
