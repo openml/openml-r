@@ -2,11 +2,11 @@ context("makeOMLRunParList")
 
 test_that("makeOMLRunParList", {
   nodesize = 1:2
-  nsplit = 0:1
+  replace = c(TRUE, FALSE)
   
   for(ns in nodesize) {
-    for (nsp in nsplit) {
-      lrn = makeLearner("classif.randomForestSRC", ntree = 300, nodesize = ns, nsplit = nsp)
+    for (rep in replace) {
+      lrn = makeLearner("classif.randomForest", ntree = 300, nodesize = ns, replace = rep)
       par.defaults = getDefaults(lrn$par.set)
       par.vals = lrn$par.vals
       # get names of parameters with values that differ from the defaults
