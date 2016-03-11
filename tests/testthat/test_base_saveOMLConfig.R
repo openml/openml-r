@@ -19,4 +19,5 @@ test_that("saveOMLConfig", {
 
   # set previous configs
   do.call("setOMLConfig", curr.conf)
+  do.call(saveOMLConfig, c(curr.conf, list(overwrite = TRUE)))
 })
