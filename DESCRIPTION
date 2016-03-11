@@ -20,7 +20,9 @@ Suggests:
     rpart,
     RWeka,
     farff,
-    mboost
+    mboost,
+    knitr,
+    rmarkdown
 Imports:
     backports (>= 1.0.1),
     BBmisc (>= 1.9),
@@ -39,3 +41,4 @@ LazyData: yes
 ByteCompile: yes
 Version: 1.0
 RoxygenNote: 5.0.1
+VignetteBuilder: knitr

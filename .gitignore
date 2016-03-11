@@ -9,3 +9,4 @@ OPENMLAPIKEY.R
 doc/?-*.md
 doc/?-*.html
 
+inst/doc
