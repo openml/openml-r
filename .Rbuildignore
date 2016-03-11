@@ -1,15 +1,15 @@
-^attic
-doc
-.gitignore
-.travis.yml
-.editorconfig
+^attic/
+^doc/
+^.gitignore$
+^.travis.yml$
+^.editorconfig$
 
 ^.*tar.gz$
-man-roxygen
-README.md
+^man-roxygen/
+^README.md$
 
-src/*.o
-src/*.so
+^src/*.o
+^src/*.so
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
