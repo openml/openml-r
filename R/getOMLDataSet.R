@@ -87,7 +87,8 @@ parseOMLDataSetDescription = function(doc) {
     paper.url = xmlOValS(doc, "/oml:data_set_description/oml:paper.url"),
     update.comment = xmlOValS(doc, "/oml:data_set_description/oml:update.comment"),
     md5.checksum = xmlRValS(doc, "/oml:data_set_description/oml:md5_checksum"),
-    status = xmlRValS(doc, "/oml:data_set_description/oml:status")
+    status = xmlRValS(doc, "/oml:data_set_description/oml:status"),
+    tags = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:tag")
   ))
   do.call(makeOMLDataSetDescription, args)
 }

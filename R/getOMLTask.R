@@ -92,7 +92,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   task.id = xmlRValI(doc, "/oml:task/oml:task_id")
   task.type = xmlRValS(doc, "/oml:task/oml:task_type")
   parameters = getParams("oml:task")
-  tags = xmlOValsMultNsS(doc, "/oml:run/oml:tag", NA_character_)
+  tags = xmlOValsMultNsS(doc, "/oml:task/oml:tag", NA_character_)
   data.set.output = filterNull(list(data.set.id = xmlOValI(doc, "/oml:task/oml:output/oml:data_set/oml:data_set_id"),
                                     target.features = xmlOValsMultNsS(doc, "/oml:task/oml:output/oml:data_set/oml:target_feature")))
   if (length(data.set.output) == 0)

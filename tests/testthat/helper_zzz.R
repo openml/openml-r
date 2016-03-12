@@ -2,6 +2,8 @@ library(mlr)
 library(mboost)
 library(stringi)
 library(checkmate)
+library(httr)
+set_config(timeout(60))
 
 # please no annoying messages, and dont use the user's cache dir
 setOMLConfig(verbosity = 1L, cachedir = tempdir(), arff.reader = "farff")

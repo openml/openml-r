@@ -109,7 +109,9 @@ print.OMLDataSet = function(x, ...) {
 #'   MD5 checksum to check if the data set is downloaded without corruption.
 #' @param status [\code{character(1)}]\cr
 #'   The status of the data set.
-#'
+#' @param tags [\code{character}]\cr
+#'   Optional tags for the data set.
+#'   
 #' @name OMLDataSetDescription
 #' @export
 #' @family dataset related functions
@@ -120,7 +122,7 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
   row.id.attribute = NA_character_, ignore.attribute = NA_character_, version.label = NA_character_,
   citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
   paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_,
-  status = NA_character_) {
+  status = NA_character_, tags = NA_character_) {
 
   assertInt(id)
   assertString(name)
@@ -145,6 +147,7 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
   assertString(update.comment, na.ok = TRUE)
   assertString(md5.checksum, na.ok = TRUE)
   assertString(status, na.ok = TRUE)
+  assertCharacter(tags)
 
   makeS3Obj("OMLDataSetDescription",
     id = id,
@@ -169,7 +172,8 @@ makeOMLDataSetDescription = function(id, name, version, description, format,
     paper.url = paper.url,
     update.comment = update.comment,
     md5.checksum = md5.checksum,
-    status = status
+    status = status,
+    tags = tags
   )
 }
 

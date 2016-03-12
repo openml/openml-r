@@ -22,7 +22,6 @@ tagOMLObject = function(id, object = c("data", "task", "flow", "run"),
   assertChoice(object, choices = c("data", "task", "flow", "run"))
   assertString(tag)
   assertChoice(method, choices = c("add", "remove"))
-  if (object == "task") stop("Tagging of tasks currently not supported by the server.")
   
   action = ifelse(method == "add", "tag", "untag")
   api.string = collapse(c(object, action), sep = "/")

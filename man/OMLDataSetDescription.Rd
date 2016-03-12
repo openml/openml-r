@@ -14,7 +14,8 @@ makeOMLDataSetDescription(id, name, version, description, format,
   version.label = NA_character_, citation = NA_character_,
   visibility = NA_character_, original.data.url = NA_character_,
   paper.url = NA_character_, update.comment = NA_character_,
-  md5.checksum = NA_character_, status = NA_character_)
+  md5.checksum = NA_character_, status = NA_character_,
+  tags = NA_character_)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -90,6 +91,9 @@ MD5 checksum to check if the data set is downloaded without corruption.}
 
 \item{status}{[\code{character(1)}]\cr
 The status of the data set.}
+
+\item{tags}{[\code{character}]\cr
+Tags for the data set.}
 }
 \description{
 Creates a description for an OMLDataSet.
