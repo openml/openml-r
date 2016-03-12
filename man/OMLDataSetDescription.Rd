@@ -93,7 +93,7 @@ MD5 checksum to check if the data set is downloaded without corruption.}
 The status of the data set.}
 
 \item{tags}{[\code{character}]\cr
-Tags for the data set.}
+Optional tags for the data set.}
 }
 \description{
 Creates a description for an OMLDataSet.

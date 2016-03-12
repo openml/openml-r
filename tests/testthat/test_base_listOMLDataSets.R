@@ -1,7 +1,7 @@
-context("listOMLDataSets")
+context(".listOMLDataSets")
 
-test_that("listOMLDataSets", {
-  dsl = listOMLDataSets()
+test_that(".listOMLDataSets", {
+  dsl = .listOMLDataSets()
   expect_is(dsl, "data.frame")
   expect_true(nrow(dsl) > 100L && ncol(dsl) == 14L)
   expect_true(setequal(names(dsl), c("did", "status", "name", "MajorityClassSize",

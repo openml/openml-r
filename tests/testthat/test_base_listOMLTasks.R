@@ -1,6 +1,6 @@
-context("listOMLTasks")
+context(".listOMLTasks")
 
-test_that("listOMLTasks", {
+test_that(".listOMLTasks", {
   exp.names = c("task.id", "task.type", "did", "status", "name", "target.feature", "tags",
     "estimation.procedure", "evaluation.measures", "MajorityClassSize",
     "MaxNominalAttDistinctValues", "MinorityClassSize", "NumBinaryAtts", 
@@ -9,7 +9,7 @@ test_that("listOMLTasks", {
     "NumberOfNumericFeatures", "NumberOfSymbolicFeatures"
   )
 
-  tasks = listOMLTasks()
+  tasks = .listOMLTasks()
   expect_is(tasks, "data.frame")
   expect_true(nrow(tasks) > 5L)
   expect_true(isSuperset(colnames(tasks), exp.names))

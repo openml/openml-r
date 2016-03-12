@@ -1,19 +1,19 @@
-context("listOMLRunEvaluations")
+context(".listOMLRunEvaluations")
 
-test_that("listOMLRunEvaluations", {
+test_that(".listOMLRunEvaluations", {
   task.id = 3L
-  run = listOMLRuns(task.id = task.id)
+  run = .listOMLRuns(task.id = task.id)
 
   # filter only successful runs
   run = run[is.na(run$error.message), , drop = FALSE]
-  run.evals = listOMLRunEvaluations(task.id = task.id)
+  run.evals = .listOMLRunEvaluations(task.id = task.id)
   expect_is(run.evals, "data.frame")
   expect_true(isSubset(run.evals$run.id, run$run.id))
 
   # now check stuff for runs
   run.ids = 1:100
-  runs = listOMLRuns(run.id = run.ids)
-  run.evals = listOMLRunEvaluations(run.id = run.ids)
+  runs = .listOMLRuns(run.id = run.ids)
+  run.evals = .listOMLRunEvaluations(run.id = run.ids)
 
   # subset only runs without error
   runs = runs[is.na(runs$error.message),]
@@ -27,7 +27,7 @@ test_that("listOMLRunEvaluations", {
   # for (i in c("run.id", "setup.id", "flow.id", "uploader.id")) {
   #   id = get(i)[length(get(i))]
   #   if (i == "uploader.id") i = "uploader"
-  #   rl = do.call("listOMLRunEvaluations", setNames(list(id), i))
+  #   rl = do.call(".listOMLRunEvaluations", setNames(list(id), i))
   #   expect_true(all(rl[, i] == id))
   # }
 })
