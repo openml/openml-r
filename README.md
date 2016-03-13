@@ -11,20 +11,12 @@ Allows to interface the [OpenML](http://www.openml.org/frontend/page/home) serve
 
 # Installation of the package
 
-At first install the latest versions of all dependencies from CRAN:
-```r
-install.packages(c("mlr", "checkmate", "data.table", "digest", "RCurl", "stringi", "XML", "RWeka", "devtools"))
-```
-Install the current development version of the OpenML R package from Github:
+There is no CRAN release yet. Use `devtools` to install the current development version of the OpenML R package from GitHub:
 ```r
 devtools::install_github("openml/r")
 ```
-After attaching the package, you are ready to start:
-```r
-library(OpenML)
-```
+
 
 # Tutorial
 
 There's a short [tutorial](https://github.com/openml/r/blob/master/doc/knitted/1-Introduction.md) with which we want to help you to get started. If you have further questions or issues, please use the [issue tracker](https://github.com/openml/r/issues).
-
