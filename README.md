@@ -1,5 +1,7 @@
 # OpenML plugin for R
 
+[![Join the chat at https://gitter.im/openml/r](https://badges.gitter.im/openml/r.svg)](https://gitter.im/openml/r?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
 [![Build Status](https://travis-ci.org/openml/r.svg)](https://travis-ci.org/openml/r)
