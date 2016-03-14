@@ -13,7 +13,8 @@ License: BSD_3_clause + file LICENSE
 URL: https://github.com/openml/r
 BugReports: https://github.com/openml/r/issues
 Depends:
-    R (>= 3.0.2)
+    R (>= 3.0.2),
+    mlr (>= 2.8)
 Suggests:
     testthat,
     randomForest,
@@ -26,15 +27,14 @@ Suggests:
 Imports:
     backports (>= 1.0.1),
     BBmisc (>= 1.9),
-    checkmate (>= 1.6.3),
-    ParamHelpers (>= 1.6),
+    checkmate (>= 1.7.3),
+    ParamHelpers (>= 1.7),
     data.table,
     digest,
     httr,
     stringi,
     XML,
     xml2,
-    mlr (>= 2.5),
     memoise (>= 1.0.0),
     stats
 LazyData: yes

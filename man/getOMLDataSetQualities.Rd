@@ -18,7 +18,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
 \item{name}{[\code{character}]\cr
-Retruns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).
+Returns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).
 Default is \code{NULL} and uses all available data qualities.}
 }
 \value{

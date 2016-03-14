@@ -7,7 +7,7 @@
 #'   The data set ID.
 #' @template arg_verbosity
 #' @param name [\code{character}]\cr
-#'   Retruns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).
+#'   Returns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).
 #'   Default is \code{NULL} and uses all available data qualities.
 #' @return [\code{data.frame}].
 #' @family downloading functions
