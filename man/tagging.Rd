@@ -2,10 +2,14 @@
 % Please edit documentation in R/tagOMLObject.R
 \name{tagOMLObject}
 \alias{tagOMLObject}
+\alias{untagOMLObject}
 \title{Tagging of OpenML objects}
 \usage{
-tagOMLObject(id, object = c("data", "task", "flow", "run"), tag,
-  method = c("add", "remove"), verbosity = NULL)
+tagOMLObject(id, object = c("data", "task", "flow", "run"), tags,
+  verbosity = NULL)
+
+untagOMLObject(id, object = c("data", "task", "flow", "run"), tags,
+  verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -15,11 +19,8 @@ The ID of the respective object.}
 A character that specifies the object you want to delete from the server. Can be either
 \code{"data"}, \code{"task"}, \code{"flow"} or \code{"run"}.}
 
-\item{tag}{[\code{character(1)}]\cr
-The tag that should be added.}
-
-\item{method}{[\code{character(1)}]\cr
-Specify if tag should be added or removed.}
+\item{tags}{[\code{character}]\cr
+The tags that should be added/removed.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
