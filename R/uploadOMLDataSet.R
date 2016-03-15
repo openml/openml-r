@@ -60,10 +60,12 @@ createOMLDataSetFromMlrTask = function(task){
     status = "active"
   )
 
+  cns = colnames(mlr::getTaskData(task))
+
   oml.data = makeOMLDataSet(desc = desc,
     data = mlr::getTaskData(task),
-    colnames.old = mlr::getTaskFeatureNames(task),
-    colnames.new = mlr::getTaskFeatureNames(task),
+    colnames.old = cns,
+    colnames.new = cns,
     target.features = mlr::getTaskTargetNames(task)
   )
   return(oml.data)

@@ -1,0 +1,82 @@
+---
+title: "OpenML"
+author: "The OpenML R Team"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{OpenML}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r init, include=FALSE}
+# library("knitr")
+# opts_chunk$set(cache = TRUE)
+library("OpenML")
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+```
+
+# Example workflow with mlr {#workflow}
+
+Here we will show you how a standard workflow could look like. This just a small example, to get further information about the package and its functions, please have a look at the other sections of this tutorial or the [detailed documentation](http://www.rdocumentation.org/packages/OpenML).
+
+For this example, let's assume we wanted to test how good the R implementation of `lda` (from package **MASS**) is, in comparison with all uploaded runs on 20 randomly selected tasks.
+We only want to consider tasks that have less than 10 features, not more than 100 instances, exactly 2 classes in the target feature and not a single missing value.
+
+**FIXME: Move lengthy comments to Markdown text**
+
+```{r}
+set.seed(2315)
+library(mlr)
+
+tl = listOMLTasks()
+
+# Find tasks that match our specifications
+task.ids = subset(tl, task.type == "Supervised Classification",
+  NumberOfFeatures < 10 & NumberOfFeatures > 3 &
+  NumberOfInstances < 100 & NumberOfClasses == 2 &
+  NumberOfMissingValues == 0, select = task.id, drop = TRUE)
+length(task.ids)
+
+# Randomly select 20 of them
+task.ids = sample(task.ids, 20)
+```
+Next, we create and upload the learner, compute predictions and upload these.
+
+```{r eval = FALSE}
+# create the mlr learner for lda:
+lrn = makeLearner("classif.lda")
+
+# Upload the implementation and retrieve its implementation ID with
+implementation.id = uploadOMLFlow(lrn)
+
+run.ids = c()
+for (id in task.ids) {
+  task = getOMLTask(id)
+  res = try(runTaskMlr(task, lrn)) # try to compute predictions with our learner
+  run.id = uploadOMLRun(res, implementation.id = implementation.id, session.hash = hash)
+  run.ids = c(run.ids, run.id)
+}
+```
+
+**FIXME: Check if flow/task/... already exists on server? Download run results?**
+
+Now, we compute the quantiles of the measure `"predictive.accuracy"` of all runs using our `lda` implementation in comparison to the measures of different implementations.
+Quantiles close to one correspond to "lda has achieved (one of) the best results", quantiles close to zero correspond to "the other flows were better".
+
+```{r boxplot_pred_accuracy, eval = FALSE}
+qs = c()
+for (id in task.ids) {
+  metrics = listOMLRunResults(id)
+  if (is.null(metrics$predictive.accuracy)){
+    cat("skip")
+    next
+  }
+  f = ecdf(metrics$predictive.accuracy)
+  q = f(metrics[metrics$implementation.id == implementation.id, "predictive.accuracy"])
+  qs = c(qs, q)
+}
+
+boxplot(qs, ylim = c(0, 1), main = "Quantiles of lda measures")
+```
+As we can see in the boxplot, the performance of `lda` varies quite strongly. Mostly, though, the `lda` measures were better than the average of all run results on the considered tasks.
+**FIXME: Really? It looks like the meadian is approx. 0.5**

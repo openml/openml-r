@@ -1,0 +1,58 @@
+---
+title: "OpenML"
+author: "The OpenML R Team"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{OpenML}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r init, include=FALSE}
+# library("knitr")
+# opts_chunk$set(cache = TRUE)
+library("OpenML")
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+```
+
+# Uploading {#upload}
+
+## Upload a flow using mlr
+
+(**??? Fixme: Shoudln't we explain first, why we need to upload the implementation before uploading the results? And isn't that needed only once?**)
+
+A flows is an implementation of single algorithms or scripts.
+To create an flow, we can use the `mlr` package.
+Each `mlr` learner can be considered as an implementation of a flow that can be uploaded to the server with the function `uploadOMLFlow`.
+If the flow has already been uploaded to the server, we get a message that the flow already exists and the `flow.id` is returned from the function.
+Otherwise, the not existing flow is uploaded and a new `flow.id` is assigned to it.
+
+```{r eval = TRUE, warning = FALSE, message = TRUE}
+library(mlr)
+lrn = makeLearner("classif.randomForest")
+flow.id = uploadOMLFlow(lrn)
+flow.id
+```
+(**??? Fixme: What happens if a flow already exists on the server? And what happens here if we use the read-only API key? The tutorial states that we get a message that the flow already exists. This is not the case!**)
+
+## Upload a flow without using mlr
+
+(**??? Fixme: We don't want to do this with the sourcefile anymore. Should we provide a link how to create a mlr-learner as alternative?**)
+
+In the previous section, we explained how to create an `OMLFlow` manually and created the object `oml.flow`, which reflects the description object of the flow. Before you can upload this flow to the server, you have to write an R-script containing the algorithm you want to use as flow. Let's assume you have done this and have a string `sourcefile` containing the path to your R-script. Your flow can now be uploaded as follows:
+
+```{r eval = FALSE}
+oml.flow.id = uploadOMLFlow(oml.flow, sourcefile = sourcefile)
+oml.flow.id
+```
+
+## Upload an OpenML run to the server
+
+Runs that have been created using `mlr` can be uploaded by:
+```{r eval = FALSE, warning = FALSE, message = TRUE}
+run.id = uploadOMLRun(run.mlr)
+```
+Before the run is uploaded, `uploadOMLRun` is looking if the flow that created this run is available on the server.
+If the flow is not available on the server, it is automatically uploaded.
+(**??? Fixme: Cannot be executed with read-only API key. I still would like to execute this in order to check the code...**)
+
