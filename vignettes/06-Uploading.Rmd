@@ -23,7 +23,7 @@ A data set contains information that can be stored on OpenML and used by OpenML 
 
 ## this is a fake meaningless data set. Please do not upload it to the server. 
 days <- c(1, 10, 5)
-startdate <- c('2016-02-10','2016-2-11','2016-2-21')
+startdate <- c('2016-02-10','2016-02-11','2016-02-21')
 task <- c('Write code','Test','Make documentation')
 project = data.frame(task, days, startdate)
 
