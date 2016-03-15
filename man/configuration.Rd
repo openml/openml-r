@@ -11,6 +11,11 @@ full path to the configuration file on your operating system.
 For further information please read the \href{https://github.com/openml/r/blob/master/doc/knitted/2-Configuration.md}{configuration section}
 of the tutorial.
 }
+\note{
+By default the cache directory is located in a temporary directory and
+the cache will be deleted in between R sessions. We thus recommend to set
+the cache directory by hand.
+}
 \seealso{
 Other config: \code{\link{getOMLConfig}},
   \code{\link{loadOMLConfig}}, \code{\link{saveOMLConfig}},

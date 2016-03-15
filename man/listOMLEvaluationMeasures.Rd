@@ -28,7 +28,7 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-inst/examples/listOMLEvaluationMeasures.R
+/inst/examples/listOMLEvaluationMeasures.R
 }
 \seealso{
 Other listing functions: \code{\link{listOMLDataSetQualities}},

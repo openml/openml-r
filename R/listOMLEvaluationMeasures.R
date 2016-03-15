@@ -22,5 +22,5 @@
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @export
-#' @examples inst/examples/listOMLEvaluationMeasures.R
+#' @examples /inst/examples/listOMLEvaluationMeasures.R
 listOMLEvaluationMeasures = memoise(.listOMLEvaluationMeasures)

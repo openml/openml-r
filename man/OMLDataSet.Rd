@@ -21,7 +21,7 @@ Names of the features that were uploaded to the server.}
 Names of the features that are displayed.}
 
 \item{target.features}{[\code{character}]\cr
-Name of the target feature(s).}
+Name(s) of the target feature(s).}
 }
 \value{
 [\code{OMLDataSet}]
