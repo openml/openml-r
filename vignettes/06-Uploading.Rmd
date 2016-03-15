@@ -17,23 +17,48 @@ setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 
 # Uploading {#upload}
 
+## Upload a data set 
+A data set contains information that can be stored on OpenML and used by OpenML tasks and runs. In this example, a dumb data set is created, processed with `mlr` and uploaded to OpenML server. The workflow of uploading a data sets consists of creating `makeClassifTask`, convertation of this task to `makeOMLDataSet` and uploading this data set to the server.   
+```{r eval = FALSE, warning = FALSE, message = TRUE} 
+
+## this is a fake meaningless data set. Please do not upload it to the server. 
+days <- c(1, 10, 5)
+startdate <- c('2016-02-10','2016-2-11','2016-2-21')
+task <- c('Write code','Test','Make documentation')
+project = data.frame(task, days, startdate)
+
+## create a new mlr classification task
+sample.task = makeClassifTask(id = deparse(substitute(project)), project, "task",
+  weights = NULL, blocking = NULL, positive = NA_character_,
+  fixup.data = "warn", check.data = TRUE) 
+
+## create a new OML data set from mlr task
+sampleOMLDataSet = makeOMLDataSet(desc = data.description, data = project, colnames.old = colnames(project), colnames.new = colnames(project), target.features = "task") 
+
+(**FIXME: UPLOADING DOES NOT WORK WITH READ_ONLY KEY**)
+
+## upload a data set to the server
+dataset.id = uploadOMLDataSet(sample.task)
+dataset.id
+```
+
 ## Upload a flow using mlr
 
 (**??? Fixme: Shoudln't we explain first, why we need to upload the implementation before uploading the results? And isn't that needed only once?**)
 
-A flows is an implementation of single algorithms or scripts.
-To create an flow, we can use the `mlr` package.
+A flow is an implementation of a single algorithm or a script.
+To create an flow, we can use the `mlr` package that has a number of already implemented algorithms.
 Each `mlr` learner can be considered as an implementation of a flow that can be uploaded to the server with the function `uploadOMLFlow`.
 If the flow has already been uploaded to the server, we get a message that the flow already exists and the `flow.id` is returned from the function.
 Otherwise, the not existing flow is uploaded and a new `flow.id` is assigned to it.
-
+ 
 ```{r eval = TRUE, warning = FALSE, message = TRUE}
 library(mlr)
 lrn = makeLearner("classif.randomForest")
 flow.id = uploadOMLFlow(lrn)
 flow.id
 ```
-(**??? Fixme: What happens if a flow already exists on the server? And what happens here if we use the read-only API key? The tutorial states that we get a message that the flow already exists. This is not the case!**)
+(**??? Fixme: What happens if a flow already exists on the server? And what happens here if we use the read-only API key? The tutorial states that we get a message that the flow already exists. This is not the case! In the most recent version, it returns the Flow ID if flow already exists. Check this comment.**) 
 
 ## Upload a flow without using mlr
 
