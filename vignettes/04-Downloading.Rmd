@@ -33,6 +33,7 @@ The following call returns an OpenML task object for a supervised classification
 task = getOMLTask(task.id = 59L)
 task
 ```
+
 The corresponding `"OMLDataSet"` object can be accessed by
 ```{r eval=FALSE}
 task$input$data.set
@@ -49,7 +50,6 @@ To extract the data itself one can use
 iris.data = task$input$data.set$data
 head(iris.data)
 ```
-
 
 ## Download an OpenML flow
 You can download a flow by specifying the `flow.id` parameter in the `getOMLFlow` function:
@@ -71,7 +71,7 @@ A list containing Random Number Generator (RNG) settings for reproducing a run a
 ```{r eval=FALSE}
 run$parameter.setting  # retrieve the list of parameter settings
 ```
-(**??? FIXME: WHAT DOES THIS REPRESENT???**)
+(**??? FIXME: CHECK THE OUTPUT???**)
 The first three parameters refer to the RNG settings, e.g. the seed or the type of the RNG, which will help you to reproduce the run.
 It the flow that created this run has hyperparameters that are different from the default values of the corresponding learner, they are also shown, otherwise the default hyperparameters are used.
 
@@ -79,7 +79,7 @@ All data that served as input for the run, including data set(s) ID(s) and the U
 ```{r eval=FALSE}
 run$input.data 
 ```
-(**??? FIXME: STRANGE???**)
+(**??? FIXME: CHECK IF IT IS CLEAR FOR USERS???**)
 
 To retrieve predictions made by an uploaded run, you can use:
 ```{r eval=FALSE}
