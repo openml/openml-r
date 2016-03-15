@@ -44,7 +44,7 @@ Afterwards, there are different basic stages when using this package or OpenML, 
 
 All examples in this tutorial are given with a READ-ONLY key. 
 
-With this key you can read all the information from the server but not write data sets, tasks, flows and runs to a server. This key allows to emulate uploading to the server but doesn't allow to really store data. If you want to write data to a server, you must **get your won personal key**. The process how to obtain a key is shown in the [configuration section](#config).
+With this key you can read all the information from the server but not write data sets, tasks, flows and runs to a server. This key allows to emulate uploading to the server but doesn't allow to really store data. If you want to write data to a server, you must **get your own personal key**. The process how to obtain a key is shown in the [configuration section](#config).
 
 Important! Please do not write meaningless data to a server such as copies of already existing data sets, duplicate tasks or runs. Only one instance of Iris data set should be enough for everyone :)
 
