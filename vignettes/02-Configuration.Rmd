@@ -31,7 +31,7 @@ After registration you should create a configuration file.
 The `config` file may contain the following information:
 
 * `server`:
-    * default: `http://www.openml.org`
+    * default: `http://api_new.openml.org/v1`
 * `cachedir`:
     * directory where current cache contents are stored
     * the default cache directory can be obtained by the R command `file.path(tempdir(), "cache")`.
