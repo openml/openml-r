@@ -34,10 +34,15 @@ Default is \code{NULL}, which means no performance measurements.}
 Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.}
 }
 \value{
-[\code{OMLMlrRun}], an \code{\link{OMLRun}} with additional slots: \code{mlr.benchmark.result} and \code{flow}.
+[\code{list}] Named list with the following components:
+\describe{
+  \item{run}{The \code{\link{OMLRun}} object.}
+  \item{bmr}{Benchmark result returned by \code{\link[mlr]{benchmark}}.}
+  \item{flow}{The generated \code{\link{OMLFlow}} object.}
+}
 }
 \description{
-Run task with a specified learner from mlr and produce predictions.
+Run task with a specified learner from \pkg{mlr} and produce predictions.
 }
 \seealso{
 \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}

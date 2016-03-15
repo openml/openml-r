@@ -18,8 +18,8 @@ test_that("uploadOMLRun", {
   lrn = makeLearner("classif.rpart")
   flow = uploadOMLFlow(lrn)
   task = getOMLTask(1L)
-  run = runTaskMlr(task, lrn, scimark.vector = rep(1.5, 6))
-  run = uploadOMLRun(run)
+  res = runTaskMlr(task, lrn, scimark.vector = rep(1.5, 6))
+  run = uploadOMLRun(res$run)
   expect_is(run.id, "integer")
   deleteOMLObject(run, object = "run")
   # FIXME: flow should be deletable if no runs are associated to it
