@@ -22,6 +22,12 @@ Default is \code{TRUE}.}
 Loads the OpenML config file from the disk and overwrites the
 current OpenML config.
 }
+\examples{
+# if assign = FALSE nothing is changed
+# usually one would want assign = TRUE
+loadOMLConfig(assign = FALSE)
+
+}
 \seealso{
 Other config: \code{\link{configuration}},
   \code{\link{getOMLConfig}}, \code{\link{saveOMLConfig}},

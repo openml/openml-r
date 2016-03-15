@@ -72,6 +72,7 @@ findCachedFlow = function(id, elements = list()) {
 #' @title Clear cache directories
 #'
 #' @description Delete all cached objects and recreate cache directories.
+#' @example /inst/examples/clearOMLCache.R
 #' @export
 clearOMLCache = function() {
   conf = getOMLConfig()

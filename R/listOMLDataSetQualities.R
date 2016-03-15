@@ -22,4 +22,5 @@
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @export
+#' @example inst/examples/listOMLDataSetQualities.R
 listOMLDataSetQualities = memoise(.listOMLDataSetQualities)

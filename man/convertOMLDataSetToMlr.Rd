@@ -46,6 +46,13 @@ Default is set via \code{\link{setOMLConfig}}.}
 \description{
 Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 }
+\examples{
+\dontrun{
+	library("mlr")
+	autosOML <- getOMLDataSet(did = 9L)
+	autosMlr <- convertOMLDataSetToMlr(autosOML) 
+}
+}
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}}, \code{\link{deleteOMLObject}},

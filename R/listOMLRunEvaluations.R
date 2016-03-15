@@ -62,4 +62,5 @@
 #' @return [\code{data.frame}].
 #' @family list
 #' @export
+#' @example inst/examples/listOMLRunEvaluations.R
 listOMLRunEvaluations = memoise(.listOMLRunEvaluations)

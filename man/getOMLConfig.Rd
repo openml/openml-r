@@ -12,6 +12,9 @@ getOMLConfig()
 \description{
 Returns a list of OpenML configuration settings.
 }
+\examples{
+getOMLConfig()
+}
 \seealso{
 Other config: \code{\link{configuration}},
   \code{\link{loadOMLConfig}}, \code{\link{saveOMLConfig}},

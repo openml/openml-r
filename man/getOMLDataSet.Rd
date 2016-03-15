@@ -32,6 +32,16 @@ will be downloaded (if not in cache) and returned.
 Note that data splits and other task-related information are not included in
 an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask}}.
 }
+\examples{
+\dontrun{
+	dat <- getOMLDataSet(did = 9L)
+
+	# this object contains the data ($data) 
+	# and meta information
+	str(dat, 1)
+	summary(dat$data)
+}
+}
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},

@@ -29,6 +29,12 @@ the first call will query the server and store the results in memory while the s
 the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
+\examples{
+\dontrun{
+	flows <- listOMLFlows()
+	tail(flows)
+}
+}
 \seealso{
 Other flow related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}},

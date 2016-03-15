@@ -28,6 +28,14 @@ Default is \code{NULL} and uses all available data qualities.}
 The returned \code{data.frame} contains data set quality
 \dQuote{name} and value \dQuote{value}.
 }
+\examples{
+\dontrun{
+a <- getOMLDataSetQualities(did = 9L)
+a[a$name == "NumberOfMissingValues", ]
+getOMLDataSetQualities(did = 9L, 
+		       name = "NumberOfMissingValues")
+}
+}
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSet}},
   \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},

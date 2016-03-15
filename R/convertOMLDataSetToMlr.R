@@ -25,6 +25,7 @@
 #' @template arg_verbosity
 #' @return [\code{\link[mlr]{Task}}].
 #' @family dataset related functions
+#' @example /inst/examples/convertOMLDataSetToMlr.R
 #' @export
 convertOMLDataSetToMlr = function(
   obj,

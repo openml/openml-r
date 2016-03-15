@@ -11,6 +11,7 @@
 #'   Default is \code{NULL} and uses all available data qualities.
 #' @return [\code{data.frame}].
 #' @family downloading functions
+#' @example inst/examples/getOMLDataSetQualities.R
 #' @export
 getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
   qualities = listOMLDataSetQualities()$name

@@ -10,6 +10,7 @@
 #'   Show warning if there are deactivated datasets in cache?
 #'   Default is \code{TRUE}.
 #' @return [\code{data.frame}]
+#' @example inst/examples/getCachedOMLDataSetStatus.R
 #' @export
 getCachedOMLDataSetStatus = function(show.warnings = TRUE) {
   assertFlag(show.warnings)
