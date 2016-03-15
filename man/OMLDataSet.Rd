@@ -21,7 +21,7 @@ Names of the features that were uploaded to the server.}
 Names of the features that are displayed.}
 
 \item{target.features}{[\code{character}]\cr
-Name of the target feature(s).}
+Name(s) of the target feature(s).}
 }
 \value{
 [\code{OMLDataSet}]
@@ -46,6 +46,7 @@ of the \code{OMLDataSet} that refer to the target feature(s).
 }
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
+  \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{deleteOMLObject}},
   \code{\link{getOMLDataSet}},
