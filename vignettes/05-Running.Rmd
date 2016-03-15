@@ -13,15 +13,13 @@ vignette: >
 # opts_chunk$set(cache = TRUE)
 library("OpenML")
 setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
-task = getOMLTask(task.id = 59L)
-iris.data = task$input$data.set$data
 ```
 
 # Running {#running}
-You can apply an implementation of an algorithm to a specific task. There are several possibilities to do this.
+The modularized structure of OpenML allows to apply the implementation of an algorithm to a specific task and there exist multiple possibilities to do this.
 
 ## Run a task with a specified mlr learner
-If you are working with [**mlr**](https://github.com/mlr-org/mlr), you can specify a `RLearner` object and use the function `runTaskMlr` to create the desired `"OMLMlrRun"` object.
+If one is working with [**mlr**](https://github.com/mlr-org/mlr), one can specify a `RLearner` object and use the function `runTaskMlr` to create the desired `"OMLMlrRun"` object.
 The `task` is created the same way as in the previous sections:
 ```{r, warning = FALSE, message = FALSE}
 task = getOMLTask(task.id = 59L)
@@ -31,16 +29,14 @@ lrn = makeLearner("classif.rpart")
 run.mlr = runTaskMlr(task, lrn)
 run.mlr
 ```
-Note that locally created runs don't have a run ID or flow ID yet.
-These are assigned by the OpenML server after uploading the run.
+Note that locally created runs don't have a run ID or flow ID yet. These are assigned by the OpenML server after uploading the run.
 
 ## Run a task without using mlr
-If you are not using **mlr**, you will have to invest quite a bit more time to get things done. So -- unless you have good reasons to do otherwise -- we strongly encourage you to use **mlr**.
+If one is not using **mlr**, one will have to invest quite a bit more time and effort to get things done. So, unless there are good reasons to do otherwise, we strongly encourage to use **mlr**.
 
 The following example shows how to create an OpenML flow description object manually.
 
-The first step is to create a list of `OMLFlowParameter`, where each parameter of your implementation is stored.
-Let's assume we have written an algorithm that has two parameters called `a` (with default value: `500`) and `b` (with default value: `TRUE`).
+The first step is to create a list of `OMLFlowParameter`, where each parameter of your implementation is stored. Let's assume we have written an algorithm that has two parameters called `a` (with default value: `500`) and `b` (with default value: `TRUE`).
 ```{r}
 flow.par.a = makeOMLFlowParameter(
   name = "a",
@@ -57,7 +53,7 @@ flow.par.b = makeOMLFlowParameter(
 flow.pars = list(flow.par.a, flow.par.b)
 ```
 Now we can create the whole description object.
-Try to find a good name for your algorithm that gives other users an idea of what is happening.
+When creating a new flow, one should try to find a good name for the algorithm, so the other users get an idea of what is actually happening.
 ```{r}
 oml.flow = makeOMLFlow(
   name = "good_name",
@@ -66,8 +62,8 @@ oml.flow = makeOMLFlow(
   parameter = flow.pars)
 ```
 
-Before you can apply the created flow to a task, you have to create a `OMLRun` object.
-If you want to change the parameter settings for the run, you can do this by a list that contains an `OMLRunParameter` objects for each parameter defined by the flow **whose setting varies from the default**.
+Before one can apply the created flow to a task, one has to create a `OMLRun` object.
+If one wants to change the parameter settings for the run, one can do this by a list that contains an `OMLRunParameter` objects for each parameter defined by the flow **whose setting varies from the default**.
 The class `OMLRunParameter` has the following slots:
 
 * name
@@ -80,18 +76,17 @@ Parameter `b`, on the other hand, remains in the default setting, so that we do 
 run.par.a = makeOMLRunParameter(name = "a", value = "300")
 run.pars = list(run.par.a)
 ```
-Now you can create your `OMLRun` object using the `makeOMLRun` function.
-If you want to upload the run to OpenML you will need to create a `data.frame` for the `predictions` parameter, which has to be in a standardized form before you can create a run using `makeOMLRun`.
-The call `task$output$predictions` gives us the expected column names and their types.
+Now one can create the `OMLRun` object using the `makeOMLRun` function.
+If one wants to upload the run to OpenML it is necessary to create a `data.frame` for the `predictions` parameter before actually creating the run with `makeOMLRun`. Note that the `data.frame` for the `predictions` has to be in a **standardized form**.
+The call `task$output$predictions` returns the expected column names and their types.
 For supervised classification and regression tasks, these are:
 
 ```{r}
 str(task$output$predictions$features)
 ```
-The columns `repeat`, `fold` and `row_id` have to be zero-based, i.e., we start numbering with 0 and not with 1 as we would usually do in R.
-For an example, see below.
+The columns `repeat`, `fold` and `row_id` have to be zero-based, i.e., we start numbering with 0 and not with 1 as we would usually do in R. There is an example in the next subsection.
 
-Additionally, in case of a classification task one needs:
+Additionally, in case of a classification task, one needs:
 
 * confidence.*classname_1*
 * confidence.*classname_2*
@@ -102,16 +97,19 @@ i.e., one column for each level of the target variable.
 
 ### Example: An excerpt of predictions (Iris data set, 2x10-fold CV).
 
-Here we used two repetitions (`repeat` can be either `0` or `1`) of a 10-fold cross-validation (`fold` can be in `0:9`). The data set has 150 observations, thus, the `row_id` can be in `0:149`.
+Now, we first show, how one could create the predictions and then, how to perform an OpenML run with these predictions. In the given scenario, we used two repetitions (`repeat` can be either `0` or `1`) of a 10-fold cross-validation (`fold` can be in `0:9`). The data set has 150 observations, thus, the `row_id` can be in `0:149`.
 
 (**??? Fixme: This is created WHILE or AFTER running the learner? I.e. `prediction` and `confidence.xyz` are the results of the learner? And how would one usually create all these objects? I.e. are the run parameters perhaps the result from cross-validation?**)
 
-```{r}
+```{r, message=FALSE}
+task = getOMLTask(task.id = 59L)
+iris.data = task$input$data.set$data
+
 set.seed(1907)  # set seed for reproducible results
-preds = data.frame('repeat' = rep(0:1, each = nrow(iris.data)),
-                   fold = rep(0:9, each = nrow(iris.data)/10),
-                   row.id = sample(1:nrow(iris.data)) - 1)
-names(preds)[1] = "repeat"
+preds = data.frame(rep(0:1, each = nrow(iris.data)),
+  rep(0:9, each = nrow(iris.data)/10),
+  sample(1:nrow(iris.data)) - 1)
+names(preds) = c("repeat", "fold", "row.id")
 head(preds)
 ```
 (**??? Fixme: Why can't one specify `repeat = ...`**)
@@ -130,7 +128,7 @@ head(preds)
 
 (**??? Fixme: Is it possible to NOT wrap the above code block but use scroll bars instead? This would strongly increase readability. Problem would be the PDF version, though.**)
 
-When you have created such a data frame you can create an OpenML run by:
+Once such a data frame has been created, one can create an OpenML run by calling:
 
 ```{r eval = FALSE}
 run = makeOMLRun(task.id = 59L, parameter.setting = run.pars, predictions = preds)

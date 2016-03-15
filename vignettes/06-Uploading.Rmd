@@ -16,23 +16,30 @@ setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 ```
 
 # Uploading {#upload}
+The following section gives an overview on how one can contribute building blocks (i.e. data sets, flows and runs) to the OpenML server.
 
 ## Upload a data set 
-A data set contains information that can be stored on OpenML and used by OpenML tasks and runs. In this example, a dumb data set is created, processed with `mlr` and uploaded to OpenML server. The workflow of uploading a data sets consists of creating `makeClassifTask`, convertation of this task to `makeOMLDataSet` and uploading this data set to the server.   
+A data set contains information that can be stored on OpenML and used by OpenML tasks and runs. In this example, a very simple (and admittedly rather stupid) data set is created, processed with `mlr` and uploaded to the OpenML server. The corresponding workflow of uploading a data sets consists of the following four steps:
+
+1. `make*Task`: create a task (e.g. `makeClassifTask` for classification tasks)
+2. `makeOMLDataSetDescription`: create the description object of an OpenML data set
+3. `makeOMLDataSet`: convert this task to an OpenML data set
+4. `uploadOMLDataSet`: upload the data set to the server
+
 ```{r eval = FALSE, warning = FALSE, message = TRUE} 
 
-## this is a fake meaningless data set. Please do not upload it to the server. 
-days <- c(1, 10, 5)
-startdate <- c('2016-02-10','2016-02-11','2016-02-21')
-task <- c('Write code','Test','Make documentation')
+## This is a fake meaningless data set. Please DO NOT upload it to the server!
+days = c(1, 10, 5)
+startdate = c('2016-02-10', '2016-02-11', '2016-02-21')
+task = c('Write code', 'Test', 'Make documentation')
 project = data.frame(task, days, startdate)
 
-## create a new mlr classification task
-sample.task = makeClassifTask(id = deparse(substitute(project)), project, "task",
-  weights = NULL, blocking = NULL, positive = NA_character_,
+## Create a new mlr classification task
+sample.task = makeClassifTask(id = "my_project", data = project,
+  target = "task", weights = NULL, blocking = NULL, positive = NA_character_,
   fixup.data = "warn", check.data = TRUE) 
 
-## create a new OML data set from mlr task
+## create a new OML data set from the mlr task
 sampleOMLDataSet = makeOMLDataSet(desc = data.description, data = project, 
   colnames.old = colnames(project), colnames.new = colnames(project), 
   target.features = "task") 
@@ -46,40 +53,33 @@ dataset.id
 
 ## Upload a flow using mlr
 
-(**??? Fixme: Shoudln't we explain first, why we need to upload the implementation before uploading the results? And isn't that needed only once?**)
-
-A flow is an implementation of a single algorithm or a script.
-To create an flow, we can use the `mlr` package that has a number of already implemented algorithms.
-Each `mlr` learner can be considered as an implementation of a flow that can be uploaded to the server with the function `uploadOMLFlow`.
-If the flow has already been uploaded to the server, we get a message that the flow already exists and the `flow.id` is returned from the function.
+A flow is an implementation of a single algorithm or a script. To create a flow, we can use the `mlr` package, which already contains numerous implemented algorithms. Each `mlr` learner can be considered as an implementation of a flow, which then again can be uploaded to the server with the function `uploadOMLFlow`.
+If the flow has already been uploaded to the server, one receives a message that the flow already exists and the `flow.id` is returned from the function.
 Otherwise, the not existing flow is uploaded and a new `flow.id` is assigned to it.
  
-```{r eval = TRUE, warning = FALSE, message = TRUE}
+```{r eval = FALSE, warning = FALSE, message = TRUE}
 library(mlr)
 lrn = makeLearner("classif.randomForest")
 flow.id = uploadOMLFlow(lrn)
 flow.id
 ```
-(**??? Fixme: What happens if a flow already exists on the server? And what happens here if we use the read-only API key? The tutorial states that we get a message that the flow already exists. This is not the case! In the most recent version, it returns the Flow ID if flow already exists. Check this comment.**) 
 
 ## Upload a flow without using mlr
 
 (**??? Fixme: We don't want to do this with the sourcefile anymore. Should we provide a link how to create a mlr-learner as alternative?**)
+In the previous section, we explained how to create an `OMLFlow` manually and created the object `oml.flow`, which reflects the description object of the flow. Before one can upload the flow to the server, one has to store the algorithm (that should be used as a flow) within a single R-script. Assuming one has already done this step (and the path to the R-script is called `"path-to-sourcefile"`), one can can now upload the flow as follows:
 
-In the previous section, we explained how to create an `OMLFlow` manually and created the object `oml.flow`, which reflects the description object of the flow. Before you can upload this flow to the server, you have to write an R-script containing the algorithm you want to use as flow. Let's assume you have done this and have a string `sourcefile` containing the path to your R-script. Your flow can now be uploaded as follows:
 
 ```{r eval = FALSE}
-oml.flow.id = uploadOMLFlow(oml.flow, sourcefile = sourcefile)
+oml.flow.id = uploadOMLFlow(oml.flow, sourcefile = "path-to-sourcefile")
 oml.flow.id
 ```
 
 ## Upload an OpenML run to the server
 
-Runs that have been created using `mlr` can be uploaded by:
+In addition to uploading data sets or flows, one can also upload runs. Runs that have been created using `mlr` can be uploaded by:
 ```{r eval = FALSE, warning = FALSE, message = TRUE}
 run.id = uploadOMLRun(run.mlr)
 ```
-Before the run is uploaded, `uploadOMLRun` is looking if the flow that created this run is available on the server.
-If the flow is not available on the server, it is automatically uploaded.
+Before the run is uploaded, `uploadOMLRun` is checking whether the flow that created this run is available on the server. If the flow is not available on the server, it will also be uploaded (automatically).
 (**??? Fixme: Cannot be executed with read-only API key. I still would like to execute this in order to check the code...**)
-
