@@ -39,3 +39,37 @@ Afterwards, there are different basic stages when using this package or OpenML, 
     * output: `OMLMlrRun`, `OMLRun`
 * [Uploading](#upload)
     * function `uploadOMLRun`
+
+## Basic example {#basicexample}
+
+Below you can find an example that downloads a task from the server, presents some information about a task and uploads a new task to the server. 
+
+*Note that before working with OpenML you must* **get a key**. The process how to obtain a key is shown in the [configuration section](#config).
+    
+```{r eval=FALSE}
+library("OpenML")
+## temporarily set API key to read only key (replace with your own) 
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+
+# download a task 
+task = getOMLTask(task.id = 1) 
+print(task)
+
+# Task type defines a type of a task: regression, classification, clustering, etc. 
+# Data set field shows to what data set the task in binded. A task always has to be connected to only one data set.
+# Target feature field is optional for all kinds of classification and regression tasks 
+# Estimation procedure defines the way that prevents overfitting
+
+# in the next line RandomForest is used as a classifier and run with help of mlr library. You need to run an algorithm locally on your computer. Mlr will automatically download a package with a aspecified classifier.
+library(mlr)
+lrn = makeLearner("classif.randomForest")
+
+# you need to upload a new flow with information about your algorithm and settings. If this algorithm already exists, you receive a message with ID of the existing flow
+flow.id = uploadOMLFlow(lrn)
+
+# the last step is to perform a run and upload results
+run.mlr = runTaskMlr(task, lrn)
+run.id = uploadOMLRun(run.mlr)
+
+```
+
