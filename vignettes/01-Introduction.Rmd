@@ -1,0 +1,41 @@
+---
+title: "OpenML"
+author: "The OpenML R Team"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{OpenML}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r init, include=FALSE}
+# library("knitr")
+# opts_chunk$set(cache = TRUE)
+library("OpenML")
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+```
+
+# Introduction {#intro}
+The R package OpenML is an interface to make interactions with the [OpenML](http://openml.org/) server as comfortable as possible.
+Users can download and upload files, run their implementations on specific tasks, get predictions in the correct form, and run SQL queries, etc. directly via R commands.
+In this tutorial, we will show you the most important functions of this package and give you examples on standard workflows.
+
+For general information on what OpenML is, please have a look at the [README file](https://github.com/openml/OpenML/blob/master/README.md) or visit the [official OpenML website](http://openml.org/).
+
+Before making practical use of the package, in most cases it is desirable to [setup a configuration file](#config) to simplify further steps.
+Afterwards, there are different basic stages when using this package or OpenML, respectively:
+
+* [Listing](#listing)
+    * function names begin with `listOML`
+    * result is always a `data.frame`
+    * available for `DataSets`, `Tasks`, `Flows`, `Runs`, `RunEvaluations`, `EvaluationMeasures` and `TaskTypes`
+* [Downloading](#download)
+    * function names begin with `getOML`
+    * result is an object of a specific OpenML class
+    * available for `DataSets`, `Tasks`, `Runs`, `Predictions` and `Flows`
+* [Running models on tasks](#running)
+    * function `runTaskMlr`
+    * input: `OMLTask` and [`Learner`](https://mlr-org.github.io/mlr-tutorial/release/html/learner/index.html)
+    * output: `OMLMlrRun`, `OMLRun`
+* [Uploading](#upload)
+    * function `uploadOMLRun`
