@@ -62,7 +62,7 @@ uploadOMLDataSet.Task = function(x, description = NULL, verbosity = NULL) {
 #' @return [\code{\link{OMLDataSet}}].
 #' @family dataset related functions
 #' @export
-convertMlrTaskToOMLDataSet = function(task, description = NULL, ...){
+convertMlrTaskToOMLDataSet = function(task, description = NULL){
   assert(checkClass(description, "character"), checkClass(description, "OMLDataSetDescription"), checkNull(description))
   assertClass(task, "Task")
   

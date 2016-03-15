@@ -4,7 +4,7 @@
 \alias{convertMlrTaskToOMLDataSet}
 \title{Converts a mlr task to an OpenML data set.}
 \usage{
-convertMlrTaskToOMLDataSet(task, description = NULL, ...)
+convertMlrTaskToOMLDataSet(task, description = NULL)
 }
 \arguments{
 \item{task}{[\code{\link[mlr]{Task}}]\cr
