@@ -27,7 +27,7 @@
 #' @param colnames.new [\code{character}]\cr
 #'   Names of the features that are displayed.
 #' @param target.features [\code{character}]\cr
-#'   Name of the target feature(s).
+#'   Name(s) of the target feature(s).
 #' @return [\code{OMLDataSet}]
 #' @name OMLDataSet
 #' @export
@@ -36,16 +36,22 @@
 makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.features) {
   assertClass(desc, "OMLDataSetDescription")
   assertDataFrame(data)
-  assertCharacter(colnames.old, any.missing = FALSE)
-  assertCharacter(colnames.new, any.missing = FALSE)
-  assertCharacter(target.features, any.missing = FALSE)
+  n.col = ncol(data)
+  assertCharacter(colnames.old, len = n.col, any.missing = FALSE, all.missing = FALSE)
+  assertCharacter(colnames.new, len = n.col, any.missing = FALSE, all.missing = FALSE)
+  assertCharacter(target.features, min.len = 1L, max.len = n.col, any.missing = FALSE, all.missing = FALSE)
+
+  if (!isSubset(target.features, colnames(data))) {
+    stopf("Data has no column(s) named '%s'.", collapse(setdiff(target.features, colnames(data)), sep = ", "))
+  }
 
   makeS3Obj("OMLDataSet",
     desc = desc,
     data = data,
     colnames.old = colnames.old,
     colnames.new = colnames.new,
-    target.features = target.features)
+    target.features = target.features
+  )
 }
 
 #' @export
@@ -111,7 +117,7 @@ print.OMLDataSet = function(x, ...) {
 #'   The status of the data set.
 #' @param tags [\code{character}]\cr
 #'   Optional tags for the data set.
-#'   
+#'
 #' @name OMLDataSetDescription
 #' @export
 #' @family dataset related functions
