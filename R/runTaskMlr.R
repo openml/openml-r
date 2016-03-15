@@ -1,7 +1,7 @@
 #' @title Run mlr learner on OpenML task.
 #'
 #' @description
-#' Run task with a specified learner from mlr and produce predictions.
+#' Run task with a specified learner from \pkg{mlr} and produce predictions.
 #'
 #' @template arg_task
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
@@ -16,7 +16,12 @@
 #'   Default is \code{NULL}, which means no performance measurements.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.
-#' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}} with additional slots: \code{mlr.benchmark.result} and \code{flow}.
+#' @return [\code{list}] Named list with the following components:
+#' \describe{
+#'   \item{run}{The \code{\link{OMLRun}} object.}
+#'   \item{bmr}{Benchmark result returned by \code{\link[mlr]{benchmark}}.}
+#'   \item{flow}{The generated \code{\link{OMLFlow}} object.}
+#' }
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
@@ -49,8 +54,8 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   do.call("set.seed", as.list(seed.pars))
 
   # Create OMLRun
-  bench = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
-  res = bench$results[[1]][[1]]
+  bmr = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
+  res = bmr$results[[1]][[1]]
 
   # add error message
   tr.err = unique(res$err.msgs$train)
@@ -71,7 +76,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   run = makeOMLRun(task.id = task$task.id, error.message = ifelse(length(msg) == 0, NA_character_, msg))
   # FIXME: allow list of results?
   run$predictions = reformatPredictions(res$pred$data, task)
-  run$mlr.benchmark.result = bench
+
   # Add parameter settings and seed
   parameter.setting = makeOMLRunParList(learner)
   # FIXME: modify seed.pars names because there are learners that have "seed" as parameter setting (e.g. classif.randomForestSRC)?
@@ -84,10 +89,12 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
     )
   })
   run$parameter.setting = append(parameter.setting, seed.setting)
+  flow = createOMLFlowForMlrLearner(learner)
+  run$flow = flow
+
   par.names = extractSubList(run$parameter.setting, "name")
-  if (length(par.names) != length(unique(par.names))) 
+  if (length(par.names) != length(unique(par.names)))
     stop("duplicated names in 'parameter.setting' and/or 'seed.setting'")
-  run$flow = createOMLFlowForMlrLearner(learner)
   # run$flow$source.path = createLearnerSourcefile(learner)
   # check = checkOMLFlow(learner, verbosity = verbosity)
 
@@ -100,13 +107,10 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   #     stopf("Flow does not exist, use 'auto.upload = TRUE' to upload it.")
   #   }
   # }
-  run = addClasses(run, "OMLMlrRun")
-  # append scimark result to
-  # FIXME: this is kind of a dirty hack
   if (!is.null(scimark.vector)) {
     run$scimark.vector = scimark.vector
   }
-  return(run)
+  return(list(run = run, bmr = bmr, flow = flow))
 }
 
 
@@ -140,7 +144,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
   par.vals = par.vals[par.ind]
   par.names = par.names[par.ind]
-  
+
   par.settings = vector("list", length(par.vals))
   for (i in seq_along(par.vals)) {
     psi = ps[[par.names[i]]]
