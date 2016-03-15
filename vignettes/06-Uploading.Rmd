@@ -33,7 +33,9 @@ sample.task = makeClassifTask(id = deparse(substitute(project)), project, "task"
   fixup.data = "warn", check.data = TRUE) 
 
 ## create a new OML data set from mlr task
-sampleOMLDataSet = makeOMLDataSet(desc = data.description, data = project, colnames.old = colnames(project), colnames.new = colnames(project), target.features = "task") 
+sampleOMLDataSet = makeOMLDataSet(desc = data.description, data = project, 
+  colnames.old = colnames(project), colnames.new = colnames(project), 
+  target.features = "task") 
 
 (**FIXME: UPLOADING DOES NOT WORK WITH READ_ONLY KEY**)
 
