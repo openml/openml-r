@@ -13,6 +13,8 @@ vignette: >
 # opts_chunk$set(cache = TRUE)
 library("OpenML")
 setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+task = getOMLTask(task.id = 59L)
+iris.data = task$input$data.set$data
 ```
 
 # Running {#running}
@@ -20,7 +22,7 @@ You can apply an implementation of an algorithm to a specific task. There are se
 
 ## Run a task with a specified mlr learner
 If you are working with [**mlr**](https://github.com/mlr-org/mlr), you can specify a `RLearner` object and use the function `runTaskMlr` to create the desired `"OMLMlrRun"` object.
-The `task` is created the same was as in the previous sections:
+The `task` is created the same way as in the previous sections:
 ```{r, warning = FALSE, message = FALSE}
 task = getOMLTask(task.id = 59L)
 
@@ -29,7 +31,7 @@ lrn = makeLearner("classif.rpart")
 run.mlr = runTaskMlr(task, lrn)
 run.mlr
 ```
-Note that locally created runs don't have run ID or flow id yet.
+Note that locally created runs don't have a run ID or flow ID yet.
 These are assigned by the OpenML server after uploading the run.
 
 ## Run a task without using mlr
@@ -93,9 +95,9 @@ Additionally, in case of a classification task one needs:
 
 * confidence.*classname_1*
 * confidence.*classname_2*
-* ...
+* etc
 
-I.e., one column for each level of the target variable.
+i.e., one column for each level of the target variable.
 
 
 ### Example: An excerpt of predictions (Iris data set, 2x10-fold CV).
