@@ -1,6 +1,6 @@
 data("airquality")
 dsc <- "aily air quality measurements in New York, May to September 1973.
-This data is taken from R and can be loaded via data('airquality')"
+This data is taken from R."
 cit <- "Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983) Graphical 
 Methods for Data Analysis. Belmont, CA: Wadsworth."
 desc_airquality <- makeOMLDataSetDescription(name = "airquality", 
