@@ -5,7 +5,7 @@
 \title{Settter for configuration settings.}
 \usage{
 setOMLConfig(server = NULL, verbosity = NULL, apikey = NULL,
-  cachedir = NULL, arff.reader = NULL)
+  cachedir = NULL, arff.reader = NULL, confirm.upload = NULL)
 }
 \arguments{
 \item{server}{[\code{character(1)}]\cr
@@ -24,6 +24,9 @@ Path the the cache directory.}
 \item{arff.reader}{[\code{character(1)}]\cr
 Name of the package which should be used to parse arff files. Possible are
 \dQuote{RWeka}, which is the default and \dQuote{farff}.}
+
+\item{confirm.upload}{[\code{logical(1)}]\cr
+Should the user be asked for confirmation before upload of OML objects?}
 }
 \value{
 Invisibly returns a list of configuration settings.

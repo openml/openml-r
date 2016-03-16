@@ -35,6 +35,11 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
   }
   file = tempfile(fileext = ".xml")
   on.exit(unlink(file))
+
+  if (!checkUserConfirmation(type = "flow")) {
+    return(invisible())
+  }
+
   writeOMLFlowXML(x, file)
 
   showInfo(verbosity, "Uploading flow to server.")
@@ -71,7 +76,7 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
   flow.id = xmlOValI(doc, "/oml:upload_flow/oml:id")
   showInfo(verbosity, "Flow successfully uploaded. Flow ID: %i", flow.id)
   forget(listOMLFlows)
-  return(flow.id)
+  return(invisible(flow.id))
 }
 
 #' @export
