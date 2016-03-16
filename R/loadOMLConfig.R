@@ -12,6 +12,7 @@
 #' @return \code{list} of current configuration variables with class \dQuote{OMLConfig}.
 #' @family config
 #' @export
+#' @example inst/examples/loadOMLConfig.R
 loadOMLConfig = function(path = "~/.openml/config", assign = TRUE) {
   assertFile(path, access = "r")
   assertFlag(assign)

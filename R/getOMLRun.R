@@ -11,6 +11,7 @@
 #' @return [\code{\link{OMLRun}}].
 #' @family downloading functions
 #' @family run related functions
+#' @example inst/examples/getOMLRun.R
 #' @export
 getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(run.id)

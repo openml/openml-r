@@ -39,6 +39,13 @@ Default is set via \code{\link{setOMLConfig}}.}
 Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},
 \code{\link[mlr]{ResampleInstance}} and \code{\link[mlr]{Measure}}.
 }
+\examples{
+\dontrun{
+	library("mlr")
+	vinnieOML <- getOMLTask(task.id = 4845)
+	vinnieMlr <- convertOMLTaskToMlr(vinnieOML) 
+}
+}
 \seealso{
 Other task related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLTask}}, \code{\link{listOMLTaskTypes}},

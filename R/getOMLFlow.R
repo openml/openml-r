@@ -10,6 +10,7 @@
 #' @return [\code{\link{OMLFlow}}].
 #' @family downloading functions
 #' @family flow related functions
+#' @example /inst/examples/getOMLFlow.R
 #' @export
 getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   flow.id = asCount(flow.id)

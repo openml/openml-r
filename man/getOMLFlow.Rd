@@ -29,6 +29,12 @@ Default is set via \code{\link{setOMLConfig}}.}
 Given an flow id, the corresponding \code{\link{OMLFlow}} is
 downloaded if not already available in cache.
 }
+\examples{
+\dontrun{
+	r_ctree <- getOMLFlow(flow.id = 2569L)
+	weka_bagging <- getOMLFlow(flow.id = 2286L)
+}
+}
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLRun}},

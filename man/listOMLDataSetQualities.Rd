@@ -26,6 +26,11 @@ the first call will query the server and store the results in memory while the s
 the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
+\examples{
+\dontrun{
+	listOMLDataSetQualities()
+}
+}
 \seealso{
 Other listing functions: \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},

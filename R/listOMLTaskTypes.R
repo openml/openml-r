@@ -21,4 +21,5 @@
 #' @family listing functions
 #' @family task related functions
 #' @export
+#' @example inst/examples/listOMLTaskTypes.R
 listOMLTaskTypes = memoise(.listOMLTaskTypes)

@@ -20,4 +20,9 @@ work on a dataset, which is already cached and has been deactivated in the
 meanwhile. This function can be used to determine the status of all cached
 datasets.
 }
+\examples{
+\dontrun{
+	getCachedOMLDataSetStatus()
+}
+}
 

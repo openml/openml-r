@@ -11,15 +11,7 @@
 #' @family downloading functions
 #' @family task related functions
 #' @export
-#' @examples
-#' # Download task and access relevant information to start running experiments
-#' \dontrun{
-#' task = getOMLTask(1)
-#' print(task)
-#' print(task$task.type)
-#' print(task$input$data.set)
-#' print(head(task$input$data.set$data))
-#' }
+#' @example inst/examples/getOMLTask.R
 getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(task.id)
   assertFlag(cache.only)

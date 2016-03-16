@@ -13,6 +13,7 @@
 #' @return [\code{\link{OMLDataSet}}].
 #' @family downloading functions
 #' @family dataset related functions
+#' @example inst/examples/getOMLDataSet.R
 #' @export
 getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
   did = asInt(did, lower = 0)

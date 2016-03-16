@@ -14,6 +14,7 @@
 #' }
 #' @inheritParams convertOMLDataSetToMlr
 #' @family task related functions
+#' @example /inst/examples/convertOMLTaskToMlr.R
 #' @export
 convertOMLTaskToMlr = function(
   obj,

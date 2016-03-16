@@ -37,6 +37,12 @@ the first call will query the server and store the results in memory while the s
 the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
+\examples{
+\dontrun{
+	datasets <- listOMLDataSets()
+	tail(datasets)
+}
+}
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},

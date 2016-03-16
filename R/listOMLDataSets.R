@@ -49,4 +49,5 @@
 #' @family listing functions
 #' @family dataset related functions
 #' @export
+#' @example inst/examples/listOMLDataSets.R
 listOMLDataSets = memoise(.listOMLDataSets)
