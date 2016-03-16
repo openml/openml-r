@@ -4,7 +4,7 @@
 \alias{listOMLDataSets}
 \title{List available OpenML data sets.}
 \usage{
-listOMLDataSets(verbosity = NULL, status = "active")
+listOMLDataSets(verbosity = NULL, status = "active", tag = NULL)
 }
 \arguments{
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -18,6 +18,10 @@ Default is set via \code{\link{setOMLConfig}}.}
 Subsets the results according to the status, can take one or more values of
 \code{{"active", "deactivated", "in_preparation"}}.
 Default is \code{"active"}.}
+
+\item{tag}{[\code{character(1)}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}
+are listed.}
 }
 \value{
 [\code{data.frame}].

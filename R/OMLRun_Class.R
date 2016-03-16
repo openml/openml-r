@@ -100,9 +100,10 @@ print.OMLRun = function(x, print.metrics = FALSE, ...)  {
 
   ## General info
   catf('\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)', x$run.id, x$task.id, x$flow.id)
-  catNotNA('\tUser ID:', x$uploader)
-  catNotNA('\tTags   :', x$tags)
-  catNotNA('\tLearner:', x$flow.name)
+  catNotNA('\tUser ID  :', x$uploader)
+  catNotNA('\tTags     :', x$tags)
+  catNotNA('\tLearner  :', x$flow.name)
+  catNotNA('\tTask type:', x$task.type)
 
   if (!is.null(x$mlr.benchmark.result$results[[1]][[1]])) {
     cat('\n')
