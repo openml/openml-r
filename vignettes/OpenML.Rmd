@@ -17,7 +17,7 @@ setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 
 ## Introduction {#intro}
 The R package OpenML is an interface to make interactions with the [OpenML](http://openml.org/) server as comfortable as possible.
-Users can download and upload files, run their implementations on specific tasks, get predictions in the correct form, and run SQL queries, etc. directly via R commands.
+For example, the users can download and upload files, run their implementations on specific tasks and get predictions in the correct form directly via R commands.
 In this tutorial, we will show the most important functions of this package and give examples on standard workflows.
 
 For general information on what OpenML is, please have a look at the [README file](https://github.com/openml/OpenML/blob/master/README.md) or visit the [official OpenML website](http://openml.org/).
@@ -26,11 +26,11 @@ Before making practical use of the package, in most cases it is desirable to [se
 Afterwards, there are different basic stages when using this package or OpenML, respectively:
 
 * [Listing](#listing)
-    * lists which data is available wrt a specific object (`DataSets`, `Tasks`, `Flows`, `Runs`, `RunEvaluations`, `EvaluationMeasures` and `TaskTypes`)
+    * lists which data is available w.r.t. a specific object (`DataSets`, `Tasks`, `Flows`, `Runs`, `RunEvaluations`, `EvaluationMeasures`, and `TaskTypes`)
     * function names begin with `listOML`
     * result is always a `data.frame`
 * [Downloading](#download)
-    * downloads the specific objects (for `DataSets`, `Tasks`, `Runs`, `Predictions` and `Flows`)
+    * downloads the specific objects (for `DataSets`, `Tasks`, `Runs`, `Predictions`, and `Flows`)
     * function names begin with `getOML`
     * result is an object of a specific OpenML class
 * [Running models on tasks](#running)
@@ -42,15 +42,15 @@ Afterwards, there are different basic stages when using this package or OpenML, 
 
 ### Private key notification
 
-All examples in this tutorial are given with a <span style="color:red">**READ-ONLY key**</span>. 
+All examples in this tutorial are given with a <span style="color:red">**READ-ONLY API key**</span>. 
 
-With this key you can **read** all the information from the server but not **write** data sets, tasks, flows and runs to the server. This key allows to emulate uploading to the server but doesn't allow to really store data. If one wants to write data to a server, one has to **get a personal key**. The process of how to obtain a key is shown in the [configuration section](#config).
+With this key you can **read** all the information from the server but not **write** data sets, tasks, flows, and runs to the server. This key allows to emulate uploading to the server but doesn't allow to really store data. If one wants to write data to a server, one has to **get a personal API key**. The process of how to obtain a key is shown in the [configuration section](#config).
 
-<span style="color:red">**Important: Please do not write meaningless data to a server such as copies of already existing data sets, tasks or runs (such as the ones from this tutorial)! One instance of the iris data set should be enough for everyone :D**</span>
+<span style="color:red">**Important: Please do not write meaningless data to the server such as copies of already existing data sets, tasks, or runs (such as the ones from this tutorial)! One instance of the Iris data set should be enough for everyone. :D**</span>
 
 ### Basic example {#basicexample}
 
-Within this paragraph you can find an example that downloads a task from the server, presents some information about a task and uploads the results of a run (on this task) to the server. 
+In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server. 
 
 ```{r eval=TRUE, message=FALSE}
 library("OpenML")
@@ -70,7 +70,7 @@ The task contains information on the following:
 * tags: tags / labels, which might be helpful for further subselections
 * estimation procedure: which estimation procedure has been used when computing the performance
 
-In the next line `randomForest` is used as a classifier and run with the help of the [`mlr package`](https://github.com/mlr-org/mlr). Note that one needs to run the algorithm locally and that `mlr` will automatically download the package that is needed to run the specified classifier.
+In the next line, `randomForest` is used as a classifier and run with the help of the [`mlr package`](https://github.com/mlr-org/mlr). Note that one needs to run the algorithm locally and that `mlr` will automatically download the package that is needed to run the specified classifier.
 
 ```{r eval=FALSE}
 # define the classifier (usually called "flow" within OpenML)
@@ -113,7 +113,7 @@ After registering, you should [create a configuration file](#createconfig). The 
     * `2`: debug output
 * `arff.reader`:
     * `RWeka`: this is the standard Java parser used in Weka
-    * `farff`: the [farff package](http://www.github.com/mlr-org/farff) lives below the mlr-org and is a newer, faster parser without any Java requirements
+    * `farff`: the [farff package](http://www.github.com/mlr-org/farff) provides a newer, faster parser without any Java requirements
 * `apikey`:
     * required to access the server
 
@@ -123,7 +123,7 @@ With your API key other users have full access to your account via the API, so p
 The configuration file and some related things are also explained in the [OpenML Wiki](https://github.com/openml/OpenML/wiki/Client-API).
 
 ### Creating the configuration file in R {#createconfig}
-One can easily create a configuration file using either `setOMLConfig` or `saveOMLConfig`. The difference between those two commands is that `setOMLConfig` sets your configuration temporarily for the current R session, whereas `saveOMLConfig` saves the configuration permanently.
+To set up your OpenML configuration, you can either use `setOMLConfig` or `saveOMLConfig`. The difference between those two commands is that `setOMLConfig` sets your configuration temporarily for the current R session, whereas `saveOMLConfig` saves the configuration permanently.
 In order to create a permanent configuration file using default values and at the same time setting your personal API key, run
 ```{r, eval = FALSE}
 library(OpenML)
@@ -320,7 +320,7 @@ To download the results of one run including all server and user computed metric
 Here we use a run of task 59, which has the `run.id` 525534.
 One can download a single OpenML run with the `getOMLRun` function:
 ```{r eval=TRUE}
-task.list = listOMLRuns(task.id = 59)
+task.list = listOMLRuns(task.id = 59L)
 task.list[281:285, ]
 run = getOMLRun(run.id = 525534L)
 ```
