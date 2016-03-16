@@ -68,4 +68,5 @@
 #' @family listing functions
 #' @family run related functions
 #' @export
+#' @example inst/examples/listOMLRuns.R
 listOMLRuns = memoise(.listOMLRuns)
