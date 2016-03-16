@@ -1,27 +1,22 @@
-data(CHFLS, package = "HSAUR3")
-dsc <- "The Chinese Health and Family Life Survey sampled $60$ villages and urban 
-neighborhoods chosen in such a way as to represent the full geographical and 
-socioeconomic range of contemporary China.
-This data set is taken from R package HSAUR3 (version 1.0-5)"
-cit <- "William L. Parish, Edward O. Laumann, Myron S. Cohen, Suiming Pan, Heyi Zheng, 
-Irving Hoffman, Tianfu Wang, and Kwai Hang Ng. (2003), Population-Based Study of 
-Chlamydial Infection in China: A Hidden Epidemic. Journal of the American Medican 
-Association, 289(10), 1265–1273."
-desc_chfls <- makeOMLDataSetDescription(name = "CHFLS", 
+data("airquality")
+dsc <- "aily air quality measurements in New York, May to September 1973.
+This data is taken from R and can be loaded via data('airquality')"
+cit <- "Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983) Graphical 
+Methods for Data Analysis. Belmont, CA: Wadsworth."
+desc_airquality <- makeOMLDataSetDescription(name = "airquality", 
     description = dsc, 
-    creator = "Chinese Health and Family Life Survey",
-    contributor = "Torsten Hothorn and Brian S. Everitt",
-    collection.date = as.POSIXct("2015-07-28"),
+    creator = "New York State Department of Conservation (ozone data) and the National 
+    Weather Service (meteorological data)",
+    collection.date = "May 1, 1973 to September 30, 1973",
     language = "English",
     licence = "GPL-2", 
-    url = "https://cran.r-project.org/web/packages/HSAUR3/",
-    default.target.attribute = NA_character_,
+    url = "https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html",
+    default.target.attribute = "Ozone",
     citation = cit, 
-    original.data.url = "http://www.spc.uchicago.edu/prc/chfls.php",
     tags = "R")
 
-chfls_oml <- makeOMLDataSet(desc = desc_chfls, 
-                            data = CHFLS, 
-                            colnames.old = colnames(CHFLS), 
-                            colnames.new = colnames(CHFLS),
-                            target.features = c("R_income", "R_happy", "A_income"))
+airquality_oml <- makeOMLDataSet(desc = desc_airquality, 
+                            data = airquality, 
+                            colnames.old = colnames(airquality), 
+                            colnames.new = colnames(airquality),
+                            target.features = "Ozone")
