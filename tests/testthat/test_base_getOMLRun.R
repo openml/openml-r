@@ -7,6 +7,7 @@ test_that("getOMLRun", {
   run = getOMLRun(1L)
   expect_output(print(run), "OpenML Run")
   expect_output(print(run, print.metrics = TRUE), "OpenML Run")
+  expect_true(!is.na(run$flow.name))
 
   expect_is(run, "OMLRun")
   expect_true(run$run.id == 1L)

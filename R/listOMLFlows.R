@@ -1,5 +1,14 @@
-.listOMLFlows = function(verbosity = NULL) {
-  content = doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET")
+.listOMLFlows = function(verbosity = NULL, tag = NULL) {
+  api.call = "flow/list"
+  if (!is.null(tag)) {
+    assertString(tag, na.ok = FALSE)
+    api.call = collapse(c(api.call, "tag", tag), sep = "/")
+  }
+  content = try(doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET"))
+  if (is.error(content)) {
+    return(data.frame())
+  }
+
   xml = parseXMLResponse(content, "Getting flows", "flows", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
@@ -27,6 +36,7 @@
 #' @template note_memoise
 #'
 #' @template arg_verbosity
+#' @template arg_tag
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family flow related functions

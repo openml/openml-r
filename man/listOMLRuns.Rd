@@ -4,15 +4,12 @@
 \alias{listOMLRuns}
 \title{List OpenML runs.}
 \usage{
-listOMLRuns(task.id = NULL, setup.id = NULL, flow.id = NULL,
-  run.id = NULL, uploader.id = NULL, verbosity = NULL)
+listOMLRuns(task.id = NULL, flow.id = NULL, run.id = NULL,
+  uploader.id = NULL, tag = NULL, verbosity = NULL)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
 Task ID.}
-
-\item{setup.id}{[\code{integer(1)}]\cr
-ID of the parameter setup.}
 
 \item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
@@ -22,6 +19,10 @@ a single ID or a vector of IDs of the runs.}
 
 \item{uploader.id}{[\code{integer(1)}]\cr
 ID of the uploader.}
+
+\item{tag}{[\code{character(1)}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}
+are listed.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -34,8 +35,10 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-This function returns information on all OpenML runs that match a certain
-\code{task.id}, \code{setup.id} and/or implementation ID \code{flow.id}.
+This function returns information on all OpenML runs that match certain
+\code{task.id}(s), \code{run.id}(s), flow ID \code{flow.id} and/or
+\code{uploader.id}(s). Alternatively the function can be passed a single
+\code{tag} to list only runs with the corresponding tag associated.
 }
 \note{
 This function is memoised. I.e., if you call this function twice in a running R session,

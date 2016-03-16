@@ -1,9 +1,16 @@
-.listOMLTasks = function(verbosity = NULL, status = "active") {
+.listOMLTasks = function(verbosity = NULL, status = "active", tag = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
-  content = try(doAPICall(api.call = "task/list", file = NULL, verbosity = verbosity, method = "GET"))
+  api.call = "task/list"
+  if (!is.null(tag)) {
+    assertString(tag, na.ok = FALSE)
+    api.call = collapse(c(api.call, "tag", tag), sep = "/")
+  }
 
-  if (is.error(content)) return(data.frame())
+  content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
+
+  if (is.error(content))
+    return(data.frame())
 
   d = xmlRoot(xmlParse(content))
 
@@ -58,6 +65,7 @@
 #'
 #' @template arg_verbosity
 #' @template arg_status
+#' @template arg_tag
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family task related functions

@@ -4,7 +4,7 @@
 \alias{listOMLFlows}
 \title{List all registered OpenML flows.}
 \usage{
-listOMLFlows(verbosity = NULL)
+listOMLFlows(verbosity = NULL, tag = NULL)
 }
 \arguments{
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -13,6 +13,10 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{tag}{[\code{character(1)}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}
+are listed.}
 }
 \value{
 [\code{data.frame}].

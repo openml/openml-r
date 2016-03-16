@@ -45,6 +45,7 @@ an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
+  \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{deleteOMLObject}},
   \code{\link{listOMLDataSets}},

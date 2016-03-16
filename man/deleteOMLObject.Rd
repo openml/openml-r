@@ -29,6 +29,7 @@ Note that you can only delete the objects you uploaded.
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
+  \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{getOMLDataSet}},
   \code{\link{listOMLDataSets}},

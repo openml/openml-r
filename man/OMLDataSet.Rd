@@ -46,6 +46,7 @@ of the \code{OMLDataSet} that refer to the target feature(s).
 }
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
+  \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{deleteOMLObject}},
   \code{\link{getOMLDataSet}},
