@@ -21,6 +21,10 @@ uploadOMLDataSet = function(x, description = NULL, verbosity = NULL) {
 
 #' @export
 uploadOMLDataSet.OMLDataSet = function(x, description = NULL, verbosity = NULL) {
+  if (!checkUserConfirmation(type = "dataset")) {
+    return(invisible())
+  }
+
   desc.file = tempfile()
   on.exit(unlink(desc.file))
   writeOMLDataSetXML(x$desc, desc.file)
@@ -56,19 +60,19 @@ uploadOMLDataSet.Task = function(x, description = NULL, verbosity = NULL) {
 #' Converts a \code{\link[mlr]{Task}} to an \code{\link{OMLDataSet}}.
 #'
 #' @param task [\code{\link[mlr]{Task}}]\cr
-#'   A mlr task.   
+#'   A mlr task.
 #' @template arg_description
-#' 
+#'
 #' @return [\code{\link{OMLDataSet}}].
 #' @family dataset related functions
 #' @export
 convertMlrTaskToOMLDataSet = function(task, description = NULL){
   assert(checkClass(description, "character"), checkClass(description, "OMLDataSetDescription"), checkNull(description))
   assertClass(task, "Task")
-  
+
   if (is.null(description))
     description = as.character(task$task.desc$id)
-  
+
   if (isTRUE(checkClass(description, "OMLDataSetDescription"))) {
     desc = description
   } else {
@@ -82,9 +86,9 @@ convertMlrTaskToOMLDataSet = function(task, description = NULL){
       status = "active"
     )
   }
-  
+
   cns = colnames(mlr::getTaskData(task))
-  
+
   oml.data = makeOMLDataSet(desc = desc,
     data = mlr::getTaskData(task),
     colnames.old = cns,

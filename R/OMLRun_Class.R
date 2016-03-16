@@ -93,6 +93,8 @@ makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, uploader.nam
 # show
 #' @export
 print.OMLRun = function(x, print.metrics = FALSE, ...)  {
+  assertFlag(print.metrics, na.ok = FALSE)
+
   catNotNA = function(s, val) {
     if (!all(is.na(val)))
       catf("%s %s", s, collapse(val, sep = ", "))
@@ -112,7 +114,7 @@ print.OMLRun = function(x, print.metrics = FALSE, ...)  {
 
   if (print.metrics) {
     cat('\n\tMetrics:\n\n')
-    m = x$output.data$evaluation
+    m = x$output.data$evaluations
     print(m[, colnames(m) != "array.data"])
   }
 }

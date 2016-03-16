@@ -16,7 +16,8 @@ getDefaultConfig = function() {
     cachedir = file.path(tempdir(), "cache"),
     verbosity = 1L,
     arff.reader = "RWeka",
-    apikey = "PLEASE CHANGE ME"
+    apikey = "PLEASE CHANGE ME",
+    confirm.upload = TRUE
   ))
   checkConfig(x)
   addClasses(x, "OMLConfig")
@@ -26,7 +27,7 @@ getDefaultConfig = function() {
 # also subtly change some values to a better, standard format
 checkConfig = function(conf) {
   ns = ls(conf, all.names = TRUE)
-  ns2 = c("server", "apikey", "cachedir", "verbosity", "arff.reader")
+  ns2 = c("server", "apikey", "cachedir", "verbosity", "arff.reader", "confirm.upload")
   if (any(ns %nin% ns2))
     stopf("You are only allowed to define the following names in your config:\n%s\nBut you also had:\n%s",
       collapse(ns2, sep = ", "), collapse(setdiff(ns, ns2), sep = ", "))
@@ -35,6 +36,7 @@ checkConfig = function(conf) {
   conf$verbosity = as.integer(conf$verbosity)
   assertString(conf$cachedir)
   assertString(conf$apikey)
+  #assertFlag(conf$confirm.upload)
   if (nchar(conf$apikey) != 32 & conf$apikey != "PLEASE CHANGE ME")
     stopf("The apikey must contain 32 characters, currently it has %i characters", nchar(conf$apikey))
   assertChoice(conf$arff.reader, c("RWeka", "farff"))
@@ -55,9 +57,10 @@ printableConfig = function(conf) {
     "  cachedir         : %s",
     "  verbosity        : %s",
     "  arff.reader      : %s",
+    "  confirm.upload   : %s",
     "  apikey           : %s\n",
     sep = "\n")
-  sprintf(fmt, conf$server, conf$cachedir, conf$verbosity, conf$arff.reader, key)
+  sprintf(fmt, conf$server, conf$cachedir, conf$verbosity, conf$arff.reader, conf$confirm.upload, key)
 }
 
 #' @export

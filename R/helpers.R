@@ -15,6 +15,17 @@ showMessage = function(verbosity, msg, ..., minlev) {
     messagef(msg, ...)
 }
 
+checkUserConfirmation = function(type) {
+  assertChoice(type, choices = c("dataset", "flow", "task", "run"))
+
+  if (as.logical(getOMLConfig()$confirm.upload)) {
+    catf("Do you really want to upload the %s? (yes|no)", type)
+    reaction = readLines(con = stdin(), 1L)
+    return(reaction == "yes")
+  }
+  return(TRUE)
+}
+
 rename = function(x) {
   if (is.data.table(x)) {
     setnames(x, stri_replace_all_fixed(names(x), "_", "."))
