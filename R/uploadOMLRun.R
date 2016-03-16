@@ -18,6 +18,10 @@
 uploadOMLRun = function(run, verbosity = NULL) {
   assertClass(run, "OMLRun")
 
+  if (!checkUserConfirmation(type = "run")) {
+    return(invisible())
+  }
+
   if (is.na(run$flow.id)) {
     if (!is.null(run$flow))
       run$flow.id = uploadOMLFlow(run$flow) else
@@ -64,5 +68,5 @@ uploadOMLRun = function(run, verbosity = NULL) {
   forget(listOMLRuns)
   forget(listOMLRunEvaluations)
 
-  return(run.id)
+  return(invisible(run.id))
 }

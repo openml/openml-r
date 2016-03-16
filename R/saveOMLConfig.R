@@ -12,7 +12,7 @@
 #' @family config
 #' @export
 saveOMLConfig = function(server = NULL, verbosity = NULL, apikey = NULL, cachedir = NULL,
-  arff.reader = NULL, overwrite = FALSE) {
+  arff.reader = NULL, confirm.upload = NULL, overwrite = FALSE) {
 
   # we always store the config in the same place
   path = "~/.openml/config"
@@ -29,7 +29,7 @@ saveOMLConfig = function(server = NULL, verbosity = NULL, apikey = NULL, cachedi
 
   conf = setOMLConfig(server = server, verbosity = verbosity,
     apikey = apikey, cachedir = cachedir,
-    arff.reader = arff.reader)
+    arff.reader = arff.reader, confirm.upload = confirm.upload)
   conf = as.list(conf)
   lines = paste(names(conf), conf, sep = "=")
   con = file(path, "w")
