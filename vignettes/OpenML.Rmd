@@ -58,7 +58,7 @@ library("OpenML")
 setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 
 # download a task 
-task = getOMLTask(task.id = 1) 
+task = getOMLTask(task.id = 1L) 
 task
 ```
 
@@ -227,7 +227,7 @@ flows[56:63, 1:4]
 ```
 
 ### List runs and run results
-A run is an experiment, which is executed on a given combination of task, flow and setup. The corresponding results are stored as a run result.
+A run is an experiment, which is executed on a given combination of task, flow and setup. The corresponding results are stored as a run result. (##FIXME: Setup does not exist any more..)
 Both objects, i.e., runs and run results, can be listed via `listOMLRuns` and `listOMLRunEvaluations`.
 As each of those objects is defined with a task, setup and flow, one can extract runs and run results with specific combinations of `task.id`, `setup.id` and/or `flow.id`.
 For instance, listing all runs for [task 59](http://www.openml.org/t/59) (supervised classification on iris) can be done with
@@ -235,8 +235,8 @@ For instance, listing all runs for [task 59](http://www.openml.org/t/59) (superv
 runs = listOMLRuns(task.id = 59L)  # must be restricted to a task, setup and/or implementation ID
 head(runs)
 
-runresults = listOMLRunEvaluations(task.id = 59)  # a task ID must be supplied
-str(runresults)
+run.results = listOMLRunEvaluations(task.id = 59L)  # a task ID must be supplied
+str(run.results)
 ```
 
 ### List evaluation measures and task types
@@ -250,43 +250,42 @@ listOMLTaskTypes()
 
 ## Downloading {#download}
 Users can download data, tasks, flows and runs from the OpenML server.
-The package provides special representations for each object which will be discussed here.
+The package provides special representations for each object, which will be discussed here.
 
-### Download an OpenML data set only
+### Download an OpenML data set
 To directly download a data set, e.g., when you want to run a few preliminary experiments, one can use the function `getOMLDataSet`.
 The function accepts a data set ID as input and returns the corresponding `OMLDataSet`:
 ```{r eval=FALSE}
 iris.data = getOMLDataSet(did = 61L)  # the iris data set has the data set ID 61
-iris.data
 ```
 
 ### Download an OpenML task
 The following call returns an OpenML task object for a supervised classification task on the iris data:
-```{r eval=FALSE}
+```{r eval=TRUE}
 task = getOMLTask(task.id = 59L)
 task
 ```
 
 The corresponding `"OMLDataSet"` object can be accessed by
-```{r eval=FALSE}
+```{r eval=TRUE}
 task$input$data.set
 ```
 
-The class of the task an be shown with the next line
-```{r eval=FALSE}
+The class of the task can be shown with the next line
+```{r eval=TRUE}
 task$task.type
 ```
 
 A special print function gives the basic information on the data set.
 To extract the data itself one can use
-```{r eval=FALSE}
+```{r eval=TRUE}
 iris.data = task$input$data.set$data
 head(iris.data)
 ```
 
 ### Download an OpenML flow
 You can download a flow by specifying the `flow.id` parameter in the `getOMLFlow` function:
-```{r eval=FALSE}
+```{r eval=TRUE}
 flow = getOMLFlow(flow.id = 2700L)
 flow
 ```
@@ -297,9 +296,9 @@ IDs for all runs related to the task can be extracted from the `runs` object, wh
 Here we use a run of task 59, which has the `run.id` 525534.
 You can download a single OpenML run with the `getOMLRun` function:
 ```{r eval=FALSE}
-run = getOMLRun(run.id = 525534L)  # see ?OMLRun for each slot of the OMLRun object
+run = getOMLRun(run.id = 525534L)
 ```
-There are some slots which are of major interest for the `OMLRun` object.
+There are some arguments that are of major interest for the `OMLRun` object.
 A list containing Random Number Generator (RNG) settings for reproducing a run and non-default settings for hyperparameters can be obtained by `run$parameter.setting`:
 ```{r eval=FALSE}
 run$parameter.setting  # retrieve the list of parameter settings

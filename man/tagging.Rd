@@ -35,6 +35,7 @@ Add or remove a specific tag to a OpenML data, task, flow or run.
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
+  \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{deleteOMLObject}},
   \code{\link{getOMLDataSet}},

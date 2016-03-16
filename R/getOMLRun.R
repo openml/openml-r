@@ -74,7 +74,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     task.type = xmlOValS(doc, "/oml:run/oml:task_type"),
     task.evaluation.measure = xmlOValS(doc, "/oml:task_evaluation_measure"),
     flow.id = xmlRValI(doc, "/oml:run/oml:flow_id"),
-    flow.name = xmlOValS(doc, "/oml:run/oml:flow.name"),
+    flow.name = xmlOValS(doc, "/oml:run/oml:flow_name"),
     setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),
     setup.string = xmlOValS(doc, "/oml:run/oml:setup_string"),
     error.message = xmlOValS(doc, "/oml:run/oml:error_message"),

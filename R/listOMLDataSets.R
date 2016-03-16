@@ -1,7 +1,16 @@
-.listOMLDataSets = function(verbosity = NULL, status = "active") {
-  content = doAPICall(api.call = "data/list", file = NULL, verbosity = verbosity, method = "GET")
-  xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
+.listOMLDataSets = function(verbosity = NULL, status = "active", tag = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
+
+  api.call = "data/list"
+  if (!is.null(tag)) {
+    assertString(tag, na.ok = FALSE)
+    api.call = collapse(c(api.call, "tag", tag), sep = "/")
+  }
+
+  content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
+  if (is.error(content))
+    return(data.frame())
+  xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
 
   # get list of blocks for data sets
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
@@ -35,6 +44,7 @@
 #'
 #' @template arg_verbosity
 #' @template arg_status
+#' @template arg_tag
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family dataset related functions

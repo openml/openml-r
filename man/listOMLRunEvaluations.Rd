@@ -4,15 +4,12 @@
 \alias{listOMLRunEvaluations}
 \title{List run results of a task.}
 \usage{
-listOMLRunEvaluations(task.id = NULL, setup.id = NULL, flow.id = NULL,
-  run.id = NULL, uploader.id = NULL, verbosity = NULL)
+listOMLRunEvaluations(task.id = NULL, flow.id = NULL, run.id = NULL,
+  uploader.id = NULL, tag = NULL, verbosity = NULL)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
 Task ID.}
-
-\item{setup.id}{[\code{integer(1)}]\cr
-ID of the parameter setup.}
 
 \item{flow.id}{[\code{integer(1)}]\cr
 ID of the implementation of an OpenML flow.}
@@ -22,6 +19,10 @@ a single ID or a vector of IDs of the runs.}
 
 \item{uploader.id}{[\code{integer(1)}]\cr
 ID of the uploader.}
+
+\item{tag}{[\code{character(1)}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}
+are listed.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -34,9 +35,11 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-Retrieves all run results for a task (\code{task.id}), a setup
-(\code{setup.id}), a flow (\code{flow.id}) or a run (\code{run.id}) and returns
-a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid}.
+Retrieves all run results for task(s) (\code{task.id}), flow(s) (\code{flow.id})
+run(s) (\code{run.id}) or uploaders(s) (\code{uploader.id} and returns a \code{data.frame}.
+Each row contains, among others, the run id \dQuote{rid}. Alternatively the
+function can be passed a single \code{tag} to list only runs with the corresponding
+tag associated.
 }
 \note{
 This function is memoised. I.e., if you call this function twice in a running R session,
