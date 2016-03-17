@@ -1,7 +1,6 @@
 library(mlr)
 library(mboost)
 library(stringi)
-library(checkmate)
 library(httr)
 set_config(timeout(60))
 
