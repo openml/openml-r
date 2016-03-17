@@ -1,4 +1,6 @@
-context("listOMLDataSets/server")
+context("listOMLDataSets")
+
+skip_on_cran()
 
 test_that("listOMLDataSets", {
   for (dsl in list(listOMLDataSets(), listOMLDataSets(tag = "test"))) {

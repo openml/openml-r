@@ -1,4 +1,4 @@
-context("getOMLDataSet/local")
+context("getOMLDataSet")
 
 test_that("getOMLDataSet", {
   with_test_cache({

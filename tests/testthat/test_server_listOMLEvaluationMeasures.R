@@ -1,9 +1,9 @@
-context(".listOMLEvaluationMeasures")
+context("listOMLEvaluationMeasures")
 
-test_that(".listOMLEvaluationMeasures", {
-  df = .listOMLEvaluationMeasures()
-  expect_is(df, "data.frame")
-  expect_true(nrow(df) > 30L)
-  expect_true(ncol(df) == 1L)
+skip_on_cran()
+
+test_that("listOMLEvaluationMeasures", {
+  df = listOMLEvaluationMeasures()
+  expect_data_frame(df, min.rows = 30, ncols = 1)
   expect_set_equal(names(df), "name")
 })

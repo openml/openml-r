@@ -1,10 +1,10 @@
-context(".listOMLEstimationProcedures/server")
+context("listOMLEstimationProcedures")
 
-test_that(".listOMLEstimationProcedures", {
-  df = .listOMLEstimationProcedures()
-  expect_is(df, "data.frame")
-  expect_true(nrow(df) > 5L)
-  expect_true(ncol(df) == 2L)
+skip_on_cran()
+
+test_that("listOMLEstimationProcedures", {
+  df = listOMLEstimationProcedures()
+  expect_data_frame(df, min.rows = 5, ncols = 2)
   expect_set_equal(names(df), c("est.id", "name"))
-  expect_true(any(grepl("Crossvalidation", df$name)))
+  expect_true("10-fold Crossvalidation" %in% df$name)
 })

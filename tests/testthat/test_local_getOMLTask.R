@@ -1,4 +1,4 @@
-context("getOMLTask/local")
+context("getOMLTask")
 
 test_that("getOMLTask", {
   with_test_cache({
