@@ -11,7 +11,7 @@ Delete all cached objects and recreate cache directories.
 }
 \examples{
 \dontrun{
-clearOMLCache()
+  clearOMLCache()
 }
 }
 

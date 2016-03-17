@@ -1,5 +1,5 @@
 \dontrun{
-	dat = getOMLDataSet(did = 9L)
+	dat = getOMLDataSet(did = 9)
 
 	# this object contains the data ($data)
 	# and meta information
