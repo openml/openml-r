@@ -139,13 +139,13 @@ apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f
 ```
 Note that the values are not quoted.
 
-If one manually modifies the `config` file, one needs to reload the modified `config` file to the current R session using `loadOMLConfig()`. One can query the current configuration using
+If one manually modifies the `config` file, one needs to reload the modified `config` file to the current R session using `loadOMLConfig()`. You can query the current configuration using
 ```{r}
 library(OpenML)
 getOMLConfig()
 ```
 
-As one can see, the configuration file lists the five items (`server`, `cachedir`, `verbosity`, `arff.reader` and `apikey`) that were listed in the [beginning of this paragraph](#permanentconfig).
+As you can see, the configuration file lists the five items `server`, `cachedir`, `verbosity`, `arff.reader` and `apikey` that were listed in the [beginning of this paragraph](#permanentconfig).
 
 Once the config file is set up, you are **ready to go**!
 
@@ -162,14 +162,14 @@ In this stage, we want to list basic information about the various OpenML object
 
 See the [OpenML introduction](http://openml.org/guide) for a detailed overview on (and explanations of) the different objects.
 
-For each of these objects we have a function to query the information beginning with `listOML`. All of these functions return a `data.frame`, even in case the result consists of a single column or have zero observations (i.e. rows).
+For each of these objects, we have a function to query the information, beginning with `listOML`. All of these functions return a `data.frame`, even in case the result consists of a single column or has zero observations (i.e., rows).
 
-One should be aware of the fact, that the `listOML*` functions only list information on the corresponding objects -- they do not download the respective objects. Information on actually [downloading](#download) specific objects is covered in the next section.
+One should be aware of the fact that the `listOML*` functions only list information on the corresponding objects -- they do not download the respective objects. Information on actually downloading specific objects is covered in the [next section](#download).
 
 First, load the package:
 ```{r results="hide"}
 library("OpenML")
-setOMLConfig(verbosity = 0) # switch off status output
+setOMLConfig(verbosity = 0)  # switch off status output
 ```
 
 ### List data sets {#listdata}
@@ -192,21 +192,20 @@ str(datasets)
 head(datasets[, 1:5])
 ```
 
-
 If one needs data sets that are either `"in_preparation"` or `"deactivated"`, one can change the `status` parameter accordingly:
 ```{r}
 inactive.data = listOMLDataSets(status = "deactivated")
 head(inactive.data[, 1:5])
 ```
 
-To find a specific data set, one can now query the resulting `datasets` object. Suppose we want
+To find a specific data set, you can now query the resulting `datasets` object. Suppose we want
 to find the `iris` data set.
 ```{r}
 subset(datasets, name == "iris")
 ```
 
-As one can see, there are two data sets called `iris`. We want to use the *original* data set with three classes, which is stored under the data set ID (`did`) `r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`.
-One can also have a closer look at the data set on the corresponding OpenML web page (http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`).
+As you can see, there are two data sets called `iris`. We want to use the *original* data set with three classes, which is stored under the data set ID (`did`) `r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`.
+You can also have a closer look at the data set on the corresponding OpenML web page (http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`).
 
 ### List tasks
 Each OpenML task is a bundle that encapsulates information on various objects:
