@@ -52,6 +52,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   # Create seed info and set this seed
   seed.pars = setNames(c(seed, RNGkind()), c("seed", "kind", "normal.kind"))
   do.call("set.seed", as.list(seed.pars))
+  names(seed.pars) = paste0("openml.", names(seed.pars))
 
   # Create OMLRun
   bmr = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
@@ -79,8 +80,6 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
 
   # Add parameter settings and seed
   parameter.setting = makeOMLRunParList(learner)
-  # FIXME: modify seed.pars names because there are learners that have "seed" as parameter setting (e.g. classif.randomForestSRC)?
-  # names(seed.pars) = paste0("R.", names(seed.pars))
   seed.setting = lapply(seq_along(seed.pars), function(x) {
     makeOMLRunParameter(
       name = names(seed.pars[x]),
