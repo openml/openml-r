@@ -16,6 +16,9 @@ with_empty_cache = function(expr, envir = parent.frame()) {
 }
 
 regen_test_cache = function() {
+  prev = as.list(getOMLConfig())
+  on.exit(do.call(setOMLConfig, prev))
+  setOMLConfig(cachedir = file.path(find.package("OpenML"), "tests", "cache"))
   with_test_cache({
     getOMLTask(task.id = 59)
   })
