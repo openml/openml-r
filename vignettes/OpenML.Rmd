@@ -210,12 +210,12 @@ You can also have a closer look at the data set on the corresponding OpenML web 
 ### List tasks
 Each OpenML task is a bundle that encapsulates information on various objects:
 
-* the data set itself
-* the target feature
-* a (performance) estimation procedure,  e.g., a 10-fold cross-validation
-* data splits for this estimation procedure
-* one or more (performance) evaluation measures
 * a specific type, e.g., `"Supervised Classification"` or `"Supervised Regression"`
+* a data set
+* a target feature (which might differ from the data set's default target)
+* an estimation/resampling procedure, e.g., a 10-fold cross-validation
+* data splits for this estimation procedure
+* one or more (performance) evaluation measures, e.g., `"predictive accuracy"` for a classification task
 
 Listing the tasks can be done via
 ```{r}
