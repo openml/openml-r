@@ -46,32 +46,27 @@ of the \code{OMLDataSet} that refer to the target feature(s).
 }
 \examples{
 data("airquality")
-description = "Daily air quality measurements in New York, May to September 1973.
+dsc = "Daily air quality measurements in New York, May to September 1973.
 This data is taken from R."
 cit = "Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983) Graphical
 Methods for Data Analysis. Belmont, CA: Wadsworth."
-
-description = makeOMLDataSetDescription(
-  name = "airquality",
-  description = description,
+desc_airquality = makeOMLDataSetDescription(name = "airquality",
+  description = dsc,
   creator = "New York State Department of Conservation (ozone data) and the National
-  Weather Service (meteorological data)",
+    Weather Service (meteorological data)",
   collection.date = "May 1, 1973 to September 30, 1973",
   language = "English",
   licence = "GPL-2",
   url = "https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html",
   default.target.attribute = "Ozone",
   citation = cit,
-  tags = "R"
-)
+  tags = "R")
 
-airquality_oml = makeOMLDataSet(
-  desc = description,
+airquality_oml = makeOMLDataSet(desc = desc_airquality,
   data = airquality,
   colnames.old = colnames(airquality),
   colnames.new = colnames(airquality),
-  target.features = "Ozone"
-)
+  target.features = "Ozone")
 }
 \seealso{
 Other dataset related functions: \code{\link{OMLDataSetDescription}},
