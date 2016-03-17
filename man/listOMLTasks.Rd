@@ -38,7 +38,7 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 \examples{
 \dontrun{
-	tasks <- listOMLTasks()
+	tasks = listOMLTasks()
 	head(tasks)
 }
 }

@@ -34,9 +34,9 @@ an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask
 }
 \examples{
 \dontrun{
-	dat <- getOMLDataSet(did = 9L)
+	dat = getOMLDataSet(did = 9L)
 
-	# this object contains the data ($data) 
+	# this object contains the data ($data)
 	# and meta information
 	str(dat, 1)
 	summary(dat$data)
