@@ -1,4 +1,4 @@
-context("listOMLDataSets")
+context("listOMLDataSets/server")
 
 test_that("listOMLDataSets", {
   for (dsl in list(listOMLDataSets(), listOMLDataSets(tag = "test"))) {
