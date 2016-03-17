@@ -11,7 +11,6 @@ test_that(".listOMLTasks", {
 
   tasks = .listOMLTasks()
   expect_data_frame(tasks, min.rows = 6L, col.names = "unique")
-  expect_true(all(tasks$))
   expect_subset(exp.names, names(tasks))
 
   # check if qualities are meaningful
