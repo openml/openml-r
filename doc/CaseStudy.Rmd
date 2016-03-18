@@ -2,7 +2,7 @@
 title: "Example workflow using OpenML and mlr"
 author: "The OpenML R Team"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 bibliography: Bib.bib
 vignette: >
   %\VignetteIndexEntry{OpenML}
@@ -49,7 +49,7 @@ dim(all.tasks)
 
 For this study the candidates are filtered to meet the following criteria:  
 1. Binary classification problem  
-2. 10-fold Cross-validation for validation  
+2. 10-fold cross-validation as resampling procedure
 3. No missing values -- Random Forest cannot handle them automatically  
 4. Less than 500 instances -- keep evaluation time low  
 5. $n < p$  
@@ -71,12 +71,10 @@ tasks = tasks[
 nrow(tasks)
 ```
 We randomly pick 10 out of the `r nrow(tasks)` remaining tasks to keep the runtimes reasonable.
-<!-- Furthermore, we left join the data frame returned by `listOMLDataSets()` to have a quick glance at the names of the selected data sets: #FIXME: Why not only call `tasks[, name]`?-->  
 Furthermore, we have a quick glance at the names of the corresponding data sets.
 ```{r sample-tasks, cache=TRUE}
 set.seed(1)
 tasks = tasks[sample(nrow(tasks), 10), ]
-# tasks[listOMLDataSets(), name, on = "did", nomatch = 0]
 tasks[, name]
 ```
 
@@ -103,7 +101,7 @@ res = Map(runTask, task.id = grid$task.id, learner.id = grid$learner.id)
 ```
 In the next figure, the boxplots of the results of the four learners are depicted. We can see a large variance in the predictive accuracies. Apart from that, in average the bagging of cpart trees seems to be the worst of all considered learners. Please note that these results may only indicate tendencies, because we used only a small number of tasks.
 
-```{r figure1, echo=FALSE, message=FALSE, fig.width=7}
+```{r figure1, echo=FALSE, message=FALSE, fig.width=7, fig.height=4}
 library(ggplot2)
 library(reshape2)
 
@@ -126,7 +124,7 @@ To get a closer look at which learner might or might not be better than another,
 the next figure, showing the differences in predictive accuracy per task between each combination of two learners.
 Besides boxplots, there are also so-called violin plots depicted in the background, that represent the estimated density of the differences' distributions.
 
-```{r figure2, echo=FALSE, message=FALSE, fig.width=7}
+```{r figure2, echo=FALSE, message=FALSE, fig.width=7, fig.height=4}
 ## violinplot_binary
 diffs = res[, 2] - res[, 3]
 diffs = cbind(diffs, res[, 2] - res[, 4])
