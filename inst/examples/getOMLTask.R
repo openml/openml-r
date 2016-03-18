@@ -6,4 +6,3 @@
   task$input$data.set
   head(task$input$data.set$data)
 }
-
