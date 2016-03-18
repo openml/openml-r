@@ -1,5 +1,6 @@
 language: r
 sudo: false
+r_check_args: "--as-cran --run-donttest"
 
 env:
   global:
@@ -16,7 +17,9 @@ cache:
     - $HOME/.openml/cache
 
 before_script:
-  - find $HOME/.openml/cache
+  - [[ -d "$HOME/.openml/cache" ]] || mkdir -p "$HOME/.openml/cache"
+  - echo "apikey=$OPENMLAPIKEY" >> "$HOME/.openml/config"
+  - find "$HOME/.openml/cache"
 
 after_success:
   - Rscript -e 'library(covr);coveralls()'
