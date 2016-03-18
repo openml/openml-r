@@ -1,4 +1,4 @@
-# R interface to [OpenML](http://www.openml.org/frontend/page/home) 
+# R interface to [OpenML](http://www.openml.org/) 
 
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
