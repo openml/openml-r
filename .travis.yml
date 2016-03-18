@@ -17,8 +17,8 @@ cache:
     - $HOME/.openml/cache
 
 before_script:
-  - echo "apikey=$OPENMLAPIKEY" >> "$HOME/.openml/config"
-  - find "$HOME/.openml/cache"
+  - mkdir -p "$HOME/.openml/cache" && find "$HOME/.openml/cache"
+  - echo "apikey=$OPENMLAPIKEY" > "$HOME/.openml/config"
 
 after_success:
   - Rscript -e 'library(covr);coveralls()'
