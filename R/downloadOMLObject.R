@@ -15,9 +15,7 @@
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [list]
-downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
-  overwrite = FALSE, cache.only = FALSE, verbosity = NULL) {
-
+downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), overwrite = FALSE, cache.only = FALSE, verbosity = NULL) {
   id = asCount(id)
   assertChoice(object, choices = c("data", "task", "flow", "run"))
 
@@ -33,8 +31,9 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"),
     stopf("%s '%i' files not found in cache with option 'cache.only'.", cap.obj, id)
 
   # download and write xml if not found in cache (and if overwrite is true)
-  xml.ind = grep("xml", names(f))
-  file.ind = seq_along(f)[!seq_along(f) %in% xml.ind]
+  xml.ind = stri_endswith_fixed(names(f), "xml")
+  file.ind = which(!xml.ind)
+  xml.ind = which(xml.ind)
   if (f[[xml.ind]]$found & !overwrite) {
     # parse info
     showInfo(verbosity, sprintf("%s '%i' file '%s' found in cache.", cap.obj, id, basename(f[[xml.ind]]$path)))
