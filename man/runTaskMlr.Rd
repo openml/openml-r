@@ -45,13 +45,15 @@ Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.}
 Run task with a specified learner from \pkg{mlr} and produce predictions.
 }
 \examples{
-library(mlr)
-## run a single flow (learner) on a single task
-task = getOMLTask(57)
-lrn = makeLearner("classif.rpart")
-res = runTaskMlr(task, lrn)
-## the result "res" is a list, storing information on the actual "run", the
-## corresponding benchmark result "bmr" and the applied "flow"
+\dontrun{
+  library(mlr)
+  ## run a single flow (learner) on a single task
+  task = getOMLTask(57)
+  lrn = makeLearner("classif.rpart")
+  res = runTaskMlr(task, lrn)
+  ## the result "res" is a list, storing information on the actual "run", the
+  ## corresponding benchmark result "bmr" and the applied "flow"
+}
 }
 \seealso{
 \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}

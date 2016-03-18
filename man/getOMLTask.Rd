@@ -38,7 +38,6 @@ Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded
   task$input$data.set
   head(task$input$data.set$data)
 }
-
 }
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},

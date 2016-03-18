@@ -2,16 +2,17 @@ Package: OpenML
 Title: Exploring Machine Learning Better, Together
 Description: An R interface to OpenML to download and upload data sets, tasks,
     flows and runs.
-Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <ftorgo@fc.up.pt>,
+Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
+    Bernd Bischl <bernd_bischl@gmx.net>, 
     Dominik Kirchhoff <dom.kirchhoff@gmail.com>,
     Michel Lang <michellang@gmail.com>,
-    Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
     Benjamin Hofner <benjamin.hofner@fau.de>,
-    Jakob Bossek <j.bossek@gmail.com>
-Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
+    Jakob Bossek <j.bossek@gmail.com>,
+    Pascal Kerschke <kerschke@uni-muenster.de>
+Maintainer: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>
 License: BSD_3_clause + file LICENSE
-URL: https://github.com/openml/r
-BugReports: https://github.com/openml/r/issues
+URL: https://github.com/openml/openml-r
+BugReports: https://github.com/openml/openml-r/issues
 Depends:
     R (>= 3.0.2),
     mlr (>= 2.8)
