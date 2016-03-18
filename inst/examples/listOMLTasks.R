@@ -1,4 +1,4 @@
 \dontrun{
-	tasks <- listOMLTasks()
+	tasks = listOMLTasks()
 	head(tasks)
 }

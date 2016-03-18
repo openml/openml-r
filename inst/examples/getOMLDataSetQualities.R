@@ -1,6 +1,5 @@
 \dontrun{
-a <- getOMLDataSetQualities(did = 9L)
-a[a$name == "NumberOfMissingValues", ]
-getOMLDataSetQualities(did = 9L, 
-		       name = "NumberOfMissingValues")
+  a = getOMLDataSetQualities(did = 9)
+  a[a$name == "NumberOfMissingValues", ]
+  getOMLDataSetQualities(did = 9, name = "NumberOfMissingValues")
 }

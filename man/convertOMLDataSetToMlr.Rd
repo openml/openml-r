@@ -49,8 +49,8 @@ Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 \examples{
 \dontrun{
 	library("mlr")
-	autosOML <- getOMLDataSet(did = 9L)
-	autosMlr <- convertOMLDataSetToMlr(autosOML) 
+	autosOML = getOMLDataSet(did = 9)
+	autosMlr = convertOMLDataSetToMlr(autosOML)
 }
 }
 \seealso{
