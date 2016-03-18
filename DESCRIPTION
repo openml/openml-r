@@ -7,7 +7,8 @@ Author: Bernd Bischl <bernd_bischl@gmx.net>, Luis Torgo <ftorgo@fc.up.pt>,
     Michel Lang <michellang@gmail.com>,
     Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
     Benjamin Hofner <benjamin.hofner@fau.de>,
-    Jakob Bossek <j.bossek@gmail.com>
+    Jakob Bossek <j.bossek@gmail.com>,
+    Pascal Kerschke <kerschke@uni-muenster.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 URL: https://github.com/openml/r
