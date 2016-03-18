@@ -1,7 +1,6 @@
 context("convertOMLDataSetToMlr")
 
 test_that("convertOMLDataSetToMlr", {
-  clearOMLCache()
   ds = getOMLDataSet(10)
 
   expect_is_mlr_task = function(mlr.task, ds) {
@@ -24,5 +23,5 @@ test_that("convertOMLDataSetToMlr", {
   expect_equal(sum(mlr.task$task.desc$n.feat), ncol(ds$data) - 3L)
 
   # pass faulty parameters
-  expect_error(convertOMLDataSetToMlr(ds, task.type = "Nonexistent task type"))
+  expect_error(convertOMLDataSetToMlr(ds, task.type = "Nonexistent task type"), "element of")
 })
