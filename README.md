@@ -3,7 +3,7 @@
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
 [![Build Status](https://travis-ci.org/openml/openml-r.svg)](https://travis-ci.org/openml/openml-r)
-[![Coverage Status](https://coveralls.io/repos/openml/openml-r/badge.svg?branch=master&service=github)](https://coveralls.io/github/openml/openml-r?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/openml/openml-r/badge.svg?branch=master)](https://coveralls.io/github/openml/openml-r?branch=master)
 [![Issues in Ready](https://badge.waffle.io/openml/openml-r.png?label=ready&title=Ready)](https://waffle.io/openml/r)
 [![Issues in Progress](https://badge.waffle.io/openml/openml-r.png?label=in%20progress&title=In%20Progress)](https://waffle.io/openml/r)
 [![Join the chat at https://gitter.im/openml/r](https://badges.gitter.im/openml/openml-r.svg)](https://gitter.im/openml/r?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
