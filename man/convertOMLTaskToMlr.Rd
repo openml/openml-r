@@ -42,8 +42,8 @@ Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},
 \examples{
 \dontrun{
 	library("mlr")
-	vinnieOML <- getOMLTask(task.id = 4845)
-	vinnieMlr <- convertOMLTaskToMlr(vinnieOML) 
+	vinnieOML = getOMLTask(task.id = 4845)
+	vinnieMlr = convertOMLTaskToMlr(vinnieOML)
 }
 }
 \seealso{

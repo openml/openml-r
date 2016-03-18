@@ -1,4 +1,4 @@
 \dontrun{
-	datasets <- listOMLDataSets()
+	datasets = listOMLDataSets()
 	tail(datasets)
 }

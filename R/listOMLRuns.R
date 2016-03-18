@@ -1,9 +1,9 @@
 .listOMLRuns = function(task.id = NULL, flow.id = NULL,
   run.id = NULL, uploader.id = NULL, tag = NULL, verbosity = NULL) {
-  if (!is.null(task.id)) assertInteger(task.id)
-  if (!is.null(flow.id)) assertInteger(flow.id)
-  if (!is.null(run.id)) assertNumeric(run.id)
-  if (!is.null(uploader.id)) assertInteger(uploader.id)
+  if (!is.null(task.id)) asCount(task.id)
+  if (!is.null(flow.id)) asCount(flow.id)
+  if (!is.null(run.id)) asCount(run.id)
+  if (!is.null(uploader.id)) asCount(uploader.id)
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
   if (is.null(task.id) && is.null(flow.id) && is.null(run.id) && is.null(uploader.id) && is.null(tag))
     stop("Please hand over at least one of the following: task.id, flow.id, run.id, uploader.id, tag")

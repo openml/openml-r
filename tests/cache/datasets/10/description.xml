@@ -1,0 +1,198 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>10</oml:id>
+  <oml:name>lymph</oml:name>
+  <oml:version>1</oml:version>
+  <oml:description>**Author**:   
+**Source**: Unknown -   
+**Please cite**:   
+
+Citation Request:
+    This lymphography domain was obtained from the University Medical Centre,
+    Institute of Oncology, Ljubljana, Yugoslavia.  Thanks go to M. Zwitter and 
+    M. Soklic for providing the data.  Please include this citation if you plan
+    to use this database.
+ 
+ 1. Title: Lymphography Domain
+ 
+ 2. Sources: 
+     (a) See Above.
+     (b) Donors: Igor Kononenko, 
+                 University E.Kardelj
+                 Faculty for electrical engineering
+                 Trzaska 25
+                 61000 Ljubljana (tel.: (38)(+61) 265-161
+ 
+                 Bojan Cestnik
+                 Jozef Stefan Institute
+                 Jamova 39
+                 61000 Ljubljana
+                 Yugoslavia (tel.: (38)(+61) 214-399 ext.287) 
+    (c) Date: November 1988
+ 
+ 3. Past Usage: (sveral)
+     1. Cestnik,G., Konenenko,I, &amp; Bratko,I. (1987). Assistant-86: A
+        Knowledge-Elicitation Tool for Sophisticated Users.  In I.Bratko
+        &amp; N.Lavrac (Eds.) Progress in Machine Learning, 31-45, Sigma Press.
+        -- Assistant-86: 76% accuracy
+     2. Clark,P. &amp; Niblett,T. (1987). Induction in Noisy Domains.  In
+        I.Bratko &amp; N.Lavrac (Eds.) Progress in Machine Learning, 11-30,
+        Sigma Press.
+        -- Simple Bayes: 83% accuracy
+        -- CN2 (99% threshold): 82%
+     3. Michalski,R., Mozetic,I. Hong,J., &amp; Lavrac,N. (1986).  The Multi-Purpose
+        Incremental Learning System AQ15 and its Testing Applications to Three
+        Medical Domains.  In Proceedings of the Fifth National Conference on
+        Artificial Intelligence, 1041-1045. Philadelphia, PA: Morgan Kaufmann.
+        -- Experts: 85% accuracy (estimate)
+        -- AQ15: 80-82%
+ 
+ 4. Relevant Information:
+      This is one of three domains provided by the Oncology Institute
+      that has repeatedly appeared in the machine learning literature.
+      (See also breast-cancer and primary-tumor.)
+ 
+ 5. Number of Instances: 148
+ 
+ 6. Number of Attributes: 19 including the class attribute
+ 
+ 7. Attribute information:
+     --- NOTE: All attribute values in the database have been entered as
+               numeric values corresponding to their index in the list
+               of attribute values for that attribute domain as given below.
+     1. class: normal find, metastases, malign lymph, fibrosis
+     2. lymphatics: normal, arched, deformed, displaced
+     3. block of affere: no, yes
+     4. bl. of lymph. c: no, yes
+     5. bl. of lymph. s: no, yes
+     6. by pass: no, yes
+     7. extravasates: no, yes
+     8. regeneration of: no, yes
+     9. early uptake in: no, yes
+    10. lym.nodes dimin: 0-3
+    11. lym.nodes enlar: 1-4
+    12. changes in lym.: bean, oval, round
+    13. defect in node: no, lacunar, lac. marginal, lac. central
+    14. changes in node: no, lacunar, lac. margin, lac. central
+    15. changes in stru: no, grainy, drop-like, coarse, diluted, reticular, 
+                         stripped, faint, 
+    16. special forms: no, chalices, vesicles
+    17. dislocation of: no, yes
+    18. exclusion of no: no, yes
+    19. no. of nodes in: 0-9, 10-19, 20-29, 30-39, 40-49, 50-59, 60-69, &gt;=70
+ 
+ 8. Missing Attribute Values: None
+ 
+ 9. Class Distribution: 
+     Class:        Number of Instances:
+     normal find:  2
+     metastases:   81
+     malign lymph: 61
+     fibrosis:     4
+ 
+ 
+
+
+
+
+ Relabeled values in attribute 'lymphatics'
+    From: '1'                     To: normal              
+    From: '2'                     To: arched              
+    From: '3'                     To: deformed            
+    From: '4'                     To: displaced           
+
+
+ Relabeled values in attribute 'block_of_affere'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'bl_of_lymph_c'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'bl_of_lymph_s'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'by_pass'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'extravasates'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'regeneration_of'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'early_uptake_in'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'changes_in_lym'
+    From: '1'                     To: bean                
+    From: '2'                     To: oval                
+    From: '3'                     To: round               
+
+
+ Relabeled values in attribute 'defect_in_node'
+    From: '1'                     To: no                  
+    From: '2'                     To: lacunar             
+    From: '3'                     To: lac_margin          
+    From: '4'                     To: lac_central         
+
+
+ Relabeled values in attribute 'changes_in_node'
+    From: '1'                     To: no                  
+    From: '2'                     To: lacunar             
+    From: '3'                     To: lac_margin          
+    From: '4'                     To: lac_central         
+
+
+ Relabeled values in attribute 'changes_in_stru'
+    From: '1'                     To: no                  
+    From: '2'                     To: grainy              
+    From: '3'                     To: drop_like           
+    From: '4'                     To: coarse              
+    From: '5'                     To: diluted             
+    From: '6'                     To: reticular           
+    From: '7'                     To: stripped            
+    From: '8'                     To: faint               
+
+
+ Relabeled values in attribute 'special_forms'
+    From: '1'                     To: no                  
+    From: '2'                     To: chalices            
+    From: '3'                     To: vesicles            
+
+
+ Relabeled values in attribute 'dislocation_of'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'exclusion_of_no'
+    From: '1'                     To: no                  
+    From: '2'                     To: yes                 
+
+
+ Relabeled values in attribute 'class'
+    From: '1'                     To: normal              
+    From: '2'                     To: metastases          
+    From: '3'                     To: malign_lymph        
+    From: '4'                     To: fibrosis</oml:description>
+  <oml:format>ARFF</oml:format>
+  			<oml:upload_date>2014-04-06 23:19:52</oml:upload_date>
+    <oml:licence>Public</oml:licence>  <oml:url>http://www.openml.org/data/download/10/dataset_10_lymph.arff</oml:url>
+  
+  <oml:file_id>10</oml:file_id>  <oml:default_target_attribute>class</oml:default_target_attribute>      <oml:version_label>1</oml:version_label>    <oml:tag>study_1</oml:tag><oml:tag>study_7</oml:tag><oml:tag>uci</oml:tag>  <oml:visibility>public</oml:visibility>      <oml:status>active</oml:status>
+  <oml:md5_checksum>f91f03d0535d532c8795787a51005caf</oml:md5_checksum>
+</oml:data_set_description>
+

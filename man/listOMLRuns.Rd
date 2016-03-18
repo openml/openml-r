@@ -48,8 +48,8 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 \examples{
 \dontrun{
-runs_ctree <- listOMLRuns(flow.id = 2569L)
-head(runs_ctree)
+  runs_ctree = listOMLRuns(flow.id = 2569)
+  head(runs_ctree)
 }
 }
 \seealso{

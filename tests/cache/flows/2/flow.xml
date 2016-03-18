@@ -1,0 +1,24 @@
+
+<oml:flow xmlns:oml="http://openml.org/openml">
+  <oml:id>2</oml:id>
+<oml:uploader>1</oml:uploader>
+<oml:name>openml.evaluation.PolynomialKernel</oml:name>
+<oml:version>1.0</oml:version>
+<oml:description>An implementation of the evaluation measure &quot;PolynomialKernel&quot;</oml:description>
+<oml:creator>Jan N. van Rijn</oml:creator>
+<oml:contributor>Bernd Bischl</oml:contributor>
+<oml:contributor>Luis Torgo</oml:contributor>
+<oml:contributor>Bo Gao</oml:contributor>
+<oml:contributor>Venkatesh Umaashankar</oml:contributor>
+<oml:contributor>Simon Fischer</oml:contributor>
+<oml:contributor>Patrick Winter</oml:contributor>
+<oml:contributor>Bernd Wiswedel</oml:contributor>
+<oml:contributor>Michael R. Berthold</oml:contributor>
+<oml:contributor>Joaquin Vanschoren</oml:contributor>
+<oml:upload_date>2014-01-16 14:12:56</oml:upload_date>
+<oml:licence>public domain</oml:licence>
+<oml:language>english</oml:language>
+<oml:installation_notes>Runs on OpenML servers</oml:installation_notes>
+<oml:dependencies>Build on top of Weka API (Jar version 3.?.?)</oml:dependencies>
+</oml:flow>
+

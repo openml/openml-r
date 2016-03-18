@@ -31,10 +31,7 @@ uploadOMLDataSet.OMLDataSet = function(x, description = NULL, verbosity = NULL) 
 
   output = tempfile()
   on.exit(unlink(output), add = TRUE)
-  if (getOMLConfig()$arff.reader == "RWeka")
-    RWeka::write.arff(x$data, file = output)
-  else
-    farff::writeARFF(x$data, path = output)
+  arff.writer(x$data, file = output)
 
   showInfo(verbosity, "Uploading data set to server.")
 
