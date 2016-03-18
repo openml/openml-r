@@ -49,6 +49,12 @@ arff.reader = function(file){
     farff::readARFF(file, show.info = FALSE)
 }
 
+arff.writer = function(x, file){
+  reader = getOMLConfig()$arff.reader
+  if (reader == "RWeka") RWeka::write.arff(x, file = file) else
+      farff::writeARFF(x, path = file)
+}
+
 getValidOMLDataSetStatusLevels = function() {
   c("active", "deactivated", "in_preparation")
 }
