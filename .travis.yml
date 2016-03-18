@@ -17,7 +17,6 @@ cache:
     - $HOME/.openml/cache
 
 before_script:
-  - [[ -d "$HOME/.openml/cache" ]] || mkdir -p "$HOME/.openml/cache"
   - echo "apikey=$OPENMLAPIKEY" >> "$HOME/.openml/config"
   - find "$HOME/.openml/cache"
 
