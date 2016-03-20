@@ -38,12 +38,12 @@ uploadOMLRun = function(run, verbosity = NULL) {
     assertString(run$error.message)
   }
 
-  description = tempfile()
+  description = tempfile(fileext = ".xml")
   on.exit(unlink(description))
   writeOMLRunXML(run, description)
 
   if (!is.null(run$predictions)) {
-    output = tempfile()
+    output = tempfile(fileext = ".arff")
     on.exit(unlink(output), add = TRUE)
     arff.writer(run$predictions, file = output)
     

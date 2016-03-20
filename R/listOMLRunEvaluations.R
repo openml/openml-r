@@ -29,7 +29,7 @@
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
 
   d = try(parseXMLResponse(content, "Getting task results", "evaluations", as.text = TRUE, return.doc = FALSE), silent = TRUE)
-  if (is.error(d)) return(NULL)
+  if (is.error(d)) return(data.frame())
 
   mat = xmlSApply(d, function(x) {
     line = getChildrenStringsNA(x)

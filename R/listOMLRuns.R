@@ -32,7 +32,7 @@
   xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE), silent = TRUE)
 
   if (is.error(xml)) {
-    return(NULL)
+    return(data.frame())
   }
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
