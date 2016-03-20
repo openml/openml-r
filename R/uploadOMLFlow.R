@@ -108,10 +108,10 @@ uploadOMLFlow.Learner = function(x,
 # }
 
 checkOMLFlow = function(x, verbosity = NULL){
-  if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
+  if (inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
 
   content = doAPICall(api.call = paste0("flow/exists/", x$name, "/", x$external.version),
-                      method = "GET", file = NULL, verbosity = verbosity)
+    method = "GET", file = NULL, verbosity = verbosity)
 
   doc = parseXMLResponse(content, "Checking existence of flow", "flow_exists", as.text = TRUE)
 
