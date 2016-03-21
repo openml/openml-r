@@ -66,7 +66,7 @@
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
-#' @family run related functions
+#' @family run-related functions
 #' @export
 #' @example inst/examples/listOMLRuns.R
 listOMLRuns = memoise(.listOMLRuns)

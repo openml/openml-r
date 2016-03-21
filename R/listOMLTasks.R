@@ -68,7 +68,7 @@
 #' @template arg_tag
 #' @return [\code{data.frame}].
 #' @family listing functions
-#' @family task related functions
+#' @family task-related functions
 #' @export
 #' @example inst/examples/listOMLTasks.R
 listOMLTasks = memoise(.listOMLTasks)

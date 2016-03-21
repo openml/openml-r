@@ -118,7 +118,7 @@ More details about the elements of a \code{OMLFlow} can be found in the
 \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.implementation.upload.xsd}{XSD scheme}.
 }
 \seealso{
-Other flow related functions: \code{\link{deleteOMLObject}},
+Other flow-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{tagOMLObject}}

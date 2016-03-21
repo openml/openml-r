@@ -7,10 +7,10 @@
 #' @template arg_id 
 #' @template arg_object
 #' @template arg_verbosity
-#' @family dataset related functions
-#' @family task related functions
-#' @family flow related functions
-#' @family run related functions
+#' @family data set-related functions
+#' @family task-related functions
+#' @family flow-related functions
+#' @family run-related functions
 #' @export
 deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbosity = NULL) {
   id = asCount(id)

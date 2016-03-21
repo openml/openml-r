@@ -9,7 +9,7 @@
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}].
 #' @family downloading functions
-#' @family task related functions
+#' @family task-related functions
 #' @export
 #' @example inst/examples/getOMLTask.R
 getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {

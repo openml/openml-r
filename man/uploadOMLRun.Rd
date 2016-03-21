@@ -22,14 +22,14 @@ Default is set via \code{\link{setOMLConfig}}.}
   The run ID.
 }
 \description{
-Share a run of an flow on a given OpenML task by uploading it to the OpenML server.
+Share a run of a flow on a given OpenML task by uploading it to the OpenML server.
 }
 \note{
-This function will reset the cache of \code{link{listOMLRuns}} and
+This function will reset the cache of \code{\link{listOMLRuns}} and
 \code{\link{listOMLRunEvaluations}} on success.
 }
 \seealso{
-Other run related functions: \code{\link{deleteOMLObject}},
+Other run-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}}

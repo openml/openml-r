@@ -1,10 +1,10 @@
 #' @title Upload an OpenML run.
 #'
 #' @description
-#' Share a run of an flow on a given OpenML task by uploading it to the OpenML server.
+#' Share a run of a flow on a given OpenML task by uploading it to the OpenML server.
 #'
 #' @note
-#' This function will reset the cache of \code{link{listOMLRuns}} and
+#' This function will reset the cache of \code{\link{listOMLRuns}} and
 #' \code{\link{listOMLRunEvaluations}} on success.
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
@@ -13,7 +13,7 @@
 #' @return [\code{invisible(numeric(1))}].
 #'   The run ID.
 #' @family uploading functions
-#' @family run related functions
+#' @family run-related functions
 #' @export
 uploadOMLRun = function(run, verbosity = NULL) {
   assertClass(run, "OMLRun")

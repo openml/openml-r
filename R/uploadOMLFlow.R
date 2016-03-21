@@ -4,7 +4,7 @@
 #' Share a flow by uploading it to the OpenML server.
 #'
 #' @note
-#' This function will reset the cache of \code{link{listOMLFlows}} on success.
+#' This function will reset the cache of \code{\link{listOMLFlows}} on success.
 #'
 #' @param x [\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
 #'   The flow that should be uploaded.

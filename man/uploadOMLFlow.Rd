@@ -31,7 +31,7 @@ The file path to the flow (not needed for \code{\link{Learner}}).}
 Share a flow by uploading it to the OpenML server.
 }
 \note{
-This function will reset the cache of \code{link{listOMLFlows}} on success.
+This function will reset the cache of \code{\link{listOMLFlows}} on success.
 }
 \seealso{
 Other uploading functions: \code{\link{uploadOMLDataSet}},

@@ -69,7 +69,7 @@
 #' @param binary.path [\code{character(1)}]\cr
 #'   The path to the cached binary file, once \code{\link{getOMLFlow}} was run.
 #' @export
-#' @family flow related functions
+#' @family flow-related functions
 #' @aliases OMLFlow
 # @param implements [\code{character}]\cr
 #   Ontological reference.
@@ -196,7 +196,7 @@ print.OMLFlow = function(x, ...)  {
 #' @param recommended.range [\code{character(1)}]\cr
 #'   Minimal/maximal value and/or a recommended range of values.
 #' @export
-#' @family flow related functions
+#' @family flow-related functions
 #' @aliases OMLFlowParameter
 makeOMLFlowParameter = function(
   name,
@@ -266,7 +266,7 @@ print.OMLBibRef = function(x, ...) {
 # @param value [\code{character(1)}]\cr
 #   The quality's value. E.g., 'true' or 'false'.
 # @export
-# @family flow related functions
+# @family flow-related functions
 # @aliases OMLFlowQuality
 makeOMLFlowQuality = function(name, value) {
   assertString(name)
