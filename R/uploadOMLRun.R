@@ -9,13 +9,14 @@
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.
+#' @template arg_upload_tags
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}].
 #'   The run ID.
 #' @family uploading functions
 #' @family run-related functions
 #' @export
-uploadOMLRun = function(run, verbosity = NULL) {
+uploadOMLRun = function(run, tags = NULL, verbosity = NULL) {
   assertClass(run, "OMLRun")
 
   if (!checkUserConfirmation(type = "run")) {
@@ -64,6 +65,7 @@ uploadOMLRun = function(run, verbosity = NULL) {
   run.id = xmlRValI(doc, "/oml:upload_run/oml:run_id")
   # else, return the run.id invisibly
   showInfo(verbosity, "Run successfully uploaded. Run ID: %i", run.id)
+  if (!is.null(tags)) tagOMLObject(run.id, object = "run", tags = tags)
   forget(listOMLRuns)
   forget(listOMLRunEvaluations)
 
