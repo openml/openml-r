@@ -4,11 +4,14 @@
 \alias{uploadOMLFlow}
 \title{Upload an OpenML.}
 \usage{
-uploadOMLFlow(x, verbosity, sourcefile, binaryfile)
+uploadOMLFlow(x, tags = NULL, verbosity = NULL, sourcefile, binaryfile)
 }
 \arguments{
 \item{x}{[\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
 The flow that should be uploaded.}
+
+\item{tags}{[\code{character}]\cr
+The tags that should be added after uploading.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

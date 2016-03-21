@@ -4,11 +4,14 @@
 \alias{uploadOMLDataSet}
 \title{Upload a data set to the OpenML server.}
 \usage{
-uploadOMLDataSet(x, description = NULL, verbosity = NULL)
+uploadOMLDataSet(x, tags = NULL, description = NULL, verbosity = NULL)
 }
 \arguments{
 \item{x}{[\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
 Contains the data set that should be uploaded.}
+
+\item{tags}{[\code{character}]\cr
+The tags that should be added after uploading.}
 
 \item{description}{[\code{character(1)}|\code{\link{OMLDataSetDescription}}]\cr
 Either an \code{\link{OMLDataSetDescription}} or a \code{character(1)} that describes the data. 

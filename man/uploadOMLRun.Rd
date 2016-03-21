@@ -4,11 +4,14 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run.}
 \usage{
-uploadOMLRun(run, verbosity = NULL)
+uploadOMLRun(run, tags = NULL, verbosity = NULL)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}]\cr
 The run that should be uploaded.}
+
+\item{tags}{[\code{character}]\cr
+The tags that should be added after uploading.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
