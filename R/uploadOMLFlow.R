@@ -4,10 +4,11 @@
 #' Share a flow by uploading it to the OpenML server.
 #'
 #' @note
-#' This function will reset the cache of \code{link{listOMLFlows}} on success.
+#' This function will reset the cache of \code{\link{listOMLFlows}} on success.
 #'
 #' @param x [\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
 #'   The flow that should be uploaded.
+#' @template arg_upload_tags
 #' @template arg_verbosity
 #' @param sourcefile [\code{character(1)}]\cr
 #'   The file path to the flow (not needed for \code{\link{Learner}}).
@@ -17,12 +18,12 @@
 #'   The ID of the flow (\code{flow.id}).
 #' @family uploading functions
 #' @export
-uploadOMLFlow = function(x, verbosity, sourcefile, binaryfile) {
+uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile, binaryfile) {
   UseMethod("uploadOMLFlow")
 }
 
 #' @export
-uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
+uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
 #   if (is.null(sourcefile) && is.null(binaryfile)) {
 #     stopf("Please provide source and/or binary file.")
 #   }
@@ -75,12 +76,13 @@ uploadOMLFlow.OMLFlow = function(x, verbosity = NULL, sourcefile = NULL, binaryf
   doc = parseXMLResponse(response, "Uploading flow", c("upload_flow", "response"), as.text = TRUE)
   flow.id = xmlOValI(doc, "/oml:upload_flow/oml:id")
   showInfo(verbosity, "Flow successfully uploaded. Flow ID: %i", flow.id)
+  if (!is.null(tags)) tagOMLObject(flow.id, object = "flow", tags = tags)
   forget(listOMLFlows)
   return(invisible(flow.id))
 }
 
 #' @export
-uploadOMLFlow.Learner = function(x,
+uploadOMLFlow.Learner = function(x, tags = NULL,
   verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = createOMLFlowForMlrLearner(x)
 
@@ -108,10 +110,10 @@ uploadOMLFlow.Learner = function(x,
 # }
 
 checkOMLFlow = function(x, verbosity = NULL){
-  if(inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
+  if (inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
 
   content = doAPICall(api.call = paste0("flow/exists/", x$name, "/", x$external.version),
-                      method = "GET", file = NULL, verbosity = verbosity)
+    method = "GET", file = NULL, verbosity = verbosity)
 
   doc = parseXMLResponse(content, "Checking existence of flow", "flow_exists", as.text = TRUE)
 

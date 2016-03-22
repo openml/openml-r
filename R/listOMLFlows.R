@@ -39,7 +39,7 @@
 #' @template arg_tag
 #' @return [\code{data.frame}].
 #' @family listing functions
-#' @family flow related functions
+#' @family flow-related functions
 #' @export
 #' @example inst/examples/listOMLFlows.R
 listOMLFlows = memoise(.listOMLFlows)

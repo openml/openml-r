@@ -4,11 +4,14 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run.}
 \usage{
-uploadOMLRun(run, verbosity = NULL)
+uploadOMLRun(run, tags = NULL, verbosity = NULL)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}]\cr
 The run that should be uploaded.}
+
+\item{tags}{[\code{character}]\cr
+The tags that should be added after uploading.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -22,14 +25,14 @@ Default is set via \code{\link{setOMLConfig}}.}
   The run ID.
 }
 \description{
-Share a run of an flow on a given OpenML task by uploading it to the OpenML server.
+Share a run of a flow on a given OpenML task by uploading it to the OpenML server.
 }
 \note{
-This function will reset the cache of \code{link{listOMLRuns}} and
+This function will reset the cache of \code{\link{listOMLRuns}} and
 \code{\link{listOMLRunEvaluations}} on success.
 }
 \seealso{
-Other run related functions: \code{\link{deleteOMLObject}},
+Other run-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}}

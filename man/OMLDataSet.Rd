@@ -69,7 +69,7 @@ airquality_oml = makeOMLDataSet(desc = desc_airquality,
   target.features = "Ozone")
 }
 \seealso{
-Other dataset related functions: \code{\link{OMLDataSetDescription}},
+Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
   \code{\link{deleteOMLObject}},

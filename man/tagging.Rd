@@ -33,7 +33,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 Add or remove a specific tag to a OpenML data, task, flow or run.
 }
 \seealso{
-Other dataset related functions: \code{\link{OMLDataSetDescription}},
+Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
@@ -42,17 +42,17 @@ Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{listOMLDataSets}},
   \code{\link{uploadOMLDataSet}}
 
-Other flow related functions: \code{\link{deleteOMLObject}},
+Other flow-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}
 
-Other run related functions: \code{\link{deleteOMLObject}},
+Other run-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
 
-Other task related functions: \code{\link{convertOMLTaskToMlr}},
+Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLTask}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}}

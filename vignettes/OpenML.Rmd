@@ -324,7 +324,7 @@ Single OpenML runs can be downloaded with the function `getOMLRun`:
 ```{r eval=TRUE}
 task.list = listOMLRuns(task.id = 59L)
 task.list[281:285, ]
-run = getOMLRun(run.id = 525534L)
+run = getOMLRun(run.id = 524027L)
 ```
 Each `OMLRun` object is a list object, which stores additional information on the run. For instance, the flow of the previously downloaded run has some non-default settings for hyperparameters, which can be obtained by:
 ```{r eval=TRUE}

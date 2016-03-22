@@ -45,7 +45,7 @@ convertNodeSetToList = function(ns, fun = NULL) {
 
 arff.reader = function(file){
   reader = getOMLConfig()$arff.reader
-  if(reader == "RWeka") RWeka::read.arff(file) else
+  if (reader == "RWeka") RWeka::read.arff(file) else
     farff::readARFF(file, show.info = FALSE)
 }
 

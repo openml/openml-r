@@ -32,7 +32,7 @@
   xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE), silent = TRUE)
 
   if (is.error(xml)) {
-    return(NULL)
+    return(data.frame())
   }
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
@@ -66,7 +66,7 @@
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
-#' @family run related functions
+#' @family run-related functions
 #' @export
 #' @example inst/examples/listOMLRuns.R
 listOMLRuns = memoise(.listOMLRuns)

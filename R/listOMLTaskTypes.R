@@ -19,7 +19,7 @@
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
-#' @family task related functions
+#' @family task-related functions
 #' @export
 #' @example inst/examples/listOMLTaskTypes.R
 listOMLTaskTypes = memoise(.listOMLTaskTypes)
