@@ -8,10 +8,10 @@
 #' @param tags [\code{character}]\cr
 #'  The tags that should be added/removed.
 #' @template arg_verbosity
-#' @family dataset related functions
-#' @family task related functions
-#' @family flow related functions
-#' @family run related functions
+#' @family data set-related functions
+#' @family task-related functions
+#' @family flow-related functions
+#' @family run-related functions
 #' @rdname tagging
 #' @export
 tagOMLObject = function(id, object = c("data", "task", "flow", "run"), tags, verbosity = NULL) {

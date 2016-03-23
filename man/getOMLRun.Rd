@@ -31,8 +31,8 @@ and user computed metrics is downloaded if not already available in cache.
 }
 \examples{
 \dontrun{
-	runs_ctree <- listOMLRuns(flow.id = 2569L)
-	run1 <- getOMLRun(run.id = runs_ctree$run.id[1])
+	runs_ctree = listOMLRuns(flow.id = 2569)
+	run1 = getOMLRun(run.id = runs_ctree$run.id[1])
 	str(run1, 1)
 }
 }
@@ -41,7 +41,7 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
   \code{\link{getOMLTask}}
 
-Other run related functions: \code{\link{deleteOMLObject}},
+Other run-related functions: \code{\link{deleteOMLObject}},
   \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},

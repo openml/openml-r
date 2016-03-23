@@ -4,9 +4,9 @@
 #' @title Construct OpenMLRun.
 #'
 #' @param task.id [\code{character(1)}]\cr
-#'    The id of the task.
+#'    The ID of the task.
 #' @param implementation.id [\code{character(1)}]\cr
-#'   The id of the used implementation.
+#'   The ID of the used implementation.
 #' @param error.message [\code{character(1)}]\cr
 #'   Potential error message generated during run.
 #'   Default is NA, which means no error occurred.

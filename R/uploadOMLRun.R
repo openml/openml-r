@@ -1,21 +1,22 @@
 #' @title Upload an OpenML run.
 #'
 #' @description
-#' Share a run of an flow on a given OpenML task by uploading it to the OpenML server.
+#' Share a run of a flow on a given OpenML task by uploading it to the OpenML server.
 #'
 #' @note
-#' This function will reset the cache of \code{link{listOMLRuns}} and
+#' This function will reset the cache of \code{\link{listOMLRuns}} and
 #' \code{\link{listOMLRunEvaluations}} on success.
 #'
 #' @param run [\code{\link{OMLRun}}]\cr
 #'   The run that should be uploaded.
+#' @template arg_upload_tags
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}].
 #'   The run ID.
 #' @family uploading functions
-#' @family run related functions
+#' @family run-related functions
 #' @export
-uploadOMLRun = function(run, verbosity = NULL) {
+uploadOMLRun = function(run, tags = NULL, verbosity = NULL) {
   assertClass(run, "OMLRun")
 
   if (!checkUserConfirmation(type = "run")) {
@@ -38,16 +39,15 @@ uploadOMLRun = function(run, verbosity = NULL) {
     assertString(run$error.message)
   }
 
-  description = tempfile()
+  description = tempfile(fileext = ".xml")
   on.exit(unlink(description))
   writeOMLRunXML(run, description)
 
   if (!is.null(run$predictions)) {
-    output = tempfile()
+    output = tempfile(fileext = ".arff")
     on.exit(unlink(output), add = TRUE)
-    if (getOMLConfig()$arff.reader == "RWeka")
-      RWeka::write.arff(run$predictions, file = output) else farff::writeARFF(run$predictions, path = output)
-
+    arff.writer(run$predictions, file = output)
+    
     content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity,
       post.args = list(description = upload_file(path = description),
                        predictions = upload_file(path = output)))
@@ -56,15 +56,11 @@ uploadOMLRun = function(run, verbosity = NULL) {
       post.args = list(description = upload_file(path = description)) )
   }
   # was uploading successful?
-  doc = try(parseXMLResponse(content, "Uploading run", "upload_run", as.text = TRUE), silent = TRUE)
-
-  # if not, print the error.
-  if (is.error(doc)) {
-    parseXMLResponse(content, "Uploading run", "response")
-  }
+  doc = parseXMLResponse(content, "Uploading run", as.text = TRUE)
   run.id = xmlRValI(doc, "/oml:upload_run/oml:run_id")
   # else, return the run.id invisibly
   showInfo(verbosity, "Run successfully uploaded. Run ID: %i", run.id)
+  if (!is.null(tags)) tagOMLObject(run.id, object = "run", tags = tags)
   forget(listOMLRuns)
   forget(listOMLRunEvaluations)
 

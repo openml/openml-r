@@ -1,4 +1,4 @@
 \dontrun{
-	flows <- listOMLFlows()
+	flows = listOMLFlows()
 	tail(flows)
 }

@@ -13,7 +13,7 @@
 #'   \item{mlr.measures}{[list of \code{\link[mlr]{Measure}s} to optimize for.}
 #' }
 #' @inheritParams convertOMLDataSetToMlr
-#' @family task related functions
+#' @family task-related functions
 #' @example /inst/examples/convertOMLTaskToMlr.R
 #' @export
 convertOMLTaskToMlr = function(

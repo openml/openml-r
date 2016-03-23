@@ -18,10 +18,10 @@ showMessage = function(verbosity, msg, ..., minlev) {
 checkUserConfirmation = function(type) {
   assertChoice(type, choices = c("dataset", "flow", "task", "run"))
 
-  if (as.logical(getOMLConfig()$confirm.upload)) {
+  if (isTRUE(as.logical(getOMLConfig()$confirm.upload))) {
     catf("Do you really want to upload the %s? (yes|no)", type)
     reaction = readLines(con = stdin(), 1L)
-    return(reaction == "yes")
+    return(grepl(reaction, "yes"))
   }
   return(TRUE)
 }
@@ -45,8 +45,14 @@ convertNodeSetToList = function(ns, fun = NULL) {
 
 arff.reader = function(file){
   reader = getOMLConfig()$arff.reader
-  if(reader == "RWeka") RWeka::read.arff(file) else
+  if (reader == "RWeka") RWeka::read.arff(file) else
     farff::readARFF(file, show.info = FALSE)
+}
+
+arff.writer = function(x, file){
+  reader = getOMLConfig()$arff.reader
+  if (reader == "RWeka") RWeka::write.arff(x, file = file) else
+      farff::writeARFF(x, path = file)
 }
 
 getValidOMLDataSetStatusLevels = function() {

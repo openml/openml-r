@@ -31,8 +31,8 @@ downloaded if not already available in cache.
 }
 \examples{
 \dontrun{
-	r_ctree <- getOMLFlow(flow.id = 2569L)
-	weka_bagging <- getOMLFlow(flow.id = 2286L)
+	r_ctree = getOMLFlow(flow.id = 2569)
+	weka_bagging = getOMLFlow(flow.id = 2286)
 }
 }
 \seealso{
@@ -40,7 +40,7 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLRun}},
   \code{\link{getOMLTask}}
 
-Other flow related functions: \code{\link{deleteOMLObject}},
+Other flow-related functions: \code{\link{deleteOMLObject}},
   \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}

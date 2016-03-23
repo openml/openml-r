@@ -29,7 +29,7 @@ Minimal/maximal value and/or a recommended range of values.}
 Construct OMLFlowParameter.
 }
 \seealso{
-Other flow related functions: \code{\link{deleteOMLObject}},
+Other flow-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }

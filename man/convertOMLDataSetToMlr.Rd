@@ -49,12 +49,12 @@ Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 \examples{
 \dontrun{
 	library("mlr")
-	autosOML <- getOMLDataSet(did = 9L)
-	autosMlr <- convertOMLDataSetToMlr(autosOML) 
+	autosOML = getOMLDataSet(did = 9)
+	autosMlr = convertOMLDataSetToMlr(autosOML)
 }
 }
 \seealso{
-Other dataset related functions: \code{\link{OMLDataSetDescription}},
+Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{deleteOMLObject}},

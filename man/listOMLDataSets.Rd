@@ -39,12 +39,12 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 \examples{
 \dontrun{
-	datasets <- listOMLDataSets()
+	datasets = listOMLDataSets()
 	tail(datasets)
 }
 }
 \seealso{
-Other dataset related functions: \code{\link{OMLDataSetDescription}},
+Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},

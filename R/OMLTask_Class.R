@@ -17,7 +17,7 @@
 #'   Outputs expected after running this task.
 #' @param tags [\code{character}]\cr
 #'   Optional tags describing the (data of the) task.
-#' @family task related functions
+#' @family task-related functions
 #' @export
 #' @aliases OMLTask
 makeOMLTask = function(task.id, task.type, input, parameters = list(), output, tags = NA_character_) {

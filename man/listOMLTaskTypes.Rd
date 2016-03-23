@@ -29,7 +29,7 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 \examples{
 \dontrun{
-listOMLTaskTypes()
+  listOMLTaskTypes()
 }
 }
 \seealso{
@@ -40,7 +40,7 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
   \code{\link{listOMLTasks}}
 
-Other task related functions: \code{\link{convertOMLTaskToMlr}},
+Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLTask}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}

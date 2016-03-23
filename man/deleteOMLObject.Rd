@@ -27,7 +27,7 @@ This will delete one of your uploaded datasets, tasks, flows or runs.
 Note that you can only delete the objects you uploaded.
 }
 \seealso{
-Other dataset related functions: \code{\link{OMLDataSetDescription}},
+Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertMlrTaskToOMLDataSet}},
   \code{\link{convertOMLDataSetToMlr}},
@@ -36,18 +36,18 @@ Other dataset related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 
-Other flow related functions: \code{\link{getOMLFlow}},
+Other flow-related functions: \code{\link{getOMLFlow}},
   \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 
-Other run related functions: \code{\link{getOMLRun}},
+Other run-related functions: \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}
 
-Other task related functions: \code{\link{convertOMLTaskToMlr}},
+Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{getOMLTask}}, \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}

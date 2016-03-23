@@ -10,3 +10,4 @@ doc/?-*.md
 doc/?-*.html
 
 inst/doc
+.DS_Store

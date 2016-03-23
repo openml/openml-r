@@ -1,26 +1,27 @@
-#' @title Upload a dataset to the OpenML server.
+#' @title Upload a data set to the OpenML server.
 #'
 #' @description
-#' Share a dataset by uploading it to the OpenML server.
+#' Share a data set by uploading it to the OpenML server.
 #'
 #' @note
-#' This function will reset the cache of \code{link{listOMLDataSets}} on success.
+#' This function will reset the cache of \code{\link{listOMLDataSets}} on success.
 #'
 #' @param x [\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
-#'   Contains the dataset that should be uploaded.
+#'   Contains the data set that should be uploaded.
+#' @template arg_upload_tags
 #' @template arg_description
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}].
-#'   The id of the data (\code{did}).
+#'   The ID of the data (\code{did}).
 #' @family uploading functions
-#' @family dataset related functions
+#' @family data set-related functions
 #' @export
-uploadOMLDataSet = function(x, description = NULL, verbosity = NULL) {
+uploadOMLDataSet = function(x, tags = NULL, description = NULL, verbosity = NULL) {
   UseMethod("uploadOMLDataSet")
 }
 
 #' @export
-uploadOMLDataSet.OMLDataSet = function(x, description = NULL, verbosity = NULL) {
+uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, verbosity = NULL) {
   if (!checkUserConfirmation(type = "dataset")) {
     return(invisible())
   }
@@ -31,10 +32,7 @@ uploadOMLDataSet.OMLDataSet = function(x, description = NULL, verbosity = NULL) 
 
   output = tempfile()
   on.exit(unlink(output), add = TRUE)
-  if (getOMLConfig()$arff.reader == "RWeka")
-    RWeka::write.arff(x$data, file = output)
-  else
-    farff::writeARFF(x$data, path = output)
+  arff.writer(x$data, file = output)
 
   showInfo(verbosity, "Uploading data set to server.")
 
@@ -44,12 +42,13 @@ uploadOMLDataSet.OMLDataSet = function(x, description = NULL, verbosity = NULL) 
   doc = parseXMLResponse(response, "Uploading dataset", c("upload_data_set", "response"), as.text = TRUE)
   did = xmlOValI(doc, "/oml:upload_data_set/oml:id")
   showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", did)
+  if (!is.null(tags)) tagOMLObject(did, object = "data", tags = tags)
   forget(listOMLDataSets)
   return(invisible(did))
 }
 
 #' @export
-uploadOMLDataSet.Task = function(x, description = NULL, verbosity = NULL) {
+uploadOMLDataSet.Task = function(x, tags = NULL, description = NULL, verbosity = NULL) {
   x = convertMlrTaskToOMLDataSet(x, description = description)
   uploadOMLDataSet.OMLDataSet(x)
 }
@@ -64,7 +63,7 @@ uploadOMLDataSet.Task = function(x, description = NULL, verbosity = NULL) {
 #' @template arg_description
 #'
 #' @return [\code{\link{OMLDataSet}}].
-#' @family dataset related functions
+#' @family data set-related functions
 #' @export
 convertMlrTaskToOMLDataSet = function(task, description = NULL){
   assert(checkClass(description, "character"), checkClass(description, "OMLDataSetDescription"), checkNull(description))

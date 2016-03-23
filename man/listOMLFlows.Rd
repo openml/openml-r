@@ -35,12 +35,12 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 \examples{
 \dontrun{
-	flows <- listOMLFlows()
+	flows = listOMLFlows()
 	tail(flows)
 }
 }
 \seealso{
-Other flow related functions: \code{\link{deleteOMLObject}},
+Other flow-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLFlow}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}

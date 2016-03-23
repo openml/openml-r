@@ -24,7 +24,7 @@
 #'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{\link[mlr]{Task}}].
-#' @family dataset related functions
+#' @family data set-related functions
 #' @example /inst/examples/convertOMLDataSetToMlr.R
 #' @export
 convertOMLDataSetToMlr = function(
