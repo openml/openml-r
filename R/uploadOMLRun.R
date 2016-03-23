@@ -60,7 +60,7 @@ uploadOMLRun = function(run, tags = NULL, verbosity = NULL) {
 
   # if not, print the error.
   if (is.error(doc)) {
-    parseXMLResponse(content, "Uploading run", "response")
+    parseXMLResponse(content, "Uploading run", "response", as.text = TRUE)
   }
   run.id = xmlRValI(doc, "/oml:upload_run/oml:run_id")
   # else, return the run.id invisibly
