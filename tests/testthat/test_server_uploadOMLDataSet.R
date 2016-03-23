@@ -6,10 +6,10 @@ test_that("uploadOMLDataSet", {
     ds = getOMLDataSet(10L)
     mlr.task = convertOMLDataSetToMlr(ds)
     
-    with_read_only({
-      expect_error(uploadOMLDataSet(ds), "This is a read-only account")
-      expect_error(uploadOMLDataSet(mlr.task), "This is a read-only account")
-    })
+    # with_read_only({
+    #   expect_error(uploadOMLDataSet(ds), "This is a read-only account")
+    #   expect_error(uploadOMLDataSet(mlr.task), "This is a read-only account")
+    # })
     
     with_write_access({
       did = uploadOMLDataSet(ds)
