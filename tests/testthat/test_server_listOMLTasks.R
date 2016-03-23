@@ -11,7 +11,7 @@ test_that("listOMLTasks", {
     "NumberOfNumericFeatures", "NumberOfSymbolicFeatures"
   )
 
-  tasks = listOMLTasks()
+  tasks = .listOMLTasks()
   expect_data_frame(tasks, min.rows = 6L, col.names = "unique")
   expect_set_equal(exp.names, names(tasks))
 
