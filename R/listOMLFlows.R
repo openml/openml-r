@@ -4,7 +4,7 @@
     assertString(tag, na.ok = FALSE)
     api.call = collapse(c(api.call, "tag", tag), sep = "/")
   }
-  content = try(doAPICall(api.call = "flow/list", file = NULL, verbosity = verbosity, method = "GET"))
+  content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
   if (is.error(content)) {
     return(data.frame())
   }

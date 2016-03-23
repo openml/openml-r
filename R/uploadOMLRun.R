@@ -56,12 +56,7 @@ uploadOMLRun = function(run, tags = NULL, verbosity = NULL) {
       post.args = list(description = upload_file(path = description)) )
   }
   # was uploading successful?
-  doc = try(parseXMLResponse(content, "Uploading run", "upload_run", as.text = TRUE), silent = TRUE)
-
-  # if not, print the error.
-  if (is.error(doc)) {
-    parseXMLResponse(content, "Uploading run", "response", as.text = TRUE)
-  }
+  doc = parseXMLResponse(content, "Uploading run", as.text = TRUE)
   run.id = xmlRValI(doc, "/oml:upload_run/oml:run_id")
   # else, return the run.id invisibly
   showInfo(verbosity, "Run successfully uploaded. Run ID: %i", run.id)

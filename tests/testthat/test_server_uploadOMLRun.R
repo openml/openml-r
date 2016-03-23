@@ -23,9 +23,9 @@ test_that("uploadOMLRun", {
     lrn = makeLearner("classif.rpart")
     task = getOMLTask(59L)
     res = runTaskMlr(task, lrn, scimark.vector = rep(1.5, 6))
-    run = uploadOMLRun(res$run)
+    run.id = uploadOMLRun(res$run)
     expect_is(run.id, "integer")
-    deleteOMLObject(run, object = "run")
+    deleteOMLObject(run.id, object = "run")
   })
 
   run$flow.id = NA

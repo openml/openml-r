@@ -29,7 +29,7 @@
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
 
   # FIXME: speedup using return.doc = FALSE (see also listOMLRunResults)
-  xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE), silent = TRUE)
+  xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE))
 
   if (is.error(xml)) {
     return(data.frame())

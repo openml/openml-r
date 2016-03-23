@@ -1,28 +1,28 @@
 .listOMLTasks = function(verbosity = NULL, status = "active", tag = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
-
+  
   api.call = "task/list"
   if (!is.null(tag)) {
     assertString(tag, na.ok = FALSE)
     api.call = collapse(c(api.call, "tag", tag), sep = "/")
   }
-
+  
   content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
-
+  
   if (is.error(content))
     return(data.frame())
-
-  d = xmlRoot(xmlParse(content))
-
+  
+  d = parseXMLResponse(content, as.text = TRUE, return.doc = FALSE) #xmlRoot(xmlParse(content))
+  
   # get values from each XML string
   string.list = xmlSApply(d, getChildrenStrings)
   # get indices where string.status is included in status
   string.ind = which(vcapply(string.list, function(X) X["status"]) %in% status)
-
+  
   # subset with respect to 'status' (speedup)
   string.list = string.list[string.ind]
   child.list = sapply(d[string.ind], xmlChildren)
-
+  
   info = lapply(1:length(string.list), function(X) {
     strings = string.list[[X]]
     child = child.list[[X]]
@@ -37,19 +37,19 @@
     tag.ind = names(strings) == "tag"
     strings = c(strings[!tag.ind], "tags" = collapse(strings[tag.ind], sep = ", "))
     out.vars = c("task_id", "task_type", "did", "status", "name", "target_feature", "tags",
-                 "estimation_procedure", "evaluation_measures", names[names(names)%in%"quality"])
+      "estimation_procedure", "evaluation_measures", names[names(names)%in%"quality"])
     return(as.list(strings[out.vars]))
   })
   li = as.data.frame(rbindlist(info, fill = TRUE))
   li = li[, !is.na(colnames(li))]
   int.vars = setdiff(colnames(li), c("task_type", "status", "name", "target_feature", "tags", "evaluation_measures"))
   li[, int.vars] = lapply(int.vars, function(x) as.integer(li[, x]))
-
+  
   estproc = listOMLEstimationProcedures(verbosity = FALSE)
   row.names(estproc) = estproc$est.id
   li$estimation_procedure = droplevels(estproc[as.character(li$estimation_procedure), "name"])
   li$status = as.factor(li$status)
-
+  
   #FIXME: do we want to replace _ by . in colnames?
   colnames(li) = gsub("_", ".", colnames(li))
   return(li)
