@@ -60,7 +60,10 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
         xmlValue(children[["array_data"]]),
         as.integer(xmlValue(children[["sample_size"]]))
       )
-      names(row) = c("did", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size")
+      cv.info = xmlAttrs(node)[c("repeat", "fold")]
+      if (is.null(cv.info)) cv.info = c(NA, NA)
+      row = c(row, cv.info)
+      names(row) = c("did", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size", "repeat", "fold")
       row
     }), fill = TRUE)
     makeOMLIOData(datasets = datasets, files = files, evaluations = as.data.frame(evals))
