@@ -3,7 +3,7 @@ context("runTaskMlr")
 test_that("runTaskMlr", {
   with_test_cache({
     checkRun = function(res) {
-      expect_is(res, "list")
+      expect_is(res, "runTaskMlr")
       expect_equal(length(res), 3L)
       expect_is(res$run$predictions, "data.frame")
       expect_is(res$bmr, "BenchmarkResult")

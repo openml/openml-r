@@ -7,8 +7,8 @@
 uploadOMLRun(run, tags = NULL, verbosity = NULL)
 }
 \arguments{
-\item{run}{[\code{\link{OMLRun}}]\cr
-The run that should be uploaded.}
+\item{run}{[\code{\link{OMLRun}}|\code{\link{runTaskMlr}}]\cr
+The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{runTaskMlr}}.}
 
 \item{tags}{[\code{character}]\cr
 The tags that should be added after uploading.}
