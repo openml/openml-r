@@ -88,7 +88,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     iter.eval$iter = as.factor(paste0(iter.eval[,"repeat"], "-", iter.eval$fold))
     iter.eval.split = split(iter.eval, iter.eval$iter)
     getMeasureValue = function(eval, measures, as.df = TRUE) {
-      eval = subset(eval, name %in% measures)
+      eval = eval[eval$name %in% measures, ]#subset(eval, name %in% measures)
       ret = setNames(eval$value, eval$name)
       if (as.df) as.data.frame(t(ret)) else ret
     }

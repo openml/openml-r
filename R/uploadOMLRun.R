@@ -11,26 +11,29 @@
 #'   The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{runTaskMlr}}.
 #' @template arg_upload_tags
 #' @template arg_verbosity
+#' @param ...
+#'   Not used.
 #' @return [\code{invisible(numeric(1))}].
 #'   The run ID.
 #' @family uploading functions
 #' @family run-related functions
 #' @export
-uploadOMLRun = function(run, tags = NULL, verbosity = NULL) {
+uploadOMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
   UseMethod("uploadOMLRun")
 }
 
 #' @export
-uploadOMLRun.runTaskMlr = function(run, tags = NULL, verbosity = NULL) {
+uploadOMLRun.runTaskMlr = function(run, tags = NULL, verbosity = NULL, ...) {
   assertClass(run, "runTaskMlr")
   assertClass(run$bmr, "BenchmarkResult")
   uploadOMLRun.OMLRun(run = run$run, bmr = run$bmr)
 }
 
 #' @export
-uploadOMLRun.OMLRun = function(run, bmr = NULL, tags = NULL, verbosity = NULL) {
+uploadOMLRun.OMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
   assertClass(run, "OMLRun")
-
+  bmr = list(...)$bmr
+  
   if (!checkUserConfirmation(type = "run")) {
     return(invisible())
   }

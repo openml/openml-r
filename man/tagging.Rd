@@ -47,8 +47,9 @@ Other flow-related functions: \code{\link{deleteOMLObject}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}
 
-Other run-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
+Other run-related functions: \code{\link{convertOMLRunToBMR}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
+  \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
 
