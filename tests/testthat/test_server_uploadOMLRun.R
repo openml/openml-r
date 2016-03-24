@@ -26,6 +26,11 @@ test_that("uploadOMLRun", {
     run.id = uploadOMLRun(res$run)
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
+    
+    # upload runTaskMlr Run
+    run.id = uploadOMLRun(res)
+    expect_is(run.id, "integer")
+    deleteOMLObject(run.id, object = "run")
   })
 
   run$flow.id = NA

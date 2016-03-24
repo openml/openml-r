@@ -104,7 +104,7 @@ The function `runTaskMlr()` applies an mlr learner on an OpenML data set and ret
 ```r
 runTask = function(task.id, learner.id) {
   res = runTaskMlr(getOMLTask(task.id), learners[[learner.id]])
-  getBMRAggrPerformances(res$mlr.benchmark.result)[[1]][[1]][1]
+  getBMRAggrPerformances(res$bmr)[[1]][[1]][1]
 }
 learners = list(lrn1, lrn2, lrn3, lrn4)
 grid = expand.grid(task.id = tasks$task.id, learner.id = 1:4)

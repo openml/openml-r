@@ -4,11 +4,11 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run.}
 \usage{
-uploadOMLRun(run, tags = NULL, verbosity = NULL)
+uploadOMLRun(run, tags = NULL, verbosity = NULL, ...)
 }
 \arguments{
-\item{run}{[\code{\link{OMLRun}}]\cr
-The run that should be uploaded.}
+\item{run}{[\code{\link{OMLRun}}|\code{\link{runTaskMlr}}]\cr
+The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{runTaskMlr}}.}
 
 \item{tags}{[\code{character}]\cr
 The tags that should be added after uploading.}
@@ -19,6 +19,8 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{...}{Not used.}
 }
 \value{
 [\code{invisible(numeric(1))}].
@@ -32,8 +34,9 @@ This function will reset the cache of \code{\link{listOMLRuns}} and
 \code{\link{listOMLRunEvaluations}} on success.
 }
 \seealso{
-Other run-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
+Other run-related functions: \code{\link{convertOMLRunToBMR}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
+  \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}}
 

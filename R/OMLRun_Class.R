@@ -107,9 +107,9 @@ print.OMLRun = function(x, print.metrics = FALSE, ...)  {
   catNotNA('\tLearner  :', x$flow.name)
   catNotNA('\tTask type:', x$task.type)
 
-  if (!is.null(x$mlr.benchmark.result$results[[1]][[1]])) {
+  if (!is.null(x$bmr$results[[1]][[1]])) {
     cat('\n')
-    print(x$mlr.benchmark.result$results[[1]][[1]])
+    print(x$bmr$results[[1]][[1]])
   }
 
   if (print.metrics) {

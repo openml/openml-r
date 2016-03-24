@@ -5,8 +5,9 @@
 # @param file [\code{character(1)}]\cr
 #   Destination path where the XML file should be saved.
 # @return [\code{invisible(NULL)}].
-writeOMLRunXML = function(run, file) {
+writeOMLRunXML = function(run, file, bmr = NULL) {
   assertClass(run, "OMLRun")
+  assert(checkClass(bmr, "BenchmarkResult"), checkNull(bmr)) 
   assertPathForOutput(file, overwrite = TRUE)
 
   # FIXME: We currently support only parameter values that can be converted to character
@@ -35,11 +36,11 @@ writeOMLRunXML = function(run, file) {
     mynode("value", run$parameter.setting[[i]]$value, parent = par.setting)
     mynode("component", run$parameter.setting[[i]]$component, parent = par.setting)
   }
+  
+  output = newXMLNode("output_data", parent = top, namespace = "oml")
 
-  if (!is.null(run$mlr.benchmark.result)) {
-    aggr = run$mlr.benchmark.result$results[[1]][[1]]$aggr
-
-    output = newXMLNode("output_data", parent = top, namespace = "oml")
+  if (!is.null(bmr)) {
+    aggr = bmr$results[[1]][[1]]$aggr
 
     # FIXME: maybe add time info for each resample iteration from `measures.test` slot
     eval.testtime = newXMLNode("evaluation", parent = output, namespace = "oml")
@@ -54,22 +55,23 @@ writeOMLRunXML = function(run, file) {
     mynode("name", "usercpu_time_millis", parent = eval.total)
     mynode("flow", "openml.evaluation.usercpu_time_millis(1.0)", parent = eval.total)
     mynode("value", sum(aggr[c("timetrain.test.sum", "timepredict.test.sum")]), parent = eval.total)
-    # add scimark information
-    if (!is.null(run$scimark.vector)) {
-      eval.scimark = newXMLNode("evaluation", parent = output, namespace = "oml")
-      mynode("name", "scimark_benchmark", parent = eval.scimark)
-      mynode("flow", "openml.userdefined.scimark_benchmark(1.0)", parent = eval.scimark)
-      mynode("value", run$scimark.vector[1L], parent = eval.scimark) # composite value
-      mynode("array_data", paste0("[ ", collapse(run$scimark.vector[-1], sep = ", "), " ]"), parent = eval.scimark)
-    }
     if ("cindex.test.mean" %in% names(aggr)) {
       eval = newXMLNode("evaluation", parent = output, namespace = "oml")
       mynode("name", "c_index", parent = eval)
       mynode("flow", "openml.evaluation.c_index(1.0)", parent = eval)
       mynode("value", aggr["cindex.test.mean"], parent = eval)
-      ind = which(colnames(run$mlr.benchmark.result$results[[1]][[1]]$measures.test) == "cindex")
-      mynode("stdev", sd(run$mlr.benchmark.result$results[[1]][[1]]$measures.test[, ind]), parent = eval)
+      ind = which(colnames(bmr$results[[1]][[1]]$measures.test) == "cindex")
+      mynode("stdev", sd(bmr$results[[1]][[1]]$measures.test[, ind]), parent = eval)
     }
+  }
+  
+  # add scimark information
+  if (!is.null(run$scimark.vector)) {
+    eval.scimark = newXMLNode("evaluation", parent = output, namespace = "oml")
+    mynode("name", "scimark_benchmark", parent = eval.scimark)
+    mynode("flow", "openml.userdefined.scimark_benchmark(1.0)", parent = eval.scimark)
+    mynode("value", run$scimark.vector[1L], parent = eval.scimark) # composite value
+    mynode("array_data", paste0("[ ", collapse(run$scimark.vector[-1], sep = ", "), " ]"), parent = eval.scimark)
   }
 
   saveXML(top, file = file)
