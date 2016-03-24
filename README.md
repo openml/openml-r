@@ -4,8 +4,7 @@
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
 [![Build Status](https://travis-ci.org/openml/openml-r.svg)](https://travis-ci.org/openml/openml-r)
 [![Coverage Status](https://coveralls.io/repos/github/openml/openml-r/badge.svg?branch=master)](https://coveralls.io/github/openml/openml-r?branch=master)
-[![Issues in Ready](https://badge.waffle.io/openml/openml-r.png?label=ready&title=Ready)](https://waffle.io/openml/r)
-[![Issues in Progress](https://badge.waffle.io/openml/openml-r.png?label=in%20progress&title=In%20Progress)](https://waffle.io/openml/r)
+[![Issues in TODOs](https://badge.waffle.io/openml/openml-r.png?label=TODO&title=TODOs)](https://waffle.io/openml/openml-r)
 [![Join the chat at https://gitter.im/openml/r](https://badges.gitter.im/openml/openml-r.svg)](https://gitter.im/openml/r?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 OpenML aims to create a frictionless, collaborative environment for exploring machine learning. This R package allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download datasets, tasks, runs and upload results. 
@@ -19,4 +18,4 @@ devtools::install_github("openml/r")
 
 # Contact
 
-Found some nasty bugs? Please use the [issue tracker](https://github.com/openml/r/issues) to report on bugs or missing features. Pay attention to explain the problem as good as possible (in the best case with a `traceback()` result and a `sessionInfo()`). Moreover, a reproducible example is desirable.
+Found some nasty bugs? Please use the [issue tracker](https://github.com/openml/openml-r/issues) to report on bugs or missing features. Pay attention to explain the problem as good as possible (in the best case with a `traceback()` result and a `sessionInfo()`). Moreover, a reproducible example is desirable.
