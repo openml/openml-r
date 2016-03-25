@@ -9,7 +9,8 @@ Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
     Michel Lang <michellang@gmail.com>,
     Benjamin Hofner <benjamin.hofner@fau.de>,
     Jakob Bossek <j.bossek@gmail.com>,
-    Pascal Kerschke <kerschke@uni-muenster.de>
+    Pascal Kerschke <kerschke@uni-muenster.de>, 
+    Joaquin Vanschoren <joaquin.vanschoren@gmail.com>
 Maintainer: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>
 License: BSD_3_clause + file LICENSE
 URL: https://github.com/openml/openml-r

@@ -2,7 +2,7 @@
 title: "Example workflow using OpenML and mlr"
 author: "The OpenML R Team"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 bibliography: Bib.bib
 vignette: >
   %\VignetteIndexEntry{OpenML}
@@ -19,7 +19,7 @@ setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 In this vignette we illustrate the advantages of OpenML by performing a small comparison study between a random forest and bagged trees.
 We first create the respective binary classification learners using mlr, then query OpenML for suitable data sets, apply the learners on the data, and finally evaluate the results.
 
-# Create Learners {#learners}
+## Create Learners {#learners}
 
 Because there is a variety of tree implementations in R, we select three implementations of different algorithms. These are **rpart** from the package *rpart* [@rpart] as an implementation of *CART*, **J48** from the package *RWeka* [@RWeka] as an implementation of *C4.5*, and **ctree** from the package *party* [@party], which is an implementation of the algorithm *Conditional inference trees*. As for the *Random forest*, we use the implementation **ranger** from the package *ranger* [@ranger].
 
@@ -39,7 +39,7 @@ lrn3 = makeBaggingWrapper(makeLearner("classif.J48"), bw.iters = 100)
 lrn4 = makeBaggingWrapper(makeLearner("classif.ctree"), bw.iters = 100)
 ```
 
-# Query OpenML
+## Query OpenML
 
 Now we search for appropriate tasks on OpenML by querying the server using `listOMLTasks()`, which returns a large data frame:
 ```{r get-tasks, cache=TRUE}
@@ -49,14 +49,14 @@ dim(all.tasks)
 
 For this study the candidates are filtered to meet the following criteria:  
 1. Binary classification problem  
-2. 10-fold Crossvalidation for validation  
+2. 10-fold cross-validation as resampling procedure
 3. No missing values -- Random Forest cannot handle them automatically  
-4. Less than 1000 instances -- keep evaluation time low  
+4. Less than 500 instances -- keep evaluation time low  
 5. $n < p$  
 6. Predictive accuracy as evaluation measure  
 
 Although a data frame can be filtered with the `subset()` function (in R's base package), we strongly recommend the faster and more convenient alternatives provided by either **data.table** [@data.table] or **dplyr** [@dplyr].
-```{r subset-task, seval=TRUE, cache=FALSE}
+```{r subset-task, seval=TRUE, cache=FALSE, warning=FALSE}
 library(data.table)
 tasks = as.data.table(all.tasks)
 tasks = tasks[
@@ -64,40 +64,87 @@ tasks = tasks[
   NumberOfClasses == 2 &
   estimation.procedure == "10-fold Crossvalidation" &
   NumberOfMissingValues == 0 &
-  NumberOfInstances < 1000 &
+  NumberOfInstances < 500 &
   NumberOfNumericFeatures < NumberOfInstances &
   evaluation.measures == "predictive_accuracy", ]
 
 nrow(tasks)
 ```
-We randomly pick 20 out of the `r nrow(tasks)` remaining tasks to keep the runtimes reasonable.
-Furthermore, we left join the data frame returned by `listOMLDataSets()` to have a quick glance at the names of the selected data sets:  
-**Why not only call `tasks[, name]`?**  
+We randomly pick 10 out of the `r nrow(tasks)` remaining tasks to keep the runtimes reasonable.
+Furthermore, we have a quick glance at the names of the corresponding data sets.
 ```{r sample-tasks, cache=TRUE}
-set.seed(52251)
-tasks = tasks[sample(nrow(tasks), 20), ]
-tasks[listOMLDataSets(), name, on = "did", nomatch = 0]
+set.seed(1)
+tasks = tasks[sample(nrow(tasks), 10), ]
+tasks[, name]
 ```
 
-# Evaluation  
+## Evaluation  
 
-The function `runTaskMlr()` applies an mlr learner on an OpenML data set and returns a benchmark result from which we extract the aggregated performance measure:
-```{r run-tasks, eval=FALSE}
+The function `runTaskMlr()` applies an mlr learner on an OpenML data set and returns a benchmark result (`bmr`). Here, we write a short helper function that extracts the aggregated performance measure from this benchmark result for a given task ID and a learner ID determining which of the four learners is run. We then generate a grid of these IDs and map them to the helper function.
+```{r run-tasks-showonly, eval=FALSE}
 runTask = function(task.id, learner.id) {
-  # FIXME: See issue #145
   res = runTaskMlr(getOMLTask(task.id), learners[[learner.id]])
-  getBMRAggrPerformances(res$mlr.benchmark.result)[[1]][[1]][1]
+  getBMRAggrPerformances(res$bmr)[[1]][[1]][1]
 }
 learners = list(lrn1, lrn2, lrn3, lrn4)
 grid = expand.grid(task.id = tasks$task.id, learner.id = 1:4)
 res = Map(runTask, task.id = grid$task.id, learner.id = grid$learner.id)
-# runTask(tasks[1, task.id], lrn2)
+```
+```{r run-tasks, cache=TRUE, include=FALSE}
+runTask = function(task.id, learner.id) {
+  res = runTaskMlr(getOMLTask(task.id), learners[[learner.id]])
+  getBMRAggrPerformances(res$bmr)[[1]][[1]][1]
+}
+learners = list(lrn1, lrn2, lrn3, lrn4)
+grid = expand.grid(task.id = tasks$task.id, learner.id = 1:4)
+res = Map(runTask, task.id = grid$task.id, learner.id = grid$learner.id)
+```
+In the next figure, the boxplots of the results of the four learners are depicted. We can see a large variance in the predictive accuracies. Apart from that, in average the bagging of cpart trees seems to be the worst of all considered learners. Please note that these results may only indicate tendencies, because we used only a small number of tasks.
+
+```{r figure1, echo=FALSE, message=FALSE, fig.width=7, fig.height=4}
+library(ggplot2)
+library(reshape2)
+
+res = cbind(grid, unlist(res))
+
+res = cbind(res[1:10, 1], "Ranger" = res[1:10, 3], "Bagging (rpart)" = res[11:20, 3], "Bagging (J48)" = res[21:30, 3], "Bagging (cpart)" = res[31:40, 3])
+colnames(res)[1] = "task.id"
+res = as.data.frame(res)
+res$task.id = as.factor(as.character(res$task.id))
+molten = data.table::melt(res, id.vars = "task.id")
+p = ggplot(molten, aes(x = variable, y = value))
+p + geom_boxplot(aes(fill = NULL), position = position_dodge(width = 0.9), width = 0.3) +
+  theme(legend.title = element_blank(), legend.text = element_text(size = 8),
+    axis.title.y = element_text(size = 10), axis.title.x = element_blank(),
+    axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8)) +
+  ylab("Predictive Accuracy")
 ```
 
-**FIXME: better implement an OpenML version of benchmark and use mlr's plotting capabilities for benchmark results?**
-
-In figure \ref{fig:diff}, the differences in predictive accuracy between each combination of two learners are visualized.
+To get a closer look at which learner might or might not be better than another, we have a look at 
+the next figure, showing the differences in predictive accuracy per task between each combination of two learners.
 Besides boxplots, there are also so-called violin plots depicted in the background, that represent the estimated density of the differences' distributions.
-![](figures/violinplot_binary.pdf)  
 
-# References  
+```{r figure2, echo=FALSE, message=FALSE, fig.width=7, fig.height=4}
+## violinplot_binary
+diffs = res[, 2] - res[, 3]
+diffs = cbind(diffs, res[, 2] - res[, 4])
+diffs = cbind(diffs, res[, 2] - res[, 5])
+diffs = cbind(diffs, res[, 3] - res[, 4])
+diffs = cbind(diffs, res[, 3] - res[, 5])
+diffs = cbind(diffs, res[, 4] - res[, 5])
+colnames(diffs) = as.character(1:6)
+diffs = as.data.frame(diffs)
+diff2 = melt(diffs, na.rm = TRUE)
+p = ggplot(diff2, aes(x = variable, y = value))
+p + geom_violin(aes(fill = variable)) + 
+ geom_boxplot(aes(fill = NULL), position = position_dodge(width = 0.9), width = 0.3) + 
+ scale_fill_discrete(breaks = as.character(1:6),
+   labels = c("1: Ranger - Bagging (rpart)", "2: Ranger - Bagging (J48)", "3: Ranger - Bagging (cpart)",
+   "4: Bagging (rpart) - Bagging (J48)", "5: Bagging (rpart) - Bagging (cpart)", "6: Bagging (J48) - Bagging (cpart)")) +
+ theme(legend.title = element_blank(), legend.text = element_text(size = 8),
+   axis.title.y = element_text(size = 10), axis.title.x = element_blank(),
+   axis.text.x = element_text(size = 8), axis.text.y = element_text(size = 8)) +
+ ylab("Difference in Predictive Accuracy")
+```
+
+## References  

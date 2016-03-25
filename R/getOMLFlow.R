@@ -9,7 +9,7 @@
 #' @template arg_verbosity
 #' @return [\code{\link{OMLFlow}}].
 #' @family downloading functions
-#' @family flow related functions
+#' @family flow-related functions
 #' @example /inst/examples/getOMLFlow.R
 #' @export
 getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
@@ -23,7 +23,7 @@ getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   file.exist = !(names(down$files) %in% "flow.xml")
   if (any(file.exist)) {
     file = down$files[[which(file.exist)]]
-    if(file$binary) flow$binary.path = file$path else flow$source.path = file$path
+    if (file$binary) flow$binary.path = file$path else flow$source.path = file$path
   }
 
   return(flow)

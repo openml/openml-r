@@ -44,7 +44,7 @@
 #'   provide evaluation scores for their own evaluation measures.
 #' @export
 #' @aliases OMLRun
-#' @family run related functions
+#' @family run-related functions
 makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, uploader.name = NA_character_,
   task.id, task.type = NA_character_,
   task.evaluation.measure = NA_character_, flow.id = NA_integer_, flow.name = NA_character_,
@@ -107,9 +107,9 @@ print.OMLRun = function(x, print.metrics = FALSE, ...)  {
   catNotNA('\tLearner  :', x$flow.name)
   catNotNA('\tTask type:', x$task.type)
 
-  if (!is.null(x$mlr.benchmark.result$results[[1]][[1]])) {
+  if (!is.null(x$bmr$results[[1]][[1]])) {
     cat('\n')
-    print(x$mlr.benchmark.result$results[[1]][[1]])
+    print(x$bmr$results[[1]][[1]])
   }
 
   if (print.metrics) {

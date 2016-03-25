@@ -13,7 +13,7 @@
 #'   \item{mlr.measures}{[list of \code{\link[mlr]{Measure}s} to optimize for.}
 #' }
 #' @inheritParams convertOMLDataSetToMlr
-#' @family task related functions
+#' @family task-related functions
 #' @example /inst/examples/convertOMLTaskToMlr.R
 #' @export
 convertOMLTaskToMlr = function(
@@ -33,6 +33,6 @@ convertOMLTaskToMlr = function(
     usercpu_time_millis_training = setAggregation(timetrain, test.sum), 
     usercpu_time_millis_testing = setAggregation(timepredict, test.sum)
     )
-  mlr.measures = append(convertOMLMeasuresToMlr(obj$input$evaluation.measures, mlr.task), time.measures)
+  mlr.measures = append(convertOMLMeasuresToMlr(obj$input$evaluation.measures), time.measures)
   list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
 }

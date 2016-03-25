@@ -47,7 +47,7 @@ Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},
 }
 }
 \seealso{
-Other task related functions: \code{\link{deleteOMLObject}},
+Other task-related functions: \code{\link{deleteOMLObject}},
   \code{\link{getOMLTask}}, \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}

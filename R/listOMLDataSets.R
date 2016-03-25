@@ -47,7 +47,7 @@
 #' @template arg_tag
 #' @return [\code{data.frame}].
 #' @family listing functions
-#' @family dataset related functions
+#' @family data set-related functions
 #' @export
 #' @example inst/examples/listOMLDataSets.R
 listOMLDataSets = memoise(.listOMLDataSets)

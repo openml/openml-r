@@ -31,7 +31,7 @@
 #' @return [\code{OMLDataSet}]
 #' @name OMLDataSet
 #' @export
-#' @family dataset related functions
+#' @family data set-related functions
 #' @aliases OMLDataSet
 #' @example inst/examples/makeOMLDataSet.R
 makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.features) {
@@ -125,7 +125,7 @@ print.OMLDataSet = function(x, ...) {
 #'
 #' @name OMLDataSetDescription
 #' @export
-#' @family dataset related functions
+#' @family data set-related functions
 #' @aliases OMLDataSetDescription
 #' @example inst/examples/makeOMLDataSet.R
 makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, format = "ARFF",

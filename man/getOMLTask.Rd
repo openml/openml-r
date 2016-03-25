@@ -44,7 +44,7 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
   \code{\link{getOMLRun}}
 
-Other task related functions: \code{\link{convertOMLTaskToMlr}},
+Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{deleteOMLObject}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},

@@ -3,7 +3,7 @@ context("listOMLDataSets")
 skip_on_cran()
 
 test_that("listOMLDataSets", {
-  for (dsl in list(listOMLDataSets(), listOMLDataSets(tag = "test"))) {
+  for (dsl in list(.listOMLDataSets(), .listOMLDataSets(tag = "test"))) {
     expect_data_frame(dsl, col.names = "unique", min.rows = 1)
     expect_set_equal(names(dsl), c("did", "status", "name", "MajorityClassSize",
       "MaxNominalAttDistinctValues", "MinorityClassSize", "NumBinaryAtts",

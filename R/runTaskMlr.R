@@ -110,7 +110,8 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   if (!is.null(scimark.vector)) {
     run$scimark.vector = scimark.vector
   }
-  return(list(run = run, bmr = bmr, flow = flow))
+  #return(list(run = run, bmr = bmr, flow = flow))
+  makeS3Obj("runTaskMlr", run = run, bmr = bmr, flow = flow)
 }
 
 

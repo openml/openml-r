@@ -49,17 +49,19 @@ doAPICall = function(api.call, id = NULL,
   if (nchar(url) > 4068)
     stopf("'%s' has %s characters, the maximum allowed url length is 4068.", url, nchar(url))
 
-  from.url = ifelse(method == "GET", "Downloading from",
-    ifelse(method == "POST", "Uploading to", "Deleting from"))
-  showInfo(verbosity, "%s '%s' to '%s'", from.url, url, ifelse(is.null(file), "<mem>", file))
-
   if (method == "GET") {
+    showInfo(verbosity, "%s '%s' to '%s'.", "Downloading from", url,
+      ifelse(is.null(file), "<mem>", file))
     content = GET(url = url, query = list(api_key = conf$apikey))
     content = rawToChar(content$content)
-  } else if (method == "POST") {
-    content = POST(url = url, body = post.args, query = list(api_key = conf$apikey))
-  } else if (method == "DELETE")
-    content = DELETE(url = url, query = list(api_key = conf$apikey))
+  } else {
+    from.url = ifelse(method == "POST", "Uploading to", "Deleting from")
+    showInfo(verbosity, "%s '%s'.", from.url, url)
+    if (method == "POST") {
+      content = POST(url = url, body = post.args, query = list(api_key = conf$apikey))
+    } else if (method == "DELETE")
+      content = DELETE(url = url, query = list(api_key = conf$apikey))
+  }
 
   if (!is.null(file)) {
     con = file(file, open = "w")
