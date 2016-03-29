@@ -21,9 +21,9 @@ Print verbose output on console? Possible values are:\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
-\item{seed}{[\code{numeric(1)}]\cr
-Set a seed to reproduce this run.
-Default is \code{1}.}
+\item{seed}{[\code{numeric(1)}|\code{\link{OMLSeedParList}} ]\cr
+Set a seed to make the run reproducible.
+Default is \code{1} and sets the seed using \code{set.seed(1)}.}
 
 \item{scimark.vector}{[\code{numeric(6)}]\cr
 Optional vector of performance measurements computed by the scientific SciMark

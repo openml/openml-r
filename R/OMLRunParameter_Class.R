@@ -29,7 +29,7 @@ makeOMLRunParameter = function(name, value, component = NA_character_) {
 }
 
 # show
-# @export
+#' @export
 print.OMLRunParameter = function(x, ...)  {
   s = ""
   if (!is.na(x$component))
@@ -38,14 +38,3 @@ print.OMLRunParameter = function(x, ...)  {
   val = try(as.character(x$value))
   catf("%s %s = %s", s, x$name, ifelse(is.error(val), "can't print this data type", x$value))
 }
-
-# 
-# makeOMLRunParSeedList = function() {
-#   seed.setting = lapply(seq_along(seed.pars), function(x) {
-#     makeOMLRunParameter(
-#       name = names(seed.pars[x]),
-#       value = as.character(seed.pars[x]),
-#       component = NA_character_
-#     )
-#   })
-# }
