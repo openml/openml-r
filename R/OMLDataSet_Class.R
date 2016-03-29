@@ -40,7 +40,7 @@ makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.feature
   n.col = ncol(data)
   assertCharacter(colnames.old, len = n.col, any.missing = FALSE, all.missing = FALSE)
   assertCharacter(colnames.new, len = n.col, any.missing = FALSE, all.missing = FALSE)
-  assertCharacter(target.features, min.len = 1L, max.len = n.col, any.missing = FALSE, all.missing = FALSE)
+  assertCharacter(target.features, min.len = 0L, max.len = n.col, any.missing = TRUE, all.missing = TRUE)
 
   if (!isSubset(target.features, colnames(data))) {
     stopf("Data has no column(s) named '%s'.", collapse(setdiff(target.features, colnames(data)), sep = ", "))
