@@ -29,7 +29,7 @@ makeOMLRunParameter = function(name, value, component = NA_character_) {
 }
 
 # show
-# @export
+#' @export
 print.OMLRunParameter = function(x, ...)  {
   s = ""
   if (!is.na(x$component))

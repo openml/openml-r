@@ -97,7 +97,10 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     ))
     do.call(makeOMLRunParameter, args)
   })
-
+  par.names = vcapply(run.args[["parameter.setting"]], function(x) x$name)
+  run.args[["parameter.setting"]] = setNames(run.args[["parameter.setting"]], par.names)
+  #setClasses(run.args[["parameter.setting"]], "OMLRunParList")
+  
   # get the predictions
   f = findCachedRun(run.args$run.id)
 

@@ -162,7 +162,8 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   #on.exit(unlink(sourcefile))
 
   # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
-  external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), "-", digest(pkges, "crc32"))
+  external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), 
+    "-v1.", digest(pkges, "crc32"))
 
   flow = makeOMLFlow(
     name = name,
@@ -200,18 +201,16 @@ makeFlowParameterList = function(mlr.lrn) {
     # if(data.type == "discrete") data.type = "string"      ?
     # if(data.type == "numericvector") data.type = "vector" ?
     # ...
-    # FIXME: For now, we don't want to store default values on the server.
-#     if (pars[[i]]$has.default & length(pars[[i]]$default) != 0)
-#       default.value = as.character(pars[[i]]$default)
-#     else
-   default.value = NA_character_
+    # For now, we don't want to store default values on the server.
+    default.value = NA_character_
     flow.par = makeOMLFlowParameter(
       name = name,
       data.type = data.type,
-      default.value = default.value)
+      default.value = default.value
+    )
     par.list[[i]] = flow.par
   }
-  seed.pars = setNames(c(1, RNGkind()), c("seed", "kind", "normal.kind"))
+  seed.pars = setNames(c(1, RNGkind()), c("openml.seed", "openml.kind", "openml.normal.kind"))
   par.list = append(par.list, lapply(seq_along(seed.pars), function(x) {
     makeOMLFlowParameter(
       name = names(seed.pars[x]),

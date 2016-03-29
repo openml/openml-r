@@ -14,7 +14,15 @@ test_that("makeOMLRunParList", {
       par.diff = names(par.vals[ind])
       
       oml.par.list = makeOMLRunParList(lrn)
-      expect_equal(extractSubList(oml.par.list, "name"), par.diff) 
+      expect_is(oml.par.list, "OMLRunParList")
+      expect_equal(unname(extractSubList(oml.par.list, "name")), par.diff) 
     }
   }
 })
+
+# FIXME:
+# This works but a created run can't be uploaded
+# lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.randomForest", mtry = 4)), osw.rate = 2)
+# This won't work:
+# lrn = makeImputeWrapper(makeLearner("classif.randomForest", mtry = 4), class = imputeMedian())
+
