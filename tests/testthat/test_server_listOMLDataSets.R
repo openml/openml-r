@@ -6,7 +6,7 @@ test_that("listOMLDataSets", {
   for (dsl in list(.listOMLDataSets(), .listOMLDataSets(tag = "study_1"))) {
     expect_data_frame(dsl, col.names = "unique", min.rows = 1)
     expect_set_equal(names(dsl), c("did", "status", "name", "MajorityClassSize",
-      "MaxNominalAttDistinctValues", "MinorityClassSize", "NumBinaryAtts",
+      "MaxNominalAttDistinctValues", "MinorityClassSize", #"NumBinaryAtts",
       "NumberOfClasses", "NumberOfFeatures", "NumberOfInstances",
       "NumberOfInstancesWithMissingValues", "NumberOfMissingValues",
       "NumberOfNumericFeatures", "NumberOfSymbolicFeatures"))
