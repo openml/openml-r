@@ -20,17 +20,19 @@
 #
 # bagging.par.settings = makeRunParameterList(bagging)
 # bagging.par.settings
-# lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.randomForest", mtry = 4)), osw.rate = 2)
-# lrn = makeImputeWrapper(makeLearner("classif.randomForest", mtry = 4), class = imputeMedian())
+# mlr.lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.randomForest", mtry = 4, ntree = 500), fw.perc = 0.5), osw.rate = 1)
+# mlr.lrn = makeImputeWrapper(makeLearner("classif.randomForest", mtry = 4, ntree = 500), class = imputeMedian())
+# mlr.lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.randomForest", mtry = 4, ntree = 500)), osw.rate = 1)
+# mlr.lrn = makeLearner("classif.randomForest", mtry = 4, ntree = 500)
 makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
   
-  ps = mlr.lrn$par.set$pars
-  par.vals = mlr.lrn$par.vals
-  par.names = names(mlr.lrn$par.vals)
+  ps = getParamSet(mlr.lrn) #mlr.lrn$par.set$pars
+  par.vals = getHyperPars(mlr.lrn) # mlr.lrn$par.vals
+  par.names = names(par.vals)
   # get defaults for par.vals that have been set
-  par.defaults = getDefaults(mlr.lrn$par.set)
+  par.defaults = getDefaults(ps)
   # store only par.vals that are different from default values
   par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
   par.vals = par.vals[par.ind]
@@ -38,7 +40,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   
   par.settings = setNames(vector("list", length(par.vals)), par.names)
   for (i in seq_along(par.vals)) {
-    psi = ps[[par.names[i]]]
+    psi = ps$pars[[par.names[i]]]
     # FIXME: what happens with parameters that are vectors (or not scalars, e.g. deeplearning)?
     val = paramValueToString(psi, par.vals[[i]])
     par.settings[[i]] = makeOMLRunParameter(
@@ -48,13 +50,16 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
       component = component #gsub(".*[.]", "", mlr.lrn$id)
     )
   }
-  if (!is.null(mlr.lrn$next.learner)) {
-    # Use the learner's id (without "classif." or "regr.") as the subcomponent's name...
-    # FIXME: check if or make sure that this is correct
-    #component = strsplit(mlr.lrn$next.learner$id, split = ".", fixed = TRUE)[[1]][2]
-    component = gsub(".*[.]", "", mlr.lrn$next.learner$id)
-    inner.par.settings = makeOMLRunParList(mlr.lrn$next.learner, component = component)
-    par.settings = c(par.settings, inner.par.settings)
+  
+  # add component
+  next.learner = mlr.lrn
+  while (!is.null(next.learner)) {
+    component = gsub(".*[.]", "", next.learner$id)
+    par.component = intersect(names(next.learner$par.set$pars), names(par.settings))
+    for (comp in par.component) {
+      par.settings[[comp]]$component = component
+    }
+    next.learner = next.learner$next.learner
   }
   setClasses(par.settings, "OMLRunParList")
 }

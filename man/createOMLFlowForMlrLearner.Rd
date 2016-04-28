@@ -4,7 +4,8 @@
 \alias{createOMLFlowForMlrLearner}
 \title{createOMLFlowForMlrLearner.}
 \usage{
-createOMLFlowForMlrLearner(lrn, name = lrn$id, description = NULL, ...)
+createOMLFlowForMlrLearner(lrn, name = paste0("mlr.", lrn$id),
+  description = NULL, ...)
 }
 \arguments{
 \item{lrn}{[\code{\link[mlr]{Learner}}]\cr

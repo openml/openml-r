@@ -26,34 +26,47 @@ uploadOMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
 uploadOMLRun.runTaskMlr = function(run, tags = NULL, verbosity = NULL, ...) {
   assertClass(run, "runTaskMlr")
   assertClass(run$bmr, "BenchmarkResult")
-  uploadOMLRun.OMLRun(run = run$run, bmr = run$bmr)
+  assertClass(run$flow, "OMLFlow")
+  uploadOMLRun.OMLRun(run = run$run, bmr = run$bmr, flow = run$flow)
 }
 
 #' @export
 uploadOMLRun.OMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
   assertClass(run, "OMLRun")
   bmr = list(...)$bmr
+  flow = list(...)$flow
   
   if (!checkUserConfirmation(type = "run")) {
     return(invisible())
   }
 
   if (is.na(run$flow.id)) {
-    if (!is.null(run$flow))
-      run$flow.id = uploadOMLFlow(run$flow) else
-        stop("Please provide a 'flow.id'")
-#     if (!missing(flow.id)) {
-#       run$flow.id = asCount(flow.id)
-#     } else stop("Please provide a 'flow.id'")
-  } #else {
-#    if (!missing(flow.id)) stop("This run has already a 'flow.id'.")
-#  }
+    if (!is.null(flow)){
+      flow.ids = uploadOMLFlow(flow) 
+      run$flow.id = flow.ids[1]
+      flow.ids = setNames(flow.ids, rev(unlist(strsplit(flow$name, "[.]")))[1:length(flow.ids)])
+    } else stop("Please provide a 'flow'")
+  } else flow.ids = run$flow.id
+  
   if (is.na(run$error.message)) {
     assertDataFrame(run$predictions)
   } else {
     assertString(run$error.message)
   }
-
+  
+  # modify parameter.setting and add component flow.id
+  #parameter.setting = unclass(getOMLRunParList(run))
+  #seed.setting = unclass(getOMLSeedParList(run))
+  parameter.setting = run$parameter.setting
+  flow.ids[1] = NA_character_
+  if (length(parameter.setting) > 0) {
+    for(i in 1:length(parameter.setting)) {
+      ind = parameter.setting[[i]]$component
+      parameter.setting[[i]]$component = NA_character_ #flow.ids[ind]
+    }
+  }
+  run$parameter.setting = parameter.setting #append(parameter.setting, seed.setting)
+  
   description = tempfile(fileext = ".xml")
   on.exit(unlink(description))
   writeOMLRunXML(run, description, bmr = bmr)

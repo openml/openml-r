@@ -23,7 +23,7 @@ test_that("uploadOMLRun", {
     lrn = makeLearner("classif.rpart")
     task = getOMLTask(59L)
     res = runTaskMlr(task, lrn, scimark.vector = rep(1.5, 6))
-    run.id = uploadOMLRun(res$run)
+    run.id = uploadOMLRun(res)
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
     
@@ -34,5 +34,5 @@ test_that("uploadOMLRun", {
   })
 
   run$flow.id = NA
-  expect_error(uploadOMLRun(run), "Please provide a 'flow.id'")
+  expect_error(uploadOMLRun(run), "Please provide a")
 })

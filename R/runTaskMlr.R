@@ -42,14 +42,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   } else {
     seed.setting = seed
   }
-  # seed.setting = lapply(seq_along(seed.pars), function(x) {
-  #   makeOMLRunParameter(
-  #     name = names(seed.pars[x]),
-  #     value = as.character(seed.pars[x]),
-  #     component = NA_character_
-  #   )
-  # })
-  
+
   # set default evaluation measure for classification and regression
   if (task$input$evaluation.measures == "") {
     if (task$task.type == "Supervised Classification")
@@ -65,11 +58,6 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
 
   # Create mlr task with estimation procedure and evaluation measure
   z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
-
-  # Create seed info and set this seed
-  # seed.pars = setNames(c(seed, RNGkind()), c("seed", "kind", "normal.kind"))
-  # do.call("set.seed", as.list(seed.pars))
-  # names(seed.pars) = paste0("openml.", names(seed.pars))
 
   # Create OMLRun
   setOMLSeedParList(seed.setting)
@@ -99,7 +87,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   # Add parameter settings and seed
   run$parameter.setting = append(parameter.setting, seed.setting)
   flow = createOMLFlowForMlrLearner(learner)
-  run$flow = flow
+  #run$flow = flow
 
   par.names = extractSubList(run$parameter.setting, "name")
   if (length(par.names) != length(unique(par.names)))

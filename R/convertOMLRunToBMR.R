@@ -19,7 +19,18 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   assertSubset(measures, choices = names(lookupMeasures()))
   # FIXME: allow that measures are recomputed with mlr using the predictions
   assertSubset(assertFlag(recompute), FALSE)
-  learners = makeLearner(gsub("\\(.*", "", run$flow.name))
+  
+  # FIXME: try to do this without downloading, if it is possible?
+  task = getOMLTask(run$task.id)
+  flow = getOMLFlow(run$flow.id)
+  flow.version = getFlowExternalVersion(flow)
+  
+  if (flow.version >= 2) {
+    learners = readRDS(flow$binary.path)
+  } else {
+    learners = makeLearner(gsub("\\(.*", "", run$flow.name))
+  }
+  
   task.id = paste0("OpenML-Task-", run$task.id)
   # FIXME: why is there a flow_id column and where can we find the measures per fold values
   evals = run$output.data$evaluations
@@ -30,8 +41,6 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
       collapse(unique(evals$name), "', '"))
   runtime = evals$value[evals$name == "usercpu_time_millis"]
   
-  # FIXME: try to do this without downloading
-  task = getOMLTask(run$task.id)
   task = convertOMLTaskToMlr(task)
   nclasses = length(task$mlr.task$task.desc$class.levels)
   

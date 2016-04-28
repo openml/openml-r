@@ -14,8 +14,8 @@
 #'   The file path to the flow (not needed for \code{\link{Learner}}).
 #' @param binaryfile [\code{character(1)}]\cr
 #'   The file path to the flow (not needed for \code{\link{Learner}}).
-#' @return [\code{invisible(numeric(1))}].
-#'   The ID of the flow (\code{flow.id}).
+#' @return [\code{invisible(numeric)}].
+#'   The ID of the flow (\code{flow.id}). If there are more componets in the flow, than a vector of IDs.
 #' @family uploading functions
 #' @export
 uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile, binaryfile) {
@@ -27,12 +27,19 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
 #   if (is.null(sourcefile) && is.null(binaryfile)) {
 #     stopf("Please provide source and/or binary file.")
 #   }
+  if (length(x$components) > 0) {
+    tmp = uploadOMLFlow(x$components[[1]])
+    if (length(x$components) > 1) {
+      for(i in 2:length(x$components)) tmp = c(uploadOMLFlow(x$components[[i]]), tmp)
+    }
+  } else tmp = NULL
+  
   check = checkOMLFlow(x, verbosity = FALSE)
   doc = check$doc
   if (check$exists) {
     flow.id = xmlOValI(doc, "/oml:flow_exists/oml:id")
     showInfo(verbosity, "Flow already exists (Flow ID = %i).", flow.id)
-    return(flow.id)
+    return(c(flow.id, tmp))
   }
   file = tempfile(fileext = ".xml")
   on.exit(unlink(file))
@@ -78,7 +85,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
   showInfo(verbosity, "Flow successfully uploaded. Flow ID: %i", flow.id)
   if (!is.null(tags)) tagOMLObject(flow.id, object = "flow", tags = tags)
   forget(listOMLFlows)
-  return(invisible(flow.id))
+  return(invisible(c(flow.id, tmp)))
 }
 
 #' @export
@@ -141,10 +148,12 @@ checkOMLFlow = function(x, verbosity = NULL){
 #' @param ... [\code{any}]\cr
 #'   Further optional parameters that are passed to \code{\link{makeOMLFlow}}.
 #' @return [\code{\link{OMLFlow}}].
-createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ...) {
+createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), description = NULL, ...) {
   assertClass(lrn, "Learner")
   assertString(name)
 
+  lrn = removeDefaultsFromParamValues(lrn)
+  
   if (!is.null(description))
     assertString(description)
   else
@@ -152,7 +161,8 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
 
   # dependencies
   lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
-  pkges = c("mlr", lrn.package)
+  if ("mlr"%in%lrn.package) pkges = lrn.package else pkges = c("mlr", lrn.package)
+  #pkges = c("mlr", lrn.package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = collapse(pkges, sep = ", ")
 
@@ -162,8 +172,10 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
   #on.exit(unlink(sourcefile))
 
   # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
+  binary.path = file.path(tempdir(), sprintf("%s_binary.Rds", lrn$id))
+  saveRDS(lrn, file = binary.path)
   external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), 
-    "-v1.", digest(pkges, "crc32"))
+    "-v2.", digest(algo = "crc32", file = binary.path))
 
   flow = makeOMLFlow(
     name = name,
@@ -171,14 +183,27 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
     parameters = makeFlowParameterList(lrn),
     dependencies = pkges,
     external.version = external.version,
+    binary.path = binary.path,
     ...
   )
   if (!is.null(lrn$next.learner)) {
-    identifier = stri_split_fixed(lrn$next.learner$id, ".")[[1L]][2L]
+    identifier = gsub(".*[.]", "", lrn$next.learner$id) #stri_split_fixed(lrn$next.learner$id, ".")[[1L]][2L]
     flow$components = list(createOMLFlowForMlrLearner(lrn$next.learner))
     names(flow$components) = identifier
   }
   return(flow)
+}
+
+removeDefaultsFromParamValues = function(mlr.lrn) {
+  par.defaults = getDefaults(getParamSet(mlr.lrn))
+  par.vals = mlr.lrn$par.vals
+  par.ind = vlapply(names(par.vals), function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
+  mlr.lrn$par.vals = par.vals[par.ind]
+  
+  if (!is.null(mlr.lrn$next.learner))
+    mlr.lrn$next.learner = removeDefaultsFromParamValues(mlr.lrn$next.learner)
+  
+  return(mlr.lrn)
 }
 
 # Generate a list of OpenML flow parameters for a given mlr learner.
@@ -192,7 +217,7 @@ createOMLFlowForMlrLearner = function(lrn, name = lrn$id, description = NULL, ..
 # pars = makeFlowParameterList(lrn)
 # pars
 makeFlowParameterList = function(mlr.lrn) {
-  pars = mlr.lrn$par.set$pars
+  pars = getParamSet(mlr.lrn)$pars #mlr.lrn$par.set$pars
   par.list = vector("list", length = length(pars))
   for(i in seq_along(pars)){
     name = pars[[i]]$id
