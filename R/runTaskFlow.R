@@ -45,7 +45,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   # assign data type to learner parameters 
   par.vals = convertOMLRunParListToList(par.list)
   lrn.pars = par.vals[names(par.vals)%nin%seed.pars]
-  lrn.pars.type = vcapply(lrn$par.set$pars, function(x) x$type)[names(lrn.pars)]
+  lrn.pars.type = vcapply(getParamSet(lrn)$pars, function(x) x$type)[names(lrn.pars)]
   for (i in seq_along(lrn.pars)) {
     if (lrn.pars.type[i] == "integer") lrn.pars[[i]] = as.integer(lrn.pars[[i]])
     if (lrn.pars.type[i] == "numeric") lrn.pars[[i]] = as.numeric(lrn.pars[[i]])

@@ -28,8 +28,8 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
   
-  ps = getParamSet(mlr.lrn) #mlr.lrn$par.set$pars
-  par.vals = getHyperPars(mlr.lrn) # mlr.lrn$par.vals
+  ps = getParamSet(mlr.lrn)
+  par.vals = getHyperPars(mlr.lrn) 
   par.names = names(par.vals)
   # get defaults for par.vals that have been set
   par.defaults = getDefaults(ps)
@@ -55,7 +55,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   next.learner = mlr.lrn
   while (!is.null(next.learner)) {
     component = gsub(".*[.]", "", next.learner$id)
-    par.component = intersect(names(next.learner$par.set$pars), names(par.settings))
+    par.component = intersect(names(getParamSet(next.learner)$pars), names(par.settings))
     for (comp in par.component) {
       par.settings[[comp]]$component = component
     }
