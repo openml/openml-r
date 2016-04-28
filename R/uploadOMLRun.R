@@ -40,13 +40,13 @@ uploadOMLRun.OMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
     return(invisible())
   }
 
+  # if no flow.id, try to upload flow (if it exists) and assign its id to flow.id slot
   if (is.na(run$flow.id)) {
     if (!is.null(flow)){
-      flow.ids = uploadOMLFlow(flow) 
-      run$flow.id = flow.ids[1]
-      flow.ids = setNames(flow.ids, rev(unlist(strsplit(flow$name, "[.]")))[1:length(flow.ids)])
+      run$flow.id = uploadOMLFlow(flow) 
+      #flow.ids = setNames(flow.ids, rev(unlist(strsplit(flow$name, "[.]")))[1:length(flow.ids)])
     } else stop("Please provide a 'flow'")
-  } else flow.ids = run$flow.id
+  } # else flow.ids = run$flow.id
   
   if (is.na(run$error.message)) {
     assertDataFrame(run$predictions)
@@ -58,7 +58,7 @@ uploadOMLRun.OMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
   #parameter.setting = unclass(getOMLRunParList(run))
   #seed.setting = unclass(getOMLSeedParList(run))
   parameter.setting = run$parameter.setting
-  flow.ids[1] = NA_character_
+  #flow.ids[1] = NA_character_
   if (length(parameter.setting) > 0) {
     for(i in 1:length(parameter.setting)) {
       ind = parameter.setting[[i]]$component

@@ -24,9 +24,7 @@ uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile, binaryfil
 
 #' @export
 uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
-#   if (is.null(sourcefile) && is.null(binaryfile)) {
-#     stopf("Please provide source and/or binary file.")
-#   }
+  # upload components as flows if there are some
   if (length(x$components) > 0) {
     tmp = uploadOMLFlow(x$components[[1]])
     if (length(x$components) > 1) {
@@ -39,7 +37,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
   if (check$exists) {
     flow.id = xmlOValI(doc, "/oml:flow_exists/oml:id")
     showInfo(verbosity, "Flow already exists (Flow ID = %i).", flow.id)
-    return(c(flow.id, tmp))
+    return(flow.id)
   }
   file = tempfile(fileext = ".xml")
   on.exit(unlink(file))
@@ -85,7 +83,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
   showInfo(verbosity, "Flow successfully uploaded. Flow ID: %i", flow.id)
   if (!is.null(tags)) tagOMLObject(flow.id, object = "flow", tags = tags)
   forget(listOMLFlows)
-  return(invisible(c(flow.id, tmp)))
+  return(invisible(flow.id))
 }
 
 #' @export
