@@ -28,6 +28,8 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
   
+  if (isTRUE(checkClass(mlr.lrn, "TuneWrapper"))) mlr.lrn = removeAllHyperPars(mlr.lrn)
+  
   ps = getParamSet(mlr.lrn)
   par.vals = getHyperPars(mlr.lrn) 
   par.names = names(par.vals)

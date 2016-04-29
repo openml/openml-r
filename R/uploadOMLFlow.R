@@ -150,7 +150,8 @@ createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), descri
   assertClass(lrn, "Learner")
   assertString(name)
 
-  lrn = removeDefaultsFromParamValues(lrn)
+  #lrn = removeDefaultsFromParamValues(lrn)
+  lrn = removeAllHyperPars(lrn)
   
   if (!is.null(description))
     assertString(description)
@@ -160,8 +161,9 @@ createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), descri
   # dependencies
   lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
   if ("mlr"%in%lrn.package) pkges = lrn.package else pkges = c("mlr", lrn.package)
-  #pkges = c("mlr", lrn.package)
+  pkges = c("OpenML", lrn.package)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
+  pkges = c(paste0("R_", collapse(R.Version()[c("major", "minor")], ".")), pkges)
   pkges = collapse(pkges, sep = ", ")
 
   # create sourcefile
@@ -169,9 +171,10 @@ createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), descri
   #external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
   #on.exit(unlink(sourcefile))
 
-  # FIXME: currently we only want to allow mlr learners as flows, later we might want switch using sourcefiles again
   binary.path = file.path(tempdir(), sprintf("%s_binary.Rds", lrn$id))
   saveRDS(lrn, file = binary.path)
+  
+  # FIXME: use only hash when OpenML is on CRAN!
   external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), 
     "-v2.", digest(algo = "crc32", file = binary.path))
 
@@ -184,6 +187,7 @@ createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), descri
     binary.path = binary.path,
     ...
   )
+  
   if (!is.null(lrn$next.learner)) {
     identifier = gsub(".*[.]", "", lrn$next.learner$id) #stri_split_fixed(lrn$next.learner$id, ".")[[1L]][2L]
     flow$components = list(createOMLFlowForMlrLearner(lrn$next.learner))
@@ -192,6 +196,17 @@ createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), descri
   return(flow)
 }
 
+removeAllHyperPars = function(mlr.lrn) {
+  all.pars = names(getHyperPars(mlr.lrn))
+  mlr.lrn = removeHyperPars(mlr.lrn, ids = all.pars)
+
+  if (!is.null(mlr.lrn$next.learner))
+    mlr.lrn$next.learner = removeAllHyperPars(mlr.lrn$next.learner)
+  
+  return(mlr.lrn)
+}
+
+# FIXME: we don't need this anymore right?
 removeDefaultsFromParamValues = function(mlr.lrn) {
   par.defaults = getDefaults(getParamSet(mlr.lrn))
   par.vals = mlr.lrn$par.vals
