@@ -63,6 +63,6 @@ print.OMLTask = function(x, ...) {
     n.folds = ifelse(!is.null(n.folds) && !is.na(n.folds), paste(" x", n.folds, "folds"), " rep(s)")
     catf('  Estimation Procedure : %s%s (%s%s)', strat, est.type, n.rep, n.folds)
   }
-  if (!all(x$evaluation.measures == ""))
+  if (!all(x$input$evaluation.measures == ""))
     catNotNA('  Evaluation Measure(s):', x$input$evaluation.measures, fun = collapse, sep = ", ")
 }
