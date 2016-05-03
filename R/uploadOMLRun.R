@@ -9,6 +9,8 @@
 #'
 #' @param run [\code{\link{OMLRun}}|\code{\link{runTaskMlr}}]\cr
 #'   The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{runTaskMlr}}.
+#' @param upload.bmr [\code{logical(1)}]\cr
+#'   Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded?
 #' @template arg_upload_tags
 #' @template arg_verbosity
 #' @param ...
@@ -18,21 +20,24 @@
 #' @family uploading functions
 #' @family run-related functions
 #' @export
-uploadOMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
+uploadOMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
   UseMethod("uploadOMLRun")
 }
 
 #' @export
-uploadOMLRun.runTaskMlr = function(run, tags = NULL, verbosity = NULL, ...) {
+uploadOMLRun.runTaskMlr = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
   assertClass(run, "runTaskMlr")
   assertClass(run$bmr, "BenchmarkResult")
   assertClass(run$flow, "OMLFlow")
-  uploadOMLRun.OMLRun(run = run$run, bmr = run$bmr, flow = run$flow)
+  assertFlag(upload.bmr)
+  uploadOMLRun.OMLRun(run = run$run, upload.bmr = upload.bmr, bmr = run$bmr, flow = run$flow)
 }
 
 #' @export
-uploadOMLRun.OMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
+uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
   assertClass(run, "OMLRun")
+  assertFlag(upload.bmr)
+  
   bmr = list(...)$bmr
   flow = list(...)$flow
   
@@ -66,23 +71,30 @@ uploadOMLRun.OMLRun = function(run, tags = NULL, verbosity = NULL, ...) {
     }
   }
   run$parameter.setting = parameter.setting #append(parameter.setting, seed.setting)
-  
+
   description = tempfile(fileext = ".xml")
   on.exit(unlink(description))
   writeOMLRunXML(run, description, bmr = bmr)
-
+  post.args = list(description = upload_file(path = description))
+  
   if (!is.null(run$predictions)) {
-    output = tempfile(fileext = ".arff")
-    on.exit(unlink(output), add = TRUE)
-    arff.writer(run$predictions, file = output)
-    
-    content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity,
-      post.args = list(description = upload_file(path = description),
-                       predictions = upload_file(path = output)))
-  } else {
-    content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity,
-      post.args = list(description = upload_file(path = description)) )
+    predictions.file = tempfile(fileext = ".arff")
+    on.exit(unlink(predictions.file), add = TRUE)
+    arff.writer(run$predictions, file = predictions.file)
+    post.args$predictions = upload_file(path = predictions.file)
+  } 
+  
+  if (!is.null(bmr) && upload.bmr) {
+    # FIXME: See https://github.com/openml/OpenML/issues/276 do we always want to upload this? Or only for TuneWrapper?
+    bmr.file = tempfile(fileext = ".rds")
+    on.exit(unlink(bmr.file))
+    saveRDS(bmr, file = bmr.file)
+    post.args$BenchmarkResult = upload_file(path = bmr.file)
   }
+  
+  content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity,
+    post.args = post.args)
+  
   # was uploading successful?
   doc = parseXMLResponse(content, "Uploading run", as.text = TRUE)
   run.id = xmlRValI(doc, "/oml:upload_run/oml:run_id")

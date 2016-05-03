@@ -198,7 +198,7 @@ createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), descri
 
 removeAllHyperPars = function(mlr.lrn) {
   all.pars = names(getHyperPars(mlr.lrn))
-  mlr.lrn = removeHyperPars(mlr.lrn, ids = all.pars)
+  if (!is.null(all.pars)) mlr.lrn = removeHyperPars(mlr.lrn, ids = all.pars)
 
   if (!is.null(mlr.lrn$next.learner))
     mlr.lrn$next.learner = removeAllHyperPars(mlr.lrn$next.learner)

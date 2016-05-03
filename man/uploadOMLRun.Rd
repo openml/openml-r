@@ -4,11 +4,14 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run.}
 \usage{
-uploadOMLRun(run, tags = NULL, verbosity = NULL, ...)
+uploadOMLRun(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}|\code{\link{runTaskMlr}}]\cr
 The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{runTaskMlr}}.}
+
+\item{upload.bmr}{[\code{logical(1)}]\cr
+Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded?}
 
 \item{tags}{[\code{character}]\cr
 The tags that should be added after uploading.}

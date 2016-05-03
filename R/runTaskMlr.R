@@ -56,6 +56,9 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
     verbosity = getOMLConfig()$verbosity
   show.info = (verbosity > 0L)
 
+  # create Flow
+  flow = createOMLFlowForMlrLearner(learner)
+  
   # Create mlr task with estimation procedure and evaluation measure
   z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
 
@@ -86,7 +89,6 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
 
   # Add parameter settings and seed
   run$parameter.setting = append(parameter.setting, seed.setting)
-  flow = createOMLFlowForMlrLearner(learner)
   #run$flow = flow
 
   par.names = extractSubList(run$parameter.setting, "name")

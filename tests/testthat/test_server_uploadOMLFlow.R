@@ -11,6 +11,7 @@ test_that("uploadOMLFlow", {
     
     # create a own flow
     lrn = makeLearner("classif.rpart")
+    lrnW = makeFilterWrapper(makeImputeWrapper(lrn, classes = list(numeric = imputeMedian(), integer = imputeMedian())), fw.perc = 0.5)
     
     # with_read_only({
     #   expect_error(uploadOMLFlow(flow, sourcefile = flow$source.path), "This is a read-only account")
@@ -27,6 +28,13 @@ test_that("uploadOMLFlow", {
       expect_is(flow.id, "integer")
       expect_message(uploadOMLFlow(lrn), "Flow already exists")
       #deleteOMLObject(flow.id, object = "flow")
+      
+      # upload wrapped learner
+      flow.id = uploadOMLFlow(lrnW)
+      expect_is(flow.id, "integer")
+      expect_message(uploadOMLFlow(lrnW), "Flow already exists")
+      
+      # upload tune wrapper
     })
   })
 })
