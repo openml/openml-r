@@ -72,24 +72,32 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity =
   }
   run$parameter.setting = parameter.setting #append(parameter.setting, seed.setting)
 
-  description = tempfile(fileext = ".xml")
+  description = tempfile(pattern = "description", fileext = ".xml")
   on.exit(unlink(description))
   writeOMLRunXML(run, description, bmr = bmr)
   post.args = list(description = upload_file(path = description))
   
   if (!is.null(run$predictions)) {
-    predictions.file = tempfile(fileext = ".arff")
+    predictions.file = tempfile(pattern = "predictions", fileext = ".arff")
     on.exit(unlink(predictions.file), add = TRUE)
     arff.writer(run$predictions, file = predictions.file)
     post.args$predictions = upload_file(path = predictions.file)
   } 
   
-  if (!is.null(bmr) && upload.bmr) {
+  if (!is.null(bmr)) {
     # FIXME: See https://github.com/openml/OpenML/issues/276 do we always want to upload this? Or only for TuneWrapper?
-    bmr.file = tempfile(fileext = ".rds")
-    on.exit(unlink(bmr.file))
-    saveRDS(bmr, file = bmr.file)
-    post.args$BenchmarkResult = upload_file(path = bmr.file)
+    if (grepl("[.]tuned", flow$name)) {
+      trace.file = tempfile(pattern = "optimization_trace", fileext = ".arff")
+      on.exit(unlink(trace.file), add = TRUE)
+      arff.writer(getBMRTuneTrace(bmr), file = trace.file)
+      post.args$Trace = upload_file(path = trace.file)
+    }
+    if (upload.bmr) {
+      bmr.file = tempfile(pattern = "bmr", fileext = ".rds")
+      on.exit(unlink(bmr.file), add = TRUE)
+      saveRDS(bmr, file = bmr.file)
+      post.args$BenchmarkResult = upload_file(path = bmr.file)
+    }
   }
   
   content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity,
@@ -105,4 +113,55 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity =
   forget(listOMLRunEvaluations)
 
   return(invisible(run.id))
+}
+
+
+
+# helpers for tune trace
+getResampInfo = function(resample.desc) {
+  assertClass(resample.desc, "ResampleDesc")
+  reps = ifelse(!is.null(resample.desc$reps), resample.desc$reps, 1)
+  folds = ifelse(!is.null(resample.desc$folds), resample.desc$folds, resample.desc$iters)
+  return(list(reps = reps, folds = folds))
+}
+
+getBMRTuneTrace = function(bmr) {
+  res = bmr$results[[1]][[1]]
+  tune.res = getNestedTuneResultsOptPathDf(res)
+  tune.x = getNestedTuneResultsX(res)
+  tune.par = colnames(tune.x)
+  resample.info = getResampInfo(res$pred$instance$desc)
+  evaluation = names(getBMRTuneResults(bmr)[[1]][[1]][[1]]$y)
+  
+  cv.iter = tune.res$iter
+  folds = resample.info$folds
+  reps = resample.info$reps
+  rep = rep(seq_len(reps), each = length(cv.iter)/reps)
+  fold = cv.iter %% folds
+  fold[fold == 0L] = folds
+  
+  # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
+  tune.trace = data.frame(
+    rep = rep - 1L,
+    fold = fold - 1L,
+    iteration = as.numeric(tune.res$dob) - 1L,
+    tune.res[,tune.par, drop = FALSE], 
+    evaluation = tune.res[[evaluation]]
+  )
+  
+  par = apply(tune.res[,tune.par, drop = FALSE], 1, function(x) collapse(x))
+  par = chunk(par, chunk.size = length(unique(tune.res$dob)))
+  tune.x.vec = apply(tune.x, 1, function(x) collapse(x))
+  tune.trace$selected = unlist(lapply(seq_along(par), function(i) par[[i]]%in%tune.x.vec[i]))
+
+  # tune.x2 = data.frame(unique(tune.trace[,c("rep", "fold")]), tune.x)
+  # tune.trace = plyr::ddply(tune.trace, .variables = c("rep", "fold"), function(d) {
+  #   dat = tune.x2[tune.x2$rep == unique(d$rep) & tune.x2$fold == unique(d$fold),, drop = FALSE]
+  #   dat = subset(dat, select = -c(rep, fold))
+  #   d$select = (apply(d[, colnames(dat), drop = FALSE], 1, collapse))%in%collapse(dat)
+  #   return(d)
+  # })
+  
+  tune.trace = tune.trace[order(tune.trace$rep, tune.trace$fold, tune.trace$iteration),]
+  return(tune.trace)
 }
