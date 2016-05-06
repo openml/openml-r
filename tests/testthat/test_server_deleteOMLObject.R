@@ -9,6 +9,7 @@ test_that("deleteOMLObject", {
     run = getOMLRun(1)
     run.id = uploadOMLRun(run)
     del = deleteOMLObject(id = run.id, object = "run")
+    expect_is(del, "response")
     expect_equal(httr::status_code(del), 200)
     expect_error(deleteOMLObject(id = run.id, object = "run"), "Run does not exists")
   })
