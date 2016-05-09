@@ -21,6 +21,8 @@ Default is \code{TRUE}.}
 \description{
 Loads the OpenML config file from the disk and overwrites the
 current OpenML config.
+If there is no API key in the configuration file, the key is retrieved from the
+environment variable \dQuote{OPENMLAPIKEY} (if defined).
 }
 \examples{
 # if assign = FALSE nothing is changed
