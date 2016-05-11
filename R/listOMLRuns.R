@@ -7,11 +7,7 @@
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
 
   # FIXME: speedup using return.doc = FALSE (see also listOMLRunResults)
-  xml = try(parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE))
-
-  if (is.error(xml)) {
-    return(data.frame())
-  }
+  xml = parseXMLResponse(content, "Getting runs", "runs", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
   ret = as.data.frame(rename(rbindlist(lapply(blocks, function(node) {

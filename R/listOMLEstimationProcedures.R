@@ -1,6 +1,6 @@
 .listOMLEstimationProcedures = function(verbosity = NULL) {
-  content = try(doAPICall(api.call = "estimationprocedure/list", file = NULL,
-    verbosity = verbosity, method = "GET"))
+  content = doAPICall(api.call = "estimationprocedure/list", file = NULL,
+    verbosity = verbosity, method = "GET")
   doc = parseXMLResponse(content, "Getting names of estimation procedures", "estimationprocedures",
     as.text = TRUE)
   data.frame(

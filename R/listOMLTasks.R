@@ -7,10 +7,7 @@
     api.call = collapse(c(api.call, "tag", tag), sep = "/")
   }
   
-  content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
-  
-  if (is.error(content))
-    return(data.frame())
+  content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   
   d = parseXMLResponse(content, as.text = TRUE, return.doc = FALSE) #xmlRoot(xmlParse(content))
   
