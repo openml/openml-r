@@ -19,10 +19,10 @@ test_that("getOMLDataSet", {
   with_empty_cache({
     dids = c(1479) #, 1484, 1566, 1468, 1514, 1515)
     for(i in dids) {
-      data = getOMLDataSet(i)
-      checkOMLDataSet(data)
       # cache only option
       expect_error(getOMLDataSet(i, cache.only = TRUE), "not found in cache with option")
+      data = getOMLDataSet(i)
+      checkOMLDataSet(data)
     }
     expect_error(getOMLDataSet(17), "Data set has been deactivated.")
     expect_error(getOMLDataSet(473), "Data set is in preparation. You can download it as soon as it's active.")

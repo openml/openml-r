@@ -36,14 +36,14 @@ with_write_access = function(expr, envir = parent.frame()) {
   })
 }
 
-with_read_only = function(expr, envir = parent.frame()) {
-  reset_config({
-    setOMLConfig(confirm.upload = FALSE)
-    # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
-    if (identical(Sys.getenv("TRAVIS"), "true")) {
-      eval(expr, envir = envir)
-    } else {
-      skip_on_os(os = c("windows", "mac", "linux", "solaris"))
-    }
-  })
-}
+# with_read_only = function(expr, envir = parent.frame()) {
+#   reset_config({
+#     setOMLConfig(confirm.upload = FALSE)
+#     # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
+#     if (identical(Sys.getenv("TRAVIS"), "true")) {
+#       eval(expr, envir = envir)
+#     } else {
+#       skip_on_os(os = c("windows", "mac", "linux", "solaris"))
+#     }
+#   })
+# }
