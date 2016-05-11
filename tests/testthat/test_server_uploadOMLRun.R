@@ -19,11 +19,14 @@ test_that("uploadOMLRun", {
     expect_true(maxrun < run.id)
     deleteOMLObject(run.id, object = "run")
     
+    run$flow.id = NA
+    expect_error(uploadOMLRun(run), "Please provide a")
+    
     # upload self-created run
     lrn = makeLearner("classif.rpart")
     task = getOMLTask(59L)
     res = runTaskMlr(task, lrn, scimark.vector = rep(1.5, 6))
-    run.id = uploadOMLRun(res$run)
+    run.id = uploadOMLRun(res)
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
     
@@ -31,8 +34,15 @@ test_that("uploadOMLRun", {
     run.id = uploadOMLRun(res)
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
+    
+    # upload wrapped learner
+    lrn = makeImputeWrapper(lrn, classes = list(numeric = imputeMedian(), integer = imputeMedian()))
+    lrn = makeFilterWrapper(lrn, fw.perc = 0.5)
+    
+    res = runTaskMlr(task, lrn)
+    run.id = uploadOMLRun(res)
+    expect_is(run.id, "integer")
+    deleteOMLObject(run.id, object = "run")
   })
-
-  run$flow.id = NA
-  expect_error(uploadOMLRun(run), "Please provide a 'flow.id'")
+  
 })

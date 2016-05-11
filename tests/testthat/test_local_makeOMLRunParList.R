@@ -7,8 +7,8 @@ test_that("makeOMLRunParList", {
   for(ns in nodesize) {
     for (rep in replace) {
       lrn = makeLearner("classif.randomForest", ntree = 300, nodesize = ns, replace = rep)
-      par.defaults = getDefaults(lrn$par.set)
-      par.vals = lrn$par.vals
+      par.defaults = getDefaults(getParamSet(lrn))
+      par.vals = getHyperPars(lrn)
       # get names of parameters with values that differ from the defaults
       ind = vlapply(names(par.vals), function(x) !isTRUE(all.equal(par.defaults[[x]], par.vals[[x]])))
       par.diff = names(par.vals[ind])

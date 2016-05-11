@@ -68,7 +68,7 @@ test_that("convertOMLRunToBMR", {
     # runs = lapply(tasks, function(x) runTaskMlr(x, makeLearner("regr.rpart")))
     # run.ids = sapply(runs, function(x) uploadOMLRun(x, tags = "convertBMR"))
     # 
-    run.ids = 543407:543408
+    run.ids = 568501:568502
     run.list = lapply(run.ids, getOMLRun)
     bmr = lapply(run.list, convertOMLRunToBMR, measures = c("root_mean_squared_error"))
     for(i in 1:length(bmr)) {

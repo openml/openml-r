@@ -25,12 +25,12 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   assert(checkIntegerish(seed), checkClass(seed, "OMLSeedParList"))
   # assert par.vals list and OMLParList
   #run = getOMLRun(run.id)
-  if (grepl("-v1[[:punct:]]", flow$external.version)) {
+  seed.pars = c("seed", "kind", "normal.kind")
+  kind.var = c("kind", "normal.kind")
+
+  if (grepl("-v.[[:punct:]]", flow$external.version)) {
     seed.pars = c("openml.seed", "openml.kind", "openml.normal.kind")
     kind.var = c("openml.kind", "openml.normal.kind")
-  } else if (grepl("R_", flow$external.version)) {
-    seed.pars = c("seed", "kind", "normal.kind")
-    kind.var = c("kind", "normal.kind")
   } else {
     stop("This flow can't be run in R.")
   }
@@ -40,11 +40,12 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   #flow = getOMLFlow(run$flow.id)
   
   # make learner with parameters
-  lrn = makeLearner(flow$name)
+  lrn = createMlrLearnerForOMLFlow(flow)
+
   # assign data type to learner parameters 
   par.vals = convertOMLRunParListToList(par.list)
   lrn.pars = par.vals[names(par.vals)%nin%seed.pars]
-  lrn.pars.type = vcapply(lrn$par.set$pars, function(x) x$type)[names(lrn.pars)]
+  lrn.pars.type = vcapply(getParamSet(lrn)$pars, function(x) x$type)[names(lrn.pars)]
   for (i in seq_along(lrn.pars)) {
     if (lrn.pars.type[i] == "integer") lrn.pars[[i]] = as.integer(lrn.pars[[i]])
     if (lrn.pars.type[i] == "numeric") lrn.pars[[i]] = as.numeric(lrn.pars[[i]])
@@ -66,4 +67,14 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   #ret$run.id = run$run.id
   
   return(ret)
+}
+
+
+createMlrLearnerForOMLFlow = function(flow) {
+  if (grepl("-v2[[:punct:]]", flow$external.version)) {
+    lrn = readRDS(flow$binary.path)
+  } else {
+    lrn = makeLearner(flow$name)
+  }
+  return(lrn)
 }

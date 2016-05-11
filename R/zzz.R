@@ -11,6 +11,8 @@
 #' @importFrom digest digest
 #' @importFrom stats setNames
 #' @importFrom httr POST GET DELETE content upload_file status_code
+#' @importFrom stats reshape sd
+#' @importFrom utils download.file packageVersion type.convert
 NULL
 
 .OpenML.config = getDefaultConfig()

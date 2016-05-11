@@ -7,9 +7,7 @@
     api.call = collapse(c(api.call, "tag", tag), sep = "/")
   }
 
-  content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
-  if (is.error(content))
-    return(data.frame())
+  content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
 
   # get list of blocks for data sets

@@ -27,8 +27,8 @@ The file path to the flow (not needed for \code{\link{Learner}}).}
 The file path to the flow (not needed for \code{\link{Learner}}).}
 }
 \value{
-[\code{invisible(numeric(1))}].
-  The ID of the flow (\code{flow.id}).
+[\code{invisible(numeric)}].
+  The ID of the flow (\code{flow.id}). If there are more componets in the flow, than a vector of IDs.
 }
 \description{
 Share a flow by uploading it to the OpenML server.
