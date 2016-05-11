@@ -23,16 +23,15 @@ convertOMLTaskToMlr = function(
   verbosity = NULL) {
   assertClass(obj, "OMLTask")
 
-  # FIXME: here it is wrong that we take the taget from the dset, must be from task!
   mlr.task = convertOMLDataSetToMlr(obj$input$data.set, obj$task.type,
-    obj$input$data.set$target.features, ignore.flagged.attributes, drop.levels, verbosity)
+    obj$input$target.features, ignore.flagged.attributes, drop.levels, verbosity)
   mlr.task$task.desc$id = paste0("OpenML-Task-", obj$task.id)
   mlr.rin = convertOMLSplitsToMlr(obj$input$estimation.procedure, mlr.task, predict = "test")
   # use time as measure and aggregate by sum
   time.measures = list(
-    usercpu_time_millis_training = setAggregation(timetrain, test.sum), 
+    usercpu_time_millis_training = setAggregation(timetrain, test.sum),
     usercpu_time_millis_testing = setAggregation(timepredict, test.sum)
-    )
+  )
   mlr.measures = append(convertOMLMeasuresToMlr(obj$input$evaluation.measures), time.measures)
   list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
 }

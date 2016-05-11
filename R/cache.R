@@ -24,7 +24,7 @@ createDir = function(dir, verbosity = NULL) {
 #   Should the function be verbose?
 createCacheSubDirs = function(verbosity = NULL) {
   conf = getOMLConfig()
-  cd = conf$cachedir
+  cd = normalizePath(conf$cachedir, winslash = "/")
   createDir(file.path(cd, "datasets"), verbosity)
   createDir(file.path(cd, "tasks"), verbosity)
   createDir(file.path(cd, "runs"), verbosity)
@@ -42,7 +42,7 @@ createCacheSubDirs = function(verbosity = NULL) {
 # @return [list]
 getCacheURI = function(subdir, id, elements) {
   path = file.path(getOMLConfig()$cachedir, subdir, id)
-  if (!isDirectory(path) && !dir.create(path, recursive = TRUE))
+  if (!dir.exists(path) && !dir.create(path, recursive = TRUE))
     stopf("Unable to create directory '%s'", path)
   path = normalizePath(file.path(path, elements), mustWork = FALSE)
   size = file.size(path) # file.info(path)$size

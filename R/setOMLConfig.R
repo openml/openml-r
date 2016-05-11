@@ -11,7 +11,7 @@
 #' @param apikey [\code{character(1)}]\cr
 #'   Your OpenML API key. Log in to OpenML, move to your profile to get it.
 #' @param cachedir [\code{character(1)}]\cr
-#'   Path the the cache directory.
+#'   Path to the cache directory.
 #' @param arff.reader [\code{character(1)}]\cr
 #'   Name of the package which should be used to parse arff files. Possible are
 #'   \dQuote{RWeka}, which is the default and \dQuote{farff}.
