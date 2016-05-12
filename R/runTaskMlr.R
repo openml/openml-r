@@ -57,7 +57,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   show.info = (verbosity > 0L)
 
   # create Flow
-  flow = createOMLFlowForMlrLearner(learner)
+  flow = convertMlrLearnerToOMLFlow(learner)
   
   # Create mlr task with estimation procedure and evaluation measure
   z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)

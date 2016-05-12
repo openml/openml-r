@@ -28,4 +28,5 @@ Any parameters for the estimation procedure, e.g. the number of repeats and fold
 \description{
 Constructs an estimation procedure.
 }
+\keyword{internal}
 

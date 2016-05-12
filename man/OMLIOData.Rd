@@ -9,4 +9,5 @@ Objects of class \code{OMLIOData} are used to return information about all input
   containing information on \code{datasets} ("did", "name", "url"), \code{files} ("did", "name", "url")
   and/or \code{evaluations}.
 }
+\keyword{internal}
 

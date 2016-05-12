@@ -89,7 +89,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
 #' @export
 uploadOMLFlow.Learner = function(x, tags = NULL,
   verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
-  flow = createOMLFlowForMlrLearner(x)
+  flow = convertMlrLearnerToOMLFlow(x)
 
   # create sourcefile
   #sourcefile = createLearnerSourcefile(x)
@@ -115,7 +115,7 @@ uploadOMLFlow.Learner = function(x, tags = NULL,
 # }
 
 checkOMLFlow = function(x, verbosity = NULL){
-  if (inherits(x, "Learner")) x = createOMLFlowForMlrLearner(x)
+  if (inherits(x, "Learner")) x = convertMlrLearnerToOMLFlow(x)
 
   content = doAPICall(api.call = paste0("flow/exists/", x$name, "/", x$external.version),
     method = "GET", file = NULL, verbosity = verbosity)
@@ -130,7 +130,7 @@ checkOMLFlow = function(x, verbosity = NULL){
   )
 }
 
-#' @title createOMLFlowForMlrLearner.
+#' @title convertMlrLearnerToOMLFlow
 #'
 #' @description
 #' Creates an OMLFlow for an mlr learner.
@@ -146,7 +146,8 @@ checkOMLFlow = function(x, verbosity = NULL){
 #' @param ... [\code{any}]\cr
 #'   Further optional parameters that are passed to \code{\link{makeOMLFlow}}.
 #' @return [\code{\link{OMLFlow}}].
-createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), description = NULL, ...) {
+convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), description = NULL, ...) {
+  # This function has been renamed, it was called createOMLFlowForMlrLearner
   assertClass(lrn, "Learner")
   assertString(name)
 
@@ -190,7 +191,7 @@ createOMLFlowForMlrLearner = function(lrn, name = paste0("mlr.", lrn$id), descri
   
   if (!is.null(lrn$next.learner)) {
     identifier = gsub(".*[.]", "", lrn$next.learner$id) #stri_split_fixed(lrn$next.learner$id, ".")[[1L]][2L]
-    flow$components = list(createOMLFlowForMlrLearner(lrn$next.learner))
+    flow$components = list(convertMlrLearnerToOMLFlow(lrn$next.learner))
     names(flow$components) = identifier
   }
   return(flow)

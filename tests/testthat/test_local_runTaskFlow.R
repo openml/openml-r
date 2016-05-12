@@ -28,7 +28,7 @@ test_that("runTaskFlow", {
         res2$bmr$results[[1]][[1]]$measures.test$acc)
       
       # do the same again and use a learner with parameter values
-      lrn = makeLearner("classif.randomForest", mtry = 3, ntree = 10)
+      lrn = makeLearner("classif.randomForest", mtry = 2, ntree = 5)
       res = runTaskMlr(task, lrn)
       run.id = uploadOMLRun(res)
       run = getOMLRun(run.id)
