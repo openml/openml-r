@@ -65,15 +65,15 @@ catfNotNA = function(text, obj) {
 }
 
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL,
-  run.id = NULL, uploader.id = NULL, tag = NULL) {
+  run.id = NULL, uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL) {
   assertString(api.call)
   if (!is.null(task.id)) assertIntegerish(task.id)
   if (!is.null(flow.id)) assertIntegerish(flow.id)
   if (!is.null(run.id)) assertIntegerish(run.id)
   if (!is.null(uploader.id)) assertIntegerish(uploader.id)
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
-  if (is.null(task.id) && is.null(flow.id) && is.null(run.id) && is.null(uploader.id) && is.null(tag))
-    stop("Please hand over at least one of the following: task.id, flow.id, run.id, uploader.id, tag")
+  if (!is.null(limit)) assertIntegerish(limit, len = 1)
+  if (!is.null(offset)) assertIntegerish(offset, len = 1)
   
   if (length(run.id) > 1)
     run.id = collapse(run.id)
@@ -83,13 +83,20 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL,
     flow.id = collapse(flow.id)
   if (length(uploader.id) > 1)
     uploader.id = collapse(uploader.id)
-  url.args = list(task = task.id, flow = flow.id, run = run.id, uploader = uploader.id)
+  if (length(tag) > 1)
+    tag = collapse(tag, sep = "/")
+  url.args = list(
+    task = task.id,
+    flow = flow.id,
+    run = run.id,
+    uploader = uploader.id,
+    tag = tag,
+    limit = limit,
+    offset = offset
+  )
   url.args = Filter(function(x) !is.null(x), url.args)
   
   api.call = paste0(api.call, "/", collapseNamedList(url.args, sep = "/", collapse = "/"))
-  
-  if (!is.null(tag))
-    api.call = collapse(c(api.call, "tag", tag), sep = "/")
   
   return(api.call) 
 }

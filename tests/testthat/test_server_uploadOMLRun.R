@@ -37,7 +37,7 @@ test_that("uploadOMLRun", {
     
     # upload wrapped learner
     lrn = makeImputeWrapper(lrn, classes = list(numeric = imputeMedian(), integer = imputeMedian()))
-    lrn = makeFilterWrapper(lrn, fw.perc = 0.5)
+    lrn = makeFilterWrapper(lrn, fw.perc = 0.5, fw.method = "variance")
     
     res = runTaskMlr(task, lrn)
     run.id = uploadOMLRun(res)

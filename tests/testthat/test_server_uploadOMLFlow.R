@@ -11,7 +11,7 @@ test_that("uploadOMLFlow", {
     
     # create a own flow
     lrn = makeLearner("classif.rpart")
-    lrnW = makeFilterWrapper(makeImputeWrapper(lrn, classes = list(numeric = imputeMedian(), integer = imputeMedian())), fw.perc = 0.5)
+    lrnW = makeFilterWrapper(makeImputeWrapper(lrn, classes = list(numeric = imputeMedian(), integer = imputeMedian())), fw.perc = 0.5, fw.method = "variance")
     
     # with_read_only({
     #   expect_error(uploadOMLFlow(flow, sourcefile = flow$source.path), "This is a read-only account")

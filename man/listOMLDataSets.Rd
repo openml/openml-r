@@ -4,24 +4,31 @@
 \alias{listOMLDataSets}
 \title{List available OpenML data sets.}
 \usage{
-listOMLDataSets(verbosity = NULL, status = "active", tag = NULL)
+listOMLDataSets(tag = NULL, limit = NULL, offset = NULL,
+  status = "active", verbosity = NULL)
 }
 \arguments{
-\item{verbosity}{[\code{integer(1)}]\cr
-Print verbose output on console? Possible values are:\cr
-\code{0}: normal output,\cr
-\code{1}: info output,\cr
-\code{2}: debug output.\cr
-Default is set via \code{\link{setOMLConfig}}.}
+\item{tag}{[\code{character(1)}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}
+are listed.}
+
+\item{limit}{[\code{numeric(1)}]\cr
+Optional. The maximum number of datasets to return. Without specifying \code{offset}, it returns the first '\code{limit}' datasets.}
+
+\item{offset}{[\code{numeric(1)}]\cr
+Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
 Subsets the results according to the status, can take one or more values of
 \code{{"active", "deactivated", "in_preparation"}}.
 Default is \code{"active"}.}
 
-\item{tag}{[\code{character(1)}]\cr
-If not \code{NULL} only entries with the corresponding \code{tag}
-are listed.}
+\item{verbosity}{[\code{integer(1)}]\cr
+Print verbose output on console? Possible values are:\cr
+\code{0}: normal output,\cr
+\code{1}: info output,\cr
+\code{2}: debug output.\cr
+Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
 [\code{data.frame}].
