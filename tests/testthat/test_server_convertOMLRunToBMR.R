@@ -4,7 +4,7 @@ test_that("convertOMLRunToBMR", {
   with_empty_cache({
     ### Supervised Classification tasks with different estimation procedures
     # set.seed(1)
-    # tid = c(3632, 4367, 4322, 1817)
+    # tid = c(3632, 4367) #4322, 1817
     # tasks = lapply(tid, getOMLTask)
     # runs = lapply(tasks, function(x) runTaskMlr(x, makeLearner("classif.rpart", predict.type = "prob")))
     # run.ids = sapply(runs, function(x) uploadOMLRun(x, tags = "convertBMR"))
@@ -37,28 +37,27 @@ test_that("convertOMLRunToBMR", {
       expect_is(a, "data.frame")
       expect_true(nrow(a) == 1)
     }
-    run.ids = 543387:543390
+    
+    run.ids = 543387:543388 # 543387:543390
     run.list = lapply(run.ids, getOMLRun)
     bmr = lapply(run.list, convertOMLRunToBMR, measures = c("area_under_roc_curve"))
     for(i in 1:length(bmr)) {
       checkBMR(bmr[[i]])
       expect_equal(bmr[[i]]$measures[[1]]$id, "auc")
-      pred.data = bmr[[i]]$results[[1]][[1]]$pred$data
-      pred.data = pred.data[,grepl("prob[.]", colnames(pred.data))]
-      for(col in colnames(pred.data)) expect_true(!isTRUE(checkIntegerish(pred.data[,col])))
+      expect_numeric(getPredictionProbabilities(getBMRPredictions(bmr[[i]])[[1]][[1]]))
     }
     expect_is(do.call(mlr:::mergeBenchmarkResultTask, bmr), "BenchmarkResult")
     
+    ### Supervised Classification with predict.type = "response"
     # runs = lapply(tasks, function(x) runTaskMlr(x, makeLearner("classif.rpart", predict.type = "response")))
     # run.ids = sapply(runs, function(x) uploadOMLRun(x, tags = "convertBMR"))
     # 
-    run.ids = c(543394:543396, 543398)
+    run.ids = 543394:543395 # c(543394:543396, 543398)
     run.list = lapply(run.ids, getOMLRun)
     bmr = lapply(run.list, convertOMLRunToBMR, measures = c("area_under_roc_curve"))
     for(i in 1:length(bmr)) {
       checkBMR(bmr[[i]])
-      pred.data = bmr[[i]]$results[[1]][[1]]$pred$data
-      expect_false(any(grepl("prob[.]", colnames(pred.data))))
+      expect_error(getPredictionProbabilities(getBMRPredictions(bmr[[i]])[[1]][[1]]), "Probabilities not present")
     }
     
     ### Supervised Regression
