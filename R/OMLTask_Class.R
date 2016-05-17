@@ -53,7 +53,7 @@ print.OMLTask = function(x, ...) {
        x$input$data.set$desc$version, x$input$data.set$desc$id)
   catNotNA('  Target Feature(s)    :', x$input$data.set$target.features, fun = collapse, sep = ", ")
   
-  ptasks = paste(task$tags, collapse = ", ")
+  ptasks = paste(x$tags, collapse = ", ")
   if(nchar(ptasks) > 80) {
     tags_cut = BBmisc::clipString(ptasks, 80)
     catNotNA('  Tags                 :', tags_cut)
