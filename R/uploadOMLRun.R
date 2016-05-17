@@ -24,9 +24,16 @@ uploadOMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, 
   UseMethod("uploadOMLRun")
 }
 
+# For reverse support
 #' @export
 uploadOMLRun.runTaskMlr = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
-  assertClass(run, "runTaskMlr")
+  class(run) = "OMLMlrRun"
+  uploadOMLRun(run = run, upload.bmr = upload.bmr, tags = tags, verbosity = verbosity, ...)
+}
+
+#' @export
+uploadOMLRun.OMLMlrRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
+  assertClass(run, "OMLMlrRun")
   assertClass(run$bmr, "BenchmarkResult")
   assertClass(run$flow, "OMLFlow")
   assertFlag(upload.bmr)

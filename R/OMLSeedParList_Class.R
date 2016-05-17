@@ -33,10 +33,12 @@ makeOMLSeedParList = function(seed, prefix = "openml") {
 #' @export
 print.OMLSeedParList = function(x, ...)  {
   #x = unclass(x)
-  ret = rbindlist(lapply(x, function(x) x[c("name", "value", "component")]))
   catf("This is a '%s' with the following parameters:", class(x)[1])
-  ret$component = NULL
-  print(ret)
+  if (length(x) > 0)
+    x = rbindlist(lapply(x, function(x) x[c("name", "value", "component")])) else
+      x = data.frame()
+  x$component = NULL
+  print(x)
 }
 
 
@@ -53,7 +55,7 @@ print.OMLSeedParList = function(x, ...)  {
 getOMLSeedParList = function(run) {
   assertClass(run, "OMLRun")
   par = run$parameter.setting
-  assertList(par[isSeedPar(par)], len = 3)
+  #assertList(par[isSeedPar(par)], len = 3)
   return(setClasses(par[isSeedPar(par)], "OMLSeedParList"))
 }
 
