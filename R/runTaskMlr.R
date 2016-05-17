@@ -23,6 +23,7 @@
 #'   \item{flow}{The generated \code{\link{OMLFlow}} object.}
 #' }
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
+#' @aliases OMLMlrRun
 #' @example /inst/examples/runTaskMlr.R
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
