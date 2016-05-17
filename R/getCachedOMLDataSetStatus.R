@@ -9,7 +9,7 @@
 #' @param show.warnings [\code{logical(1)}]\cr
 #'   Show warning if there are deactivated datasets in cache?
 #'   Default is \code{TRUE}.
-#' @param ... \cr 
+#' @param ...
 #'   Arguments passed to \code{\link{listOMLDataSets}}
 #' @return [\code{data.frame}]
 #' @example inst/examples/getCachedOMLDataSetStatus.R

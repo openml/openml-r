@@ -11,5 +11,10 @@ test_that("getOMLSeedParList", {
     expect_is(par, "OMLSeedParList")
     expect_equal(unname(extractSubList(par, "name")), c("openml.seed", "openml.kind", "openml.normal.kind")) 
     expect_is(par[[1]], "OMLRunParameter")
+    
+    run = getOMLRun(1L)
+    par = getOMLSeedParList(run)
+    expect_is(par, "OMLSeedParList")
+    expect_equal(unclass(unname(par)), list())
   })
 })

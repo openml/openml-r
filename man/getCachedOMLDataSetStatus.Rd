@@ -11,8 +11,7 @@ getCachedOMLDataSetStatus(show.warnings = TRUE, ...)
 Show warning if there are deactivated datasets in cache?
 Default is \code{TRUE}.}
 
-\item{...}{\cr 
-Arguments passed to \code{\link{listOMLDataSets}}}
+\item{...}{Arguments passed to \code{\link{listOMLDataSets}}}
 }
 \value{
 [\code{data.frame}]

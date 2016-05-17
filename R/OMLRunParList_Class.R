@@ -70,9 +70,11 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
 #' @export
 print.OMLRunParList = function(x, ...)  {
   #x = unclass(x)
-  ret = rbindlist(lapply(x, function(x) x[c("name", "value", "component")]))
   catf("This is a '%s' with the following parameters:", class(x)[1])
-  print(ret)
+  if (length(x) > 0)
+    x = rbindlist(lapply(x, function(x) x[c("name", "value", "component")])) else
+      x = data.frame()
+  print(x)
 }
 
 #' @title Extract OMLRunParList from run
