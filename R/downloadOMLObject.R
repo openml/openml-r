@@ -14,6 +14,7 @@
 #'   Default is \code{FALSE}.
 #' @template arg_cache_only
 #' @template arg_verbosity
+#' @keywords internal
 #' @return [list]
 downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), overwrite = FALSE, cache.only = FALSE, verbosity = NULL) {
   id = asCount(id)

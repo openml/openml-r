@@ -205,6 +205,7 @@ print.OMLFlow = function(x, ...)  {
 #' @param recommended.range [\code{character(1)}]\cr
 #'   Minimal/maximal value and/or a recommended range of values.
 #' @export
+#' @keywords internal
 #' @family flow-related functions
 #' @aliases OMLFlowParameter
 makeOMLFlowParameter = function(

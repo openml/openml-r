@@ -7,11 +7,12 @@
 uploadOMLRun(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...)
 }
 \arguments{
-\item{run}{[\code{\link{OMLRun}}|\code{\link{runTaskMlr}}]\cr
-The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{runTaskMlr}}.}
+\item{run}{[\code{\link{OMLRun}}|\code{\link{OMLMlrRun}}]\cr
+The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{OMLMlrRun}}.}
 
 \item{upload.bmr}{[\code{logical(1)}]\cr
-Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded?}
+Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded? 
+If set to \code{TRUE} and the flow is created via \link[mlr]{makeTuneWrapper}, an arff file that contains the hyperparameter optimization trace is also uploaded.}
 
 \item{tags}{[\code{character}]\cr
 The tags that should be added after uploading.}

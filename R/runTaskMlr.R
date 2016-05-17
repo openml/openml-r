@@ -23,6 +23,7 @@
 #'   \item{flow}{The generated \code{\link{OMLFlow}} object.}
 #' }
 #' @seealso \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
+#' @aliases OMLMlrRun
 #' @example /inst/examples/runTaskMlr.R
 #' @export
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
@@ -57,7 +58,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   show.info = (verbosity > 0L)
 
   # create Flow
-  flow = createOMLFlowForMlrLearner(learner)
+  flow = convertMlrLearnerToOMLFlow(learner)
   
   # Create mlr task with estimation procedure and evaluation measure
   z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
@@ -99,6 +100,6 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   if (!is.null(scimark.vector)) {
     run$scimark.vector = scimark.vector
   }
-  makeS3Obj("runTaskMlr", run = run, bmr = bmr, flow = flow)
+  makeS3Obj("OMLMlrRun", run = run, bmr = bmr, flow = flow)
 }
 

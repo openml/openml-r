@@ -14,6 +14,7 @@
 #'   Any parameters for the estimation procedure, e.g. the number of repeats and folds in cross-validation.
 #' @return [\code{OMLEstimationProcedure}]
 #' @export
+#' @keywords internal
 #' @aliases OMLEstimationProcedure
 makeOMLEstimationProcedure = function(
   type,

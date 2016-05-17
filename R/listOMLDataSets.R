@@ -1,11 +1,7 @@
-.listOMLDataSets = function(verbosity = NULL, status = "active", tag = NULL) {
+.listOMLDataSets = function(tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
-  api.call = "data/list"
-  if (!is.null(tag)) {
-    assertString(tag, na.ok = FALSE)
-    api.call = collapse(c(api.call, "tag", tag), sep = "/")
-  }
+  api.call = generateAPICall("data/list", tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
@@ -40,9 +36,11 @@
 #'
 #' @template note_memoise
 #'
-#' @template arg_verbosity
-#' @template arg_status
 #' @template arg_tag
+#' @template arg_limit
+#' @template arg_offset
+#' @template arg_status
+#' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family data set-related functions

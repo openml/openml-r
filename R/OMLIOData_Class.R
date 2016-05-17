@@ -5,6 +5,7 @@
 #'   containing information on \code{datasets} ("did", "name", "url"), \code{files} ("did", "name", "url")
 #'   and/or \code{evaluations}.
 #' @name OMLIOData
+#' @keywords internal
 NULL
 
 makeOMLIOData = function(datasets = NULL, files = NULL, evaluations = NULL) {

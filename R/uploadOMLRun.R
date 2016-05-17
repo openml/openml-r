@@ -7,10 +7,11 @@
 #' This function will reset the cache of \code{\link{listOMLRuns}} and
 #' \code{\link{listOMLRunEvaluations}} on success.
 #'
-#' @param run [\code{\link{OMLRun}}|\code{\link{runTaskMlr}}]\cr
-#'   The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{runTaskMlr}}.
+#' @param run [\code{\link{OMLRun}}|\code{\link{OMLMlrRun}}]\cr
+#'   The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{OMLMlrRun}}.
 #' @param upload.bmr [\code{logical(1)}]\cr
-#'   Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded?
+#'   Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded? 
+#'   If set to \code{TRUE} and the flow is created via \link[mlr]{makeTuneWrapper}, an arff file that contains the hyperparameter optimization trace is also uploaded.
 #' @template arg_upload_tags
 #' @template arg_verbosity
 #' @param ...
@@ -24,9 +25,16 @@ uploadOMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, 
   UseMethod("uploadOMLRun")
 }
 
+# For reverse support
 #' @export
 uploadOMLRun.runTaskMlr = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
-  assertClass(run, "runTaskMlr")
+  class(run) = "OMLMlrRun"
+  uploadOMLRun(run = run, upload.bmr = upload.bmr, tags = tags, verbosity = verbosity, ...)
+}
+
+#' @export
+uploadOMLRun.OMLMlrRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
+  assertClass(run, "OMLMlrRun")
   assertClass(run$bmr, "BenchmarkResult")
   assertClass(run$flow, "OMLFlow")
   assertFlag(upload.bmr)

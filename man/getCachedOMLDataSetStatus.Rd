@@ -4,12 +4,14 @@
 \alias{getCachedOMLDataSetStatus}
 \title{Check status of cached datasets.}
 \usage{
-getCachedOMLDataSetStatus(show.warnings = TRUE)
+getCachedOMLDataSetStatus(show.warnings = TRUE, ...)
 }
 \arguments{
 \item{show.warnings}{[\code{logical(1)}]\cr
 Show warning if there are deactivated datasets in cache?
 Default is \code{TRUE}.}
+
+\item{...}{Arguments passed to \code{\link{listOMLDataSets}}}
 }
 \value{
 [\code{data.frame}]

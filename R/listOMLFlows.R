@@ -1,9 +1,6 @@
-.listOMLFlows = function(verbosity = NULL, tag = NULL) {
-  api.call = "flow/list"
-  if (!is.null(tag)) {
-    assertString(tag, na.ok = FALSE)
-    api.call = collapse(c(api.call, "tag", tag), sep = "/")
-  }
+.listOMLFlows = function(tag = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
+  api.call = generateAPICall("flow/list", tag = tag, limit = limit, offset = offset)
+  
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 
   xml = parseXMLResponse(content, "Getting flows", "flows", as.text = TRUE)
@@ -32,8 +29,10 @@
 #'
 #' @template note_memoise
 #'
-#' @template arg_verbosity
 #' @template arg_tag
+#' @template arg_limit
+#' @template arg_offset
+#' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family flow-related functions

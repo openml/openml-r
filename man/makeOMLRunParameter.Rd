@@ -27,4 +27,5 @@ Other run-related functions: \code{\link{convertOMLRunToBMR}},
   \code{\link{listOMLRuns}}, \code{\link{makeOMLRun}},
   \code{\link{tagOMLObject}}, \code{\link{uploadOMLRun}}
 }
+\keyword{internal}
 

@@ -11,8 +11,8 @@ test_that("listOMLTasks", {
     "NumberOfNumericFeatures", "NumberOfSymbolicFeatures"
   )
 
-  tasks = .listOMLTasks()
-  expect_data_frame(tasks, min.rows = 6L, col.names = "unique")
+  tasks = .listOMLTasks(limit = 10L)
+  expect_data_frame(tasks, nrows = 10L, col.names = "unique")
   expect_set_equal(exp.names, names(tasks))
 
   # check number of classes
@@ -26,5 +26,6 @@ test_that("listOMLTasks", {
   expect_true(all(tasks[, list(ok = (NumberOfMissingValues <= as.numeric(NumberOfInstances) * as.numeric(NumberOfFeatures)))]$ok, na.rm = TRUE))
   
   tasks1 = .listOMLTasks(tag = "study_1")
-  expect_true(nrow(tasks) > nrow(tasks1))
+  expect_data_frame(tasks1, min.rows = 10L, col.names = "unique")
+  expect_set_equal(exp.names, names(tasks1))
 })
