@@ -3,7 +3,7 @@ context("listOMLTasks")
 skip_on_cran()
 
 test_that("listOMLTasks", {
-  exp.names = c("task.id", "task.type", "did", "status", "name", "target.feature", "tags",
+  exp.names = c("task.id", "task.type", "did", "status", "format", "name", "target.feature", "tags",
     "estimation.procedure", "evaluation.measures", "MajorityClassSize",
     "MaxNominalAttDistinctValues", "MinorityClassSize", #"NumBinaryAtts",
     "NumberOfClasses", "NumberOfFeatures", "NumberOfInstances",

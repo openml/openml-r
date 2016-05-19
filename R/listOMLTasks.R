@@ -29,13 +29,13 @@
     # get the tag indices and paste them together as single column
     tag.ind = names(strings) == "tag"
     strings = c(strings[!tag.ind], "tags" = collapse(strings[tag.ind], sep = ", "))
-    out.vars = c("task_id", "task_type", "did", "status", "name", "target_feature", "tags",
+    out.vars = c("task_id", "task_type", "did", "status", "format", "name", "target_feature", "tags",
       "estimation_procedure", "evaluation_measures", names[names(names)%in%"quality"])
     return(as.list(strings[out.vars]))
   })
   li = as.data.frame(rbindlist(info, fill = TRUE))
   li = li[, !is.na(colnames(li))]
-  int.vars = setdiff(colnames(li), c("task_type", "status", "name", "target_feature", "tags", "evaluation_measures"))
+  int.vars = setdiff(colnames(li), c("task_type", "status", "format", "name", "target_feature", "tags", "evaluation_measures"))
   li[, int.vars] = lapply(int.vars, function(x) as.integer(li[, x]))
   
   estproc = listOMLEstimationProcedures(verbosity = FALSE)
