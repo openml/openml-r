@@ -14,6 +14,7 @@
     info = list(
       did = as.integer(xmlValue(children[["did"]])),
       status = xmlValue(children[["status"]]),
+      format = xmlValue(children[["format"]]),
       name = xmlValue(children[["name"]])
     )
     qualities = convertNodeSetToList(children[is.quality], fun = as.integer)
