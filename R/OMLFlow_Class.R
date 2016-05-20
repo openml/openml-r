@@ -169,14 +169,14 @@ makeOMLFlow = function(
   )
 }
 
-comp.length = function(x) {
-  len = 0
-  while(length(x$components) != 0) {
-    len = len + length(x$components) 
-    if(length(x$components) == 1) x = x$components[[1]] 
-  } 
-  return(len)
-}
+# comp.length = function(x) {
+#   len = 0
+#   while(length(x$components) != 0) {
+#     len = len + length(x$components) 
+#     if(length(x$components) == 1) x = x$components[[1]] 
+#   } 
+#   return(len)
+# }
 
 # show
 #' @export
@@ -189,7 +189,7 @@ print.OMLFlow = function(x, ...)  {
   catfNotNA('\tInstallation Notes       : %s', x$installation.notes)
   catfNotNA('\tDependencies             : %s', x$dependencies)
   catf('\tNumber of Flow Parameters: %i', length(x$parameters))
-  catf('\tNumber of Flow Components: %i', comp.length(x))
+  catf('\tNumber of Flow Components: %i', length(x$components))
 }
 
 #' Construct OMLFlowParameter.

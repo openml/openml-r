@@ -6,7 +6,7 @@
 #'
 #' @param obj [\code{\link{OMLTask}}]\cr
 #'   The OML task object that should be converted.
-#' @return [list] A list with the following components:
+#' @return [list] A list with the following objects:
 #' \describe{
 #'   \item{mlr.task}{[\code{\link[mlr]{Task}}]}
 #'   \item{mlr.rin}{[\code{\link[mlr]{ResampleInstance}}]}
@@ -25,7 +25,7 @@ convertOMLTaskToMlr = function(
 
   mlr.task = convertOMLDataSetToMlr(obj$input$data.set, obj$task.type,
     obj$input$target.features, ignore.flagged.attributes, drop.levels, verbosity)
-  mlr.task$task.desc$id = paste0("OpenML-Task-", obj$task.id)
+  mlr.task$task.desc$id = paste(obj$input$data.set$desc$name, "task", obj$task.id, sep = ".") #paste0("OpenML-Task-", obj$task.id)
   mlr.rin = convertOMLSplitsToMlr(obj$input$estimation.procedure, mlr.task, predict = "test")
   # use time as measure and aggregate by sum
   time.measures = list(

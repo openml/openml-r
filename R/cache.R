@@ -24,7 +24,7 @@ createDir = function(dir, verbosity = NULL) {
 #   Should the function be verbose?
 createCacheSubDirs = function(verbosity = NULL) {
   conf = getOMLConfig()
-  cd = normalizePath(conf$cachedir, winslash = "/")
+  cd = normalizePath(conf$cachedir, winslash = "/", mustWork = FALSE)
   createDir(file.path(cd, "datasets"), verbosity)
   createDir(file.path(cd, "tasks"), verbosity)
   createDir(file.path(cd, "runs"), verbosity)

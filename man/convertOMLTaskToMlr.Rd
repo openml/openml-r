@@ -28,7 +28,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
-[list] A list with the following components:
+[list] A list with the following objects:
 \describe{
   \item{mlr.task}{[\code{\link[mlr]{Task}}]}
   \item{mlr.rin}{[\code{\link[mlr]{ResampleInstance}}]}
