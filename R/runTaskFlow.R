@@ -40,7 +40,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   #flow = getOMLFlow(run$flow.id)
   
   # make learner with parameters
-  lrn = createMlrLearnerForOMLFlow(flow)
+  lrn = convertOMLFlowToMlrLearner(flow)
 
   # assign data type to learner parameters 
   par.vals = convertOMLRunParListToList(par.list)
@@ -70,7 +70,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
 }
 
 
-createMlrLearnerForOMLFlow = function(flow) {
+convertOMLFlowToMlrLearner = function(flow) {
   if (grepl("-v2[[:punct:]]", flow$external.version)) {
     lrn = readRDS(flow$binary.path)
   } else {

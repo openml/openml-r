@@ -8,6 +8,8 @@ test_that("uploadOMLRun", {
   expect_is(run$run.id, "integer")
   expect_is(run$task.id, "integer")
   
+  task = getOMLTask(59L)
+  
   # with_read_only({
   #   expect_error(uploadOMLRun(run), "This is a read-only account")
   # })
@@ -24,7 +26,6 @@ test_that("uploadOMLRun", {
     
     # upload self-created run
     lrn = makeLearner("classif.rpart")
-    task = getOMLTask(59L)
     res = runTaskMlr(task, lrn, scimark.vector = rep(1.5, 6))
     run.id = uploadOMLRun(res)
     expect_is(run.id, "integer")
@@ -43,6 +44,22 @@ test_that("uploadOMLRun", {
     run.id = uploadOMLRun(res)
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
+    
+    # upload tune wrapper
+    # lrn = makeLearner("classif.rpart")
+    # # stupid mini grid
+    # ps = makeParamSet(
+    #   makeDiscreteParam("cp", values = c(0.05, 0.1)),
+    #   makeDiscreteParam("minsplit", values = c(10, 20))
+    # )
+    # ctrl = makeTuneControlGrid()
+    # inner = makeResampleDesc("Holdout")
+    # outer = makeResampleDesc("CV", iters = 2)
+    # lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl)
+    # 
+    # res = runTaskMlr(task, lrn)
+    # run.id = uploadOMLRun(res, upload.bmr = TRUE)
+    # expect_is(run.id, "integer")
+    # deleteOMLObject(run.id, object = "run")
   })
-  
 })
