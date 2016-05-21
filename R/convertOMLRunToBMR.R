@@ -31,7 +31,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     learners = makeLearner(gsub("\\(.*", "", run$flow.name))
   }
   
-  task.id = paste0("OpenML-Task-", run$task.id)
+  task.id = paste(task$input$data.set$desc$name, "task", task$task.id, sep = ".") #paste0("OpenML-Task-", run$task.id)
   # FIXME: why is there a flow_id column and where can we find the measures per fold values
   evals = run$output.data$evaluations
   missing.meas = measures[measures%nin%unique(evals$name)]
