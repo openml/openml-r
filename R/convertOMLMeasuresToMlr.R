@@ -34,15 +34,15 @@ convertOMLMeasuresToMlr = function(measures) {
   return(lookup[measures])
 }
 
-convertMlrMeasuresToOMLMeasures = function(mlr.measures) {
-  lookup = lookupMeasures()
-  lookup.ids = vcapply(lookup, function(x) x$id)
-  if (inherits(mlr.measures, "Measure"))
-    mlr.measures = mlr.measures$id else {
-      assertList(mlr.measures)
-      mlr.measures = vcapply(mlr.measures, function(x) x$id)
-    }
-      
-  assertSubset(mlr.measures, lookup.ids)
-  return(names(lookup.ids[lookup.ids%in%mlr.measures]))
-}
+# convertMlrMeasuresToOMLMeasures = function(mlr.measures) {
+#   lookup = lookupMeasures()
+#   lookup.ids = vcapply(lookup, function(x) x$id)
+#   if (inherits(mlr.measures, "Measure"))
+#     mlr.measures = mlr.measures$id else {
+#       assertList(mlr.measures)
+#       mlr.measures = vcapply(mlr.measures, function(x) x$id)
+#     }
+#       
+#   assertSubset(mlr.measures, lookup.ids)
+#   return(names(lookup.ids[lookup.ids%in%mlr.measures]))
+# }
