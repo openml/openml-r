@@ -49,6 +49,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   for (i in seq_along(lrn.pars)) {
     if (lrn.pars.type[i] == "integer") lrn.pars[[i]] = as.integer(lrn.pars[[i]])
     if (lrn.pars.type[i] == "numeric") lrn.pars[[i]] = as.numeric(lrn.pars[[i]])
+    if (lrn.pars.type[i] == "logical") lrn.pars[[i]] = as.logical(lrn.pars[[i]])
     if (lrn.pars.type[i] == "discrete") lrn.pars[[i]] = as.character(lrn.pars[[i]])
   }
   lrn = do.call("setHyperPars", append(list(learner = lrn), list(par.vals = lrn.pars)))
