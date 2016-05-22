@@ -14,6 +14,8 @@ test_that("runTaskMlr", {
     task = getOMLTask(59)
     res = runTaskMlr(task, lrn)
     expect_true(res$run$task.id == 59)
+    expect_subset(c("repeat", "fold", "row_id", "prediction", "truth"),
+      colnames(reformatPredictions(res$bmr$results[[1]][[1]]$pred$data, task)))
     checkRun(res)
     
     # results for splits must be the same
