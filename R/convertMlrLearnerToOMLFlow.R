@@ -30,7 +30,7 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
   # dependencies
   lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
   if ("mlr"%in%lrn.package) pkges = lrn.package else pkges = c("mlr", lrn.package)
-  pkges = c("OpenML", lrn.package)
+  pkges = c("OpenML", pkges)
   pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
   pkges = c(paste0("R_", collapse(R.Version()[c("major", "minor")], ".")), pkges)
   pkges = collapse(pkges, sep = ", ")
