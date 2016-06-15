@@ -16,7 +16,7 @@
 #' @export
 #' @example inst/examples/loadOMLConfig.R
 loadOMLConfig = function(path = "~/.openml/config", assign = TRUE) {
-  assertFile(path, access = "r")
+  assertFileExists(path, access = "r")
   assertFlag(assign)
   conf = new.env(parent = emptyenv())
 

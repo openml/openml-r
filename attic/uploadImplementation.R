@@ -21,11 +21,11 @@ uploadOpenMLImplementation = function(implementation, sourcefile, binaryfile, se
     stopf("Please provide source and/or binary file.")
   }
   if (!missing(binaryfile)) {
-    assertFile(binaryfile)
+    assertFileExists(binaryfile)
     implementation$binary.md5 = digest(file = binaryfile)
   }
   if (!missing(sourcefile)) {
-    assertFile(sourcefile)
+    assertFileExists(sourcefile)
     implementation$source.md5 = digest(file = sourcefile)
   }
   on.exit({

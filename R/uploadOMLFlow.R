@@ -31,7 +31,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
   #     for(i in 2:length(x$components)) tmp = c(uploadOMLFlow(x$components[[i]]), tmp)
   #   }
   # } else tmp = NULL
-  
+
   check = checkOMLFlow(x, verbosity = FALSE)
   doc = check$doc
   if (check$exists) {
@@ -69,7 +69,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
 #   if (!(is.null(x$source.path) || is.na(x$source.path)) & !sourcefile.exists)
 #     sourcefile = x$source.path
 #   if (!(is.null(sourcefile) || is.na(sourcefile))){
-#     assertFile(sourcefile)
+#     assertFileExists(sourcefile)
 #     x$source.md5 = digest(file = sourcefile)
 #     params$source = upload_file(path = sourcefile)
 #   }
