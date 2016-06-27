@@ -15,7 +15,11 @@ There is no CRAN release yet. Use `devtools` to install the current development 
 ```r
 devtools::install_github("openml/r")
 ```
-
+Furthermore,  you need `RWeka` or [farff](https://github.com/mlr-org/farff) installed to process ARFF files:
+```r
+install.packages("RWeka")
+# or: devtools::install_github("mlr-org/farff")
+```
 # Contact
 
 Found some nasty bugs? Please use the [issue tracker](https://github.com/openml/openml-r/issues) to report on bugs or missing features. Pay attention to explain the problem as good as possible (in the best case with a `traceback()` result and a `sessionInfo()`). Moreover, a reproducible example is desirable.
