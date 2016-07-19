@@ -7,9 +7,7 @@
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   Learner from package mlr to run the task.
 #' @template arg_verbosity
-#' @param seed [\code{numeric(1)}|\code{\link{OMLSeedParList}} ]\cr
-#'   Set a seed to make the run reproducible.
-#'   Default is \code{1} and sets the seed using \code{set.seed(1)}.
+#' @template arg_seed
 #' @param scimark.vector [\code{numeric(6)}]\cr
 #'   Optional vector of performance measurements computed by the scientific SciMark
 #'   benchmark. May be computed using the \pkg{rscimark} R package.

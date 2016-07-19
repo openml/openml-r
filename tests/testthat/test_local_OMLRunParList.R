@@ -3,7 +3,7 @@ context("OMLRunParList")
 test_that("OMLRunParList", {
   nodesize = 1:2
   rf = makeLearner("classif.randomForest")
-  lrnList = list(
+  lrn.list = list(
     rf,
     makeFilterWrapper(rf, fw.perc = 0.5),
     makeOversampleWrapper(rf, osw.rate = 1),
@@ -11,7 +11,7 @@ test_that("OMLRunParList", {
     makeOversampleWrapper(makeFilterWrapper(rf), osw.rate = 1)
   )
   
-  for(lrn in lrnList) {
+  for(lrn in lrn.list) {
     for(ns in nodesize) {
       lrn = setHyperPars(lrn, ntree = 300, nodesize = ns)
       par.defaults = getDefaults(getParamSet(lrn))
@@ -31,6 +31,10 @@ test_that("OMLRunParList", {
       
       # check convertOMLRunParListToList
       expect_equal(convertOMLRunParListToList(oml.par.list), lapply(par.vals[ind], as.character))
+      
+      # check convertListToOMLRunParList
+      expect_equal(oml.par.list, 
+        convertListToOMLRunParList(convertOMLRunParListToList(oml.par.list), component = extractSubList(oml.par.list, "component")))
     }
   }
   

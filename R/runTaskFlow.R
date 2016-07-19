@@ -4,12 +4,10 @@
 #'
 #' @template arg_task
 #' @param flow [\code{\link{OMLFlow}}]\cr
-#'   Flow that is applied to the Task
-#' @param par.list [\code{\link{OMLRunParList}}]\cr
-#'   List of Hyperparameters
-#' @param seed [\code{numeric(1)}|\code{\link{OMLSeedParList}}]\cr
-#'   Set a seed to make the run reproducible.
-#'   Default is \code{1} and sets the seed using \code{set.seed(1)}.
+#'   Flow that is applied to the Task.
+#' @param par.list [\code{list}|\code{\link{OMLRunParList}}]\cr
+#'   Can be either a named list containing the hyperparameter values or a \code{\link{OMLRunParList}}.
+#' @template arg_seed
 #' @param predict.type [character(1)]\cr
 #'   Optional. See \code{\link[mlr]{setPredictType}}. 
 #'   Default is "response".
@@ -21,13 +19,16 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   assertClass(task, "OMLTask")
   assertClass(flow, "OMLFlow")
   assertString(flow$name)
-  assertClass(par.list, "OMLRunParList")
+  assert(checkList(par.list), checkClass(par.list, "OMLRunParList"))
+  par.names = extractSubList(flow$parameters, "name")
+  assertSubset(names(par.list), par.names)
   assert(checkIntegerish(seed), checkClass(seed, "OMLSeedParList"))
-  # assert par.vals list and OMLParList
-  #run = getOMLRun(run.id)
   seed.pars = c("seed", "kind", "normal.kind")
   kind.var = c("kind", "normal.kind")
 
+  if (!inherits(par.list, "OMLRunParList")) {
+    par.list = convertListToOMLRunParList(par.list)
+  }
   if (grepl("-v.[[:punct:]]", flow$external.version)) {
     seed.pars = c("openml.seed", "openml.kind", "openml.normal.kind")
     kind.var = c("openml.kind", "openml.normal.kind")

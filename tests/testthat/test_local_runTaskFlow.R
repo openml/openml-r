@@ -24,6 +24,12 @@ test_that("runTaskFlow", {
     flow = getOMLFlow(run$flow.id)
     res2 = runTaskFlow(task, flow, par.list = getOMLRunParList(run), seed = getOMLSeedParList(run))
     checkRun(res2)
+    par.list = convertOMLRunParListToList(getOMLRunParList(run))
+    res3 = runTaskFlow(task, flow, par.list = par.list, seed = 1)
+    checkRun(res3)
+    names(par.list)[1] = "renamed"
+    expect_error(runTaskFlow(task, flow, par.list = par.list, seed = 1))
+    
     # compare with acc value computed from run
     acc = getOMLRunEvaluations(run, "predictive_accuracy", aggr = FALSE)$value
     acc2 = getBMRPerformances(res2$bmr)[[1]][[1]][["acc"]]

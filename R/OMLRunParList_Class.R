@@ -109,3 +109,21 @@ convertOMLRunParListToList = function(x, ...) {
   }
   return(as.list(par.list))
 }
+
+# converts a named list to a OMLRunParList
+convertListToOMLRunParList = function(x, component = NULL) {
+  assertList(x, names = "unique")
+  assertCharacter(component, null.ok = TRUE, len = length(x))
+  par.names = names(x)
+  
+  par.settings = setNames(vector("list", length(x)), par.names)
+  for (i in seq_along(x)) {
+    par.settings[[i]] = makeOMLRunParameter(
+      name = par.names[i],
+      value = x[[i]], 
+      component = ifelse(is.null(component), NA_character_, component[i])
+    )
+  }
+  
+  setClasses(par.settings, "OMLRunParList")
+}
