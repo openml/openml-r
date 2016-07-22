@@ -38,6 +38,10 @@ test_that("OMLRunParList", {
     }
   }
   
+  # test untyped character
+  lrn = makeLearner("classif.xgboost", objective = "binary:logitraw")
+  expect_equal(makeOMLRunParList(lrn)[[1]]$value, "binary:logitraw")
+  
   # check getOMLRunParList
   with_test_cache({
     run = getOMLRun(1L)

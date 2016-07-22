@@ -39,12 +39,17 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
   par.vals = par.vals[par.ind]
   par.names = par.names[par.ind]
+  par.types = sapply(ps$pars[par.names], function(x) x$type)
   
   par.settings = setNames(vector("list", length(par.vals)), par.names)
   for (i in seq_along(par.vals)) {
     psi = ps$pars[[par.names[i]]]
     # FIXME: what happens with parameters that are vectors (or not scalars, e.g. deeplearning)?
-    val = paramValueToString(psi, par.vals[[i]])
+    if (par.types[i] == "untyped") {
+      val = as.character(par.vals[[i]])
+    } else {
+      val = paramValueToString(psi, par.vals[[i]])
+    }
     par.settings[[i]] = makeOMLRunParameter(
       name = par.names[i],
       value = val, #par.vals[[i]],

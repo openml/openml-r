@@ -28,12 +28,7 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
   
   # dependencies
-  lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
-  if ("mlr"%in%lrn.package) pkges = lrn.package else pkges = c("mlr", lrn.package)
-  pkges = c("OpenML", pkges)
-  pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
-  pkges = c(paste0("R_", collapse(R.Version()[c("major", "minor")], ".")), pkges)
-  pkges = collapse(pkges, sep = ", ")
+  pkges = getDependencies(lrn)
   
   # create sourcefile
   #sourcefile = createLearnerSourcefile(lrn)
@@ -68,6 +63,17 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
   }
   
   return(flow)
+}
+
+# extracts version dependencies including R, OpenML and mlr version
+getDependencies = function(lrn) {
+  lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
+  if ("mlr"%in%lrn.package) pkges = lrn.package else pkges = c("mlr", lrn.package)
+  pkges = c("OpenML", pkges)
+  pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
+  pkges = c(paste0("R_", collapse(R.Version()[c("major", "minor")], ".")), pkges)
+  pkges = collapse(pkges, sep = ", ")
+  return(pkges)
 }
 
 # A list that extracts all next.learner recursively
