@@ -14,6 +14,7 @@
 #' @param ... [\code{any}]\cr
 #'   Further optional parameters that are passed to \code{\link{makeOMLFlow}}.
 #' @return [\code{\link{OMLFlow}}].
+#' @export
 convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), description = NULL, ...) {
   # This function has been renamed, it was called createOMLFlowForMlrLearner
   assertClass(lrn, "Learner")

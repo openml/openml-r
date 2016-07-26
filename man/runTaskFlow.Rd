@@ -12,12 +12,12 @@ runTaskFlow(task, flow, par.list, seed = 1, predict.type = NULL,
 An OpenML task.}
 
 \item{flow}{[\code{\link{OMLFlow}}]\cr
-Flow that is applied to the Task}
+Flow that is applied to the Task.}
 
-\item{par.list}{[\code{\link{OMLRunParList}}]\cr
-List of Hyperparameters}
+\item{par.list}{[\code{list}|\code{\link{OMLRunParList}}]\cr
+Can be either a named list containing the hyperparameter values or a \code{\link{OMLRunParList}}.}
 
-\item{seed}{[\code{numeric(1)}|\code{\link{OMLSeedParList}}]\cr
+\item{seed}{[\code{numeric(1)}|\code{\link{OMLSeedParList}} ]\cr
 Set a seed to make the run reproducible.
 Default is \code{1} and sets the seed using \code{set.seed(1)}.}
 

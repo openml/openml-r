@@ -13,8 +13,8 @@
 #'   Default is "response".
 #' @template arg_verbosity
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}}.
-# @export
-# @family run related functions
+#' @export
+#' @family run related functions
 runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verbosity = NULL) {
   assertClass(task, "OMLTask")
   assertClass(flow, "OMLFlow")
@@ -78,6 +78,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
 
 convertOMLFlowToMlrLearner = function(flow) {
   if (grepl("-v2[[:punct:]]", flow$external.version)) {
+    assertFile(flow$binary.path)
     lrn = readRDS(flow$binary.path)
   } else {
     lrn = makeLearner(flow$name)
