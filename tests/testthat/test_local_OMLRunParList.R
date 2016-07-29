@@ -38,9 +38,12 @@ test_that("OMLRunParList", {
     }
   }
   
-  # test untyped character
-  lrn = makeLearner("classif.xgboost", objective = "binary:logitraw")
-  expect_equal(makeOMLRunParList(lrn)[[1]]$value, "binary:logitraw")
+  # test untyped param and vector param
+  pars = list(sampsize = c(30, 30), mtry = 3, strata = iris$Species)
+  lrn = makeLearner("classif.randomForest", par.vals = pars)
+  expect_equal(convertOMLRunParListToList(makeOMLRunParList(lrn), lrn$par.set), pars)
+  expect_equal(pars, 
+    convertOMLRunParListToList(convertListToOMLRunParList(pars, lrn$par.set), lrn$par.set))
   
   # check getOMLRunParList
   with_test_cache({

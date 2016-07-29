@@ -44,12 +44,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   par.settings = setNames(vector("list", length(par.vals)), par.names)
   for (i in seq_along(par.vals)) {
     psi = ps$pars[[par.names[i]]]
-    # FIXME: what happens with parameters that are vectors (or not scalars, e.g. deeplearning)?
-    if (par.types[i] == "untyped") {
-      val = as.character(par.vals[[i]])
-    } else {
-      val = paramValueToString(psi, par.vals[[i]])
-    }
+    val = paramToString(psi, par.vals[[i]])
     par.settings[[i]] = makeOMLRunParameter(
       name = par.names[i],
       value = val, #par.vals[[i]],
@@ -106,21 +101,32 @@ getOMLRunParList = function(run) {
 # }
 
 # converts a OMLRunParList to a named list
-convertOMLRunParListToList = function(x, ...) {
-  par.list = extractSubList(x, "value")
+convertOMLRunParListToList = function(x, ps = NULL, ...) {
+  assertClass(x, "OMLRunParList")
+  par.list = extractSubList(x, "value", simplify = FALSE)
   if(!isTRUE(checkNamed(par.list))) {
     par.names = extractSubList(x, "name")
     par.list = setNames(par.list, par.names)
   }
-  return(as.list(par.list))
+  # if paramset is given, convert vectors, matrices, untyped etc. properly
+  if (!is.null(ps)) {
+    for(i in names(x)) {
+      par.list[[i]] = stringToParam(ps$pars[[i]], par.list[[i]])
+    }
+  }
+  return(par.list)
 }
 
 # converts a named list to a OMLRunParList
-convertListToOMLRunParList = function(x, component = NULL) {
+convertListToOMLRunParList = function(x, ps = NULL, component = NULL) {
   assertList(x, names = "unique")
   assertCharacter(component, null.ok = TRUE, len = length(x))
   par.names = names(x)
-  
+  if (!is.null(ps)) {
+    for(i in names(x)) {
+      x[[i]] = paramToString(ps$pars[[i]], x[[i]])
+    }
+  }
   par.settings = setNames(vector("list", length(x)), par.names)
   for (i in seq_along(x)) {
     par.settings[[i]] = makeOMLRunParameter(
@@ -129,6 +135,34 @@ convertListToOMLRunParList = function(x, component = NULL) {
       component = ifelse(is.null(component), NA_character_, component[i])
     )
   }
-  
   setClasses(par.settings, "OMLRunParList")
+}
+
+paramToString = function (par, x) {
+  assertClass(par, "Param")
+  type = par$type
+  if (type %in% c("numeric", "integer", "logical", "character")) 
+    as.character(x)
+  else if (type %in% c("numericvector", "integervector", "logicalvector", "charactervector"))
+    collapse(x)
+  else if (type == "discrete") 
+    discreteValueToName(par, x)
+  else if (type == "discretevector") 
+    collapse(discreteValueToName(par, x))
+  else if (type %in% c("function", "untyped"))
+    rawToChar(serialize(x, connection = NULL, ascii = TRUE)) 
+}
+
+stringToParam = function (par, x) {
+  assertClass(par, "Param")
+  assertCharacter(x)
+  type = par$type
+  if (type %in% c("numeric", "integer", "logical", "character")) 
+    do.call(paste0("as.", type), list(x))
+  else if (type %in% c("numericvector", "integervector", "logicalvector", "charactervector", "discretevector"))
+    do.call(paste0("as.", gsub("vector", "", type)), list(strsplit(x, ",")[[1]]))
+  else if (type == "discrete") 
+    discreteNameToValue(par, x)
+  else if (type %in% c("function", "untyped"))
+    unserialize(charToRaw(x))
 }
