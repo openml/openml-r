@@ -41,9 +41,9 @@ test_that("OMLRunParList", {
   # test untyped param and vector param
   pars = list(sampsize = c(30, 30), mtry = 3, strata = iris$Species)
   lrn = makeLearner("classif.randomForest", par.vals = pars)
-  expect_equal(convertOMLRunParListToList(makeOMLRunParList(lrn), lrn$par.set), pars)
+  expect_equal(convertOMLRunParListToList(makeOMLRunParList(lrn), getParamSet(lrn)), pars)
   expect_equal(pars, 
-    convertOMLRunParListToList(convertListToOMLRunParList(pars, lrn$par.set), lrn$par.set))
+    convertOMLRunParListToList(convertListToOMLRunParList(pars, getParamSet(lrn)), getParamSet(lrn)))
   
   # check getOMLRunParList
   with_test_cache({

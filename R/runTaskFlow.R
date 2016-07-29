@@ -42,22 +42,22 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   
   # make learner with parameters
   lrn = convertOMLFlowToMlrLearner(flow)
-  lrn = setHyperPars(lrn, par.vals = getDefaults(lrn$par.set))
+  lrn = setHyperPars(lrn, par.vals = getDefaults(getParamSet(lrn)))
   
   # assign data type to learner parameters 
-  par.vals = convertOMLRunParListToList(par.list, ps = lrn$par.set)
+  par.vals = convertOMLRunParListToList(par.list, ps = getParamSet(lrn))
   lrn.pars = par.vals[names(par.vals)%nin%seed.pars]
   ps = getParamSet(lrn)$pars
   lrn.pars.type = vcapply(getParamSet(lrn)$pars, function(x) x$type)[names(lrn.pars)]
-  for (i in seq_along(lrn.pars)) {
+  #for (i in seq_along(lrn.pars)) {
   #   if (lrn.pars.type[i] == "integer") lrn.pars[[i]] = as.integer(lrn.pars[[i]])
   #   if (lrn.pars.type[i] == "numeric") lrn.pars[[i]] = as.numeric(lrn.pars[[i]])
   #   if (lrn.pars.type[i] == "logical") lrn.pars[[i]] = as.logical(lrn.pars[[i]])
   #   if (lrn.pars.type[i] == "discrete") lrn.pars[[i]] = discreteNameToValue(ps[[i]], lrn.pars[[i]])
   #   # FIXME: what should we do with untyped parameters, when they are matrices or so?
   #   if (lrn.pars.type[i] == "untyped") lrn.pars[[i]] = as.character(lrn.pars[[i]])
-    lrn.pars[[i]] = stringToParam(ps[[i]], lrn.pars[[i]]) 
-  }
+  #  lrn.pars[[i]] = stringToParam(ps[[i]], lrn.pars[[i]]) 
+  #}
   lrn = do.call("setHyperPars", append(list(learner = lrn), list(par.vals = lrn.pars)))
   if (!is.null(predict.type)) lrn = setPredictType(lrn, predict.type = predict.type)
   
