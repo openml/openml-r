@@ -25,10 +25,6 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   assert(checkIntegerish(seed), checkClass(seed, "OMLSeedParList"))
   seed.pars = c("seed", "kind", "normal.kind")
   kind.var = c("kind", "normal.kind")
-
-  if (!inherits(par.list, "OMLRunParList")) {
-    par.list = convertListToOMLRunParList(par.list)
-  }
   if (grepl("-v.[[:punct:]]", flow$external.version)) {
     seed.pars = c("openml.seed", "openml.kind", "openml.normal.kind")
     kind.var = c("openml.kind", "openml.normal.kind")
@@ -45,6 +41,8 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   lrn = setHyperPars(lrn, par.vals = getDefaults(getParamSet(lrn)))
   
   # assign data type to learner parameters 
+  if (!inherits(par.list, "OMLRunParList"))
+    par.list = convertListToOMLRunParList(par.list, ps = getParamSet(lrn))
   par.vals = convertOMLRunParListToList(par.list, ps = getParamSet(lrn))
   lrn.pars = par.vals[names(par.vals)%nin%seed.pars]
   ps = getParamSet(lrn)$pars
