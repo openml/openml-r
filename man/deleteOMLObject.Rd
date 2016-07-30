@@ -36,8 +36,8 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 
-Other flow-related functions: \code{\link{getOMLFlow}},
-  \code{\link{listOMLFlows}},
+Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
+  \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 

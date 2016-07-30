@@ -41,7 +41,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   #flow = getOMLFlow(run$flow.id)
   
   # make learner with parameters
-  lrn = convertOMLFlowToMlrLearner(flow)
+  lrn = convertOMLFlowToMlr(flow)
   lrn = setHyperPars(lrn, par.vals = getDefaults(getParamSet(lrn)))
   
   # assign data type to learner parameters 
@@ -74,15 +74,4 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   #ret$run.id = run$run.id
   
   return(ret)
-}
-
-
-convertOMLFlowToMlrLearner = function(flow) {
-  if (grepl("-v2[[:punct:]]", flow$external.version)) {
-    assertFile(flow$binary.path)
-    lrn = readRDS(flow$binary.path)
-  } else {
-    lrn = makeLearner(flow$name)
-  }
-  return(lrn)
 }

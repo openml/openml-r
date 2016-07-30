@@ -21,7 +21,7 @@ test_that("getOMLFlow", {
       expect_output(print(flow$parameters[[i]]), "Parameter")
 
     # flow converter
-    lrn1 = convertOMLFlowToMlrLearner(flow)
+    lrn1 = convertOMLFlowToMlr(flow)
     expect_is(lrn1, "Learner")
     converted.flow = convertMlrLearnerToOMLFlow(lrn1)
     expect_is(converted.flow, "OMLFlow")
@@ -39,5 +39,5 @@ test_that("getOMLFlow", {
 # lrnW = removeAllHyperPars(lrnW)
 # flow.id = uploadOMLFlow(lrnW)
 # flow = getOMLFlow(3876)
-# lrn = convertOMLFlowToMlrLearner(flow)
+# lrn = convertOMLFlowToMlr(flow)
 # converted.flow = convertMlrLearnerToOMLFlow(lrn)

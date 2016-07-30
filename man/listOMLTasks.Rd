@@ -4,16 +4,33 @@
 \alias{listOMLTasks}
 \title{List available OpenML tasks.}
 \usage{
-listOMLTasks(tag = NULL, limit = NULL, offset = NULL, status = "active",
-  verbosity = NULL)
+listOMLTasks(NumberOfInstances = NULL, NumberOfFeatures = NULL,
+  NumberOfClasses = NULL, NumberOfMissingValues = NULL, tag = NULL,
+  limit = NULL, offset = NULL, status = "active", verbosity = NULL)
 }
 \arguments{
-\item{tag}{[\code{character(1)}]\cr
-If not \code{NULL} only entries with the corresponding \code{tag}
+\item{NumberOfInstances}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or, 
+if a vector of length 2 is passed, the given ranges.}
+
+\item{NumberOfFeatures}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, it subsets the entries with respect to the given values or, 
+if a vector of length 2 is passed, the given range.}
+
+\item{NumberOfClasses}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or, 
+if a vector of length 2 is passed, the given ranges.}
+
+\item{NumberOfMissingValues}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or, 
+if a vector of length 2 is passed, the given ranges.}
+
+\item{tag}{[\code{character}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}s
 are listed.}
 
 \item{limit}{[\code{numeric(1)}]\cr
-Optional. The maximum number of datasets to return. Without specifying \code{offset}, it returns the first '\code{limit}' datasets.}
+Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
 
 \item{offset}{[\code{numeric(1)}]\cr
 Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}

@@ -7,12 +7,12 @@
 listOMLFlows(tag = NULL, limit = NULL, offset = NULL, verbosity = NULL)
 }
 \arguments{
-\item{tag}{[\code{character(1)}]\cr
-If not \code{NULL} only entries with the corresponding \code{tag}
+\item{tag}{[\code{character}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}s
 are listed.}
 
 \item{limit}{[\code{numeric(1)}]\cr
-Optional. The maximum number of datasets to return. Without specifying \code{offset}, it returns the first '\code{limit}' datasets.}
+Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
 
 \item{offset}{[\code{numeric(1)}]\cr
 Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
@@ -46,8 +46,8 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 }
 \seealso{
-Other flow-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLFlow}},
+Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 

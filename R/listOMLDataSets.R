@@ -1,7 +1,12 @@
-.listOMLDataSets = function(tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
+.listOMLDataSets = function(NumberOfInstances = NULL, NumberOfFeatures = NULL, 
+  NumberOfClasses = NULL, NumberOfMissingValues = NULL,
+  tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
-  api.call = generateAPICall("data/list", tag = tag, limit = limit, offset = offset)
+  api.call = generateAPICall("data/list", 
+    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures, 
+    NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
+    tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
@@ -37,6 +42,10 @@
 #'
 #' @template note_memoise
 #'
+#' @template arg_NumberOfInstances
+#' @template arg_NumberOfFeatures
+#' @template arg_NumberOfClasses
+#' @template arg_NumberOfMissingValues
 #' @template arg_tag
 #' @template arg_limit
 #' @template arg_offset

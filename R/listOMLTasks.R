@@ -1,7 +1,12 @@
-.listOMLTasks = function(tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
+.listOMLTasks = function(NumberOfInstances = NULL, NumberOfFeatures = NULL, 
+  NumberOfClasses = NULL, NumberOfMissingValues = NULL,
+  tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
   
-  api.call = generateAPICall("task/list", tag = tag, limit = limit, offset = offset)
+  api.call = generateAPICall("task/list", 
+    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures, 
+    NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
+    tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   
@@ -55,7 +60,11 @@
 #' the \code{status} and some describing data qualities.
 #'
 #' @template note_memoise
-#'
+#' 
+#' @template arg_NumberOfInstances
+#' @template arg_NumberOfFeatures
+#' @template arg_NumberOfClasses
+#' @template arg_NumberOfMissingValues
 #' @template arg_tag
 #' @template arg_limit
 #' @template arg_offset

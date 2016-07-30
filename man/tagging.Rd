@@ -42,8 +42,9 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{listOMLDataSets}},
   \code{\link{uploadOMLDataSet}}
 
-Other flow-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
+Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
+  \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}
 

@@ -21,12 +21,12 @@ a single ID or a vector of IDs of the runs.}
 \item{uploader.id}{[\code{integer(1)}]\cr
 ID of the uploader.}
 
-\item{tag}{[\code{character(1)}]\cr
-If not \code{NULL} only entries with the corresponding \code{tag}
+\item{tag}{[\code{character}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}s
 are listed.}
 
 \item{limit}{[\code{numeric(1)}]\cr
-Optional. The maximum number of datasets to return. Without specifying \code{offset}, it returns the first '\code{limit}' datasets.}
+Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
 
 \item{offset}{[\code{numeric(1)}]\cr
 Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
