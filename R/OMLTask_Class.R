@@ -9,8 +9,8 @@
 #' @param task.type [\code{character(1)}]\cr
 #'   The task type of this task. Task types can be browsed and created on the OpenML website.
 #'   See also \code{\link{listOMLTaskTypes}} for a list of all available tasks.
-#' @param input [\code{character}]\cr
-#'   The inputs given for this task (data.set, estimation.procedure, evaluation.measures, cost.matrix).
+#' @param input [\code{list}]\cr
+#'   The inputs given for this task (i.e. data.set, estimation.procedure, evaluation.measures, cost.matrix).
 #' @param parameters [\code{list}]\cr
 #'   Parameter settings for this task (depends on the task type).
 #' @param output [\code{list}]\cr

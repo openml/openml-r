@@ -41,17 +41,14 @@ test_that("runTaskFlow", {
     acc3 = getBMRPerformances(res3$bmr)[[1]][[1]][["acc"]]
     expect_false(isTRUE(all.equal(round(acc, 5), round(acc3, 5))))
     
-    # check when passing parameters as list
-    with_write_access({
-      lrn = makeLearner("classif.randomForest", mtry = 2)
-      task = getOMLTask(task.id = 59L)
-      run.mlr = runTaskMlr(task, lrn)
-      flow.id = uploadOMLFlow(lrn)
-      run.flow = runTaskFlow(task, getOMLFlow(flow.id), par.list = getHyperPars(lrn))
-      checkRun(run.flow)
-  
-      expect_equal(getBMRPerformances(run.mlr$bmr, as.df = TRUE)$acc,
-        getBMRPerformances(run.flow$bmr, as.df = TRUE)$acc)
-    })
+    # check if passing parameters as list works
+    lrn = makeLearner("classif.randomForest", mtry = 2)
+    task = getOMLTask(task.id = 59L)
+    run.mlr = runTaskMlr(task, lrn)
+    run.flow = runTaskFlow(task, convertMlrLearnerToOMLFlow(lrn), par.list = getHyperPars(lrn))
+    checkRun(run.flow)
+    
+    expect_equal(getBMRPerformances(run.mlr$bmr, as.df = TRUE)$acc,
+      getBMRPerformances(run.flow$bmr, as.df = TRUE)$acc)
   })
 })

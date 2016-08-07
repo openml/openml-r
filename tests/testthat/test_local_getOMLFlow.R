@@ -7,21 +7,21 @@ test_that("getOMLFlow", {
     expect_is(flow, "OMLFlow")
     expect_output(print(flow), "Flow")
     expect_equal(flow$flow.id, 2)
- })
-  
-  with_empty_cache({
-    flow = getOMLFlow(3880)
-    expect_is(flow, "OMLFlow")
-    expect_output(print(flow), "Flow|3880")
-    expect_string(flow$binary.url)
-    expect_equal(flow$binary.format, "Rds")
-    expect_file(flow$binary.path)
-    expect_string(flow$binary.md5)
-    for (i in seq_along(flow$parameters)) 
-      expect_output(print(flow$parameters[[i]]), "Parameter")
-
+    
+    # check flow created with R
+    flow.r = getOMLFlow(3884)
+    expect_is(flow.r, "OMLFlow")
+    expect_output(print(flow.r), "Flow|3880")
+    expect_string(flow.r$binary.url)
+    expect_equal(flow.r$binary.format, "Rds")
+    expect_file(flow.r$binary.path)
+    expect_string(flow.r$binary.md5)
+    for (i in seq_along(flow.r$parameters)) 
+      expect_output(print(flow.r$parameters[[i]]), "Parameter")
+    
     # flow converter
-    lrn1 = convertOMLFlowToMlr(flow)
+    expect_error(convertOMLFlowToMlr(flow), "This flow can not be converted")
+    lrn1 = convertOMLFlowToMlr(flow.r)
     expect_is(lrn1, "Learner")
     converted.flow = convertMlrLearnerToOMLFlow(lrn1)
     expect_is(converted.flow, "OMLFlow")
@@ -30,14 +30,5 @@ test_that("getOMLFlow", {
     #lrn = makeOversampleWrapper(makeFilterWrapper(makeImputeWrapper(makeLearner("classif.logreg"), 
     #  classes = list(numeric = imputeMedian(), integer = imputeMedian())), fw.perc = 0.5, fw.method = "variance"))
     #expect_equal(removeAllHyperPars(lrn), lrn1)
-  })
+ })
 })
-
-# 
-# # create a own flow
-# lrnW = makeFilterWrapper(makeImputeWrapper(makeLearner("classif.logreg"), classes = list(numeric = imputeMedian(), integer = imputeMedian())), fw.perc = 0.5, fw.method = "variance")
-# lrnW = removeAllHyperPars(lrnW)
-# flow.id = uploadOMLFlow(lrnW)
-# flow = getOMLFlow(3876)
-# lrn = convertOMLFlowToMlr(flow)
-# converted.flow = convertMlrLearnerToOMLFlow(lrn)

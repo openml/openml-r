@@ -56,7 +56,7 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity =
   # if no flow.id, try to upload flow (if it exists) and assign its id to flow.id slot
   if (is.na(run$flow.id)) {
     if (!is.null(flow)){
-      run$flow.id = uploadOMLFlow(flow) 
+      run$flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity) 
       #flow.ids = setNames(flow.ids, rev(unlist(strsplit(flow$name, "[.]")))[1:length(flow.ids)])
     } else stop("Please provide a 'flow'")
   } # else flow.ids = run$flow.id
