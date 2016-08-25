@@ -15,6 +15,10 @@
   # get values from each XML string
   string.list = xmlSApply(d, getChildrenStrings)
   # get indices where string.status is included in status
+  if (!is.list(string.list)) {
+    string.list = list(setNames(as.vector(string.list), row.names(string.list)))
+    d = list(d)
+  }
   string.ind = which(vcapply(string.list, function(X) X["status"]) %in% status)
   
   # subset with respect to 'status' (speedup)
