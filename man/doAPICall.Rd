@@ -34,7 +34,8 @@ Default is set via \code{\link{setOMLConfig}}.}
 \item{method}{[\code{character(1)}]\cr
 HTTP request method. Currently one of GET, POST or DELETE.}
 
-\item{...}{Another possibility to pass key-value pairs for the HTTP request query.}
+\item{...}{Another possibility to pass key-value pairs for the HTTP request query.
+Arguments passed via ... have a higher priority.}
 }
 \value{
 [\code{character(1)}]\cr Unparsed content of the returned XML file.
