@@ -32,3 +32,4 @@ notifications:
         - j.bossek@gmail.com
     on_success: change
     on_failure: always
+  slack: openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
