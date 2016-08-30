@@ -22,7 +22,7 @@ In this tutorial, we will show the most important functions of this package and 
 
 For general information on what OpenML is, please have a look at the [README file](https://github.com/openml/OpenML/blob/master/README.md) or visit the [official OpenML website](http://openml.org/).
 
-Before making practical use of the package, in most cases it is desirable to [setup a configuration file](#config) to simplify further steps.
+After installation and before making practical use of the package, in most cases it is desirable to [setup a configuration file](#config) to simplify further steps.
 Afterwards, there are different basic stages when using this package or OpenML, respectively:
 
 * [Listing](#listing)
@@ -40,9 +40,21 @@ Afterwards, there are different basic stages when using this package or OpenML, 
 * [Uploading](#upload)
     * function `uploadOMLRun`
 
+### Installation instructions
+
+At the moment there is no [CRAN](https://cran.r-project.org/) release yet. To install the current development version use the [`devtools`](https://cran.r-project.org/web/packages/devtools/index.html) package and run
+```{r eval=FALSE, message=FALSE}
+devtools::install_github("openml/openml-r")
+```
+in an R session. Using the OpenML package also requires a reader for the [ARFF](http://www.cs.waikato.ac.nz/ml/weka/arff.html) file format. By default [RWeka](https://cran.r-project.org/web/packages/RWeka/index.html) is used. However, the [farff](https://github.com/mlr-org/farff) package can be used as an alternative. You can install the packages with the following calls.
+```{r eval=FALSE, message=FALSE}
+install.packages("RWeka")
+devtools::install_github("mlr-org/farff")
+```
+
 ### Private key notification
 
-All examples in this tutorial are given with a <span style="color:red">**READ-ONLY API key**</span>. 
+All examples in this tutorial are given with a <span style="color:red">**READ-ONLY API key**</span>.
 
 With this key you can **read** all the information from the server but not **write** data sets, tasks, flows, and runs to the server. This key allows to emulate uploading to the server but doesn't allow to really store data. If one wants to write data to a server, one has to **get a personal API key**. The process of how to obtain a key is shown in the [configuration section](#config).
 
@@ -50,15 +62,15 @@ With this key you can **read** all the information from the server but not **wri
 
 ### Basic example {#basicexample}
 
-In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server. 
+In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server.
 
 ```{r eval=TRUE, message=FALSE}
 library("OpenML")
-## temporarily set API key to read only key (replace it with your own key) 
+## temporarily set API key to read only key (replace it with your own key)
 setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 
 # download a task (whose ID is 1L)
-task = getOMLTask(task.id = 1L) 
+task = getOMLTask(task.id = 1L)
 task
 ```
 
@@ -66,7 +78,7 @@ The task contains information on the following:
 
 * task type: defines the type of the task (regression, classification, clustering, etc.)
 * data set: which data set belongs to the given task (one task can always only be connected to a single data set)
-* target feature(s): optional field for all kinds of classification and regression tasks 
+* target feature(s): optional field for all kinds of classification and regression tasks
 * tags: tags / labels, which might be helpful for further subselections
 * estimation procedure: which estimation procedure has been used when computing the performance
 
@@ -182,7 +194,7 @@ By default, `listOMLDataSets()` returns only data sets that have an active statu
 datasets = listOMLDataSets()  # returns active data sets
 ```
 
-The resulting `data.frame` contains the following information for each of the listed data sets: 
+The resulting `data.frame` contains the following information for each of the listed data sets:
 
 * the data set ID `did`
 * the `status` (`"active"`, `"in_preparation"` or `"deactivated"`) of the data set
@@ -225,7 +237,7 @@ Listing the tasks can be done via
 tasks = listOMLTasks()
 ```
 
-The resulting `data.frame` contains for each of the listed tasks information on: 
+The resulting `data.frame` contains for each of the listed tasks information on:
 
 * the task ID `task.id`
 * the type of the task `task.type`
@@ -335,7 +347,7 @@ If the underlying flow has hyperparameters that are different from the default v
 
 All the data that served as input for the run, including data set IDs and the URL to the data, is stored in `input.data`:
 ```{r eval=TRUE}
-run$input.data 
+run$input.data
 ```
 
 Predictions made by an uploaded run are stored within the `predictions` element and can be retrieved via
@@ -375,7 +387,7 @@ A data set contains information that can be stored on OpenML and used by OpenML 
 2. `makeOMLDataSet`: convert the data set into an OpenML data set
 3. `uploadOMLDataSet`: upload the data set to the server
 
-```{r eval = FALSE, warning = FALSE, message = TRUE} 
+```{r eval = FALSE, warning = FALSE, message = TRUE}
 ## This is simple data set, which is generally already available in R.
 ## Please DO NOT upload it to the server!
 data("airquality")
@@ -413,7 +425,7 @@ dataset.id
 
 A [flow](#flows) is an implementation of a single algorithm or a script. To create a flow, we can use the `mlr` package, which already contains numerous implemented algorithms. Each [`mlr` learner](http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/) can be considered as an implementation of a flow, which then again can be uploaded to the server with the function `uploadOMLFlow`.
 If the flow has already been uploaded to the server (either by you or someone else), one receives a message that the flow already exists and the `flow.id` is returned from the function. Otherwise, the flow will be uploaded, receive its own `flow.id` and return that ID.
- 
+
 ```{r eval = FALSE, warning = FALSE, message = TRUE}
 library(mlr)
 lrn = makeLearner("classif.randomForest")
