@@ -1,7 +1,7 @@
 #' @title List available OpenML qualities with values for given data set.
 #'
 #' @description The returned \code{data.frame} contains data set quality
-#' \dQuote{name} and value \dQuote{value}.
+#' \dQuote{name}s and values \dQuote{value}.
 #'
 #' @param did [\code{integer(1)}]\cr
 #'   The data set ID.

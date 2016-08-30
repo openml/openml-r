@@ -26,7 +26,7 @@ Default is \code{NULL} and uses all available data qualities.}
 }
 \description{
 The returned \code{data.frame} contains data set quality
-\dQuote{name} and value \dQuote{value}.
+\dQuote{name}s and values \dQuote{value}.
 }
 \examples{
 \dontrun{

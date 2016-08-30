@@ -4,14 +4,14 @@
 #' Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 #'
 #' @param obj [\code{\link{OMLDataSet}}]\cr
-#'   The object that should be converted.
+#'   The data set that should be converted.
 #' @param task.type [\code{character(1)}]\cr
 #'   As we only pass the data set, we need to define the task type manually.
 #'   Possible are: \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
 #'   \dQuote{Survival Analysis}.
 #'   Default is \code{NULL} which means to guess it from the target column in the
-#'   data set. If that is a factor, we choose classification. If it is numeric we
-#'   choose regression. In all other cases an error is thrown.
+#'   data set. If that is a factor or a logical, we choose classification.
+#'   If it is numeric we choose regression. In all other cases an error is thrown.
 #' @param target [\code{character}]\cr
 #'   The target for the classification/regression task.
 #'   Default is the \code{default.target.attribute} of the \code{\link{OMLDataSetDescription}}.
@@ -44,16 +44,9 @@ convertOMLDataSetToMlr = function(
   desc = obj$desc
 
   # no task type? guess it by looking at target
-  if (is.null(task.type)) {
-    if (is.factor(data[, target]) | is.logical(data[, target]))
-      task.type = "Supervised Classification"
-    else if (is.numeric(data[, target]))
-      task.type = "Supervised Regression"
-    else
-      stopf("Cannot guess task.type from data!")
-  } else {
-    assertChoice(task.type, c("Supervised Classification", "Supervised Regression", "Survival Analysis"))
-  }
+  if (is.null(task.type))
+    task.type = guessTaskType(data[, target])
+  assertChoice(task.type, getValidTaskTypes())
 
   #  remove ignored attributes from data
   if (!is.na(desc$ignore.attribute) && ignore.flagged.attributes) {
@@ -77,8 +70,24 @@ convertOMLDataSetToMlr = function(
     stopf("Encountered currently unsupported task type: %s", task.type)
   )
 
-  #  remove constant featues
+  #  remove constant features
   mlr.task = removeConstantFeatures(mlr.task)
   return(mlr.task)
 }
 
+# @title Helper to guess task type from target column format.
+#
+# @param target [vector]
+#   Vector of target values.
+# @return [character(1)]
+guessTaskType = function(target) {
+  if (is.factor(target) | is.logical(target))
+    return("Supervised Classification")
+  if (is.numeric(target))
+    return("Supervised Regression")
+  stopf("Cannot guess task.type from data!")
+}
+
+getValidTaskTypes = function() {
+  c("Supervised Classification", "Supervised Regression", "Survival Analysis")
+}
