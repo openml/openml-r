@@ -33,4 +33,10 @@ test_that("listOMLTasks", {
   one.task = .listOMLTasks(limit = 1)
   expect_data_frame(one.task, nrows = 1, col.names = "unique")
   expect_set_equal(exp.names, names(one.task))
+  
+  # check if evaluation.measures and estimation.procedures are NA for Subgroup Discovery task type
+  tasks = .listOMLTasks(tag = "Cortana")
+  expect_true(unique(tasks$task.type) == "Subgroup Discovery")
+  expect_true(sum(is.na(tasks$evaluation.measures)) == nrow(tasks))
+  expect_set_equal(exp.names, names(tasks))
 })

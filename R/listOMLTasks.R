@@ -44,15 +44,19 @@
   })
   li = as.data.frame(rbindlist(info, fill = TRUE))
   li = li[, !is.na(colnames(li))]
-  int.vars = setdiff(colnames(li), c("task_type", "status", "format", "name", "target_feature", "tags", "evaluation_measures"))
+  int.vars = setdiff(colnames(li), c("task_type", "status", "format", "name", "target_feature", "tags", "evaluation_measures", "estimation_procedure"))
   li[, int.vars] = lapply(int.vars, function(x) as.integer(li[, x]))
 
-  estproc = listOMLEstimationProcedures(verbosity = 0L)
-  row.names(estproc) = estproc$est.id
-  li$estimation_procedure = droplevels(estproc[as.character(li$estimation_procedure), "name"])
+  if (!is.null(li$estimation_procedure)) {
+    estproc = listOMLEstimationProcedures(verbosity = 0L)
+    row.names(estproc) = estproc$est.id
+    li$estimation_procedure = droplevels(estproc[as.character(li$estimation_procedure), "name"])
+  } else {
+    li$estimation_procedure = NA
+  }
+  if (is.null(li$evaluation_measures)) li$evaluation_measures = NA
   li$status = as.factor(li$status)
 
-  #FIXME: do we want to replace _ by . in colnames?
   colnames(li) = gsub("_", ".", colnames(li))
   return(li)
 }
