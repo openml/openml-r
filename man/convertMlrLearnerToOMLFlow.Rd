@@ -2,7 +2,7 @@
 % Please edit documentation in R/convertMlrLearnerToOMLFlow.R
 \name{convertMlrLearnerToOMLFlow}
 \alias{convertMlrLearnerToOMLFlow}
-\title{convertMlrLearnerToOMLFlow}
+\title{Converts an OMLFlow to an mlr learner.}
 \usage{
 convertMlrLearnerToOMLFlow(lrn, name = paste0("mlr.", lrn$id),
   description = NULL, ...)
@@ -12,7 +12,8 @@ convertMlrLearnerToOMLFlow(lrn, name = paste0("mlr.", lrn$id),
 The mlr learner.}
 
 \item{name}{[\code{character(1)}]\cr
-The name of the flow object. Default is the learner ID.}
+The name of the flow object. Default is the learner ID with the prefix
+\dQuote{mlr} prepended.}
 
 \item{description}{[\code{character(1)}]\cr
 An optional description of the learner.
@@ -25,7 +26,7 @@ Further optional parameters that are passed to \code{\link{makeOMLFlow}}.}
 [\code{\link{OMLFlow}}].
 }
 \description{
-Creates an OMLFlow for an mlr learner.
-Required if you want to upload an mlr learner.
+Creates an \code{\link{OMLFlow}} for an \pkg{mlr} \code{\link[mlr]{Learner}}]
+Required if you want to upload an mlr learner to the OpenML server.
 }
 

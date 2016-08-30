@@ -1,13 +1,14 @@
-#' @title convertMlrLearnerToOMLFlow
+#' @title Converts an OMLFlow to an mlr learner.
 #'
 #' @description
-#' Creates an OMLFlow for an mlr learner.
-#' Required if you want to upload an mlr learner.
+#' Creates an \code{\link{OMLFlow}} for an \pkg{mlr} \code{\link[mlr]{Learner}}]
+#' Required if you want to upload an mlr learner to the OpenML server.
 #'
 #' @param lrn [\code{\link[mlr]{Learner}}]\cr
 #'   The mlr learner.
 #' @param name [\code{character(1)}]\cr
-#'   The name of the flow object. Default is the learner ID.
+#'   The name of the flow object. Default is the learner ID with the prefix
+#'   \dQuote{mlr} prepended.
 #' @param description [\code{character(1)}]\cr
 #'   An optional description of the learner.
 #'   Default is a short specification of the learner and the associated package.
@@ -19,65 +20,81 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
   # This function has been renamed, it was called createOMLFlowForMlrLearner
   assertClass(lrn, "Learner")
   assertString(name)
-  
+
   #lrn = removeDefaultsFromParamValues(lrn)
   lrn = removeAllHyperPars(lrn)
-  
-  if (!is.null(description))
-    assertString(description)
-  else
+
+  if (is.null(description))
     description = sprintf("Learner %s from package(s) %s.", name, collapse(lrn$package, sep = ", "))
-  
-  # dependencies
-  pkges = getDependencies(lrn)
-  
+  assertString(description)
+
+  # get R/mlr version information
+  dependencies = getDependencies(lrn)
+
   # create sourcefile
   #sourcefile = createLearnerSourcefile(lrn)
   #external.version = paste0("R_", digest(file = sourcefile)) #digest(file = sourcefile)
   #on.exit(unlink(sourcefile))
-  
+
+  # save learner object to RDS file
   binary.path = file.path(tempdir(), sprintf("%s_binary.Rds", lrn$id))
   saveRDS(lrn, file = binary.path)
-  
+
   # FIXME: use only hash when OpenML is on CRAN!
-  external.version = paste0("R_", collapse(R.Version()[c("major", "minor")], "."), 
-    "-v2.", digest(algo = "crc32", file = binary.path))
-  
+  external.version = paste0(getRVersionString(), "-v2.", digest(algo = "crc32", file = binary.path))
+
   flow = makeOMLFlow(
     name = name,
     description = description,
     parameters = makeFlowParameterList(lrn),
-    dependencies = pkges,
+    dependencies = dependencies,
     external.version = external.version,
     binary.path = binary.path,
     ...
   )
-  
+
   # if (!is.null(lrn$next.learner)) {
   #   identifier = gsub(".*[.]", "", lrn$next.learner$id) #stri_split_fixed(lrn$next.learner$id, ".")[[1L]][2L]
   #   flow$components = list(convertMlrLearnerToOMLFlow(lrn$next.learner))
   #   names(flow$components) = identifier
   # }
-  
+
   if (!is.null(lrn$next.learner)) {
     flow$components = lapply(getAllNextLearners(lrn), convertMlrLearnerToOMLFlow)
   }
-  
+
   return(flow)
 }
 
-# extracts version dependencies including R, OpenML and mlr version
+# @title Get learner dependencies.
+#
+# @description
+# Extracts version dependencies including R, OpenML and mlr version.
+#
+# @param lrn [Learner]
+#   Learner from mlr package.
+# @return [character(1)]
 getDependencies = function(lrn) {
+  # remove starting !
   lrn.package = ifelse(grepl("^!", lrn$package), gsub("^!", "", lrn$package), lrn$package)
-  if ("mlr"%in%lrn.package) pkges = lrn.package else pkges = c("mlr", lrn.package)
-  pkges = c("OpenML", pkges)
-  pkges = sapply(pkges, function(x) sprintf("%s_%s", x, packageVersion(x)))
-  pkges = c(paste0("R_", collapse(R.Version()[c("major", "minor")], ".")), pkges)
-  pkges = collapse(pkges, sep = ", ")
-  return(pkges)
+  # check if mlr is needed
+  dependencies = if ("mlr" %in% lrn.package) lrn.package else c("mlr", lrn.package)
+  # OpenML is always needed
+  dependencies = c("OpenML", dependencies)
+  # append package version to each package
+  dependencies = sapply(dependencies, function(x) sprintf("%s_%s", x, packageVersion(x)))
+  # finally add "R version string"
+  dependencies = c(getRVersionString(), dependencies)
+
+  dependencies = collapse(dependencies, sep = ", ")
+  return(dependencies)
 }
 
-# A list that extracts all next.learner recursively
+# @title Extract wrapped learners recursively.
+#
+# @param lrn [Learner]
+#   Learner from mlr package.
+# @return [list] Named list of learners.
 getAllNextLearners = function(lrn) {
   getNextLearner = function(lrn, i) lrn$next.learner
   # get number of available next learners
@@ -87,31 +104,26 @@ getAllNextLearners = function(lrn) {
   return(setNames(all.next.learner, lapply(all.next.learner, function(x) gsub(".*[.]", "", x$id))))
 }
 
-removeAllHyperPars = function(mlr.lrn) {
-  all.pars = names(getHyperPars(mlr.lrn))
-  if (!is.null(all.pars)) mlr.lrn = removeHyperPars(mlr.lrn, ids = all.pars)
-  
-  if (!is.null(mlr.lrn$next.learner))
-    mlr.lrn$next.learner = removeAllHyperPars(mlr.lrn$next.learner)
-  
-  return(mlr.lrn)
+# @title Recursively remove learner parameters.
+#
+# @param lrn [Learner]
+#   Learner from mlr package.
+# @return [Learner]
+removeAllHyperPars = function(lrn) {
+  all.pars = names(getHyperPars(lrn))
+  if (!is.null(all.pars))
+    lrn = removeHyperPars(lrn, ids = all.pars)
+
+  # proceed recursively
+  if (!is.null(lrn$next.learner))
+    lrn$next.learner = removeAllHyperPars(lrn$next.learner)
+
+  return(lrn)
 }
 
-# removeDefaultsFromParamValues = function(mlr.lrn) {
-#   par.defaults = getDefaults(getParamSet(mlr.lrn))
-#   par.vals = mlr.lrn$par.vals
-#   par.ind = vlapply(names(par.vals), function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
-#   mlr.lrn$par.vals = par.vals[par.ind]
-#   
-#   if (!is.null(mlr.lrn$next.learner))
-#     mlr.lrn$next.learner = removeDefaultsFromParamValues(mlr.lrn$next.learner)
-#   
-#   return(mlr.lrn)
-# }
-
-# Generate a list of OpenML flow parameters for a given mlr learner.
+# @title Generate a list of OpenML flow parameters for a given mlr learner.
 #
-# @param mlr.lrn [\code{\link[mlr]{Learner}}]\cr
+# @param lrn [\code{\link[mlr]{Learner}}]\cr
 #   The mlr learner.
 # @return A list of \code{\link{OpenMLFlowParameter}s}.
 # @examples
@@ -119,31 +131,50 @@ removeAllHyperPars = function(mlr.lrn) {
 # lrn = makeLearner("classif.randomForest")
 # pars = makeFlowParameterList(lrn)
 # pars
-makeFlowParameterList = function(mlr.lrn) {
-  pars = getParamSet(mlr.lrn)$pars #mlr.lrn$par.set$pars
-  par.list = vector("list", length = length(pars))
-  for(i in seq_along(pars)){
-    name = pars[[i]]$id
-    data.type = pars[[i]]$type
-    # FIXME: data.type Should be either integer, numeric, string, vector, matrix, object.
-    # if(data.type == "discrete") data.type = "string"      ?
-    # if(data.type == "numericvector") data.type = "vector" ?
-    # ...
-    # For now, we don't want to store default values on the server.
-    default.value = NA_character_
-    flow.par = makeOMLFlowParameter(
-      name = name,
-      data.type = data.type,
-      default.value = default.value
+makeFlowParameterList = function(lrn) {
+  par.list = makeFlowParameterListForMlrLearner(lrn)
+  par.list = append(par.list, makeFlowParameterListFor())
+  return(par.list)
+}
+
+# @title Helper to create parameters for mlr learner.
+#
+# @param lrn [Learner]
+#   Learner from package mlr.
+# @return [list] of OMLFlowParameter objects.
+makeFlowParameterListForMlrLearner = function(lrn) {
+  # create list of OpenMLFlowParameters
+  lapply(getParamSet(lrn)$pars, function(par) {
+    makeOMLFlowParameter(
+      name = par$id,
+      data.type = par$type,
+      default.value = NA_character_  # For now, we don't want to store default values on the server.
     )
-    par.list[[i]] = flow.par
-  }
+  })
+}
+
+# @title Helper to create parameters for random numbers generator.
+#
+# @return [list] of OMLFlowParameter objects.
+makeFlowParameterListFor = function() {
+  # now handle random numbers generator seeding
   seed.pars = setNames(c(1, RNGkind()), c("openml.seed", "openml.kind", "openml.normal.kind"))
-  par.list = append(par.list, lapply(seq_along(seed.pars), function(x) {
+  lapply(seq_along(seed.pars), function(x) {
     makeOMLFlowParameter(
       name = names(seed.pars[x]),
       data.type = ifelse(is.numeric(seed.pars[x]), "integer", "discrete"),
       default.value = seed.pars[x]
-    )}))
-  return(par.list)
+  )})
 }
+
+# removeDefaultsFromParamValues = function(lrn) {
+#   par.defaults = getDefaults(getParamSet(lrn))
+#   par.vals = lrn$par.vals
+#   par.ind = vlapply(names(par.vals), function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
+#   lrn$par.vals = par.vals[par.ind]
+#
+#   if (!is.null(lrn$next.learner))
+#     lrn$next.learner = removeDefaultsFromParamValues(lrn$next.learner)
+#
+#   return(lrn)
+# }
