@@ -13,10 +13,10 @@
 convertMlrTaskToOMLDataSet = function(task, description = NULL){
   assert(checkClass(description, "character"), checkClass(description, "OMLDataSetDescription"), checkNull(description))
   assertClass(task, "Task")
-  
+
   if (is.null(description))
     description = as.character(task$task.desc$id)
-  
+
   if (isTRUE(checkClass(description, "OMLDataSetDescription"))) {
     desc = description
   } else {
@@ -30,9 +30,9 @@ convertMlrTaskToOMLDataSet = function(task, description = NULL){
       status = "active"
     )
   }
-  
+
   cns = colnames(mlr::getTaskData(task))
-  
+
   oml.data = makeOMLDataSet(desc = desc,
     data = mlr::getTaskData(task),
     colnames.old = cns,

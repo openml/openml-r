@@ -10,15 +10,15 @@ convertOMLDataSetToMlr(obj, task.type = NULL,
 }
 \arguments{
 \item{obj}{[\code{\link{OMLDataSet}}]\cr
-The object that should be converted.}
+The data set that should be converted.}
 
 \item{task.type}{[\code{character(1)}]\cr
 As we only pass the data set, we need to define the task type manually.
 Possible are: \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
 \dQuote{Survival Analysis}.
 Default is \code{NULL} which means to guess it from the target column in the
-data set. If that is a factor, we choose classification. If it is numeric we
-choose regression. In all other cases an error is thrown.}
+data set. If that is a factor or a logical, we choose classification.
+If it is numeric we choose regression. In all other cases an error is thrown.}
 
 \item{target}{[\code{character}]\cr
 The target for the classification/regression task.

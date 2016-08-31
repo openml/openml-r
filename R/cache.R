@@ -69,6 +69,19 @@ findCachedFlow = function(id, elements = list()) {
   getCacheURI("flows", id, c(elements, list("flow.xml")))
 }
 
+# @title Get IDs of OML objects in cache.
+#
+# @param type [character(1)]
+#   OML object type.
+# @return [integer]
+getCachedObjectIds = function(type) {
+  assertChoice(type, c("data", "flow", "task", "run"))
+  type = if (type == "data") "datasets" else paste0(type, "s")
+  cache.dir = getOMLConfig()$cachedir
+  # each OML object is located in its own directory named with the object ID
+  as.integer(list.files(paste0(cache.dir, "/", type)))
+}
+
 #' @title Clear cache directories
 #'
 #' @description Delete all cached objects and recreate cache directories.

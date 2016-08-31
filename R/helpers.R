@@ -15,6 +15,10 @@ showMessage = function(verbosity, msg, ..., minlev) {
     messagef(msg, ...)
 }
 
+getRVersionString = function() {
+  paste0("R_", collapse(R.Version()[c("major", "minor")], "."))
+}
+
 checkUserConfirmation = function(type) {
   assertChoice(type, choices = c("dataset", "flow", "task", "run"))
 
@@ -64,7 +68,7 @@ catfNotNA = function(text, obj) {
     catf(text, collapse(obj, sep = "; "))
 }
 
-generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL, 
+generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
   NumberOfInstances = NULL, NumberOfFeatures = NULL, NumberOfClasses = NULL, NumberOfMissingValues = NULL,
   tag = NULL, limit = NULL, offset = NULL) {
   is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
@@ -90,18 +94,18 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     if (length(NumberOfClasses) == 1) NumberOfClasses = rep(NumberOfClasses, 2)
     assertIntegerish(NumberOfClasses, lower = 2, null.ok = TRUE, min.len = 1, max.len = 2)
     assertSorted(NumberOfClasses)
-    NumberOfClasses = collapse(NumberOfClasses, sep = "..") 
+    NumberOfClasses = collapse(NumberOfClasses, sep = "..")
   }
   if (!is.null(NumberOfMissingValues)) {
     if (length(NumberOfMissingValues) == 1) NumberOfMissingValues = rep(NumberOfMissingValues, 2)
     assertIntegerish(NumberOfMissingValues, lower = 0, null.ok = TRUE, min.len = 1, max.len = 2)
     assertSorted(NumberOfMissingValues)
-    NumberOfMissingValues = collapse(NumberOfMissingValues, sep = "..") 
+    NumberOfMissingValues = collapse(NumberOfMissingValues, sep = "..")
   }
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
   if (!is.null(limit)) assertIntegerish(limit, len = 1)
   if (!is.null(offset)) assertIntegerish(offset, len = 1)
-  
+
   if (length(run.id) > 1)
     run.id = collapse(run.id)
   if (length(task.id) > 1)
@@ -126,8 +130,8 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     offset = offset
   )
   url.args = Filter(function(x) !is.null(x), url.args)
-  
+
   api.call = paste0(api.call, "/", collapseNamedList(url.args, sep = "/", collapse = "/"))
-  
-  return(api.call) 
+
+  return(api.call)
 }

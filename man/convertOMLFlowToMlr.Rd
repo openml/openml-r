@@ -2,7 +2,7 @@
 % Please edit documentation in R/convertOMLFlowToMlr.R
 \name{convertOMLFlowToMlr}
 \alias{convertOMLFlowToMlr}
-\title{Converts an flow to a mlr learner.}
+\title{Converts a flow to a mlr learner.}
 \usage{
 convertOMLFlowToMlr(flow)
 }
@@ -14,7 +14,7 @@ The flow object.}
 [\code{\link[mlr]{Learner}}].
 }
 \description{
-Converts an \code{\link{OMLFlow}} that was originally created with the OpenML 
+Converts an \code{\link{OMLFlow}} that was originally created with the OpenML
 R-package to a \code{\link[mlr]{Learner}}.
 }
 \seealso{
