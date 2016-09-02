@@ -4,12 +4,16 @@
 \alias{convertOMLTaskToMlr}
 \title{Convert an OpenML task to mlr.}
 \usage{
-convertOMLTaskToMlr(obj, ignore.flagged.attributes = TRUE,
-  drop.levels = TRUE, verbosity = NULL)
+convertOMLTaskToMlr(obj,
+  mlr.task.id = "<oml.data.name>.task.id.<oml.task.id>",
+  ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLTask}}]\cr
 The OML task object that should be converted.}
+
+\item{mlr.task.id}{[\code{character(1)}]\cr
+Id string for \code{\link[mlr]{Task}} object.}
 
 \item{ignore.flagged.attributes}{[\code{logical(1)}]\cr
 Should those features that are listed in the data set description slot \dQuote{ignore.attribute}
