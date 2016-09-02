@@ -3,33 +3,33 @@
   tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
-  api.call = generateAPICall("data/list", 
+  api.call = generateAPICall("json/data/list", 
     NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures, 
     NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
     tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
-  xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
+  res = fromJSON(txt = content)[[1L]][[1L]]
+  data.id = as.integer(res$did)
+  qualities = convertNameValueListToDF(res$quality)
+  res$quality = res$did = NULL
+  
+  res = cbind(data.id, as.data.frame(res, stringsAsFactors = FALSE), qualities, stringsAsFactors = FALSE)
+  i = colnames(res)%in%colnames(qualities)
+  res[i] = lapply(res[i], as.integer)
+  return(res)
+}
 
-  # get list of blocks for data sets
-  blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  df = as.data.frame(rbindlist(lapply(blocks, function(node) {
-    children = xmlChildren(node)
-    is.quality = names(children) == "quality"
-    info = list(
-      did = as.integer(xmlValue(children[["did"]])),
-      status = xmlValue(children[["status"]]),
-      format = xmlValue(children[["format"]]),
-      name = xmlValue(children[["name"]])
-    )
-    qualities = convertNodeSetToList(children[is.quality], fun = as.integer)
-    c(info, qualities)
-  }), fill = TRUE))
-  df$status = factor(df$status, levels = getValidOMLDataSetStatusLevels())
-
-  # subset status level
-  ret = droplevels(df[df$status %in% status, , drop = FALSE])
-  row.names(ret) = NULL
+convertNameValueListToDF = function(x) {
+  if (!isTRUE(checkList(x))) x = list(x)
+  #assertList(x)
+  #for(i in seq_along(x)) assertSubset(lapply(x, colnames)[[i]], c("name", "value"))
+  ret = lapply(x, function(x) as.list(setNames(x$value, x$name)))
+  cols = unique(unlist(lapply(x, function(x) x$name)))
+  # replace empty rows with NA
+  na.ind = which(vnapply(ret, length) == 0)
+  ret[na.ind] = lapply(seq_along(na.ind), function(x) as.list(setNames(rep(NA, length(cols)), cols)))
+  ret = as.data.frame(rbindlist(ret, fill = TRUE), stringsAsFactors = FALSE)
   return(ret)
 }
 
