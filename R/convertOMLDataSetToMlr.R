@@ -4,7 +4,9 @@
 #' Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 #'
 #' @param obj [\code{\link{OMLDataSet}}]\cr
-#'   The data set that should be converted.
+#'   The object that should be converted.
+#' @param mlr.task.id [\code{character(1)}]\cr
+#'   Id string for \code{\link[mlr]{Task}} object.
 #' @param task.type [\code{character(1)}]\cr
 #'   As we only pass the data set, we need to define the task type manually.
 #'   Possible are: \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
@@ -29,6 +31,7 @@
 #' @export
 convertOMLDataSetToMlr = function(
   obj,
+  mlr.task.id = "<oml.data.name>.data.id.<oml.data.id>",
   task.type = NULL,
   target = obj$desc$default.target.attribute,
   ignore.flagged.attributes = TRUE,
@@ -70,9 +73,18 @@ convertOMLDataSetToMlr = function(
     stopf("Encountered currently unsupported task type: %s", task.type)
   )
 
-  #  remove constant features
+  if (!is.null(mlr.task.id)) 
+    mlr.task$task.desc$id = replaceOMLDataSetString(mlr.task.id, obj)
+
+  #  remove constant featues
   mlr.task = removeConstantFeatures(mlr.task)
   return(mlr.task)
+}
+
+replaceOMLDataSetString = function(string, data.set) {
+  string = gsub("<oml.data.id>", data.set$desc$id, string)
+  string = gsub("<oml.data.name>", data.set$desc$name, string)
+  return(gsub("<oml.data.version>", data.set$desc$version, string))
 }
 
 # @title Helper to guess task type from target column format.
