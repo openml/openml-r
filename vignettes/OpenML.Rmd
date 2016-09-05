@@ -196,7 +196,7 @@ datasets = listOMLDataSets()  # returns active data sets
 
 The resulting `data.frame` contains the following information for each of the listed data sets:
 
-* the data set ID `did`
+* the data set ID `data.id`
 * the `status` (`"active"`, `"in_preparation"` or `"deactivated"`) of the data set
 * the `name` of the data set
 * the size of the majority / biggest class (`MajorityClassSize`)
@@ -219,8 +219,8 @@ to find the `iris` data set.
 subset(datasets, name == "iris")
 ```
 
-As you can see, there are two data sets called `iris`. We want to use the *original* data set with three classes, which is stored under the data set ID (`did`) `r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`.
-You can also have a closer look at the data set on the corresponding OpenML web page (http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$did`).
+As you can see, there are two data sets called `iris`. We want to use the *original* data set with three classes, which is stored under the data set ID (`data.id`) `r subset(datasets, name == "iris" & NumberOfClasses == 3)$data.id`.
+You can also have a closer look at the data set on the corresponding OpenML web page (http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$data.id`).
 
 ### List tasks
 Each OpenML task is a bundle that encapsulates information on various objects:
@@ -255,7 +255,7 @@ head(tasks[, 1:5])
 For some data sets, there may be more than one task available on the OpenML server.
 For example, one can look for `"Supervised Classification"` tasks that are available for a specific data via
 ```{r}
-head(subset(tasks, task.type == "Supervised Classification" & did == 61L)[, 1:5])
+head(subset(tasks, task.type == "Supervised Classification" & data.id == 61L)[, 1:5])
 ```
 
 ### List flows {#flows}
@@ -296,7 +296,7 @@ The package provides special representations for each object, which will be disc
 To directly download a data set, e.g., when you want to run a few preliminary experiments, one can use the function `getOMLDataSet`.
 The function accepts a data set ID as input and returns the corresponding `OMLDataSet`:
 ```{r eval=TRUE}
-iris.data = getOMLDataSet(did = 61L)  # the iris data set has the data set ID 61
+iris.data = getOMLDataSet(data.id = 61L)  # the iris data set has the data set ID 61
 ```
 
 ### Download an OpenML task
