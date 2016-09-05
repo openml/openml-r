@@ -4,13 +4,19 @@
 \alias{convertOMLDataSetToMlr}
 \title{Convert an OpenML data set to mlr task.}
 \usage{
-convertOMLDataSetToMlr(obj, task.type = NULL,
-  target = obj$desc$default.target.attribute,
+convertOMLDataSetToMlr(obj, mlr.task.id = "<oml.data.name>",
+  task.type = NULL, target = obj$desc$default.target.attribute,
   ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLDataSet}}]\cr
-The data set that should be converted.}
+The object that should be converted.}
+
+\item{mlr.task.id}{[\code{character(1)}]\cr
+Id string for \code{\link[mlr]{Task}} object. 
+The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>} 
+will be replaced by their respective values contained in the \code{\link{OMLDataSet}} object.
+Default is \code{<oml.data.name>}.}
 
 \item{task.type}{[\code{character(1)}]\cr
 As we only pass the data set, we need to define the task type manually.
