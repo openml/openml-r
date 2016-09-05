@@ -12,7 +12,7 @@
 
 <meta name="author" content="The OpenML R Team" />
 
-<meta name="date" content="2016-08-30" />
+<meta name="date" content="2016-09-05" />
 
 <title>OpenML</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">OpenML</h1>
 <h4 class="author"><em>The OpenML R Team</em></h4>
-<h4 class="date"><em>2016-08-30</em></h4>
+<h4 class="date"><em>2016-09-05</em></h4>
 
 
 
@@ -124,11 +124,11 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;mlr-org/
 ## temporarily set API key to read only key (replace it with your own key)
 <span class="kw">setOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
 <pre><code>## OpenML configuration:
-##   server           : http://www.openml.org/api/v1
-##   cachedir         : /var/folders/jr/7g50z6m57s9gg1lbkt727nzh0000gn/T//RtmpeoyZcR/file3d9826f0066a
+##   server           : http://api_new.openml.org/v1
+##   cachedir         : /tmp/Rtmp6Ygsyz/cache
 ##   verbosity        : 1
-##   arff.reader      : farff
-##   confirm.upload   : FALSE
+##   arff.reader      : RWeka
+##   confirm.upload   : TRUE
 ##   apikey           : ***************************47f1f</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download a task (whose ID is 1L)</span>
 task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 1L)
@@ -228,11 +228,11 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(OpenML)
 <span class="kw">getOMLConfig</span>()</code></pre></div>
 <pre><code>## OpenML configuration:
-##   server           : http://www.openml.org/api/v1
-##   cachedir         : /var/folders/jr/7g50z6m57s9gg1lbkt727nzh0000gn/T//RtmpeoyZcR/file3d9826f0066a
+##   server           : http://api_new.openml.org/v1
+##   cachedir         : /tmp/Rtmp6Ygsyz/cache
 ##   verbosity        : 1
-##   arff.reader      : farff
-##   confirm.upload   : FALSE
+##   arff.reader      : RWeka
+##   confirm.upload   : TRUE
 ##   apikey           : ***************************47f1f</code></pre>
 <p>As you can see, the configuration file lists the five items <code>server</code>, <code>cachedir</code>, <code>verbosity</code>, <code>arff.reader</code> and <code>apikey</code> that were listed in the <a href="#permanentconfig">beginning of this paragraph</a>.</p>
 <p>Once the config file is set up, you are <strong>ready to go</strong>!</p>
@@ -347,7 +347,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ##  $ name                              : chr  &quot;anneal&quot; &quot;anneal&quot; &quot;kr-vs-kp&quot; &quot;labor&quot; ...
 ##  $ target.feature                    : chr  &quot;class&quot; &quot;class&quot; &quot;class&quot; &quot;class&quot; ...
 ##  $ tags                              : chr  &quot;basic, study_1, study_7, under100k, under1m&quot; &quot;at2, basic, study_1, study_14, under100k&quot; &quot;at2, basic, mythbusting, mythbusting_1, study_1, study_14, study_15, study_7, under100k, under1m&quot; &quot;basic, mythbusting, mythbusting_1, study_1, study_15, under100k, under1m&quot; ...
-##  $ estimation.procedure              : Factor w/ 13 levels &quot;10 times 10-fold Crossvalidation&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ estimation.procedure              : Factor w/ 13 levels &quot;10-fold Crossvalidation&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ evaluation.measures               : chr  &quot;predictive_accuracy&quot; &quot;predictive_accuracy&quot; &quot;predictive_accuracy&quot; &quot;predictive_accuracy&quot; ...
 ##  $ MajorityClassSize                 : int  684 684 1669 37 245 813 57 -1 67 81 ...
 ##  $ MaxNominalAttDistinctValues       : int  10 9 3 3 2 -1 6 -1 22 8 ...
@@ -382,7 +382,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <p>A flow is the definition and implementation of a specific algorithm workflow or script, i.e., a flow is essentially the code / implementation of the algorithm.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flows =<span class="st"> </span><span class="kw">listOMLFlows</span>()
 <span class="kw">str</span>(flows)</code></pre></div>
-<pre><code>## 'data.frame':    2913 obs. of  6 variables:
+<pre><code>## 'data.frame':    2918 obs. of  6 variables:
 ##  $ flow.id         : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ full.name       : chr  &quot;openml.evaluation.EuclideanDistance(1.0)&quot; &quot;openml.evaluation.PolynomialKernel(1.0)&quot; &quot;openml.evaluation.RBFKernel(1.0)&quot; &quot;openml.evaluation.area_under_roc_curve(1.0)&quot; ...
 ##  $ name            : chr  &quot;openml.evaluation.EuclideanDistance&quot; &quot;openml.evaluation.PolynomialKernel&quot; &quot;openml.evaluation.RBFKernel&quot; &quot;openml.evaluation.area_under_roc_curve&quot; ...
@@ -406,12 +406,12 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">runs =<span class="st"> </span><span class="kw">listOMLRuns</span>(<span class="dt">task.id =</span> 59L)  <span class="co"># must be specified with the task, setup and/or implementation ID</span>
 <span class="kw">head</span>(runs)</code></pre></div>
 <pre><code>##   run.id task.id setup.id flow.id uploader error.message
-## 1    234      59        1      56        1          &lt;NA&gt;
-## 2   6214      59        1      56       17          &lt;NA&gt;
-## 3  15288      59        1      56       17          &lt;NA&gt;
-## 4   6212      59        2      57       17          &lt;NA&gt;
-## 5  15283      59        2      57       17          &lt;NA&gt;
-## 6   6504      59      118      57       17          &lt;NA&gt;</code></pre>
+## 1     81      59       12      67        1          &lt;NA&gt;
+## 2    161      59       13      70        1          &lt;NA&gt;
+## 3    234      59        1      56        1          &lt;NA&gt;
+## 4    447      59        6      61        1          &lt;NA&gt;
+## 5    473      59       18      77        1          &lt;NA&gt;
+## 6    491      59        7      62        1          &lt;NA&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run.results =<span class="st"> </span><span class="kw">listOMLRunEvaluations</span>(<span class="dt">task.id =</span> 59L)  <span class="co"># one of the IDs (here: task.id) must be supplied</span>
 <span class="kw">str</span>(run.results)</code></pre></div>
 <pre><code>## 'data.frame':    2403 obs. of  33 variables:
@@ -420,9 +420,9 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ##  $ setup.id                     : int  12 13 1 6 18 7 16 11 12 3 ...
 ##  $ flow.id                      : int  67 70 56 61 77 62 75 66 67 58 ...
 ##  $ area.under.roc.curve         : num  0.983 0.977 0.5 0.967 0.978 ...
-##  $ area.under.roc.curve.array   : Factor w/ 488 levels &quot;[0.5,0.5,0.5]&quot;,..: 281 190 1 137 196 85 267 134 281 407 ...
+##  $ area.under.roc.curve.array   : Factor w/ 488 levels &quot;[0.5,0.5,0.5]&quot;,..: 281 192 1 137 189 85 267 134 281 407 ...
 ##  $ average.cost                 : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ confusion.matrix             : Factor w/ 117 levels &quot;[[0,15,35],[0,15,35],[0,15,35]]&quot;,..: 77 91 117 59 76 100 72 75 77 84 ...
+##  $ confusion.matrix             : Factor w/ 117 levels &quot;[[0,15,35],[0,15,35],[0,15,35]]&quot;,..: 77 91 116 59 76 100 72 75 77 84 ...
 ##  $ f.measure                    : num  0.94 0.96 0.167 0.927 0.947 ...
 ##  $ f.measure.array              : Factor w/ 117 levels &quot;[0,0.315789,0.451613]&quot;,..: 91 107 6 82 96 69 109 101 91 102 ...
 ##  $ kappa                        : num  0.91 0.94 0 0.89 0.92 0.5 0.95 0.93 0.91 0.93 ...
@@ -432,11 +432,11 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ##  $ number.of.instances          : int  150 150 150 150 150 150 150 150 150 150 ...
 ##  $ number.of.instances.array    : Factor w/ 1 level &quot;[50,50,50]&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ precision                    : num  0.94 0.96 0.111 0.927 0.947 ...
-##  $ precision.array              : Factor w/ 113 levels &quot;[0,0.333333,0.333333]&quot;,..: 65 78 3 62 73 32 108 82 65 76 ...
+##  $ precision.array              : Factor w/ 113 levels &quot;[0,0.333333,0.333333]&quot;,..: 63 78 3 62 73 31 108 82 63 76 ...
 ##  $ predictive.accuracy          : num  0.94 0.96 0.333 0.927 0.947 ...
 ##  $ prior.entropy                : num  1.58 1.58 1.58 1.58 1.58 ...
 ##  $ recall                       : num  0.94 0.96 0.333 0.927 0.947 ...
-##  $ recall.array                 : Factor w/ 107 levels &quot;[0,0.3,0.7]&quot;,..: 82 97 41 63 83 107 86 84 82 89 ...
+##  $ recall.array                 : Factor w/ 107 levels &quot;[0,0.3,0.7]&quot;,..: 82 97 41 63 83 106 86 84 82 89 ...
 ##  $ relative.absolute.error      : num  0.0863 0.52 1 0.151 0.0881 ...
 ##  $ root.mean.prior.squared.error: num  0.471 0.471 0.471 0.471 0.471 ...
 ##  $ root.mean.squared.error      : num  0.16 0.288 0.471 0.211 0.178 ...
@@ -444,7 +444,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ##  $ total.cost                   : int  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ os.information               : Factor w/ 23 levels &quot;[Apple Inc., 1.6.0_65, x86_64, Mac OS X, 10.10.3]&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
 ##  $ scimark.benchmark            : num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ scimark.benchmark.array      : Factor w/ 204 levels &quot;[ 1.5, 1.5, 1.5, 1.5, 1.5 ]&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ scimark.benchmark.array      : Factor w/ 204 levels &quot;[1062.2659455227413, 1422.1069969560601, 811.9030863840538, 1690.1611873706404, 3825.802659788186]&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
 ##  $ usercpu.time.millis          : num  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ usercpu.time.millis.testing  : num  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ usercpu.time.millis.training : num  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
@@ -518,11 +518,11 @@ flow</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task.list =<span class="st"> </span><span class="kw">listOMLRuns</span>(<span class="dt">task.id =</span> 59L)
 task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre></div>
 <pre><code>##     run.id task.id setup.id flow.id uploader error.message
-## 281   6492      59      106      76       17          &lt;NA&gt;
-## 282   6493      59      107      76       17          &lt;NA&gt;
-## 283  14843      59      107      76       17          &lt;NA&gt;
-## 284   6494      59      108      76       17          &lt;NA&gt;
-## 285   6495      59      109      76       17          &lt;NA&gt;</code></pre>
+## 281   6512      59      126      72       17          &lt;NA&gt;
+## 282   6513      59      127      72       17          &lt;NA&gt;
+## 283   6514      59      128      72       17          &lt;NA&gt;
+## 284   6516      59      129      72       17          &lt;NA&gt;
+## 285   6517      59      130      72       17          &lt;NA&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run =<span class="st"> </span><span class="kw">getOMLRun</span>(<span class="dt">run.id =</span> 524027L)</code></pre></div>
 <p>Each <code>OMLRun</code> object is a list object, which stores additional information on the run. For instance, the flow of the previously downloaded run has some non-default settings for hyperparameters, which can be obtained by:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run$parameter.setting  <span class="co"># retrieve the list of parameter settings</span></code></pre></div>
@@ -543,10 +543,10 @@ task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre
 ## 1  61 iris http://www.openml.org/data/download/61/dataset_61_iris.arff
 ## 
 ## ** Files **
-## Dataframe mit 0 Spalten und 0 Zeilen
+## data frame with 0 columns and 0 rows
 ## 
 ## ** Evaluations **
-## Dataframe mit 0 Spalten und 0 Zeilen</code></pre>
+## data frame with 0 columns and 0 rows</code></pre>
 <p>Predictions made by an uploaded run are stored within the <code>predictions</code> element and can be retrieved via</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(run$predictions, <span class="dv">10</span>)</code></pre></div>
 <pre><code>##    repeat fold row_id      prediction           truth
@@ -603,15 +603,15 @@ run.mlr</code></pre></div>
 ## 
 ## $bmr
 ##        task.id    learner.id acc.test.mean timetrain.test.sum
-## 1 iris.task.59 classif.rpart          0.94              0.066
+## 1 iris.task.59 classif.rpart          0.94              0.938
 ##   timepredict.test.sum
-## 1                0.029
+## 1                0.053
 ## 
 ## $flow
 ## 
 ## Flow &quot;mlr.classif.rpart&quot; :: (Version = NA, Flow ID = NA)
-##  External Version         : R_3.2.2-v2.b2d69851
-##  Dependencies             : R_3.2.2, OpenML_1.0, mlr_2.8, rpart_4.1.10
+##  External Version         : R_3.3.1-v2.e6a066f2
+##  Dependencies             : R_3.3.1, OpenML_1.0, mlr_2.9, rpart_4.1.10
 ##  Number of Flow Parameters: 13
 ##  Number of Flow Components: 0
 ## 
