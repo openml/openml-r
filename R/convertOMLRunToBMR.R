@@ -28,7 +28,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   if (flow.version >= 2) {
     learners = readRDS(flow$binary.path)
   } else {
-    learners = makeLearner(gsub("\\(.*", "", run$flow.name))
+    learners = mlr::makeLearner(gsub("\\(.*", "", run$flow.name))
   }
   
   task.id = paste(task$input$data.set$desc$name, "task", task$task.id, sep = ".") #paste0("OpenML-Task-", run$task.id)
