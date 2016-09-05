@@ -1,6 +1,7 @@
 ^attic/
 ^doc/
 ^.gitignore$
+^.agignore$
 ^.travis.yml$
 ^.editorconfig$
 

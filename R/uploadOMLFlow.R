@@ -6,14 +6,14 @@
 #' @note
 #' This function will reset the cache of \code{\link{listOMLFlows}} on success.
 #'
-#' @param x [\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
+#' @param x [\code{\link{OMLFlow}}|\code{\link[mlr]{Learner}}]\cr
 #'   The flow that should be uploaded.
 #' @template arg_upload_tags
 #' @template arg_verbosity
 #' @param sourcefile [\code{character(1)}]\cr
-#'   The file path to the flow (not needed for \code{\link{Learner}}).
+#'   The file path to the flow (not needed for \code{\link[mlr]{Learner}}).
 #' @param binaryfile [\code{character(1)}]\cr
-#'   The file path to the flow (not needed for \code{\link{Learner}}).
+#'   The file path to the flow (not needed for \code{\link[mlr]{Learner}}).
 #' @return [\code{invisible(numeric)}].
 #'   The ID of the flow (\code{flow.id}). If there are more componets in the flow, than a vector of IDs.
 #' @family uploading functions

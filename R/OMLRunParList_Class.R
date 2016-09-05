@@ -31,7 +31,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   if (isTRUE(checkClass(mlr.lrn, "TuneWrapper"))) mlr.lrn = removeAllHyperPars(mlr.lrn)
   
   ps = getParamSet(mlr.lrn)
-  par.vals = getHyperPars(mlr.lrn) 
+  par.vals = mlr::getHyperPars(mlr.lrn) 
   par.names = names(par.vals)
   # get defaults for par.vals that have been set
   par.defaults = getDefaults(ps)

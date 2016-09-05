@@ -110,9 +110,9 @@ getAllNextLearners = function(lrn) {
 #   Learner from mlr package.
 # @return [Learner]
 removeAllHyperPars = function(lrn) {
-  all.pars = names(getHyperPars(lrn))
+  all.pars = names(mlr::getHyperPars(lrn))
   if (!is.null(all.pars))
-    lrn = removeHyperPars(lrn, ids = all.pars)
+    lrn = mlr::removeHyperPars(lrn, ids = all.pars)
 
   # proceed recursively
   if (!is.null(lrn$next.learner))
