@@ -11,6 +11,8 @@ r_github_packages:
     - jimhester/covr
     - mlr-org/farff
     - mlr-org/mlr
+    - berndbischl/BBmisc
+    - berndbischl/ParamHelpers
 
 cache:
   packages: true

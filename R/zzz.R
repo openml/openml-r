@@ -4,8 +4,8 @@
 #' @import ParamHelpers
 #' @import stringi
 #' @import XML
+#' @import jsonlite
 #' @import xml2
-#' @import mlr
 #' @import data.table
 #' @importFrom memoise memoise forget
 #' @importFrom digest digest

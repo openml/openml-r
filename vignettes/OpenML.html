@@ -7,11 +7,12 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="author" content="The OpenML R Team" />
 
-<meta name="date" content="2016-03-17" />
+<meta name="date" content="2016-09-05" />
 
 <title>OpenML</title>
 
@@ -19,27 +20,46 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
+div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; }
-code > span.dt { color: #902000; }
-code > span.dv { color: #40a070; }
-code > span.bn { color: #40a070; }
-code > span.fl { color: #40a070; }
-code > span.ch { color: #4070a0; }
-code > span.st { color: #4070a0; }
-code > span.co { color: #60a0b0; font-style: italic; }
-code > span.ot { color: #007020; }
-code > span.al { color: #ff0000; font-weight: bold; }
-code > span.fu { color: #06287e; }
-code > span.er { color: #ff0000; font-weight: bold; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
-<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%7D%0Apre%20%7B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -47,21 +67,18 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 
 
-<div class="fluid-row" id="header">
 
-
-<h1 class="title">OpenML</h1>
+<h1 class="title toc-ignore">OpenML</h1>
 <h4 class="author"><em>The OpenML R Team</em></h4>
-<h4 class="date"><em>2016-03-17</em></h4>
+<h4 class="date"><em>2016-09-05</em></h4>
 
-</div>
 
 
 <div id="intro" class="section level2">
 <h2>Introduction</h2>
 <p>The R package OpenML is an interface to make interactions with the <a href="http://openml.org/">OpenML</a> server as comfortable as possible. For example, the users can download and upload files, run their implementations on specific tasks and get predictions in the correct form directly via R commands. In this tutorial, we will show the most important functions of this package and give examples on standard workflows.</p>
 <p>For general information on what OpenML is, please have a look at the <a href="https://github.com/openml/OpenML/blob/master/README.md">README file</a> or visit the <a href="http://openml.org/">official OpenML website</a>.</p>
-<p>Before making practical use of the package, in most cases it is desirable to <a href="#config">setup a configuration file</a> to simplify further steps. Afterwards, there are different basic stages when using this package or OpenML, respectively:</p>
+<p>After installation and before making practical use of the package, in most cases it is desirable to <a href="#config">setup a configuration file</a> to simplify further steps. Afterwards, there are different basic stages when using this package or OpenML, respectively:</p>
 <ul>
 <li><a href="#listing">Listing</a>
 <ul>
@@ -86,6 +103,14 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <li>function <code>uploadOMLRun</code></li>
 </ul></li>
 </ul>
+<div id="installation-instructions" class="section level3">
+<h3>Installation instructions</h3>
+<p>At the moment there is no <a href="https://cran.r-project.org/">CRAN</a> release yet. To install the current development version use the <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a> package and run</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;openml/openml-r&quot;</span>)</code></pre></div>
+<p>in an R session. Using the OpenML package also requires a reader for the <a href="http://www.cs.waikato.ac.nz/ml/weka/arff.html">ARFF</a> file format. By default <a href="https://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a> is used. However, the <a href="https://github.com/mlr-org/farff">farff</a> package can be used as an alternative. You can install the packages with the following calls.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;RWeka&quot;</span>)
+devtools::<span class="kw">install_github</span>(<span class="st">&quot;mlr-org/farff&quot;</span>)</code></pre></div>
+</div>
 <div id="private-key-notification" class="section level3">
 <h3>Private key notification</h3>
 <p>All examples in this tutorial are given with a <span style="color:red"><strong>READ-ONLY API key</strong></span>.</p>
@@ -95,26 +120,27 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <div id="basicexample" class="section level3">
 <h3>Basic example</h3>
 <p>In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;OpenML&quot;</span>)
-## temporarily set API key to read only key (replace it with your own key) 
-<span class="kw">setOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;OpenML&quot;</span>)
+## temporarily set API key to read only key (replace it with your own key)
+<span class="kw">setOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
 <pre><code>## OpenML configuration:
-##   server           : http://www.openml.org/api/v1
-##   cachedir         : /var/folders/ds/h70dd7gj3z70m3tyzstwyf6c0000gn/T//RtmphmprD1
+##   server           : http://api_new.openml.org/v1
+##   cachedir         : /tmp/Rtmp6Ygsyz/cache
 ##   verbosity        : 1
-##   arff.reader      : farff
-##   confirm.upload   : FALSE
+##   arff.reader      : RWeka
+##   confirm.upload   : TRUE
 ##   apikey           : ***************************47f1f</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download a task (whose ID is 1L)</span>
-task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 1L) 
-task</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download a task (whose ID is 1L)</span>
+task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 1L)
+task</code></pre></div>
 <pre><code>## 
 ## OpenML Task 1 :: (Data ID = 1)
 ##   Task Type            : Supervised Classification
 ##   Data Set             : anneal :: (Version = 2, OpenML ID = 1)
 ##   Target Feature(s)    : class
 ##   Tags                 : basic, study_1, study_7, under100k, under1m
-##   Estimation Procedure : Stratified crossvalidation (1 x 10 folds)</code></pre>
+##   Estimation Procedure : Stratified crossvalidation (1 x 10 folds)
+##   Evaluation Measure(s): predictive_accuracy</code></pre>
 <p>The task contains information on the following:</p>
 <ul>
 <li>task type: defines the type of the task (regression, classification, clustering, etc.)</li>
@@ -124,7 +150,7 @@ task</code></pre>
 <li>estimation procedure: which estimation procedure has been used when computing the performance</li>
 </ul>
 <p>In the next line, <code>randomForest</code> is used as a classifier and run with the help of the <a href="https://github.com/mlr-org/mlr"><code>mlr package</code></a>. Note that one needs to run the algorithm locally and that <code>mlr</code> will automatically download the package that is needed to run the specified classifier.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the classifier (usually called &quot;flow&quot; within OpenML)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the classifier (usually called &quot;flow&quot; within OpenML)</span>
 <span class="kw">library</span>(mlr)
 lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.randomForest&quot;</span>)
 
@@ -134,7 +160,7 @@ flow.id =<span class="st"> </span><span class="kw">uploadOMLFlow</span>(lrn)
 
 <span class="co"># the last step is to perform a run and upload the results</span>
 run.mlr =<span class="st"> </span><span class="kw">runTaskMlr</span>(task, lrn)
-run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</code></pre>
+run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</code></pre></div>
 <p>Following this very brief example, we will explain the single steps of the OpenML package in more detail in the next sections.</p>
 </div>
 </div>
@@ -189,24 +215,24 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div id="createconfig" class="section level3">
 <h3>Creating the configuration file in R</h3>
 <p>To set up your OpenML configuration, you can either use <code>setOMLConfig</code> or <code>saveOMLConfig</code>. The difference between those two commands is that <code>setOMLConfig</code> sets your configuration temporarily for the current R session, whereas <code>saveOMLConfig</code> saves the configuration permanently. In order to create a permanent configuration file using default values and at the same time setting your personal API key, run</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(OpenML)
-<span class="kw">saveOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(OpenML)
+<span class="kw">saveOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
 <p>where <code>&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</code> should be replaced with <a href="#personalapikey"><em>your personal API key</em></a>.</p>
 </div>
 <div id="manually-creating-the-configuration-file" class="section level3">
 <h3>Manually creating the configuration file</h3>
 <p>It is also possible to manually create a file <code>~/.openml/config</code> in your home directory – one can use the R command <code>path.expand(&quot;~/.openml/config&quot;)</code> to get the full path to the configuration file on the operating system. The <code>config</code> file consists of <code>key = value</code> pairs. An exemplary minimal <code>config</code> file might look as follows:</p>
-<pre class="sourceCode r"><code class="sourceCode r">apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f</code></pre></div>
 <p>Note that the values are not quoted.</p>
 <p>If one manually modifies the <code>config</code> file, one needs to reload the modified <code>config</code> file to the current R session using <code>loadOMLConfig()</code>. You can query the current configuration using</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(OpenML)
-<span class="kw">getOMLConfig</span>()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(OpenML)
+<span class="kw">getOMLConfig</span>()</code></pre></div>
 <pre><code>## OpenML configuration:
-##   server           : http://www.openml.org/api/v1
-##   cachedir         : /var/folders/ds/h70dd7gj3z70m3tyzstwyf6c0000gn/T//RtmphmprD1
+##   server           : http://api_new.openml.org/v1
+##   cachedir         : /tmp/Rtmp6Ygsyz/cache
 ##   verbosity        : 1
-##   arff.reader      : farff
-##   confirm.upload   : FALSE
+##   arff.reader      : RWeka
+##   confirm.upload   : TRUE
 ##   apikey           : ***************************47f1f</code></pre>
 <p>As you can see, the configuration file lists the five items <code>server</code>, <code>cachedir</code>, <code>verbosity</code>, <code>arff.reader</code> and <code>apikey</code> that were listed in the <a href="#permanentconfig">beginning of this paragraph</a>.</p>
 <p>Once the config file is set up, you are <strong>ready to go</strong>!</p>
@@ -228,12 +254,12 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <p>For each of these objects, we have a function to query the information, beginning with <code>listOML</code>. All of these functions return a <code>data.frame</code>, even in case the result consists of a single column or has zero observations (i.e., rows).</p>
 <p>One should be aware of the fact that the <code>listOML*</code> functions only list information on the corresponding objects – they do not download the respective objects. Information on actually downloading specific objects is covered in the <a href="#download">next section</a>.</p>
 <p>First, load the package:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;OpenML&quot;</span>)
-<span class="kw">setOMLConfig</span>(<span class="dt">verbosity =</span> <span class="dv">0</span>)  <span class="co"># switch off status output</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;OpenML&quot;</span>)
+<span class="kw">setOMLConfig</span>(<span class="dt">verbosity =</span> <span class="dv">0</span>)  <span class="co"># switch off status output</span></code></pre></div>
 <div id="listdata" class="section level3">
 <h3>List data sets</h3>
 <p>To browse the OpenML data base for appropriate data sets, you can use <code>listOMLDataSets()</code> in order to get basic data characteristics (number of features, instances, classes, missing values, etc.) for each data set. By default, <code>listOMLDataSets()</code> returns only data sets that have an active status on OpenML:</p>
-<pre class="sourceCode r"><code class="sourceCode r">datasets =<span class="st"> </span><span class="kw">listOMLDataSets</span>()  <span class="co"># returns active data sets</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">datasets =<span class="st"> </span><span class="kw">listOMLDataSets</span>()  <span class="co"># returns active data sets</span></code></pre></div>
 <p>The resulting <code>data.frame</code> contains the following information for each of the listed data sets:</p>
 <ul>
 <li>the data set ID <code>did</code></li>
@@ -242,61 +268,50 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>the size of the majority / biggest class (<code>MajorityClassSize</code>)</li>
 <li>etc.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(datasets)</code></pre>
-<pre><code>## 'data.frame':    2421 obs. of  14 variables:
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(datasets)</code></pre></div>
+<pre><code>## 'data.frame':    19479 obs. of  14 variables:
 ##  $ did                               : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ status                            : Factor w/ 1 level &quot;active&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ format                            : chr  &quot;ARFF&quot; &quot;ARFF&quot; &quot;ARFF&quot; &quot;ARFF&quot; ...
 ##  $ name                              : chr  &quot;anneal&quot; &quot;anneal&quot; &quot;kr-vs-kp&quot; &quot;labor&quot; ...
-##  $ MajorityClassSize                 : int  684 684 1669 37 245 813 57 NA 67 81 ...
+##  $ MajorityClassSize                 : int  684 684 1669 37 245 813 57 -1 67 81 ...
 ##  $ MaxNominalAttDistinctValues       : int  10 9 3 3 2 -1 6 -1 22 8 ...
-##  $ MinorityClassSize                 : int  0 0 1527 20 0 734 1 NA 0 2 ...
-##  $ NumBinaryAtts                     : int  14 7 34 3 73 0 61 0 4 9 ...
-##  $ NumberOfClasses                   : int  6 6 2 2 16 26 24 NA 7 4 ...
+##  $ MinorityClassSize                 : int  0 0 1527 20 0 734 1 -1 0 2 ...
+##  $ NumberOfClasses                   : int  6 6 2 2 16 26 24 -1 7 4 ...
 ##  $ NumberOfFeatures                  : int  39 39 37 17 280 17 70 7 26 19 ...
 ##  $ NumberOfInstances                 : int  898 898 3196 57 452 20000 226 345 205 148 ...
 ##  $ NumberOfInstancesWithMissingValues: int  0 898 0 56 384 0 222 0 46 0 ...
 ##  $ NumberOfMissingValues             : int  0 22175 0 326 408 0 317 0 59 0 ...
 ##  $ NumberOfNumericFeatures           : int  6 6 0 8 206 16 0 6 15 3 ...
-##  $ NumberOfSymbolicFeatures          : int  32 32 36 8 73 0 69 1 10 15 ...</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(datasets[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre>
-<pre><code>##   did status       name MajorityClassSize MaxNominalAttDistinctValues
-## 1   1 active     anneal               684                          10
-## 2   2 active     anneal               684                           9
-## 3   3 active   kr-vs-kp              1669                           3
-## 4   4 active      labor                37                           3
-## 5   5 active arrhythmia               245                           2
-## 6   6 active     letter               813                          -1</code></pre>
+##  $ NumberOfSymbolicFeatures          : int  33 33 37 9 74 1 70 1 11 16 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(datasets[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
+<pre><code>##   did status format       name MajorityClassSize
+## 1   1 active   ARFF     anneal               684
+## 2   2 active   ARFF     anneal               684
+## 3   3 active   ARFF   kr-vs-kp              1669
+## 4   4 active   ARFF      labor                37
+## 5   5 active   ARFF arrhythmia               245
+## 6   6 active   ARFF     letter               813</code></pre>
 <p>If one needs data sets that are either <code>&quot;in_preparation&quot;</code> or <code>&quot;deactivated&quot;</code>, one can change the <code>status</code> parameter accordingly:</p>
-<pre class="sourceCode r"><code class="sourceCode r">inactive.data =<span class="st"> </span><span class="kw">listOMLDataSets</span>(<span class="dt">status =</span> <span class="st">&quot;deactivated&quot;</span>)
-<span class="kw">head</span>(inactive.data[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre>
-<pre><code>##   did      status                       name MajorityClassSize
-## 1  17 deactivated                    bridges                44
-## 2  19 deactivated                    bridges                44
-## 3  33 deactivated             cylinder-bands               312
-## 4 145 deactivated BNG(vowel,nominal,1000000)             91473
-## 5 173 deactivated                solar-flare               316
-## 6 174 deactivated                solar-flare              1061
-##   MaxNominalAttDistinctValues
-## 1                         108
-## 2                         108
-## 3                         429
-## 4                          15
-## 5                           6
-## 6                           8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inactive.data =<span class="st"> </span><span class="kw">listOMLDataSets</span>(<span class="dt">status =</span> <span class="st">&quot;deactivated&quot;</span>)
+<span class="kw">head</span>(inactive.data[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
+<pre><code>## [1] did               status            format            name             
+## [5] MajorityClassSize
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 <p>To find a specific data set, you can now query the resulting <code>datasets</code> object. Suppose we want to find the <code>iris</code> data set.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(datasets, name ==<span class="st"> &quot;iris&quot;</span>)</code></pre>
-<pre><code>##     did status name MajorityClassSize MaxNominalAttDistinctValues
-## 55   61 active iris                50                          -1
-## 821 969 active iris               100                          -1
-##     MinorityClassSize NumBinaryAtts NumberOfClasses NumberOfFeatures
-## 55                 50             0               3                5
-## 821                50             0               2                5
-##     NumberOfInstances NumberOfInstancesWithMissingValues
-## 55                150                                  0
-## 821               150                                  0
-##     NumberOfMissingValues NumberOfNumericFeatures NumberOfSymbolicFeatures
-## 55                      0                       4                        0
-## 821                     0                       4                        0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(datasets, name ==<span class="st"> &quot;iris&quot;</span>)</code></pre></div>
+<pre><code>##     did status format name MajorityClassSize MaxNominalAttDistinctValues
+## 55   61 active   ARFF iris                50                          -1
+## 820 969 active   ARFF iris               100                          -1
+##     MinorityClassSize NumberOfClasses NumberOfFeatures NumberOfInstances
+## 55                 50               3                5               150
+## 820                50               2                5               150
+##     NumberOfInstancesWithMissingValues NumberOfMissingValues
+## 55                                   0                     0
+## 820                                  0                     0
+##     NumberOfNumericFeatures NumberOfSymbolicFeatures
+## 55                        4                        1
+## 820                       4                        1</code></pre>
 <p>As you can see, there are two data sets called <code>iris</code>. We want to use the <em>original</em> data set with three classes, which is stored under the data set ID (<code>did</code>) 61. You can also have a closer look at the data set on the corresponding OpenML web page (<a href="http://openml.org/d/61" class="uri">http://openml.org/d/61</a>).</p>
 </div>
 <div id="list-tasks" class="section level3">
@@ -311,7 +326,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>one or more (performance) evaluation measures, e.g., <code>&quot;predictive accuracy&quot;</code> for a classification task</li>
 </ul>
 <p>Listing the tasks can be done via</p>
-<pre class="sourceCode r"><code class="sourceCode r">tasks =<span class="st"> </span><span class="kw">listOMLTasks</span>()</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tasks =<span class="st"> </span><span class="kw">listOMLTasks</span>()</code></pre></div>
 <p>The resulting <code>data.frame</code> contains for each of the listed tasks information on:</p>
 <ul>
 <li>the task ID <code>task.id</code></li>
@@ -322,59 +337,59 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>the <code>estimation.procedure</code> (aka resampling strategy)</li>
 <li>the <code>evaluation.measures</code> used for measuring the performance of the <a href="#flows">learner / flow</a> on the task</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tasks)</code></pre>
-<pre><code>## 'data.frame':    8415 obs. of  20 variables:
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tasks)</code></pre></div>
+<pre><code>## 'data.frame':    50338 obs. of  20 variables:
 ##  $ task.id                           : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ task.type                         : chr  &quot;Supervised Classification&quot; &quot;Supervised Classification&quot; &quot;Supervised Classification&quot; &quot;Supervised Classification&quot; ...
 ##  $ did                               : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ status                            : Factor w/ 1 level &quot;active&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ format                            : chr  &quot;ARFF&quot; &quot;ARFF&quot; &quot;ARFF&quot; &quot;ARFF&quot; ...
 ##  $ name                              : chr  &quot;anneal&quot; &quot;anneal&quot; &quot;kr-vs-kp&quot; &quot;labor&quot; ...
 ##  $ target.feature                    : chr  &quot;class&quot; &quot;class&quot; &quot;class&quot; &quot;class&quot; ...
-##  $ tags                              : chr  &quot;basic, study_1, study_7, under100k, under1m&quot; &quot;basic, study_1, under100k&quot; &quot;basic, mythbusting, mythbusting_1, study_1, study_7, under100k, under1m&quot; &quot;basic, mythbusting, mythbusting_1, study_1, under100k, under1m&quot; ...
-##  $ estimation.procedure              : Factor w/ 13 levels &quot;10 times 10-fold Crossvalidation&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ tags                              : chr  &quot;basic, study_1, study_7, under100k, under1m&quot; &quot;at2, basic, study_1, study_14, under100k&quot; &quot;at2, basic, mythbusting, mythbusting_1, study_1, study_14, study_15, study_7, under100k, under1m&quot; &quot;basic, mythbusting, mythbusting_1, study_1, study_15, under100k, under1m&quot; ...
+##  $ estimation.procedure              : Factor w/ 13 levels &quot;10-fold Crossvalidation&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ evaluation.measures               : chr  &quot;predictive_accuracy&quot; &quot;predictive_accuracy&quot; &quot;predictive_accuracy&quot; &quot;predictive_accuracy&quot; ...
-##  $ MajorityClassSize                 : int  684 684 1669 37 245 813 57 NA 67 81 ...
+##  $ MajorityClassSize                 : int  684 684 1669 37 245 813 57 -1 67 81 ...
 ##  $ MaxNominalAttDistinctValues       : int  10 9 3 3 2 -1 6 -1 22 8 ...
-##  $ MinorityClassSize                 : int  0 0 1527 20 0 734 1 NA 0 2 ...
-##  $ NumBinaryAtts                     : int  14 7 34 3 73 0 61 0 4 9 ...
-##  $ NumberOfClasses                   : int  6 6 2 2 16 26 24 NA 7 4 ...
+##  $ MinorityClassSize                 : int  0 0 1527 20 0 734 1 -1 0 2 ...
+##  $ NumberOfClasses                   : int  6 6 2 2 16 26 24 -1 7 4 ...
 ##  $ NumberOfFeatures                  : int  39 39 37 17 280 17 70 7 26 19 ...
 ##  $ NumberOfInstances                 : int  898 898 3196 57 452 20000 226 345 205 148 ...
 ##  $ NumberOfInstancesWithMissingValues: int  0 898 0 56 384 0 222 0 46 0 ...
 ##  $ NumberOfMissingValues             : int  0 22175 0 326 408 0 317 0 59 0 ...
 ##  $ NumberOfNumericFeatures           : int  6 6 0 8 206 16 0 6 15 3 ...
-##  $ NumberOfSymbolicFeatures          : int  32 32 36 8 73 0 69 1 10 15 ...</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tasks[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre>
-<pre><code>##   task.id                 task.type did status       name
-## 1       1 Supervised Classification   1 active     anneal
-## 2       2 Supervised Classification   2 active     anneal
-## 3       3 Supervised Classification   3 active   kr-vs-kp
-## 4       4 Supervised Classification   4 active      labor
-## 5       5 Supervised Classification   5 active arrhythmia
-## 6       6 Supervised Classification   6 active     letter</code></pre>
+##  $ NumberOfSymbolicFeatures          : int  33 33 37 9 74 1 70 1 11 16 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tasks[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
+<pre><code>##   task.id                 task.type did status format
+## 1       1 Supervised Classification   1 active   ARFF
+## 2       2 Supervised Classification   2 active   ARFF
+## 3       3 Supervised Classification   3 active   ARFF
+## 4       4 Supervised Classification   4 active   ARFF
+## 5       5 Supervised Classification   5 active   ARFF
+## 6       6 Supervised Classification   6 active   ARFF</code></pre>
 <p>For some data sets, there may be more than one task available on the OpenML server. For example, one can look for <code>&quot;Supervised Classification&quot;</code> tasks that are available for a specific data via</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">subset</span>(tasks, task.type ==<span class="st"> &quot;Supervised Classification&quot;</span> &amp;<span class="st"> </span>did ==<span class="st"> </span>61L)[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre>
-<pre><code>##      task.id                 task.type did status name
-## 53        59 Supervised Classification  61 active iris
-## 271      289 Supervised Classification  61 active iris
-## 442     1823 Supervised Classification  61 active iris
-## 551     1939 Supervised Classification  61 active iris
-## 598     1992 Supervised Classification  61 active iris
-## 4445    7306 Supervised Classification  61 active iris</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">subset</span>(tasks, task.type ==<span class="st"> &quot;Supervised Classification&quot;</span> &amp;<span class="st"> </span>did ==<span class="st"> </span>61L)[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
+<pre><code>##      task.id                 task.type did status format
+## 53        59 Supervised Classification  61 active   ARFF
+## 271      289 Supervised Classification  61 active   ARFF
+## 442     1823 Supervised Classification  61 active   ARFF
+## 551     1939 Supervised Classification  61 active   ARFF
+## 598     1992 Supervised Classification  61 active   ARFF
+## 4437    7306 Supervised Classification  61 active   ARFF</code></pre>
 </div>
 <div id="flows" class="section level3">
 <h3>List flows</h3>
 <p>A flow is the definition and implementation of a specific algorithm workflow or script, i.e., a flow is essentially the code / implementation of the algorithm.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flows =<span class="st"> </span><span class="kw">listOMLFlows</span>()
-<span class="kw">str</span>(flows)</code></pre>
-<pre><code>## 'data.frame':    2371 obs. of  6 variables:
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flows =<span class="st"> </span><span class="kw">listOMLFlows</span>()
+<span class="kw">str</span>(flows)</code></pre></div>
+<pre><code>## 'data.frame':    2918 obs. of  6 variables:
 ##  $ flow.id         : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ full.name       : chr  &quot;openml.evaluation.EuclideanDistance(1.0)&quot; &quot;openml.evaluation.PolynomialKernel(1.0)&quot; &quot;openml.evaluation.RBFKernel(1.0)&quot; &quot;openml.evaluation.area_under_roc_curve(1.0)&quot; ...
 ##  $ name            : chr  &quot;openml.evaluation.EuclideanDistance&quot; &quot;openml.evaluation.PolynomialKernel&quot; &quot;openml.evaluation.RBFKernel&quot; &quot;openml.evaluation.area_under_roc_curve&quot; ...
 ##  $ version         : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ external.version: chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
 ##  $ uploader        : int  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">flows[<span class="dv">56</span>:<span class="dv">63</span>, <span class="dv">1</span>:<span class="dv">4</span>]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flows[<span class="dv">56</span>:<span class="dv">63</span>, <span class="dv">1</span>:<span class="dv">4</span>]</code></pre></div>
 <pre><code>##    flow.id             full.name               name version
 ## 56      56         weka.ZeroR(1)         weka.ZeroR       1
 ## 57      57          weka.OneR(1)          weka.OneR       1
@@ -388,28 +403,28 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div id="list-runs-and-run-results" class="section level3">
 <h3>List runs and run results</h3>
 <p>A run is an experiment, which is executed on a given combination of task, flow and setup (i.e., the explicit parameter configuration of a flow). The corresponding results are stored as a run result. Both objects, i.e., runs and run results, can be listed via <code>listOMLRuns</code> or <code>listOMLRunEvaluations</code>, respectively. As each of those objects is defined with a task, setup and flow, you can extract runs and run results with specific combinations of <code>task.id</code>, <code>setup.id</code> and/or <code>flow.id</code>. For instance, listing all runs for <a href="http://www.openml.org/t/59">task 59</a> (supervised classification on iris) can be done with</p>
-<pre class="sourceCode r"><code class="sourceCode r">runs =<span class="st"> </span><span class="kw">listOMLRuns</span>(<span class="dt">task.id =</span> 59L)  <span class="co"># must be specified with the task, setup and/or implementation ID</span>
-<span class="kw">head</span>(runs)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">runs =<span class="st"> </span><span class="kw">listOMLRuns</span>(<span class="dt">task.id =</span> 59L)  <span class="co"># must be specified with the task, setup and/or implementation ID</span>
+<span class="kw">head</span>(runs)</code></pre></div>
 <pre><code>##   run.id task.id setup.id flow.id uploader error.message
-## 1 478830      59     2417    1817       64            NA
-## 2 479006      59     2417    1817       64            NA
-## 3 479036      59     2417    1817       64            NA
-## 4 479464      59     2417    1817       64            NA
-## 5 479642      59     2417    1817       64            NA
-## 6 479643      59     2417    1817       64            NA</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">run.results =<span class="st"> </span><span class="kw">listOMLRunEvaluations</span>(<span class="dt">task.id =</span> 59L)  <span class="co"># one of the IDs (here: task.id) must be supplied</span>
-<span class="kw">str</span>(run.results)</code></pre>
-<pre><code>## 'data.frame':    2268 obs. of  33 variables:
+## 1     81      59       12      67        1          &lt;NA&gt;
+## 2    161      59       13      70        1          &lt;NA&gt;
+## 3    234      59        1      56        1          &lt;NA&gt;
+## 4    447      59        6      61        1          &lt;NA&gt;
+## 5    473      59       18      77        1          &lt;NA&gt;
+## 6    491      59        7      62        1          &lt;NA&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run.results =<span class="st"> </span><span class="kw">listOMLRunEvaluations</span>(<span class="dt">task.id =</span> 59L)  <span class="co"># one of the IDs (here: task.id) must be supplied</span>
+<span class="kw">str</span>(run.results)</code></pre></div>
+<pre><code>## 'data.frame':    2403 obs. of  33 variables:
 ##  $ run.id                       : int  81 161 234 447 473 491 550 6088 6157 6158 ...
 ##  $ task.id                      : int  59 59 59 59 59 59 59 59 59 59 ...
 ##  $ setup.id                     : int  12 13 1 6 18 7 16 11 12 3 ...
 ##  $ flow.id                      : int  67 70 56 61 77 62 75 66 67 58 ...
 ##  $ area.under.roc.curve         : num  0.983 0.977 0.5 0.967 0.978 ...
-##  $ area.under.roc.curve.array   : Factor w/ 444 levels &quot;[0.5,0.5,0.5]&quot;,..: 257 176 1 126 181 75 245 123 257 367 ...
+##  $ area.under.roc.curve.array   : Factor w/ 488 levels &quot;[0.5,0.5,0.5]&quot;,..: 281 192 1 137 189 85 267 134 281 407 ...
 ##  $ average.cost                 : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ confusion.matrix             : Factor w/ 112 levels &quot;[[0,15,35],[0,15,35],[0,15,35]]&quot;,..: 74 87 112 57 73 96 69 72 74 81 ...
+##  $ confusion.matrix             : Factor w/ 117 levels &quot;[[0,15,35],[0,15,35],[0,15,35]]&quot;,..: 77 91 116 59 76 100 72 75 77 84 ...
 ##  $ f.measure                    : num  0.94 0.96 0.167 0.927 0.947 ...
-##  $ f.measure.array              : Factor w/ 112 levels &quot;[0,0.315789,0.451613]&quot;,..: 86 102 6 78 91 66 104 96 86 97 ...
+##  $ f.measure.array              : Factor w/ 117 levels &quot;[0,0.315789,0.451613]&quot;,..: 91 107 6 82 96 69 109 101 91 102 ...
 ##  $ kappa                        : num  0.91 0.94 0 0.89 0.92 0.5 0.95 0.93 0.91 0.93 ...
 ##  $ kb.relative.information.score: num  1.39e+02 9.09e+01 -6.80e-05 1.31e+02 1.38e+02 ...
 ##  $ mean.absolute.error          : num  0.0384 0.2311 0.4444 0.0671 0.0392 ...
@@ -417,19 +432,19 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ##  $ number.of.instances          : int  150 150 150 150 150 150 150 150 150 150 ...
 ##  $ number.of.instances.array    : Factor w/ 1 level &quot;[50,50,50]&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ precision                    : num  0.94 0.96 0.111 0.927 0.947 ...
-##  $ precision.array              : Factor w/ 108 levels &quot;[0,0.333333,0.333333]&quot;,..: 60 73 3 57 68 30 103 77 60 71 ...
+##  $ precision.array              : Factor w/ 113 levels &quot;[0,0.333333,0.333333]&quot;,..: 63 78 3 62 73 31 108 82 63 76 ...
 ##  $ predictive.accuracy          : num  0.94 0.96 0.333 0.927 0.947 ...
 ##  $ prior.entropy                : num  1.58 1.58 1.58 1.58 1.58 ...
 ##  $ recall                       : num  0.94 0.96 0.333 0.927 0.947 ...
-##  $ recall.array                 : Factor w/ 103 levels &quot;[0,0.3,0.7]&quot;,..: 79 93 39 61 80 103 83 81 79 86 ...
+##  $ recall.array                 : Factor w/ 107 levels &quot;[0,0.3,0.7]&quot;,..: 82 97 41 63 83 106 86 84 82 89 ...
 ##  $ relative.absolute.error      : num  0.0863 0.52 1 0.151 0.0881 ...
 ##  $ root.mean.prior.squared.error: num  0.471 0.471 0.471 0.471 0.471 ...
 ##  $ root.mean.squared.error      : num  0.16 0.288 0.471 0.211 0.178 ...
 ##  $ root.relative.squared.error  : num  0.339 0.611 1 0.447 0.377 ...
 ##  $ total.cost                   : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ os.information               : Factor w/ 12 levels &quot;[Oracle Corporation, 1.7.0_45, x86_64, Mac OS X, 10.11]&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ os.information               : Factor w/ 23 levels &quot;[Apple Inc., 1.6.0_65, x86_64, Mac OS X, 10.10.3]&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
 ##  $ scimark.benchmark            : num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ scimark.benchmark.array      : Factor w/ 19 levels &quot;[1062.2659455227413, 1422.1069969560601, 811.9030863840538, 1690.1611873706404, 3825.802659788186]&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ scimark.benchmark.array      : Factor w/ 204 levels &quot;[1062.2659455227413, 1422.1069969560601, 811.9030863840538, 1690.1611873706404, 3825.802659788186]&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
 ##  $ usercpu.time.millis          : num  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ usercpu.time.millis.testing  : num  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ usercpu.time.millis.training : num  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
@@ -437,10 +452,10 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div id="list-evaluation-measures-and-task-types" class="section level3">
 <h3>List evaluation measures and task types</h3>
 <p>Analogously to the previous listings, one can list further objects simply by calling the respective functions.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">listOMLDataSetQualities</span>()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">listOMLDataSetQualities</span>()
 <span class="kw">listOMLEstimationProcedures</span>()
 <span class="kw">listOMLEvaluationMeasures</span>()
-<span class="kw">listOMLTaskTypes</span>()</code></pre>
+<span class="kw">listOMLTaskTypes</span>()</code></pre></div>
 </div>
 </div>
 <div id="download" class="section level2">
@@ -449,33 +464,34 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div id="download-an-openml-data-set" class="section level3">
 <h3>Download an OpenML data set</h3>
 <p>To directly download a data set, e.g., when you want to run a few preliminary experiments, one can use the function <code>getOMLDataSet</code>. The function accepts a data set ID as input and returns the corresponding <code>OMLDataSet</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris.data =<span class="st"> </span><span class="kw">getOMLDataSet</span>(<span class="dt">did =</span> 61L)  <span class="co"># the iris data set has the data set ID 61</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.data =<span class="st"> </span><span class="kw">getOMLDataSet</span>(<span class="dt">did =</span> 61L)  <span class="co"># the iris data set has the data set ID 61</span></code></pre></div>
 </div>
 <div id="download-an-openml-task" class="section level3">
 <h3>Download an OpenML task</h3>
 <p>The following call returns an OpenML task object for a supervised classification task on the iris data:</p>
-<pre class="sourceCode r"><code class="sourceCode r">task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 59L)
-task</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 59L)
+task</code></pre></div>
 <pre><code>## 
 ## OpenML Task 59 :: (Data ID = 61)
 ##   Task Type            : Supervised Classification
 ##   Data Set             : iris :: (Version = 1, OpenML ID = 61)
 ##   Target Feature(s)    : class
 ##   Tags                 : basic, study_1, study_7, under100k, under1m
-##   Estimation Procedure : Stratified crossvalidation (1 x 10 folds)</code></pre>
+##   Estimation Procedure : Stratified crossvalidation (1 x 10 folds)
+##   Evaluation Measure(s): predictive_accuracy</code></pre>
 <p>The corresponding <code>&quot;OMLDataSet&quot;</code> object can be accessed by</p>
-<pre class="sourceCode r"><code class="sourceCode r">task$input$data.set</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task$input$data.set</code></pre></div>
 <pre><code>## 
 ## Data Set &quot;iris&quot; :: (Version = 1, OpenML ID = 61)
 ##   Collection Date         : 1936
 ##   Creator(s)              : R.A. Fisher
 ##   Default Target Attribute: class</code></pre>
 <p>and the class of the task can be shown with the next line</p>
-<pre class="sourceCode r"><code class="sourceCode r">task$task.type</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task$task.type</code></pre></div>
 <pre><code>## [1] &quot;Supervised Classification&quot;</code></pre>
 <p>Also, it is possible to extract the data set itself via</p>
-<pre class="sourceCode r"><code class="sourceCode r">iris.data =<span class="st"> </span>task$input$data.set$data
-<span class="kw">head</span>(iris.data)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris.data =<span class="st"> </span>task$input$data.set$data
+<span class="kw">head</span>(iris.data)</code></pre></div>
 <pre><code>##   sepallength sepalwidth petallength petalwidth       class
 ## 0         5.1        3.5         1.4        0.2 Iris-setosa
 ## 1         4.9        3.0         1.4        0.2 Iris-setosa
@@ -487,8 +503,8 @@ task</code></pre>
 <div id="download-an-openml-flow" class="section level3">
 <h3>Download an OpenML flow</h3>
 <p>Aside from tasks and data sets, one can also download flows – by calling <code>getOMLFlow</code> with the specific <code>flow.id</code></p>
-<pre class="sourceCode r"><code class="sourceCode r">flow =<span class="st"> </span><span class="kw">getOMLFlow</span>(<span class="dt">flow.id =</span> 2700L)
-flow</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flow =<span class="st"> </span><span class="kw">getOMLFlow</span>(<span class="dt">flow.id =</span> 2700L)
+flow</code></pre></div>
 <pre><code>## 
 ## Flow &quot;classif.randomForest&quot; :: (Version = 47, Flow ID = 2700)
 ##  External Version         : R_3.1.2-734b029d
@@ -499,70 +515,40 @@ flow</code></pre>
 <div id="download-an-openml-run" class="section level3">
 <h3>Download an OpenML run</h3>
 <p>To download the results of one run, including all server and user computed metrics, you have to define the corresponding run ID. For all runs that are actually related to the task, the corresponding ID can be extracted from the <code>runs</code> object, which was created in the previous section. Here we use a run of task 59, which has the <code>run.id</code> 525534. Single OpenML runs can be downloaded with the function <code>getOMLRun</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r">task.list =<span class="st"> </span><span class="kw">listOMLRuns</span>(<span class="dt">task.id =</span> 59L)
-task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task.list =<span class="st"> </span><span class="kw">listOMLRuns</span>(<span class="dt">task.id =</span> 59L)
+task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre></div>
 <pre><code>##     run.id task.id setup.id flow.id uploader error.message
-## 281 524028      59     2963    2393      970            NA
-## 282 533711      59     2963    2393       17            NA
-## 283 536080      59     2963    2393       17            NA
-## 284 536513      59     2963    2393       17            NA
-## 285 537819      59     2963    2393     1145            NA</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">run =<span class="st"> </span><span class="kw">getOMLRun</span>(<span class="dt">run.id =</span> 525534L)</code></pre>
+## 281   6512      59      126      72       17          &lt;NA&gt;
+## 282   6513      59      127      72       17          &lt;NA&gt;
+## 283   6514      59      128      72       17          &lt;NA&gt;
+## 284   6516      59      129      72       17          &lt;NA&gt;
+## 285   6517      59      130      72       17          &lt;NA&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run =<span class="st"> </span><span class="kw">getOMLRun</span>(<span class="dt">run.id =</span> 524027L)</code></pre></div>
 <p>Each <code>OMLRun</code> object is a list object, which stores additional information on the run. For instance, the flow of the previously downloaded run has some non-default settings for hyperparameters, which can be obtained by:</p>
-<pre class="sourceCode r"><code class="sourceCode r">run$parameter.setting  <span class="co"># retrieve the list of parameter settings</span></code></pre>
-<pre><code>## [[1]]
-## $name
-## [1] &quot;seed&quot;
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run$parameter.setting  <span class="co"># retrieve the list of parameter settings</span></code></pre></div>
+<pre><code>## $seed
+##  seed = 1
 ## 
-## $value
-## [1] &quot;1&quot;
+## $kind
+##  kind = Mersenne-Twister
 ## 
-## $component
-## [1] NA
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;OMLRunParameter&quot;
-## 
-## [[2]]
-## $name
-## [1] &quot;kind&quot;
-## 
-## $value
-## [1] &quot;Mersenne-Twister&quot;
-## 
-## $component
-## [1] NA
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;OMLRunParameter&quot;
-## 
-## [[3]]
-## $name
-## [1] &quot;normal.kind&quot;
-## 
-## $value
-## [1] &quot;Inversion&quot;
-## 
-## $component
-## [1] NA
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;OMLRunParameter&quot;</code></pre>
+## $normal.kind
+##  normal.kind = Inversion</code></pre>
 <p>If the underlying flow has hyperparameters that are different from the default values of the corresponding learner, they are also shown, otherwise the default hyperparameters are used (but not explicitly listed).</p>
 <p>All the data that served as input for the run, including data set IDs and the URL to the data, is stored in <code>input.data</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r">run$input.data </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run$input.data</code></pre></div>
 <pre><code>## 
 ## ** Data Sets **
 ##   did name                                                         url
 ## 1  61 iris http://www.openml.org/data/download/61/dataset_61_iris.arff
 ## 
 ## ** Files **
-## Dataframe mit 0 Spalten und 0 Zeilen
+## data frame with 0 columns and 0 rows
 ## 
 ## ** Evaluations **
-## Dataframe mit 0 Spalten und 0 Zeilen</code></pre>
+## data frame with 0 columns and 0 rows</code></pre>
 <p>Predictions made by an uploaded run are stored within the <code>predictions</code> element and can be retrieved via</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(run$predictions, <span class="dv">10</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(run$predictions, <span class="dv">10</span>)</code></pre></div>
 <pre><code>##    repeat fold row_id      prediction           truth
 ## 1       0    0     43     Iris-setosa     Iris-setosa
 ## 2       0    0     14     Iris-setosa     Iris-setosa
@@ -605,117 +591,38 @@ task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre
 <div id="run-a-task-with-a-specified-mlr-learner" class="section level3">
 <h3>Run a task with a specified mlr learner</h3>
 <p>If one is working with <a href="https://github.com/mlr-org/mlr"><strong>mlr</strong></a>, one can specify a <code>RLearner</code> object and use the function <code>runTaskMlr</code> to create the desired <code>&quot;OMLMlrRun&quot;</code> object. The <code>task</code> is created the same way as in the previous sections:</p>
-<pre class="sourceCode r"><code class="sourceCode r">task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 59L)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 59L)
 
 <span class="kw">library</span>(mlr)
 lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.rpart&quot;</span>)
 run.mlr =<span class="st"> </span><span class="kw">runTaskMlr</span>(task, lrn)
-run.mlr</code></pre>
+run.mlr</code></pre></div>
 <pre><code>## $run
 ## 
 ## OpenML Run NA :: (Task ID = 59, Flow ID = NA)
 ## 
 ## $bmr
-##          task.id    learner.id acc.test.mean timetrain.test.sum
-## 1 OpenML-Task-59 classif.rpart          0.94              0.035
+##        task.id    learner.id acc.test.mean timetrain.test.sum
+## 1 iris.task.59 classif.rpart          0.94              0.938
 ##   timepredict.test.sum
-## 1                0.011
+## 1                0.053
 ## 
 ## $flow
 ## 
-## Flow &quot;classif.rpart&quot; :: (Version = NA, Flow ID = NA)
-##  External Version         : R_3.2.3-efb7e2d5
-##  Dependencies             : mlr_2.8, rpart_4.1.10
+## Flow &quot;mlr.classif.rpart&quot; :: (Version = NA, Flow ID = NA)
+##  External Version         : R_3.3.1-v2.e6a066f2
+##  Dependencies             : R_3.3.1, OpenML_1.0, mlr_2.9, rpart_4.1.10
 ##  Number of Flow Parameters: 13
-##  Number of Flow Components: 0</code></pre>
+##  Number of Flow Components: 0
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;OMLMlrRun&quot;</code></pre>
 <p>Note that locally created runs don’t have a run ID or flow ID yet. These are assigned by the OpenML server after uploading the run.</p>
 </div>
 <div id="run-a-task-without-using-mlr" class="section level3">
 <h3>Run a task without using mlr</h3>
-<p><span style="color:blue"><strong>FIXME: This section needs to be (re-)written.</strong></span> If you are not using <strong>mlr</strong>, you will have to invest some more time and effort to get things done. So, unless you have good reasons to do otherwise, we strongly encourage to use <strong>mlr</strong>.</p>
-<p>The following example shows how to create an OpenML flow description object manually.</p>
-<p>The first step is to create a list of <code>OMLFlowParameter</code>, where each parameter of your implementation is stored. Let’s assume we have written an algorithm that has two parameters called <code>&quot;a&quot;</code> (with default value: <code>&quot;500&quot;</code>) and <code>&quot;b&quot;</code> (with default value: <code>&quot;TRUE&quot;</code>). Note that each parameter argument has to be passed as <code>character</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flow.par.a =<span class="st"> </span><span class="kw">makeOMLFlowParameter</span>(
-  <span class="dt">name =</span> <span class="st">&quot;a&quot;</span>,
-  <span class="dt">data.type =</span> <span class="st">&quot;numeric&quot;</span>,
-  <span class="dt">default.value =</span> <span class="st">&quot;500&quot;</span>,
-  <span class="dt">description =</span> <span class="st">&quot;An optional description of parameter a.&quot;</span>
-)
-
-flow.par.b =<span class="st"> </span><span class="kw">makeOMLFlowParameter</span>(
-  <span class="dt">name =</span> <span class="st">&quot;b&quot;</span>,
-  <span class="dt">data.type =</span> <span class="st">&quot;logical&quot;</span>,
-  <span class="dt">default.value =</span> <span class="st">&quot;TRUE&quot;</span>,
-  <span class="dt">description =</span> <span class="st">&quot;An optional description of parameter b.&quot;</span>
-)
-
-flow.pars =<span class="st"> </span><span class="kw">list</span>(flow.par.a, flow.par.b)</code></pre>
-<p>Now, we can create the whole flow object. When creating a new flow, one should try to find a good name for the algorithm, so the other users get an idea of what is actually happening.</p>
-<pre class="sourceCode r"><code class="sourceCode r">oml.flow =<span class="st"> </span><span class="kw">makeOMLFlow</span>(
-  <span class="dt">name =</span> <span class="st">&quot;good_name&quot;</span>,
-  <span class="dt">external.version =</span> <span class="st">&quot;1.0&quot;</span>,
-  <span class="dt">description =</span> <span class="st">&quot;A proper description of your algorithm, changes, etc.&quot;</span>,
-  <span class="dt">parameter =</span> flow.pars
-)</code></pre>
-<p>Before one can apply the created flow to a task, one has to create a <code>OMLRun</code> object. If one wants to change the parameter settings for the run, one can do this by a list that contains an <code>OMLRunParameter</code> objects for each parameter defined by the flow <strong>whose setting varies from the default</strong>. The class <code>OMLRunParameter</code> has the following slots:</p>
-<ul>
-<li>name</li>
-<li>value</li>
-<li>component (optional and only needed if the parameter belongs to a (sub-)component of the implementation. Then, the name of this component must be handed over here.) (<strong>??? Fixme: What is a (sub-)component? Any good example here???</strong>)</li>
-</ul>
-<p>Let’s assume that we want to set the parameter <code>&quot;a&quot;</code> to a value of <code>&quot;300&quot;</code>. Parameter <code>&quot;b&quot;</code>, on the other hand, remains in the default setting, so that we do not need to define a <code>OMLRunParameter</code> for it:</p>
-<pre class="sourceCode r"><code class="sourceCode r">run.par.a =<span class="st"> </span><span class="kw">makeOMLRunParameter</span>(<span class="dt">name =</span> <span class="st">&quot;a&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;300&quot;</span>)
-run.pars =<span class="st"> </span><span class="kw">list</span>(run.par.a)</code></pre>
-<p>Now, one can create the <code>OMLRun</code> object using the <code>makeOMLRun</code> function. If one wants to upload the run to OpenML it is necessary to create a <code>data.frame</code> for the <code>predictions</code> parameter before actually creating the run with <code>makeOMLRun</code>. Note that the <code>data.frame</code> for the <code>predictions</code> has to be in a <strong>standardized form</strong>. The call <code>task$output$predictions</code> returns the expected column names and their types. For supervised classification and regression tasks, these are:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(task$output$predictions$features)</code></pre>
-<pre><code>## List of 5
-##  $ repeat              : chr &quot;integer&quot;
-##  $ fold                : chr &quot;integer&quot;
-##  $ row_id              : chr &quot;integer&quot;
-##  $ confidence.classname: chr &quot;numeric&quot;
-##  $ prediction          : chr &quot;string&quot;</code></pre>
-<p>The columns <code>repeat</code>, <code>fold</code> and <code>row_id</code> have to be zero-based, i.e., we start numbering with 0 and not with 1 as we would usually do in R. There is an example in the next subsection.</p>
-<p>In case of a classification task, one needs a confidence-column per target feature, i.e.,</p>
-<ul>
-<li><code>confidence.classname_1</code></li>
-<li><code>confidence.classname_2</code></li>
-<li>etc.</li>
-</ul>
-</div>
-<div id="example-an-excerpt-of-predictions-iris-data-set-2x10-fold-cv" class="section level3">
-<h3>Example: An excerpt of predictions (Iris data set, 2x10-fold CV)</h3>
-<p><span style="color:blue"><strong>FIXME: This section needs to be (re-)written.</strong></span></p>
-<p>Now, we first show, how one could create the predictions and then, how to perform an OpenML run with these predictions. In the given scenario, we used two repetitions (<code>repeat</code> can be either <code>0</code> or <code>1</code>) of a 10-fold cross-validation (<code>fold</code> can be in <code>0:9</code>). The data set has 150 observations, thus, the <code>row_id</code> can be in <code>0:149</code>.</p>
-<p>(<strong>??? Fixme: This is created WHILE or AFTER running the learner? I.e. <code>prediction</code> and <code>confidence.xyz</code> are the results of the learner? And how would one usually create all these objects? I.e. are the run parameters perhaps the result from cross-validation?</strong>)</p>
-<pre class="sourceCode r"><code class="sourceCode r">task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 59L)
-iris.data =<span class="st"> </span>task$input$data.set$data
-
-<span class="kw">set.seed</span>(<span class="dv">1907</span>)  <span class="co"># set seed for reproducible results</span>
-preds =<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">rep</span>(<span class="dv">0</span>:<span class="dv">1</span>, <span class="dt">each =</span> <span class="kw">nrow</span>(iris.data)),
-  <span class="kw">rep</span>(<span class="dv">0</span>:<span class="dv">9</span>, <span class="dt">each =</span> <span class="kw">nrow</span>(iris.data)/<span class="dv">10</span>),
-  <span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(iris.data)) -<span class="st"> </span><span class="dv">1</span>)
-<span class="kw">names</span>(preds) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;repeat&quot;</span>, <span class="st">&quot;fold&quot;</span>, <span class="st">&quot;row.id&quot;</span>)
-<span class="kw">head</span>(preds)</code></pre>
-<pre><code>##   repeat fold row.id
-## 1      0    0      1
-## 2      0    0    117
-## 3      0    0     27
-## 4      0    0     84
-## 5      0    0     85
-## 6      0    0     79</code></pre>
-<p>(<strong>??? Fixme: Why can’t one specify <code>repeat = ...</code></strong>)</p>
-<pre><code>    repeat fold row_id      prediction confidence.Iris-setosa   ... confidence.Iris-virginica
-1        0    0    140  Iris-virginica                      0   ...                         1
-...    ...  ...    ...             ...                    ...   ...                       ...
-51       0    3     37     Iris-setosa                      1   ...                         0
-...    ...  ...    ...             ...                    ...   ...                       ...
-150      0    9     76  Iris-virginica                      0   ...                         1
-151      1    0    110  Iris-virginica                      0   ...                         1
-...    ...  ...    ...             ...                    ...   ...                       ...
-300      1    9     58 Iris-versicolor                      0   ...                         0</code></pre>
-<p>Once such a data frame has been created, one can create an OpenML run by calling:</p>
-<pre class="sourceCode r"><code class="sourceCode r">run =<span class="st"> </span><span class="kw">makeOMLRun</span>(<span class="dt">task.id =</span> 59L, <span class="dt">parameter.setting =</span> run.pars, <span class="dt">predictions =</span> preds)</code></pre>
-<p>This run can now be uploaded to the <a href="http://openml.org">OpenML server</a> as we will show in the next section.</p>
+<p>If you are not using <code>mlr</code>, you will have to invest some more time and effort to get things done. So, unless you have good reasons to do otherwise, we strongly encourage to use <code>mlr</code>.</p>
+<p>In the case you want to work without <code>mlr</code>, you have to create some objects on your own. You will find detailed descriptions of the constructors in the manual.</p>
 </div>
 </div>
 <div id="upload" class="section level2">
@@ -729,7 +636,7 @@ preds =<span class="st"> </span><span class="kw">data.frame</span>(<span class="
 <li><code>makeOMLDataSet</code>: convert the data set into an OpenML data set</li>
 <li><code>uploadOMLDataSet</code>: upload the data set to the server</li>
 </ol>
-<pre class="sourceCode r"><code class="sourceCode r">## This is simple data set, which is generally already available in R.
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## This is simple data set, which is generally already available in R.
 ## Please DO NOT upload it to the server!
 <span class="kw">data</span>(<span class="st">&quot;airquality&quot;</span>)
 dsc =<span class="st"> &quot;Daily air quality measurements in New York, May to September 1973.</span>
@@ -759,26 +666,24 @@ air.data =<span class="st"> </span><span class="kw">makeOMLDataSet</span>(<span 
 
 ## (3) Upload the OpenML data set to the server
 dataset.id =<span class="st"> </span><span class="kw">uploadOMLDataSet</span>(air.data)
-dataset.id</code></pre>
+dataset.id</code></pre></div>
 </div>
 <div id="upload-a-flow-using-mlr" class="section level3">
 <h3>Upload a flow using mlr</h3>
 <p>A <a href="#flows">flow</a> is an implementation of a single algorithm or a script. To create a flow, we can use the <code>mlr</code> package, which already contains numerous implemented algorithms. Each <a href="http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/"><code>mlr</code> learner</a> can be considered as an implementation of a flow, which then again can be uploaded to the server with the function <code>uploadOMLFlow</code>. If the flow has already been uploaded to the server (either by you or someone else), one receives a message that the flow already exists and the <code>flow.id</code> is returned from the function. Otherwise, the flow will be uploaded, receive its own <code>flow.id</code> and return that ID.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlr)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlr)
 lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.randomForest&quot;</span>)
 flow.id =<span class="st"> </span><span class="kw">uploadOMLFlow</span>(lrn)
-flow.id</code></pre>
+flow.id</code></pre></div>
 </div>
 <div id="upload-a-flow-without-using-mlr" class="section level3">
 <h3>Upload a flow without using mlr</h3>
-<p><span style="color:blue"><strong>FIXME: This section needs to be (re-)written.</strong></span> (<strong>??? Fixme: We don’t want to do this with the sourcefile anymore. Should we provide a link how to create a mlr-learner as alternative?</strong>) In the previous section, we explained how to create an <code>OMLFlow</code> manually and created the object <code>oml.flow</code>, which reflects the description object of the flow. Before one can upload the flow to the server, one has to store the algorithm (that should be used as a flow) within a single R-script. Assuming one has already done this step (and the path to the R-script is called <code>&quot;path-to-sourcefile&quot;</code>), one can can now upload the flow as follows:</p>
-<pre class="sourceCode r"><code class="sourceCode r">oml.flow.id =<span class="st"> </span><span class="kw">uploadOMLFlow</span>(oml.flow, <span class="dt">sourcefile =</span> <span class="st">&quot;path-to-sourcefile&quot;</span>)
-oml.flow.id</code></pre>
+<p>As mentioned before, it is possible to avoid using <code>mlr</code>, but it requires much more effort from your side.</p>
 </div>
 <div id="upload-an-openml-run-to-the-server" class="section level3">
 <h3>Upload an OpenML run to the server</h3>
 <p>In addition to uploading data sets or flows, one can also upload runs (which a priori have to created, e.g., using <code>mlr</code>):</p>
-<pre class="sourceCode r"><code class="sourceCode r">## choose 2 flows (i.e., mlr-learners)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## choose 2 flows (i.e., mlr-learners)
 learners =<span class="st"> </span><span class="kw">list</span>(
   <span class="kw">makeLearner</span>(<span class="st">&quot;classif.kknn&quot;</span>),
   <span class="kw">makeLearner</span>(<span class="st">&quot;classif.randomForest&quot;</span>)
@@ -793,7 +698,7 @@ for (lrn in learners) {
     res =<span class="st"> </span><span class="kw">runTaskMlr</span>(task, lrn)$run
     run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(res)  <span class="co"># upload results</span>
   }
-}</code></pre>
+}</code></pre></div>
 <p>Before your run will be uploaded to the server, <code>uploadOMLRun</code> checks whether the flow that created this run is already available on the server. If the flow does not exist on the server, it will (automatically) be uploaded as well.</p>
 </div>
 </div>
