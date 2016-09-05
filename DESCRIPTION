@@ -16,9 +16,9 @@ License: BSD_3_clause + file LICENSE
 URL: https://github.com/openml/openml-r
 BugReports: https://github.com/openml/openml-r/issues
 Depends:
-    R (>= 3.0.2),
-    mlr (>= 2.8)
+    R (>= 3.0.2)
 Suggests:
+    mlr (>= 2.9),
     testthat,
     randomForest,
     rpart,
@@ -31,7 +31,7 @@ Imports:
     backports (>= 1.0.1),
     BBmisc (>= 1.9),
     checkmate (>= 1.8.0),
-    ParamHelpers (>= 1.7),
+    ParamHelpers (>= 1.8),
     data.table,
     digest,
     httr,
