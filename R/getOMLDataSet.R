@@ -20,6 +20,9 @@ getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
   assertFlag(cache.only)
 
   down = downloadOMLObject(did, object = "data", cache.only = cache.only, verbosity = verbosity)
+  # print(down$files)
+  # print(readLines(down$files$description.xml$path))
+
   f = down$files
 
   # parse data set description

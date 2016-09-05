@@ -17,7 +17,7 @@
   flows$external_version[zero.len.ids] = ""
   flows$external_version = unlist(flows$external_version)
 
-  names(flows) = c("id", "full.name", "name", "version", "external.version", "uploader")
+  names(flows) = c("flow.id", "full.name", "name", "version", "external.version", "uploader")
   return(flows)
 }
 
