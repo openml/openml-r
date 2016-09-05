@@ -105,9 +105,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div id="installation-instructions" class="section level3">
 <h3>Installation instructions</h3>
-<p>At the moment there is no <a href="https://cran.r-project.org/">CRAN</a> release yet. To install the current development version use the <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a> package and run</p>
+<p>Installation works as in any other package using</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;OpenML&quot;</span>)</code></pre></div>
+<p>To install the current development version use the <a href="https://cran.r-project.org/web/packages/devtools/index.html"><code>devtools</code></a> package and run</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;openml/openml-r&quot;</span>)</code></pre></div>
-<p>in an R session. Using the OpenML package also requires a reader for the <a href="http://www.cs.waikato.ac.nz/ml/weka/arff.html">ARFF</a> file format. By default <a href="https://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a> is used. However, the <a href="https://github.com/mlr-org/farff">farff</a> package can be used as an alternative. You can install the packages with the following calls.</p>
+<p>Using the OpenML package also requires a reader for the <a href="http://www.cs.waikato.ac.nz/ml/weka/arff.html">ARFF</a> file format. By default <a href="https://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a> is used. Alternatively, the <a href="https://github.com/mlr-org/farff">farff</a> package can be used. You can install the packages with the following calls.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;RWeka&quot;</span>)
 devtools::<span class="kw">install_github</span>(<span class="st">&quot;mlr-org/farff&quot;</span>)</code></pre></div>
 </div>
@@ -119,14 +121,14 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;mlr-org/
 </div>
 <div id="basicexample" class="section level3">
 <h3>Basic example</h3>
-<p>In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server.</p>
+<p>In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server. For detailed information on OpenML terminology (task, run, etc.) see the <a href="http://www.openml.org/guide">OpenML guide</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;OpenML&quot;</span>)
-## temporarily set API key to read only key (replace it with your own key)
+## temporarily set API key to read only key 
 <span class="kw">setOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
 <pre><code>## OpenML configuration:
 ##   server           : http://api_new.openml.org/v1
 ##   cachedir         : /tmp/Rtmp6Ygsyz/cache
-##   verbosity        : 1
+##   verbosity        : 0
 ##   arff.reader      : RWeka
 ##   confirm.upload   : TRUE
 ##   apikey           : ***************************47f1f</code></pre>
@@ -146,12 +148,12 @@ task</code></pre></div>
 <li>task type: defines the type of the task (regression, classification, clustering, etc.)</li>
 <li>data set: which data set belongs to the given task (one task can always only be connected to a single data set)</li>
 <li>target feature(s): optional field for all kinds of classification and regression tasks</li>
-<li>tags: tags / labels, which might be helpful for further subselections</li>
+<li>tags: tags / labels, which might be helpful for further sub-selections</li>
 <li>estimation procedure: which estimation procedure has been used when computing the performance</li>
 </ul>
 <p>In the next line, <code>randomForest</code> is used as a classifier and run with the help of the <a href="https://github.com/mlr-org/mlr"><code>mlr package</code></a>. Note that one needs to run the algorithm locally and that <code>mlr</code> will automatically download the package that is needed to run the specified classifier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the classifier (usually called &quot;flow&quot; within OpenML)</span>
-<span class="kw">library</span>(mlr)
+<span class="kw">library</span>(<span class="st">&quot;mlr&quot;</span>)
 lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.randomForest&quot;</span>)
 
 <span class="co"># upload the new flow (with information about the algorithm and settings);</span>
@@ -177,7 +179,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 </div>
 <div id="permanentconfig" class="section level3">
 <h3>Permanently setting configuration</h3>
-<p>After registering, you should <a href="#createconfig">create a configuration file</a>. The <code>config</code> file may contain the following information:</p>
+<p>After registering, you can <a href="#createconfig">create a configuration file</a>. The <code>config</code> file may contain the following information:</p>
 <ul>
 <li><code>server</code>:
 <ul>
@@ -215,8 +217,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div id="createconfig" class="section level3">
 <h3>Creating the configuration file in R</h3>
 <p>To set up your OpenML configuration, you can either use <code>setOMLConfig</code> or <code>saveOMLConfig</code>. The difference between those two commands is that <code>setOMLConfig</code> sets your configuration temporarily for the current R session, whereas <code>saveOMLConfig</code> saves the configuration permanently. In order to create a permanent configuration file using default values and at the same time setting your personal API key, run</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(OpenML)
-<span class="kw">saveOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
 <p>where <code>&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</code> should be replaced with <a href="#personalapikey"><em>your personal API key</em></a>.</p>
 </div>
 <div id="manually-creating-the-configuration-file" class="section level3">
@@ -225,12 +226,11 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f</code></pre></div>
 <p>Note that the values are not quoted.</p>
 <p>If one manually modifies the <code>config</code> file, one needs to reload the modified <code>config</code> file to the current R session using <code>loadOMLConfig()</code>. You can query the current configuration using</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(OpenML)
-<span class="kw">getOMLConfig</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getOMLConfig</span>()</code></pre></div>
 <pre><code>## OpenML configuration:
 ##   server           : http://api_new.openml.org/v1
 ##   cachedir         : /tmp/Rtmp6Ygsyz/cache
-##   verbosity        : 1
+##   verbosity        : 0
 ##   arff.reader      : RWeka
 ##   confirm.upload   : TRUE
 ##   apikey           : ***************************47f1f</code></pre>
@@ -240,7 +240,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 </div>
 <div id="listing" class="section level2">
 <h2>Listing</h2>
-<p>In this stage, we want to list basic information about the various OpenML objects:</p>
+<p>In this stage, we want to list basic information about the various <a href="http://openml.org/guide">OpenML objects</a>:</p>
 <ul>
 <li>data sets</li>
 <li>tasks</li>
@@ -250,12 +250,8 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>evaluation measures</li>
 <li>task types</li>
 </ul>
-<p>See the <a href="http://openml.org/guide">OpenML introduction</a> for a detailed overview on (and explanations of) the different objects.</p>
 <p>For each of these objects, we have a function to query the information, beginning with <code>listOML</code>. All of these functions return a <code>data.frame</code>, even in case the result consists of a single column or has zero observations (i.e., rows).</p>
 <p>One should be aware of the fact that the <code>listOML*</code> functions only list information on the corresponding objects – they do not download the respective objects. Information on actually downloading specific objects is covered in the <a href="#download">next section</a>.</p>
-<p>First, load the package:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;OpenML&quot;</span>)
-<span class="kw">setOMLConfig</span>(<span class="dt">verbosity =</span> <span class="dv">0</span>)  <span class="co"># switch off status output</span></code></pre></div>
 <div id="listdata" class="section level3">
 <h3>List data sets</h3>
 <p>To browse the OpenML data base for appropriate data sets, you can use <code>listOMLDataSets()</code> in order to get basic data characteristics (number of features, instances, classes, missing values, etc.) for each data set. By default, <code>listOMLDataSets()</code> returns only data sets that have an active status on OpenML:</p>
@@ -292,12 +288,6 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ## 4   4 active   ARFF      labor                37
 ## 5   5 active   ARFF arrhythmia               245
 ## 6   6 active   ARFF     letter               813</code></pre>
-<p>If one needs data sets that are either <code>&quot;in_preparation&quot;</code> or <code>&quot;deactivated&quot;</code>, one can change the <code>status</code> parameter accordingly:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">inactive.data =<span class="st"> </span><span class="kw">listOMLDataSets</span>(<span class="dt">status =</span> <span class="st">&quot;deactivated&quot;</span>)
-<span class="kw">head</span>(inactive.data[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
-<pre><code>## [1] did               status            format            name             
-## [5] MajorityClassSize
-## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 <p>To find a specific data set, you can now query the resulting <code>datasets</code> object. Suppose we want to find the <code>iris</code> data set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(datasets, name ==<span class="st"> &quot;iris&quot;</span>)</code></pre></div>
 <pre><code>##     did status format name MajorityClassSize MaxNominalAttDistinctValues
@@ -318,7 +308,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <h3>List tasks</h3>
 <p>Each OpenML task is a bundle that encapsulates information on various objects:</p>
 <ul>
-<li>a specific type, e.g., <code>&quot;Supervised Classification&quot;</code> or <code>&quot;Supervised Regression&quot;</code></li>
+<li>a specific <a href="http://www.openml.org/search?type=task_type">type</a>, e.g., <code>&quot;Supervised Classification&quot;</code> or <code>&quot;Supervised Regression&quot;</code></li>
 <li>a data set</li>
 <li>a target feature (which might differ from the data set’s default target)</li>
 <li>an estimation/resampling procedure, e.g., a 10-fold cross-validation</li>
@@ -359,15 +349,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ##  $ NumberOfMissingValues             : int  0 22175 0 326 408 0 317 0 59 0 ...
 ##  $ NumberOfNumericFeatures           : int  6 6 0 8 206 16 0 6 15 3 ...
 ##  $ NumberOfSymbolicFeatures          : int  33 33 37 9 74 1 70 1 11 16 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tasks[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
-<pre><code>##   task.id                 task.type did status format
-## 1       1 Supervised Classification   1 active   ARFF
-## 2       2 Supervised Classification   2 active   ARFF
-## 3       3 Supervised Classification   3 active   ARFF
-## 4       4 Supervised Classification   4 active   ARFF
-## 5       5 Supervised Classification   5 active   ARFF
-## 6       6 Supervised Classification   6 active   ARFF</code></pre>
-<p>For some data sets, there may be more than one task available on the OpenML server. For example, one can look for <code>&quot;Supervised Classification&quot;</code> tasks that are available for a specific data via</p>
+<p>For some data sets, there may be more than one task available on the OpenML server. For example, one can look for <code>&quot;Supervised Classification&quot;</code> tasks that are available for data set 61 via</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">subset</span>(tasks, task.type ==<span class="st"> &quot;Supervised Classification&quot;</span> &amp;<span class="st"> </span>did ==<span class="st"> </span>61L)[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
 <pre><code>##      task.id                 task.type did status format
 ## 53        59 Supervised Classification  61 active   ARFF
@@ -382,7 +364,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <p>A flow is the definition and implementation of a specific algorithm workflow or script, i.e., a flow is essentially the code / implementation of the algorithm.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flows =<span class="st"> </span><span class="kw">listOMLFlows</span>()
 <span class="kw">str</span>(flows)</code></pre></div>
-<pre><code>## 'data.frame':    2918 obs. of  6 variables:
+<pre><code>## 'data.frame':    2924 obs. of  6 variables:
 ##  $ flow.id         : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ full.name       : chr  &quot;openml.evaluation.EuclideanDistance(1.0)&quot; &quot;openml.evaluation.PolynomialKernel(1.0)&quot; &quot;openml.evaluation.RBFKernel(1.0)&quot; &quot;openml.evaluation.area_under_roc_curve(1.0)&quot; ...
 ##  $ name            : chr  &quot;openml.evaluation.EuclideanDistance&quot; &quot;openml.evaluation.PolynomialKernel&quot; &quot;openml.evaluation.RBFKernel&quot; &quot;openml.evaluation.area_under_roc_curve&quot; ...
@@ -523,7 +505,13 @@ task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre
 ## 283   6514      59      128      72       17          &lt;NA&gt;
 ## 284   6516      59      129      72       17          &lt;NA&gt;
 ## 285   6517      59      130      72       17          &lt;NA&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run =<span class="st"> </span><span class="kw">getOMLRun</span>(<span class="dt">run.id =</span> 524027L)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run =<span class="st"> </span><span class="kw">getOMLRun</span>(<span class="dt">run.id =</span> 524027L)
+run</code></pre></div>
+<pre><code>## 
+## OpenML Run 524027 :: (Task ID = 59, Flow ID = 2393)
+##  User ID  : 970
+##  Learner  : classif.randomForest(43)
+##  Task type: Supervised Classification</code></pre>
 <p>Each <code>OMLRun</code> object is a list object, which stores additional information on the run. For instance, the flow of the previously downloaded run has some non-default settings for hyperparameters, which can be obtained by:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run$parameter.setting  <span class="co"># retrieve the list of parameter settings</span></code></pre></div>
 <pre><code>## $seed
@@ -582,7 +570,7 @@ task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre
 ## 8                          0
 ## 9                          0
 ## 10                         0</code></pre>
-<p>The output above shows predicitons, ground truth information about classes and task-specific information, e.g., about the confidence of a classifier (for every observation) or in which fold a data point has been placed.</p>
+<p>The output above shows predictions, ground truth information about classes and task-specific information, e.g., about the confidence of a classifier (for every observation) or in which fold a data point has been placed.</p>
 </div>
 </div>
 <div id="running" class="section level2">
@@ -590,10 +578,10 @@ task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre
 <p>The modularized structure of OpenML allows to apply the implementation of an algorithm to a specific task and there exist multiple possibilities to do this.</p>
 <div id="run-a-task-with-a-specified-mlr-learner" class="section level3">
 <h3>Run a task with a specified mlr learner</h3>
-<p>If one is working with <a href="https://github.com/mlr-org/mlr"><strong>mlr</strong></a>, one can specify a <code>RLearner</code> object and use the function <code>runTaskMlr</code> to create the desired <code>&quot;OMLMlrRun&quot;</code> object. The <code>task</code> is created the same way as in the previous sections:</p>
+<p>If one is working with <a href="https://github.com/mlr-org/mlr"><strong>mlr</strong></a>, one can specify an <code>RLearner</code> object and use the function <code>runTaskMlr</code> to create the desired <code>&quot;OMLMlrRun&quot;</code> object. The <code>task</code> is created the same way as in the previous sections:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task =<span class="st"> </span><span class="kw">getOMLTask</span>(<span class="dt">task.id =</span> 59L)
 
-<span class="kw">library</span>(mlr)
+<span class="kw">library</span>(<span class="st">&quot;mlr&quot;</span>)
 lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.rpart&quot;</span>)
 run.mlr =<span class="st"> </span><span class="kw">runTaskMlr</span>(task, lrn)
 run.mlr</code></pre></div>
@@ -603,9 +591,9 @@ run.mlr</code></pre></div>
 ## 
 ## $bmr
 ##        task.id    learner.id acc.test.mean timetrain.test.sum
-## 1 iris.task.59 classif.rpart          0.94              0.938
+## 1 iris.task.59 classif.rpart          0.94               0.62
 ##   timepredict.test.sum
-## 1                0.053
+## 1                0.016
 ## 
 ## $flow
 ## 
@@ -621,8 +609,7 @@ run.mlr</code></pre></div>
 </div>
 <div id="run-a-task-without-using-mlr" class="section level3">
 <h3>Run a task without using mlr</h3>
-<p>If you are not using <code>mlr</code>, you will have to invest some more time and effort to get things done. So, unless you have good reasons to do otherwise, we strongly encourage to use <code>mlr</code>.</p>
-<p>In the case you want to work without <code>mlr</code>, you have to create some objects on your own. You will find detailed descriptions of the constructors in the manual.</p>
+<p>If you are not using <code>mlr</code>, you will have to invest some more time and effort to get things done since this is not supported yet. So, unless you have good reasons to do otherwise, we strongly encourage to use <code>mlr</code>. If the algorithm you want to use is not integrated in <code>mlr</code> yet, you can integrate it yourself (see the <a href="http://mlr-org.github.io/mlr-tutorial/devel/html/create_learner/index.html">tutorial</a>) or open an <a href="https://github.com/mlr-org/mlr/issues">issue on mlr GitHub repository</a> and hope someone else will do it for you.</p>
 </div>
 </div>
 <div id="upload" class="section level2">
@@ -667,22 +654,19 @@ air.data =<span class="st"> </span><span class="kw">makeOMLDataSet</span>(<span 
 ## (3) Upload the OpenML data set to the server
 dataset.id =<span class="st"> </span><span class="kw">uploadOMLDataSet</span>(air.data)
 dataset.id</code></pre></div>
+<p>Alternatively you can enter data directly on the <a href="http://www.openml.org/new/data">OpenML website</a>.</p>
 </div>
-<div id="upload-a-flow-using-mlr" class="section level3">
-<h3>Upload a flow using mlr</h3>
-<p>A <a href="#flows">flow</a> is an implementation of a single algorithm or a script. To create a flow, we can use the <code>mlr</code> package, which already contains numerous implemented algorithms. Each <a href="http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/"><code>mlr</code> learner</a> can be considered as an implementation of a flow, which then again can be uploaded to the server with the function <code>uploadOMLFlow</code>. If the flow has already been uploaded to the server (either by you or someone else), one receives a message that the flow already exists and the <code>flow.id</code> is returned from the function. Otherwise, the flow will be uploaded, receive its own <code>flow.id</code> and return that ID.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mlr)
+<div id="upload-a-flow" class="section level3">
+<h3>Upload a flow</h3>
+<p>A <a href="#flows">flow</a> is an implementation of a single algorithm or a script. Each <a href="http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/"><code>mlr</code> learner</a> can be considered an implementation of a flow, which can be uploaded to the server with the function <code>uploadOMLFlow</code>. If the flow has already been uploaded to the server (either by you or someone else), one receives a message that the flow already exists and the <code>flow.id</code> is returned from the function. Otherwise, the flow will be uploaded, receive its own <code>flow.id</code> and return that ID.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;mlr&quot;</span>)
 lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.randomForest&quot;</span>)
 flow.id =<span class="st"> </span><span class="kw">uploadOMLFlow</span>(lrn)
 flow.id</code></pre></div>
 </div>
-<div id="upload-a-flow-without-using-mlr" class="section level3">
-<h3>Upload a flow without using mlr</h3>
-<p>As mentioned before, it is possible to avoid using <code>mlr</code>, but it requires much more effort from your side.</p>
-</div>
-<div id="upload-an-openml-run-to-the-server" class="section level3">
-<h3>Upload an OpenML run to the server</h3>
-<p>In addition to uploading data sets or flows, one can also upload runs (which a priori have to created, e.g., using <code>mlr</code>):</p>
+<div id="upload-a-run" class="section level3">
+<h3>Upload a run</h3>
+<p>In addition to uploading data sets or flows, one can also upload runs (which a priori have to be created, e.g., using <code>mlr</code>):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## choose 2 flows (i.e., mlr-learners)
 learners =<span class="st"> </span><span class="kw">list</span>(
   <span class="kw">makeLearner</span>(<span class="st">&quot;classif.kknn&quot;</span>),
@@ -707,8 +691,8 @@ for (lrn in learners) {
 <p>Now, you should have gotten an idea on how to use our package. However, as there is always room for improvement, we are more than happy to receive your feedback. So, in case</p>
 <ul>
 <li>there is anything not well documented</li>
-<li>you encountered a bug</li>
-<li>are missing a certain functionality</li>
+<li>you encounter a bug</li>
+<li>are missing functionality</li>
 </ul>
 <p>please open an issue in the <a href="https://github.com/openml/openml-r/issues">issue tracker of our GitHub repository</a>.</p>
 </div>
