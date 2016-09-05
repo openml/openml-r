@@ -11,7 +11,7 @@
 #'   The strings \code{<oml.data.name>}, \code{<oml.data.id>}, \code{<oml.data.version>} 
 #'   and \code{<oml.task.id>} will be replaced by their respective values contained 
 #'   in the \code{\link{OMLTask}} object.
-#'   Default is \code{<oml.data.name>.task.id.<oml.task.id>}.
+#'   Default is \code{<oml.data.name>}.
 #' @return [list] A list with the following objects:
 #' \describe{
 #'   \item{mlr.task}{[\code{\link[mlr]{Task}}]}
@@ -24,7 +24,7 @@
 #' @export
 convertOMLTaskToMlr = function(
   obj,
-  mlr.task.id = "<oml.data.name>.task.id.<oml.task.id>",
+  mlr.task.id = "<oml.data.name>",
   ignore.flagged.attributes = TRUE,
   drop.levels = TRUE,
   verbosity = NULL) {

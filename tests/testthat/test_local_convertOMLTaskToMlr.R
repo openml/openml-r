@@ -13,8 +13,9 @@ test_that("convertOMLTaskToMlr", {
 
   ds = task$input$data.set
   # check setting mlr task id
-  expect_equal(getTaskId(convertOMLTaskToMlr(task)$mlr.task), 
-    sprintf("%s.task.id.%s", ds$desc$name, task$task.id))
+  expect_equal(getTaskId(convertOMLTaskToMlr(task)$mlr.task), ds$desc$name)
+  expect_equal(getTaskId(convertOMLTaskToMlr(task, mlr.task.id = "<oml.data.name>.<oml.task.id>")$mlr.task),
+    sprintf("%s.%s", ds$desc$name, task$task.id))
   expect_equal(getTaskId(convertOMLTaskToMlr(task, mlr.task.id = "test")$mlr.task), "test")
   expect_equal(getTaskId(convertOMLTaskToMlr(task, mlr.task.id = "<oml.data.id>")$mlr.task), as.character(ds$desc$id))
   expect_equal(getTaskId(convertOMLTaskToMlr(task, mlr.task.id = "<oml.data.name>")$mlr.task), as.character(ds$desc$name))

@@ -27,8 +27,9 @@ test_that("convertOMLDataSetToMlr", {
     expect_error(convertOMLDataSetToMlr(ds, task.type = "Nonexistent task type"), "element of")
     
     # check setting mlr task id
-    expect_equal(getTaskId(convertOMLDataSetToMlr(ds)), 
-      sprintf("%s.data.id.%s", ds$desc$name, ds$desc$id))
+    expect_equal(getTaskId(convertOMLDataSetToMlr(ds)), ds$desc$name)
+    expect_equal(getTaskId(convertOMLDataSetToMlr(ds, mlr.task.id = "<oml.data.name>.<oml.data.id>")), 
+      sprintf("%s.%s", ds$desc$name, ds$desc$id))
     expect_equal(getTaskId(convertOMLDataSetToMlr(ds, mlr.task.id = "test")), "test")
     expect_equal(getTaskId(convertOMLDataSetToMlr(ds, mlr.task.id = "<oml.data.id>")), as.character(ds$desc$id))
     expect_equal(getTaskId(convertOMLDataSetToMlr(ds, mlr.task.id = "<oml.data.name>")), as.character(ds$desc$name))
