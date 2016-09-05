@@ -1,10 +1,10 @@
-.listOMLDataSets = function(NumberOfInstances = NULL, NumberOfFeatures = NULL, 
+.listOMLDataSets = function(NumberOfInstances = NULL, NumberOfFeatures = NULL,
   NumberOfClasses = NULL, NumberOfMissingValues = NULL,
   tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
-  api.call = generateAPICall("json/data/list", 
-    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures, 
+  api.call = generateAPICall("json/data/list",
+    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures,
     NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
     tag = tag, limit = limit, offset = offset)
 
@@ -13,7 +13,7 @@
   data.id = as.integer(res$did)
   qualities = convertNameValueListToDF(res$quality)
   res$quality = res$did = NULL
-  
+
   res = cbind(data.id, as.data.frame(res, stringsAsFactors = FALSE), qualities, stringsAsFactors = FALSE)
   i = colnames(res)%in%colnames(qualities)
   res[i] = lapply(res[i], as.integer)
