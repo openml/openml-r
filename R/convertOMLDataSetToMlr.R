@@ -64,14 +64,14 @@ convertOMLDataSetToMlr = function(
   fixup = ifelse(verbosity == 0L, "quiet", "warn")
 
   mlr.task = switch(task.type,
-    "Supervised Classification" = makeClassifTask(data = data, target = target, fixup.data = fixup),
-    "Supervised Regression" = makeRegrTask(data = data, target = target, fixup.data = fixup),
-    "Survival Analysis" = makeSurvTask(data = data, target = target, fixup.data = fixup),
+    "Supervised Classification" = mlr::makeClassifTask(data = data, target = target, fixup.data = fixup),
+    "Supervised Regression" = mlr::makeRegrTask(data = data, target = target, fixup.data = fixup),
+    "Survival Analysis" = mlr::makeSurvTask(data = data, target = target, fixup.data = fixup),
     stopf("Encountered currently unsupported task type: %s", task.type)
   )
 
   #  remove constant features
-  mlr.task = removeConstantFeatures(mlr.task)
+  mlr.task = mlr::removeConstantFeatures(mlr.task)
   return(mlr.task)
 }
 

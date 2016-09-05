@@ -7,7 +7,7 @@
 uploadOMLFlow(x, tags = NULL, verbosity = NULL, sourcefile, binaryfile)
 }
 \arguments{
-\item{x}{[\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
+\item{x}{[\code{\link{OMLFlow}}|\code{\link[mlr]{Learner}}]\cr
 The flow that should be uploaded.}
 
 \item{tags}{[\code{character}]\cr
@@ -21,10 +21,10 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
 \item{sourcefile}{[\code{character(1)}]\cr
-The file path to the flow (not needed for \code{\link{Learner}}).}
+The file path to the flow (not needed for \code{\link[mlr]{Learner}}).}
 
 \item{binaryfile}{[\code{character(1)}]\cr
-The file path to the flow (not needed for \code{\link{Learner}}).}
+The file path to the flow (not needed for \code{\link[mlr]{Learner}}).}
 }
 \value{
 [\code{invisible(numeric)}].

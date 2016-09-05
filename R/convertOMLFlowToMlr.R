@@ -18,5 +18,5 @@ convertOMLFlowToMlr = function(flow) {
     assertFile(flow$binary.path)
     return(readRDS(flow$binary.path))
   }
-  return(makeLearner(flow$name))
+  return(mlr::makeLearner(flow$name))
 }

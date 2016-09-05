@@ -135,11 +135,11 @@ getResampInfo = function(resample.desc) {
 
 getBMRTuneTrace = function(bmr) {
   res = bmr$results[[1]][[1]]
-  tune.res = getNestedTuneResultsOptPathDf(res)
-  tune.x = getNestedTuneResultsX(res)
+  tune.res = mlr::getNestedTuneResultsOptPathDf(res)
+  tune.x = mlr::getNestedTuneResultsX(res)
   tune.par = colnames(tune.x)
   resample.info = getResampInfo(res$pred$instance$desc)
-  evaluation = names(getBMRTuneResults(bmr)[[1]][[1]][[1]]$y)
+  evaluation = names(mlr::getBMRTuneResults(bmr)[[1]][[1]][[1]]$y)
   
   cv.iter = tune.res$iter
   folds = resample.info$folds
