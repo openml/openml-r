@@ -10,17 +10,17 @@ convertOMLSplitsToMlr = function(estim.proc, mlr.task, predict = "both") {
   # FIXME: more resampling
   if (type == "crossvalidation") {
     if (n.repeats == 1L)
-      mlr.rdesc = makeResampleDesc("CV", iters = n.folds, predict = predict)
+      mlr.rdesc = mlr::makeResampleDesc("CV", iters = n.folds, predict = predict)
     else
-      mlr.rdesc = makeResampleDesc("RepCV", reps = n.repeats, folds = n.folds, predict = predict)
-    mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
+      mlr.rdesc = mlr::makeResampleDesc("RepCV", reps = n.repeats, folds = n.folds, predict = predict)
+    mlr.rin = mlr::makeResampleInstance(mlr.rdesc, task = mlr.task)
   } else if (type == "holdout") {
-    mlr.rdesc = makeResampleDesc("Holdout", split = 1 - percentage / 100, predict = predict)
-    mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
+    mlr.rdesc = mlr::makeResampleDesc("Holdout", split = 1 - percentage / 100, predict = predict)
+    mlr.rin = mlr::makeResampleInstance(mlr.rdesc, task = mlr.task)
     n.folds = 1
   } else if (type == "leaveoneout") {
-    mlr.rdesc = makeResampleDesc("LOO", predict = predict)
-    mlr.rin = makeResampleInstance(mlr.rdesc, task = mlr.task)
+    mlr.rdesc = mlr::makeResampleDesc("LOO", predict = predict)
+    mlr.rin = mlr::makeResampleInstance(mlr.rdesc, task = mlr.task)
     n.folds = nrow(mlr.task$env$data)
   } else {
     stopf("Unsupported estimation procedure type: %s", type)

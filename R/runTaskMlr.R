@@ -27,7 +27,7 @@
 runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
   assert(checkString(learner), checkClass(learner, "Learner"))
   if (is.character(learner))
-    learner = makeLearner(learner)
+    learner = mlr::makeLearner(learner)
   assertClass(task, "OMLTask")
   assertChoice(task$task.type, c("Supervised Classification", "Supervised Regression"))
   assert(checkIntegerish(seed), checkClass(seed, "OMLSeedParList"))
@@ -63,7 +63,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
 
   # Create OMLRun
   setOMLSeedParList(seed.setting)
-  bmr = benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
+  bmr = mlr::benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
   res = bmr$results[[1]][[1]]
 
   # add error message

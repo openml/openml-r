@@ -38,7 +38,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   
   # make learner with parameters
   lrn = convertOMLFlowToMlr(flow)
-  lrn = setHyperPars(lrn, par.vals = getDefaults(getParamSet(lrn)))
+  lrn = mlr::setHyperPars(lrn, par.vals = getDefaults(getParamSet(lrn)))
   
   # assign data type to learner parameters 
   if (!inherits(par.list, "OMLRunParList"))
@@ -57,7 +57,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   #  lrn.pars[[i]] = stringToParam(ps[[i]], lrn.pars[[i]]) 
   #}
   lrn = do.call("setHyperPars", append(list(learner = lrn), list(par.vals = lrn.pars)))
-  if (!is.null(predict.type)) lrn = setPredictType(lrn, predict.type = predict.type)
+  if (!is.null(predict.type)) lrn = mlr::setPredictType(lrn, predict.type = predict.type)
   
   # FIXME: warn if installed package version are not equal
   local.pkges = strsplit(getDependencies(lrn), ", ")[[1]]
