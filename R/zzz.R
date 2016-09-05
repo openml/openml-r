@@ -5,7 +5,6 @@
 #' @import stringi
 #' @import XML
 #' @import xml2
-#' @import mlr
 #' @import data.table
 #' @importFrom memoise memoise forget
 #' @importFrom digest digest
