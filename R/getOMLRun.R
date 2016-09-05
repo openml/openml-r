@@ -27,7 +27,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     ns.datasets = getNodeSet(doc, path.ds)
     datasets = lapply(seq_along(ns.datasets), function(i) {
       list(
-        did = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep = '')),
+        data.id = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep = '')),
         name = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep = '')),
         url = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep = ''))
       )})
@@ -38,7 +38,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     ns.fls = getNodeSet(doc, path.fls)
     files = lapply(seq_along(ns.fls), function(i) {
       list(
-        did = xmlRValR(doc, paste(path.fls, "[", i, "]/oml:did", sep='')),
+        data.id = xmlRValR(doc, paste(path.fls, "[", i, "]/oml:did", sep='')),
         name = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:name", sep='')),
         url = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:url", sep=''))
       )})
@@ -63,7 +63,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
       cv.info = xmlAttrs(node)[c("repeat", "fold")]
       if (is.null(cv.info)) cv.info = c(NA, NA)
       row = c(row, cv.info)
-      names(row) = c("did", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size", "repeat", "fold")
+      names(row) = c("data.id", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size", "repeat", "fold")
       row
     }), fill = TRUE)
     makeOMLIOData(datasets = datasets, files = files, evaluations = as.data.frame(evals))

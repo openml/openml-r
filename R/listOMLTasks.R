@@ -50,7 +50,7 @@
 #' @title List available OpenML tasks.
 #'
 #' @description
-#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
+#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id},
 #' the \code{status} and some describing data qualities.
 #'
 #' @template note_memoise

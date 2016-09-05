@@ -4,12 +4,12 @@
 \alias{populateOMLCache}
 \title{Download a bunch of OpenML objects to cache.}
 \usage{
-populateOMLCache(dids = integer(0L), task.ids = integer(0L),
+populateOMLCache(data.ids = integer(0L), task.ids = integer(0L),
   flow.ids = integer(0L), run.ids = integer(0L), verbosity = NULL,
   overwrite = FALSE)
 }
 \arguments{
-\item{dids}{[\code{integer}]\cr
+\item{data.ids}{[\code{integer}]\cr
 Dataset ids.
 Default is none.}
 

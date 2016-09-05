@@ -4,10 +4,10 @@
 \alias{getOMLDataSet}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(did, cache.only = FALSE, verbosity = NULL)
+getOMLDataSet(data.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
-\item{did}{[\code{integer(1)}]\cr
+\item{data.id}{[\code{integer(1)}]\cr
 Data set ID.}
 
 \item{cache.only}{[\code{logical(1)}]\cr

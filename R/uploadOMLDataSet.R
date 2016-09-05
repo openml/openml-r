@@ -40,11 +40,11 @@ uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, verbo
     post.args = list(description = upload_file(path = desc.file),
                      dataset = upload_file(path = output)))
   doc = parseXMLResponse(response, "Uploading dataset", c("upload_data_set", "response"), as.text = TRUE)
-  did = xmlOValI(doc, "/oml:upload_data_set/oml:id")
-  showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", did)
-  if (!is.null(tags)) tagOMLObject(did, object = "data", tags = tags)
+  data.id = xmlOValI(doc, "/oml:upload_data_set/oml:id")
+  showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", data.id)
+  if (!is.null(tags)) tagOMLObject(data.id, object = "data", tags = tags)
   forget(listOMLDataSets)
-  return(invisible(did))
+  return(invisible(data.id))
 }
 
 #' @export

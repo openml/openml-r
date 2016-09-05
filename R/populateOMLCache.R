@@ -7,7 +7,7 @@
 #' This is of particular interest in highly parallel computations on
 #' a cluster with a shared file system.
 #'
-#' @param dids [\code{integer}]\cr
+#' @param data.ids [\code{integer}]\cr
 #'   Dataset ids.
 #'   Default is none.
 #' @param task.ids [\code{integer}]\cr
@@ -24,14 +24,14 @@
 #'   Should files that are already in cache be overwritten?
 #' @return [\code{invisible(NULL)}]
 #' @export
-populateOMLCache = function(dids = integer(0L), task.ids = integer(0L),
+populateOMLCache = function(data.ids = integer(0L), task.ids = integer(0L),
   flow.ids = integer(0L), run.ids = integer(0L), verbosity = NULL, overwrite = FALSE) {
 
   # sanity check passed stuff
   task.ids = asInteger(task.ids, lower = 1L, any.missing = FALSE, unique = TRUE)
   flow.ids = asInteger(flow.ids, lower = 1L, any.missing = FALSE, unique = TRUE)
   run.ids = asInteger(run.ids, lower = 1L, any.missing = FALSE, unique = TRUE)
-  dids = asInteger(dids, lower = 1L, any.missing = FALSE, unique = TRUE)
+  data.ids = asInteger(data.ids, lower = 1L, any.missing = FALSE, unique = TRUE)
 
   # Helper function to dispatch to the download function
   downloadStuff = function(type, fun, ids, ...) {
@@ -41,7 +41,7 @@ populateOMLCache = function(dids = integer(0L), task.ids = integer(0L),
     }
   }
 
-  downloadStuff("datsets", downloadOMLObject, dids, object = "data")
+  downloadStuff("datsets", downloadOMLObject, data.ids, object = "data")
   downloadStuff("tasks", downloadOMLObject, task.ids, object = "task")
   downloadStuff("flows", downloadOMLObject, flow.ids, object = "flow")
   downloadStuff("runs", downloadOMLObject, run.ids, object = "run")
