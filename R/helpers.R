@@ -23,7 +23,11 @@ showMessage = function(verbosity, msg, ..., minlev) {
 # @return [character] "Renamed" variable names.
 convertNamesOMLToR = function(names) {
   assertCharacter(names, any.missing = FALSE, all.missing = FALSE)
-  gsub("_", ".", names)
+  # a_b_c to a.b.c
+  new.names = gsub("_", ".", names)
+  # did to data.id
+  new.names = gsub("^did$", "data.id", new.names)
+  return(new.names)
 }
 
 getRVersionString = function() {

@@ -10,20 +10,20 @@
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   res = fromJSON(txt = content)[[1L]][[1L]]
+
   data.id = as.integer(res$did)
   qualities = convertNameValueListToDF(res$quality)
   res$quality = res$did = NULL
 
   res = cbind(data.id, as.data.frame(res, stringsAsFactors = FALSE), qualities, stringsAsFactors = FALSE)
-  i = colnames(res)%in%colnames(qualities)
+  i = colnames(res) %in% colnames(qualities)
   res[i] = lapply(res[i], as.integer)
+
   return(res)
 }
 
 convertNameValueListToDF = function(x) {
   if (!isTRUE(checkList(x))) x = list(x)
-  #assertList(x)
-  #for(i in seq_along(x)) assertSubset(lapply(x, colnames)[[i]], c("name", "value"))
   ret = lapply(x, function(x) as.list(setNames(x$value, x$name)))
   cols = unique(unlist(lapply(x, function(x) x$name)))
   # replace empty rows with NA

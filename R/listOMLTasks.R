@@ -2,34 +2,48 @@
   NumberOfClasses = NULL, NumberOfMissingValues = NULL,
   tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
-  
+
   api.call = generateAPICall("json/task/list",
     NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures,
     NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
     tag = tag, limit = limit, offset = offset)
-  
+
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
-  res = fromJSON(txt = content)[[1L]][[1L]]
+
+  res = fromJSON(txt = content)$tasks$task
   res$task_type_id = NULL
-  
+
+  # make some neccesary conversions (we want a compact data frame)
   qualities = convertNameValueListToDF(res$quality)
   input = convertNameValueListToDF(res$input)
+
+  # get rid of less interesting stuff
   input$source_data = input$target_value = input$time_limit = input$number_samples = NULL
+
+  # include columns for estimation and evaluation if missing
   if (is.null(input$estimation_procedure)) input$estimation_procedure = NA
   if (is.null(input$evaluation_measures)) input$evaluation_measures = NA_character_
+
+  # build tag string
   if (is.list(res$tag)) {
     tags = vcapply(res$tag, function(x) collapse(x, sep = ", "))
   } else {
     tags = collapse(res$tag, sep = ", ")
   }
+
+  # again get rid of redundant/uninteresting stuff
   res$quality = res$input = res$tag = NULL
+
+  # build final dataframe
   res = cbind(res, input, qualities, tags, stringsAsFactors = FALSE)
-  
-  i = colnames(res)%in%c(colnames(qualities), "did", "task_id")
+
+  # convert to integer
+  i = colnames(res) %in% c(colnames(qualities), "did", "task_id")
   res[i] = lapply(res[i], as.integer)
-  
-  colnames(res) = gsub("_", ".", colnames(res))
-  colnames(res) = gsub("^did$", "data.id", colnames(res))
+
+  # finally convert _ to . in col names
+  names(res) = convertNamesOMLToR(names(res))
+
   return(res)
 }
 
