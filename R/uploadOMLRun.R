@@ -7,10 +7,14 @@
 #' This function will reset the cache of \code{\link{listOMLRuns}} and
 #' \code{\link{listOMLRunEvaluations}} on success.
 #'
+#' By default you will be asked to confirm the upload. You can deactivate the
+#' need for confirmation by setting \dQuote{confirm.upload = TRUE} via
+#' \link{setOMLConfig}.
+#'
 #' @param run [\code{\link{OMLRun}}|\code{\link{OMLMlrRun}}]\cr
 #'   The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{OMLMlrRun}}.
 #' @param upload.bmr [\code{logical(1)}]\cr
-#'   Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded? 
+#'   Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded?
 #'   If set to \code{TRUE} and the flow is created via \link[mlr]{makeTuneWrapper}, an arff file that contains the hyperparameter optimization trace is also uploaded.
 #' @template arg_upload_tags
 #' @template arg_verbosity
@@ -45,10 +49,10 @@ uploadOMLRun.OMLMlrRun = function(run, upload.bmr = FALSE, tags = NULL, verbosit
 uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
   assertClass(run, "OMLRun")
   assertFlag(upload.bmr)
-  
+
   bmr = list(...)$bmr
   flow = list(...)$flow
-  
+
   if (!checkUserConfirmation(type = "run")) {
     return(invisible())
   }
@@ -56,17 +60,17 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity =
   # if no flow.id, try to upload flow (if it exists) and assign its id to flow.id slot
   if (is.na(run$flow.id)) {
     if (!is.null(flow)){
-      run$flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity) 
+      run$flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity)
       #flow.ids = setNames(flow.ids, rev(unlist(strsplit(flow$name, "[.]")))[1:length(flow.ids)])
     } else stop("Please provide a 'flow'")
   } # else flow.ids = run$flow.id
-  
+
   if (is.na(run$error.message)) {
     assertDataFrame(run$predictions)
   } else {
     assertString(run$error.message)
   }
-  
+
   # modify parameter.setting and add component flow.id
   #parameter.setting = unclass(getOMLRunParList(run))
   #seed.setting = unclass(getOMLSeedParList(run))
@@ -84,14 +88,14 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity =
   on.exit(unlink(description))
   writeOMLRunXML(run, description, bmr = bmr)
   post.args = list(description = upload_file(path = description))
-  
+
   if (!is.null(run$predictions)) {
     predictions.file = tempfile(pattern = "predictions", fileext = ".arff")
     on.exit(unlink(predictions.file), add = TRUE)
     arff.writer(run$predictions, file = predictions.file)
     post.args$predictions = upload_file(path = predictions.file)
-  } 
-  
+  }
+
   if (!is.null(bmr)) {
     # FIXME: See https://github.com/openml/OpenML/issues/276 do we always want to upload this? Or only for TuneWrapper?
     if (grepl("[.]tuned", flow$name)) {
@@ -107,10 +111,10 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity =
       post.args$BenchmarkResult = upload_file(path = bmr.file)
     }
   }
-  
+
   content = doAPICall(api.call = "run", method = "POST", file = NULL, verbosity = verbosity,
     post.args = post.args)
-  
+
   # was uploading successful?
   doc = parseXMLResponse(content, "Uploading run", as.text = TRUE)
   run.id = xmlRValI(doc, "/oml:upload_run/oml:run_id")
@@ -140,23 +144,23 @@ getBMRTuneTrace = function(bmr) {
   tune.par = colnames(tune.x)
   resample.info = getResampInfo(res$pred$instance$desc)
   evaluation = names(mlr::getBMRTuneResults(bmr)[[1]][[1]][[1]]$y)
-  
+
   cv.iter = tune.res$iter
   folds = resample.info$folds
   reps = resample.info$reps
   rep = rep(seq_len(reps), each = length(cv.iter)/reps)
   fold = cv.iter %% folds
   fold[fold == 0L] = folds
-  
+
   # Note: The columns rep, fold and row_id must be 0-based to be accepted by the server.
   tune.trace = data.frame(
     rep = rep - 1L,
     fold = fold - 1L,
     iteration = as.numeric(tune.res$dob) - 1L,
-    tune.res[,tune.par, drop = FALSE], 
+    tune.res[,tune.par, drop = FALSE],
     evaluation = tune.res[[evaluation]]
   )
-  
+
   par = apply(tune.res[,tune.par, drop = FALSE], 1, function(x) collapse(x))
   par = chunk(par, chunk.size = length(unique(tune.res$dob)))
   tune.x.vec = apply(tune.x, 1, function(x) collapse(x))
@@ -169,7 +173,7 @@ getBMRTuneTrace = function(bmr) {
   #   d$select = (apply(d[, colnames(dat), drop = FALSE], 1, collapse))%in%collapse(dat)
   #   return(d)
   # })
-  
+
   tune.trace = tune.trace[order(tune.trace$rep, tune.trace$fold, tune.trace$iteration),]
   return(tune.trace)
 }
