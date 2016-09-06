@@ -111,6 +111,14 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     
     aggr = getMeasureValue(aggr.eval, measures = measures, as.df = FALSE)
     names(aggr) = unname(sapply(convertOMLMeasuresToMlr(names(aggr)), function(x) x$id))
+  } else {
+    # FIXME: this is incomplete
+  #   ms.test.df = lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )
+  #   ms.test.df = do.call("rbind", ms.test.df)
+  #   ms.test.df = data.frame(iter = row.names(ms.test.df), setRowNames(ms.test.df, NULL))
+  #   ms.test.df$iter = as.integer(gsub(".*-", "", ms.test.df$iter))
+  #   ms.test.df = ms.test.df[order(ms.test.df$iter),]
+  #   aggr = rowMeans(as.data.frame(lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )))
   }
 
   results = list(

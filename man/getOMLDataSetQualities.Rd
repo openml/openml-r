@@ -8,7 +8,7 @@ getOMLDataSetQualities(data.id, verbosity = NULL, name = NULL)
 }
 \arguments{
 \item{data.id}{[\code{integer(1)}]\cr
-ID of the data set.}
+Data ID.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

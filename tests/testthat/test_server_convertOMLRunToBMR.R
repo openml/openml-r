@@ -38,7 +38,7 @@ test_that("convertOMLRunToBMR", {
       expect_true(nrow(a) == 1)
     }
     
-    run.ids = 543387:543388 # 543387:543390
+    run.ids = 539200:539201 # main server: 543387:543388 # 543387:543390
     run.list = lapply(run.ids, getOMLRun)
     bmr = lapply(run.list, convertOMLRunToBMR, measures = c("area_under_roc_curve"))
     for(i in 1:length(bmr)) {
@@ -52,7 +52,7 @@ test_that("convertOMLRunToBMR", {
     # runs = lapply(tasks, function(x) runTaskMlr(x, makeLearner("classif.rpart", predict.type = "response")))
     # run.ids = sapply(runs, function(x) uploadOMLRun(x, tags = "convertBMR"))
     # 
-    run.ids = 543394:543395 # c(543394:543396, 543398)
+    run.ids = 539202:539203 # main server: 543394:543395 # c(543394:543396, 543398)
     run.list = lapply(run.ids, getOMLRun)
     bmr = lapply(run.list, convertOMLRunToBMR, measures = c("area_under_roc_curve"))
     for(i in 1:length(bmr)) {
@@ -67,7 +67,7 @@ test_that("convertOMLRunToBMR", {
     # runs = lapply(tasks, function(x) runTaskMlr(x, makeLearner("regr.rpart")))
     # run.ids = sapply(runs, function(x) uploadOMLRun(x, tags = "convertBMR"))
     # 
-    run.ids = 568501:568502
+    run.ids = 539204:539205 # main server: 568501:568502
     run.list = lapply(run.ids, getOMLRun)
     bmr = lapply(run.list, convertOMLRunToBMR, measures = c("root_mean_squared_error"))
     for(i in 1:length(bmr)) {

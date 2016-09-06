@@ -8,7 +8,7 @@ getOMLDataSet(data.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{data.id}{[\code{integer(1)}]\cr
-ID of the data set.}
+Data ID.}
 
 \item{cache.only}{[\code{logical(1)}]\cr
 Only try to retrieve the object from cache.
