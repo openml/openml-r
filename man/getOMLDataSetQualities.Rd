@@ -4,11 +4,11 @@
 \alias{getOMLDataSetQualities}
 \title{List available OpenML qualities with values for given data set.}
 \usage{
-getOMLDataSetQualities(did, verbosity = NULL, name = NULL)
+getOMLDataSetQualities(data.id, verbosity = NULL, name = NULL)
 }
 \arguments{
-\item{did}{[\code{integer(1)}]\cr
-The data set ID.}
+\item{data.id}{[\code{integer(1)}]\cr
+ID of the data set.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

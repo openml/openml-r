@@ -51,7 +51,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-The returned \code{data.frame} contains the data set id \dQuote{did},
+The returned \code{data.frame} contains the data set id \dQuote{data.id},
 the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
 and describing data qualities.
 }

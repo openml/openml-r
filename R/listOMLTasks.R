@@ -39,7 +39,7 @@
     tag.ind = names(strings) == "tag"
     strings = c(strings[!tag.ind], "tags" = collapse(strings[tag.ind], sep = ", "))
     out.vars = c("task_id", "task_type", "did", "status", "format", "name", "target_feature", "tags",
-      "estimation_procedure", "evaluation_measures", names[names(names)%in%"quality"])
+      "estimation_procedure", "evaluation_measures", names[names(names) %in% "quality"])
     return(as.list(strings[out.vars]))
   })
   li = as.data.frame(rbindlist(info, fill = TRUE))
@@ -57,7 +57,7 @@
   if (is.null(li$evaluation_measures)) li$evaluation_measures = NA
   li$status = as.factor(li$status)
 
-  colnames(li) = gsub("_", ".", colnames(li))
+  names(li) = convertNamesOMLToR(names(li))
   return(li)
 }
 
