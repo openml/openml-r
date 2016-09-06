@@ -17,11 +17,11 @@ test_that("getOMLDataSet", {
     checkOMLDataSet(data)
  })
   with_empty_cache({
-    dids = c(1479) #, 1484, 1566, 1468, 1514, 1515)
-    for(i in dids) {
+    data.ids = c(1479) #, 1484, 1566, 1468, 1514, 1515)
+    for(data.id in data.ids) {
       # cache only option
-      expect_error(getOMLDataSet(i, cache.only = TRUE), "not found in cache with option")
-      data = getOMLDataSet(i)
+      expect_error(getOMLDataSet(data.id, cache.only = TRUE), "not found in cache with option")
+      data = getOMLDataSet(data.id)
       checkOMLDataSet(data)
     }
     expect_error(getOMLDataSet(17), "Data set has been deactivated.")

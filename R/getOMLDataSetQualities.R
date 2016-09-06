@@ -3,8 +3,7 @@
 #' @description The returned \code{data.frame} contains data set quality
 #' \dQuote{name}s and values \dQuote{value}.
 #'
-#' @param did [\code{integer(1)}]\cr
-#'   The data set ID.
+#' @template arg_data.id
 #' @template arg_verbosity
 #' @param name [\code{character}]\cr
 #'   Returns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).
@@ -13,14 +12,14 @@
 #' @family downloading functions
 #' @example inst/examples/getOMLDataSetQualities.R
 #' @export
-getOMLDataSetQualities = function(did, verbosity = NULL, name = NULL) {
+getOMLDataSetQualities = function(data.id, verbosity = NULL, name = NULL) {
   qualities = listOMLDataSetQualities()$name
   if (is.null(name))
     name = qualities
   assertSubset(name, qualities)
 
   content = doAPICall(
-    api.call = "data/qualities", id = did,
+    api.call = "data/qualities", id = data.id,
     file = NULL, verbosity = verbosity, method = "GET"
   )
   xml = parseXMLResponse(content, "Getting data set qualities", "data_qualities", as.text = TRUE)

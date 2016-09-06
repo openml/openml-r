@@ -6,8 +6,7 @@
 #' Note that data splits and other task-related information are not included in
 #' an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask}}.
 #'
-#' @param did [\code{integer(1)}]\cr
-#'   Data set ID.
+#' @template arg_data.id
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}].
@@ -15,11 +14,11 @@
 #' @family data set-related functions
 #' @example inst/examples/getOMLDataSet.R
 #' @export
-getOMLDataSet = function(did, cache.only = FALSE, verbosity = NULL) {
-  did = asInt(did, lower = 0)
+getOMLDataSet = function(data.id, cache.only = FALSE, verbosity = NULL) {
+  data.id = asInt(data.id, lower = 0)
   assertFlag(cache.only)
 
-  down = downloadOMLObject(did, object = "data", cache.only = cache.only, verbosity = verbosity)
+  down = downloadOMLObject(data.id, object = "data", cache.only = cache.only, verbosity = verbosity)
   f = down$files
 
   # parse data set description

@@ -4,11 +4,11 @@
 \alias{getOMLDataSet}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(did, cache.only = FALSE, verbosity = NULL)
+getOMLDataSet(data.id, cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
-\item{did}{[\code{integer(1)}]\cr
-Data set ID.}
+\item{data.id}{[\code{integer(1)}]\cr
+ID of the data set.}
 
 \item{cache.only}{[\code{logical(1)}]\cr
 Only try to retrieve the object from cache.

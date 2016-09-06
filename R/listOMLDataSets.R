@@ -1,10 +1,10 @@
-.listOMLDataSets = function(NumberOfInstances = NULL, NumberOfFeatures = NULL, 
+.listOMLDataSets = function(NumberOfInstances = NULL, NumberOfFeatures = NULL,
   NumberOfClasses = NULL, NumberOfMissingValues = NULL,
   tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
-  api.call = generateAPICall("data/list", 
-    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures, 
+  api.call = generateAPICall("data/list",
+    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures,
     NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
     tag = tag, limit = limit, offset = offset)
 
@@ -17,7 +17,7 @@
     children = xmlChildren(node)
     is.quality = names(children) == "quality"
     info = list(
-      did = as.integer(xmlValue(children[["did"]])),
+      data.id = as.integer(xmlValue(children[["did"]])),
       status = xmlValue(children[["status"]]),
       format = xmlValue(children[["format"]]),
       name = xmlValue(children[["name"]])
@@ -36,7 +36,7 @@
 #' @title List available OpenML data sets.
 #'
 #' @description
-#' The returned \code{data.frame} contains the data set id \dQuote{did},
+#' The returned \code{data.frame} contains the data set id \dQuote{data.id},
 #' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
 #' and describing data qualities.
 #'
