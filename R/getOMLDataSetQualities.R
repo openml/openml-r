@@ -3,8 +3,7 @@
 #' @description The returned \code{data.frame} contains data set quality
 #' \dQuote{name}s and values \dQuote{value}.
 #'
-#' @param data.id [\code{integer(1)}]\cr
-#'   The data set ID.
+#' @template arg_data.id
 #' @template arg_verbosity
 #' @param name [\code{character}]\cr
 #'   Returns only the data qualities from \dQuote{name} (see also \code{\link{listOMLDataSetQualities}}).

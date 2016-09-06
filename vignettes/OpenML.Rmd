@@ -22,7 +22,7 @@ The R package OpenML is an interface to make interactions with the [OpenML](http
 For example, the users can download and upload files, run their implementations on specific tasks and get predictions in the correct form directly via R commands.
 In this tutorial, we will show the most important functions of this package and give examples on standard workflows.
 
-For general information on what OpenML is, please have a look at the [README file](https://github.com/openml/OpenML/blob/master/README.md) or visit the [official OpenML website](http://openml.org/). 
+For general information on what OpenML is, please have a look at the [README file](https://github.com/openml/OpenML/blob/master/README.md) or visit the [official OpenML website](http://openml.org/).
 
 After installation and before making practical use of the package, in most cases it is desirable to [setup a configuration file](#config) to simplify further steps.
 Afterwards, there are different basic stages when using this package or OpenML, respectively:
@@ -73,7 +73,7 @@ In this paragraph you can find an example on how to download a task from the ser
 
 ```{r eval=TRUE, message=FALSE}
 library("OpenML")
-## temporarily set API key to read only key 
+## temporarily set API key to read only key
 setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 
 # download a task (whose ID is 1L)
@@ -418,7 +418,7 @@ dataset.id
 Alternatively you can enter data directly on the [OpenML website](http://www.openml.org/new/data).
 
 
-### Upload a flow 
+### Upload a flow
 
 A [flow](#flows) is an implementation of a single algorithm or a script. Each [`mlr` learner](http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/) can be considered an implementation of a flow, which can be uploaded to the server with the function `uploadOMLFlow`.
 If the flow has already been uploaded to the server (either by you or someone else), one receives a message that the flow already exists and the `flow.id` is returned from the function. Otherwise, the flow will be uploaded, receive its own `flow.id` and return that ID.

@@ -26,7 +26,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 }
 \value{
 [\code{invisible(numeric(1))}].
-  The ID of the data (\code{did}).
+  The ID of the data (\code{data.id}).
 }
 \description{
 Share a data set by uploading it to the OpenML server.

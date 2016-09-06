@@ -10,19 +10,19 @@ populateOMLCache(data.ids = integer(0L), task.ids = integer(0L),
 }
 \arguments{
 \item{data.ids}{[\code{integer}]\cr
-Dataset ids.
+Dataset IDs.
 Default is none.}
 
 \item{task.ids}{[\code{integer}]\cr
-Task ids.
+Task IDs.
 Default is none.}
 
 \item{flow.ids}{[\code{integer}]\cr
-Flow ids.
+Flow IDs.
 Default is none.}
 
 \item{run.ids}{[\code{integer}]\cr
-Run ids.
+Run IDs.
 Default is none.}
 
 \item{verbosity}{[\code{integer(1)}]\cr

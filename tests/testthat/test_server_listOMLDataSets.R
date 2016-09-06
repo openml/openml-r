@@ -14,7 +14,7 @@ test_that("listOMLDataSets", {
     expect_character(dsl$status, any.missing = FALSE)
     expect_character(dsl$name, any.missing = FALSE)
   }
-  ds = .listOMLDataSets(NumberOfInstances = c(40, 100), NumberOfFeatures = c(5, 10), 
+  ds = .listOMLDataSets(NumberOfInstances = c(40, 100), NumberOfFeatures = c(5, 10),
     NumberOfClasses = 2, NumberOfMissingValues = 0)
   expect_true(min(ds$NumberOfInstances) >= 40)
   expect_true(max(ds$NumberOfInstances) <= 100)

@@ -6,8 +6,7 @@
 #' Note that data splits and other task-related information are not included in
 #' an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask}}.
 #'
-#' @param data.id [\code{integer(1)}]\cr
-#'   Data set ID.
+#' @template arg_data.id
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}].
@@ -20,9 +19,6 @@ getOMLDataSet = function(data.id, cache.only = FALSE, verbosity = NULL) {
   assertFlag(cache.only)
 
   down = downloadOMLObject(data.id, object = "data", cache.only = cache.only, verbosity = verbosity)
-  # print(down$files)
-  # print(readLines(down$files$description.xml$path))
-
   f = down$files
 
   # parse data set description

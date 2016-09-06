@@ -12,7 +12,7 @@
 #' @template arg_description
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}].
-#'   The ID of the data (\code{did}).
+#'   The ID of the data (\code{data.id}).
 #' @family uploading functions
 #' @family data set-related functions
 #' @export
