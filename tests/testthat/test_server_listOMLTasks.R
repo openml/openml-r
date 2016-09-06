@@ -27,7 +27,6 @@ test_that("listOMLTasks", {
 
   tasks1 = .listOMLTasks(tag = "study_1")
   expect_data_frame(tasks1, min.rows = 10L, col.names = "unique")
-
   #expect_set_equal(exp.names, names(tasks1))
 
   # check if listing one tag works

@@ -80,7 +80,7 @@ convertOMLDataSetToMlr = function(
     mlr.task$task.desc$id = replaceOMLDataSetString(mlr.task.id, obj)
 
   #  remove constant featues
-  mlr.task = removeConstantFeatures(mlr.task)
+  mlr.task = mlr::removeConstantFeatures(mlr.task)
   return(mlr.task)
 }
 
