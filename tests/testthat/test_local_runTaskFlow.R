@@ -20,7 +20,8 @@ test_that("runTaskFlow", {
     
     # do the same again and use a learner with parameter values
     lrn = makeFilterWrapper(makeLearner("classif.randomForest", mtry = 2, ntree = 5), fw.method = "variance", fw.perc = 0.5)
-    run = getOMLRun(572944)
+    run = getOMLRun(539275)
+    
     flow = getOMLFlow(run$flow.id)
     res2 = runTaskFlow(task, flow, par.list = getOMLRunParList(run), seed = getOMLSeedParList(run))
     checkRun(res2)

@@ -71,7 +71,8 @@ isSeedPar = function(par) {
 setOMLSeedParList = function(x) {
   assertClass(x, "OMLSeedParList")
   seed.pars = vcapply(x, function(x) x$value)
-  names(seed.pars) = c("seed", "kind", "normal.kind")
+  prefix = unique(gsub("seed|kind|normal.kind", "", names(seed.pars)))
+  names(seed.pars) = gsub(prefix, "", names(seed.pars)) #c("seed", "kind", "normal.kind")
   xRNG = seed.pars[c("kind", "normal.kind")]
   
   currentRNG = RNGkind()
