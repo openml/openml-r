@@ -9,6 +9,8 @@ environment:
   OPENMLAPIKEY:
     secure: hINTXDh/axsuXD8r6A8DuR2bovaPFBIlmBVba0xXtilQNf5guE1/fT0mtrKgVRsR
 
+platform: x64
+
 install:
   ps: Bootstrap
 
