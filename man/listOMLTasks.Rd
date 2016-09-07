@@ -4,25 +4,25 @@
 \alias{listOMLTasks}
 \title{List available OpenML tasks.}
 \usage{
-listOMLTasks(NumberOfInstances = NULL, NumberOfFeatures = NULL,
-  NumberOfClasses = NULL, NumberOfMissingValues = NULL, tag = NULL,
+listOMLTasks(number.of.instances = NULL, number.of.features = NULL,
+  number.of.classes = NULL, number.of.missing.values = NULL, tag = NULL,
   limit = NULL, offset = NULL, status = "active", verbosity = NULL)
 }
 \arguments{
-\item{NumberOfInstances}{[\code{numeric(1) | numeric(2)}]\cr
-If not \code{NULL}, subsets the entries with respect to the given values or, 
+\item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or,
 if a vector of length 2 is passed, the given ranges.}
 
-\item{NumberOfFeatures}{[\code{numeric(1) | numeric(2)}]\cr
-If not \code{NULL}, it subsets the entries with respect to the given values or, 
+\item{number.of.features}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, it subsets the entries with respect to the given values or,
 if a vector of length 2 is passed, the given range.}
 
-\item{NumberOfClasses}{[\code{numeric(1) | numeric(2)}]\cr
-If not \code{NULL}, subsets the entries with respect to the given values or, 
+\item{number.of.classes}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or,
 if a vector of length 2 is passed, the given ranges.}
 
-\item{NumberOfMissingValues}{[\code{numeric(1) | numeric(2)}]\cr
-If not \code{NULL}, subsets the entries with respect to the given values or, 
+\item{number.of.missing.values}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or,
 if a vector of length 2 is passed, the given ranges.}
 
 \item{tag}{[\code{character}]\cr

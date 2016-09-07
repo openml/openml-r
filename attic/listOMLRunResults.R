@@ -5,7 +5,7 @@
 #' it in a \code{data.frame}. Each row contains, among others, the run id \dQuote{rid},
 #' the setup id \dQuote{sid} and the task.id \dQuote{tid}.
 #'
-#' @template arg_task_id
+#' @template arg_task.id
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family list
