@@ -4,7 +4,7 @@
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
   api.call = generateAPICall("task/list",
-    NumberOfInstances = NumberOfInstances, NumberOfFeatures = number.of.features,
+    NumberOfInstances = number.of.instances, NumberOfFeatures = number.of.features,
     NumberOfClasses = number.of.classes, NumberOfMissingValues = number.of.missing.values,
     tag = tag, limit = limit, offset = offset)
 
@@ -58,6 +58,7 @@
   li$status = as.factor(li$status)
 
   names(li) = convertNamesOMLToR(names(li))
+
   return(li)
 }
 

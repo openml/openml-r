@@ -27,6 +27,10 @@ convertNamesOMLToR = function(names) {
   new.names = gsub("_", ".", names)
   # did to data.id
   new.names = gsub("^did$", "data.id", new.names)
+  # ServerVar to server.var
+  new.names = gsub("([a-z])([A-Z])", "\\1.\\L\\2", new.names, perl = TRUE)
+  # make first character lower case
+  new.names = sub("^(.[a-z])", "\\L\\1", new.names, perl = TRUE)
   return(new.names)
 }
 

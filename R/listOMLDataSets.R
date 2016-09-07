@@ -30,6 +30,9 @@
   # subset status level
   ret = droplevels(df[df$status %in% status, , drop = FALSE])
   row.names(ret) = NULL
+
+  names(ret) = convertNamesOMLToR(names(ret))
+
   return(ret)
 }
 
