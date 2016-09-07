@@ -7,7 +7,7 @@ init:
 environment:
   USE_RTOOLS: true
   OPENMLAPIKEY:
-    secure: zLFT7JPIgQKo7yUL8zHDaq73p7jLmQ8X+MEPID7GfZdLMJZgiujavaNIm+tOAwtm
+    secure: hINTXDh/axsuXD8r6A8DuR2bovaPFBIlmBVba0xXtilQNf5guE1/fT0mtrKgVRsR
 
 install:
   ps: Bootstrap
