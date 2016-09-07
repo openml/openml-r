@@ -32,7 +32,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
   #   }
   # } else tmp = NULL
 
-  check = checkOMLFlow(x, verbosity = FALSE)
+  check = checkOMLFlow(x, verbosity = verbosity)
   doc = check$doc
   if (check$exists) {
     flow.id = xmlOValI(doc, "/oml:flow_exists/oml:id")
