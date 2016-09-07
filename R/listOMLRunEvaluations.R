@@ -22,7 +22,8 @@
 
   mat = t(mat)
   ret = setNames(as.data.frame(unname(mat), stringsAsFactors = FALSE), colnames(mat))
-  ret = reshape(ret, timevar = "function", idvar = c("run_id", "task_id", "setup_id", "flow_id"), direction = "wide")
+  ret = reshape(ret, timevar = "function", 
+    idvar = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name"), direction = "wide")
   # remove NA columns
   ret = ret[,vlapply(ret, function(x) !all(is.na(x)))]
 
