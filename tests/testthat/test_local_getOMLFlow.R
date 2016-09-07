@@ -9,9 +9,9 @@ test_that("getOMLFlow", {
     expect_equal(flow$flow.id, 2)
     
     # check flow created with R
-    flow.r = getOMLFlow(3884)
+    flow.r = getOMLFlow(5270)
     expect_is(flow.r, "OMLFlow")
-    expect_output(print(flow.r), "Flow|3880")
+    expect_output(print(flow.r), "Flow")
     expect_string(flow.r$binary.url)
     expect_equal(flow.r$binary.format, "Rds")
     expect_file(flow.r$binary.path)

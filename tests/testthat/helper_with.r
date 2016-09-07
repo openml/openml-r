@@ -28,11 +28,11 @@ with_write_access = function(expr, envir = parent.frame()) {
   reset_config({
     setOMLConfig(confirm.upload = FALSE)
     # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
-    if (identical(Sys.getenv("TRAVIS"), "true")) {
-      skip_on_travis()
-    } else {
+    # if (identical(Sys.getenv("TRAVIS"), "true")) {
+    #   skip_on_travis()
+    # } else {
       eval(expr, envir = envir)
-    }
+    #}
   })
 }
 
