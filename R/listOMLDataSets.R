@@ -20,6 +20,7 @@
       data.id = as.integer(xmlValue(children[["did"]])),
       status = xmlValue(children[["status"]]),
       format = xmlValue(children[["format"]]),
+      version = xmlValue(children[["version"]]),
       name = xmlValue(children[["name"]])
     )
     qualities = convertNodeSetToList(children[is.quality], fun = as.integer)
