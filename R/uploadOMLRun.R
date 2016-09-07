@@ -158,7 +158,7 @@ getBMRTuneTrace = function(bmr) {
     fold = fold - 1L,
     iteration = as.numeric(tune.res$dob) - 1L,
     tune.res[,tune.par, drop = FALSE],
-    evaluation = tune.res[[evaluation]]
+    evaluation = tune.res[evaluation]
   )
 
   par = apply(tune.res[,tune.par, drop = FALSE], 1, function(x) collapse(x))

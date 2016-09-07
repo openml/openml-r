@@ -45,21 +45,22 @@ test_that("uploadOMLRun", {
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
 
-    # upload tune wrapper
-    # lrn = makeLearner("classif.rpart")
-    # # stupid mini grid
-    # ps = makeParamSet(
-    #   makeDiscreteParam("cp", values = c(0.05, 0.1)),
-    #   makeDiscreteParam("minsplit", values = c(10, 20))
-    # )
-    # ctrl = makeTuneControlGrid()
-    # inner = makeResampleDesc("Holdout")
-    # outer = makeResampleDesc("CV", iters = 2)
-    # lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl)
-    #
-    # res = runTaskMlr(task, lrn)
-    # run.id = uploadOMLRun(res, upload.bmr = TRUE)
-    # expect_is(run.id, "integer")
-    # deleteOMLObject(run.id, object = "run")
+    # upload tune wrapper with two measures
+    lrn = makeLearner("classif.rpart")
+    # stupid mini grid
+    ps = makeParamSet(
+      makeDiscreteParam("cp", values = c(0.05, 0.1)),
+      makeDiscreteParam("minsplit", values = c(10, 20))
+    )
+    ctrl = makeTuneControlGrid()
+    inner = makeResampleDesc("Holdout")
+    outer = makeResampleDesc("CV", iters = 2)
+    lrn = makeTuneWrapper(lrn, resampling = inner, measures = list(acc, mmce),
+      par.set = ps, control = ctrl)
+
+    res = runTaskMlr(task, lrn)
+    run.id = uploadOMLRun(res, upload.bmr = TRUE)
+    expect_is(run.id, "integer")
+    deleteOMLObject(run.id, object = "run")
   })
 })
