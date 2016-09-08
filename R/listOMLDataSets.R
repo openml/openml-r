@@ -1,12 +1,14 @@
-.listOMLDataSets = function(NumberOfInstances = NULL, NumberOfFeatures = NULL,
-  NumberOfClasses = NULL, NumberOfMissingValues = NULL,
-  tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
+.listOMLDataSets = function(number.of.instances = NULL, number.of.features = NULL,
+  number.of.classes = NULL, number.of.missing.values = NULL,
+  tag = NULL, data.name = NULL,
+  limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
   api.call = generateAPICall("data/list",
-    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures,
-    NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
-    tag = tag, limit = limit, offset = offset)
+    number.of.instances = number.of.instances, number.of.features = number.of.features,
+    number.of.classes = number.of.classes, number.of.missing.values = number.of.missing.values,
+    tag = tag, data.name = data.name,
+    limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
@@ -30,6 +32,9 @@
   # subset status level
   ret = droplevels(df[df$status %in% status, , drop = FALSE])
   row.names(ret) = NULL
+
+  names(ret) = convertNamesOMLToR(names(ret))
+
   return(ret)
 }
 
@@ -42,11 +47,12 @@
 #'
 #' @template note_memoise
 #'
-#' @template arg_NumberOfInstances
-#' @template arg_NumberOfFeatures
-#' @template arg_NumberOfClasses
-#' @template arg_NumberOfMissingValues
+#' @template arg_number.of.instances
+#' @template arg_number.of.features
+#' @template arg_number.of.classes
+#' @template arg_number.of.missing.values
 #' @template arg_tag
+#' @template arg_data.name
 #' @template arg_limit
 #' @template arg_offset
 #' @template arg_status
