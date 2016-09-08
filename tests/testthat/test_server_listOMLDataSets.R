@@ -5,9 +5,9 @@ skip_on_cran()
 test_that("listOMLDataSets", {
   exp.names = c("data.id", "status", "format", "name", "MajorityClassSize",
     "max.nominal.att.distinct.values", "minority.class.size", #"num.binary.atts",
-    ".number.of.classes", ".number.of.features", ".number.of.instances",
-    ".number.of.instances.with.missing.values", ".number.of.missing.values",
-    ".number.of.numeric.features", "number.of.symbolic.features")
+    "number.of.classes", "number.of.features", "number.of.instances",
+    "number.of.instances.with.missing.values", "number.of.missing.values",
+    "number.of.numeric.features", "number.of.symbolic.features")
 
   for (dsl in list(.listOMLDataSets(limit = 10L), .listOMLDataSets(tag = "study_1", limit = 10L))) {
     expect_data_frame(dsl, col.names = "unique", min.rows = 1)
@@ -28,8 +28,8 @@ test_that("listOMLDataSets", {
 
 test_that("listOMLDataSets by data.name", {
   exp.name = "iris"
-  data.sets = .listOMLDataSets(name = exp.name)
+  data.sets = .listOMLDataSets(data.name = exp.name)
   # there needs to be at least on iris version
-  expect_data_frame(data.sets, col.names = unique, min.rows = 1)
+  expect_data_frame(data.sets, col.names = "unique", min.rows = 1)
   expect_true(all(data.sets$name == exp.name))
 })

@@ -88,7 +88,7 @@ catfNotNA = function(text, obj) {
 }
 
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
-  NumberOfInstances = NULL, NumberOfFeatures = NULL, NumberOfClasses = NULL, NumberOfMissingValues = NULL,
+  number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL, number.of.missing.values = NULL,
   tag = NULL, data.name = NULL, limit = NULL, offset = NULL) {
   is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
   assertSorted = makeAssertionFunction(is.sorted)
@@ -97,29 +97,29 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   if (!is.null(flow.id)) assertIntegerish(flow.id)
   if (!is.null(run.id)) assertIntegerish(run.id)
   if (!is.null(uploader.id)) assertIntegerish(uploader.id)
-  if (!is.null(NumberOfInstances)) {
-    if (length(NumberOfInstances) == 1) NumberOfInstances = rep(NumberOfInstances, 2)
-    assertIntegerish(NumberOfInstances, lower = 1, null.ok = TRUE, min.len = 1, max.len = 2)
-    assertSorted(NumberOfInstances)
-    NumberOfInstances = collapse(NumberOfInstances, sep = "..")
+  if (!is.null(number.of.instances)) {
+    if (length(number.of.instances) == 1) number.of.instances = rep(number.of.instances, 2)
+    assertIntegerish(number.of.instances, lower = 1, null.ok = TRUE, min.len = 1, max.len = 2)
+    assertSorted(number.of.instances)
+    number.of.instances = collapse(number.of.instances, sep = "..")
   }
-  if (!is.null(NumberOfFeatures)) {
-    if (length(NumberOfFeatures) == 1) NumberOfFeatures = rep(NumberOfFeatures, 2)
-    assertIntegerish(NumberOfFeatures, lower = 1, null.ok = TRUE, min.len = 1, max.len = 2)
-    assertSorted(NumberOfFeatures)
-    NumberOfFeatures = collapse(NumberOfFeatures, sep = "..")
+  if (!is.null(number.of.features)) {
+    if (length(number.of.features) == 1) number.of.features = rep(number.of.features, 2)
+    assertIntegerish(number.of.features, lower = 1, null.ok = TRUE, min.len = 1, max.len = 2)
+    assertSorted(number.of.features)
+    number.of.features = collapse(number.of.features, sep = "..")
   }
-  if (!is.null(NumberOfClasses)) {
-    if (length(NumberOfClasses) == 1) NumberOfClasses = rep(NumberOfClasses, 2)
-    assertIntegerish(NumberOfClasses, lower = 2, null.ok = TRUE, min.len = 1, max.len = 2)
-    assertSorted(NumberOfClasses)
-    NumberOfClasses = collapse(NumberOfClasses, sep = "..")
+  if (!is.null(number.of.classes)) {
+    if (length(number.of.classes) == 1) number.of.classes = rep(number.of.classes, 2)
+    assertIntegerish(number.of.classes, lower = 2, null.ok = TRUE, min.len = 1, max.len = 2)
+    assertSorted(number.of.classes)
+    number.of.classes = collapse(number.of.classes, sep = "..")
   }
-  if (!is.null(NumberOfMissingValues)) {
-    if (length(NumberOfMissingValues) == 1) NumberOfMissingValues = rep(NumberOfMissingValues, 2)
-    assertIntegerish(NumberOfMissingValues, lower = 0, null.ok = TRUE, min.len = 1, max.len = 2)
-    assertSorted(NumberOfMissingValues)
-    NumberOfMissingValues = collapse(NumberOfMissingValues, sep = "..")
+  if (!is.null(number.of.missing.values)) {
+    if (length(number.of.missing.values) == 1) number.of.missing.values = rep(number.of.missing.values, 2)
+    assertIntegerish(number.of.missing.values, lower = 0, null.ok = TRUE, min.len = 1, max.len = 2)
+    assertSorted(number.of.missing.values)
+    number.of.missing.values = collapse(number.of.missing.values, sep = "..")
   }
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
   if (!is.null(data.name)) assertString(data.name, na.ok = FALSE)
@@ -142,10 +142,10 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     run = run.id,
     uploader = uploader.id,
     tag = tag,
-    NumberOfInstances = NumberOfInstances,
-    NumberOfFeatures = NumberOfFeatures,
-    NumberOfClasses = NumberOfClasses,
-    NumberOfMissingValues = NumberOfMissingValues,
+    NumberOfInstances = number.of.instances,
+    NumberOfFeatures = number.of.features,
+    NumberOfClasses = number.of.classes,
+    NumberOfMissingValues = number.of.missing.values,
     DataName = data.name,
     limit = limit,
     offset = offset

@@ -5,9 +5,10 @@
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
   api.call = generateAPICall("task/list",
-    NumberOfInstances = number.of.instances, NumberOfFeatures = number.of.features,
-    NumberOfClasses = number.of.classes, NumberOfMissingValues = number.of.missing.values,
-    tag = tag, limit = limit, offset = offset, data_name = data.name)
+    number.of.instances = number.of.instances, number.of.features = number.of.features,
+    number.of.classes = number.of.classes, number.of.missing.values = number.of.missing.values,
+    tag = tag, data.name = data.name,
+    limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 

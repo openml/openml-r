@@ -40,3 +40,10 @@ test_that("listOMLTasks", {
   expect_true(sum(is.na(tasks$evaluation.measures)) == nrow(tasks))
   #expect_set_equal(exp.names, names(tasks))
 })
+
+test_that("listOMLTasks works with data.name filter", {
+  exp.name = "iris"
+  tasks = .listOMLTasks(limit = 10L, data.name = exp.name)
+  expect_data_frame(tasks)
+  expect_true(all(tasks$name == exp.name))
+})
