@@ -1,39 +1,42 @@
-.listOMLRunEvaluations = function(task.id = NULL, flow.id = NULL, run.id = NULL, 
+.listOMLRunEvaluations = function(task.id = NULL, flow.id = NULL, run.id = NULL,
   uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
-  
+
   if (is.null(task.id) && is.null(flow.id) && is.null(run.id) && is.null(uploader.id) && is.null(tag))
     stop("Please hand over at least one of the following: task.id, flow.id, run.id, uploader.id, tag")
-  
-  api.call = generateAPICall(api.call = "evaluation/list", task.id = task.id, flow.id = flow.id,
+
+  api.call = generateAPICall(api.call = "json/evaluation/list", task.id = task.id, flow.id = flow.id,
     run.id = run.id, uploader.id = uploader.id, tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
 
-  d = parseXMLResponse(content, "Getting task results", "evaluations", as.text = TRUE, return.doc = FALSE)
+  evals = fromJSON(txt = content)$evaluations$evaluation
 
-  mat = xmlSApply(d, function(x) {
-    line = getChildrenStringsNA(x)
-    if ("array_data" %nin% names(line))
-      line = c(line, "array_data" = NA)
-    if ("value" %nin% names(line))
-      line = c(line, "value" = NA)
-    return(line)
-  })
+  # convert long format to wide format
+  evals = reshape(evals,
+    timevar = "function",
+    idvar = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name"),
+    direction = "wide")
 
-  mat = t(mat)
-  ret = setNames(as.data.frame(unname(mat), stringsAsFactors = FALSE), colnames(mat))
-  ret = reshape(ret, timevar = "function", 
-    idvar = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name"), direction = "wide")
-  # remove NA columns
-  ret = ret[,vlapply(ret, function(x) !all(is.na(x)))]
+  # drop "all NA" columns
+  evals = evals[, vlapply(evals, function(x) !all(is.na(x)))]
+  # drop all array columns that are NULL
+  drop.array = vlapply(evals[,grepl("array_data[.]", colnames(evals))], function(x) all(vlapply(x, is.null)))
+  drop.array = names(drop.array)[drop.array]
+  evals = evals[, colnames(evals)%nin%drop.array]
+  
+  # unfortunately column names are f***ed up now. Some tedious work is neccessary
+  # to achive our naming conventions
+  colnames(evals) = gsub("value[.]", "", colnames(evals))
+  arr.ind = grepl("array_data[.]", colnames(evals))
+  colnames(evals)[arr.ind] = paste0(gsub("array_data[.]", "", colnames(evals)[arr.ind]), ".array")
 
-  colnames(ret) = gsub("value[.]", "", colnames(ret))
-  arr.ind = grepl("array_data[.]", colnames(ret))
-  colnames(ret)[arr.ind] = paste0(gsub("array_data[.]", "", colnames(ret)[arr.ind]), ".array")
-  ret = as.data.frame(lapply(ret, type.convert, numerals = "no.loss", as.is = TRUE))
+  # convert types (by default all is character)
+  #evals = as.data.frame(lapply(evals, type.convert, numerals = "no.loss", as.is = TRUE))
 
-  colnames(ret) = gsub("_", ".", colnames(ret))
-  return(ret)
+  # finally convert _ to . in col names
+  names(evals) = convertNamesOMLToR(names(evals))
+
+  return(evals)
 }
 
 #' @title List run results of a task.

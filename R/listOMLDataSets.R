@@ -1,36 +1,33 @@
-.listOMLDataSets = function(NumberOfInstances = NULL, NumberOfFeatures = NULL,
-  NumberOfClasses = NULL, NumberOfMissingValues = NULL,
-  tag = NULL, limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
+.listOMLDataSets = function(number.of.instances = NULL, number.of.features = NULL,
+  number.of.classes = NULL, number.of.missing.values = NULL,
+  tag = NULL, data.name = NULL,
+  limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
   assertSubset(status, getValidOMLDataSetStatusLevels())
 
-  api.call = generateAPICall("data/list",
-    NumberOfInstances = NumberOfInstances, NumberOfFeatures = NumberOfFeatures,
-    NumberOfClasses = NumberOfClasses, NumberOfMissingValues = NumberOfMissingValues,
-    tag = tag, limit = limit, offset = offset)
+  api.call = generateAPICall("json/data/list",
+    number.of.instances = number.of.instances, number.of.features = number.of.features,
+    number.of.classes = number.of.classes, number.of.missing.values = number.of.missing.values,
+    tag = tag, data.name = data.name,
+    limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
-  xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
+  res = fromJSON(txt = content, simplifyVector = FALSE)$data$dataset
 
-  # get list of blocks for data sets
-  blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  df = as.data.frame(rbindlist(lapply(blocks, function(node) {
-    children = xmlChildren(node)
-    is.quality = names(children) == "quality"
-    info = list(
-      data.id = as.integer(xmlValue(children[["did"]])),
-      status = xmlValue(children[["status"]]),
-      format = xmlValue(children[["format"]]),
-      name = xmlValue(children[["name"]])
-    )
-    qualities = convertNodeSetToList(children[is.quality], fun = as.integer)
-    c(info, qualities)
-  }), fill = TRUE))
-  df$status = factor(df$status, levels = getValidOMLDataSetStatusLevels())
+  qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
+  tags = convertTagListToTagString(res)
+  res = rbindlist(lapply(res, function(x) x[c("did", "name", "version", "status", "format")]))
 
-  # subset status level
-  ret = droplevels(df[df$status %in% status, , drop = FALSE])
-  row.names(ret) = NULL
-  return(ret)
+  res = cbind(res, tags, qualities)
+  res = as.data.frame(res, stringsAsFactors = FALSE)
+
+  # convert to integer
+  i = colnames(res) %in% colnames(qualities)
+  res[i] = lapply(res[i], as.integer)
+
+  # finally convert _ to . in col names
+  names(res) = convertNamesOMLToR(names(res))
+
+  return(res)
 }
 
 #' @title List available OpenML data sets.
@@ -42,11 +39,12 @@
 #'
 #' @template note_memoise
 #'
-#' @template arg_NumberOfInstances
-#' @template arg_NumberOfFeatures
-#' @template arg_NumberOfClasses
-#' @template arg_NumberOfMissingValues
+#' @template arg_number.of.instances
+#' @template arg_number.of.features
+#' @template arg_number.of.classes
+#' @template arg_number.of.missing.values
 #' @template arg_tag
+#' @template arg_data.name
 #' @template arg_limit
 #' @template arg_offset
 #' @template arg_status

@@ -4,7 +4,7 @@
 #' Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded
 #' (if not in cache) and returned.
 #'
-#' @template arg_task_id
+#' @template arg_task.id
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}].
@@ -65,7 +65,7 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
     # FIXME: see https://github.com/openml/website/issues/25 when this is solved, we might change this line:
     data = suppressWarnings(arff.reader(f$datasplits.arff$path))
       #tryCatch(suppressWarnings(arff.reader(f$datasplits.arff$path)), error = function(e) NULL)
-    #if (!is.null(data)) 
+    #if (!is.null(data))
     task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   } #else warning("Task not providing datasplits.")
 

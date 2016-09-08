@@ -1,2 +1,2 @@
 #' @param data.id [\code{integer(1)}]\cr
-#'   Data ID.
+#'   ID of the data set.

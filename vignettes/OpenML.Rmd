@@ -12,7 +12,7 @@ vignette: >
 # library("knitr")
 # opts_chunk$set(cache = TRUE)
 library("OpenML")
-setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", server = "http://test.openml.org/api/v1")
 
 setOMLConfig(verbosity = 0)  # switch off status output
 ```
@@ -74,7 +74,7 @@ In this paragraph you can find an example on how to download a task from the ser
 ```{r eval=TRUE, message=FALSE}
 library("OpenML")
 ## temporarily set API key to read only key
-setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", server = "http://test.openml.org/api/v1")
 
 # download a task (whose ID is 1L)
 task = getOMLTask(task.id = 1L)
@@ -97,7 +97,8 @@ library("mlr")
 lrn = makeLearner("classif.randomForest")
 
 # upload the new flow (with information about the algorithm and settings);
-# if this algorithm already exists on the server, one will receive a message with the ID of the existing flow
+# if this algorithm already exists on the server, one will receive a message
+# with the ID of the existing flow
 flow.id = uploadOMLFlow(lrn)
 
 # the last step is to perform a run and upload the results
@@ -213,8 +214,8 @@ to find the `iris` data set.
 subset(datasets, name == "iris")
 ```
 
-As you can see, there are two data sets called `iris`. We want to use the *original* data set with three classes, which is stored under the data set ID (`data.id`) `r subset(datasets, name == "iris" & NumberOfClasses == 3)$data.id`.
-You can also have a closer look at the data set on the corresponding OpenML web page (http://openml.org/d/`r subset(datasets, name == "iris" & NumberOfClasses == 3)$data.id`).
+As you can see, there are two data sets called `iris`. We want to use the *original* data set with three classes, which is stored under the data set ID (`data.id`) `r subset(datasets, name == "iris" & number.of.classes == 3)$data.id`.
+You can also have a closer look at the data set on the corresponding OpenML web page (http://openml.org/d/`r subset(datasets, name == "iris" & number.of.classes == 3)$data.id`).
 
 ### List tasks
 Each OpenML task is a bundle that encapsulates information on various objects:
@@ -268,8 +269,9 @@ For instance, listing all runs for [task 59](http://www.openml.org/t/59) (superv
 runs = listOMLRuns(task.id = 59L)  # must be specified with the task, setup and/or implementation ID
 head(runs)
 
-run.results = listOMLRunEvaluations(task.id = 59L)  # one of the IDs (here: task.id) must be supplied
-str(run.results)
+# one of the IDs (here: task.id) must be supplied
+run.results = listOMLRunEvaluations(task.id = 59L)
+head(run.results)
 ```
 
 ### List evaluation measures and task types

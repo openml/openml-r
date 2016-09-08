@@ -1,22 +1,24 @@
 .listOMLFlows = function(tag = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
-  api.call = generateAPICall("flow/list", tag = tag, limit = limit, offset = offset)
-  
+  api.call = generateAPICall("json/flow/list", tag = tag, limit = limit, offset = offset)
+
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 
-  xml = parseXMLResponse(content, "Getting flows", "flows", as.text = TRUE)
+  flows = fromJSON(txt = content)$flows$flow
 
-  blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  as.data.frame(rbindlist(lapply(blocks, function(node) {
-    children = xmlChildren(node)
-    list(
-      flow.id = as.integer(xmlValue(children[["id"]])),
-      full.name = xmlValue(children[["full_name"]]),
-      name = xmlValue(children[["name"]]),
-      version = as.integer(xmlValue(children[["version"]])),
-      external.version = xmlValue(children[["external_version"]]),
-      uploader = as.integer(xmlValue(children[["uploader"]]))
-    )
-  }), fill = TRUE))
+  # type conversions
+  flows$id = as.integer(flows$id)
+  flows$version = as.integer(flows$version)
+  flows$uploader = as.integer(flows$uploader)
+
+  # for some reason external_version is NOT atomic
+  # Unfortunately unlist() drops character(0) entries!
+  # -> ugly workaround: replace with "" -.-
+  zero.len.ids = sapply(flows$external_version, function(x) identical(x, character(0)))
+  flows$external_version[zero.len.ids] = ""
+  flows$external_version = unlist(flows$external_version)
+
+  names(flows) = c("flow.id", "full.name", "name", "version", "external.version", "uploader")
+  return(flows)
 }
 
 #' @title List all registered OpenML flows.
