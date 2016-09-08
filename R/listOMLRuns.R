@@ -18,9 +18,13 @@
   runs$error.message = as.character(sapply(runs$error.message, function(e) if (length(e) == 0 || e == "") NA else e))
 
   # first five columns are IDs and hence need to be converted to integer
-  runs = as.data.frame(lapply(runs, type.convert, numerals = "no.loss", as.is = TRUE))
-  runs$error.message = as.factor(runs$error.message)
+  #runs = as.data.frame(lapply(runs, type.convert, numerals = "no.loss", as.is = TRUE))
+  #runs$error.message = as.factor(runs$error.message)
 
+  # convert to integer
+  i = grepl("[.]id", colnames(runs))
+  runs[i] = lapply(runs[i], as.integer)
+  
   return(runs)
 }
 

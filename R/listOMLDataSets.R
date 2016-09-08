@@ -9,28 +9,24 @@
     tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
-  res = fromJSON(txt = content)[[1L]][[1L]]
+  res = fromJSON(txt = content, simplifyVector = FALSE)$data$dataset
 
-  data.id = as.integer(res$did)
-  qualities = convertNameValueListToDF(res$quality)
-  res$quality = res$did = NULL
-
-  res = cbind(data.id, as.data.frame(res, stringsAsFactors = FALSE), qualities, stringsAsFactors = FALSE)
+  qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
+  #data.id = as.integer(extractSubList(res, "did"))
+  res = rbindlist(lapply(res, function(x) x[c("did", "name", "version", "status", "format")])) 
+  #res = cbind(data.id, as.data.frame(res, stringsAsFactors = FALSE), qualities, stringsAsFactors = FALSE)
+ 
+  res = cbind(res, qualities)
+  res = as.data.frame(res, stringsAsFactors = FALSE)
+  
+  # convert to integer
   i = colnames(res) %in% colnames(qualities)
   res[i] = lapply(res[i], as.integer)
-
+  
+  # finally convert _ to . in col names
+  names(res) = convertNamesOMLToR(names(res))
+  
   return(res)
-}
-
-convertNameValueListToDF = function(x) {
-  if (!isTRUE(checkList(x))) x = list(x)
-  ret = lapply(x, function(x) as.list(setNames(x$value, x$name)))
-  cols = unique(unlist(lapply(x, function(x) x$name)))
-  # replace empty rows with NA
-  na.ind = which(vnapply(ret, length) == 0)
-  ret[na.ind] = lapply(seq_along(na.ind), function(x) as.list(setNames(rep(NA, length(cols)), cols)))
-  ret = as.data.frame(rbindlist(ret, fill = TRUE), stringsAsFactors = FALSE)
-  return(ret)
 }
 
 #' @title List available OpenML data sets.

@@ -150,3 +150,20 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
 
   return(api.call)
 }
+
+convertNameValueListToRow = function(x) {
+  #if (!isTRUE(checkList(x))) x = list(x)
+  value = lapply(x, function(x) x$value)
+  name = vcapply(x, function(x) x$name)
+  setNames(value, name)
+}
+
+convertNameValueListToDF = function(x) {
+  x = lapply(x, convertNameValueListToRow)
+  cols = names(x[[1]]) #unique(unlist(lapply(x, names)))
+  na.ind = which(vnapply(x, length) == 0)
+  x[na.ind] = lapply(seq_along(na.ind), function(x) setNames(rep(list(NA), length(cols)), cols))
+  #as.list(setNames(rep(NA, length(cols)), cols)))
+  x = rbindlist(x, fill = TRUE)
+  return(x)
+}
