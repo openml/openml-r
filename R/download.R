@@ -96,11 +96,49 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
   http.args = filterNull(http.args)
   # do the request and catch potential "unreadable" curl errors
   server.response = try(do.call(method, http.args), silent = TRUE)
-  if (is.error(server.response)) {
+  if (is.error(server.response) || !inherits(server.response, "response")) {
     stopf("API call failed. Maybe you are not connected to the internet.")
   }
+  # handle HTTP non success status codes
+  status.code = server.response$status_code
+  if (!(status.code %btwn% c(200, 399))) {
+    parseError = parseHTMLError
+    if (isXMLResponse(server.response)) parseError = parseXMLError
+    else if (isJSONResponse(server.response)) parseError = parseJSONError
+    error = parseError(server.response)
+    stopf("ERROR %s: %s", error$code, error$message)
+  }
+
   # if we requested a document we need to extract the actual content
   if (method == "GET")
     server.response = rawToChar(server.response$content)
   return(server.response)
+}
+
+# Helper to check if HTTP call returned XML document.
+isXMLResponse = function(response) {
+  assertClass(response, "response")
+  grepl("text/xml", response$headers[["content-type"]])
+}
+
+# Helper to check if HTTP call returned JSON document.
+isJSONResponse = function(response) {
+  assertClass(response, "response")
+  grepl("application/json", response$headers[["content-type"]])
+}
+
+parseHTMLError = function(response) {
+  list(code = "<NA>", message = "<NA>")
+}
+
+parseXMLError = function(response) {
+  content = response$content
+  # need to parse fucking xml file
+  #list(code = xmlRValI(tmpfile, "/oml:error/oml:code"), message = xmlRValS(doc, "/oml:error/oml:message"))
+  list(code = "<NA>", message = "<NA>")
+}
+
+parseJSONError = function(response) {
+  # parsed by httr (no need to call fromJSON by hand)
+  return(content(response)$error)
 }
