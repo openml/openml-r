@@ -6,7 +6,8 @@
 \usage{
 listOMLTasks(number.of.instances = NULL, number.of.features = NULL,
   number.of.classes = NULL, number.of.missing.values = NULL, tag = NULL,
-  limit = NULL, offset = NULL, status = "active", verbosity = NULL)
+  data.name = NULL, limit = NULL, offset = NULL, status = "active",
+  verbosity = NULL)
 }
 \arguments{
 \item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr
@@ -28,6 +29,9 @@ if a vector of length 2 is passed, the given ranges.}
 \item{tag}{[\code{character}]\cr
 If not \code{NULL} only entries with the corresponding \code{tag}s
 are listed.}
+
+\item{data.name}{[\code{character(1)}]\cr
+Name of the data set.}
 
 \item{limit}{[\code{numeric(1)}]\cr
 Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
