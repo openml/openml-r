@@ -1,6 +1,6 @@
 Package: OpenML
 Title: Exploring Machine Learning Better, Together
-Description: OpenML is an online machine learning platform where researchers can automatically 
+Description: OpenML is an online machine learning platform where researchers can automatically
     share data, code, and experiments, and organize them online to work and collaborate more effectively.
     We provide a R interface to the OpenML API in order to download and upload data sets, tasks, flows and runs.
 Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
@@ -26,7 +26,8 @@ Suggests:
     farff,
     mboost,
     knitr,
-    rmarkdown
+    rmarkdown,
+    R.rsp
 Imports:
     backports (>= 1.0.1),
     BBmisc (>= 1.9),
@@ -45,4 +46,4 @@ LazyData: yes
 ByteCompile: yes
 Version: 1.0
 RoxygenNote: 5.0.1
-VignetteBuilder: rmarkdown
+VignetteBuilder: R.rsp
