@@ -34,6 +34,10 @@ convertNamesOMLToR = function(names) {
   return(new.names)
 }
 
+convertTagListToTagString = function(l) {
+  vcapply(extractSubList(l, "tags", simplify = FALSE), function(x) collapse(unlist(x), ", "))
+}
+
 getRVersionString = function() {
   paste0("R_", collapse(R.Version()[c("major", "minor")], "."))
 }
