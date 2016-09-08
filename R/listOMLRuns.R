@@ -24,7 +24,7 @@
   # convert to integer
   i = grepl("[.]id", colnames(runs))
   runs[i] = lapply(runs[i], as.integer)
-  
+
   return(runs)
 }
 
@@ -38,7 +38,7 @@
 #'
 #' @template note_memoise
 #'
-#' @template arg_task_id
+#' @template arg_task.id
 #' @template arg_flow.id
 #' @param run.id [\code{integer}]\cr
 #'  a single ID or a vector of IDs of the runs.
