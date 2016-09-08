@@ -142,11 +142,11 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     run = run.id,
     uploader = uploader.id,
     tag = tag,
-    NumberOfInstances = number.of.instances,
-    NumberOfFeatures = number.of.features,
-    NumberOfClasses = number.of.classes,
-    NumberOfMissingValues = number.of.missing.values,
-    DataName = data.name,
+    number_instances = number.of.instances,
+    number_features = number.of.features,
+    number_classes = number.of.classes,
+    number_missing_values = number.of.missing.values,
+    data_name = data.name,
     limit = limit,
     offset = offset
   )
