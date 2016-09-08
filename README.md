@@ -3,6 +3,7 @@
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
 [![Build Status](https://travis-ci.org/openml/openml-r.svg?branch=master)](https://travis-ci.org/openml/openml-r)
+[![Build status](https://ci.appveyor.com/api/projects/status/mevevtyr538faqdv/branch/master?svg=true)](https://ci.appveyor.com/project/jakobbossek/openml-r/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/openml/openml-r/badge.svg?branch=master)](https://coveralls.io/github/openml/openml-r?branch=master)
 [![Issues in TODOs](https://badge.waffle.io/openml/openml-r.png?label=TODO&title=TODOs)](https://waffle.io/openml/openml-r)
 [![Join the chat at https://gitter.im/openml/r](https://badges.gitter.im/openml/openml-r.svg)](https://gitter.im/openml/r?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
