@@ -9,7 +9,7 @@ getOMLDataSet(data.id = NULL, data.name = NULL, data.version = NULL,
 }
 \arguments{
 \item{data.id}{[\code{integer(1)}]\cr
-Data ID.}
+ID of the data set.}
 
 \item{data.name}{[\code{character(1)}]\cr
 Data set name.
