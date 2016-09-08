@@ -48,7 +48,7 @@ One of \code{data.id} or \code{data.name} must be passed.
 }
 \examples{
 \dontrun{
-	dat = getOMLDataSet(did = 9)
+	dat = getOMLDataSet(data.id = 9)
 
 	# this object contains the data ($data)
 	# and meta information
