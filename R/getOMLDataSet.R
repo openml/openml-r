@@ -41,8 +41,8 @@ getOMLDataSet = function(data.id = NULL, data.name = NULL, data.version = NULL, 
 # Helper function to get data set by data name (and version number).
 # (Makes use of getOMLDataSetById)
 getOMLDataSetByName = function(data.name, data.version, cache.only = FALSE, verbosity = NULL) {
-  # else get list of datasets, filter by name and evantually extract version
-  data.sets = listOMLDataSets(verbosity = verbosity)
+  # else get list of datasets RESTRICTED to the given name
+  data.sets = .listOMLDataSets(data.name = data.name, verbosity = verbosity)
 
   # match by name
   matching.ids = which(data.sets$name == data.name)
