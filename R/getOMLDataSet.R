@@ -6,7 +6,18 @@
 #' Note that data splits and other task-related information are not included in
 #' an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask}}.
 #'
+#' @note
+#' One of \code{data.id} or \code{data.name} must be passed.
+#'
 #' @template arg_data.id
+#' @param data.name [\code{character(1)}]\cr
+#'   Data set name.
+#'   This is an alternative to \code{data.id}.
+#'   Default is \code{NULL}.
+#' @param data.version [\code{integer(1)}]\cr
+#'   Version number of the data set with name \code{data.name}.
+#'   Default is \code{NULL}.
+#'   Ignored if \code{data.id} is passed.
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLDataSet}}].
@@ -14,10 +25,57 @@
 #' @family data set-related functions
 #' @example inst/examples/getOMLDataSet.R
 #' @export
-getOMLDataSet = function(data.id, cache.only = FALSE, verbosity = NULL) {
-  data.id = asInt(data.id, lower = 0)
+getOMLDataSet = function(data.id = NULL, data.name = NULL, data.version = NULL, cache.only = FALSE, verbosity = NULL) {
+  if (!xor(is.null(data.id), is.null(data.name)))
+    stopf("You must provide either a data.id or a data.name, but not both.")
+
   assertFlag(cache.only)
 
+  if (is.null(data.name)) {
+    data.id = asInt(data.id, lower = 0)
+    return(getOMLDataSetById(data.id = data.id, cache.only = cache.only, verbosity = verbosity))
+  }
+  getOMLDataSetByName(data.name = data.name, data.version = data.version, cache.only = cache.only, verbosity = verbosity)
+}
+
+# Helper function to get data set by data name (and version number).
+# (Makes use of getOMLDataSetById)
+getOMLDataSetByName = function(data.name, data.version, cache.only = FALSE, verbosity = NULL) {
+  # else get list of datasets RESTRICTED to the given name
+  data.sets = .listOMLDataSets(data.name = data.name, verbosity = verbosity)
+
+  # match by name
+  matching.ids = which(data.sets$name == data.name)
+  matching.sets = data.sets[matching.ids, , drop = FALSE]
+
+  # get number of matches ...
+  n.matches = length(matching.ids)
+
+  # ... and react accordingly
+  if (n.matches == 0)
+    stopf("No dataset with name '%s' found.", data.name)
+  if (n.matches == 1)
+    return(getOMLDataSetById(data.id = matching.sets$data.id, cache.only = cache.only, verbosity = verbosity))
+
+  # otherwise we have multiple matches and need to consider the version
+  data.id = if (is.null(data.version)) {
+    # in this case we default to the newest version
+    showInfo(verbosity, "Multiple version available, but no data.version passed! Returning the newest version.")
+    matching.sets[getMaxIndex(matching.sets$version), "data.id"]
+  } else {
+    data.version = asInt(data.version, lower = 0)
+    matching.sets[matching.sets$version == data.version, "data.id"]
+  }
+
+  if (is.null(data.id) || length(data.id) == 0) {
+    stopf("Version %i does not exist for dataset '%s'. Available versions: %s",
+      data.version, data.name, collapse(matching.sets$version, sep = ", "))
+  }
+  return(getOMLDataSetById(data.id = data.id, cache.only = cache.only, verbosity = verbosity))
+}
+
+# Helper function to get data set by data ID.
+getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NULL) {
   down = downloadOMLObject(data.id, object = "data", cache.only = cache.only, verbosity = verbosity)
   f = down$files
 
