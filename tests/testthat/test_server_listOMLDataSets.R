@@ -25,3 +25,11 @@ test_that("listOMLDataSets", {
   expect_true(unique(ds$number.of.classes) == 2)
   expect_true(unique(ds$number.of.missing.values) == 0)
 })
+
+test_that("listOMLDataSets by data.name", {
+  exp.name = "iris"
+  data.sets = .listOMLDataSets(name = exp.name)
+  # there needs to be at least on iris version
+  expect_data_frame(data.sets, col.names = unique, min.rows = 1)
+  expect_true(all(data.sets$name == exp.name))
+})

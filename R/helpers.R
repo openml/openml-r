@@ -89,7 +89,7 @@ catfNotNA = function(text, obj) {
 
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
   NumberOfInstances = NULL, NumberOfFeatures = NULL, NumberOfClasses = NULL, NumberOfMissingValues = NULL,
-  tag = NULL, limit = NULL, offset = NULL) {
+  tag = NULL, data.name = NULL, limit = NULL, offset = NULL) {
   is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
   assertSorted = makeAssertionFunction(is.sorted)
   assertString(api.call)
@@ -122,6 +122,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     NumberOfMissingValues = collapse(NumberOfMissingValues, sep = "..")
   }
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
+  if (!is.null(data.name)) assertString(data.name, na.ok = FALSE)
   if (!is.null(limit)) assertIntegerish(limit, len = 1)
   if (!is.null(offset)) assertIntegerish(offset, len = 1)
 
@@ -145,6 +146,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     NumberOfFeatures = NumberOfFeatures,
     NumberOfClasses = NumberOfClasses,
     NumberOfMissingValues = NumberOfMissingValues,
+    DataName = data.name,
     limit = limit,
     offset = offset
   )
