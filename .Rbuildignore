@@ -1,6 +1,7 @@
 ^attic/
 ^doc/
 ^notebooks/
+^tests/
 ^.gitignore$
 ^.agignore$
 ^.travis.yml$
