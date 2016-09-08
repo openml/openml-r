@@ -1,6 +1,6 @@
 Package: OpenML
 Title: Exploring Machine Learning Better, Together
-Description: OpenML is an online machine learning platform where researchers can automatically log and
+Description: OpenML is an online machine learning platform where researchers can automatically 
     share data, code, and experiments, and organize them online to work and collaborate more effectively.
     We provide a R interface to the OpenML API in order to download and upload data sets, tasks, flows and runs.
 Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
@@ -12,7 +12,7 @@ Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
     Pascal Kerschke <kerschke@uni-muenster.de>,
     Joaquin Vanschoren <joaquin.vanschoren@gmail.com>
 Maintainer: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>
-License: BSD_3_clause + file LICENSE
+License: BSD_2_clause + file LICENSE
 URL: https://github.com/openml/openml-r
 BugReports: https://github.com/openml/openml-r/issues
 Depends:
