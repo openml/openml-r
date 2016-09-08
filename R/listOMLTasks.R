@@ -15,7 +15,7 @@
   res = fromJSON(txt = content, simplifyVector = FALSE)$tasks$task
   input = convertNameValueListToDF(extractSubList(res, "input", simplify = FALSE))
   qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
-  tags = vcapply(extractSubList(res, "tags", simplify = FALSE), function(x) collapse(unlist(x), ", "))
+  tags = convertTagListToTagString(res)
 
   # get rid of less interesting stuff
   #input$source_data = input$target_value = input$time_limit = input$number_samples = NULL
@@ -31,7 +31,7 @@
   #res$quality = res$input = res$tags = NULL
 
   # build final dataframe
-  res = cbind(res, input, qualities, tags)
+  res = cbind(res, input, tags, qualities)
   res = as.data.frame(res, stringsAsFactors = FALSE)
 
   # convert to integer

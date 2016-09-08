@@ -15,6 +15,7 @@ test_that("listOMLDataSets", {
     expect_integer(dsl$data.id, any.missing = FALSE, unique = TRUE)
     expect_character(dsl$status, any.missing = FALSE)
     expect_character(dsl$name, any.missing = FALSE)
+    expect_character(dsl$tags, any.missing = FALSE)
   }
   ds = .listOMLDataSets(number.of.instances = c(40, 100), number.of.features = c(5, 10),
     number.of.classes = 2, number.of.missing.values = 0)
