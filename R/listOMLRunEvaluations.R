@@ -14,12 +14,16 @@
   # convert long format to wide format
   evals = reshape(evals,
     timevar = "function",
-    idvar = c("run_id", "task_id", "setup_id", "flow_id"),
+    idvar = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name"),
     direction = "wide")
 
   # drop "all NA" columns
   evals = evals[, vlapply(evals, function(x) !all(is.na(x)))]
-
+  # drop all array columns that are NULL
+  drop.array = vlapply(evals[,grepl("array_data[.]", colnames(evals))], function(x) all(vlapply(x, is.null)))
+  drop.array = names(drop.array)[drop.array]
+  evals = evals[, colnames(evals)%nin%drop.array]
+  
   # unfortunately column names are f***ed up now. Some tedious work is neccessary
   # to achive our naming conventions
   colnames(evals) = gsub("value[.]", "", colnames(evals))
@@ -27,7 +31,7 @@
   colnames(evals)[arr.ind] = paste0(gsub("array_data[.]", "", colnames(evals)[arr.ind]), ".array")
 
   # convert types (by default all is character)
-  evals = as.data.frame(lapply(evals, type.convert, numerals = "no.loss", as.is = TRUE))
+  #evals = as.data.frame(lapply(evals, type.convert, numerals = "no.loss", as.is = TRUE))
 
   # finally convert _ to . in col names
   names(evals) = convertNamesOMLToR(names(evals))
