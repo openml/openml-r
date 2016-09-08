@@ -1,8 +1,10 @@
 ^attic/
 ^doc/
+^notebooks/
 ^.gitignore$
 ^.agignore$
 ^.travis.yml$
+^.appveyor.yml$
 ^.editorconfig$
 
 ^.*tar.gz$
