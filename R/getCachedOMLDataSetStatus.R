@@ -25,6 +25,7 @@ getCachedOMLDataSetStatus = function(show.warnings = TRUE, ...) {
 
   # list all avialable datasets ...
   all.ds = listOMLDataSets(...)
+
   # ... and filter the ones we found in cache
   cached.ds = all.ds[all.ds$data.id %in% data.ids, c("data.id", "status"), drop = FALSE]
   if (any(cached.ds$status == "deactivated") > 0L & show.warnings) {

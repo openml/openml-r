@@ -1,0 +1,17 @@
+<oml:data_set_description xmlns:oml="http://openml.org/openml">
+  <oml:id>969</oml:id>
+  <oml:name>iris</oml:name>
+  <oml:version>3</oml:version>
+  <oml:description>**Author**:   
+**Source**: Unknown - Date unknown  
+**Please cite**:   
+
+Binarized version of the original data set (see version 1). The multi-class target feature is converted to a two-class nominal target feature by re-labeling the majority class as positive ('P') and all others as negative ('N'). Originally converted by Quan Sun.</oml:description>
+  <oml:format>ARFF</oml:format>
+  			<oml:upload_date>2014-10-04 22:43:46</oml:upload_date>
+    <oml:licence>Public</oml:licence>  <oml:url>http://www.openml.org/data/download/53503/iris.arff</oml:url>
+  
+  <oml:file_id>53503</oml:file_id>  <oml:default_target_attribute>binaryClass</oml:default_target_attribute>          <oml:tag>study_1</oml:tag><oml:tag>study_7</oml:tag>  <oml:visibility>public</oml:visibility>      <oml:status>active</oml:status>
+  <oml:md5_checksum>3e0be4e9694732e99f5ee550f20b8d58</oml:md5_checksum>
+</oml:data_set_description>
+

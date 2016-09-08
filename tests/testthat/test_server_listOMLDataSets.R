@@ -13,7 +13,7 @@ test_that("listOMLDataSets", {
     expect_data_frame(dsl, col.names = "unique", min.rows = 1)
     #expect_set_equal(names(dsl), exp.names)
     expect_integer(dsl$data.id, any.missing = FALSE, unique = TRUE)
-    expect_factor(dsl$status, any.missing = FALSE)
+    expect_character(dsl$status, any.missing = FALSE)
     expect_character(dsl$name, any.missing = FALSE)
   }
   ds = .listOMLDataSets(number.of.instances = c(40, 100), number.of.features = c(5, 10),

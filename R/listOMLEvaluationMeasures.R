@@ -1,11 +1,11 @@
 .listOMLEvaluationMeasures = function(verbosity = NULL) {
   content = doAPICall(
-    api.call = "evaluationmeasure/list", file = NULL,
+    api.call = "json/evaluationmeasure/list", file = NULL,
     verbosity = verbosity, method = "GET"
   )
-  doc = parseXMLResponse(content, "Getting names of evaluation measures", "evaluation_measures", as.text = TRUE)
+  res = fromJSON(txt = content)
   data.frame(
-    name = xmlValsMultNsS(doc, "/oml:evaluation_measures/oml:measures/oml:measure"),
+    name = res$evaluation_measures$measures$measure,
     stringsAsFactors = FALSE
   )
 }

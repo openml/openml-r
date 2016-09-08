@@ -55,7 +55,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-The returned \code{data.frame} contains the \code{task_id}, the data set id \code{did},
+The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id},
 the \code{status} and some describing data qualities.
 }
 \note{
