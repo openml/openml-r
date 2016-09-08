@@ -18,12 +18,12 @@ test_that("listOMLTasks", {
   # check number of classes
   tasks = as.data.table(tasks)
 
-  expect_true(all(tasks[NumberOfClasses == 2, list(ok = (MinorityClassSize + MajorityClassSize) == NumberOfInstances)]$ok))
-  expect_true(all(tasks[task.type == "Supervised Classification", list(ok = (MinorityClassSize + MajorityClassSize) <= NumberOfInstances)]$ok, na.rm = TRUE))
+  expect_true(all(tasks[number.of.classes == 2, list(ok = (minority.class.size + majority.class.size) == number.of.instances)]$ok))
+  expect_true(all(tasks[task.type == "Supervised Classification", list(ok = (minority.class.size + majority.class.size) <= number.of.instances)]$ok, na.rm = TRUE))
   #expect_true(all(tasks[, list(ok = NumBinaryAtts <= NumberOfSymbolicFeatures)]$ok, na.rm = TRUE))
-  expect_true(all(tasks[, list(ok = (NumberOfNumericFeatures + NumberOfSymbolicFeatures) <= NumberOfFeatures)]$ok, na.rm = TRUE))
-  expect_true(all(tasks[, list(ok = (NumberOfInstancesWithMissingValues <= NumberOfInstances))]$ok, na.rm = TRUE))
-  expect_true(all(tasks[, list(ok = (NumberOfMissingValues <= as.numeric(NumberOfInstances) * as.numeric(NumberOfFeatures)))]$ok, na.rm = TRUE))
+  expect_true(all(tasks[, list(ok = (number.of.numeric.features + number.of.symbolic.features) <= number.of.features)]$ok, na.rm = TRUE))
+  expect_true(all(tasks[, list(ok = (number.of.instances.with.missing.values <= number.of.instances))]$ok, na.rm = TRUE))
+  expect_true(all(tasks[, list(ok = (number.of.missing.values <= as.numeric(number.of.instances) * as.numeric(number.of.features)))]$ok, na.rm = TRUE))
 
   tasks1 = .listOMLTasks(tag = "study_1")
   expect_data_frame(tasks1, min.rows = 10L, col.names = "unique")
@@ -39,4 +39,11 @@ test_that("listOMLTasks", {
   expect_true(unique(tasks$task.type) == "Subgroup Discovery")
   expect_true(sum(is.na(tasks$evaluation.measures)) == nrow(tasks))
   #expect_set_equal(exp.names, names(tasks))
+})
+
+test_that("listOMLTasks works with data.name filter", {
+  exp.name = "iris"
+  tasks = .listOMLTasks(limit = 10L, data.name = exp.name)
+  expect_data_frame(tasks)
+  expect_true(all(tasks$name == exp.name))
 })
