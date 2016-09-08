@@ -71,7 +71,10 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
       truth = pred$truth, y = y, row.names = pred$row_id,
       predict.type = predict.type, time = runtime)
   })
-  pred.data = data.frame(rbindlist(lapply(prediction, function(x) x$data)), iter = 1:length(pred.split), set = "test")
+  pred.data = lapply(prediction, function(x) x$data)
+  pred.data = pred.data[order(as.numeric(gsub(".*-","",names(pred.data))))]
+  for(i in seq_along(pred.data)) pred.data[[i]]$iter = i
+  pred.data = data.frame(rbindlist(pred.data), set = "test")
   
   threshold = unique(lapply(prediction, function(x) x$threshold))
   if(length(threshold) > 1) 
