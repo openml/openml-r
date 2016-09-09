@@ -93,7 +93,7 @@ catfNotNA = function(text, obj) {
 
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
   number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL, number.of.missing.values = NULL,
-  tag = NULL, data.name = NULL, limit = NULL, offset = NULL) {
+  tag = NULL, data.name = NULL, limit = NULL, offset = NULL, status = NULL) {
   is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
   assertSorted = makeAssertionFunction(is.sorted)
   assertString(api.call)
@@ -130,7 +130,8 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   if (!is.null(data.name)) assertString(data.name, na.ok = FALSE)
   if (!is.null(limit)) assertIntegerish(limit, len = 1)
   if (!is.null(offset)) assertIntegerish(offset, len = 1)
-
+  if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
+  
   if (length(run.id) > 1)
     run.id = collapse(run.id)
   if (length(task.id) > 1)
@@ -153,7 +154,8 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     number_missing_values = number.of.missing.values,
     data_name = data.name,
     limit = limit,
-    offset = offset
+    offset = offset,
+    status = status
   )
   url.args = Filter(function(x) !is.null(x), url.args)
 
