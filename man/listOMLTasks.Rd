@@ -40,7 +40,7 @@ Optional. The maximum number of entries to return. Without specifying \code{offs
 Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
-Subsets the results according to the status, can take one or more values of
+Subsets the results according to the status. Possible values are 
 \code{{"active", "deactivated", "in_preparation"}}.
 Default is \code{"active"}.}
 

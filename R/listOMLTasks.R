@@ -2,13 +2,12 @@
   number.of.classes = NULL, number.of.missing.values = NULL,
   tag = NULL, data.name = NULL,
   limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
-  assertSubset(status, getValidOMLDataSetStatusLevels())
 
   api.call = generateAPICall("json/task/list",
     number.of.instances = number.of.instances, number.of.features = number.of.features,
     number.of.classes = number.of.classes, number.of.missing.values = number.of.missing.values,
     tag = tag, data.name = data.name,
-    limit = limit, offset = offset)
+    limit = limit, offset = offset, status = status)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 
@@ -22,7 +21,13 @@
   input = input[, which(colnames(input)%in%c("source_data", "target_value", "time_limit", "number_samples")):=NULL]
 
   # include columns for estimation and evaluation if missing
-  if (is.null(input$estimation_procedure)) input$estimation_procedure = NA
+  if (is.null(input$estimation_procedure)) {
+    input$estimation_procedure = NA
+  } else {
+    estproc = listOMLEstimationProcedures(verbosity = FALSE)
+    row.names(estproc) = estproc$est.id
+    input$estimation_procedure = as.character(estproc[input$estimation_procedure , "name"])
+  }
   if (is.null(input$evaluation_measures)) input$evaluation_measures = NA_character_
 
   # again get rid of redundant/uninteresting stuff
@@ -40,7 +45,7 @@
 
   # finally convert _ to . in col names
   names(res) = convertNamesOMLToR(names(res))
-
+  
   return(res)
 }
 
