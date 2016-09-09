@@ -36,8 +36,7 @@
   #res$quality = res$input = res$tags = NULL
 
   # build final dataframe
-  res = cbind(res, input, tags, qualities)
-  res = as.data.frame(res, stringsAsFactors = FALSE)
+  res = setDF(cbind(res, input, tags, qualities))
 
   # convert to integer
   i = colnames(res) %in% c(colnames(qualities), "did", "task_id")
