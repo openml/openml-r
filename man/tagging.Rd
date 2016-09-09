@@ -5,15 +5,15 @@
 \alias{untagOMLObject}
 \title{Tagging of OpenML objects}
 \usage{
-tagOMLObject(id, object = c("data", "task", "flow", "run"), tags,
+tagOMLObject(ids, object = c("data", "task", "flow", "run"), tags,
   verbosity = NULL)
 
-untagOMLObject(id, object = c("data", "task", "flow", "run"), tags,
+untagOMLObject(ids, object = c("data", "task", "flow", "run"), tags,
   verbosity = NULL)
 }
 \arguments{
-\item{id}{[\code{integer(1)}]\cr
-The ID of the respective object.}
+\item{ids}{[\code{integer}]\cr
+The IDs of the respective objects.}
 
 \item{object}{[\code{character(1)}]\cr
 A character that specifies the object you want to delete from the server. Can be either
