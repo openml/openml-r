@@ -9,6 +9,7 @@
 #' @param x [\code{\link{OMLFlow}}|\code{\link[mlr]{Learner}}]\cr
 #'   The flow that should be uploaded.
 #' @template arg_upload_tags
+#' @template arg_confirm.upload
 #' @template arg_verbosity
 #' @param sourcefile [\code{character(1)}]\cr
 #'   The file path to the flow (not needed for \code{\link[mlr]{Learner}}).
@@ -18,12 +19,12 @@
 #'   The ID of the flow (\code{flow.id}). If there are more componets in the flow, than a vector of IDs.
 #' @family uploading functions
 #' @export
-uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile, binaryfile) {
+uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, confirm.upload = NULL, sourcefile, binaryfile) {
   UseMethod("uploadOMLFlow")
 }
 
 #' @export
-uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
+uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   # upload components as flows if there are some
   # if (length(x$components) > 0) {
   #   tmp = uploadOMLFlow(x$components[[1]])
@@ -42,7 +43,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
   file = tempfile(fileext = ".xml")
   on.exit(unlink(file))
 
-  if (!checkUserConfirmation(type = "flow")) {
+  if (!checkUserConfirmation(type = "flow", confirm.upload = confirm.upload)) {
     return(invisible())
   }
 
@@ -88,10 +89,10 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, sourcefile = 
 
 #' @export
 uploadOMLFlow.Learner = function(x, tags = NULL,
-  verbosity = NULL, sourcefile = NULL, binaryfile = NULL) {
+  verbosity = NULL, confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = convertMlrLearnerToOMLFlow(x)
 
-  flow.id = uploadOMLFlow(flow, sourcefile = sourcefile, binaryfile = binaryfile, verbosity = verbosity)
+  flow.id = uploadOMLFlow(flow, confirm.upload = confirm.upload, sourcefile = sourcefile, binaryfile = binaryfile, verbosity = verbosity)
   return(flow.id)
 }
 

@@ -10,19 +10,20 @@
 #'   Contains the data set that should be uploaded.
 #' @template arg_upload_tags
 #' @template arg_description
+#' @template arg_confirm.upload
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}].
 #'   The ID of the data (\code{data.id}).
 #' @family uploading functions
 #' @family data set-related functions
 #' @export
-uploadOMLDataSet = function(x, tags = NULL, description = NULL, verbosity = NULL) {
+uploadOMLDataSet = function(x, tags = NULL, description = NULL, confirm.upload = NULL, verbosity = NULL) {
   UseMethod("uploadOMLDataSet")
 }
 
 #' @export
-uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, verbosity = NULL) {
-  if (!checkUserConfirmation(type = "dataset")) {
+uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, confirm.upload = NULL, verbosity = NULL) {
+  if (!checkUserConfirmation(type = "dataset", confirm.upload = confirm.upload)) {
     return(invisible())
   }
 
@@ -48,7 +49,7 @@ uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, verbo
 }
 
 #' @export
-uploadOMLDataSet.Task = function(x, tags = NULL, description = NULL, verbosity = NULL) {
+uploadOMLDataSet.Task = function(x, tags = NULL, description = NULL, confirm.upload = NULL, verbosity = NULL) {
   x = convertMlrTaskToOMLDataSet(x, description = description)
-  uploadOMLDataSet.OMLDataSet(x)
+  uploadOMLDataSet.OMLDataSet(x, confirm.upload = NULL, verbosity = verbosity)
 }
