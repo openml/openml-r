@@ -2,6 +2,8 @@
 ^doc/
 ^notebooks/
 ^tests/
+^todo/
+^appveyor.yml$
 ^.gitignore$
 ^.agignore$
 ^.travis.yml$

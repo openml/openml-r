@@ -11,7 +11,7 @@
 
   # extract data frame
   runs = fromJSON(txt = content)$runs$run
-
+  runs$tags = vcapply(runs$tags, function(x) collapse(x, ", "))
   names(runs) = convertNamesOMLToR(names(runs))
 
   # handle error messages
