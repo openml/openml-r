@@ -12,7 +12,7 @@ The run that should be converted.}
 
 \item{measures}{[\code{character}]\cr
 Character describing the measures (see \code{\link{listOMLEvaluationMeasures}})
-that will be converted into mlr \code{\link[mlr]{measures}} and are then used in the \code{\link[mlr]{BenchmarkResult}}. 
+that will be converted into mlr \code{\link[mlr]{measures}} and are then used in the \code{\link[mlr]{BenchmarkResult}}.
 Currently, not all measures from OpenML can be converted into mlr measures.}
 
 \item{recompute}{[\code{logical(1)}]\cr
