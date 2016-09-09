@@ -108,7 +108,7 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     else if (isJSONResponse(server.response)) parseError = parseJSONError
     error = parseError(server.response)
 
-    stopf("ERROR (code = %i) in server response: %s\n%s\n", error$code, error$message,
+    stopf("ERROR (code = %s) in server response: %s\n%s\n", as.character(error$code), error$message,
       if (!is.null(error$extra)) error$extra else "")
   }
 
