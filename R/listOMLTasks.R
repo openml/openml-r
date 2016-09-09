@@ -24,7 +24,7 @@
   if (is.null(input$estimation_procedure)) {
     input$estimation_procedure = NA
   } else {
-    estproc = listOMLEstimationProcedures(verbosity = FALSE)
+    estproc = listOMLEstimationProcedures(verbosity = 0L)
     row.names(estproc) = estproc$est.id
     input$estimation_procedure = as.character(estproc[input$estimation_procedure , "name"])
   }
@@ -45,7 +45,7 @@
 
   # finally convert _ to . in col names
   names(res) = convertNamesOMLToR(names(res))
-  
+
   return(res)
 }
 
