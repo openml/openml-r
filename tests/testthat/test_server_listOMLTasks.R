@@ -4,11 +4,11 @@ skip_on_cran()
 
 test_that("listOMLTasks", {
   exp.names = c("task.id", "task.type", "data.id", "status", "format", "name", "target.feature", "tags",
-    "estimation.procedure", "evaluation.measures", "MajorityClassSize",
-    "MaxNominalAttDistinctValues", "MinorityClassSize", #"NumBinaryAtts",
-    "NumberOfClasses", "NumberOfFeatures", "NumberOfInstances",
-    "NumberOfInstancesWithMissingValues", "NumberOfMissingValues",
-    "NumberOfNumericFeatures", "NumberOfSymbolicFeatures"
+    "estimation.procedure", "evaluation.measures", "majority.class.size",
+    "max.nominal.att.distinct.values", "minority.class.size", #"num.binary.atts",
+    "number.of.classes", "number.of.features", "number.of.instances",
+    "number.of.instances.with.missing.values", "number.of.missing.values",
+    "number.of.numeric.features", "number.of.symbolic.features"
   )
 
   tasks = .listOMLTasks(limit = 10L)
@@ -39,6 +39,16 @@ test_that("listOMLTasks", {
   expect_true(unique(tasks$task.type) == "Subgroup Discovery")
   expect_true(sum(is.na(tasks$evaluation.measures)) == nrow(tasks))
   #expect_set_equal(exp.names, names(tasks))
+  
+  # check if status works
+  tasks = .listOMLTasks(status = "in_preparation", limit = 10)
+  expect_string(unique(tasks$status))
+  expect_true(unique(tasks$status) == "in_preparation")
+  
+  tasks = .listOMLTasks(status = "deactivated", limit = 10)
+  expect_data_frame(tasks, nrows = 10L, col.names = "unique")
+  expect_string(unique(tasks$status))
+  expect_true(unique(tasks$status) == "deactivated")
 })
 
 test_that("listOMLTasks works with data.name filter", {

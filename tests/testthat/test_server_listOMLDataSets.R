@@ -3,7 +3,7 @@ context("listOMLDataSets")
 skip_on_cran()
 
 test_that("listOMLDataSets", {
-  exp.names = c("data.id", "status", "format", "name", "MajorityClassSize",
+  exp.names = c("data.id", "status", "format", "name", "majority.class.size",
     "max.nominal.att.distinct.values", "minority.class.size", #"num.binary.atts",
     "number.of.classes", "number.of.features", "number.of.instances",
     "number.of.instances.with.missing.values", "number.of.missing.values",
@@ -25,6 +25,16 @@ test_that("listOMLDataSets", {
   expect_true(max(ds$number.of.features) <= 10)
   expect_true(unique(ds$number.of.classes) == 2)
   expect_true(unique(ds$number.of.missing.values) == 0)
+  
+  # check if status works
+  ds = .listOMLDataSets(status = "in_preparation", limit = 10)
+  expect_string(unique(ds$status))
+  expect_true(unique(ds$status) == "in_preparation")
+  
+  ds = .listOMLDataSets(status = "deactivated", limit = 10)
+  expect_data_frame(ds, nrows = 10L, col.names = "unique")
+  expect_string(unique(ds$status))
+  expect_true(unique(ds$status) == "deactivated")
 })
 
 test_that("listOMLDataSets by data.name", {
