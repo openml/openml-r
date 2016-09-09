@@ -96,11 +96,73 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
   http.args = filterNull(http.args)
   # do the request and catch potential "unreadable" curl errors
   server.response = try(do.call(method, http.args), silent = TRUE)
-  if (is.error(server.response)) {
+  if (is.error(server.response) || !inherits(server.response, "response")) {
     stopf("API call failed. Maybe you are not connected to the internet.")
   }
+  # handle HTTP non success status codes
+  status.code = server.response$status_code
+  if (!(status.code %btwn% c(200, 399))) {
+    # select ERROR document parser based on response type, i.e., json, xml or html
+    parseError = parseHTMLError
+    if (isXMLResponse(server.response)) parseError = parseXMLError
+    else if (isJSONResponse(server.response)) parseError = parseJSONError
+    error = parseError(server.response)
+
+    stopf("ERROR (code = %s) in server response: %s\n%s\n", as.character(error$code), error$message,
+      if (!is.null(error$extra)) error$extra else "")
+  }
+
   # if we requested a document we need to extract the actual content
   if (method == "GET")
     server.response = rawToChar(server.response$content)
   return(server.response)
+}
+
+# Helper to check if HTTP call returned XML document.
+#
+# @param response [response]
+#   Response of httr::method, e.g., httr::GET.
+# @return [logical(1)]
+isXMLResponse = function(response) {
+  assertClass(response, "response")
+  grepl("text/xml", response$headers[["content-type"]])
+}
+
+# Helper to check if HTTP call returned JSON document.
+#
+# @param response [response]
+#   Response of httr::method, e.g., httr::GET.
+# @return [logical(1)]
+isJSONResponse = function(response) {
+  assertClass(response, "response")
+  grepl("application/json", response$headers[["content-type"]])
+}
+
+# Helpers to parse error documents.
+#
+# @param response [response]
+#   Response of httr::method, e.g., httr::GET.
+# @return [list] with components 'code', 'message' and optional 'extra'
+parseHTMLError = function(response) {
+  # no parsing here
+  list(code = "<NA>", message = "<NA>", extra = "Server returned a HTML document!")
+}
+
+# see parseHTMLError for signature
+parseXMLError = function(response) {
+  content = rawToChar(response$content)
+  xml.doc = try(xmlParse(content, asText = TRUE), silent = TRUE)
+  if (is.error(xml.doc)) {
+    return(list(code = "<NA>", message = "<NA>", extra = "Unable to parse XML error response."))
+  }
+  list(
+    code = xmlRValI(xml.doc, "/oml:error/oml:code"),
+    message = xmlOValS(xml.doc, "/oml:error/oml:message")
+  )
+}
+
+# see parseHTMLError for signature
+parseJSONError = function(response) {
+  # parsed by httr (no need to call fromJSON by hand)
+  return(content(response)$error)
 }

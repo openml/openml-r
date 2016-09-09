@@ -23,7 +23,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
-This will delete one of your uploaded datasets, tasks, flows or runs. 
+This will delete one of your uploaded datasets, tasks, flows or runs.
 Note that you can only delete the objects you uploaded.
 }
 \seealso{

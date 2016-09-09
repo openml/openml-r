@@ -12,8 +12,7 @@
   # extract data frame
   runs = fromJSON(txt = content, simplifyVector = FALSE)$runs$run
   tags = convertTagListToTagString(runs)
-  runs = rbindlist(lapply(runs, function(x) x[c("run_id", "task_id", "setup_id", "flow_id", "uploader", "error_message")]))
-  runs = as.data.frame(runs, stringsAsFactors = FALSE)
+  runs = setDF(rbindlist(lapply(runs, function(x) x[c("run_id", "task_id", "setup_id", "flow_id", "uploader", "error_message")])))
   runs$tags = tags
   names(runs) = convertNamesOMLToR(names(runs))
 
