@@ -14,11 +14,10 @@
   res = fromJSON(txt = content, simplifyVector = FALSE)$data$dataset
 
   qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
-  #data.id = as.integer(extractSubList(res, "did"))
+  tags = convertTagListToTagString(res)
   res = rbindlist(lapply(res, function(x) x[c("did", "name", "version", "status", "format")]))
-  #res = cbind(data.id, as.data.frame(res, stringsAsFactors = FALSE), qualities, stringsAsFactors = FALSE)
 
-  res = cbind(res, qualities)
+  res = cbind(res, tags, qualities)
   res = as.data.frame(res, stringsAsFactors = FALSE)
 
   # convert to integer

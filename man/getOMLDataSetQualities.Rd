@@ -8,7 +8,7 @@ getOMLDataSetQualities(data.id, verbosity = NULL, name = NULL)
 }
 \arguments{
 \item{data.id}{[\code{integer(1)}]\cr
-Data ID.}
+ID of the data set.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -30,9 +30,9 @@ The returned \code{data.frame} contains data set quality
 }
 \examples{
 \dontrun{
-  a = getOMLDataSetQualities(did = 9)
-  a[a$name == "NumberOfMissingValues", ]
-  getOMLDataSetQualities(did = 9, name = "NumberOfMissingValues")
+  a = getOMLDataSetQualities(data.id = 9)
+  a[a$name == "number.of.missing.values", ]
+  getOMLDataSetQualities(data.id = 9, name = "number.of.missing.values")
 }
 }
 \seealso{

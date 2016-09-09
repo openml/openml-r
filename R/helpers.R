@@ -34,6 +34,10 @@ convertNamesOMLToR = function(names) {
   return(new.names)
 }
 
+convertTagListToTagString = function(l) {
+  vcapply(extractSubList(l, "tags", simplify = FALSE), function(x) collapse(unlist(x), ", "))
+}
+
 getRVersionString = function() {
   paste0("R_", collapse(R.Version()[c("major", "minor")], "."))
 }
@@ -99,25 +103,26 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   if (!is.null(uploader.id)) assertIntegerish(uploader.id)
   if (!is.null(number.of.instances)) {
     if (length(number.of.instances) == 1) number.of.instances = rep(number.of.instances, 2)
-    assertIntegerish(number.of.instances, lower = 1, null.ok = TRUE, min.len = 1, max.len = 2)
+    #number.of.instances = asInteger(number.of.instances, lower = 1)
+    assertIntegerish(number.of.instances, lower = 1)
     assertSorted(number.of.instances)
     number.of.instances = collapse(number.of.instances, sep = "..")
   }
   if (!is.null(number.of.features)) {
     if (length(number.of.features) == 1) number.of.features = rep(number.of.features, 2)
-    assertIntegerish(number.of.features, lower = 1, null.ok = TRUE, min.len = 1, max.len = 2)
+    number.of.features = asInteger(number.of.features, lower = 1)
     assertSorted(number.of.features)
     number.of.features = collapse(number.of.features, sep = "..")
   }
   if (!is.null(number.of.classes)) {
     if (length(number.of.classes) == 1) number.of.classes = rep(number.of.classes, 2)
-    assertIntegerish(number.of.classes, lower = 2, null.ok = TRUE, min.len = 1, max.len = 2)
+    number.of.classes = asInteger(number.of.classes, lower = 1)
     assertSorted(number.of.classes)
     number.of.classes = collapse(number.of.classes, sep = "..")
   }
   if (!is.null(number.of.missing.values)) {
     if (length(number.of.missing.values) == 1) number.of.missing.values = rep(number.of.missing.values, 2)
-    assertIntegerish(number.of.missing.values, lower = 0, null.ok = TRUE, min.len = 1, max.len = 2)
+    number.of.missing.values = asInteger(number.of.missing.values, lower = 0)
     assertSorted(number.of.missing.values)
     number.of.missing.values = collapse(number.of.missing.values, sep = "..")
   }

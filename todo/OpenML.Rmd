@@ -97,7 +97,8 @@ library("mlr")
 lrn = makeLearner("classif.randomForest")
 
 # upload the new flow (with information about the algorithm and settings);
-# if this algorithm already exists on the server, one will receive a message with the ID of the existing flow
+# if this algorithm already exists on the server, one will receive a message
+# with the ID of the existing flow
 flow.id = uploadOMLFlow(lrn)
 
 # the last step is to perform a run and upload the results
@@ -268,8 +269,9 @@ For instance, listing all runs for [task 59](http://www.openml.org/t/59) (superv
 runs = listOMLRuns(task.id = 59L)  # must be specified with the task, setup and/or implementation ID
 head(runs)
 
-run.results = listOMLRunEvaluations(task.id = 59L)  # one of the IDs (here: task.id) must be supplied
-str(run.results)
+# one of the IDs (here: task.id) must be supplied
+run.results = listOMLRunEvaluations(task.id = 59L)
+head(run.results)
 ```
 
 ### List evaluation measures and task types

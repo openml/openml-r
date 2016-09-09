@@ -9,7 +9,7 @@ getOMLDataSet(data.id = NULL, data.name = NULL, data.version = NULL,
 }
 \arguments{
 \item{data.id}{[\code{integer(1)}]\cr
-Data ID.}
+ID of the data set.}
 
 \item{data.name}{[\code{character(1)}]\cr
 Data set name.
@@ -48,7 +48,7 @@ One of \code{data.id} or \code{data.name} must be passed.
 }
 \examples{
 \dontrun{
-	dat = getOMLDataSet(did = 9)
+	dat = getOMLDataSet(data.id = 9)
 
 	# this object contains the data ($data)
 	# and meta information
