@@ -151,7 +151,10 @@ parseHTMLError = function(response) {
 # see parseHTMLError for signature
 parseXMLError = function(response) {
   content = rawToChar(response$content)
-  xml.doc = xmlParse(content, asText = TRUE)
+  xml.doc = try(xmlParse(content, asText = TRUE), silent = TRUE)
+  if (is.error(xml.doc)) {
+    return(list(code = "<NA>", message = "<NA>", extra = "Unable to parse XML error response."))
+  }
   list(
     code = xmlRValI(xml.doc, "/oml:error/oml:code"),
     message = xmlOValS(xml.doc, "/oml:error/oml:message")
