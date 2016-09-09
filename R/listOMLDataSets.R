@@ -16,8 +16,7 @@
   tags = convertTagListToTagString(res)
   res = rbindlist(lapply(res, function(x) x[c("did", "name", "version", "status", "format")]))
 
-  res = cbind(res, tags, qualities)
-  res = as.data.frame(res, stringsAsFactors = FALSE)
+  res = setDF(cbind(res, tags, qualities))
 
   # convert to integer
   i = colnames(res) %in% colnames(qualities)

@@ -25,7 +25,7 @@ getOMLDataSetQualities = function(data.id, verbosity = NULL, name = NULL) {
   xml = parseXMLResponse(content, "Getting data set qualities", "data_qualities", as.text = TRUE)
 
   blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  ret = as.data.frame(rbindlist(lapply(blocks, function(node) {
+  ret = setDF(rbindlist(lapply(blocks, function(node) {
     children = xmlChildren(node)
     list(
       name = xmlValue(children[["name"]]),
