@@ -194,3 +194,8 @@ convertNameValueListToDF = function(x) {
   x = rbindlist(x, fill = TRUE)
   return(x)
 }
+
+extractRVersionFromFlow = function(flow) {
+  version = strsplit(flow$dependencies, ",")[[1]]
+  return(gsub("R_", "", version[grepl("R_", version)]))
+}

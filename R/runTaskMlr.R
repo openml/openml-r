@@ -62,7 +62,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
 
   # Create OMLRun
-  setOMLSeedParList(seed.setting)
+  setOMLSeedParList(seed.setting, flow = flow)
   bmr = mlr::benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
   res = bmr$results[[1]][[1]]
 

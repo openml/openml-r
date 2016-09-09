@@ -68,7 +68,7 @@ isSeedPar = function(par) {
 }
 
 # @param x OMLSeedParList
-setOMLSeedParList = function(x) {
+setOMLSeedParList = function(x, flow = NULL) {
   assertClass(x, "OMLSeedParList")
   seed.pars = vcapply(x, function(x) x$value)
   prefix = unique(gsub("seed|kind|normal.kind", "", names(seed.pars)))
@@ -79,6 +79,8 @@ setOMLSeedParList = function(x) {
   if (!identical(currentRNG, unname(xRNG)))
     messagef("Kind of RNG has been changed to '%s'",
       convertToShortString(as.list(xRNG)))
+  
+  if (!is.null(flow)) RNGversion(extractRVersionFromFlow(flow)) 
   
   do.call("set.seed", as.list(seed.pars))
 }
