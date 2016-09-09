@@ -6,8 +6,8 @@
 \usage{
 listOMLTasks(number.of.instances = NULL, number.of.features = NULL,
   number.of.classes = NULL, number.of.missing.values = NULL, tag = NULL,
-  data.name = NULL, limit = NULL, offset = NULL, status = "active",
-  verbosity = NULL)
+  data.name = NULL, data.tag = NULL, limit = NULL, offset = NULL,
+  status = "active", verbosity = NULL)
 }
 \arguments{
 \item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr
@@ -32,6 +32,10 @@ are listed.}
 
 \item{data.name}{[\code{character(1)}]\cr
 Name of the data set.}
+
+\item{data.tag}{[\code{character(1)}]\cr
+Refers to the tag of the dataset the task is based on.
+If not \code{NULL} only tasks with the corresponding \code{data.tag} are listed.}
 
 \item{limit}{[\code{numeric(1)}]\cr
 Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
