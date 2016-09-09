@@ -42,10 +42,22 @@ getRVersionString = function() {
   paste0("R_", collapse(R.Version()[c("major", "minor")], "."))
 }
 
-checkUserConfirmation = function(type) {
+# Helper funtion to ask user for confirmation.
+#
+# @param type [character]
+#   Object type, e.g., dataset.
+# @param confirm.upload [logical(1)]
+#   Confirmation wanted?
+#   Default is the config setting.
+# @return [logical(1)]
+checkUserConfirmation = function(type, confirm.upload = NULL) {
   assertChoice(type, choices = c("dataset", "flow", "task", "run"))
+  if (is.null(confirm.upload)) {
+    confirm.upload = as.logical(getOMLConfig()$confirm.upload)
+  }
+  assertFlag(confirm.upload)
 
-  if (isTRUE(as.logical(getOMLConfig()$confirm.upload))) {
+  if (isTRUE(confirm.upload)) {
     catf("Do you really want to upload the %s? (yes|no)", type)
     reaction = readLines(con = stdin(), 1L)
     return(grepl(reaction, "yes"))
@@ -131,7 +143,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   if (!is.null(limit)) assertIntegerish(limit, len = 1)
   if (!is.null(offset)) assertIntegerish(offset, len = 1)
   if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
-  
+
   if (length(run.id) > 1)
     run.id = collapse(run.id)
   if (length(task.id) > 1)

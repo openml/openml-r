@@ -9,7 +9,8 @@
 #'
 #' By default you will be asked to confirm the upload. You can deactivate the
 #' need for confirmation by setting \dQuote{confirm.upload = TRUE} via
-#' \link{setOMLConfig}.
+#' \link{setOMLConfig} or set the corresponding argument each time you call
+#' the function.
 #'
 #' @param run [\code{\link{OMLRun}}|\code{\link{OMLMlrRun}}]\cr
 #'   The run that should be uploaded. Either a \code{\link{OMLRun}} or a run created with \code{\link{OMLMlrRun}}.
@@ -17,6 +18,7 @@
 #'   Should the Benchmark result created by \code{\link[mlr]{benchmark}} function be uploaded?
 #'   If set to \code{TRUE} and the flow is created via \link[mlr]{makeTuneWrapper}, an arff file that contains the hyperparameter optimization trace is also uploaded.
 #' @template arg_upload_tags
+#' @template arg_confirm.upload
 #' @template arg_verbosity
 #' @param ...
 #'   Not used.
@@ -25,35 +27,35 @@
 #' @family uploading functions
 #' @family run-related functions
 #' @export
-uploadOMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
+uploadOMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upload = NULL, verbosity = NULL, ...) {
   UseMethod("uploadOMLRun")
 }
 
 # For reverse support
 #' @export
-uploadOMLRun.runTaskMlr = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
+uploadOMLRun.runTaskMlr = function(run, upload.bmr = FALSE, tags = NULL, confirm.upload = NULL, verbosity = NULL, ...) {
   class(run) = "OMLMlrRun"
-  uploadOMLRun(run = run, upload.bmr = upload.bmr, tags = tags, verbosity = verbosity, ...)
+  uploadOMLRun(run = run, upload.bmr = upload.bmr, tags = tags, confirm.upload = NULL, verbosity = verbosity, ...)
 }
 
 #' @export
-uploadOMLRun.OMLMlrRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
+uploadOMLRun.OMLMlrRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upload = NULL, verbosity = NULL, ...) {
   assertClass(run, "OMLMlrRun")
   assertClass(run$bmr, "BenchmarkResult")
   assertClass(run$flow, "OMLFlow")
   assertFlag(upload.bmr)
-  uploadOMLRun.OMLRun(run = run$run, upload.bmr = upload.bmr, bmr = run$bmr, flow = run$flow)
+  uploadOMLRun.OMLRun(run = run$run, upload.bmr = upload.bmr, tags = tags, bmr = run$bmr, verbosity = verbosity, flow = run$flow)
 }
 
 #' @export
-uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...) {
+uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upload = NULL, verbosity = NULL, ...) {
   assertClass(run, "OMLRun")
   assertFlag(upload.bmr)
 
   bmr = list(...)$bmr
   flow = list(...)$flow
 
-  if (!checkUserConfirmation(type = "run")) {
+  if (!checkUserConfirmation(type = "run", confirm.upload = confirm.upload)) {
     return(invisible())
   }
 
