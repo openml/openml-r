@@ -4,7 +4,8 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run.}
 \usage{
-uploadOMLRun(run, upload.bmr = FALSE, tags = NULL, verbosity = NULL, ...)
+uploadOMLRun(run, upload.bmr = FALSE, tags = NULL, confirm.upload = NULL,
+  verbosity = NULL, ...)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}|\code{\link{OMLMlrRun}}]\cr
@@ -16,6 +17,10 @@ If set to \code{TRUE} and the flow is created via \link[mlr]{makeTuneWrapper}, a
 
 \item{tags}{[\code{character}]\cr
 The tags that should be added after uploading.}
+
+\item{confirm.upload}{[\code{logical(1)}]\cr
+Should the user be asked to confirm the upload?
+Default is the setting from your config.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -39,7 +44,8 @@ This function will reset the cache of \code{\link{listOMLRuns}} and
 
 By default you will be asked to confirm the upload. You can deactivate the
 need for confirmation by setting \dQuote{confirm.upload = TRUE} via
-\link{setOMLConfig}.
+\link{setOMLConfig} or set the corresponding argument each time you call
+the function.
 }
 \seealso{
 Other run-related functions: \code{\link{convertOMLRunToBMR}},
