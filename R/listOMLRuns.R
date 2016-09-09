@@ -10,8 +10,11 @@
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
 
   # extract data frame
-  runs = fromJSON(txt = content)$runs$run
-  runs$tags = vcapply(runs$tags, function(x) collapse(x, ", "))
+  runs = fromJSON(txt = content, simplifyVector = FALSE)$runs$run
+  tags = convertTagListToTagString(runs)
+  runs = rbindlist(lapply(runs, function(x) x[c("run_id", "task_id", "setup_id", "flow_id", "uploader", "error_message")]))
+  runs = as.data.frame(runs, stringsAsFactors = FALSE)
+  runs$tags = tags
   names(runs) = convertNamesOMLToR(names(runs))
 
   # handle error messages

@@ -62,5 +62,9 @@ test_that("uploadOMLRun", {
     run.id = uploadOMLRun(res, upload.bmr = TRUE)
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
+    
+    # upload run and tag it
+    run.id = uploadOMLRun(res, tag = "myspecialtag")
+    expect_subset(getOMLRun(run.id)$tags, "myspecialtag")
   })
 })
