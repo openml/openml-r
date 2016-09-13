@@ -14,7 +14,7 @@
   # convert long format to wide format
   evals = reshape(evals,
     timevar = "function",
-    idvar = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name"),
+    idvar = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name", "upload_time"),
     direction = "wide")
 
   # drop "all NA" columns
