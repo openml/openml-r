@@ -19,12 +19,14 @@
 #'   The ID of the flow (\code{flow.id}). If there are more componets in the flow, than a vector of IDs.
 #' @family uploading functions
 #' @export
-uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, confirm.upload = NULL, sourcefile, binaryfile) {
+uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, 
+  confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   UseMethod("uploadOMLFlow")
 }
 
 #' @export
-uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
+uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, 
+  confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   # upload components as flows if there are some
   # if (length(x$components) > 0) {
   #   tmp = uploadOMLFlow(x$components[[1]])
@@ -52,15 +54,20 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, confirm.uploa
   showInfo(verbosity, "Uploading flow to server.")
   showInfo(verbosity, "Downloading response to: %s", file)
 
-  #url = getAPIURL("flow/")
   params = list(description = upload_file(path = file))
 
-  # if binary.path is given (and binaryfile is empty), upload binary.path, otherwise upload binaryfile
+  # if file in binary.path exist (and binaryfile does not exist), upload binary.path, otherwise upload binaryfile
   if (testFile(x$binary.path) & !testFile(binaryfile)) binaryfile = x$binary.path
+  if (!is.null(x$object) & !testFile(binaryfile)) {
+    lrn = x$object
+    binaryfile = file.path(tempdir(), sprintf("%s_binary.Rds", lrn$id))
+    saveRDS(lrn, file = binaryfile)
+  }
   if (testFile(binaryfile)) {
     x$binary.md5 = digest(file = binaryfile)
     params$binary = upload_file(path = binaryfile)
-  }
+  } 
+  
   if (testFile(x$source.path) & !testFile(sourcefile)) sourcefile = x$source.path
   if (testFile(sourcefile)) {
     x$source.md5 = digest(file = sourcefile)
@@ -88,11 +95,14 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, confirm.uploa
 }
 
 #' @export
-uploadOMLFlow.Learner = function(x, tags = NULL,
-  verbosity = NULL, confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
+uploadOMLFlow.Learner = function(x, tags = NULL, verbosity = NULL, 
+  confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = convertMlrLearnerToOMLFlow(x)
 
-  flow.id = uploadOMLFlow(flow, confirm.upload = confirm.upload, sourcefile = sourcefile, binaryfile = binaryfile, verbosity = verbosity)
+  if (is.null(binaryfile)) binaryfile = flow$binary.path
+  
+  flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity, 
+    confirm.upload = confirm.upload, sourcefile = sourcefile, binaryfile = binaryfile)
   return(flow.id)
 }
 

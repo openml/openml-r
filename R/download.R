@@ -21,7 +21,6 @@
 #'   Another possibility to pass key-value pairs for the HTTP request query.
 #'   Arguments passed via ... have a higher priority.
 #' @return [\code{character(1)}]\cr Unparsed content of the returned XML file.
-#' @export
 #' @keywords internal
 doAPICall = function(api.call, id = NULL,
   url.args = list(), post.args = list(), file = NULL,
