@@ -16,7 +16,7 @@
 #' @param binaryfile [\code{character(1)}]\cr
 #'   The file path to the flow (not needed for \code{\link[mlr]{Learner}}).
 #' @return [\code{invisible(numeric)}].
-#'   The ID of the flow (\code{flow.id}). If there are more componets in the flow, than a vector of IDs.
+#'   The ID of the flow (\code{flow.id}).
 #' @family uploading functions
 #' @export
 uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, 
@@ -99,7 +99,7 @@ uploadOMLFlow.Learner = function(x, tags = NULL, verbosity = NULL,
   confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = convertMlrLearnerToOMLFlow(x)
 
-  if (is.null(binaryfile)) binaryfile = flow$binary.path
+  if (is.null(binaryfile) & testFile(flow$binary.path)) binaryfile = flow$binary.path
   
   flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity, 
     confirm.upload = confirm.upload, sourcefile = sourcefile, binaryfile = binaryfile)
