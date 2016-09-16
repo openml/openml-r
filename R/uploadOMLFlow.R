@@ -66,7 +66,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL,
   if (testFile(binaryfile)) {
     x$binary.md5 = digest(file = binaryfile)
     params$binary = upload_file(path = binaryfile)
-  } 
+  } else stop("You must provide an existing binaryfile.")
   
   if (testFile(x$source.path) & !testFile(sourcefile)) sourcefile = x$source.path
   if (testFile(sourcefile)) {
