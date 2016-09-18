@@ -107,8 +107,8 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     else if (isJSONResponse(server.response)) parseError = parseJSONError
     error = parseError(server.response)
 
-    stopf("ERROR (code = %s) in server response: %s\n%s\n", as.character(error$code), error$message,
-      if (!is.null(error$extra)) error$extra else "")
+    stopf("ERROR (code = %s) in server response: %s\n  %s\n", as.character(error$code), error$message,
+      if (!is.null(error$additional.information)) error$additional.information else "")
   }
 
   # if we requested a document we need to extract the actual content
@@ -144,7 +144,8 @@ isJSONResponse = function(response) {
 # @return [list] with components 'code', 'message' and optional 'extra'
 parseHTMLError = function(response) {
   # no parsing here
-  list(code = "<NA>", message = "<NA>", extra = "Server returned a HTML document!")
+  list(code = "<NA>", message = "<NA>",
+    additional.information = "Server returned a HTML document!")
 }
 
 # see parseHTMLError for signature
@@ -152,16 +153,20 @@ parseXMLError = function(response) {
   content = rawToChar(response$content)
   xml.doc = try(xmlParse(content, asText = TRUE), silent = TRUE)
   if (is.error(xml.doc)) {
-    return(list(code = "<NA>", message = "<NA>", extra = "Unable to parse XML error response."))
+    return(list(code = "<NA>", message = "<NA>",
+      additional.information = "Unable to parse XML error response."))
   }
   list(
     code = xmlRValI(xml.doc, "/oml:error/oml:code"),
-    message = xmlOValS(xml.doc, "/oml:error/oml:message")
+    message = xmlOValS(xml.doc, "/oml:error/oml:message"),
+    additional.information = xmlOValS(xml.doc, "/oml:error/oml:additional_information")
   )
 }
 
 # see parseHTMLError for signature
 parseJSONError = function(response) {
   # parsed by httr (no need to call fromJSON by hand)
-  return(content(response)$error)
+  error = content(response)$error
+  names(error) = convertNamesOMLToR(names(error))
+  return(error)
 }
