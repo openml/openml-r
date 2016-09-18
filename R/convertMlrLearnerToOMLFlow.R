@@ -50,6 +50,7 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
     dependencies = dependencies,
     external.version = external.version,
     binary.path = binary.path,
+    object = lrn,
     ...
   )
 

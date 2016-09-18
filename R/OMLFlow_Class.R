@@ -68,6 +68,8 @@
 #'   The path to the cached source file, once \code{\link{getOMLFlow}} was run.
 #' @param binary.path [\code{character(1)}]\cr
 #'   The path to the cached binary file, once \code{\link{getOMLFlow}} was run.
+#' @param object [\code{any}]\cr
+#'   (optional) Any R object referring to the flow.
 #' @export
 #' @family flow-related functions
 #' @aliases OMLFlow
@@ -101,7 +103,8 @@ makeOMLFlow = function(
   source.md5 = NA_character_,
   binary.md5 = NA_character_,
   source.path = NA_character_,
-  binary.path = NA_character_
+  binary.path = NA_character_,
+  object = NULL
 ) {
 
   assertInt(flow.id, na.ok = TRUE)
@@ -165,7 +168,8 @@ makeOMLFlow = function(
     source.md5 = source.md5,
     binary.md5 = binary.md5,
     source.path = source.path,
-    binary.path = binary.path
+    binary.path = binary.path, 
+    object = object
   )
 }
 

@@ -6,7 +6,7 @@
 #' full path to the configuration file on your operating system.
 #'
 #' For further information please read the
-#' \href{https://github.com/openml/openml-r/blob/master/vignettes/OpenML.html}{vignette}.
+#' \href{https://github.com/openml/openml-r/blob/master/todo/OpenML.Rmd}{vignette}.
 #'
 #' @note
 #' By default the cache directory is located in a temporary directory and
