@@ -20,5 +20,5 @@ test_that("listOMLRuns", {
   test.tag = "myspecialtag"
   rs = .listOMLRuns(tag = test.tag)
   expect_data_frame(rs, col.names = "unique")
-  expect_true(all(grepl(rs$tags, test.tag)))
+  expect_true(all(grepl(test.tag, rs$tags)))
 })
