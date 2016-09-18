@@ -35,16 +35,18 @@ test_that("listOMLTasks", {
   #expect_set_equal(exp.names, names(one.task))
 
   # check if evaluation.measures and estimation.procedures are NA for Subgroup Discovery task type
-  tasks = .listOMLTasks(tag = "Cortana")
+  exp.tag = "Cortana"
+  tasks = .listOMLTasks(tag = exp.tag)
   expect_true(unique(tasks$task.type) == "Subgroup Discovery")
   expect_true(sum(is.na(tasks$evaluation.measures)) == nrow(tasks))
+  expect_true(all(grepl(exp.tag, tasks$tags)))
   #expect_set_equal(exp.names, names(tasks))
-  
+
   # check if status works
   tasks = .listOMLTasks(status = "in_preparation", limit = 10)
   expect_string(unique(tasks$status))
   expect_true(unique(tasks$status) == "in_preparation")
-  
+
   tasks = .listOMLTasks(status = "deactivated", limit = 10)
   expect_data_frame(tasks, nrows = 10L, col.names = "unique")
   expect_string(unique(tasks$status))

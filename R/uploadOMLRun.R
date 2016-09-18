@@ -35,7 +35,7 @@ uploadOMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upload = N
 #' @export
 uploadOMLRun.runTaskMlr = function(run, upload.bmr = FALSE, tags = NULL, confirm.upload = NULL, verbosity = NULL, ...) {
   class(run) = "OMLMlrRun"
-  uploadOMLRun(run = run, upload.bmr = upload.bmr, tags = tags, confirm.upload = NULL, verbosity = verbosity, ...)
+  uploadOMLRun(run = run, upload.bmr = upload.bmr, tags = tags, confirm.upload = confirm.upload, verbosity = verbosity, ...)
 }
 
 #' @export
@@ -52,9 +52,16 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
   assertClass(run, "OMLRun")
   assertFlag(upload.bmr)
 
-  bmr = list(...)$bmr
-  flow = list(...)$flow
-
+  dot.args = list(...)
+  bmr = dot.args$bmr
+  flow = dot.args$flow
+  
+  if (is.null(flow$object) & !is.null(bmr)) {
+    lrn = getBMRLearners(bmr)[[1]]
+  } else {
+    lrn = flow$object
+  }
+  
   if (!checkUserConfirmation(type = "run", confirm.upload = confirm.upload)) {
     return(invisible())
   }
@@ -62,7 +69,7 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
   # if no flow.id, try to upload flow (if it exists) and assign its id to flow.id slot
   if (is.na(run$flow.id)) {
     if (!is.null(flow)){
-      run$flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity)
+      run$flow.id = uploadOMLFlow(lrn, tags = tags, confirm.upload = confirm.upload, verbosity = verbosity)
       #flow.ids = setNames(flow.ids, rev(unlist(strsplit(flow$name, "[.]")))[1:length(flow.ids)])
     } else stop("Please provide a 'flow'")
   } # else flow.ids = run$flow.id

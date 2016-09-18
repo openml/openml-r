@@ -16,11 +16,12 @@ There is no CRAN release yet. Use `devtools` to install the current development 
 ```r
 devtools::install_github("openml/r")
 ```
-Furthermore,  you need `RWeka` or [farff](https://github.com/mlr-org/farff) installed to process ARFF files:
+Furthermore,  you need [farff](https://github.com/mlr-org/farff) installed to process [ARFF](http://www.cs.waikato.ac.nz/ml/weka/arff.html) files:
 ```r
-install.packages("RWeka")
-# or: devtools::install_github("mlr-org/farff")
+install.packages("farff")
 ```
+Alternatively you can make use of the [RWeka](https://cran.r-project.org/web/packages/RWeka/index.html) R package to process ARFF files. However, in particular for larger ARFF files, [farff](https://github.com/mlr-org/farff) is considerably faster than RWeka.
+
 # Contact
 
 Found some nasty bugs? Please use the [issue tracker](https://github.com/openml/openml-r/issues) to report on bugs or missing features. Pay attention to explain the problem as good as possible (in the best case with a `traceback()` result and a `sessionInfo()`). Moreover, a reproducible example is desirable.

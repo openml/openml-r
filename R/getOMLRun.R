@@ -48,7 +48,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     path.evals = paste(path, "oml:evaluation", sep ="/")
     ns.evals = getNodeSet(doc, path.evals)
 
-    evals = rbindlist(lapply(ns.evals, function(node) {
+    evals = setDF(rbindlist(lapply(ns.evals, function(node) {
       children = xmlChildren(node)
       row = list(
         as.integer(xmlValue(children[["did"]])),
@@ -65,8 +65,8 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
       row = c(row, cv.info)
       names(row) = c("data.id", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size", "repeat", "fold")
       row
-    }), fill = TRUE)
-    makeOMLIOData(datasets = datasets, files = files, evaluations = as.data.frame(evals))
+    }), fill = TRUE))
+    makeOMLIOData(datasets = datasets, files = files, evaluations = evals)
   }
 
   run.args = filterNull(list(

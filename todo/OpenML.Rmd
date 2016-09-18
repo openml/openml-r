@@ -52,10 +52,9 @@ To install the current development version use the [`devtools`](https://cran.r-p
 ```{r eval=FALSE, message=FALSE}
 devtools::install_github("openml/openml-r")
 ```
-Using the OpenML package also requires a reader for the [ARFF](http://www.cs.waikato.ac.nz/ml/weka/arff.html) file format. By default [RWeka](https://cran.r-project.org/web/packages/RWeka/index.html) is used. Alternatively, the [farff](https://github.com/mlr-org/farff) package can be used. You can install the packages with the following calls.
+Using the OpenML package also requires a reader for the [ARFF](http://www.cs.waikato.ac.nz/ml/weka/arff.html) file format. By default [farff](https://cran.r-project.org/web/packages/farff/index.html) is used. Alternatively, the [RWeka](https://cran.r-project.org/web/packages/RWeka/index.html) package can be used. You can install the packages with the following calls.
 ```{r eval=FALSE, message=FALSE}
-install.packages("RWeka")
-devtools::install_github("mlr-org/farff")
+install.packages(c("farff", "RWeka"))
 ```
 
 

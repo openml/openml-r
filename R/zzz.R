@@ -23,5 +23,5 @@ NULL
   if (file.exists(fn.user))
     loadOMLConfig(fn.user, assign = TRUE)
   # FIXME: this is probably forbidden on cran?
-  createCacheSubDirs(verbosity = FALSE)
+  createCacheSubDirs(verbosity = 0L)
 }

@@ -5,7 +5,7 @@
 \title{Upload an OpenML.}
 \usage{
 uploadOMLFlow(x, tags = NULL, verbosity = NULL, confirm.upload = NULL,
-  sourcefile, binaryfile)
+  sourcefile = NULL, binaryfile = NULL)
 }
 \arguments{
 \item{x}{[\code{\link{OMLFlow}}|\code{\link[mlr]{Learner}}]\cr
@@ -33,7 +33,7 @@ The file path to the flow (not needed for \code{\link[mlr]{Learner}}).}
 }
 \value{
 [\code{invisible(numeric)}].
-  The ID of the flow (\code{flow.id}). If there are more componets in the flow, than a vector of IDs.
+  The ID of the flow (\code{flow.id}).
 }
 \description{
 Share a flow by uploading it to the OpenML server.

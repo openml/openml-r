@@ -107,7 +107,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     }
     iter.eval.split = rbindlist(lapply(iter.eval.split, getMeasureValue, measures = measures))
     colnames(iter.eval.split) = unname(sapply(convertOMLMeasuresToMlr(colnames(iter.eval.split)), function(x) x$id))
-    ms.test = data.frame(iter = 1:nrow(iter.eval.split), as.data.frame(iter.eval.split))
+    ms.test = data.frame(iter = 1:nrow(iter.eval.split), iter.eval.split)
 
     #ms.train = subset(ms.test, select = -iter)
     #ms.train[!is.na(ms.train)] = NA

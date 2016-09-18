@@ -1,12 +1,12 @@
 .listOMLTasks = function(number.of.instances = NULL, number.of.features = NULL,
   number.of.classes = NULL, number.of.missing.values = NULL,
-  tag = NULL, data.name = NULL,
+  tag = NULL, data.name = NULL, data.tag = NULL,
   limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
 
   api.call = generateAPICall("json/task/list",
     number.of.instances = number.of.instances, number.of.features = number.of.features,
     number.of.classes = number.of.classes, number.of.missing.values = number.of.missing.values,
-    tag = tag, data.name = data.name,
+    tag = tag, data.name = data.name, data.tag = data.tag,
     limit = limit, offset = offset, status = status)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
@@ -24,7 +24,7 @@
   if (is.null(input$estimation_procedure)) {
     input$estimation_procedure = NA
   } else {
-    estproc = listOMLEstimationProcedures(verbosity = FALSE)
+    estproc = listOMLEstimationProcedures(verbosity = 0L)
     row.names(estproc) = estproc$est.id
     input$estimation_procedure = as.character(estproc[input$estimation_procedure , "name"])
   }
@@ -36,8 +36,7 @@
   #res$quality = res$input = res$tags = NULL
 
   # build final dataframe
-  res = cbind(res, input, tags, qualities)
-  res = as.data.frame(res, stringsAsFactors = FALSE)
+  res = setDF(cbind(res, input, tags, qualities))
 
   # convert to integer
   i = colnames(res) %in% c(colnames(qualities), "did", "task_id")
@@ -45,7 +44,7 @@
 
   # finally convert _ to . in col names
   names(res) = convertNamesOMLToR(names(res))
-  
+
   return(res)
 }
 
@@ -63,6 +62,9 @@
 #' @template arg_number.of.missing.values
 #' @template arg_tag
 #' @template arg_data.name
+#' @param data.tag [\code{character(1)}]\cr
+#'   Refers to the tag of the dataset the task is based on.
+#'   If not \code{NULL} only tasks with the corresponding \code{data.tag} are listed. 
 #' @template arg_limit
 #' @template arg_offset
 #' @template arg_status

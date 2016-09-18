@@ -17,7 +17,7 @@ makeOMLFlow(flow.id = NA_integer_, uploader = NA_integer_, name,
   binary.url = NA_character_, source.format = NA_character_,
   binary.format = NA_character_, source.md5 = NA_character_,
   binary.md5 = NA_character_, source.path = NA_character_,
-  binary.path = NA_character_)
+  binary.path = NA_character_, object = NULL)
 }
 \arguments{
 \item{flow.id}{[\code{integer(1)}]\cr
@@ -112,6 +112,9 @@ The path to the cached source file, once \code{\link{getOMLFlow}} was run.}
 
 \item{binary.path}{[\code{character(1)}]\cr
 The path to the cached binary file, once \code{\link{getOMLFlow}} was run.}
+
+\item{object}{[\code{any}]\cr
+(optional) Any R object referring to the flow.}
 }
 \description{
 More details about the elements of a \code{OMLFlow} can be found in the

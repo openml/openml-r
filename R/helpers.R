@@ -105,7 +105,7 @@ catfNotNA = function(text, obj) {
 
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
   number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL, number.of.missing.values = NULL,
-  tag = NULL, data.name = NULL, limit = NULL, offset = NULL, status = NULL) {
+  tag = NULL, data.name = NULL, data.tag = NULL, limit = NULL, offset = NULL, status = NULL) {
   is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
   assertSorted = makeAssertionFunction(is.sorted)
   assertString(api.call)
@@ -140,6 +140,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   }
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
   if (!is.null(data.name)) assertString(data.name, na.ok = FALSE)
+  if (!is.null(data.tag)) assertString(data.tag, na.ok = FALSE)
   if (!is.null(limit)) assertIntegerish(limit, len = 1)
   if (!is.null(offset)) assertIntegerish(offset, len = 1)
   if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
@@ -165,6 +166,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     number_classes = number.of.classes,
     number_missing_values = number.of.missing.values,
     data_name = data.name,
+    data_tag = data.tag,
     limit = limit,
     offset = offset,
     status = status
@@ -191,4 +193,9 @@ convertNameValueListToDF = function(x) {
   #as.list(setNames(rep(NA, length(cols)), cols)))
   x = rbindlist(x, fill = TRUE)
   return(x)
+}
+
+extractRVersionFromFlow = function(flow) {
+  version = strsplit(flow$dependencies, ",")[[1]]
+  return(gsub("R_", "", version[grepl("R_", version)]))
 }
