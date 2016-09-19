@@ -2,9 +2,10 @@
 #'
 #' @description Objects of class \code{OMLIOData} are used to return information about all inputs
 #'   and outputs of \code{\link{OMLRun}s}. Each object may contain up to three \code{data.frames},
-#'   containing information on \code{datasets} ("did", "name", "url"), \code{files} ("did", "name", "url")
+#'   containing information on \code{datasets} ("data.id", "name", "url"), \code{files} ("data.id", "name", "url")
 #'   and/or \code{evaluations}.
 #' @name OMLIOData
+#' @keywords internal
 NULL
 
 makeOMLIOData = function(datasets = NULL, files = NULL, evaluations = NULL) {

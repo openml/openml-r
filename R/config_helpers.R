@@ -15,7 +15,7 @@ getDefaultConfig = function() {
     server = "http://www.openml.org/api/v1",
     cachedir = file.path(tempdir(), "cache"),
     verbosity = 1L,
-    arff.reader = "RWeka",
+    arff.reader = "farff",
     apikey = "PLEASE CHANGE ME",
     confirm.upload = TRUE
   ))

@@ -4,30 +4,58 @@
 \alias{listOMLDataSets}
 \title{List available OpenML data sets.}
 \usage{
-listOMLDataSets(verbosity = NULL, status = "active", tag = NULL)
+listOMLDataSets(number.of.instances = NULL, number.of.features = NULL,
+  number.of.classes = NULL, number.of.missing.values = NULL, tag = NULL,
+  data.name = NULL, limit = NULL, offset = NULL, status = "active",
+  verbosity = NULL)
 }
 \arguments{
+\item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or,
+if a vector of length 2 is passed, the given ranges.}
+
+\item{number.of.features}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, it subsets the entries with respect to the given values or,
+if a vector of length 2 is passed, the given range.}
+
+\item{number.of.classes}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or,
+if a vector of length 2 is passed, the given ranges.}
+
+\item{number.of.missing.values}{[\code{numeric(1) | numeric(2)}]\cr
+If not \code{NULL}, subsets the entries with respect to the given values or,
+if a vector of length 2 is passed, the given ranges.}
+
+\item{tag}{[\code{character}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}s
+are listed.}
+
+\item{data.name}{[\code{character(1)}]\cr
+Name of the data set.}
+
+\item{limit}{[\code{numeric(1)}]\cr
+Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
+
+\item{offset}{[\code{numeric(1)}]\cr
+Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
+
+\item{status}{[\code{character}]\cr
+Subsets the results according to the status. Possible values are 
+\code{{"active", "deactivated", "in_preparation"}}.
+Default is \code{"active"}.}
+
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
-
-\item{status}{[\code{character}]\cr
-Subsets the results according to the status, can take one or more values of
-\code{{"active", "deactivated", "in_preparation"}}.
-Default is \code{"active"}.}
-
-\item{tag}{[\code{character(1)}]\cr
-If not \code{NULL} only entries with the corresponding \code{tag}
-are listed.}
 }
 \value{
 [\code{data.frame}].
 }
 \description{
-The returned \code{data.frame} contains the data set id \dQuote{did},
+The returned \code{data.frame} contains the data set id \dQuote{data.id},
 the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
 and describing data qualities.
 }

@@ -27,7 +27,7 @@ uploadMlrLearner = function(lrn, hash, dir = getwd(), delete.source = TRUE, ...,
 
   assertClass(lrn, "Learner")
   assertString(hash)
-  assertDirectory(dir)
+  assertDirectoryExists(dir)
   assertFlag(delete.source)
   assertFlag(show.info)
 

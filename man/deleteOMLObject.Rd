@@ -23,7 +23,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 }
 \description{
-This will delete one of your uploaded datasets, tasks, flows or runs. 
+This will delete one of your uploaded datasets, tasks, flows or runs.
 Note that you can only delete the objects you uploaded.
 }
 \seealso{
@@ -36,13 +36,13 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 
-Other flow-related functions: \code{\link{getOMLFlow}},
-  \code{\link{listOMLFlows}},
+Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
+  \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 
-Other run-related functions: \code{\link{getOMLRun}},
-  \code{\link{listOMLRuns}},
+Other run-related functions: \code{\link{convertOMLRunToBMR}},
+  \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}

@@ -2,6 +2,10 @@ language: r
 sudo: false
 r_check_args: "--as-cran --run-donttest"
 
+os:
+  - linux
+  - osx
+
 env:
   global:
   - secure: oBSw3lt+e3/iEEhYHXEAJpZWmITbC6HtqRVXIKQsVpaGfQ6zxxoIKeUOpSUGSGvG+CLBqie97a7eWDq2Z21md6wr+jBnmAoHlrUckQdw7GF8aT3aOmZzQ6cZbQniTn5nRJ8GlfYi/nkhxIDQ0bUY3KBBUak27uHvNEY4wqSdCxE=
@@ -10,6 +14,9 @@ env:
 r_github_packages:
     - jimhester/covr
     - mlr-org/farff
+    - mlr-org/mlr
+    - berndbischl/BBmisc
+    - berndbischl/ParamHelpers
 
 cache:
   packages: true
@@ -31,3 +38,4 @@ notifications:
         - j.bossek@gmail.com
     on_success: change
     on_failure: always
+  slack: openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications

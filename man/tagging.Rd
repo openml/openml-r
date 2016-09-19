@@ -5,15 +5,15 @@
 \alias{untagOMLObject}
 \title{Tagging of OpenML objects}
 \usage{
-tagOMLObject(id, object = c("data", "task", "flow", "run"), tags,
+tagOMLObject(ids, object = c("data", "task", "flow", "run"), tags,
   verbosity = NULL)
 
-untagOMLObject(id, object = c("data", "task", "flow", "run"), tags,
+untagOMLObject(ids, object = c("data", "task", "flow", "run"), tags,
   verbosity = NULL)
 }
 \arguments{
-\item{id}{[\code{integer(1)}]\cr
-The ID of the respective object.}
+\item{ids}{[\code{integer}]\cr
+The IDs of the respective objects.}
 
 \item{object}{[\code{character(1)}]\cr
 A character that specifies the object you want to delete from the server. Can be either
@@ -42,13 +42,15 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{listOMLDataSets}},
   \code{\link{uploadOMLDataSet}}
 
-Other flow-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
+Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
+  \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}
 
-Other run-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
+Other run-related functions: \code{\link{convertOMLRunToBMR}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
+  \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
 

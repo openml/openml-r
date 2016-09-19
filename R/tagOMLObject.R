@@ -3,7 +3,7 @@
 #' @description
 #' Add or remove a specific tag to a OpenML data, task, flow or run.
 #'
-#' @template arg_id
+#' @template arg_ids
 #' @template arg_object
 #' @param tags [\code{character}]\cr
 #'  The tags that should be added/removed.
@@ -14,22 +14,26 @@
 #' @family run-related functions
 #' @rdname tagging
 #' @export
-tagOMLObject = function(id, object = c("data", "task", "flow", "run"), tags, verbosity = NULL) {
-  return(invisible(multipleTagsOMLObject(id, object, tags, method = "add", verbosity = verbosity)))
+tagOMLObject = function(ids, object = c("data", "task", "flow", "run"), tags, verbosity = NULL) {
+  lapply(ids, function(id)
+    multipleTagsOMLObject(id, object, tags, method = "add", verbosity = verbosity))
+  return(invisible(NULL))
 }
 
 #' @rdname tagging
 #' @export
-untagOMLObject = function(id, object = c("data", "task", "flow", "run"), tags, verbosity = NULL) {
-  return(invisible(multipleTagsOMLObject(id, object, tags, method = "remove", verbosity)))
+untagOMLObject = function(ids, object = c("data", "task", "flow", "run"), tags, verbosity = NULL) {
+  lapply(ids, function(id)
+    multipleTagsOMLObject(id, object, tags, method = "remove", verbosity))
+  return(invisible(NULL))
 }
 
 multipleTagsOMLObject = function(id, object = c("data", "task", "flow", "run"),
   tags, method = c("add", "remove"), verbosity = NULL) {
-  response = lapply(tags, function(tag) {
+  lapply(tags, function(tag) {
     singleTagOMLObject(id, object, tag, method, verbosity)
   })
-  return(response)
+  return(invisible(NULL))
 }
 
 singleTagOMLObject = function(id, object = c("data", "task", "flow", "run"),
@@ -43,15 +47,8 @@ singleTagOMLObject = function(id, object = c("data", "task", "flow", "run"),
   action = ifelse(method == "add", "tag", "untag")
   api.string = collapse(c(object, action), sep = "/")
   post.args = setNames(list(id, tag), c(paste0(object,"_id"), "tag"))
-  response = doAPICall(api.call = api.string, method = "POST", file = NULL, verbosity = 0,
+  doAPICall(api.call = api.string, method = "POST", file = NULL, verbosity = 0,
     post.args = post.args)
 
-  if (status_code(response) == 500) {
-    parseXMLResponse(response, paste(action, object, id), as.text = TRUE)
-  } else {
-    res = parseXMLResponse(response, paste(action, object, id), as.text = TRUE)
-    showInfo(verbosity, "Successful to %s tag '%s' for %s '%i'.", method, tag, object, id)
-  }
-
-  return(response)
+  return(invisible(NULL))
 }

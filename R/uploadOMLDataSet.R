@@ -10,19 +10,20 @@
 #'   Contains the data set that should be uploaded.
 #' @template arg_upload_tags
 #' @template arg_description
+#' @template arg_confirm.upload
 #' @template arg_verbosity
 #' @return [\code{invisible(numeric(1))}].
-#'   The ID of the data (\code{did}).
+#'   The ID of the data (\code{data.id}).
 #' @family uploading functions
 #' @family data set-related functions
 #' @export
-uploadOMLDataSet = function(x, tags = NULL, description = NULL, verbosity = NULL) {
+uploadOMLDataSet = function(x, tags = NULL, description = NULL, confirm.upload = NULL, verbosity = NULL) {
   UseMethod("uploadOMLDataSet")
 }
 
 #' @export
-uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, verbosity = NULL) {
-  if (!checkUserConfirmation(type = "dataset")) {
+uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, confirm.upload = NULL, verbosity = NULL) {
+  if (!checkUserConfirmation(type = "dataset", confirm.upload = confirm.upload)) {
     return(invisible())
   }
 
@@ -40,59 +41,15 @@ uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, verbo
     post.args = list(description = upload_file(path = desc.file),
                      dataset = upload_file(path = output)))
   doc = parseXMLResponse(response, "Uploading dataset", c("upload_data_set", "response"), as.text = TRUE)
-  did = xmlOValI(doc, "/oml:upload_data_set/oml:id")
-  showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", did)
-  if (!is.null(tags)) tagOMLObject(did, object = "data", tags = tags)
+  data.id = xmlOValI(doc, "/oml:upload_data_set/oml:id")
+  showInfo(verbosity, "Data set successfully uploaded. Data set ID: %i", data.id)
+  if (!is.null(tags)) tagOMLObject(data.id, object = "data", tags = tags)
   forget(listOMLDataSets)
-  return(invisible(did))
+  return(invisible(data.id))
 }
 
 #' @export
-uploadOMLDataSet.Task = function(x, tags = NULL, description = NULL, verbosity = NULL) {
+uploadOMLDataSet.Task = function(x, tags = NULL, description = NULL, confirm.upload = NULL, verbosity = NULL) {
   x = convertMlrTaskToOMLDataSet(x, description = description)
-  uploadOMLDataSet.OMLDataSet(x)
-}
-
-#' @title Converts a mlr task to an OpenML data set.
-#'
-#' @description
-#' Converts a \code{\link[mlr]{Task}} to an \code{\link{OMLDataSet}}.
-#'
-#' @param task [\code{\link[mlr]{Task}}]\cr
-#'   A mlr task.
-#' @template arg_description
-#'
-#' @return [\code{\link{OMLDataSet}}].
-#' @family data set-related functions
-#' @export
-convertMlrTaskToOMLDataSet = function(task, description = NULL){
-  assert(checkClass(description, "character"), checkClass(description, "OMLDataSetDescription"), checkNull(description))
-  assertClass(task, "Task")
-
-  if (is.null(description))
-    description = as.character(task$task.desc$id)
-
-  if (isTRUE(checkClass(description, "OMLDataSetDescription"))) {
-    desc = description
-  } else {
-    desc = makeOMLDataSetDescription(
-      name = task$task.desc$id,
-      version = "1",
-      description = description,
-      format = "ARFF",
-      upload.date = as.POSIXct(Sys.time()),
-      default.target.attribute = task$task.desc$target,
-      status = "active"
-    )
-  }
-
-  cns = colnames(mlr::getTaskData(task))
-
-  oml.data = makeOMLDataSet(desc = desc,
-    data = mlr::getTaskData(task),
-    colnames.old = cns,
-    colnames.new = cns,
-    target.features = mlr::getTaskTargetNames(task)
-  )
-  return(oml.data)
+  uploadOMLDataSet.OMLDataSet(x, confirm.upload = NULL, verbosity = verbosity)
 }

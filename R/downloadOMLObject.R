@@ -14,6 +14,7 @@
 #'   Default is \code{FALSE}.
 #' @template arg_cache_only
 #' @template arg_verbosity
+#' @keywords internal
 #' @return [list]
 downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), overwrite = FALSE, cache.only = FALSE, verbosity = NULL) {
   id = asCount(id)
@@ -37,7 +38,7 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
   if (f[[xml.ind]]$found & !overwrite) {
     # parse info
     showInfo(verbosity, sprintf("%s '%i' file '%s' found in cache.", cap.obj, id, basename(f[[xml.ind]]$path)))
-    content = readLines(f[[xml.ind]]$path)
+    content = readLines(f[[xml.ind]]$path, warn = FALSE)
   } else {
     content = doAPICall(api.call = object, id = id, file = f[[xml.ind]]$path,
       verbosity = verbosity, method = "GET")

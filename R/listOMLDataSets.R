@@ -1,50 +1,52 @@
-.listOMLDataSets = function(verbosity = NULL, status = "active", tag = NULL) {
-  assertSubset(status, getValidOMLDataSetStatusLevels())
+.listOMLDataSets = function(number.of.instances = NULL, number.of.features = NULL,
+  number.of.classes = NULL, number.of.missing.values = NULL,
+  tag = NULL, data.name = NULL,
+  limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
 
-  api.call = "data/list"
-  if (!is.null(tag)) {
-    assertString(tag, na.ok = FALSE)
-    api.call = collapse(c(api.call, "tag", tag), sep = "/")
-  }
+  api.call = generateAPICall("json/data/list",
+    number.of.instances = number.of.instances, number.of.features = number.of.features,
+    number.of.classes = number.of.classes, number.of.missing.values = number.of.missing.values,
+    tag = tag, data.name = data.name,
+    limit = limit, offset = offset, status = status)
 
-  content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
-  if (is.error(content))
-    return(data.frame())
-  xml = parseXMLResponse(content, "Getting data set list", "data", as.text = TRUE)
+  content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
+  res = fromJSON(txt = content, simplifyVector = FALSE)$data$dataset
 
-  # get list of blocks for data sets
-  blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  df = as.data.frame(rbindlist(lapply(blocks, function(node) {
-    children = xmlChildren(node)
-    is.quality = names(children) == "quality"
-    info = list(
-      did = as.integer(xmlValue(children[["did"]])),
-      status = xmlValue(children[["status"]]),
-      name = xmlValue(children[["name"]])
-    )
-    qualities = convertNodeSetToList(children[is.quality], fun = as.integer)
-    c(info, qualities)
-  }), fill = TRUE))
-  df$status = factor(df$status, levels = getValidOMLDataSetStatusLevels())
+  qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
+  tags = convertTagListToTagString(res)
+  res = rbindlist(lapply(res, function(x) x[c("did", "name", "version", "status", "format")]))
 
-  # subset status level
-  ret = droplevels(df[df$status %in% status, , drop = FALSE])
-  row.names(ret) = NULL
-  return(ret)
+  res = setDF(cbind(res, tags, qualities))
+
+  # convert to integer
+  i = colnames(res) %in% colnames(qualities)
+  res[i] = lapply(res[i], as.integer)
+
+  # finally convert _ to . in col names
+  names(res) = convertNamesOMLToR(names(res))
+
+  return(res)
 }
 
 #' @title List available OpenML data sets.
 #'
 #' @description
-#' The returned \code{data.frame} contains the data set id \dQuote{did},
+#' The returned \code{data.frame} contains the data set id \dQuote{data.id},
 #' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
 #' and describing data qualities.
 #'
 #' @template note_memoise
 #'
-#' @template arg_verbosity
-#' @template arg_status
+#' @template arg_number.of.instances
+#' @template arg_number.of.features
+#' @template arg_number.of.classes
+#' @template arg_number.of.missing.values
 #' @template arg_tag
+#' @template arg_data.name
+#' @template arg_limit
+#' @template arg_offset
+#' @template arg_status
+#' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family data set-related functions

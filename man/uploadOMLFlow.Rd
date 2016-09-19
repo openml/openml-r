@@ -4,10 +4,11 @@
 \alias{uploadOMLFlow}
 \title{Upload an OpenML.}
 \usage{
-uploadOMLFlow(x, tags = NULL, verbosity = NULL, sourcefile, binaryfile)
+uploadOMLFlow(x, tags = NULL, verbosity = NULL, confirm.upload = NULL,
+  sourcefile = NULL, binaryfile = NULL)
 }
 \arguments{
-\item{x}{[\code{\link{OMLFlow}}|\code{\link{Learner}}]\cr
+\item{x}{[\code{\link{OMLFlow}}|\code{\link[mlr]{Learner}}]\cr
 The flow that should be uploaded.}
 
 \item{tags}{[\code{character}]\cr
@@ -20,14 +21,18 @@ Print verbose output on console? Possible values are:\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
+\item{confirm.upload}{[\code{logical(1)}]\cr
+Should the user be asked to confirm the upload?
+Default is the setting from your config.}
+
 \item{sourcefile}{[\code{character(1)}]\cr
-The file path to the flow (not needed for \code{\link{Learner}}).}
+The file path to the flow (not needed for \code{\link[mlr]{Learner}}).}
 
 \item{binaryfile}{[\code{character(1)}]\cr
-The file path to the flow (not needed for \code{\link{Learner}}).}
+The file path to the flow (not needed for \code{\link[mlr]{Learner}}).}
 }
 \value{
-[\code{invisible(numeric(1))}].
+[\code{invisible(numeric)}].
   The ID of the flow (\code{flow.id}).
 }
 \description{

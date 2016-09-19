@@ -24,7 +24,7 @@ createDir = function(dir, verbosity = NULL) {
 #   Should the function be verbose?
 createCacheSubDirs = function(verbosity = NULL) {
   conf = getOMLConfig()
-  cd = conf$cachedir
+  cd = normalizePath(conf$cachedir, winslash = "/", mustWork = FALSE)
   createDir(file.path(cd, "datasets"), verbosity)
   createDir(file.path(cd, "tasks"), verbosity)
   createDir(file.path(cd, "runs"), verbosity)
@@ -42,7 +42,7 @@ createCacheSubDirs = function(verbosity = NULL) {
 # @return [list]
 getCacheURI = function(subdir, id, elements) {
   path = file.path(getOMLConfig()$cachedir, subdir, id)
-  if (!isDirectory(path) && !dir.create(path, recursive = TRUE))
+  if (!dir.exists(path) && !dir.create(path, recursive = TRUE))
     stopf("Unable to create directory '%s'", path)
   path = normalizePath(file.path(path, elements), mustWork = FALSE)
   size = file.size(path) # file.info(path)$size
@@ -67,6 +67,19 @@ findCachedRun = function(id) {
 
 findCachedFlow = function(id, elements = list()) {
   getCacheURI("flows", id, c(elements, list("flow.xml")))
+}
+
+# @title Get IDs of OML objects in cache.
+#
+# @param type [character(1)]
+#   OML object type.
+# @return [integer]
+getCachedObjectIds = function(type) {
+  assertChoice(type, c("data", "flow", "task", "run"))
+  type = if (type == "data") "datasets" else paste0(type, "s")
+  cache.dir = getOMLConfig()$cachedir
+  # each OML object is located in its own directory named with the object ID
+  as.integer(list.files(paste0(cache.dir, "/", type)))
 }
 
 #' @title Clear cache directories

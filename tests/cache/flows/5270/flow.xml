@@ -1,0 +1,253 @@
+
+<oml:flow xmlns:oml="http://openml.org/openml">
+  <oml:id>5270</oml:id>
+<oml:uploader>348</oml:uploader>
+<oml:name>mlr.classif.randomForest.filtered</oml:name>
+<oml:version>1</oml:version>
+<oml:external_version>R_3.3.0-v2.ddb609fe</oml:external_version>
+<oml:description>Learner mlr.classif.randomForest.filtered from package(s) randomForest.</oml:description>
+<oml:upload_date>2016-09-06 19:03:23</oml:upload_date>
+<oml:language>English</oml:language>
+<oml:dependencies>R_3.3.0, OpenML_1.0, randomForest_4.6.12</oml:dependencies>
+<oml:parameter>
+	<oml:name>classwt</oml:name>
+	<oml:data_type>numericvector</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>cutoff</oml:name>
+	<oml:data_type>numericvector</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>do.trace</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>fw.abs</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>fw.mandatory.feat</oml:name>
+	<oml:data_type>untyped</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>fw.method</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>fw.perc</oml:name>
+	<oml:data_type>numeric</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>fw.threshold</oml:name>
+	<oml:data_type>numeric</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>importance</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>keep.inbag</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>localImp</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>maxnodes</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>mtry</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>nodesize</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>norm.votes</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>ntree</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.kind</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>Mersenne-Twister</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.normal.kind</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>Inversion</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.seed</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>1</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>replace</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>sampsize</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:component>
+  <oml:identifier>randomForest</oml:identifier>
+	
+<oml:flow xmlns:oml="http://openml.org/openml">
+  <oml:id>5271</oml:id>
+<oml:uploader>348</oml:uploader>
+<oml:name>mlr.classif.randomForest</oml:name>
+<oml:version>2</oml:version>
+<oml:external_version>R_3.3.0-v2.5abf7e0a</oml:external_version>
+<oml:description>Learner mlr.classif.randomForest from package(s) randomForest.</oml:description>
+<oml:upload_date>2016-09-06 19:03:23</oml:upload_date>
+<oml:language>English</oml:language>
+<oml:dependencies>R_3.3.0, OpenML_1.0, randomForest_4.6.12</oml:dependencies>
+<oml:parameter>
+	<oml:name>classwt</oml:name>
+	<oml:data_type>numericvector</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>cutoff</oml:name>
+	<oml:data_type>numericvector</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>do.trace</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>importance</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>keep.inbag</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>localImp</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>maxnodes</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>mtry</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>nodesize</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>norm.votes</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>ntree</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.kind</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>Mersenne-Twister</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.normal.kind</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>Inversion</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.seed</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>1</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>replace</oml:name>
+	<oml:data_type>logical</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>sampsize</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+</oml:flow>
+</oml:component>
+<oml:binary_url>http://capa.win.tue.nl/data/download/1840849/classif.randomForest.filtered_binary.Rds</oml:binary_url>
+<oml:binary_format>Rds</oml:binary_format>
+<oml:binary_md5>7724a13cbcb0e44411d08f6748e81dcd</oml:binary_md5>
+</oml:flow>
+
