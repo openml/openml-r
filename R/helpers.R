@@ -103,9 +103,17 @@ catfNotNA = function(text, obj) {
     catf(text, collapse(obj, sep = "; "))
 }
 
+# collapse numeric values without using scientific representation of large numbers
+collapseNotScientific = function(x, ...) {
+  assertNumeric(x)
+  x = format(x, scientific = FALSE, trim = TRUE)
+  return(collapse(x, ...))
+}
+
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
-  number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL, number.of.missing.values = NULL,
-  tag = NULL, data.name = NULL, data.tag = NULL, limit = NULL, offset = NULL, status = NULL) {
+  task.type = NULL, number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL, 
+  number.of.missing.values = NULL, tag = NULL, data.name = NULL, data.tag = NULL, 
+  limit = NULL, offset = NULL, status = NULL) {
   is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
   assertSorted = makeAssertionFunction(is.sorted)
   assertString(api.call)
@@ -115,28 +123,33 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   if (!is.null(uploader.id)) assertIntegerish(uploader.id)
   if (!is.null(number.of.instances)) {
     if (length(number.of.instances) == 1) number.of.instances = rep(number.of.instances, 2)
-    #number.of.instances = asInteger(number.of.instances, lower = 1)
-    assertIntegerish(number.of.instances, lower = 1)
+    number.of.instances = asInteger(number.of.instances, lower = 1)
+    #assertIntegerish(number.of.instances, lower = 1)
     assertSorted(number.of.instances)
-    number.of.instances = collapse(number.of.instances, sep = "..")
+    number.of.instances = collapseNotScientific(number.of.instances, sep = "..")
   }
   if (!is.null(number.of.features)) {
     if (length(number.of.features) == 1) number.of.features = rep(number.of.features, 2)
     number.of.features = asInteger(number.of.features, lower = 1)
     assertSorted(number.of.features)
-    number.of.features = collapse(number.of.features, sep = "..")
+    number.of.features = collapseNotScientific(number.of.features, sep = "..")
   }
   if (!is.null(number.of.classes)) {
     if (length(number.of.classes) == 1) number.of.classes = rep(number.of.classes, 2)
     number.of.classes = asInteger(number.of.classes, lower = 1)
     assertSorted(number.of.classes)
-    number.of.classes = collapse(number.of.classes, sep = "..")
+    number.of.classes = collapseNotScientific(number.of.classes, sep = "..")
   }
   if (!is.null(number.of.missing.values)) {
     if (length(number.of.missing.values) == 1) number.of.missing.values = rep(number.of.missing.values, 2)
     number.of.missing.values = asInteger(number.of.missing.values, lower = 0)
     assertSorted(number.of.missing.values)
-    number.of.missing.values = collapse(number.of.missing.values, sep = "..")
+    number.of.missing.values = collapseNotScientific(number.of.missing.values, sep = "..")
+  }
+  if (!is.null(task.type)) {
+    types = listOMLTaskTypes(verbosity = 0)
+    assertChoice(task.type, choices = types$name)
+    task.type = types$id[types$name == task.type]
   }
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
   if (!is.null(data.name)) assertString(data.name, na.ok = FALSE)
@@ -146,13 +159,13 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
 
   if (length(run.id) > 1)
-    run.id = collapse(run.id)
+    run.id = collapseNotScientific(run.id)
   if (length(task.id) > 1)
-    task.id = collapse(task.id)
+    task.id = collapseNotScientific(task.id)
   if (length(flow.id) > 1)
-    flow.id = collapse(flow.id)
+    flow.id = collapseNotScientific(flow.id)
   if (length(uploader.id) > 1)
-    uploader.id = collapse(uploader.id)
+    uploader.id = collapseNotScientific(uploader.id)
   if (length(tag) > 1)
     tag = collapse(tag, sep = "/")
   url.args = list(
@@ -161,6 +174,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
     run = run.id,
     uploader = uploader.id,
     tag = tag,
+    type = task.type,
     number_instances = number.of.instances,
     number_features = number.of.features,
     number_classes = number.of.classes,
