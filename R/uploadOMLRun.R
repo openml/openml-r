@@ -57,7 +57,7 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
   flow = dot.args$flow
   
   if (is.null(flow$object) & !is.null(bmr)) {
-    lrn = getBMRLearners(bmr)[[1]]
+    lrn = mlr::getBMRLearners(bmr)[[1]]
   } else {
     lrn = flow$object
   }
