@@ -5,7 +5,7 @@
 \alias{runTaskMlr}
 \title{Run mlr learner on OpenML task.}
 \usage{
-runTaskMlr(task, learner, verbosity = NULL, seed = 1,
+runTaskMlr(task, learner, measures = NULL, verbosity = NULL, seed = 1,
   scimark.vector = NULL, ...)
 }
 \arguments{
@@ -14,6 +14,9 @@ An OpenML task.}
 
 \item{learner}{[\code{\link[mlr]{Learner}}]\cr
 Learner from package mlr to run the task.}
+
+\item{measures}{[\code{\link[mlr]{Measure}}]\cr
+Additional measures that should be computed.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
