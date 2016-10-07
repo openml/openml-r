@@ -4,12 +4,15 @@
 \alias{convertOMLTaskToMlr}
 \title{Convert an OpenML task to mlr.}
 \usage{
-convertOMLTaskToMlr(obj, mlr.task.id = "<oml.data.name>",
+convertOMLTaskToMlr(obj, measures = NULL, mlr.task.id = "<oml.data.name>",
   ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLTask}}]\cr
 The OML task object that should be converted.}
+
+\item{measures}{[\code{\link[mlr]{Measure}}]\cr
+Additional measures that should be computed.}
 
 \item{mlr.task.id}{[\code{character(1)}]\cr
 Id string for \code{\link[mlr]{Task}} object. 
