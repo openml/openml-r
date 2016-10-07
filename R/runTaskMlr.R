@@ -6,6 +6,8 @@
 #' @template arg_task
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   Learner from package mlr to run the task.
+#' @param measures [\code{\link[mlr]{Measure}}]\cr
+#'  Additional measures that should be computed.
 #' @template arg_verbosity
 #' @template arg_seed
 #' @param scimark.vector [\code{numeric(6)}]\cr
@@ -24,7 +26,7 @@
 #' @aliases OMLMlrRun
 #' @example /inst/examples/runTaskMlr.R
 #' @export
-runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
+runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
   assert(checkString(learner), checkClass(learner, "Learner"))
   if (is.character(learner))
     learner = mlr::makeLearner(learner)
@@ -47,7 +49,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
     if (task$task.type == "Supervised Classification")
       task$input$evaluation.measures = "predictive_accuracy"
     else
-      task$input$evaluation.measures =  "root_mean_squared_error"
+      task$input$evaluation.measures = "root_mean_squared_error"
   }
 
   # get mlr show.info from verbosity level
@@ -59,7 +61,7 @@ runTaskMlr = function(task, learner, verbosity = NULL, seed = 1, scimark.vector 
   flow = convertMlrLearnerToOMLFlow(learner)
   
   # Create mlr task with estimation procedure and evaluation measure
-  z = convertOMLTaskToMlr(task, verbosity = verbosity, ...)
+  z = convertOMLTaskToMlr(task, measures = measures, verbosity = verbosity, ...)
 
   # Create OMLRun
   setOMLSeedParList(seed.setting, flow = flow)
