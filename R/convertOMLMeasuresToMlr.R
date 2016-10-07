@@ -31,7 +31,9 @@ lookupMeasures = function() {
 convertOMLMeasuresToMlr = function(measures) {
   lookup = lookupMeasures()
   assertSubset(measures, names(lookup))
-  return(lookup[measures])
+  mlr.measures = lookup[measures]
+  mlr.measures = lapply(mlr.measures, mlr::setAggregation, aggr = mlr::test.join)
+  return(mlr.measures)
 }
 
 # convertMlrMeasuresToOMLMeasures = function(mlr.measures) {
