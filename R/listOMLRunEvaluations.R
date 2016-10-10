@@ -9,26 +9,32 @@
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
 
-  evals = fromJSON(txt = content)$evaluations$evaluation
+  evals = fromJSON(txt = content, simplifyVector = FALSE)$evaluations$evaluation
+
+  evals = rbindlist(lapply(evals, function(x) {
+    if(is.null(x$value)) x$value = NA
+    if(is.null(x$array_data)) x$array_data = NA else x$array_data = collapse(x$array_data)
+    cols = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name", "upload_time", "function", "value", "array_data")
+    x[cols]
+  }))
 
   # convert long format to wide format
-  evals = reshape(evals,
-    timevar = "function",
-    idvar = c("run_id", "task_id", "setup_id", "flow_id", "flow_name", "data_name", "upload_time"),
-    direction = "wide")
+  setnames(evals, "function", "fun")
+  form = run_id + task_id + setup_id + flow_id + flow_name + data_name + upload_time ~ fun
+  evals = dcast(data = evals, formula = form, value.var = c("value", "array_data"))
 
   # drop "all NA" columns
-  evals = evals[, vlapply(evals, function(x) !all(is.na(x)))]
+  evals = as.data.frame(evals)[, vlapply(evals, function(x) !all(is.na(x)))]
   # drop all array columns that are NULL
-  drop.array = vlapply(evals[,grepl("array_data[.]", colnames(evals))], function(x) all(vlapply(x, is.null)))
-  drop.array = names(drop.array)[drop.array]
-  evals = evals[, colnames(evals)%nin%drop.array]
+  #drop.array = vlapply(evals[,grepl("array_data[_]", colnames(evals))], function(x) all(vlapply(x, is.null)))
+  #drop.array = names(drop.array)[drop.array]
+  #evals = evals[, colnames(evals)%nin%drop.array]
   
   # unfortunately column names are f***ed up now. Some tedious work is neccessary
   # to achive our naming conventions
-  colnames(evals) = gsub("value[.]", "", colnames(evals))
-  arr.ind = grepl("array_data[.]", colnames(evals))
-  colnames(evals)[arr.ind] = paste0(gsub("array_data[.]", "", colnames(evals)[arr.ind]), ".array")
+  colnames(evals) = gsub("value[_]", "", colnames(evals))
+  arr.ind = grepl("array_data[_]", colnames(evals))
+  colnames(evals)[arr.ind] = paste0(gsub("array_data[_]", "", colnames(evals)[arr.ind]), "_array")
 
   # convert types (by default all is character)
   #evals = as.data.frame(lapply(evals, type.convert, numerals = "no.loss", as.is = TRUE))
