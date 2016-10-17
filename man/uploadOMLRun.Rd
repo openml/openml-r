@@ -48,7 +48,8 @@ need for confirmation by setting \dQuote{confirm.upload = TRUE} via
 the function.
 }
 \seealso{
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},

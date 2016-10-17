@@ -41,7 +41,8 @@ Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunToBMR}},
   \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},

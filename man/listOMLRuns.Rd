@@ -68,7 +68,8 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
