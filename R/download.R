@@ -26,7 +26,8 @@ doAPICall = function(api.call, id = NULL,
   url.args = list(), post.args = list(), file = NULL,
   verbosity = NULL, method, ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
-
+  assert(checkChoice(verbosity, choices = 0:2), checkNull(verbosity))
+  
   # get config infos
   conf = getOMLConfig()
 
