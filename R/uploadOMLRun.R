@@ -44,7 +44,8 @@ uploadOMLRun.OMLMlrRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.
   assertClass(run$bmr, "BenchmarkResult")
   assertClass(run$flow, "OMLFlow")
   assertFlag(upload.bmr)
-  uploadOMLRun.OMLRun(run = run$run, upload.bmr = upload.bmr, tags = tags, bmr = run$bmr, verbosity = verbosity, flow = run$flow)
+  uploadOMLRun.OMLRun(run = run$run, upload.bmr = upload.bmr, tags = tags, 
+    confirm.upload = confirm.upload, bmr = run$bmr, verbosity = verbosity, flow = run$flow, ...)
 }
 
 #' @export
