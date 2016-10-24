@@ -31,7 +31,7 @@ Suggests:
 Imports:
     backports (>= 1.0.3),
     BBmisc (>= 1.10),
-    checkmate (>= 1.8.2),
+    checkmate (>= 1.8.1),
     ParamHelpers (>= 1.9),
     data.table,
     digest,
