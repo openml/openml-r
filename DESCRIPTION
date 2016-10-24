@@ -29,10 +29,10 @@ Suggests:
     rmarkdown,
     R.rsp
 Imports:
-    backports (>= 1.0.1),
-    BBmisc (>= 1.9),
-    checkmate (>= 1.8.0),
-    ParamHelpers (>= 1.8),
+    backports (>= 1.0.3),
+    BBmisc (>= 1.10),
+    checkmate (>= 1.8.2),
+    ParamHelpers (>= 1.9),
     data.table,
     digest,
     httr,
