@@ -97,7 +97,12 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
   # do the request and catch potential "unreadable" curl errors
   server.response = try(do.call(method, http.args), silent = TRUE)
   if (is.error(server.response) || !inherits(server.response, "response")) {
-    stopf("API call failed. Maybe you are not connected to the internet.")
+    if (curl::has_internet()) {
+      stopf("API call failed. The OpenML server '%s' is currently not available, try again later.", 
+        getOMLConfig()$server)
+    } else {
+      stopf("API call failed. Maybe you are not connected to the internet.") 
+    }
   }
   # handle HTTP non success status codes
   status.code = server.response$status_code
@@ -125,7 +130,7 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
 # @return [logical(1)]
 isXMLResponse = function(response) {
   assertClass(response, "response")
-  grepl("text/xml", response$headers[["content-type"]])
+  grepl("text/xml", http_type(response))
 }
 
 # Helper to check if HTTP call returned JSON document.
@@ -135,7 +140,7 @@ isXMLResponse = function(response) {
 # @return [logical(1)]
 isJSONResponse = function(response) {
   assertClass(response, "response")
-  grepl("application/json", response$headers[["content-type"]])
+  grepl("application/json", http_type(response))
 }
 
 # Helpers to parse error documents.
