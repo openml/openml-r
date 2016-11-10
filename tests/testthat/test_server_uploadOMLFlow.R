@@ -1,7 +1,7 @@
 context("uploadOMLFlow")
 
 test_that("uploadOMLFlow", {
-  with_empty_cache({
+  with_test_cache({
     # get a flow
     flow = getOMLFlow(5270)
     expect_is(flow, "OMLFlow")

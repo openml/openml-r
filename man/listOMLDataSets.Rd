@@ -6,7 +6,7 @@
 \usage{
 listOMLDataSets(number.of.instances = NULL, number.of.features = NULL,
   number.of.classes = NULL, number.of.missing.values = NULL, tag = NULL,
-  data.name = NULL, limit = NULL, offset = NULL, status = "active",
+  data.name = NULL, limit = 5000, offset = NULL, status = "active",
   verbosity = NULL)
 }
 \arguments{
@@ -34,10 +34,14 @@ are listed.}
 Name of the data set.}
 
 \item{limit}{[\code{numeric(1)}]\cr
-Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
+Optional. The maximum number of entries to return. 
+Without specifying \code{offset}, it returns the first '\code{limit}' entries.
+Setting \code{limit = NULL} returns all available entries.}
 
 \item{offset}{[\code{numeric(1)}]\cr
-Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
+Optional. The offset to start from. 
+Should be indices starting from 0, which do not refer to IDs. 
+Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
 Subsets the results according to the status. Possible values are 

@@ -36,6 +36,13 @@ with_write_access = function(expr, envir = parent.frame()) {
   })
 }
 
+with_main_server = function(expr, envir = parent.frame()) {
+  reset_config({
+    setOMLConfig(server = "http://www.openml.org/api/v1")
+    eval(expr, envir = envir)
+  })
+}
+
 # with_read_only = function(expr, envir = parent.frame()) {
 #   reset_config({
 #     setOMLConfig(confirm.upload = FALSE)

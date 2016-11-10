@@ -154,8 +154,8 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   if (!is.null(tag)) assertString(tag, na.ok = FALSE)
   if (!is.null(data.name)) assertString(data.name, na.ok = FALSE)
   if (!is.null(data.tag)) assertString(data.tag, na.ok = FALSE)
-  if (!is.null(limit)) assertIntegerish(limit, len = 1)
-  if (!is.null(offset)) assertIntegerish(offset, len = 1)
+  if (!is.null(limit)) limit = collapseNotScientific(assertIntegerish(limit, len = 1))
+  if (!is.null(offset)) offset = collapseNotScientific(assertIntegerish(offset, len = 1))
   if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
 
   if (length(run.id) > 1)

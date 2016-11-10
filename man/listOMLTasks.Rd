@@ -8,7 +8,7 @@ listOMLTasks(task.type = NULL, estimation.procedure = NULL,
   evaluation.measures = NULL, number.of.instances = NULL,
   number.of.features = NULL, number.of.classes = NULL,
   number.of.missing.values = NULL, tag = NULL, data.name = NULL,
-  data.tag = NULL, limit = NULL, offset = NULL, status = "active",
+  data.tag = NULL, limit = 5000, offset = NULL, status = "active",
   verbosity = NULL)
 }
 \arguments{
@@ -57,10 +57,14 @@ Refers to the tag of the dataset the task is based on.
 If not \code{NULL} only tasks with the corresponding \code{data.tag} are listed.}
 
 \item{limit}{[\code{numeric(1)}]\cr
-Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
+Optional. The maximum number of entries to return. 
+Without specifying \code{offset}, it returns the first '\code{limit}' entries.
+Setting \code{limit = NULL} returns all available entries.}
 
 \item{offset}{[\code{numeric(1)}]\cr
-Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
+Optional. The offset to start from. 
+Should be indices starting from 0, which do not refer to IDs. 
+Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
 Subsets the results according to the status. Possible values are 

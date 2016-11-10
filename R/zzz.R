@@ -1,5 +1,6 @@
 #' @import backports
 #' @import BBmisc
+#' @import curl
 #' @import checkmate
 #' @import ParamHelpers
 #' @import stringi

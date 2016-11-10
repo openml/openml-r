@@ -3,7 +3,7 @@
   number.of.instances = NULL, number.of.features = NULL,
   number.of.classes = NULL, number.of.missing.values = NULL, 
   tag = NULL, data.name = NULL, data.tag = NULL,
-  limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
+  limit = 5000, offset = NULL, status = "active", verbosity = NULL) {
   
   estim.proc = listOMLEstimationProcedures(verbosity = 0)
   eval = listOMLEvaluationMeasures(verbosity = 0)

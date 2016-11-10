@@ -16,9 +16,9 @@ License: BSD_2_clause + file LICENSE
 URL: https://github.com/openml/openml-r
 BugReports: https://github.com/openml/openml-r/issues
 Depends:
-    R (>= 3.0.2)
+    R (>= 3.0.2),
+    mlr (>= 2.9)
 Suggests:
-    mlr (>= 2.9),
     testthat,
     randomForest,
     rpart,
@@ -41,7 +41,8 @@ Imports:
     jsonlite,
     xml2,
     memoise (>= 1.0.0),
-    stats
+    stats,
+    curl
 LazyData: yes
 ByteCompile: yes
 Version: 1.0
