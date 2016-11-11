@@ -129,7 +129,7 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
 # @return [logical(1)]
 isXMLResponse = function(response) {
   assertClass(response, "response")
-  grepl("text/xml", httr::http_type(response))
+  stri_detect_fixed(httr::http_type(response), "text/xml")
 }
 
 # Helper to check if HTTP call returned JSON document.
@@ -139,7 +139,7 @@ isXMLResponse = function(response) {
 # @return [logical(1)]
 isJSONResponse = function(response) {
   assertClass(response, "response")
-  grepl("application/json", httr::http_type(response))
+  stri_detect_fixed(httr::http_type(response), "application/json")
 }
 
 # Helpers to parse error documents.

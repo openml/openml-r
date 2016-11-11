@@ -24,7 +24,7 @@ showMessage = function(verbosity, msg, ..., minlev) {
 convertNamesOMLToR = function(names) {
   assertCharacter(names, any.missing = FALSE, all.missing = FALSE)
   # a_b_c to a.b.c
-  new.names = gsub("_", ".", names)
+  new.names = stri_replace_all_fixed(names, "_", ".")
   # did to data.id
   new.names = gsub("^did$", "data.id", new.names)
   # ServerVar to server.var
@@ -60,7 +60,7 @@ checkUserConfirmation = function(type, confirm.upload = NULL) {
   if (isTRUE(confirm.upload)) {
     catf("Do you really want to upload the %s? (yes|no)", type)
     reaction = readLines(con = stdin(), 1L)
-    return(grepl(reaction, "yes"))
+    return(grepl(reaction, "yes", fixed = TRUE))
   }
   return(TRUE)
 }
@@ -210,6 +210,6 @@ convertNameValueListToDF = function(x) {
 }
 
 extractRVersionFromFlow = function(flow) {
-  version = strsplit(flow$dependencies, ",")[[1]]
-  return(gsub("R_", "", version[grepl("R_", version)]))
+  version = strsplit(flow$dependencies, ",")[[1L]]
+  stri_replace_all_fixed(version[stri_detect_fixed(version, "R_")], "R_", "")
 }

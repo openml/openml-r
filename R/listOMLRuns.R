@@ -24,7 +24,7 @@
   #runs$error.message = as.factor(runs$error.message)
 
   # convert to integer
-  i = grepl("[.]id", colnames(runs))
+  i = stri_detect_fixed(colnames(runs), ".id")
   runs[i] = lapply(runs[i], as.integer)
 
   return(runs)

@@ -63,8 +63,7 @@ getOMLSeedParList = function(run) {
 # hepler functions:
 isSeedPar = function(par) {
   rpl.names = vcapply(par, function(x) x$name)
-  seed.pars = grepl(c("seed$|kind$|normal.kind$"), rpl.names)
-  return(seed.pars)
+  stri_detect_regex(rpl.names, "(seed$|kind$|normal.kind$)")
 }
 
 # @param x OMLSeedParList
@@ -89,6 +88,6 @@ setOMLSeedParList = function(x, flow = NULL) {
 extractSeed = function(x) {
   assertClass(x, "OMLSeedParList")
   seed.names = vcapply(x, function(x) x$name)
-  seed = vcapply(x, function(x) x$value)[grepl("seed", seed.names)]
+  seed = vcapply(x, function(x) x$value)[stri_detect_fixed(seed.names, "seed")]
   as.integer(seed)
 }

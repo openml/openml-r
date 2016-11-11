@@ -52,7 +52,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   # try to get predict.type based on "confidence." columns if values are intergish
   pred.class = ifelse(run$task.type == "Supervised Classification",
     "PredictionClassif", "PredictionRegr")
-  conf.cols = grepl("confidence", colnames(pred))
+  conf.cols = stri_detect_fixed(colnames(pred), "confidence")
   conf.cols.intergish = vlapply(pred[, conf.cols, drop = FALSE], testIntegerish)
   if (all(!conf.cols.intergish) & pred.class == "PredictionClassif") {
     predict.type = "prob"
@@ -63,7 +63,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     # get predictions based on predict.type
     if (predict.type == "prob" & pred.class == "PredictionClassif") {
       y = pred[,conf.cols]
-      colnames(y) = gsub("confidence[.]", "", colnames(y))
+      colnames(y) = stri_replace_all_fixed(colnames(y), "confidence.", "")
     } else y = pred$prediction
 
     mlr:::makePrediction(task$mlr.task$task.desc, id = pred$row_id,

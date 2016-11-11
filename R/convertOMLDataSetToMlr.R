@@ -85,9 +85,9 @@ convertOMLDataSetToMlr = function(
 }
 
 replaceOMLDataSetString = function(string, data.set) {
-  string = gsub("<oml.data.id>", data.set$desc$id, string)
-  string = gsub("<oml.data.name>", data.set$desc$name, string)
-  return(gsub("<oml.data.version>", data.set$desc$version, string))
+  string = stri_replace_all_fixed(string, "<oml.data.id>", data.set$desc$id)
+  string = stri_replace_all_fixed(string, "<oml.data.name>", data.set$desc$name)
+  stri_replace_all_fixed(string, "<oml.data.version>", data.set$desc$version)
 }
 
 # @title Helper to guess task type from target column format.

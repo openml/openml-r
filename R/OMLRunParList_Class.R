@@ -159,7 +159,7 @@ stringToParam = function (par, x) {
   if (type %in% c("numeric", "integer", "logical", "character"))
     do.call(paste0("as.", type), list(x))
   else if (type %in% c("numericvector", "integervector", "logicalvector", "charactervector", "discretevector"))
-    do.call(paste0("as.", gsub("vector", "", type)), list(strsplit(x, ",")[[1]]))
+    do.call(paste0("as.", stri_replace_all_fixed(type, "vector", "")), list(strsplit(x, ",")[[1L]]))
   else if (type == "discrete")
     discreteNameToValue(par, x)
   else if (type %in% c("function", "untyped"))

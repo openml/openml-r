@@ -106,7 +106,7 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
 
   if (!is.null(bmr)) {
     # FIXME: See https://github.com/openml/OpenML/issues/276 do we always want to upload this? Or only for TuneWrapper?
-    if (grepl("[.]tuned", flow$name)) {
+    if (stri_detect_fixed(flow$name, ".tuned")) {
       trace.file = tempfile(pattern = "optimization_trace", fileext = ".arff")
       on.exit(unlink(trace.file), add = TRUE)
       arff.writer(getBMRTuneTrace(bmr), file = trace.file)

@@ -35,7 +35,7 @@ convertOMLTaskToMlr = function(
   assert(checkClass(measures, "Measure"), checkList(measures, types = "Measure"), checkNull(measures))
   if (inherits(measures, "Measure")) measures = list(measures)
 
-  mlr.task.id = gsub("<oml.task.id>", obj$task.id, mlr.task.id)
+  mlr.task.id = stri_replace_all_fixed(mlr.task.id, "<oml.task.id>", obj$task.id)
   mlr.task = convertOMLDataSetToMlr(obj = obj$input$data.set,
     mlr.task.id = mlr.task.id,
     task.type = obj$task.type,
