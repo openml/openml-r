@@ -14,8 +14,7 @@
   # for some reason external_version is NOT atomic
   # Unfortunately unlist() drops character(0) entries!
   # -> ugly workaround: replace with "" -.-
-  zero.len.ids = sapply(flows$external_version, function(x) identical(x, character(0)))
-  flows$external_version[zero.len.ids] = ""
+  flows$external_version[lengths(flows$external_version) == 0L] = ""
   flows$external_version = unlist(flows$external_version)
 
   names(flows) = convertNamesOMLToR(names(flows))

@@ -53,7 +53,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   pred.class = ifelse(run$task.type == "Supervised Classification",
     "PredictionClassif", "PredictionRegr")
   conf.cols = grepl("confidence", colnames(pred))
-  conf.cols.intergish = sapply(pred[,conf.cols], function(x) isTRUE(checkIntegerish(x)))
+  conf.cols.intergish = vlapply(pred[, conf.cols, drop = FALSE], testIntegerish)
   if (all(!conf.cols.intergish) & pred.class == "PredictionClassif") {
     predict.type = "prob"
   } else predict.type = "response"
@@ -104,15 +104,15 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
       if (as.df) as.data.frame(t(ret)) else ret
     }
     iter.eval.split = rbindlist(lapply(iter.eval.split, getMeasureValue, measures = measures))
-    colnames(iter.eval.split) = unname(sapply(convertOMLMeasuresToMlr(colnames(iter.eval.split)), function(x) x$id))
-    ms.test = data.frame(iter = 1:nrow(iter.eval.split), iter.eval.split)
+    colnames(iter.eval.split) = unname(vcapply(convertOMLMeasuresToMlr(colnames(iter.eval.split)), function(x) x$id))
+    ms.test = data.frame(iter = seq_row(iter.eval.split), iter.eval.split)
 
     #ms.train = subset(ms.test, select = -iter)
     #ms.train[!is.na(ms.train)] = NA
     #ms.train = data.frame(iter = ms.test$iter, as.data.frame(ms.train))
 
     aggr = getMeasureValue(aggr.eval, measures = measures, as.df = FALSE)
-    names(aggr) = unname(sapply(convertOMLMeasuresToMlr(names(aggr)), function(x) x$id))
+    names(aggr) = unname(vcapply(convertOMLMeasuresToMlr(names(aggr)), function(x) x$id))
   } else {
     # FIXME: this is incomplete
   #   ms.test.df = lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )

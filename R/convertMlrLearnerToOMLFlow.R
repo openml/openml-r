@@ -83,7 +83,7 @@ getDependencies = function(lrn) {
   # OpenML is always needed
   dependencies = c("OpenML", dependencies)
   # append package version to each package
-  dependencies = sapply(dependencies, function(x) sprintf("%s_%s", x, packageVersion(x)))
+  dependencies = vcapply(dependencies, function(x) sprintf("%s_%s", x, packageVersion(x)))
   # finally add "R version string"
   dependencies = c(getRVersionString(), dependencies)
 
