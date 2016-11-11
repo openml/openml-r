@@ -81,7 +81,7 @@ makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, 
   assertString(format)
   assertCharacter(creator)
   assertCharacter(contributor)
-  if (isTRUE(checkClass(collection.date, classes = "POSIXt")))
+  if (testClass(collection.date, classes = "POSIXt"))
     collection.date = as.character(collection.date)
   assertString(collection.date, na.ok = TRUE)
   assertClass(upload.date, "POSIXt")

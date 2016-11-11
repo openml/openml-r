@@ -38,7 +38,7 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
 
   # create parameter list
   parameter.setting = makeOMLRunParList(learner)
-  if (isTRUE(checkIntegerish(seed))) {
+  if (testIntegerish(seed)) {
     seed.setting = makeOMLSeedParList(seed = seed)
   } else {
     seed.setting = seed

@@ -28,7 +28,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
 
-  if (isTRUE(checkClass(mlr.lrn, "TuneWrapper"))) mlr.lrn = removeAllHyperPars(mlr.lrn)
+  if (testClass(mlr.lrn, "TuneWrapper")) mlr.lrn = removeAllHyperPars(mlr.lrn)
 
   ps = getParamSet(mlr.lrn)
   par.vals = mlr::getHyperPars(mlr.lrn)
@@ -103,7 +103,7 @@ getOMLRunParList = function(run) {
 convertOMLRunParListToList = function(x, ps = NULL, ...) {
   assertClass(x, "OMLRunParList")
   par.list = extractSubList(x, "value", simplify = FALSE)
-  if(!isTRUE(checkNamed(par.list))) {
+  if(!testNamed(par.list)) {
     par.names = extractSubList(x, "name")
     par.list = setNames(par.list, par.names)
   }

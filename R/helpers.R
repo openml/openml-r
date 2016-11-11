@@ -57,7 +57,7 @@ checkUserConfirmation = function(type, confirm.upload = NULL) {
   }
   assertFlag(confirm.upload)
 
-  if (isTRUE(confirm.upload)) {
+  if (confirm.upload) {
     catf("Do you really want to upload the %s? (yes|no)", type)
     reaction = readLines(con = stdin(), 1L)
     return(grepl(reaction, "yes", fixed = TRUE))
@@ -193,7 +193,6 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
 }
 
 convertNameValueListToRow = function(x) {
-  #if (!isTRUE(checkList(x))) x = list(x)
   value = lapply(x, function(x) x$value)
   name = vcapply(x, function(x) x$name)
   setNames(value, name)

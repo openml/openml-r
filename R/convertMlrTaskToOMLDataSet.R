@@ -17,7 +17,7 @@ convertMlrTaskToOMLDataSet = function(task, description = NULL){
   if (is.null(description))
     description = as.character(task$task.desc$id)
 
-  if (isTRUE(checkClass(description, "OMLDataSetDescription"))) {
+  if (testClass(description, "OMLDataSetDescription")) {
     desc = description
   } else {
     desc = makeOMLDataSetDescription(
