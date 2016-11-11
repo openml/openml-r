@@ -6,7 +6,6 @@
 #' @import stringi
 #' @import XML
 #' @import jsonlite
-#' @import xml2
 #' @import data.table
 #' @importFrom memoise memoise forget
 #' @importFrom digest digest

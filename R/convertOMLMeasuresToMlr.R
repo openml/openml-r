@@ -44,7 +44,7 @@ convertOMLMeasuresToMlr = function(measures) {
 #       assertList(mlr.measures)
 #       mlr.measures = vcapply(mlr.measures, function(x) x$id)
 #     }
-#       
+#
 #   assertSubset(mlr.measures, lookup.ids)
 #   return(names(lookup.ids[lookup.ids%in%mlr.measures]))
 # }

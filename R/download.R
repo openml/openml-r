@@ -27,13 +27,12 @@ doAPICall = function(api.call, id = NULL,
   verbosity = NULL, method, ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
   assert(checkChoice(verbosity, choices = 0:2), checkNull(verbosity))
-  
+
   # get config infos
   conf = getOMLConfig()
 
   # build request URL and query
   url = buildRequestURL(conf$server, api.call, id, url.args, ...)
-  query = list(api_key = conf$apikey)
 
   if (nchar(url) > 4068)
     stopf("'%s' has %i characters, the maximum allowed url length is 4068.", url, nchar(url))
@@ -98,10 +97,10 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
   server.response = try(do.call(method, http.args), silent = TRUE)
   if (is.error(server.response) || !inherits(server.response, "response")) {
     if (has_internet()) {
-      stopf("API call failed. The OpenML server '%s' is currently not available, try again later.", 
+      stopf("API call failed. The OpenML server '%s' is currently not available, try again later.",
         getOMLConfig()$server)
     } else {
-      stopf("API call failed. Maybe you are not connected to the internet.") 
+      stopf("API call failed. Maybe you are not connected to the internet.")
     }
   }
   # handle HTTP non success status codes

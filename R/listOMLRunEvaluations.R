@@ -29,7 +29,7 @@
   #drop.array = vlapply(evals[,grepl("array_data[_]", colnames(evals))], function(x) all(vlapply(x, is.null)))
   #drop.array = names(drop.array)[drop.array]
   #evals = evals[, colnames(evals)%nin%drop.array]
-  
+
   # unfortunately column names are f***ed up now. Some tedious work is neccessary
   # to achive our naming conventions
   colnames(evals) = gsub("value[_]", "", colnames(evals))

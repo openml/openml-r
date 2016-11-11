@@ -1,14 +1,14 @@
 #' @title Construct OMLSeedParList
-#' 
+#'
 #' @description
 #' Generate a list of OpenML seed parameter settings for a given seed.
-#' 
+#'
 #' @param seed [\code{numeric(1)}]\cr
 #'   The seed.
 #' @param prefix [\code{character}]\cr
 #'   prefix for seed parameter names.
-#'   
-#' @return A \code{OMLSeedParList} which is a list of \code{\link{OMLRunParameter}s} 
+#'
+#' @return A \code{OMLSeedParList} which is a list of \code{\link{OMLRunParameter}s}
 #' that provide only information about the seed.
 #' @aliases OMLSeedParList
 #' @export
@@ -43,13 +43,13 @@ print.OMLSeedParList = function(x, ...)  {
 
 
 #' @title Extract OMLSeedParList from run
-#' 
+#'
 #' @description
 #' Extracts the seed information as \code{\link{OMLSeedParList}} from a \code{\link{OMLRun}}.
-#' 
+#'
 #' @param run [\code{OMLRun}]\cr
 #'   A \code{\link{OMLRun}}
-#'   
+#'
 #' @return [\code{OMLSeedParList}].
 #' @export
 getOMLSeedParList = function(run) {
@@ -74,14 +74,14 @@ setOMLSeedParList = function(x, flow = NULL) {
   prefix = unique(gsub("seed|kind|normal.kind", "", names(seed.pars)))
   names(seed.pars) = gsub(prefix, "", names(seed.pars)) #c("seed", "kind", "normal.kind")
   xRNG = seed.pars[c("kind", "normal.kind")]
-  
+
   currentRNG = RNGkind()
   if (!identical(currentRNG, unname(xRNG)))
     messagef("Kind of RNG has been changed to '%s'",
       convertToShortString(as.list(xRNG)))
-  
-  if (!is.null(flow)) RNGversion(extractRVersionFromFlow(flow)) 
-  
+
+  if (!is.null(flow)) RNGversion(extractRVersionFromFlow(flow))
+
   do.call("set.seed", as.list(seed.pars))
 }
 

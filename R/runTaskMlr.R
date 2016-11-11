@@ -59,7 +59,7 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
 
   # create Flow
   flow = convertMlrLearnerToOMLFlow(learner)
-  
+
   # Create mlr task with estimation procedure and evaluation measure
   z = convertOMLTaskToMlr(task, measures = measures, verbosity = verbosity, ...)
 
@@ -84,7 +84,7 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
   msg = paste0(tr.msg, pr.msg)
 
   # create run
-  run = makeOMLRun(task.id = task$task.id, 
+  run = makeOMLRun(task.id = task$task.id,
     error.message = ifelse(length(msg) == 0, NA_character_, msg))
   run$predictions = reformatPredictions(res$pred$data, task)
 

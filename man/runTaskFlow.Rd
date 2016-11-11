@@ -22,7 +22,7 @@ Set a seed to make the run reproducible.
 Default is \code{1} and sets the seed using \code{set.seed(1)}.}
 
 \item{predict.type}{[character(1)]\cr
-Optional. See \code{\link[mlr]{setPredictType}}. 
+Optional. See \code{\link[mlr]{setPredictType}}.
 Default is "response".}
 
 \item{verbosity}{[\code{integer(1)}]\cr

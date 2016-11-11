@@ -39,7 +39,6 @@ Imports:
     stringi,
     XML,
     jsonlite,
-    xml2,
     memoise (>= 1.0.0),
     stats,
     curl

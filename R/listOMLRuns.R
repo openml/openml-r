@@ -17,7 +17,7 @@
   names(runs) = convertNamesOMLToR(names(runs))
 
   # handle error messages
-  runs$error.message = as.character(sapply(runs$error.message, function(e) if (length(e) == 0 || e == "") NA else e))
+  runs$error.message = vcapply(runs$error.message, function(e) if (length(e) == 0L || !nzchar(e)) NA_character_ else e)
 
   # first five columns are IDs and hence need to be converted to integer
   #runs = as.data.frame(lapply(runs, type.convert, numerals = "no.loss", as.is = TRUE))

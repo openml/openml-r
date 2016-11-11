@@ -7,7 +7,7 @@
 # @return [\code{invisible(NULL)}].
 writeOMLRunXML = function(run, file, bmr = NULL) {
   assertClass(run, "OMLRun")
-  assert(checkClass(bmr, "BenchmarkResult"), checkNull(bmr)) 
+  assert(checkClass(bmr, "BenchmarkResult"), checkNull(bmr))
   assertPathForOutput(file, overwrite = TRUE)
 
   # FIXME: We currently support only parameter values that can be converted to character
@@ -36,7 +36,7 @@ writeOMLRunXML = function(run, file, bmr = NULL) {
     mynode("value", run$parameter.setting[[i]]$value, parent = par.setting)
     mynode("component", run$parameter.setting[[i]]$component, parent = par.setting)
   }
-  
+
   output = newXMLNode("output_data", parent = top, namespace = "oml")
 
   if (!is.null(bmr)) {
@@ -64,7 +64,7 @@ writeOMLRunXML = function(run, file, bmr = NULL) {
       mynode("stdev", sd(bmr$results[[1]][[1]]$measures.test[, ind]), parent = eval)
     }
   }
-  
+
   # add scimark information
   if (!is.null(run$scimark.vector)) {
     eval.scimark = newXMLNode("evaluation", parent = output, namespace = "oml")
