@@ -198,7 +198,7 @@ The resulting `data.frame` contains the following information for each of the li
 * the data set ID `data.id`
 * the `status` (`"active"`, `"in_preparation"` or `"deactivated"`) of the data set
 * the `name` of the data set
-* the size of the majority / biggest class (`MajorityClassSize`)
+* the size of the majority / biggest class (`majority.class.size`)
 * etc.
 
 ```{r}
@@ -270,7 +270,7 @@ head(runs)
 
 # one of the IDs (here: task.id) must be supplied
 run.results = listOMLRunEvaluations(task.id = 59L)
-head(run.results)
+str(run.results)
 ```
 
 ### List evaluation measures and task types
@@ -331,10 +331,7 @@ Single OpenML runs can be downloaded with the function `getOMLRun`:
 task.list = listOMLRuns(task.id = 59L)
 task.list[281:285, ]
 run = getOMLRun(run.id = 524027L)
-<<<<<<< HEAD:vignettes/OpenML.Rmd
-=======
 run
->>>>>>> 8bfb7b8ac318ad4e8c21ad618c16d6fb10084b09:todo/OpenML.Rmd
 ```
 Each `OMLRun` object is a list object, which stores additional information on the run. For instance, the flow of the previously downloaded run has some non-default settings for hyperparameters, which can be obtained by:
 ```{r eval=TRUE}
