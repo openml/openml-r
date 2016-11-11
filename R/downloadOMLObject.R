@@ -47,7 +47,7 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
   }
   # look for an error in xml and stop if there is one
   xml.type = ifelse(object == "data", "data_set_description", object)
-  doc = tryCatch(parseXMLResponse(content, msg = paste0("Getting ", stri_replace_underscore(xml.type, " ")), type = xml.type, as.text = TRUE),
+  doc = tryCatch(parseXMLResponse(content, msg = paste0("Getting ", stri_replace_all_fixed(xml.type, "_", " ")), type = xml.type, as.text = TRUE),
     error = function(e) {
       unlink(f[[xml.ind]]$path, recursive = TRUE, force = TRUE)
       stop(e)
