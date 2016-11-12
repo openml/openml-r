@@ -1,14 +1,14 @@
 #' @title Construct OMLSeedParList
-#' 
+#'
 #' @description
 #' Generate a list of OpenML seed parameter settings for a given seed.
-#' 
+#'
 #' @param seed [\code{numeric(1)}]\cr
 #'   The seed.
 #' @param prefix [\code{character}]\cr
 #'   prefix for seed parameter names.
-#'   
-#' @return A \code{OMLSeedParList} which is a list of \code{\link{OMLRunParameter}s} 
+#'
+#' @return A \code{OMLSeedParList} which is a list of \code{\link{OMLRunParameter}s}
 #' that provide only information about the seed.
 #' @aliases OMLSeedParList
 #' @export
@@ -43,13 +43,13 @@ print.OMLSeedParList = function(x, ...)  {
 
 
 #' @title Extract OMLSeedParList from run
-#' 
+#'
 #' @description
 #' Extracts the seed information as \code{\link{OMLSeedParList}} from a \code{\link{OMLRun}}.
-#' 
+#'
 #' @param run [\code{OMLRun}]\cr
 #'   A \code{\link{OMLRun}}
-#'   
+#'
 #' @return [\code{OMLSeedParList}].
 #' @export
 getOMLSeedParList = function(run) {
@@ -63,8 +63,7 @@ getOMLSeedParList = function(run) {
 # hepler functions:
 isSeedPar = function(par) {
   rpl.names = vcapply(par, function(x) x$name)
-  seed.pars = grepl(c("seed$|kind$|normal.kind$"), rpl.names)
-  return(seed.pars)
+  stri_detect_regex(rpl.names, "(seed$|kind$|normal.kind$)")
 }
 
 # @param x OMLSeedParList
@@ -74,14 +73,14 @@ setOMLSeedParList = function(x, flow = NULL) {
   prefix = unique(gsub("seed|kind|normal.kind", "", names(seed.pars)))
   names(seed.pars) = gsub(prefix, "", names(seed.pars)) #c("seed", "kind", "normal.kind")
   xRNG = seed.pars[c("kind", "normal.kind")]
-  
+
   currentRNG = RNGkind()
   if (!identical(currentRNG, unname(xRNG)))
     messagef("Kind of RNG has been changed to '%s'",
       convertToShortString(as.list(xRNG)))
-  
-  if (!is.null(flow)) RNGversion(extractRVersionFromFlow(flow)) 
-  
+
+  if (!is.null(flow)) RNGversion(extractRVersionFromFlow(flow))
+
   do.call("set.seed", as.list(seed.pars))
 }
 
@@ -89,6 +88,6 @@ setOMLSeedParList = function(x, flow = NULL) {
 extractSeed = function(x) {
   assertClass(x, "OMLSeedParList")
   seed.names = vcapply(x, function(x) x$name)
-  seed = vcapply(x, function(x) x$value)[grepl("seed", seed.names)]
+  seed = vcapply(x, function(x) x$value)[stri_detect_fixed(seed.names, "seed")]
   as.integer(seed)
 }

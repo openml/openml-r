@@ -29,12 +29,12 @@
   #drop.array = vlapply(evals[,grepl("array_data[_]", colnames(evals))], function(x) all(vlapply(x, is.null)))
   #drop.array = names(drop.array)[drop.array]
   #evals = evals[, colnames(evals)%nin%drop.array]
-  
+
   # unfortunately column names are f***ed up now. Some tedious work is neccessary
   # to achive our naming conventions
-  colnames(evals) = gsub("value[_]", "", colnames(evals))
-  arr.ind = grepl("array_data[_]", colnames(evals))
-  colnames(evals)[arr.ind] = paste0(gsub("array_data[_]", "", colnames(evals)[arr.ind]), "_array")
+  colnames(evals) = stri_replace_all_fixed(colnames(evals), "value_", "")
+  arr.ind = stri_detect_fixed(colnames(evals), "array_data_")
+  colnames(evals)[arr.ind] = paste0(stri_replace_all_fixed(colnames(evals)[arr.ind], "array_data[_]", ""), "_array")
 
   # convert types (by default all is character)
   #evals = as.data.frame(lapply(evals, type.convert, numerals = "no.loss", as.is = TRUE))

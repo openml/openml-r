@@ -15,9 +15,9 @@ The OML task object that should be converted.}
 Additional measures that should be computed.}
 
 \item{mlr.task.id}{[\code{character(1)}]\cr
-Id string for \code{\link[mlr]{Task}} object. 
-The strings \code{<oml.data.name>}, \code{<oml.data.id>}, \code{<oml.data.version>} 
-and \code{<oml.task.id>} will be replaced by their respective values contained 
+Id string for \code{\link[mlr]{Task}} object.
+The strings \code{<oml.data.name>}, \code{<oml.data.id>}, \code{<oml.data.version>}
+and \code{<oml.task.id>} will be replaced by their respective values contained
 in the \code{\link{OMLTask}} object.
 Default is \code{<oml.data.name>}.}
 

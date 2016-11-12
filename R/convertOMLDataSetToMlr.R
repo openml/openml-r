@@ -6,8 +6,8 @@
 #' @param obj [\code{\link{OMLDataSet}}]\cr
 #'   The object that should be converted.
 #' @param mlr.task.id [\code{character(1)}]\cr
-#'   Id string for \code{\link[mlr]{Task}} object. 
-#'   The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>} 
+#'   Id string for \code{\link[mlr]{Task}} object.
+#'   The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>}
 #'   will be replaced by their respective values contained in the \code{\link{OMLDataSet}} object.
 #'   Default is \code{<oml.data.name>}.
 #' @param task.type [\code{character(1)}]\cr
@@ -76,7 +76,7 @@ convertOMLDataSetToMlr = function(
     stopf("Encountered currently unsupported task type: %s", task.type)
   )
 
-  if (!is.null(mlr.task.id)) 
+  if (!is.null(mlr.task.id))
     mlr.task$task.desc$id = replaceOMLDataSetString(mlr.task.id, obj)
 
   #  remove constant featues
@@ -85,9 +85,9 @@ convertOMLDataSetToMlr = function(
 }
 
 replaceOMLDataSetString = function(string, data.set) {
-  string = gsub("<oml.data.id>", data.set$desc$id, string)
-  string = gsub("<oml.data.name>", data.set$desc$name, string)
-  return(gsub("<oml.data.version>", data.set$desc$version, string))
+  string = stri_replace_all_fixed(string, "<oml.data.id>", data.set$desc$id)
+  string = stri_replace_all_fixed(string, "<oml.data.name>", data.set$desc$name)
+  stri_replace_all_fixed(string, "<oml.data.version>", data.set$desc$version)
 }
 
 # @title Helper to guess task type from target column format.

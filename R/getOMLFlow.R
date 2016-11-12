@@ -29,17 +29,17 @@ getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
   return(flow)
 }
 
-# returns the version contained in the external.version slot, e.g. for R_3.2.4-v2.b4a3f309, 
+# returns the version contained in the external.version slot, e.g. for R_3.2.4-v2.b4a3f309,
 # it returns 2 (which, if available, is the number between "-v" and "." and else 0 is returned)
 
 getFlowExternalVersion = function(flow) {
   assertClass(flow, "OMLFlow")
-  
+
   has.version = grepl("-v[[:digit:]]*[.]", flow$external.version)
   if (has.version) {
     flow.version = gsub(".*-v|[.].*", "", flow$external.version)
   } else flow.version = 0
-  
+
   return(as.integer(flow.version))
 }
 

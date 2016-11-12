@@ -7,9 +7,9 @@
 #' @param obj [\code{\link{OMLTask}}]\cr
 #'   The OML task object that should be converted.
 #' @param mlr.task.id [\code{character(1)}]\cr
-#'   Id string for \code{\link[mlr]{Task}} object. 
-#'   The strings \code{<oml.data.name>}, \code{<oml.data.id>}, \code{<oml.data.version>} 
-#'   and \code{<oml.task.id>} will be replaced by their respective values contained 
+#'   Id string for \code{\link[mlr]{Task}} object.
+#'   The strings \code{<oml.data.name>}, \code{<oml.data.id>}, \code{<oml.data.version>}
+#'   and \code{<oml.task.id>} will be replaced by their respective values contained
 #'   in the \code{\link{OMLTask}} object.
 #'   Default is \code{<oml.data.name>}.
 #' @param measures [\code{\link[mlr]{Measure}}]\cr
@@ -34,14 +34,14 @@ convertOMLTaskToMlr = function(
   assertClass(obj, "OMLTask")
   assert(checkClass(measures, "Measure"), checkList(measures, types = "Measure"), checkNull(measures))
   if (inherits(measures, "Measure")) measures = list(measures)
-  
-  mlr.task.id = gsub("<oml.task.id>", obj$task.id, mlr.task.id)
-  mlr.task = convertOMLDataSetToMlr(obj = obj$input$data.set, 
+
+  mlr.task.id = stri_replace_all_fixed(mlr.task.id, "<oml.task.id>", obj$task.id)
+  mlr.task = convertOMLDataSetToMlr(obj = obj$input$data.set,
     mlr.task.id = mlr.task.id,
     task.type = obj$task.type,
-    target = obj$input$target.features, 
-    ignore.flagged.attributes = ignore.flagged.attributes, 
-    drop.levels = drop.levels, 
+    target = obj$input$target.features,
+    ignore.flagged.attributes = ignore.flagged.attributes,
+    drop.levels = drop.levels,
     verbosity = verbosity)
   mlr.rin = convertOMLSplitsToMlr(obj$input$estimation.procedure, mlr.task, predict = "test")
   # use time as measure and aggregate by sum

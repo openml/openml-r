@@ -15,7 +15,7 @@ The seed.}
 prefix for seed parameter names.}
 }
 \value{
-A \code{OMLSeedParList} which is a list of \code{\link{OMLRunParameter}s} 
+A \code{OMLSeedParList} which is a list of \code{\link{OMLRunParameter}s}
 that provide only information about the seed.
 }
 \description{

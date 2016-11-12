@@ -44,7 +44,7 @@ uploadOMLRun.OMLMlrRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.
   assertClass(run$bmr, "BenchmarkResult")
   assertClass(run$flow, "OMLFlow")
   assertFlag(upload.bmr)
-  uploadOMLRun.OMLRun(run = run$run, upload.bmr = upload.bmr, tags = tags, 
+  uploadOMLRun.OMLRun(run = run$run, upload.bmr = upload.bmr, tags = tags,
     confirm.upload = confirm.upload, bmr = run$bmr, verbosity = verbosity, flow = run$flow, ...)
 }
 
@@ -56,13 +56,13 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
   dot.args = list(...)
   bmr = dot.args$bmr
   flow = dot.args$flow
-  
+
   if (is.null(flow$object) & !is.null(bmr)) {
     lrn = mlr::getBMRLearners(bmr)[[1]]
   } else {
     lrn = flow$object
   }
-  
+
   if (!checkUserConfirmation(type = "run", confirm.upload = confirm.upload)) {
     return(invisible())
   }
@@ -86,11 +86,9 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
   #seed.setting = unclass(getOMLSeedParList(run))
   parameter.setting = run$parameter.setting
   #flow.ids[1] = NA_character_
-  if (length(parameter.setting) > 0) {
-    for(i in 1:length(parameter.setting)) {
-      ind = parameter.setting[[i]]$component
-      parameter.setting[[i]]$component = NA_character_ #flow.ids[ind]
-    }
+  for (i in seq_along(parameter.setting)) {
+    # ind = parameter.setting[[i]]$component
+    parameter.setting[[i]]$component = NA_character_ #flow.ids[ind]
   }
   run$parameter.setting = parameter.setting #append(parameter.setting, seed.setting)
 
@@ -108,7 +106,7 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
 
   if (!is.null(bmr)) {
     # FIXME: See https://github.com/openml/OpenML/issues/276 do we always want to upload this? Or only for TuneWrapper?
-    if (grepl("[.]tuned", flow$name)) {
+    if (stri_detect_fixed(flow$name, ".tuned")) {
       trace.file = tempfile(pattern = "optimization_trace", fileext = ".arff")
       on.exit(unlink(trace.file), add = TRUE)
       arff.writer(getBMRTuneTrace(bmr), file = trace.file)

@@ -52,7 +52,7 @@ print.OMLTask = function(x, ...) {
       catf('  Data Set             : %s :: (Version = %s, OpenML ID = %i)', x$input$data.set$desc$name,
        x$input$data.set$desc$version, x$input$data.set$desc$id)
   catNotNA('  Target Feature(s)    :', x$input$data.set$target.features, fun = collapse, sep = ", ")
-  
+
   ptasks = paste(x$tags, collapse = ", ")
   if(nchar(ptasks) > 80) {
     tags_cut = BBmisc::clipString(ptasks, 80)

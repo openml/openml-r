@@ -73,7 +73,7 @@ makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, 
   citation = NA_character_, visibility = NA_character_, original.data.url = NA_character_,
   paper.url = NA_character_, update.comment = NA_character_, md5.checksum = NA_character_,
   status = NA_character_, tags = NA_character_) {
-  
+
   assertInt(id)
   assertString(name)
   assertString(version)
@@ -81,7 +81,7 @@ makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, 
   assertString(format)
   assertCharacter(creator)
   assertCharacter(contributor)
-  if (isTRUE(checkClass(collection.date, classes = "POSIXt"))) 
+  if (testClass(collection.date, classes = "POSIXt"))
     collection.date = as.character(collection.date)
   assertString(collection.date, na.ok = TRUE)
   assertClass(upload.date, "POSIXt")
@@ -100,7 +100,7 @@ makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, 
   assertString(md5.checksum, na.ok = TRUE)
   assertString(status, na.ok = TRUE)
   assertCharacter(tags)
-  
+
   makeS3Obj("OMLDataSetDescription",
     id = id,
     name = name,

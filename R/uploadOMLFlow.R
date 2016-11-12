@@ -19,13 +19,13 @@
 #'   The ID of the flow (\code{flow.id}).
 #' @family uploading functions
 #' @export
-uploadOMLFlow = function(x, tags = NULL, verbosity = NULL, 
+uploadOMLFlow = function(x, tags = NULL, verbosity = NULL,
   confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   UseMethod("uploadOMLFlow")
 }
 
 #' @export
-uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL, 
+uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL,
   confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   # upload components as flows if there are some
   # if (length(x$components) > 0) {
@@ -67,7 +67,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL,
     x$binary.md5 = digest(file = binaryfile)
     params$binary = upload_file(path = binaryfile)
   } else stop("You must provide an existing binaryfile.")
-  
+
   if (testFile(x$source.path) & !testFile(sourcefile)) sourcefile = x$source.path
   if (testFile(sourcefile)) {
     x$source.md5 = digest(file = sourcefile)
@@ -95,13 +95,13 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL,
 }
 
 #' @export
-uploadOMLFlow.Learner = function(x, tags = NULL, verbosity = NULL, 
+uploadOMLFlow.Learner = function(x, tags = NULL, verbosity = NULL,
   confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL) {
   flow = convertMlrLearnerToOMLFlow(x)
 
   if (is.null(binaryfile) & testFile(flow$binary.path)) binaryfile = flow$binary.path
-  
-  flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity, 
+
+  flow.id = uploadOMLFlow(flow, tags = tags, verbosity = verbosity,
     confirm.upload = confirm.upload, sourcefile = sourcefile, binaryfile = binaryfile)
   return(flow.id)
 }

@@ -19,14 +19,14 @@ The default is \code{NULL}, which means that tasks with all available task types
 
 \item{estimation.procedure}{[\code{character}]\cr
 If not \code{NULL}, only tasks belonging the given estimation procedures are listed.
-Use \code{listOMLEstimationProcedures()$name} to see possible values for 
-\code{estimation.procedure}. The default is \code{NULL}, which means that tasks with all 
+Use \code{listOMLEstimationProcedures()$name} to see possible values for
+\code{estimation.procedure}. The default is \code{NULL}, which means that tasks with all
 available estimation procedures are listed.}
 
 \item{evaluation.measures}{[\code{character}]\cr
 If not \code{NULL}, only tasks belonging the given evaluation measures are listed.
-Use \code{listOMLEvaluationMeasures()$name} to see possible values for 
-\code{evaluation.measures}. The default is \code{NULL}, which means that tasks with all 
+Use \code{listOMLEvaluationMeasures()$name} to see possible values for
+\code{evaluation.measures}. The default is \code{NULL}, which means that tasks with all
 available evaluation measures are listed.}
 
 \item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr

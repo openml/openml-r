@@ -13,8 +13,8 @@ convertOMLDataSetToMlr(obj, mlr.task.id = "<oml.data.name>",
 The object that should be converted.}
 
 \item{mlr.task.id}{[\code{character(1)}]\cr
-Id string for \code{\link[mlr]{Task}} object. 
-The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>} 
+Id string for \code{\link[mlr]{Task}} object.
+The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>}
 will be replaced by their respective values contained in the \code{\link{OMLDataSet}} object.
 Default is \code{<oml.data.name>}.}
 

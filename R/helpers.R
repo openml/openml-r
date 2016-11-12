@@ -24,7 +24,7 @@ showMessage = function(verbosity, msg, ..., minlev) {
 convertNamesOMLToR = function(names) {
   assertCharacter(names, any.missing = FALSE, all.missing = FALSE)
   # a_b_c to a.b.c
-  new.names = gsub("_", ".", names)
+  new.names = stri_replace_all_fixed(names, "_", ".")
   # did to data.id
   new.names = gsub("^did$", "data.id", new.names)
   # ServerVar to server.var
@@ -57,10 +57,10 @@ checkUserConfirmation = function(type, confirm.upload = NULL) {
   }
   assertFlag(confirm.upload)
 
-  if (isTRUE(confirm.upload)) {
+  if (confirm.upload) {
     catf("Do you really want to upload the %s? (yes|no)", type)
     reaction = readLines(con = stdin(), 1L)
-    return(grepl(reaction, "yes"))
+    return(grepl(reaction, "yes", fixed = TRUE))
   }
   return(TRUE)
 }
@@ -111,8 +111,8 @@ collapseNotScientific = function(x, ...) {
 }
 
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
-  task.type = NULL, number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL, 
-  number.of.missing.values = NULL, tag = NULL, data.name = NULL, data.tag = NULL, 
+  task.type = NULL, number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL,
+  number.of.missing.values = NULL, tag = NULL, data.name = NULL, data.tag = NULL,
   limit = NULL, offset = NULL, status = NULL) {
   is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
   assertSorted = makeAssertionFunction(is.sorted)
@@ -193,7 +193,6 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
 }
 
 convertNameValueListToRow = function(x) {
-  #if (!isTRUE(checkList(x))) x = list(x)
   value = lapply(x, function(x) x$value)
   name = vcapply(x, function(x) x$name)
   setNames(value, name)
@@ -210,6 +209,6 @@ convertNameValueListToDF = function(x) {
 }
 
 extractRVersionFromFlow = function(flow) {
-  version = strsplit(flow$dependencies, ",")[[1]]
-  return(gsub("R_", "", version[grepl("R_", version)]))
+  version = strsplit(flow$dependencies, ",")[[1L]]
+  stri_replace_all_fixed(version[stri_detect_fixed(version, "R_")], "R_", "")
 }
