@@ -10,7 +10,7 @@
 #'   that will be converted into mlr \code{\link[mlr]{measures}} and are then used in the \code{\link[mlr]{BenchmarkResult}}.
 #'   Currently, not all measures from OpenML can be converted into mlr measures.
 #' @param recompute [\code{logical(1)}]\cr
-#'   Shuld the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.
+#'   Should the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.
 #' @return [\code{\link[mlr]{BenchmarkResult}}].
 #' @family run-related functions
 #' @export
@@ -18,7 +18,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   assertChoice(run$task.type, c("Supervised Classification", "Supervised Regression"))
   assertSubset(measures, choices = names(lookupMeasures()))
   # FIXME: allow that measures are recomputed with mlr using the predictions
-  assertSubset(assertFlag(recompute), FALSE)
+  assertFlag(recompute)
 
   # FIXME: try to do this without downloading, if it is possible?
   task = getOMLTask(run$task.id)

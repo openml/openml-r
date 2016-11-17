@@ -20,7 +20,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
   assertClass(flow, "OMLFlow")
   assertString(flow$name)
   assert(checkList(par.list), checkClass(par.list, "OMLRunParList"))
-  par.names = extractSubList(flow$parameters, "name")
+  par.names = extractSubList(flow$parameters, "name", element.value = NA_character_)
   assertSubset(names(par.list), par.names)
   assert(checkIntegerish(seed), checkClass(seed, "OMLSeedParList"))
   seed.pars = c("seed", "kind", "normal.kind")

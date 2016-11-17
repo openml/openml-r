@@ -16,7 +16,7 @@ that will be converted into mlr \code{\link[mlr]{measures}} and are then used in
 Currently, not all measures from OpenML can be converted into mlr measures.}
 
 \item{recompute}{[\code{logical(1)}]\cr
-Shuld the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.}
+Should the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.}
 }
 \value{
 [\code{\link[mlr]{BenchmarkResult}}].
