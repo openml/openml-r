@@ -9,9 +9,9 @@
   eval = listOMLEvaluationMeasures(verbosity = 0)
 
   if (!is.null(evaluation.measures))
-    assertSubset(evaluation.measures, choices = eval$name)
+    assertSubset(evaluation.measures, choices = as.character(eval$name))
   if (!is.null(estimation.procedure)) {
-    assertSubset(estimation.procedure, choices = estim.proc$name)
+    assertSubset(estimation.procedure, choices = as.character(estim.proc$name))
     estimation.procedure = estim.proc$est.id[estim.proc$name %in% estimation.procedure]
   }
 
