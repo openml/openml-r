@@ -35,9 +35,9 @@ getOMLFlow = function(flow.id, cache.only = FALSE, verbosity = NULL) {
 getFlowExternalVersion = function(flow) {
   assertClass(flow, "OMLFlow")
 
-  has.version = grepl("-v[[:digit:]]*[.]", flow$external.version)
+  has.version = stri_detect_regex(flow$external.version, "-v[[:digit:]]*[.]")
   if (has.version) {
-    flow.version = gsub(".*-v|[.].*", "", flow$external.version)
+    flow.version = stri_replace_all_regex(flow$external.version, ".*-v|[.].*", "")
   } else flow.version = 0
 
   return(as.integer(flow.version))
