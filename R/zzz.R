@@ -18,10 +18,14 @@ NULL
 .OpenML.config = getDefaultConfig()
 
 .onLoad = function(libname, pkgname) {
-  # assignConfigDefaults()
+  # set config (especially the cachedir) on package loading, otherwise the cachedir from compile-time will be used
+  do.call("setOMLConfig", as.list(getDefaultConfig()))
+  # if config file exist, use configuration from this file
   fn.user = path.expand("~/.openml/config")
   if (file.exists(fn.user))
     loadOMLConfig(fn.user, assign = TRUE)
-  # FIXME: this is probably forbidden on cran?
   createCacheSubDirs(verbosity = 0L)
+  if (getOMLConfig()$apikey == "PLEASE CHANGE ME")
+    message(paste0("Please use the 'setOMLConfig' or 'saveOMLConfig' function to set the API key.\n", 
+      "You can generate the API key from your OpenML account at http://www.openml.org/u#!api"))
 }

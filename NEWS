@@ -1,6 +1,11 @@
-OpenML v1.1 (Release date: XXXX-XX-XX):
+OpenML v1.2 (Release date: XXXX-XX-XX):
 ===========
   - ...
+  
+OpenML v1.1 (Release date: 2016-11-22):
+===========
+  - Setting default cache directory on package loading (fixes winbuilder).
+  - Replace internal regexps with stringi functions.
 
 OpenML v1.0 (Release date: 2016-11-12):
 ===========
