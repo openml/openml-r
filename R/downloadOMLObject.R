@@ -106,7 +106,8 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
       download.file(url, destfile = f[[file.ind]]$path,
         mode = ifelse(!is.null(f[[file.ind]]$binary), ifelse(f[[file.ind]]$binary, "wb", "w"), "w"),
         #FIXME: do we want to get real verbosity level here >= info ?
-        quiet = TRUE
+        quiet = TRUE,
+        method = getOMLConfig()$download.method
       ) #!as.logical(getOMLConfig()$verbosity))
       # set found = TRUE if downloaded file is in cache
       if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
