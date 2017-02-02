@@ -54,11 +54,6 @@ convertOMLDataSetToMlr = function(
     task.type = guessTaskType(data[, target])
   assertChoice(task.type, getValidTaskTypes())
 
-  # FIXME: this should be done better:
-  if (task.type == "Multilabel") {
-    data[, target] = lapply(data[, target], function(x) as.logical(as.numeric(as.character(x)))) 
-  }
-  
   #  remove ignored attributes from data
   if (!is.na(desc$ignore.attribute) && ignore.flagged.attributes) {
     inds = which(obj$colnames.old %in% desc$ignore.attribute)
@@ -103,6 +98,7 @@ replaceOMLDataSetString = function(string, data.set) {
 # @return [character(1)]
 guessTaskType = function(target) {
   if (inherits(target, "data.frame")) {
+    assertDataFrame(target, types = "logical")
     return("Multilabel")
   } else {
     if (is.factor(target) | is.logical(target))
