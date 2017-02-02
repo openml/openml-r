@@ -27,7 +27,7 @@ uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, confi
     return(invisible())
   }
 
-  desc.file = tempfile()
+  desc.file = tempfile(fileext = ".xml")
   on.exit(unlink(desc.file))
   writeOMLDataSetXML(x$desc, desc.file)
 

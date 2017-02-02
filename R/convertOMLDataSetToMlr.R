@@ -42,7 +42,7 @@ convertOMLDataSetToMlr = function(
   verbosity = NULL) {
 
   assertClass(obj, "OMLDataSet")
-  assertChoice(target, obj$colnames.new)
+  assertSubset(target, obj$colnames.new)
   assertFlag(ignore.flagged.attributes)
   assertFlag(drop.levels)
 
@@ -54,6 +54,11 @@ convertOMLDataSetToMlr = function(
     task.type = guessTaskType(data[, target])
   assertChoice(task.type, getValidTaskTypes())
 
+  # FIXME: this should be done better:
+  if (task.type == "Multilabel") {
+    data[, target] = lapply(data[, target], function(x) as.logical(as.numeric(as.character(x)))) 
+  }
+  
   #  remove ignored attributes from data
   if (!is.na(desc$ignore.attribute) && ignore.flagged.attributes) {
     inds = which(obj$colnames.old %in% desc$ignore.attribute)
@@ -73,6 +78,7 @@ convertOMLDataSetToMlr = function(
     "Supervised Classification" = mlr::makeClassifTask(data = data, target = target, fixup.data = fixup),
     "Supervised Regression" = mlr::makeRegrTask(data = data, target = target, fixup.data = fixup),
     "Survival Analysis" = mlr::makeSurvTask(data = data, target = target, fixup.data = fixup),
+    "Multilabel" = mlr::makeMultilabelTask(data = data, target = target, fixup.data = fixup),
     stopf("Encountered currently unsupported task type: %s", task.type)
   )
 
@@ -96,13 +102,18 @@ replaceOMLDataSetString = function(string, data.set) {
 #   Vector of target values.
 # @return [character(1)]
 guessTaskType = function(target) {
-  if (is.factor(target) | is.logical(target))
-    return("Supervised Classification")
-  if (is.numeric(target))
-    return("Supervised Regression")
+  if (inherits(target, "data.frame")) {
+    return("Multilabel")
+  } else {
+    if (is.factor(target) | is.logical(target))
+      return("Supervised Classification")
+    if (is.numeric(target))
+      return("Supervised Regression")
+  }
+
   stopf("Cannot guess task.type from data!")
 }
 
 getValidTaskTypes = function() {
-  c("Supervised Classification", "Supervised Regression", "Survival Analysis")
+  c("Supervised Classification", "Supervised Regression", "Survival Analysis", "Multilabel")
 }
