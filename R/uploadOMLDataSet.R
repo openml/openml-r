@@ -28,7 +28,7 @@ uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, confi
   }
 
   if (length(x$desc$default.target.attribute) > 1) {
-    target.df = ds$data[,ds$desc$default.target.attribute]
+    target.df = x$data[,x$desc$default.target.attribute]
     assertDataFrame(target.df, types = "logical")
   }
   
