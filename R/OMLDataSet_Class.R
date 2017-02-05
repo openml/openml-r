@@ -34,7 +34,7 @@
 #' @family data set-related functions
 #' @aliases OMLDataSet
 #' @example inst/examples/makeOMLDataSet.R
-makeOMLDataSet = function(desc, data, colnames.old, colnames.new, target.features) {
+makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.new = colnames(data), target.features) {
   assertClass(desc, "OMLDataSetDescription")
   assertDataFrame(data)
   n.col = ncol(data)

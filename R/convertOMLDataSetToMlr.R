@@ -27,6 +27,9 @@
 #' @param drop.levels [\code{logical(1)}]\cr
 #'   Should empty factor levels be dropped in the data?
 #'   Default is \code{TRUE}.
+#' @param fix.colnames [\code{logical(1)}]\cr
+#'   Should colnames of the data be fixed using \code{\link[base]{make.names}}?
+#'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{\link[mlr]{Task}}].
 #' @family data set-related functions
@@ -39,6 +42,7 @@ convertOMLDataSetToMlr = function(
   target = obj$desc$default.target.attribute,
   ignore.flagged.attributes = TRUE,
   drop.levels = TRUE,
+  fix.colnames = TRUE,
   verbosity = NULL) {
 
   assertClass(obj, "OMLDataSet")
@@ -63,6 +67,12 @@ convertOMLDataSetToMlr = function(
   # drop levels
   if (drop.levels)
     data = droplevels(data)
+  
+  # fix colnames using make.names
+  if (fix.colnames) {
+    colnames(data) = make.names(colnames(data), unique = TRUE)
+    target = make.names(target, unique = TRUE)
+  }
 
   # get fixup verbose setting for mlr
   if (is.null(verbosity))
