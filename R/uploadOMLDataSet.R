@@ -27,11 +27,16 @@ uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, confi
     return(invisible())
   }
 
-  desc.file = tempfile()
+  if (length(x$desc$default.target.attribute) > 1) {
+    target.df = x$data[,x$desc$default.target.attribute]
+    assertDataFrame(target.df, types = "logical")
+  }
+  
+  desc.file = tempfile(fileext = ".xml")
   on.exit(unlink(desc.file))
   writeOMLDataSetXML(x$desc, desc.file)
 
-  output = tempfile()
+  output = tempfile(fileext = ".arff")
   on.exit(unlink(output), add = TRUE)
   arff.writer(x$data, file = output)
 

@@ -88,7 +88,7 @@ makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, 
   assertString(language, na.ok = TRUE)
   assertString(licence, na.ok = TRUE)
   assertString(url, na.ok = TRUE)
-  assertString(default.target.attribute, na.ok = TRUE)
+  assertCharacter(default.target.attribute)
   assertString(row.id.attribute, na.ok = TRUE)
   assertCharacter(ignore.attribute)
   assertString(version.label, na.ok = TRUE)

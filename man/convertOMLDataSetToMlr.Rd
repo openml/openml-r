@@ -6,7 +6,8 @@
 \usage{
 convertOMLDataSetToMlr(obj, mlr.task.id = "<oml.data.name>",
   task.type = NULL, target = obj$desc$default.target.attribute,
-  ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL)
+  ignore.flagged.attributes = TRUE, drop.levels = TRUE,
+  fix.colnames = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLDataSet}}]\cr
@@ -37,6 +38,10 @@ Default is \code{TRUE}.}
 
 \item{drop.levels}{[\code{logical(1)}]\cr
 Should empty factor levels be dropped in the data?
+Default is \code{TRUE}.}
+
+\item{fix.colnames}{[\code{logical(1)}]\cr
+Should colnames of the data be fixed using \code{\link[base]{make.names}}?
 Default is \code{TRUE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr

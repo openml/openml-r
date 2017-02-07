@@ -27,6 +27,9 @@
 #' @param drop.levels [\code{logical(1)}]\cr
 #'   Should empty factor levels be dropped in the data?
 #'   Default is \code{TRUE}.
+#' @param fix.colnames [\code{logical(1)}]\cr
+#'   Should colnames of the data be fixed using \code{\link[base]{make.names}}?
+#'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{\link[mlr]{Task}}].
 #' @family data set-related functions
@@ -39,10 +42,11 @@ convertOMLDataSetToMlr = function(
   target = obj$desc$default.target.attribute,
   ignore.flagged.attributes = TRUE,
   drop.levels = TRUE,
+  fix.colnames = TRUE,
   verbosity = NULL) {
 
   assertClass(obj, "OMLDataSet")
-  assertChoice(target, obj$colnames.new)
+  assertSubset(target, obj$colnames.new)
   assertFlag(ignore.flagged.attributes)
   assertFlag(drop.levels)
 
@@ -63,6 +67,12 @@ convertOMLDataSetToMlr = function(
   # drop levels
   if (drop.levels)
     data = droplevels(data)
+  
+  # fix colnames using make.names
+  if (fix.colnames) {
+    colnames(data) = make.names(colnames(data), unique = TRUE)
+    target = make.names(target, unique = TRUE)
+  }
 
   # get fixup verbose setting for mlr
   if (is.null(verbosity))
@@ -73,6 +83,7 @@ convertOMLDataSetToMlr = function(
     "Supervised Classification" = mlr::makeClassifTask(data = data, target = target, fixup.data = fixup),
     "Supervised Regression" = mlr::makeRegrTask(data = data, target = target, fixup.data = fixup),
     "Survival Analysis" = mlr::makeSurvTask(data = data, target = target, fixup.data = fixup),
+    "Multilabel" = mlr::makeMultilabelTask(data = data, target = target, fixup.data = fixup),
     stopf("Encountered currently unsupported task type: %s", task.type)
   )
 
@@ -96,13 +107,19 @@ replaceOMLDataSetString = function(string, data.set) {
 #   Vector of target values.
 # @return [character(1)]
 guessTaskType = function(target) {
-  if (is.factor(target) | is.logical(target))
-    return("Supervised Classification")
-  if (is.numeric(target))
-    return("Supervised Regression")
+  if (inherits(target, "data.frame")) {
+    assertDataFrame(target, types = "logical")
+    return("Multilabel")
+  } else {
+    if (is.factor(target) | is.logical(target))
+      return("Supervised Classification")
+    if (is.numeric(target))
+      return("Supervised Regression")
+  }
+
   stopf("Cannot guess task.type from data!")
 }
 
 getValidTaskTypes = function() {
-  c("Supervised Classification", "Supervised Regression", "Survival Analysis")
+  c("Supervised Classification", "Supervised Regression", "Survival Analysis", "Multilabel")
 }
