@@ -212,3 +212,16 @@ extractRVersionFromFlow = function(flow) {
   version = strsplit(flow$dependencies, ",")[[1L]]
   stri_replace_all_fixed(version[stri_detect_fixed(version, "R_")], "R_", "")
 }
+
+# forget all memoised listing functions
+forgetAll = function() {
+  forget(listOMLDataSetQualities)
+  forget(listOMLDataSets)
+  forget(listOMLEstimationProcedures)
+  forget(listOMLEvaluationMeasures)
+  forget(listOMLFlows)
+  forget(listOMLRunEvaluations)
+  forget(listOMLRuns)
+  forget(listOMLTasks)
+  forget(listOMLTaskTypes)
+}
