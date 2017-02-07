@@ -83,7 +83,7 @@ getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NUL
   data.desc = parseOMLDataSetDescription(down$doc)
 
   # warn if dataset not cached and deactivated
-  if (!cache.only) {
+  if (!cache.only & !f$dataset.arff$found) {
     if (data.desc$status == "deactivated") {
       stop("Data set has been deactivated.")
     } else if (data.desc$status == "in_preparation") {
