@@ -7,7 +7,7 @@ test_that("tagOMLObject", {
   get.fun = setNames(c("getOMLDataSet", "getOMLTask", "getOMLFlow", "getOMLRun"), obj)
 
   for (i in obj) {
-    id = ifelse(i == "flow", 100, 1)
+    id = ifelse(i == "flow", 100, ifelse(i == "run", 542235, 1))
     # if tag already exist remove it and try to tag it again
     addTag = try(tagOMLObject(id = id, object = i, tags = test.tags))
     if (isTRUE(addTag)) {

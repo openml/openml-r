@@ -198,7 +198,7 @@ The resulting `data.frame` contains the following information for each of the li
 * the data set ID `data.id`
 * the `status` (`"active"`, `"in_preparation"` or `"deactivated"`) of the data set
 * the `name` of the data set
-* the size of the majority / biggest class (`MajorityClassSize`)
+* the size of the majority / biggest class (`majority.class.size`)
 * etc.
 
 ```{r}
@@ -270,7 +270,7 @@ head(runs)
 
 # one of the IDs (here: task.id) must be supplied
 run.results = listOMLRunEvaluations(task.id = 59L)
-head(run.results)
+str(run.results)
 ```
 
 ### List evaluation measures and task types

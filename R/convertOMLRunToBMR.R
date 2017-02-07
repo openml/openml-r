@@ -10,7 +10,7 @@
 #'   that will be converted into mlr \code{\link[mlr]{measures}} and are then used in the \code{\link[mlr]{BenchmarkResult}}.
 #'   Currently, not all measures from OpenML can be converted into mlr measures.
 #' @param recompute [\code{logical(1)}]\cr
-#'   Shuld the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.
+#'   Should the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.
 #' @return [\code{\link[mlr]{BenchmarkResult}}].
 #' @family run-related functions
 #' @export
@@ -42,7 +42,6 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   runtime = evals$value[evals$name == "usercpu_time_millis"]
 
   task = convertOMLTaskToMlr(task)
-  nclasses = length(task$mlr.task$task.desc$class.levels)
 
   pred = run$predictions
   if(min(pred$fold) == 0)
@@ -53,8 +52,8 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   # try to get predict.type based on "confidence." columns if values are intergish
   pred.class = ifelse(run$task.type == "Supervised Classification",
     "PredictionClassif", "PredictionRegr")
-  conf.cols = grepl("confidence", colnames(pred))
-  conf.cols.intergish = sapply(pred[,conf.cols], function(x) isTRUE(checkIntegerish(x)))
+  conf.cols = stri_detect_fixed(colnames(pred), "confidence")
+  conf.cols.intergish = vlapply(pred[, conf.cols, drop = FALSE], testIntegerish)
   if (all(!conf.cols.intergish) & pred.class == "PredictionClassif") {
     predict.type = "prob"
   } else predict.type = "response"
@@ -64,7 +63,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     # get predictions based on predict.type
     if (predict.type == "prob" & pred.class == "PredictionClassif") {
       y = pred[,conf.cols]
-      colnames(y) = gsub("confidence[.]", "", colnames(y))
+      colnames(y) = stri_replace_all_fixed(colnames(y), "confidence.", "")
     } else y = pred$prediction
 
     mlr::makePrediction(task$mlr.task$task.desc, id = pred$row_id,
@@ -73,7 +72,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   })
 
   pred.data = lapply(prediction, function(x) x$data)
-  pred.data = pred.data[order(as.numeric(gsub(".*-", "" ,names(pred.data))))]
+  pred.data = pred.data[order(as.numeric(gsub(".*-", "", names(pred.data))))]
   for(i in seq_along(pred.data)) pred.data[[i]]$iter = i
   pred.data = data.frame(rbindlist(pred.data), set = "test")
 
@@ -106,15 +105,15 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
       if (as.df) as.data.frame(t(ret)) else ret
     }
     iter.eval.split = rbindlist(lapply(iter.eval.split, getMeasureValue, measures = measures))
-    colnames(iter.eval.split) = unname(sapply(convertOMLMeasuresToMlr(colnames(iter.eval.split)), function(x) x$id))
-    ms.test = data.frame(iter = 1:nrow(iter.eval.split), iter.eval.split)
+    colnames(iter.eval.split) = unname(vcapply(convertOMLMeasuresToMlr(colnames(iter.eval.split)), function(x) x$id))
+    ms.test = data.frame(iter = seq_row(iter.eval.split), iter.eval.split)
 
     #ms.train = subset(ms.test, select = -iter)
     #ms.train[!is.na(ms.train)] = NA
     #ms.train = data.frame(iter = ms.test$iter, as.data.frame(ms.train))
 
     aggr = getMeasureValue(aggr.eval, measures = measures, as.df = FALSE)
-    names(aggr) = unname(sapply(convertOMLMeasuresToMlr(names(aggr)), function(x) x$id))
+    names(aggr) = unname(vcapply(convertOMLMeasuresToMlr(names(aggr)), function(x) x$id))
   } else {
     # FIXME: this is incomplete
   #   ms.test.df = lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )

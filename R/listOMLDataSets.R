@@ -1,7 +1,7 @@
 .listOMLDataSets = function(number.of.instances = NULL, number.of.features = NULL,
   number.of.classes = NULL, number.of.missing.values = NULL,
   tag = NULL, data.name = NULL,
-  limit = NULL, offset = NULL, status = "active", verbosity = NULL) {
+  limit = 5000, offset = NULL, status = "active", verbosity = NULL) {
 
   api.call = generateAPICall("json/data/list",
     number.of.instances = number.of.instances, number.of.features = number.of.features,

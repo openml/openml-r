@@ -29,6 +29,12 @@ test_that("listOMLTasks", {
   expect_data_frame(tasks1, min.rows = 10L, col.names = "unique")
   #expect_set_equal(exp.names, names(tasks1))
 
+  # check if scientific notation works
+  tasks = .listOMLTasks(number.of.instances = c(1e3, 1e7), limit = 10)
+  expect_data_frame(tasks, col.names = "unique")
+  expect_true(min(tasks$number.of.instances) >= 1e3)
+  expect_true(max(tasks$number.of.instances) <= 1e7)
+
   # check if listing one tag works
   one.task = .listOMLTasks(limit = 1)
   expect_data_frame(one.task, nrows = 1, col.names = "unique")
@@ -51,6 +57,28 @@ test_that("listOMLTasks", {
   expect_data_frame(tasks, nrows = 10L, col.names = "unique")
   expect_string(unique(tasks$status))
   expect_true(unique(tasks$status) == "deactivated")
+
+  # check if task type works
+  types = listOMLTaskTypes()$name
+  for(t in types) {
+    tasks = .listOMLTasks(task.type = t, limit = 10)
+    expect_data_frame(tasks, col.names = "unique")
+    expect_true(all(tasks$task.type == t))
+  }
+
+  # check if estimation procedure works
+  est = c("10 times 10-fold Crossvalidation", "10-fold Crossvalidation")
+  tasks = .listOMLTasks(task.type = "Supervised Classification",
+    estimation.procedure = est)
+  expect_data_frame(tasks, col.names = "unique", min.rows = 1L)
+  expect_true(all(tasks$estimation.procedure %in% est))
+
+  # check if evaluation measures works
+  eval = c("area_under_roc_curve", "matthews_correlation_coefficient")
+  tasks = .listOMLTasks(task.type = "Supervised Classification",
+    evaluation.measures = eval)
+  expect_data_frame(tasks, col.names = "unique", min.rows = 1L)
+  expect_true(all(tasks$evaluation.measures %in% eval))
 })
 
 test_that("listOMLTasks works with data.name filter", {

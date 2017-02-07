@@ -73,7 +73,8 @@ More details about the elements of a \code{OMLRun} can be found in the
 \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
 }
 \seealso{
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},

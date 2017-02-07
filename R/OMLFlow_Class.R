@@ -168,7 +168,7 @@ makeOMLFlow = function(
     source.md5 = source.md5,
     binary.md5 = binary.md5,
     source.path = source.path,
-    binary.path = binary.path, 
+    binary.path = binary.path,
     object = object
   )
 }
@@ -176,9 +176,9 @@ makeOMLFlow = function(
 # comp.length = function(x) {
 #   len = 0
 #   while(length(x$components) != 0) {
-#     len = len + length(x$components) 
-#     if(length(x$components) == 1) x = x$components[[1]] 
-#   } 
+#     len = len + length(x$components)
+#     if(length(x$components) == 1) x = x$components[[1]]
+#   }
 #   return(len)
 # }
 

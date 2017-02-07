@@ -30,7 +30,15 @@ test_that("uploadOMLRun", {
     run.id = uploadOMLRun(res)
     expect_is(run.id, "integer")
     deleteOMLObject(run.id, object = "run")
-
+    
+    # check if we correctly overwrite the default of confirm.upload
+    reset_config({
+      setOMLConfig(confirm.upload = TRUE)
+      run.id = uploadOMLRun(res, confirm.upload = FALSE)
+      expect_is(run.id, "integer")
+      deleteOMLObject(run.id, object = "run")
+    })
+    
     # upload runTaskMlr Run
     run.id = uploadOMLRun(res)
     expect_is(run.id, "integer")

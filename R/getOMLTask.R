@@ -76,7 +76,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   getParams = function(path) {
     ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
     parameters = lapply(ns.parameters, function(x) xmlValue(x))
-    names(parameters) = sapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
+    names(parameters) = vcapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
     parameters
   }
 
@@ -115,7 +115,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   # parse prediction info
   ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
   preds.features = lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
-  names(preds.features) = sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
+  names(preds.features) = vcapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
   preds = list(
     format = xmlRValS(doc, "/oml:task/oml:output/oml:predictions/oml:format"),
     features = preds.features

@@ -17,6 +17,11 @@ test_that("runTaskMlr", {
     expect_subset(c("repeat", "fold", "row_id", "prediction", "truth"),
       colnames(reformatPredictions(res$bmr$results[[1]][[1]]$pred$data, task)))
     checkRun(res)
+    # check if additional measure is computed
+    res = runTaskMlr(task, lrn, measures = ber)
+    expect_subset(c("ber"), colnames(getBMRPerformances(res$bmr)[[1]][[1]]))
+    res = runTaskMlr(task, lrn, measures = list(ber, mmce))
+    expect_subset(c("ber", "mmce"), colnames(getBMRPerformances(res$bmr)[[1]][[1]]))
     
     # results for splits must be the same
     res.again = runTaskMlr(task, lrn)

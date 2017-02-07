@@ -12,10 +12,17 @@ OpenML aims to create a frictionless, collaborative environment for exploring ma
 
 # Installation of the package
 
-There is no CRAN release yet. Use `devtools` to install the current development version of the OpenML R package from GitHub:
+- Install the stable version from [CRAN](https://cran.r-project.org/web/packages/OpenML/index.html)
 ```r
-devtools::install_github("openml/r")
+install.packages("OpenML")
 ```
+or
+
+- Install the development version from GitHub (using `devtools`)
+```r
+devtools::install_github("openml/openml-r")
+```
+
 Furthermore,  you need [farff](https://github.com/mlr-org/farff) installed to process [ARFF](http://www.cs.waikato.ac.nz/ml/weka/arff.html) files:
 ```r
 install.packages("farff")

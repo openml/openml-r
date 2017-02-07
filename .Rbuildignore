@@ -5,7 +5,7 @@
 ^todo/
 ^appveyor.yml$
 ^.gitignore$
-^.agignore$
+^.ignore$
 ^.travis.yml$
 ^.appveyor.yml$
 ^.editorconfig$

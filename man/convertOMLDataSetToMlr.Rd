@@ -6,15 +6,16 @@
 \usage{
 convertOMLDataSetToMlr(obj, mlr.task.id = "<oml.data.name>",
   task.type = NULL, target = obj$desc$default.target.attribute,
-  ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL)
+  ignore.flagged.attributes = TRUE, drop.levels = TRUE,
+  fix.colnames = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLDataSet}}]\cr
 The object that should be converted.}
 
 \item{mlr.task.id}{[\code{character(1)}]\cr
-Id string for \code{\link[mlr]{Task}} object. 
-The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>} 
+Id string for \code{\link[mlr]{Task}} object.
+The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>}
 will be replaced by their respective values contained in the \code{\link{OMLDataSet}} object.
 Default is \code{<oml.data.name>}.}
 
@@ -37,6 +38,10 @@ Default is \code{TRUE}.}
 
 \item{drop.levels}{[\code{logical(1)}]\cr
 Should empty factor levels be dropped in the data?
+Default is \code{TRUE}.}
+
+\item{fix.colnames}{[\code{logical(1)}]\cr
+Should colnames of the data be fixed using \code{\link[base]{make.names}}?
 Default is \code{TRUE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr

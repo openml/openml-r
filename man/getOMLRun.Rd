@@ -41,7 +41,8 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
   \code{\link{getOMLTask}}
 
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},

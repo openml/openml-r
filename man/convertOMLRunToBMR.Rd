@@ -16,7 +16,7 @@ that will be converted into mlr \code{\link[mlr]{measures}} and are then used in
 Currently, not all measures from OpenML can be converted into mlr measures.}
 
 \item{recompute}{[\code{logical(1)}]\cr
-Shuld the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.}
+Should the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.}
 }
 \value{
 [\code{\link[mlr]{BenchmarkResult}}].
@@ -25,8 +25,9 @@ Shuld the measures be recomputed with mlr using the predictions? Currently recom
 Converts an \code{\link{OMLRun}} to a \code{\link[mlr]{BenchmarkResult}}.
 }
 \seealso{
-Other run-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
+  \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}

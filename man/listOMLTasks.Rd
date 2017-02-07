@@ -4,12 +4,31 @@
 \alias{listOMLTasks}
 \title{List available OpenML tasks.}
 \usage{
-listOMLTasks(number.of.instances = NULL, number.of.features = NULL,
-  number.of.classes = NULL, number.of.missing.values = NULL, tag = NULL,
-  data.name = NULL, data.tag = NULL, limit = NULL, offset = NULL,
-  status = "active", verbosity = NULL)
+listOMLTasks(task.type = NULL, estimation.procedure = NULL,
+  evaluation.measures = NULL, number.of.instances = NULL,
+  number.of.features = NULL, number.of.classes = NULL,
+  number.of.missing.values = NULL, tag = NULL, data.name = NULL,
+  data.tag = NULL, limit = 5000, offset = NULL, status = "active",
+  verbosity = NULL)
 }
 \arguments{
+\item{task.type}{[\code{character(1)}]\cr
+If not \code{NULL}, only tasks belonging to the given task type are listed.
+Use \code{listOMLTaskTypes()$name} to see possible values for \code{task.type}.
+The default is \code{NULL}, which means that tasks with all available task types are listed.}
+
+\item{estimation.procedure}{[\code{character}]\cr
+If not \code{NULL}, only tasks belonging the given estimation procedures are listed.
+Use \code{listOMLEstimationProcedures()$name} to see possible values for
+\code{estimation.procedure}. The default is \code{NULL}, which means that tasks with all
+available estimation procedures are listed.}
+
+\item{evaluation.measures}{[\code{character}]\cr
+If not \code{NULL}, only tasks belonging the given evaluation measures are listed.
+Use \code{listOMLEvaluationMeasures()$name} to see possible values for
+\code{evaluation.measures}. The default is \code{NULL}, which means that tasks with all
+available evaluation measures are listed.}
+
 \item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr
 If not \code{NULL}, subsets the entries with respect to the given values or,
 if a vector of length 2 is passed, the given ranges.}
@@ -38,10 +57,14 @@ Refers to the tag of the dataset the task is based on.
 If not \code{NULL} only tasks with the corresponding \code{data.tag} are listed.}
 
 \item{limit}{[\code{numeric(1)}]\cr
-Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
+Optional. The maximum number of entries to return. 
+Without specifying \code{offset}, it returns the first '\code{limit}' entries.
+Setting \code{limit = NULL} returns all available entries.}
 
 \item{offset}{[\code{numeric(1)}]\cr
-Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
+Optional. The offset to start from. 
+Should be indices starting from 0, which do not refer to IDs. 
+Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
 Subsets the results according to the status. Possible values are 

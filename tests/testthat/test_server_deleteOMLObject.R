@@ -6,7 +6,7 @@ test_that("deleteOMLObject", {
 
   # local sanity check (account needs read-write permissions)
   with_write_access({
-    run = getOMLRun(1)
+    run = getOMLRun(542235)
     run.id = uploadOMLRun(run)
     del = deleteOMLObject(id = run.id, object = "run")
     expect_is(del, "response")

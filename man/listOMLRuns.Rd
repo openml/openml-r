@@ -26,10 +26,14 @@ If not \code{NULL} only entries with the corresponding \code{tag}s
 are listed.}
 
 \item{limit}{[\code{numeric(1)}]\cr
-Optional. The maximum number of entries to return. Without specifying \code{offset}, it returns the first '\code{limit}' entries.}
+Optional. The maximum number of entries to return. 
+Without specifying \code{offset}, it returns the first '\code{limit}' entries.
+Setting \code{limit = NULL} returns all available entries.}
 
 \item{offset}{[\code{numeric(1)}]\cr
-Optional. The offset to start from. Should be indices starting from 0, which do not refer to IDs. Is ignored when no \code{limit} is given.}
+Optional. The offset to start from. 
+Should be indices starting from 0, which do not refer to IDs. 
+Is ignored when no \code{limit} is given.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -68,7 +72,8 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},

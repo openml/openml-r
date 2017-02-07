@@ -26,13 +26,13 @@ doAPICall = function(api.call, id = NULL,
   url.args = list(), post.args = list(), file = NULL,
   verbosity = NULL, method, ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
+  assert(checkChoice(verbosity, choices = 0:2), checkNull(verbosity))
 
   # get config infos
   conf = getOMLConfig()
 
   # build request URL and query
   url = buildRequestURL(conf$server, api.call, id, url.args, ...)
-  query = list(api_key = conf$apikey)
 
   if (nchar(url) > 4068)
     stopf("'%s' has %i characters, the maximum allowed url length is 4068.", url, nchar(url))
@@ -96,7 +96,12 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
   # do the request and catch potential "unreadable" curl errors
   server.response = try(do.call(method, http.args), silent = TRUE)
   if (is.error(server.response) || !inherits(server.response, "response")) {
-    stopf("API call failed. Maybe you are not connected to the internet.")
+    if (has_internet()) {
+      stopf("API call failed. The OpenML server '%s' is currently not available, try again later.",
+        getOMLConfig()$server)
+    } else {
+      stopf("API call failed. Maybe you are not connected to the internet.")
+    }
   }
   # handle HTTP non success status codes
   status.code = server.response$status_code
@@ -107,8 +112,8 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     else if (isJSONResponse(server.response)) parseError = parseJSONError
     error = parseError(server.response)
 
-    stopf("ERROR (code = %s) in server response: %s\n%s\n", as.character(error$code), error$message,
-      if (!is.null(error$extra)) error$extra else "")
+    stopf("ERROR (code = %s) in server response: %s\n  %s\n", as.character(error$code), error$message,
+      if (!is.null(error$additional.information)) error$additional.information else "")
   }
 
   # if we requested a document we need to extract the actual content
@@ -124,7 +129,7 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
 # @return [logical(1)]
 isXMLResponse = function(response) {
   assertClass(response, "response")
-  grepl("text/xml", response$headers[["content-type"]])
+  stri_detect_fixed(httr::http_type(response), "text/xml")
 }
 
 # Helper to check if HTTP call returned JSON document.
@@ -134,7 +139,7 @@ isXMLResponse = function(response) {
 # @return [logical(1)]
 isJSONResponse = function(response) {
   assertClass(response, "response")
-  grepl("application/json", response$headers[["content-type"]])
+  stri_detect_fixed(httr::http_type(response), "application/json")
 }
 
 # Helpers to parse error documents.
@@ -144,7 +149,8 @@ isJSONResponse = function(response) {
 # @return [list] with components 'code', 'message' and optional 'extra'
 parseHTMLError = function(response) {
   # no parsing here
-  list(code = "<NA>", message = "<NA>", extra = "Server returned a HTML document!")
+  list(code = "<NA>", message = "<NA>",
+    additional.information = "Server returned a HTML document!")
 }
 
 # see parseHTMLError for signature
@@ -152,16 +158,20 @@ parseXMLError = function(response) {
   content = rawToChar(response$content)
   xml.doc = try(xmlParse(content, asText = TRUE), silent = TRUE)
   if (is.error(xml.doc)) {
-    return(list(code = "<NA>", message = "<NA>", extra = "Unable to parse XML error response."))
+    return(list(code = "<NA>", message = "<NA>",
+      additional.information = "Unable to parse XML error response."))
   }
   list(
     code = xmlRValI(xml.doc, "/oml:error/oml:code"),
-    message = xmlOValS(xml.doc, "/oml:error/oml:message")
+    message = xmlOValS(xml.doc, "/oml:error/oml:message"),
+    additional.information = xmlOValS(xml.doc, "/oml:error/oml:additional_information")
   )
 }
 
 # see parseHTMLError for signature
 parseJSONError = function(response) {
   # parsed by httr (no need to call fromJSON by hand)
-  return(content(response)$error)
+  error = content(response)$error
+  names(error) = convertNamesOMLToR(names(error))
+  return(error)
 }

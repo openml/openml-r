@@ -13,7 +13,7 @@
 #' @example inst/examples/getOMLDataSetQualities.R
 #' @export
 getOMLDataSetQualities = function(data.id, verbosity = NULL, name = NULL) {
-  qualities = listOMLDataSetQualities()$name
+  qualities = as.character(listOMLDataSetQualities()$name)
   if (is.null(name))
     name = qualities
   assertSubset(name, qualities)
