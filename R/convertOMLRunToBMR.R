@@ -18,7 +18,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   assertChoice(run$task.type, c("Supervised Classification", "Supervised Regression"))
   assertSubset(measures, choices = names(lookupMeasures()))
   # FIXME: allow that measures are recomputed with mlr using the predictions
-  assertFlag(recompute)
+  assertSubset(assertFlag(recompute), FALSE)
 
   # FIXME: try to do this without downloading, if it is possible?
   task = getOMLTask(run$task.id)
@@ -42,7 +42,8 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   runtime = evals$value[evals$name == "usercpu_time_millis"]
 
   task = convertOMLTaskToMlr(task)
-
+  task.desc = getTaskDescription(task$mlr.task)
+  
   pred = run$predictions
   if(min(pred$fold) == 0)
     pred$fold = (pred$fold + 1)
@@ -66,12 +67,13 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
       colnames(y) = stri_replace_all_fixed(colnames(y), "confidence.", "")
     } else y = pred$prediction
 
-    makeMlrPrediction(task$mlr.task$task.desc, id = pred$row_id,
+    mlr::makePrediction(task$mlr.task$task.desc, id = pred$row_id,
       truth = pred$truth, y = y, row.names = pred$row_id,
       predict.type = predict.type, time = runtime)
   })
+
   pred.data = lapply(prediction, function(x) x$data)
-  pred.data = pred.data[order(as.numeric(gsub(".*-","",names(pred.data))))]
+  pred.data = pred.data[order(as.numeric(gsub(".*-", "", names(pred.data))))]
   for(i in seq_along(pred.data)) pred.data[[i]]$iter = i
   pred.data = data.frame(rbindlist(pred.data), set = "test")
 
@@ -123,9 +125,10 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   #   aggr = rowMeans(as.data.frame(lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )))
   }
 
-  results = list(
+  results = makeS3Obj(c("ResampleResult", "list"),
     learner.id = learners$id,
       task.id = task.id,
+      task.desc = task.desc,
       measures.train = data.frame(),
       measures.test = ms.test,
       aggr = setNames(aggr, paste0(names(aggr), ".test.mean")),
@@ -145,71 +148,6 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     measures = measures,
     learners = setNames(list(learners), learners$id)
   )
-}
-
-# FIXME: use mlr's makePrediction when version 2.10 is on CRAN
-makeMlrPrediction = function(task.desc, row.names, id, truth, predict.type, 
-  predict.threshold = NULL, y, time, error = NA_character_) {
-  UseMethod("makeMlrPrediction")
-}
-
-makeMlrPrediction.TaskDescRegr = function(task.desc, row.names, id, truth, 
-  predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
-  data = namedList(c("id", "truth", "response", "se"))
-  data$id = id
-  data$truth = truth
-  if (predict.type == "response") {
-    data$response = y
-  } else {
-    data$response = y[, 1L]
-    data$se = y[, 2L]
-  }
-  makeS3Obj(c("PredictionRegr", "Prediction"),
-    predict.type = predict.type,
-    data = setRowNames(as.data.frame(filterNull(data)), row.names),
-    threshold = NA_real_,
-    task.desc = task.desc,
-    time = time,
-    error = error
-  )
-}
-
-makeMlrPrediction.TaskDescClassif = function(task.desc, row.names, id, truth, 
-  predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
-  data = namedList(c("id", "truth", "response", "prob"))
-  data$id = id
-  # truth can come from a simple "newdata" df. then there might not be all factor levels present
-  if (!is.null(truth))
-    levels(truth) = union(levels(truth), task.desc$class.levels)
-  data$truth = truth
-  if (predict.type == "response") {
-    data$response = y
-    data = as.data.frame(filterNull(data))
-  } else {
-    data$prob = y
-    data = as.data.frame(filterNull(data))
-    # fix columnnames for prob if strange chars are in factor levels
-    indices = stri_detect_fixed(names(data), "prob.")
-    if (sum(indices) > 0)
-      names(data)[indices] = stri_paste("prob.", colnames(y))
-  }
-  p = makeS3Obj(c("PredictionClassif", "Prediction"),
-    predict.type = predict.type,
-    data = setRowNames(data, row.names),
-    threshold = NA_real_,
-    task.desc = task.desc,
-    time = time,
-    error = error
-  )
-  if (predict.type == "prob") {
-    # set default threshold to 1/k
-    if (is.null(predict.threshold)) {
-      predict.threshold = rep(1/length(task.desc$class.levels), length(task.desc$class.levels))
-      names(predict.threshold) = task.desc$class.levels
-    }
-    p = setThreshold(p, predict.threshold)
-  }
-  return(p)
 }
 
 # run = getOMLRun(536513)
