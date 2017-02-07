@@ -47,7 +47,7 @@ test_that("convertOMLRunToBMR", {
         expect_equal(bmr[[i]]$measures[[1]]$id, "auc")
         expect_numeric(getPredictionProbabilities(getBMRPredictions(bmr[[i]])[[1]][[1]]))
       }
-      expect_is(do.call(mlr:::mergeBenchmarkResultTask, bmr), "BenchmarkResult")
+      expect_is(mlr::mergeBenchmarkResults(bmr), "BenchmarkResult")
       
       ### Supervised Classification with predict.type = "response"
       # runs = lapply(tasks, function(x) runTaskMlr(x, makeLearner("classif.rpart", predict.type = "response")))

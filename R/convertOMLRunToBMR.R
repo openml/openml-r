@@ -42,7 +42,8 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   runtime = evals$value[evals$name == "usercpu_time_millis"]
 
   task = convertOMLTaskToMlr(task)
-
+  task.desc = getTaskDescription(task$mlr.task)
+  
   pred = run$predictions
   if(min(pred$fold) == 0)
     pred$fold = (pred$fold + 1)
@@ -124,9 +125,10 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   #   aggr = rowMeans(as.data.frame(lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )))
   }
 
-  results = list(
+  results = makeS3Obj(c("ResampleResult", "list"),
     learner.id = learners$id,
       task.id = task.id,
+      task.desc = task.desc,
       measures.train = data.frame(),
       measures.test = ms.test,
       aggr = setNames(aggr, paste0(names(aggr), ".test.mean")),
