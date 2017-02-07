@@ -20,7 +20,8 @@ environment:
 
 build_script:
   - travis-tool.sh install_github mlr-org/farff
-  - travis-tool.sh install_github mlr-org/mlr  - travis-tool.sh install_github berndbischl/BBmisc
+  - travis-tool.sh install_github mlr-org/mlr  
+  - travis-tool.sh install_github berndbischl/BBmisc
   - travis-tool.sh install_github berndbischl/ParamHelpers
   - travis-tool.sh install_deps
 
