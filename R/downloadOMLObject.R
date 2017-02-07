@@ -103,11 +103,8 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
     } else {
       url = stri_trim_both(url)
       showInfo(verbosity, "Downloading from '%s' to '%s'", url, f[[file.ind]]$path)
-      download.file(url, destfile = f[[file.ind]]$path,
-        mode = ifelse(!is.null(f[[file.ind]]$binary), ifelse(f[[file.ind]]$binary, "wb", "w"), "w"),
-        #FIXME: do we want to get real verbosity level here >= info ?
-        quiet = TRUE
-      ) #!as.logical(getOMLConfig()$verbosity))
+      resp = GET(url)
+      writeBin(content(resp), f[[file.ind]]$path)
       # set found = TRUE if downloaded file is in cache
       if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
     }

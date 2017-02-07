@@ -1,7 +1,8 @@
 OpenML v1.2 (Release date: XXXX-XX-XX):
 ===========
-  - Add support for multilabel datasets and tasks
-  - Add mlr 2.10 dependency (we internally use mlr::mergeBenchmarkResults and mlr::makePrediction now)
+  - Add support for multilabel datasets and tasks.
+  - Replace download.file with httr::GET.
+  - Add mlr 2.10 dependency (we internally use mlr::mergeBenchmarkResults and mlr::makePrediction now).
   
 OpenML v1.1 (Release date: 2016-11-22):
 ===========
