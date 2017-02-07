@@ -2,8 +2,10 @@
 # if src is NULL, do nothing
 assignConfToConf = function(src, dest) {
   server.changed = src$server != dest$server
-  if (length(server.changed) == 1 & server.changed)
-    forgetAll()
+  if (length(server.changed) == 1) {
+    if (server.changed)
+      forgetAll()
+  }
   if (!is.null(src))
     assertClass(src, "OMLConfig")
   assertClass(dest, "OMLConfig")
