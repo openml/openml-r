@@ -17,12 +17,14 @@
 #'   \dQuote{RWeka}, which is the default and \dQuote{farff}.
 #' @param confirm.upload [\code{logical(1)}]\cr
 #'   Should the user be asked for confirmation before upload of OML objects?
+#' @param download.method [\code{cahracter(1)}]\cr
+#'   Method used to download files. See \code{method} argument in \code{download.file}
 #' @return Invisibly returns a list of configuration settings.
 #' @family config
 #' @export
 setOMLConfig = function(server = NULL, verbosity = NULL,
   apikey = NULL, cachedir = NULL, arff.reader = NULL,
-  confirm.upload = NULL) {
+  confirm.upload = NULL, download.method = NULL) {
 
   if (is.null(server))
     server = getOMLConfig()$server
@@ -52,9 +54,14 @@ setOMLConfig = function(server = NULL, verbosity = NULL,
     confirm.upload = getOMLConfig()$confirm.upload
   else
     confirm.upload = as.logical(confirm.upload)
+  if (is.null(download.method))
+    download.method = getOMLConfig()$download.method
+  else
+    assertChoice(download.method, c("auto", "internal", "wininet", "libcurl", "wget", "curl"))
 
   conf = list(server = server, verbosity = verbosity, apikey = apikey,
-    cachedir = cachedir, arff.reader = arff.reader, confirm.upload = confirm.upload)
+    cachedir = cachedir, arff.reader = arff.reader, confirm.upload = confirm.upload, 
+    download.method = download.method)
   conf2 = addClasses(as.environment(conf), "OMLConfig")
   checkConfig(conf2)
 
