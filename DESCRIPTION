@@ -1,10 +1,12 @@
 Package: OpenML
 Title: Exploring Machine Learning Better, Together
-Description: 'OpenML.org' is an online machine learning platform where researchers can 
-    automatically share data, machine learning tasks and experiments and organize them 
-    online to work and collaborate more effectively.
-    We provide a R interface to the OpenML REST API in order to download and upload data 
-    sets, tasks, flows and runs, see <http://www.openml.org/guide> for more information.
+Description: 'OpenML.org' is an online machine learning platform where 
+    researchers can easily download and upload data sets, share machine learning 
+    tasks and experiments and organize them online to work and collaborate more 
+    effectively.
+    We provide an R interface to the OpenML REST API in order to download and 
+    upload data sets, tasks, flows and runs, see <http://www.openml.org/guide> 
+    for more information.
 Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
     Bernd Bischl <bernd_bischl@gmx.net>,
     Dominik Kirchhoff <dom.kirchhoff@gmail.com>,
@@ -46,6 +48,6 @@ Imports:
     curl
 LazyData: yes
 ByteCompile: yes
-Version: 1.1
+Version: 1.2
 RoxygenNote: 5.0.1
 VignetteBuilder: R.rsp
