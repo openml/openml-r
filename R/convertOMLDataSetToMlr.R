@@ -81,7 +81,7 @@ convertOMLDataSetToMlr = function(
 
   # constant featues (without target)
   const.cols = vlapply(data, function(x) length(unique(x)) == 1)
-  const.feats = setdiff(const.cols, target)
+  const.feats = setdiff(names(const.cols)[const.cols], target)
   # remove constant features
   data = data[ , !colnames(data)%in%const.feats, drop = FALSE]
   
