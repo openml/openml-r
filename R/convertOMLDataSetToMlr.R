@@ -79,6 +79,12 @@ convertOMLDataSetToMlr = function(
     verbosity = getOMLConfig()$verbosity
   fixup = ifelse(verbosity == 0L, "quiet", "warn")
 
+  # constant featues (without target)
+  const.cols = vlapply(data, function(x) length(unique(x)) == 1)
+  const.feats = setdiff(const.cols, target)
+  # remove constant features
+  data = data[ , !colnames(data)%in%const.feats]
+  
   mlr.task = switch(task.type,
     "Supervised Classification" = mlr::makeClassifTask(data = data, target = target, fixup.data = fixup),
     "Supervised Regression" = mlr::makeRegrTask(data = data, target = target, fixup.data = fixup),
@@ -90,8 +96,8 @@ convertOMLDataSetToMlr = function(
   if (!is.null(mlr.task.id))
     mlr.task$task.desc$id = replaceOMLDataSetString(mlr.task.id, obj)
 
-  #  remove constant featues
-  mlr.task = mlr::removeConstantFeatures(mlr.task)
+  # remove constant featues
+  # mlr.task = mlr::removeConstantFeatures(mlr.task)
   return(mlr.task)
 }
 
