@@ -83,7 +83,7 @@ convertOMLDataSetToMlr = function(
   const.cols = vlapply(data, function(x) length(unique(x)) == 1)
   const.feats = setdiff(const.cols, target)
   # remove constant features
-  data = data[ , !colnames(data)%in%const.feats]
+  data = data[ , !colnames(data)%in%const.feats, drop = FALSE]
   
   mlr.task = switch(task.type,
     "Supervised Classification" = mlr::makeClassifTask(data = data, target = target, fixup.data = fixup),
