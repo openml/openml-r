@@ -77,7 +77,7 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
 # @return [character(1)]
 getDependencies = function(lrn) {
   # remove starting !
-  lrn.package = ifelse(stri_startswith_fixed("!", lrn$package), stri_replace_first_fixed(lrn$package, "!", ""), lrn$package)
+  lrn.package = ifelse(stri_startswith_fixed(lrn$package, "!"), stri_replace_first_fixed(lrn$package, "!", ""), lrn$package)
   # check if mlr is needed
   dependencies = if ("mlr" %in% lrn.package) lrn.package else c("mlr", lrn.package)
   # OpenML is always needed
