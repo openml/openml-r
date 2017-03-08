@@ -50,17 +50,23 @@
   
   # split flow.name into learner.name, version and flow.source
   if (extend.flow.name) {
+    # extract flow.version
     flow.version = stri_match_last(evals$flow.name, 
       regex = "[[:digit:]]+\\.*[[:digit:]]*")
-    flow.source = stri_match_first(evals$flow.name, 
-      regex = "^[[:alnum:]]+[[:alnum:]]")
-      #stri_replace_first(evals$flow.name, replacement = "",  regex = "[.].*$")
-    learner.name = stri_replace_last(evals$flow.name, replacement = "", 
-      regex = "\\([[:digit:]]+\\.*[[:digit:]]*\\)")
-
-    ind = flow.source %in% c("classif", "regr")
+    
+    # extract flow.source
+    src = c("weka", "mlr", "moa", "sklearn", "rm", "HubMiner", "classif", "regr", "surv", "openml")
+    src = stri_paste("^", src)
+    flow.source = stri_match_first(evals$flow.name, regex = stri_paste(src, collapse = "|"))
+    ind = flow.source %in% c("classif", "regr", "surv")
     flow.source[ind] = "mlr"
-    learner.name[!ind] = stri_replace_first(learner.name[!ind], replacement = "",  
+    #stri_match_first(evals$flow.name, regex = "^[[:alnum:]]+[[:alnum:]]")
+    #stri_replace_first(evals$flow.name, replacement = "",  regex = "[.].*$")
+
+    # extract learner.name
+    learner.name = stri_replace_last(evals$flow.name, replacement = "",
+      regex = "\\([[:digit:]]+\\.*[[:digit:]]*\\)")
+    learner.name[!ind] = stri_replace_first(learner.name[!ind], replacement = "",
       regex = "^[[:alnum:]]+\\.*[.]")
 
     evals = as.data.frame(append(evals, after = which(names(evals) == "flow.name"),
