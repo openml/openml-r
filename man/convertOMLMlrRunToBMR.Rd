@@ -24,4 +24,3 @@ Other run-related functions: \code{\link{convertOMLRunToBMR}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}
 }
-

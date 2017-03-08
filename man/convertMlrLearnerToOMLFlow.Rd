@@ -29,4 +29,3 @@ Further optional parameters that are passed to \code{\link{makeOMLFlow}}.}
 Creates an \code{\link{OMLFlow}} for an \pkg{mlr} \code{\link[mlr]{Learner}}]
 Required if you want to upload an mlr learner to the OpenML server.
 }
-

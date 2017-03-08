@@ -57,6 +57,10 @@ One of \code{data.id} or \code{data.name} must be passed.
 }
 }
 \seealso{
+Other downloading functions: \code{\link{getOMLDataSetQualities}},
+  \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
+  \code{\link{getOMLTask}}
+
 Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertMlrTaskToOMLDataSet}},
@@ -65,9 +69,4 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{listOMLDataSets}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
-
-Other downloading functions: \code{\link{getOMLDataSetQualities}},
-  \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
-  \code{\link{getOMLTask}}
 }
-

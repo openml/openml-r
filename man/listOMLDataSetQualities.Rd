@@ -39,4 +39,3 @@ Other listing functions: \code{\link{listOMLDataSets}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 }
-

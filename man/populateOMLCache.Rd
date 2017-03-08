@@ -45,4 +45,3 @@ all objects from the cache on disk.
 This is of particular interest in highly parallel computations on
 a cluster with a shared file system.
 }
-
