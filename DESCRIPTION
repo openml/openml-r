@@ -48,6 +48,6 @@ Imports:
     curl
 LazyData: yes
 ByteCompile: yes
-Version: 1.2
+Version: 1.3
 RoxygenNote: 6.0.1
 VignetteBuilder: R.rsp
