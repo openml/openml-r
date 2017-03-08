@@ -1,6 +1,6 @@
 .listOMLRunEvaluations = function(task.id = NULL, flow.id = NULL, run.id = NULL,
   uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL, verbosity = NULL, 
-  show.array.measures = FALSE, pretty.flow.names = FALSE) {
+  show.array.measures = FALSE, extend.flow.name = TRUE) {
   
   if (is.null(task.id) && is.null(flow.id) && is.null(run.id) && is.null(uploader.id) && is.null(tag))
     stop("Please hand over at least one of the following: task.id, flow.id, run.id, uploader.id, tag")
@@ -48,13 +48,24 @@
   # finally convert _ to . in col names
   names(evals) = convertNamesOMLToR(names(evals))
   
-  flow.source = stri_replace_first(evals$flow.name, regex = "[.].*", replacement = "")
-  flow.source = ifelse(flow.source %in% c("classif", "regr"), "mlr", flow.source)
-  evals = as.data.frame(append(evals, after = which(names(evals) == "flow.name"),
-    values = list(flow.source = flow.source)), stringsAsFactors = FALSE)
-  
-  if (pretty.flow.names) {
-    evals$flow.name = stri_replace_all(evals$flow.name, regex = ".*[.]|\\(.*\\)", replacement = "")
+  # split flow.name into learner.name, version and flow.source
+  if (extend.flow.name) {
+    flow.version = stri_match_last(evals$flow.name, 
+      regex = "[[:digit:]]+\\.*[[:digit:]]*")
+    flow.source = stri_match_first(evals$flow.name, 
+      regex = "^[[:alnum:]]+[[:alnum:]]")
+      #stri_replace_first(evals$flow.name, replacement = "",  regex = "[.].*$")
+    learner.name = stri_replace_last(evals$flow.name, replacement = "", 
+      regex = "\\([[:digit:]]+\\.*[[:digit:]]*\\)")
+
+    ind = flow.source %in% c("classif", "regr")
+    flow.source[ind] = "mlr"
+    learner.name[!ind] = stri_replace_first(learner.name[!ind], replacement = "",  
+      regex = "^[[:alnum:]]+\\.*[.]")
+
+    evals = as.data.frame(append(evals, after = which(names(evals) == "flow.name"),
+      values = list(flow.version = flow.version, flow.source = flow.source, learner.name = learner.name)),
+      stringsAsFactors = FALSE)
   }
   
   return(evals)
@@ -75,8 +86,8 @@
 #' @param show.array.measures
 #'  Should measures that return an array (i.e. confusion matrix, predictive accuracy per cv-fold) instead of a single skalar value be shown?
 #'  Default is \code{FALSE}.
-#' @param pretty.flow.names
-#'  Should the version number of the flow and the prefix that specifies the software be removed? Default is \code{FALSE}.
+#' @param extend.flow.name
+#'  Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner. Default is \code{TRUE}.
 #'   
 #' @return [\code{data.frame}].
 #' @family list
