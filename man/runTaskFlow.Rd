@@ -5,7 +5,7 @@
 \title{Reproduce the Run}
 \usage{
 runTaskFlow(task, flow, par.list, seed = 1, predict.type = NULL,
-  verbosity = NULL)
+  verbosity = NULL, models = TRUE)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr
@@ -31,6 +31,11 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{models}{[\code{logical(1)}]\cr
+This argument is passed to \code{\link[mlr]{benchmark}}. 
+Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
+Default is \code{TRUE}.}
 }
 \value{
 [\code{OMLMlrRun}], an \code{\link{OMLRun}}.

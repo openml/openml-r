@@ -11,11 +11,16 @@
 #' @param predict.type [character(1)]\cr
 #'   Optional. See \code{\link[mlr]{setPredictType}}.
 #'   Default is "response".
+#' @param models [\code{logical(1)}]\cr
+#'   This argument is passed to \code{\link[mlr]{benchmark}}. 
+#'   Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
+#'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}}.
 #' @export
 #' @family run related functions
-runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verbosity = NULL) {
+runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, 
+  verbosity = NULL, models = TRUE) {
   assertClass(task, "OMLTask")
   assertClass(flow, "OMLFlow")
   assertString(flow$name)
@@ -57,7 +62,8 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, verb
       collapse(setdiff(flow.pkges, local.pkges), ", "), collapse(local.diff, ", "))
 
   # execute setup.string
-  ret = runTaskMlr(task = task, learner = lrn, verbosity = verbosity, seed = seed)
+  ret = runTaskMlr(task = task, learner = lrn, verbosity = verbosity, 
+    seed = seed, models = models)
   #ret$run.id = run$run.id
 
   return(ret)
