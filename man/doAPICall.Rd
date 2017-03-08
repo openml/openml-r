@@ -44,4 +44,3 @@ Arguments passed via ... have a higher priority.}
 The function always returns the XML file content provided by the server.
 }
 \keyword{internal}
-

@@ -76,6 +76,13 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 }
 \seealso{
+Other listing functions: \code{\link{listOMLDataSetQualities}},
+  \code{\link{listOMLEstimationProcedures}},
+  \code{\link{listOMLEvaluationMeasures}},
+  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
+  \code{\link{listOMLTaskTypes}},
+  \code{\link{listOMLTasks}}
+
 Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertMlrTaskToOMLDataSet}},
@@ -83,12 +90,4 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{deleteOMLObject}},
   \code{\link{getOMLDataSet}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
-
-Other listing functions: \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
 }
-

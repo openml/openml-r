@@ -69,4 +69,3 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 	str(rev_rid8)
 }
 }
-

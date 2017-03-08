@@ -110,4 +110,3 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{makeOMLTask}}, \code{\link{tagOMLObject}}
 }
-

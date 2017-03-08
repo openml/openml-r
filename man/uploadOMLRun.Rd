@@ -48,14 +48,13 @@ need for confirmation by setting \dQuote{confirm.upload = TRUE} via
 the function.
 }
 \seealso{
+Other uploading functions: \code{\link{uploadOMLDataSet}},
+  \code{\link{uploadOMLFlow}}
+
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}}
-
-Other uploading functions: \code{\link{uploadOMLDataSet}},
-  \code{\link{uploadOMLFlow}}
 }
-

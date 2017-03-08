@@ -62,4 +62,3 @@ Other task-related functions: \code{\link{deleteOMLObject}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}
 }
-

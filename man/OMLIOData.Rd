@@ -10,4 +10,3 @@ Objects of class \code{OMLIOData} are used to return information about all input
   and/or \code{evaluations}.
 }
 \keyword{internal}
-

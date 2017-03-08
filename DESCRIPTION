@@ -22,7 +22,7 @@ BugReports: https://github.com/openml/openml-r/issues
 Depends:
     R (>= 3.0.2),
     mlr (>= 2.10)
-Suggests:    
+Suggests: 
     testthat,
     randomForest,
     rpart,
@@ -49,5 +49,5 @@ Imports:
 LazyData: yes
 ByteCompile: yes
 Version: 1.2
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 VignetteBuilder: R.rsp

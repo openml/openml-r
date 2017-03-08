@@ -42,6 +42,11 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{listOMLDataSets}},
   \code{\link{uploadOMLDataSet}}
 
+Other task-related functions: \code{\link{convertOMLTaskToMlr}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLTask}},
+  \code{\link{listOMLTaskTypes}},
+  \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}}
+
 Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
   \code{\link{listOMLFlows}},
@@ -54,10 +59,4 @@ Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{uploadOMLRun}}
-
-Other task-related functions: \code{\link{convertOMLTaskToMlr}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLTask}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}}
 }
-

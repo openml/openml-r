@@ -135,4 +135,3 @@ Other data set-related functions: \code{\link{OMLDataSet}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
-

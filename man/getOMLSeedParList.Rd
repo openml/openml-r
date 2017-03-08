@@ -16,4 +16,3 @@ A \code{\link{OMLRun}}}
 \description{
 Extracts the seed information as \code{\link{OMLSeedParList}} from a \code{\link{OMLRun}}.
 }
-

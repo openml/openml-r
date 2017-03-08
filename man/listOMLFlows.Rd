@@ -50,11 +50,6 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 }
 \seealso{
-Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
-  \code{\link{makeOMLFlowParameter}},
-  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
-
 Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
@@ -62,5 +57,9 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLRuns}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
-}
 
+Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
+  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
+  \code{\link{makeOMLFlowParameter}},
+  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
+}
