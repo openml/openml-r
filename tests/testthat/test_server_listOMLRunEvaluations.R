@@ -10,7 +10,7 @@ test_that("listOMLRunEvaluations", {
   run.evals = .listOMLRunEvaluations(task.id = task.id)
   expect_data_frame(run.evals, min.rows = 1L, col.names = "unique")
   expect_subset(run.evals$run.id, runs$run.id)
-  expect_subset(c("run.id", "task.id", "setup.id", "flow.id", "flow.name", "data.name"), 
+  expect_subset(c("run.id", "task.id", "setup.id", "flow.id", "flow.name", "flow.source", "data.name"), 
     names(run.evals))
   
   # filter runs with tag: study_1

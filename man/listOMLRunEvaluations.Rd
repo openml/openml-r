@@ -6,7 +6,7 @@
 \usage{
 listOMLRunEvaluations(task.id = NULL, flow.id = NULL, run.id = NULL,
   uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
-  verbosity = NULL)
+  verbosity = NULL, show.array.measures = FALSE, extend.flow.name = TRUE)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
@@ -41,6 +41,11 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{show.array.measures}{Should measures that return an array (i.e. confusion matrix, predictive accuracy per cv-fold) instead of a single skalar value be shown?
+Default is \code{FALSE}.}
+
+\item{extend.flow.name}{Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner. Default is \code{TRUE}.}
 }
 \value{
 [\code{data.frame}].
