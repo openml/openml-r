@@ -73,7 +73,8 @@ In this paragraph you can find an example on how to download a task from the ser
 ```{r eval=TRUE, message=FALSE}
 library("OpenML")
 ## temporarily set API key to read only key
-setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", server = "http://test.openml.org/api/v1")
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f",
+  server = "http://test.openml.org/api/v1")
 
 # download a task (whose ID is 1L)
 task = getOMLTask(task.id = 1L)
@@ -88,7 +89,7 @@ The task contains information on the following:
 * tags: tags / labels, which might be helpful for further sub-selections
 * estimation procedure: which estimation procedure has been used when computing the performance
 
-In the next line, `randomForest` is used as a classifier and run with the help of the [`mlr package`](https://github.com/mlr-org/mlr). Note that one needs to run the algorithm locally and that `mlr` will automatically download the package that is needed to run the specified classifier.
+In the next line, `randomForest` is used as a classifier and run with the help of the [`mlr package`](https://github.com/mlr-org/mlr). Note that one needs to run the algorithm locally and that `mlr` will automatically load the package that is needed to run the specified classifier.
 
 ```{r eval=FALSE}
 # define the classifier (usually called "flow" within OpenML)
@@ -108,19 +109,33 @@ run.id = uploadOMLRun(run.mlr)
 Following this very brief example, we will explain the single steps of the OpenML package in more detail in the next sections.
 
 ## Configuration {#config}
+Interacting with the OpenML server requires an API key. 
+For *demonstration purposes*, we have created a *public read-only API key* (`"c1994bdb7ecb3c6f3c8f3b35f4b47f1f"`), which will be used in this tutorial to make the examples executable. However, for a full-fledged usage of the `OpenML` package, you need your personal API.
+
+
 ### Generating your own personal API key {#personalapikey}
-The first step of working with OpenML should be to register yourself at the [OpenML website](http://www.openml.org).
-Most of the package's functions require an API authentication key, which is only accessible with a (free) account.
 In order to receive your own API key
 
-* go to the [OpenML website](http://www.openml.org) and log into your account
-* then go to <http://www.openml.org/u#!api>.
+* register a (free) account at the [OpenML website](http://www.openml.org),
+* log in and go to <http://www.openml.org/u#!api>.
 
-For *demonstration purposes*, we have created a *public read-only API key* (`"c1994bdb7ecb3c6f3c8f3b35f4b47f1f"`), which will be used in the following to make the examples executable.
+### Setting your configuration {#settingconfig}
 
+You can set your own OpenML configuration either just temporarily for the current R session via `setOMLConfig` or permanently via `saveOMLConfig`. 
+In order to create a permanent configuration file using default values and at the same time setting your personal API key, run
+```{r eval = FALSE}
+saveOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
+```
+where `"c1994bdb7ecb3c6f3c8f3b35f4b47f1f"` should be replaced with [*your personal API key*](#personalapikey).
+It is noteworthy that basically everybody who has access to your computer can read the configuration file and thus see your API key.
+With your API key other users have full access to your account via the API, so please handle it with care!
 
-### Permanently setting configuration {#permanentconfig}
-After registering, you can [create a configuration file](#createconfig). The `config` file may contain the following information:
+It is also possible to manually create a file `~/.openml/config` in your home directory -- you can use the R command `path.expand("~/.openml/config")` to get the full path to the configuration file on the operating system.
+The `config` file consists of `key = value` pairs, note that the values are not quoted. An exemplary minimal `config` file might look as follows:
+```{r eval = FALSE}
+apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f
+```
+The `config` file may contain the following information:
 
 * `server`:
     * default: `http://www.openml.org/api/v1`
@@ -140,33 +155,13 @@ After registering, you can [create a configuration file](#createconfig). The `co
 * `apikey`:
     * required to access the server
 
-The configuration file is *not mandatory*. Yet, permanently setting your API key via a `config` file is recommended, as this key is required to access the OpenML server. However, it is noteworthy that basically everybody who has access to your computer can read the configuration file and thus see your API key.
-With your API key other users have full access to your account via the API, so please handle it with care!
 
-The configuration file and some related things are also explained in the [OpenML Wiki](https://github.com/openml/OpenML/wiki/Client-API).
-
-### Creating the configuration file in R {#createconfig}
-To set up your OpenML configuration, you can either use `setOMLConfig` or `saveOMLConfig`. The difference between those two commands is that `setOMLConfig` sets your configuration temporarily for the current R session, whereas `saveOMLConfig` saves the configuration permanently.
-In order to create a permanent configuration file using default values and at the same time setting your personal API key, run
-```{r, eval = FALSE}
-saveOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
-```
-where `"c1994bdb7ecb3c6f3c8f3b35f4b47f1f"` should be replaced with [*your personal API key*](#personalapikey).
-
-### Manually creating the configuration file
-It is also possible to manually create a file `~/.openml/config` in your home directory -- one can use the R command `path.expand("~/.openml/config")` to get the full path to the configuration file on the operating system.
-The `config` file consists of `key = value` pairs. An exemplary minimal `config` file might look as follows:
-```{r eval = FALSE}
-apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f
-```
-Note that the values are not quoted.
-
-If one manually modifies the `config` file, one needs to reload the modified `config` file to the current R session using `loadOMLConfig()`. You can query the current configuration using
+If you manually modify the `config` file, you need to reload the modified `config` file to the current R session using `loadOMLConfig()`. You can query the current configuration using
 ```{r}
 getOMLConfig()
 ```
 
-As you can see, the configuration file lists the five items `server`, `cachedir`, `verbosity`, `arff.reader` and `apikey` that were listed in the [beginning of this paragraph](#permanentconfig).
+The configuration file and some related things are also explained in the [OpenML Wiki](https://github.com/openml/OpenML/wiki/Client-API).
 
 Once the config file is set up, you are **ready to go**!
 
@@ -183,7 +178,7 @@ In this stage, we want to list basic information about the various [OpenML objec
 
 For each of these objects, we have a function to query the information, beginning with `listOML`. All of these functions return a `data.frame`, even in case the result consists of a single column or has zero observations (i.e., rows).
 
-One should be aware of the fact that the `listOML*` functions only list information on the corresponding objects -- they do not download the respective objects. Information on actually downloading specific objects is covered in the [next section](#download).
+Note that the `listOML*` functions only list information on the corresponding objects -- they do not download the respective objects. Information on actually downloading specific objects is covered in the [next section](#download).
 
 
 ### List data sets {#listdata}
@@ -376,15 +371,13 @@ The following section gives an overview on how one can contribute building block
 
 
 ### Upload a data set
-A data set contains information that can be stored on OpenML and used by OpenML tasks and runs. In this example, a very simple data set is taken from R, converted to an OpenML data set and afterwards uploaded to the server. The corresponding workflow of uploading a data set consists of the following three steps:
+A data set contains information that can be stored on OpenML and used by OpenML tasks and runs. This example shows how a very simple data set can be taken from R, converted to an OpenML data set and afterwards uploaded to the server. The corresponding workflow consists of the following three steps:
 
 1. `makeOMLDataSetDescription`: create the description object of an OpenML data set
 2. `makeOMLDataSet`: convert the data set into an OpenML data set
 3. `uploadOMLDataSet`: upload the data set to the server
 
 ```{r eval = FALSE, warning = FALSE, message = TRUE}
-## This is simple data set, which is generally already available in R.
-## Please DO NOT upload it to the server!
 data("airquality")
 dsc = "Daily air quality measurements in New York, May to September 1973.
   This data is taken from R."
@@ -412,8 +405,11 @@ air.data = makeOMLDataSet(desc = desc,
   target.features = "Ozone")
 
 ## (3) Upload the OpenML data set to the server
-dataset.id = uploadOMLDataSet(air.data)
-dataset.id
+## Because this is a simple data set which is generally already available in R
+## please do not actually upload it to the server!
+## The code would be:
+#dataset.id = uploadOMLDataSet(air.data)
+#dataset.id
 ```
 
 Alternatively you can enter data directly on the [OpenML website](http://www.openml.org/new/data).
@@ -461,8 +457,8 @@ Before your run will be uploaded to the server, `uploadOMLRun` checks whether th
 
 Now, you should have gotten an idea on how to use our package. However, as there is always room for improvement, we are more than happy to receive your feedback. So, in case
 
-* there is anything not well documented
-* you encounter a bug
-* are missing functionality
+* there is anything not well documented,
+* you encounter a bug, or
+* you are missing functionality
 
 please open an issue in the [issue tracker of our GitHub repository](https://github.com/openml/openml-r/issues).
