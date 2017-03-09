@@ -2,7 +2,8 @@
 ^doc/
 ^notebooks/
 ^tests/
-^todo/
+^vingette/OpenML.Rmd
+^vingette/Bib.bib
 ^appveyor.yml$
 ^.gitignore$
 ^.ignore$

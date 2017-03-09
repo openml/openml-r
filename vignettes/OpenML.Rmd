@@ -12,9 +12,7 @@ vignette: >
 # library("knitr")
 # opts_chunk$set(cache = TRUE)
 library("OpenML")
-setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", server = "http://test.openml.org/api/v1")
-
-setOMLConfig(verbosity = 0)  # switch off status output
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", verbosity = 0)
 ```
 
 ## Introduction {#intro}
@@ -73,7 +71,7 @@ In this paragraph you can find an example on how to download a task from the ser
 ```{r eval=TRUE, message=FALSE}
 library("OpenML")
 ## temporarily set API key to read only key
-setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", server = "http://test.openml.org/api/v1")
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
 
 # download a task (whose ID is 1L)
 task = getOMLTask(task.id = 1L)
