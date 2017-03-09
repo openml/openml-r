@@ -14,6 +14,10 @@
 #'   Optional vector of performance measurements computed by the scientific SciMark
 #'   benchmark. May be computed using the \pkg{rscimark} R package.
 #'   Default is \code{NULL}, which means no performance measurements.
+#' @param models [\code{logical(1)}]\cr
+#'   This argument is passed to \code{\link[mlr]{benchmark}}. 
+#'   Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
+#'   Default is \code{TRUE}.
 #' @param ... [any]\cr
 #'   Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.
 #' @return [\code{list}] Named list with the following components:
@@ -26,7 +30,8 @@
 #' @aliases OMLMlrRun
 #' @example /inst/examples/runTaskMlr.R
 #' @export
-runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1, scimark.vector = NULL, ...) {
+runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1, 
+  scimark.vector = NULL, models = TRUE, ...) {
   assert(checkString(learner), checkClass(learner, "Learner"))
   if (is.character(learner))
     learner = mlr::makeLearner(learner)
@@ -35,7 +40,7 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
   assert(checkIntegerish(seed), checkClass(seed, "OMLSeedParList"))
   if (!is.null(scimark.vector))
     assertNumeric(scimark.vector, lower = 0, len = 6, finite = TRUE, any.missing = FALSE, all.missing = FALSE)
-
+  
   # create parameter list
   parameter.setting = makeOMLRunParList(learner)
   if (testIntegerish(seed)) {
@@ -43,7 +48,7 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
   } else {
     seed.setting = seed
   }
-
+  
   # set default evaluation measure for classification and regression
   if (task$input$evaluation.measures == "") {
     if (task$task.type == "Supervised Classification")
@@ -51,23 +56,24 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
     else
       task$input$evaluation.measures = "root_mean_squared_error"
   }
-
+  
   # get mlr show.info from verbosity level
   if (is.null(verbosity))
     verbosity = getOMLConfig()$verbosity
   show.info = (verbosity > 0L)
-
+  
   # create Flow
   flow = convertMlrLearnerToOMLFlow(learner)
-
+  
   # Create mlr task with estimation procedure and evaluation measure
   z = convertOMLTaskToMlr(task, measures = measures, verbosity = verbosity, ...)
-
+  
   # Create OMLRun
   setOMLSeedParList(seed.setting, flow = flow)
-  bmr = mlr::benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, show.info = show.info)
+  bmr = mlr::benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures, 
+    models = models, show.info = show.info)
   res = bmr$results[[1]][[1]]
-
+  
   # add error message
   tr.err = unique(res$err.msgs$train)
   pr.err = unique(res$err.msgs$predict)
@@ -82,21 +88,21 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
     pr.msg = NULL
   }
   msg = paste0(tr.msg, pr.msg)
-
+  
   # create run
   run = makeOMLRun(task.id = task$task.id,
     error.message = ifelse(length(msg) == 0, NA_character_, msg))
   run$predictions = reformatPredictions(res$pred$data, task)
-
+  
   # Add parameter settings and seed
   run$parameter.setting = append(parameter.setting, seed.setting)
   #run$flow = flow
-
+  
   par.names = extractSubList(run$parameter.setting, "name")
   if (length(par.names) != length(unique(par.names)))
     stop("duplicated names in 'parameter.setting' and/or 'seed.setting'")
   # run$flow$source.path = createLearnerSourcefile(learner)
-
+  
   if (!is.null(scimark.vector)) {
     run$scimark.vector = scimark.vector
   }
