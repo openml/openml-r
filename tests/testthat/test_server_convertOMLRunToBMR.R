@@ -12,9 +12,10 @@ test_that("convertOMLRunToBMR", {
       # 
       checkBMR = function(bmr) {
         expect_is(bmr, "BenchmarkResult")
-        #res.classes = c("character", "character", "data.frame", "data.frame", "numeric",
-        #  "Prediction", "list", "data.frame", "list", "numeric", "Learner" )
-        #for (j in seq_along(res.classes)) expect_is(bmr$results[[1]][[1]][[j]], res.classes[j])
+        res.classes = c("character", "character", "TaskDesc", "data.frame", "data.frame", "numeric",
+          "Prediction", "list", "data.frame", "list", "numeric", "Learner" )
+        for (j in seq_along(res.classes)) expect_is(bmr$results[[1]][[1]][[j]], res.classes[j])
+        expect_equal(dim(bmr$results[[1]][[1]]$measures.train), dim(bmr$results[[1]][[1]]$measures.test))
         for (j in seq_along(bmr$measures)) {
           expect_is(bmr$measures[[j]], "Measure")
           expect_equal(getBMRMeasures(bmr)[[j]], bmr$measures[[j]])
