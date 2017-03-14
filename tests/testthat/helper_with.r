@@ -1,7 +1,7 @@
 with_test_cache = function(expr, envir = parent.frame()) {
   prev = as.list(getOMLConfig())
   on.exit(do.call(setOMLConfig, prev))
-  setOMLConfig(cachedir = file.path(find.package("OpenML"), "tests", "cache"))
+  setOMLConfig(cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache")))
   eval(expr, envir = envir)
 }
 
