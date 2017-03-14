@@ -42,6 +42,7 @@ Imports:
     httr,
     stringi,
     XML,
+    xml2,
     jsonlite,
     memoise (>= 1.0.0),
     stats,
