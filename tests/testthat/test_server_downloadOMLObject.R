@@ -2,7 +2,7 @@ context("downloadOMLObject")
 
 test_that("downloadOMLObject", {
   with_empty_cache({
-    grid = expand.grid(id = 2:3, object = c("data", "task", "flow", "run"), stringsAsFactors = FALSE)
+    grid = expand.grid(id = 1, object = c("data", "task", "flow", "run"), stringsAsFactors = FALSE)
     for (i in 1:nrow(grid)) {
       # check if there is error when file is not in cache but cache.only option is active
       expect_error(downloadOMLObject(id = grid[i, "id"], object = grid[i, "object"], cache.only = TRUE), "not found in cache")
@@ -23,6 +23,4 @@ test_that("downloadOMLObject", {
       })
     })
   })
-  
-
 })
