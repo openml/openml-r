@@ -25,10 +25,12 @@ Depends:
 Suggests: 
     testthat,
     randomForest,
+    randomForestSRC,
     rpart,
     RWeka,
     farff,
     mboost,
+    xml2,
     knitr,
     rmarkdown,
     R.rsp
@@ -42,7 +44,6 @@ Imports:
     httr,
     stringi,
     XML,
-    xml2,
     jsonlite,
     memoise (>= 1.0.0),
     stats,
