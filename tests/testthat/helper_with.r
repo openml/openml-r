@@ -1,21 +1,10 @@
-normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache"))
-list.files(normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache")))
-list.files(normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache", "flow")))
-list.files(normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache", "flow", "2")))
-
-list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache")))
-list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flow")))
-list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flow", "2")))
-
-identical(Sys.getenv("TRAVIS"), "true")
-
 with_test_cache = function(expr, envir = parent.frame()) {
   prev = as.list(getOMLConfig())
   on.exit(do.call(setOMLConfig, prev))
   if (identical(Sys.getenv("TRAVIS"), "true")) {
     cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
   } else {
-    cachedir = normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache"))
+    cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
   }
   setOMLConfig(cachedir = cachedir)
   eval(expr, envir = envir)

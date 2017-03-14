@@ -1,14 +1,15 @@
 library(testthat)
 
-normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache"))
-list.files(normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache")))
-list.files(normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache", "flow")))
-list.files(normalizePath(file.path(find.package("OpenML"), "00_pkg_src", "OpenML", "tests", "cache", "flow", "2")))
-
+list.files(normalizePath(file.path(find.package("OpenML"))))
+list.files(normalizePath(file.path(find.package("OpenML"), "..")))
 list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache")))
-list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flow")))
-list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flow", "2")))
-
-identical(Sys.getenv("TRAVIS"), "true")
+list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flows")))
+list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flows", "2")))
 
 test_check("OpenML")
+
+list.files(normalizePath(file.path(find.package("OpenML"))))
+list.files(normalizePath(file.path(find.package("OpenML"), "..")))
+list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache")))
+list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flows")))
+list.files(normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache", "flows", "2")))
