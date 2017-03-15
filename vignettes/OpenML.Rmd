@@ -12,7 +12,9 @@ vignette: >
 # library("knitr")
 # opts_chunk$set(cache = TRUE)
 library("OpenML")
-setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", verbosity = 0)
+setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f", 
+  server = "https://www.openml.org/api/v1",
+  verbosity = 0)
 ```
 
 ## Introduction {#intro}
