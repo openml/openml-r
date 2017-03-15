@@ -33,7 +33,7 @@ test_that("populateOMLCache", {
     #flow.ids = flows[!grepl("openml.evaluation", flows$name), "flow.id"]
     data.ids = 1:2
     task.ids = 1:2
-    flow.ids = 2:3
+    flow.ids = 100:101
 
     # check if stuff is stored
     populateOMLCache(data.ids = data.ids)

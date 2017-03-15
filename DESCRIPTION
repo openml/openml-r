@@ -25,10 +25,12 @@ Depends:
 Suggests: 
     testthat,
     randomForest,
+    randomForestSRC,
     rpart,
     RWeka,
     farff,
     mboost,
+    xml2,
     knitr,
     rmarkdown,
     R.rsp

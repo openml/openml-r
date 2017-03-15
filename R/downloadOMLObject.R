@@ -103,8 +103,11 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
     } else {
       url = stri_trim_both(url)
       showInfo(verbosity, "Downloading from '%s' to '%s'", url, f[[file.ind]]$path)
-      resp = GET(url)
-      writeBin(content(resp), f[[file.ind]]$path)
+      resp = get.file(url)
+      content.resp = content(resp)
+      if (is.vector(content.resp))
+        writeBin(content.resp, f[[file.ind]]$path) else
+          warningf("File not found at '%s'.", url)
       # set found = TRUE if downloaded file is in cache
       if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
     }
@@ -112,3 +115,17 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
   return(list(doc = doc, files = f))
 }
 
+# helper to get files either from test or from main server if it failed
+get.file = function(url, switch.server.if.failing = TRUE) {
+  resp = GET(url)
+  if (!is.vector(content(resp)) & switch.server.if.failing) {
+    server.url = ifelse(stri_detect_fixed(url, "https://test"), "https://www", "https://test")
+    change.url = stri_paste(server.url, stri_match_first(url, regex = "[.]openml.*", ""))
+    head.status = httr::headers(resp)$status
+    if (!is.null(head.status))
+      messagef("The url '%s' has the header status: %s.", url, head.status)
+    messagef("Trying to get the file from '%s'.", change.url)
+    resp = GET(change.url)
+  }
+  return(resp)
+}

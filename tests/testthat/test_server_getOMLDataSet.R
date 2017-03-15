@@ -18,12 +18,15 @@ test_that("getOMLDataSet by name", {
     data = getOMLDataSet(data.name = "iris", data.version = 1)
     checkOMLDataSet(data)
     
-    # get deactivated dataset if it is downloaded anyway
+    # get deactivated and in_preparation dataset
     ds = listOMLDataSets(status = "deactivated", limit = 1)
-    d = getOMLDataSet(ds$data.id) # this should work if data is downloaded anyway
-    # remove data and check if error is thrown
-    f = normalizePath(paste0(getOMLConfig()$cachedir, "/datasets/", ds$data.id, "/dataset.arff"))
-    unlink(f, force = TRUE)
-    expect_error(getOMLDataSet(ds$data.id, cache.only = TRUE), "deactivated")
+    expect_warning(getOMLDataSet(ds$data.id), "Data set has been deactivated.")
+    ds = listOMLDataSets(status = "in_preparation", limit = 1)
+    expect_warning(getOMLDataSet(ds$data.id), "Data set is in preparation and will be activated soon.")
+    
+    # check option
+    expect_error(getOMLDataSet(1479, cache.only = TRUE), "not found in cache with option")
+    data = getOMLDataSet(1479)
+    checkOMLDataSet(data)
   })
 })

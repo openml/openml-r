@@ -83,12 +83,10 @@ getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NUL
   data.desc = parseOMLDataSetDescription(down$doc)
 
   # warn if dataset not cached and deactivated
-  if (!cache.only & !f$dataset.arff$found) {
-    if (data.desc$status == "deactivated") {
-      stop("Data set has been deactivated.")
-    } else if (data.desc$status == "in_preparation") {
-      stop("Data set is in preparation. You can download it as soon as it's active.")
-    }
+  if (data.desc$status == "deactivated") {
+    warningf("Data set has been deactivated.")
+  } else if (data.desc$status == "in_preparation") {
+    warningf("Data set is in preparation and will be activated soon.")
   }
 
   # now read data file
@@ -137,7 +135,7 @@ parseOMLDataSetDescription = function(doc) {
     language = xmlOValS(doc, "/oml:data_set_description/oml:language"),
     licence = xmlOValS(doc, "/oml:data_set_description/oml:licence"),
     url = xmlRValS(doc, "/oml:data_set_description/oml:url"),
-    default.target.attribute = unlist(strsplit(default.target.attribute, ",")),
+    default.target.attribute = ifelse(!is.null(default.target.attribute), unlist(strsplit(default.target.attribute, ",")), ""),
     row.id.attribute = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute"),
     ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute"),
     version.label = xmlOValS(doc, "/oml:data_set_description/oml:version_label"),
