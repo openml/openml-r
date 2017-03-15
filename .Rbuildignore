@@ -1,7 +1,6 @@
 ^attic/
 ^doc/
 ^notebooks/
-^tests/
 ^vingette/OpenML.Rmd
 ^vingette/Bib.bib
 ^appveyor.yml$
