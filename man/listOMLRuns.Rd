@@ -5,7 +5,8 @@
 \title{List OpenML runs.}
 \usage{
 listOMLRuns(task.id = NULL, flow.id = NULL, run.id = NULL,
-  uploader.id = NULL, tag = NULL, verbosity = NULL)
+  uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
+  verbosity = NULL)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
@@ -20,9 +21,19 @@ a single ID or a vector of IDs of the runs.}
 \item{uploader.id}{[\code{integer(1)}]\cr
 ID of the uploader.}
 
-\item{tag}{[\code{character(1)}]\cr
-If not \code{NULL} only entries with the corresponding \code{tag}
+\item{tag}{[\code{character}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}s
 are listed.}
+
+\item{limit}{[\code{numeric(1)}]\cr
+Optional. The maximum number of entries to return. 
+Without specifying \code{offset}, it returns the first '\code{limit}' entries.
+Setting \code{limit = NULL} returns all available entries.}
+
+\item{offset}{[\code{numeric(1)}]\cr
+Optional. The offset to start from. 
+Should be indices starting from 0, which do not refer to IDs. 
+Is ignored when no \code{limit} is given.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -61,10 +72,10 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
+Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}
 }
-

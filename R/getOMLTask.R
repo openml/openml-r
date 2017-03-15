@@ -4,7 +4,7 @@
 #' Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded
 #' (if not in cache) and returned.
 #'
-#' @template arg_task_id
+#' @template arg_task.id
 #' @template arg_cache_only
 #' @template arg_verbosity
 #' @return [\code{\link{OMLTask}}].
@@ -65,7 +65,7 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
     # FIXME: see https://github.com/openml/website/issues/25 when this is solved, we might change this line:
     data = suppressWarnings(arff.reader(f$datasplits.arff$path))
       #tryCatch(suppressWarnings(arff.reader(f$datasplits.arff$path)), error = function(e) NULL)
-    #if (!is.null(data)) 
+    #if (!is.null(data))
     task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   } #else warning("Task not providing datasplits.")
 
@@ -76,7 +76,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   getParams = function(path) {
     ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
     parameters = lapply(ns.parameters, function(x) xmlValue(x))
-    names(parameters) = sapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
+    names(parameters) = vcapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
     parameters
   }
 
@@ -115,7 +115,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   # parse prediction info
   ns.preds.features = getNodeSet(doc, "/oml:task/oml:output/oml:predictions/oml:feature")
   preds.features = lapply(ns.preds.features, function(x) xmlGetAttr(x, "type"))
-  names(preds.features) = sapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
+  names(preds.features) = vcapply(ns.preds.features, function(x) xmlGetAttr(x, "name"))
   preds = list(
     format = xmlRValS(doc, "/oml:task/oml:output/oml:predictions/oml:format"),
     features = preds.features

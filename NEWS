@@ -1,2 +1,20 @@
-OpenML_1.0:
-  - Initial release to CRAN
+OpenML v1.3 (Release date: 2017-03-09):
+===========
+  - Bugfixes
+  - listOMLRunEvaluations now returns additional columns for the flow
+  - runTask now allows to set the 'models' option to FALSE so that resulting objects will be smaller
+
+OpenML v1.2 (Release date: 2017-02-07):
+===========
+  - Add support for multilabel datasets and tasks.
+  - Replace download.file with httr::GET.
+  - Add mlr 2.10 dependency (we internally use mlr::mergeBenchmarkResults and mlr::makePrediction now).
+  
+OpenML v1.1 (Release date: 2016-11-22):
+===========
+  - Setting default cache directory on package loading (fixes winbuilder).
+  - Replace internal regexps with stringi functions.
+
+OpenML v1.0 (Release date: 2016-11-12):
+===========
+  - First submission to CRAN.

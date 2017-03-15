@@ -1,11 +1,13 @@
 .listOMLEstimationProcedures = function(verbosity = NULL) {
-  content = try(doAPICall(api.call = "estimationprocedure/list", file = NULL,
-    verbosity = verbosity, method = "GET"))
-  doc = parseXMLResponse(content, "Getting names of estimation procedures", "estimationprocedures",
-    as.text = TRUE)
+  content = doAPICall(api.call = "json/estimationprocedure/list", file = NULL,
+    verbosity = verbosity, method = "GET")
+  res = fromJSON(txt = content)$estimationprocedures$estimationprocedure
+  task.types = .listOMLTaskTypes(verbosity = 0)
+  row.names(task.types) = task.types$id
   data.frame(
-    est.id = xmlValsMultNsS(doc, "/oml:estimationprocedures/oml:estimationprocedure/oml:id"),
-    name = xmlValsMultNsS(doc, "/oml:estimationprocedures/oml:estimationprocedure/oml:name"),
+    est.id = as.integer(res$id),
+    task.type = as.character(task.types[as.character(res$ttid), "name"]),
+    name = res$name,
     stringsAsFactors = TRUE
   )
 }

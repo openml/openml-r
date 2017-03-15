@@ -3,7 +3,7 @@ context("runTaskMlr")
 test_that("runTaskMlr", {
   with_test_cache({
     checkRun = function(res) {
-      expect_is(res, "runTaskMlr")
+      expect_is(res, "OMLMlrRun")
       expect_equal(length(res), 3L)
       expect_is(res$run$predictions, "data.frame")
       expect_is(res$bmr, "BenchmarkResult")
@@ -14,7 +14,14 @@ test_that("runTaskMlr", {
     task = getOMLTask(59)
     res = runTaskMlr(task, lrn)
     expect_true(res$run$task.id == 59)
+    expect_subset(c("repeat", "fold", "row_id", "prediction", "truth"),
+      colnames(reformatPredictions(res$bmr$results[[1]][[1]]$pred$data, task)))
     checkRun(res)
+    # check if additional measure is computed
+    res = runTaskMlr(task, lrn, measures = ber)
+    expect_subset(c("ber"), colnames(getBMRPerformances(res$bmr)[[1]][[1]]))
+    res = runTaskMlr(task, lrn, measures = list(ber, mmce))
+    expect_subset(c("ber", "mmce"), colnames(getBMRPerformances(res$bmr)[[1]][[1]]))
     
     # results for splits must be the same
     res.again = runTaskMlr(task, lrn)

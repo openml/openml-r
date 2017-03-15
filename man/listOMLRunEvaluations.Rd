@@ -5,7 +5,8 @@
 \title{List run results of a task.}
 \usage{
 listOMLRunEvaluations(task.id = NULL, flow.id = NULL, run.id = NULL,
-  uploader.id = NULL, tag = NULL, verbosity = NULL)
+  uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
+  verbosity = NULL, show.array.measures = FALSE, extend.flow.name = TRUE)
 }
 \arguments{
 \item{task.id}{[\code{integer(1)}]\cr
@@ -20,9 +21,19 @@ a single ID or a vector of IDs of the runs.}
 \item{uploader.id}{[\code{integer(1)}]\cr
 ID of the uploader.}
 
-\item{tag}{[\code{character(1)}]\cr
-If not \code{NULL} only entries with the corresponding \code{tag}
+\item{tag}{[\code{character}]\cr
+If not \code{NULL} only entries with the corresponding \code{tag}s
 are listed.}
+
+\item{limit}{[\code{numeric(1)}]\cr
+Optional. The maximum number of entries to return. 
+Without specifying \code{offset}, it returns the first '\code{limit}' entries.
+Setting \code{limit = NULL} returns all available entries.}
+
+\item{offset}{[\code{numeric(1)}]\cr
+Optional. The offset to start from. 
+Should be indices starting from 0, which do not refer to IDs. 
+Is ignored when no \code{limit} is given.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -30,6 +41,11 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{show.array.measures}{Should measures that return an array (i.e. confusion matrix, predictive accuracy per cv-fold) instead of a single skalar value be shown?
+Default is \code{FALSE}.}
+
+\item{extend.flow.name}{Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner. Default is \code{TRUE}.}
 }
 \value{
 [\code{data.frame}].
@@ -58,4 +74,3 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 	str(rev_rid8)
 }
 }
-

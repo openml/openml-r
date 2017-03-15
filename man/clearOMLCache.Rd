@@ -14,4 +14,3 @@ Delete all cached objects and recreate cache directories.
   clearOMLCache()
 }
 }
-

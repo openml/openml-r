@@ -4,11 +4,11 @@
 \alias{getOMLDataSetQualities}
 \title{List available OpenML qualities with values for given data set.}
 \usage{
-getOMLDataSetQualities(did, verbosity = NULL, name = NULL)
+getOMLDataSetQualities(data.id, verbosity = NULL, name = NULL)
 }
 \arguments{
-\item{did}{[\code{integer(1)}]\cr
-The data set ID.}
+\item{data.id}{[\code{integer(1)}]\cr
+ID of the data set.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -26,13 +26,13 @@ Default is \code{NULL} and uses all available data qualities.}
 }
 \description{
 The returned \code{data.frame} contains data set quality
-\dQuote{name} and value \dQuote{value}.
+\dQuote{name}s and values \dQuote{value}.
 }
 \examples{
 \dontrun{
-  a = getOMLDataSetQualities(did = 9)
-  a[a$name == "NumberOfMissingValues", ]
-  getOMLDataSetQualities(did = 9, name = "NumberOfMissingValues")
+  a = getOMLDataSetQualities(data.id = 9)
+  a[a$name == "number.of.missing.values", ]
+  getOMLDataSetQualities(data.id = 9, name = "number.of.missing.values")
 }
 }
 \seealso{
@@ -40,4 +40,3 @@ Other downloading functions: \code{\link{getOMLDataSet}},
   \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
   \code{\link{getOMLTask}}
 }
-

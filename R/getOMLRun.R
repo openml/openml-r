@@ -27,7 +27,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     ns.datasets = getNodeSet(doc, path.ds)
     datasets = lapply(seq_along(ns.datasets), function(i) {
       list(
-        did = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep = '')),
+        data.id = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep = '')),
         name = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep = '')),
         url = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep = ''))
       )})
@@ -38,7 +38,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     ns.fls = getNodeSet(doc, path.fls)
     files = lapply(seq_along(ns.fls), function(i) {
       list(
-        did = xmlRValR(doc, paste(path.fls, "[", i, "]/oml:did", sep='')),
+        data.id = xmlRValR(doc, paste(path.fls, "[", i, "]/oml:did", sep='')),
         name = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:name", sep='')),
         url = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:url", sep=''))
       )})
@@ -48,7 +48,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     path.evals = paste(path, "oml:evaluation", sep ="/")
     ns.evals = getNodeSet(doc, path.evals)
 
-    evals = rbindlist(lapply(ns.evals, function(node) {
+    evals = setDF(rbindlist(lapply(ns.evals, function(node) {
       children = xmlChildren(node)
       row = list(
         as.integer(xmlValue(children[["did"]])),
@@ -63,10 +63,10 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
       cv.info = xmlAttrs(node)[c("repeat", "fold")]
       if (is.null(cv.info)) cv.info = c(NA, NA)
       row = c(row, cv.info)
-      names(row) = c("did", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size", "repeat", "fold")
+      names(row) = c("data.id", "name", "flow_id", "label", "value", "stdev", "array.data", "sample.size", "repeat", "fold")
       row
-    }), fill = TRUE)
-    makeOMLIOData(datasets = datasets, files = files, evaluations = as.data.frame(evals))
+    }), fill = TRUE))
+    makeOMLIOData(datasets = datasets, files = files, evaluations = evals)
   }
 
   run.args = filterNull(list(
@@ -100,7 +100,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
   par.names = vcapply(run.args[["parameter.setting"]], function(x) x$name)
   run.args[["parameter.setting"]] = setNames(run.args[["parameter.setting"]], par.names)
   #setClasses(run.args[["parameter.setting"]], "OMLRunParList")
-  
+
   # get the predictions
   f = findCachedRun(run.args$run.id)
 

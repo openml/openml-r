@@ -1,5 +1,5 @@
 #' @title Construct OMLRunParList.
-#' 
+#'
 #' @description
 #' Generate a list of OpenML run parameter settings for a given mlr learner.
 #'
@@ -20,27 +20,30 @@
 #
 # bagging.par.settings = makeRunParameterList(bagging)
 # bagging.par.settings
-# lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.randomForest", mtry = 4)), osw.rate = 2)
-# lrn = makeImputeWrapper(makeLearner("classif.randomForest", mtry = 4), class = imputeMedian())
+# mlr.lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.randomForest", mtry = 4, ntree = 500), fw.perc = 0.5), osw.rate = 1)
+# mlr.lrn = makeImputeWrapper(makeLearner("classif.randomForest", mtry = 4, ntree = 500), class = imputeMedian())
+# mlr.lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.randomForest", mtry = 4, ntree = 500)), osw.rate = 1)
+# mlr.lrn = makeLearner("classif.randomForest", mtry = 4, ntree = 500)
 makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
-  
-  ps = mlr.lrn$par.set$pars
-  par.vals = mlr.lrn$par.vals
-  par.names = names(mlr.lrn$par.vals)
+
+  if (testClass(mlr.lrn, "TuneWrapper")) mlr.lrn = removeAllHyperPars(mlr.lrn)
+
+  ps = getParamSet(mlr.lrn)
+  par.vals = mlr::getHyperPars(mlr.lrn)
+  par.names = names(par.vals)
   # get defaults for par.vals that have been set
-  par.defaults = getDefaults(mlr.lrn$par.set)
+  par.defaults = getDefaults(ps)
   # store only par.vals that are different from default values
   par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
   par.vals = par.vals[par.ind]
   par.names = par.names[par.ind]
-  
+
   par.settings = setNames(vector("list", length(par.vals)), par.names)
   for (i in seq_along(par.vals)) {
-    psi = ps[[par.names[i]]]
-    # FIXME: what happens with parameters that are vectors (or not scalars, e.g. deeplearning)?
-    val = paramValueToString(psi, par.vals[[i]])
+    psi = ps$pars[[par.names[i]]]
+    val = paramToString(psi, par.vals[[i]])
     par.settings[[i]] = makeOMLRunParameter(
       name = par.names[i],
       value = val, #par.vals[[i]],
@@ -48,140 +51,117 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
       component = component #gsub(".*[.]", "", mlr.lrn$id)
     )
   }
-  if (!is.null(mlr.lrn$next.learner)) {
-    # Use the learner's id (without "classif." or "regr.") as the subcomponent's name...
-    # FIXME: check if or make sure that this is correct
-    #component = strsplit(mlr.lrn$next.learner$id, split = ".", fixed = TRUE)[[1]][2]
-    component = gsub(".*[.]", "", mlr.lrn$next.learner$id)
-    inner.par.settings = makeOMLRunParList(mlr.lrn$next.learner, component = component)
-    par.settings = c(par.settings, inner.par.settings)
+
+  # add component
+  next.learner = mlr.lrn
+  while (!is.null(next.learner)) {
+    component = gsub(".*[.]", "", next.learner$id)
+    par.component = intersect(names(getParamSet(next.learner)$pars), names(par.settings))
+    for (comp in par.component) {
+      par.settings[[comp]]$component = component
+    }
+    next.learner = next.learner$next.learner
   }
   setClasses(par.settings, "OMLRunParList")
-}
-
-#' @title Construct OMLSeedParList
-#' 
-#' @description
-#' Generate a list of OpenML seed parameter settings for a given seed.
-#' 
-#' @param seed [\code{numeric(1)}]\cr
-#'   The seed.
-#' @param prefix [\code{character}]\cr
-#'   prefix for seed parameter names.
-#'   
-#' @return A \code{OMLSeedParList} which is a list of \code{\link{OMLRunParameter}s} 
-#' that provide only information about the seed.
-#' @aliases OMLSeedParList
-#' @export
-makeOMLSeedParList = function(seed, prefix = "openml") {
-  assertIntegerish(seed)
-  assert(checkString(prefix), checkNull(prefix))
-  seed.pars = setNames(c(seed, RNGkind()), c("seed", "kind", "normal.kind"))
-  if(!is.null(prefix))
-    names(seed.pars) = paste0(prefix, ".", names(seed.pars))
-  seed.setting = lapply(seq_along(seed.pars), function(x) {
-    makeOMLRunParameter(
-      name = names(seed.pars[x]),
-      value = as.character(seed.pars[x]),
-      component = NA_character_
-    )
-  })
-  seed.setting = setNames(seed.setting, names(seed.pars))
-  setClasses(seed.setting, "OMLSeedParList")
 }
 
 # show
 #' @export
 print.OMLRunParList = function(x, ...)  {
   #x = unclass(x)
-  ret = rbindlist(lapply(x, function(x) x[c("name", "value", "component")]))
   catf("This is a '%s' with the following parameters:", class(x)[1])
-  print(ret)
-}
-
-# show
-#' @export
-print.OMLSeedParList = function(x, ...)  {
-  #x = unclass(x)
-  ret = rbindlist(lapply(x, function(x) x[c("name", "value", "component")]))
-  catf("This is a '%s' with the following parameters:", class(x)[1])
-  ret$component = NULL
-  print(ret)
-}
-
-#' @title Extract OMLSeedParList from run
-#' 
-#' @description
-#' Extracts the seed information as \code{\link{OMLSeedParList}} from a \code{\link{OMLRun}}.
-#' 
-#' @param run [\code{OMLRun}]\cr
-#'   A \code{\link{OMLRun}}
-#'   
-#' @return [\code{OMLSeedParList}].
-#' @export
-getOMLSeedParList = function(run) {
-  assertClass(run, "OMLRun")
-  par = run$parameter.setting
-  seed.pars = grepl(c("seed|kind|normal.kind"), getOMLRunParListNames(run))
-  assertList(par[seed.pars], len = 3)
-  return(setClasses(par[seed.pars], "OMLSeedParList"))
+  if (length(x) > 0)
+    x = rbindlist(lapply(x, function(x) x[c("name", "value", "component")])) else
+      x = data.frame()
+  print(x)
 }
 
 #' @title Extract OMLRunParList from run
-#' 
+#'
 #' @description
 #' Extracts the seed information as \code{\link{OMLRunParList}} from a \code{\link{OMLRun}}.
-#' 
+#'
 #' @param run [\code{OMLRun}]\cr
 #'   A \code{\link{OMLRun}}
-#'   
+#'
 #' @return [\code{OMLRunParList}].
 #' @export
 getOMLRunParList = function(run) {
   assertClass(run, "OMLRun")
   par = run$parameter.setting
-  seed.pars = grepl(c("seed|kind|normal.kind"), getOMLRunParListNames(run))
-  return(setClasses(par[!seed.pars], "OMLRunParList"))
+  return(setClasses(par[!isSeedPar(par)], "OMLRunParList"))
 }
 
-
-# hepler functions:
-
-# @param x OMLSeedParList
-setOMLSeedParList = function(x) {
-  assertClass(x, "OMLSeedParList")
-  seed.pars = vcapply(x, function(x) x$value)
-  names(seed.pars) = c("seed", "kind", "normal.kind")
-  xRNG = seed.pars[c("kind", "normal.kind")]
-  
-  currentRNG = RNGkind()
-  if (!identical(currentRNG, unname(xRNG)))
-    messagef("Kind of RNG has been changed to '%s'",
-      convertToShortString(as.list(xRNG)))
-  
-  do.call("set.seed", as.list(seed.pars))
-}
-
-# extracts the seed value of a OMLSeedParList
-extractSeed = function(x) {
-  assertClass(x, "OMLSeedParList")
-  seed.names = vcapply(x, function(x) x$name)
-  seed = vcapply(x, function(x) x$value)[grepl("seed", seed.names)]
-  as.integer(seed)
-}
-
+# helpers:
 # get the names of a run
-getOMLRunParListNames = function(run) {
-  assertClass(run, "OMLRun")
-  return(vcapply(run$parameter.setting, function(x) x$name))
-}
+# getOMLRunParListNames = function(run) {
+#   assertClass(run, "OMLRun")
+#   return(vcapply(run$parameter.setting, function(x) x$name))
+# }
 
 # converts a OMLRunParList to a named list
-convertOMLRunParListToList = function(x, ...) {
-  par.list = extractSubList(x, "value")
-  if(!isTRUE(checkNamed(par.list))) {
+convertOMLRunParListToList = function(x, ps = NULL, ...) {
+  assertClass(x, "OMLRunParList")
+  par.list = extractSubList(x, "value", simplify = FALSE)
+  if(!testNamed(par.list)) {
     par.names = extractSubList(x, "name")
     par.list = setNames(par.list, par.names)
   }
-  return(as.list(par.list))
+  # if paramset is given, convert vectors, matrices, untyped etc. properly
+  if (!is.null(ps)) {
+    for(i in names(x)) {
+      par.list[[i]] = stringToParam(ps$pars[[i]], par.list[[i]])
+    }
+  }
+  return(par.list)
+}
+
+# converts a named list to a OMLRunParList
+convertListToOMLRunParList = function(x, ps = NULL, component = NULL) {
+  assertList(x, names = "unique")
+  assertCharacter(component, null.ok = TRUE, len = length(x))
+  par.names = names(x)
+  if (!is.null(ps)) {
+    for(i in names(x)) {
+      x[[i]] = paramToString(ps$pars[[i]], x[[i]])
+    }
+  }
+  par.settings = setNames(vector("list", length(x)), par.names)
+  for (i in seq_along(x)) {
+    par.settings[[i]] = makeOMLRunParameter(
+      name = par.names[i],
+      value = x[[i]],
+      component = ifelse(is.null(component), NA_character_, component[i])
+    )
+  }
+  setClasses(par.settings, "OMLRunParList")
+}
+
+paramToString = function (par, x) {
+  assertClass(par, "Param")
+  type = par$type
+  if (type %in% c("numeric", "integer", "logical", "character"))
+    as.character(x)
+  else if (type %in% c("numericvector", "integervector", "logicalvector", "charactervector"))
+    collapse(x)
+  else if (type == "discrete")
+    discreteValueToName(par, x)
+  else if (type == "discretevector")
+    collapse(discreteValueToName(par, x))
+  else if (type %in% c("function", "untyped"))
+    rawToChar(serialize(x, connection = NULL, ascii = TRUE))
+}
+
+stringToParam = function (par, x) {
+  assertClass(par, "Param")
+  assertCharacter(x)
+  type = par$type
+  if (type %in% c("numeric", "integer", "logical", "character"))
+    do.call(paste0("as.", type), list(x))
+  else if (type %in% c("numericvector", "integervector", "logicalvector", "charactervector", "discretevector"))
+    do.call(paste0("as.", stri_replace_all_fixed(type, "vector", "")), list(strsplit(x, ",")[[1L]]))
+  else if (type == "discrete")
+    discreteNameToValue(par, x)
+  else if (type %in% c("function", "untyped"))
+    unserialize(charToRaw(x))
 }

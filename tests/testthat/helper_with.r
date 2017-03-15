@@ -1,7 +1,12 @@
 with_test_cache = function(expr, envir = parent.frame()) {
   prev = as.list(getOMLConfig())
   on.exit(do.call(setOMLConfig, prev))
-  setOMLConfig(cachedir = file.path(find.package("OpenML"), "tests", "cache"))
+  if (identical(Sys.getenv("TRAVIS"), "true")) {
+    cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
+  } else {
+    cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
+  }
+  setOMLConfig(cachedir = cachedir)
   eval(expr, envir = envir)
 }
 
@@ -28,22 +33,29 @@ with_write_access = function(expr, envir = parent.frame()) {
   reset_config({
     setOMLConfig(confirm.upload = FALSE)
     # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
-    if (identical(Sys.getenv("TRAVIS"), "true")) {
-      skip_on_travis()
-    } else {
+    # if (identical(Sys.getenv("TRAVIS"), "true")) {
+    #   skip_on_travis()
+    # } else {
       eval(expr, envir = envir)
-    }
+    #}
   })
 }
 
-with_read_only = function(expr, envir = parent.frame()) {
+with_main_server = function(expr, envir = parent.frame()) {
   reset_config({
-    setOMLConfig(confirm.upload = FALSE)
-    # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
-    if (identical(Sys.getenv("TRAVIS"), "true")) {
-      eval(expr, envir = envir)
-    } else {
-      skip_on_os(os = c("windows", "mac", "linux", "solaris"))
-    }
+    setOMLConfig(server = "http://www.openml.org/api/v1")
+    eval(expr, envir = envir)
   })
 }
+
+# with_read_only = function(expr, envir = parent.frame()) {
+#   reset_config({
+#     setOMLConfig(confirm.upload = FALSE)
+#     # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
+#     if (identical(Sys.getenv("TRAVIS"), "true")) {
+#       eval(expr, envir = envir)
+#     } else {
+#       skip_on_os(os = c("windows", "mac", "linux", "solaris"))
+#     }
+#   })
+# }

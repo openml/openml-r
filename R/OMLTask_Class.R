@@ -9,8 +9,8 @@
 #' @param task.type [\code{character(1)}]\cr
 #'   The task type of this task. Task types can be browsed and created on the OpenML website.
 #'   See also \code{\link{listOMLTaskTypes}} for a list of all available tasks.
-#' @param input [\code{character}]\cr
-#'   The inputs given for this task (data.set, estimation.procedure, evaluation.measures, cost.matrix).
+#' @param input [\code{list}]\cr
+#'   The inputs given for this task (i.e. data.set, estimation.procedure, evaluation.measures, cost.matrix).
 #' @param parameters [\code{list}]\cr
 #'   Parameter settings for this task (depends on the task type).
 #' @param output [\code{list}]\cr
@@ -52,7 +52,14 @@ print.OMLTask = function(x, ...) {
       catf('  Data Set             : %s :: (Version = %s, OpenML ID = %i)', x$input$data.set$desc$name,
        x$input$data.set$desc$version, x$input$data.set$desc$id)
   catNotNA('  Target Feature(s)    :', x$input$data.set$target.features, fun = collapse, sep = ", ")
-  catNotNA('  Tags                 :', x$tags, fun = collapse, sep = ", ")
+
+  ptasks = paste(x$tags, collapse = ", ")
+  if(nchar(ptasks) > 80) {
+    tags_cut = BBmisc::clipString(ptasks, 80)
+    catNotNA('  Tags                 :', tags_cut)
+  } else {
+    catNotNA('  Tags                 :', x$tags, fun = collapse, sep = ", ")
+  }
   if (!is.na(x$input$estimation.procedure$type)) {
     est.type = x$input$estimation.procedure$type
     strat = x$input$estimation.procedure$parameters$stratified_sampling
@@ -63,6 +70,6 @@ print.OMLTask = function(x, ...) {
     n.folds = ifelse(!is.null(n.folds) && !is.na(n.folds), paste(" x", n.folds, "folds"), " rep(s)")
     catf('  Estimation Procedure : %s%s (%s%s)', strat, est.type, n.rep, n.folds)
   }
-  if (!all(x$evaluation.measures == ""))
+  if (!all(x$input$evaluation.measures == ""))
     catNotNA('  Evaluation Measure(s):', x$input$evaluation.measures, fun = collapse, sep = ", ")
 }

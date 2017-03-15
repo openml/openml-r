@@ -5,24 +5,24 @@
 \title{Reproduce the Run}
 \usage{
 runTaskFlow(task, flow, par.list, seed = 1, predict.type = NULL,
-  verbosity = NULL)
+  verbosity = NULL, models = TRUE)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr
 An OpenML task.}
 
 \item{flow}{[\code{\link{OMLFlow}}]\cr
-Flow that is applied to the Task}
+Flow that is applied to the Task.}
 
-\item{par.list}{[\code{\link{OMLRunParList}}]\cr
-List of Hyperparameters}
+\item{par.list}{[\code{list}|\code{\link{OMLRunParList}}]\cr
+Can be either a named list containing the hyperparameter values or a \code{\link{OMLRunParList}}.}
 
-\item{seed}{[\code{numeric(1)}|\code{\link{OMLSeedParList}}]\cr
+\item{seed}{[\code{numeric(1)}|\code{\link{OMLSeedParList}} ]\cr
 Set a seed to make the run reproducible.
 Default is \code{1} and sets the seed using \code{set.seed(1)}.}
 
 \item{predict.type}{[character(1)]\cr
-Optional. See \code{\link[mlr]{setPredictType}}. 
+Optional. See \code{\link[mlr]{setPredictType}}.
 Default is "response".}
 
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -31,6 +31,11 @@ Print verbose output on console? Possible values are:\cr
 \code{1}: info output,\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
+
+\item{models}{[\code{logical(1)}]\cr
+This argument is passed to \code{\link[mlr]{benchmark}}. 
+Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
+Default is \code{TRUE}.}
 }
 \value{
 [\code{OMLMlrRun}], an \code{\link{OMLRun}}.
@@ -38,4 +43,3 @@ Default is set via \code{\link{setOMLConfig}}.}
 \description{
 Uses the ID of the run and tries to reproduce its results by downloading the flow and appling it to the respecitve task.
 }
-

@@ -7,10 +7,10 @@
 #'   The run that should be converted.
 #' @param measures [\code{character}]\cr
 #'   Character describing the measures (see \code{\link{listOMLEvaluationMeasures}})
-#'   that will be converted into mlr \code{\link[mlr]{measures}} and are then used in the \code{\link[mlr]{BenchmarkResult}}. 
+#'   that will be converted into mlr \code{\link[mlr]{measures}} and are then used in the \code{\link[mlr]{BenchmarkResult}}.
 #'   Currently, not all measures from OpenML can be converted into mlr measures.
 #' @param recompute [\code{logical(1)}]\cr
-#'   Shuld the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.
+#'   Should the measures be recomputed with mlr using the predictions? Currently recomputing is not supported.
 #' @return [\code{\link[mlr]{BenchmarkResult}}].
 #' @family run-related functions
 #' @export
@@ -19,33 +19,42 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   assertSubset(measures, choices = names(lookupMeasures()))
   # FIXME: allow that measures are recomputed with mlr using the predictions
   assertSubset(assertFlag(recompute), FALSE)
-  learners = makeLearner(gsub("\\(.*", "", run$flow.name))
-  task.id = paste0("OpenML-Task-", run$task.id)
+  
+  # FIXME: try to do this without downloading, if it is possible?
+  task = getOMLTask(run$task.id)
+  flow = getOMLFlow(run$flow.id)
+  flow.version = getFlowExternalVersion(flow)
+  
+  if (flow.version >= 2) {
+    learners = readRDS(flow$binary.path)
+  } else {
+    learners = mlr::makeLearner(gsub("\\(.*", "", run$flow.name))
+  }
+  
+  task.id = paste(task$input$data.set$desc$name, "task", task$task.id, sep = ".") #paste0("OpenML-Task-", run$task.id)
   # FIXME: why is there a flow_id column and where can we find the measures per fold values
   evals = run$output.data$evaluations
   missing.meas = measures[measures%nin%unique(evals$name)]
-  if (length(missing.meas) != 0) 
-    stopf("You requested the measures {'%s'}. However, only {'%s'} are available in the evaluations slot of the run.", 
-      collapse(missing.meas, "', '"), 
+  if (length(missing.meas) != 0)
+    stopf("You requested the measures {'%s'}. However, only {'%s'} are available in the evaluations slot of the run.",
+      collapse(missing.meas, "', '"),
       collapse(unique(evals$name), "', '"))
   runtime = evals$value[evals$name == "usercpu_time_millis"]
   
-  # FIXME: try to do this without downloading
-  task = getOMLTask(run$task.id)
   task = convertOMLTaskToMlr(task)
-  nclasses = length(task$mlr.task$task.desc$class.levels)
+  task.desc = getTaskDescription(task$mlr.task)
   
   pred = run$predictions
-  if(min(pred$fold) == 0) 
+  if(min(pred$fold) == 0)
     pred$fold = (pred$fold + 1)
-  if(min(pred[,"repeat"]) == 0) 
+  if(min(pred[,"repeat"]) == 0)
     pred[,"repeat"] = (pred[,"repeat"] + 1)
   
   # try to get predict.type based on "confidence." columns if values are intergish
-  pred.class = ifelse(run$task.type == "Supervised Classification", 
+  pred.class = ifelse(run$task.type == "Supervised Classification",
     "PredictionClassif", "PredictionRegr")
-  conf.cols = grepl("confidence", colnames(pred))
-  conf.cols.intergish = sapply(pred[,conf.cols], function(x) isTRUE(checkIntegerish(x)))
+  conf.cols = stri_detect_fixed(colnames(pred), "confidence")
+  conf.cols.intergish = vlapply(pred[, conf.cols, drop = FALSE], testIntegerish)
   if (all(!conf.cols.intergish) & pred.class == "PredictionClassif") {
     predict.type = "prob"
   } else predict.type = "response"
@@ -55,17 +64,21 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
     # get predictions based on predict.type
     if (predict.type == "prob" & pred.class == "PredictionClassif") {
       y = pred[,conf.cols]
-      colnames(y) = gsub("confidence[.]", "", colnames(y))
+      colnames(y) = stri_replace_all_fixed(colnames(y), "confidence.", "")
     } else y = pred$prediction
     
-    mlr:::makePrediction(task$mlr.task$task.desc, id = pred$row_id, 
+    mlr::makePrediction(task$mlr.task$task.desc, id = pred$row_id,
       truth = pred$truth, y = y, row.names = pred$row_id,
       predict.type = predict.type, time = runtime)
   })
-  pred.data = data.frame(rbindlist(lapply(prediction, function(x) x$data)), iter = 1:length(pred.split), set = "test")
+  
+  pred.data = lapply(prediction, function(x) x$data)
+  pred.data = pred.data[order(as.numeric(gsub(".*-", "", names(pred.data))))]
+  for(i in seq_along(pred.data)) pred.data[[i]]$iter = i
+  pred.data = data.frame(rbindlist(pred.data), set = "test")
   
   threshold = unique(lapply(prediction, function(x) x$threshold))
-  if(length(threshold) > 1) 
+  if(length(threshold) > 1)
     stopf("threshold must be a list of length 1")
   
   # FIXME: fix this for repeated CV and bootstrap
@@ -93,30 +106,40 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
       if (as.df) as.data.frame(t(ret)) else ret
     }
     iter.eval.split = rbindlist(lapply(iter.eval.split, getMeasureValue, measures = measures))
-    colnames(iter.eval.split) = unname(sapply(convertOMLMeasuresToMlr(colnames(iter.eval.split)), function(x) x$id))
-    ms.test = data.frame(iter = 1:nrow(iter.eval.split), as.data.frame(iter.eval.split))
+    colnames(iter.eval.split) = unname(vcapply(convertOMLMeasuresToMlr(colnames(iter.eval.split)), function(x) x$id))
+    ms.test = data.frame(iter = seq_row(iter.eval.split), iter.eval.split)
     
     #ms.train = subset(ms.test, select = -iter)
     #ms.train[!is.na(ms.train)] = NA
-    #ms.train = data.frame(iter = ms.test$iter, as.data.frame(ms.train))
+    ms.train = data.frame(iter = ms.test$iter, 
+      setColNames(matrix(NA, nrow = nrow(iter.eval.split), ncol = ncol(iter.eval.split)), colnames(iter.eval.split)))
     
     aggr = getMeasureValue(aggr.eval, measures = measures, as.df = FALSE)
-    names(aggr) = unname(sapply(convertOMLMeasuresToMlr(names(aggr)), function(x) x$id))
+    names(aggr) = unname(vcapply(convertOMLMeasuresToMlr(names(aggr)), function(x) x$id))
+  } else {
+    # FIXME: this is incomplete
+    #   ms.test.df = lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )
+    #   ms.test.df = do.call("rbind", ms.test.df)
+    #   ms.test.df = data.frame(iter = row.names(ms.test.df), setRowNames(ms.test.df, NULL))
+    #   ms.test.df$iter = as.integer(gsub(".*-", "", ms.test.df$iter))
+    #   ms.test.df = ms.test.df[order(ms.test.df$iter),]
+    #   aggr = rowMeans(as.data.frame(lapply(prediction, function(x) mlr::performance(x, lookupMeasures()[measures]) )))
   }
-
-  results = list(
+  
+  results = makeS3Obj(c("ResampleResult", "list"),
     learner.id = learners$id,
-      task.id = task.id,
-      measures.train = data.frame(),
-      measures.test = ms.test,
-      aggr = setNames(aggr, paste0(names(aggr), ".test.mean")),
-      pred = resamp.pred,
-      models = list(),
-      err.msgs = data.frame(),
-      extract = list(),
-      runtime = runtime,
-      learner = learners
-    )
+    task.id = task.id,
+    task.desc = task.desc,
+    measures.train = ms.train,
+    measures.test = ms.test,
+    aggr = setNames(aggr, paste0(names(aggr), ".test.mean")),
+    pred = resamp.pred,
+    models = list(),
+    err.msgs = data.frame(),
+    extract = list(),
+    runtime = runtime,
+    learner = learners
+  )
   
   results = setNames(list(setNames(list(results), learners$id)), task.id)
   
@@ -136,5 +159,5 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
 # convertOMLRunToBMR(run, mlr::auc)
 
 # convertOMLPredictionsToMlrPredictions = function(predictions) {
-#   
+#
 # }

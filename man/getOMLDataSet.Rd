@@ -4,11 +4,22 @@
 \alias{getOMLDataSet}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(did, cache.only = FALSE, verbosity = NULL)
+getOMLDataSet(data.id = NULL, data.name = NULL, data.version = NULL,
+  cache.only = FALSE, verbosity = NULL)
 }
 \arguments{
-\item{did}{[\code{integer(1)}]\cr
-Data set ID.}
+\item{data.id}{[\code{integer(1)}]\cr
+ID of the data set.}
+
+\item{data.name}{[\code{character(1)}]\cr
+Data set name.
+This is an alternative to \code{data.id}.
+Default is \code{NULL}.}
+
+\item{data.version}{[\code{integer(1)}]\cr
+Version number of the data set with name \code{data.name}.
+Default is \code{NULL}.
+Ignored if \code{data.id} is passed.}
 
 \item{cache.only}{[\code{logical(1)}]\cr
 Only try to retrieve the object from cache.
@@ -32,9 +43,12 @@ will be downloaded (if not in cache) and returned.
 Note that data splits and other task-related information are not included in
 an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask}}.
 }
+\note{
+One of \code{data.id} or \code{data.name} must be passed.
+}
 \examples{
 \dontrun{
-	dat = getOMLDataSet(did = 9)
+	dat = getOMLDataSet(data.id = 9)
 
 	# this object contains the data ($data)
 	# and meta information
@@ -43,6 +57,10 @@ an \code{\link{OMLDataSet}}. Tasks can be downloaded with \code{\link{getOMLTask
 }
 }
 \seealso{
+Other downloading functions: \code{\link{getOMLDataSetQualities}},
+  \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
+  \code{\link{getOMLTask}}
+
 Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},
   \code{\link{convertMlrTaskToOMLDataSet}},
@@ -51,9 +69,4 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{listOMLDataSets}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
-
-Other downloading functions: \code{\link{getOMLDataSetQualities}},
-  \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
-  \code{\link{getOMLTask}}
 }
-

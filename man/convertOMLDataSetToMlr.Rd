@@ -4,21 +4,28 @@
 \alias{convertOMLDataSetToMlr}
 \title{Convert an OpenML data set to mlr task.}
 \usage{
-convertOMLDataSetToMlr(obj, task.type = NULL,
-  target = obj$desc$default.target.attribute,
-  ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL)
+convertOMLDataSetToMlr(obj, mlr.task.id = "<oml.data.name>",
+  task.type = NULL, target = obj$desc$default.target.attribute,
+  ignore.flagged.attributes = TRUE, drop.levels = TRUE,
+  fix.colnames = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLDataSet}}]\cr
 The object that should be converted.}
+
+\item{mlr.task.id}{[\code{character(1)}]\cr
+Id string for \code{\link[mlr]{Task}} object.
+The strings \code{<oml.data.name>}, \code{<oml.data.id>} and \code{<oml.data.version>}
+will be replaced by their respective values contained in the \code{\link{OMLDataSet}} object.
+Default is \code{<oml.data.name>}.}
 
 \item{task.type}{[\code{character(1)}]\cr
 As we only pass the data set, we need to define the task type manually.
 Possible are: \dQuote{Supervised Classification}, \dQuote{Supervised Regression},
 \dQuote{Survival Analysis}.
 Default is \code{NULL} which means to guess it from the target column in the
-data set. If that is a factor, we choose classification. If it is numeric we
-choose regression. In all other cases an error is thrown.}
+data set. If that is a factor or a logical, we choose classification.
+If it is numeric we choose regression. In all other cases an error is thrown.}
 
 \item{target}{[\code{character}]\cr
 The target for the classification/regression task.
@@ -31,6 +38,10 @@ Default is \code{TRUE}.}
 
 \item{drop.levels}{[\code{logical(1)}]\cr
 Should empty factor levels be dropped in the data?
+Default is \code{TRUE}.}
+
+\item{fix.colnames}{[\code{logical(1)}]\cr
+Should colnames of the data be fixed using \code{\link[base]{make.names}}?
 Default is \code{TRUE}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -49,7 +60,7 @@ Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 \examples{
 \dontrun{
 	library("mlr")
-	autosOML = getOMLDataSet(did = 9)
+	autosOML = getOMLDataSet(data.id = 9)
 	autosMlr = convertOMLDataSetToMlr(autosOML)
 }
 }
@@ -63,4 +74,3 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
-

@@ -2,10 +2,11 @@
 % Please edit documentation in R/runTaskMlr.R
 \name{runTaskMlr}
 \alias{runTaskMlr}
+\alias{OMLMlrRun}
 \title{Run mlr learner on OpenML task.}
 \usage{
-runTaskMlr(task, learner, verbosity = NULL, seed = 1,
-  scimark.vector = NULL, ...)
+runTaskMlr(task, learner, measures = NULL, verbosity = NULL, seed = 1,
+  scimark.vector = NULL, models = TRUE, ...)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr
@@ -13,6 +14,9 @@ An OpenML task.}
 
 \item{learner}{[\code{\link[mlr]{Learner}}]\cr
 Learner from package mlr to run the task.}
+
+\item{measures}{[\code{\link[mlr]{Measure}}]\cr
+Additional measures that should be computed.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -29,6 +33,11 @@ Default is \code{1} and sets the seed using \code{set.seed(1)}.}
 Optional vector of performance measurements computed by the scientific SciMark
 benchmark. May be computed using the \pkg{rscimark} R package.
 Default is \code{NULL}, which means no performance measurements.}
+
+\item{models}{[\code{logical(1)}]\cr
+This argument is passed to \code{\link[mlr]{benchmark}}. 
+Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
+Default is \code{TRUE}.}
 
 \item{...}{[any]\cr
 Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.}
@@ -58,4 +67,3 @@ Run task with a specified learner from \pkg{mlr} and produce predictions.
 \seealso{
 \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}
 }
-

@@ -20,7 +20,7 @@ Verbosity level. Possible values are 0 (normal output), 1 (info output),
 Your OpenML API key. Log in to OpenML, move to your profile to get it.}
 
 \item{cachedir}{[\code{character(1)}]\cr
-Path the the cache directory.}
+Path to the cache directory.}
 
 \item{arff.reader}{[\code{character(1)}]\cr
 Name of the package which should be used to parse arff files. Possible are
@@ -43,4 +43,3 @@ Other config: \code{\link{configuration}},
   \code{\link{getOMLConfig}}, \code{\link{loadOMLConfig}},
   \code{\link{setOMLConfig}}
 }
-

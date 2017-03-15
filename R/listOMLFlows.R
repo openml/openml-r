@@ -1,28 +1,25 @@
-.listOMLFlows = function(verbosity = NULL, tag = NULL) {
-  api.call = "flow/list"
-  if (!is.null(tag)) {
-    assertString(tag, na.ok = FALSE)
-    api.call = collapse(c(api.call, "tag", tag), sep = "/")
-  }
-  content = try(doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET"))
-  if (is.error(content)) {
-    return(data.frame())
-  }
+.listOMLFlows = function(tag = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
+  api.call = generateAPICall("json/flow/list", tag = tag, limit = limit, offset = offset)
 
-  xml = parseXMLResponse(content, "Getting flows", "flows", as.text = TRUE)
+  content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 
-  blocks = xmlChildren(xmlChildren(xml)[[1L]])
-  as.data.frame(rbindlist(lapply(blocks, function(node) {
-    children = xmlChildren(node)
-    list(
-      flow.id = as.integer(xmlValue(children[["id"]])),
-      full.name = xmlValue(children[["full_name"]]),
-      name = xmlValue(children[["name"]]),
-      version = as.integer(xmlValue(children[["version"]])),
-      external.version = xmlValue(children[["external_version"]]),
-      uploader = as.integer(xmlValue(children[["uploader"]]))
-    )
-  }), fill = TRUE))
+  flows = fromJSON(txt = content)$flows$flow
+
+  # type conversions
+  flows$id = as.integer(flows$id)
+  flows$version = as.integer(flows$version)
+  flows$uploader = as.integer(flows$uploader)
+  flows$tags = vcapply(flows$tags, function(x) collapse(x, ", "))
+
+  # for some reason external_version is NOT atomic
+  # Unfortunately unlist() drops character(0) entries!
+  # -> ugly workaround: replace with "" -.-
+  flows$external_version[lengths(flows$external_version) == 0L] = ""
+  flows$external_version = unlist(flows$external_version)
+
+  names(flows) = convertNamesOMLToR(names(flows))
+  names(flows) = gsub("^id$", "flow.id", names(flows))
+  return(flows)
 }
 
 #' @title List all registered OpenML flows.
@@ -35,8 +32,10 @@
 #'
 #' @template note_memoise
 #'
-#' @template arg_verbosity
 #' @template arg_tag
+#' @template arg_limit
+#' @template arg_offset
+#' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @family flow-related functions

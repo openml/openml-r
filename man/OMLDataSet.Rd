@@ -5,7 +5,8 @@
 \alias{makeOMLDataSet}
 \title{OMLDataSet.}
 \usage{
-makeOMLDataSet(desc, data, colnames.old, colnames.new, target.features)
+makeOMLDataSet(desc, data, colnames.old = colnames(data),
+  colnames.new = colnames(data), target.features)
 }
 \arguments{
 \item{desc}{[\code{OMLDataSetDescription}]\cr
@@ -78,4 +79,3 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
-

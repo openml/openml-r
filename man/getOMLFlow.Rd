@@ -40,9 +40,9 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLRun}},
   \code{\link{getOMLTask}}
 
-Other flow-related functions: \code{\link{deleteOMLObject}},
+Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
+  \code{\link{deleteOMLObject}},
   \code{\link{listOMLFlows}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }
-
