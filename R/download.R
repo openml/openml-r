@@ -66,7 +66,7 @@ doAPICall = function(api.call, id = NULL,
 # OpenML backend.
 buildRequestURL = function(server, api.call, id, url.args, ...) {
   # occasionally we need to pass a single API arg, such as the data id, additionally
-  id = if (!is.null(id)) paste0("/", id) else ""
+  id = if (!is.null(id)) stri_paste("/", id) else ""
 
   #url.args$api_key = conf$apikey
   url.args = collapseNamedList(url.args)
@@ -83,7 +83,7 @@ buildRequestURL = function(server, api.call, id, url.args, ...) {
 # Helper function to transform named list to HTTP query string.
 # E.g. list(x = 123, y = openml) to x=123&y=openml.
 collapseNamedList = function(args, sep = "=", collapse = "&") {
-  collapse(paste(names(args), args, sep = sep), collapse)
+  stri_paste(names(args), args, sep = sep, collapse = collapse)
 }
 
 # Helper function to do HTTP request.
