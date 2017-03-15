@@ -12,7 +12,7 @@
 
 <meta name="author" content="The OpenML R Team" />
 
-<meta name="date" content="2016-11-11" />
+<meta name="date" content="2017-03-15" />
 
 <title>OpenML</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">OpenML</h1>
 <h4 class="author"><em>The OpenML R Team</em></h4>
-<h4 class="date"><em>2016-11-11</em></h4>
+<h4 class="date"><em>2017-03-15</em></h4>
 
 
 
@@ -123,10 +123,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server. For detailed information on OpenML terminology (task, run, etc.) see the <a href="http://www.openml.org/guide">OpenML guide</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;OpenML&quot;</span>)
 ## temporarily set API key to read only key
-<span class="kw">setOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>, <span class="dt">server =</span> <span class="st">&quot;http://test.openml.org/api/v1&quot;</span>)</code></pre></div>
+<span class="kw">setOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
 <pre><code>## OpenML configuration:
-##   server           : http://test.openml.org/api/v1
-##   cachedir         : L:\GitRepository\openml-r/tests/cache
+##   server           : https://www.openml.org/api/v1
+##   cachedir         : L:\Users\Admin2\AppData\Local\Temp\RtmpEj45Ot\file2cc4361a6ab4
 ##   verbosity        : 0
 ##   arff.reader      : RWeka
 ##   confirm.upload   : FALSE
@@ -139,7 +139,7 @@ task</code></pre></div>
 ##   Task Type            : Supervised Classification
 ##   Data Set             : anneal :: (Version = 2, OpenML ID = 1)
 ##   Target Feature(s)    : class
-##   Tags                 : basic, study_1, study_7, under100k, under1m
+##   Tags                 : basic, study_1, study_7, testtag, under100k, under1m
 ##   Estimation Procedure : Stratified crossvalidation (1 x 10 folds)
 ##   Evaluation Measure(s): predictive_accuracy</code></pre>
 <p>The task contains information on the following:</p>
@@ -150,7 +150,7 @@ task</code></pre></div>
 <li>tags: tags / labels, which might be helpful for further sub-selections</li>
 <li>estimation procedure: which estimation procedure has been used when computing the performance</li>
 </ul>
-<p>In the next line, <code>randomForest</code> is used as a classifier and run with the help of the <a href="https://github.com/mlr-org/mlr"><code>mlr package</code></a>. Note that one needs to run the algorithm locally and that <code>mlr</code> will automatically download the package that is needed to run the specified classifier.</p>
+<p>In the next line, <code>randomForest</code> is used as a classifier and run with the help of the <a href="https://github.com/mlr-org/mlr"><code>mlr package</code></a>. Note that one needs to run the algorithm locally and that <code>mlr</code> will automatically load the package that is needed to run the specified classifier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the classifier (usually called &quot;flow&quot; within OpenML)</span>
 <span class="kw">library</span>(<span class="st">&quot;mlr&quot;</span>)
 lrn =<span class="st"> </span><span class="kw">makeLearner</span>(<span class="st">&quot;classif.randomForest&quot;</span>)
@@ -168,18 +168,23 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 </div>
 <div id="config" class="section level2">
 <h2>Configuration</h2>
+<p>Interacting with the OpenML server requires an API key. For <em>demonstration purposes</em>, we have created a <em>public read-only API key</em> (<code>&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</code>), which will be used in this tutorial to make the examples executable. However, for a full-fledged usage of the <code>OpenML</code> package, you need your personal API.</p>
 <div id="personalapikey" class="section level3">
 <h3>Generating your own personal API key</h3>
-<p>The first step of working with OpenML should be to register yourself at the <a href="http://www.openml.org">OpenML website</a>. Most of the package’s functions require an API authentication key, which is only accessible with a (free) account. In order to receive your own API key</p>
+<p>In order to receive your own API key</p>
 <ul>
-<li>go to the <a href="http://www.openml.org">OpenML website</a> and log into your account</li>
-<li>then go to <a href="http://www.openml.org/u#!api" class="uri">http://www.openml.org/u#!api</a>.</li>
+<li>register a (free) account at the <a href="http://www.openml.org">OpenML website</a>,</li>
+<li>log in and go to <a href="http://www.openml.org/u#!api" class="uri">http://www.openml.org/u#!api</a>.</li>
 </ul>
-<p>For <em>demonstration purposes</em>, we have created a <em>public read-only API key</em> (<code>&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</code>), which will be used in the following to make the examples executable.</p>
 </div>
-<div id="permanentconfig" class="section level3">
-<h3>Permanently setting configuration</h3>
-<p>After registering, you can <a href="#createconfig">create a configuration file</a>. The <code>config</code> file may contain the following information:</p>
+<div id="settingconfig" class="section level3">
+<h3>Setting your configuration</h3>
+<p>You can set your own OpenML configuration either just temporarily for the current R session via <code>setOMLConfig</code> or permanently via <code>saveOMLConfig</code>. In order to create a permanent configuration file using default values and at the same time setting your personal API key, run</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
+<p>where <code>&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</code> should be replaced with <a href="#personalapikey"><em>your personal API key</em></a>. It is noteworthy that basically everybody who has access to your computer can read the configuration file and thus see your API key. With your API key other users have full access to your account via the API, so please handle it with care!</p>
+<p>It is also possible to manually create a file <code>~/.openml/config</code> in your home directory – you can use the R command <code>path.expand(&quot;~/.openml/config&quot;)</code> to get the full path to the configuration file on the operating system. The <code>config</code> file consists of <code>key = value</code> pairs, note that the values are not quoted. An exemplary minimal <code>config</code> file might look as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f</code></pre></div>
+<p>The <code>config</code> file may contain the following information:</p>
 <ul>
 <li><code>server</code>:
 <ul>
@@ -211,30 +216,16 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>required to access the server</li>
 </ul></li>
 </ul>
-<p>The configuration file is <em>not mandatory</em>. Yet, permanently setting your API key via a <code>config</code> file is recommended, as this key is required to access the OpenML server. However, it is noteworthy that basically everybody who has access to your computer can read the configuration file and thus see your API key. With your API key other users have full access to your account via the API, so please handle it with care!</p>
-<p>The configuration file and some related things are also explained in the <a href="https://github.com/openml/OpenML/wiki/Client-API">OpenML Wiki</a>.</p>
-</div>
-<div id="createconfig" class="section level3">
-<h3>Creating the configuration file in R</h3>
-<p>To set up your OpenML configuration, you can either use <code>setOMLConfig</code> or <code>saveOMLConfig</code>. The difference between those two commands is that <code>setOMLConfig</code> sets your configuration temporarily for the current R session, whereas <code>saveOMLConfig</code> saves the configuration permanently. In order to create a permanent configuration file using default values and at the same time setting your personal API key, run</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">saveOMLConfig</span>(<span class="dt">apikey =</span> <span class="st">&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</span>)</code></pre></div>
-<p>where <code>&quot;c1994bdb7ecb3c6f3c8f3b35f4b47f1f&quot;</code> should be replaced with <a href="#personalapikey"><em>your personal API key</em></a>.</p>
-</div>
-<div id="manually-creating-the-configuration-file" class="section level3">
-<h3>Manually creating the configuration file</h3>
-<p>It is also possible to manually create a file <code>~/.openml/config</code> in your home directory – one can use the R command <code>path.expand(&quot;~/.openml/config&quot;)</code> to get the full path to the configuration file on the operating system. The <code>config</code> file consists of <code>key = value</code> pairs. An exemplary minimal <code>config</code> file might look as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">apikey=c1994bdb7ecb3c6f3c8f3b35f4b47f1f</code></pre></div>
-<p>Note that the values are not quoted.</p>
-<p>If one manually modifies the <code>config</code> file, one needs to reload the modified <code>config</code> file to the current R session using <code>loadOMLConfig()</code>. You can query the current configuration using</p>
+<p>If you manually modify the <code>config</code> file, you need to reload the modified <code>config</code> file to the current R session using <code>loadOMLConfig()</code>. You can query the current configuration using</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getOMLConfig</span>()</code></pre></div>
 <pre><code>## OpenML configuration:
-##   server           : http://test.openml.org/api/v1
-##   cachedir         : L:\GitRepository\openml-r/tests/cache
+##   server           : https://www.openml.org/api/v1
+##   cachedir         : L:\Users\Admin2\AppData\Local\Temp\RtmpEj45Ot\file2cc4361a6ab4
 ##   verbosity        : 0
 ##   arff.reader      : RWeka
 ##   confirm.upload   : FALSE
 ##   apikey           : ***************************47f1f</code></pre>
-<p>As you can see, the configuration file lists the five items <code>server</code>, <code>cachedir</code>, <code>verbosity</code>, <code>arff.reader</code> and <code>apikey</code> that were listed in the <a href="#permanentconfig">beginning of this paragraph</a>.</p>
+<p>The configuration file and some related things are also explained in the <a href="https://github.com/openml/OpenML/wiki/Client-API">OpenML Wiki</a>.</p>
 <p>Once the config file is set up, you are <strong>ready to go</strong>!</p>
 </div>
 </div>
@@ -251,7 +242,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>task types</li>
 </ul>
 <p>For each of these objects, we have a function to query the information, beginning with <code>listOML</code>. All of these functions return a <code>data.frame</code>, even in case the result consists of a single column or has zero observations (i.e., rows).</p>
-<p>One should be aware of the fact that the <code>listOML*</code> functions only list information on the corresponding objects – they do not download the respective objects. Information on actually downloading specific objects is covered in the <a href="#download">next section</a>.</p>
+<p>Note that the <code>listOML*</code> functions only list information on the corresponding objects – they do not download the respective objects. Information on actually downloading specific objects is covered in the <a href="#download">next section</a>.</p>
 <div id="listdata" class="section level3">
 <h3>List data sets</h3>
 <p>To browse the OpenML data base for appropriate data sets, you can use <code>listOMLDataSets()</code> in order to get basic data characteristics (number of features, instances, classes, missing values, etc.) for each data set. By default, <code>listOMLDataSets()</code> returns only data sets that have an active status on OpenML:</p>
@@ -265,24 +256,23 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>etc.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(datasets)</code></pre></div>
-<pre><code>## 'data.frame':    2417 obs. of  17 variables:
+<pre><code>## 'data.frame':    5000 obs. of  16 variables:
 ##  $ data.id                                : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ name                                   : chr  &quot;anneal&quot; &quot;anneal&quot; &quot;kr-vs-kp&quot; &quot;labor&quot; ...
 ##  $ version                                : int  2 1 1 1 1 1 1 1 1 1 ...
 ##  $ status                                 : chr  &quot;active&quot; &quot;active&quot; &quot;active&quot; &quot;active&quot; ...
 ##  $ format                                 : chr  &quot;ARFF&quot; &quot;ARFF&quot; &quot;ARFF&quot; &quot;ARFF&quot; ...
-##  $ tags                                   : chr  &quot;1, capacapa, hallo, hallo1, joaquin, new_test, study_1, study_7, t1, test, test_base_tagOMLObject1, test_base_tagOMLObject2, uc&quot;| __truncated__ &quot;hallo, study_1, uci, welt&quot; &quot;hallo, study_1, study_7, uci, welt&quot; &quot;study_1, uci&quot; ...
-##  $ majority.class.size                    : int  684 684 1669 37 245 813 57 NA 67 81 ...
+##  $ tags                                   : chr  &quot;study_1, study_7, uci&quot; &quot;study_1, study_14, study_34, uci&quot; &quot;mythbusting_1, study_1, study_14, study_15, study_20, study_34, study_7, uci&quot; &quot;mythbusting_1, study_1, study_15, study_20, uci&quot; ...
+##  $ majority.class.size                    : int  684 684 1669 37 245 813 57 -1 67 81 ...
 ##  $ max.nominal.att.distinct.values        : int  10 9 3 3 2 -1 6 -1 22 8 ...
-##  $ minority.class.size                    : int  0 0 1527 20 0 734 1 NA 0 2 ...
-##  $ num.binary.atts                        : int  14 7 34 3 73 0 61 0 4 9 ...
-##  $ number.of.classes                      : int  6 6 2 2 16 26 24 NA 7 4 ...
+##  $ minority.class.size                    : int  0 0 1527 20 0 734 1 -1 0 2 ...
+##  $ number.of.classes                      : int  6 6 2 2 16 26 24 -1 7 4 ...
 ##  $ number.of.features                     : int  39 39 37 17 280 17 70 7 26 19 ...
 ##  $ number.of.instances                    : int  898 898 3196 57 452 20000 226 345 205 148 ...
 ##  $ number.of.instances.with.missing.values: int  0 898 0 56 384 0 222 0 46 0 ...
 ##  $ number.of.missing.values               : int  0 22175 0 326 408 0 317 0 59 0 ...
 ##  $ number.of.numeric.features             : int  6 6 0 8 206 16 0 6 15 3 ...
-##  $ number.of.symbolic.features            : int  32 32 36 8 73 0 69 1 10 15 ...</code></pre>
+##  $ number.of.symbolic.features            : int  33 33 37 9 74 1 70 1 11 16 ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(datasets[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
 <pre><code>##   data.id       name version status format
 ## 1       1     anneal       2 active   ARFF
@@ -293,24 +283,27 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ## 6       6     letter       1 active   ARFF</code></pre>
 <p>To find a specific data set, you can now query the resulting <code>datasets</code> object. Suppose we want to find the <code>iris</code> data set.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(datasets, name ==<span class="st"> &quot;iris&quot;</span>)</code></pre></div>
-<pre><code>##     data.id name version status format                           tags
-## 55       61 iris       1 active   ARFF study_1, study_4, study_7, uci
-## 821     969 iris       3 active   ARFF               study_1, study_7
+<pre><code>##     data.id name version status format
+## 55       61 iris       1 active   ARFF
+## 820     969 iris       3 active   ARFF
+##                                                    tags
+## 55             study_1, study_25, study_4, study_7, uci
+## 820 mythbusting_1, study_1, study_15, study_20, study_7
 ##     majority.class.size max.nominal.att.distinct.values
 ## 55                   50                              -1
-## 821                 100                              -1
-##     minority.class.size num.binary.atts number.of.classes
-## 55                   50               0                 3
-## 821                  50               0                 2
-##     number.of.features number.of.instances
-## 55                   5                 150
-## 821                  5                 150
-##     number.of.instances.with.missing.values number.of.missing.values
-## 55                                        0                        0
-## 821                                       0                        0
-##     number.of.numeric.features number.of.symbolic.features
-## 55                           4                           0
-## 821                          4                           0</code></pre>
+## 820                 100                              -1
+##     minority.class.size number.of.classes number.of.features
+## 55                   50                 3                  5
+## 820                  50                 2                  5
+##     number.of.instances number.of.instances.with.missing.values
+## 55                  150                                       0
+## 820                 150                                       0
+##     number.of.missing.values number.of.numeric.features
+## 55                         0                          4
+## 820                        0                          4
+##     number.of.symbolic.features
+## 55                            1
+## 820                           1</code></pre>
 <p>As you can see, there are two data sets called <code>iris</code>. We want to use the <em>original</em> data set with three classes, which is stored under the data set ID (<code>data.id</code>) 61. You can also have a closer look at the data set on the corresponding OpenML web page (<a href="http://openml.org/d/61" class="uri">http://openml.org/d/61</a>).</p>
 </div>
 <div id="list-tasks" class="section level3">
@@ -337,7 +330,7 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <li>the <code>evaluation.measures</code> used for measuring the performance of the <a href="#flows">learner / flow</a> on the task</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(tasks)</code></pre></div>
-<pre><code>## 'data.frame':    5000 obs. of  26 variables:
+<pre><code>## 'data.frame':    4998 obs. of  26 variables:
 ##  $ task.id                                : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ task.type                              : chr  &quot;Supervised Classification&quot; &quot;Supervised Classification&quot; &quot;Supervised Classification&quot; &quot;Supervised Classification&quot; ...
 ##  $ data.id                                : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -352,18 +345,18 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ##  $ target.feature.event                   : chr  NA NA NA NA ...
 ##  $ target.feature.left                    : chr  NA NA NA NA ...
 ##  $ target.feature.right                   : chr  NA NA NA NA ...
-##  $ tags                                   : chr  &quot;basic, study_1, study_7, under100k, under1m&quot; &quot;at2, basic, study_1, under100k&quot; &quot;at2, basic, mythbusting, mythbusting_1, study_1, study_7, under100k, under1m&quot; &quot;basic, mythbusting, mythbusting_1, study_1, under100k, under1m&quot; ...
-##  $ majority.class.size                    : int  684 684 1669 37 245 813 57 NA 67 81 ...
+##  $ quality.measure                        : chr  NA NA NA NA ...
+##  $ tags                                   : chr  &quot;basic, study_1, study_7, testtag, under100k, under1m&quot; &quot;at2, basic, study_1, study_14, under100k&quot; &quot;at2, basic, mythbusting, mythbusting_1, study_1, study_14, study_15, study_20, study_7, under100k, under1m&quot; &quot;basic, mythbusting, mythbusting_1, study_1, study_15, study_20, under100k, under1m&quot; ...
+##  $ majority.class.size                    : int  684 684 1669 37 245 813 57 -1 67 81 ...
 ##  $ max.nominal.att.distinct.values        : int  10 9 3 3 2 -1 6 -1 22 8 ...
-##  $ minority.class.size                    : int  0 0 1527 20 0 734 1 NA 0 2 ...
-##  $ num.binary.atts                        : int  14 7 34 3 73 0 61 0 4 9 ...
-##  $ number.of.classes                      : int  6 6 2 2 16 26 24 NA 7 4 ...
+##  $ minority.class.size                    : int  0 0 1527 20 0 734 1 -1 0 2 ...
+##  $ number.of.classes                      : int  6 6 2 2 16 26 24 -1 7 4 ...
 ##  $ number.of.features                     : int  39 39 37 17 280 17 70 7 26 19 ...
 ##  $ number.of.instances                    : int  898 898 3196 57 452 20000 226 345 205 148 ...
 ##  $ number.of.instances.with.missing.values: int  0 898 0 56 384 0 222 0 46 0 ...
 ##  $ number.of.missing.values               : int  0 22175 0 326 408 0 317 0 59 0 ...
 ##  $ number.of.numeric.features             : int  6 6 0 8 206 16 0 6 15 3 ...
-##  $ number.of.symbolic.features            : int  32 32 36 8 73 0 69 1 10 15 ...</code></pre>
+##  $ number.of.symbolic.features            : int  33 33 37 9 74 1 70 1 11 16 ...</code></pre>
 <p>For some data sets, there may be more than one task available on the OpenML server. For example, one can look for <code>&quot;Supervised Classification&quot;</code> tasks that are available for data set 61 via</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">subset</span>(tasks, task.type ==<span class="st"> &quot;Supervised Classification&quot;</span> &amp;<span class="st"> </span>data.id ==<span class="st"> </span>61L)[, <span class="dv">1</span>:<span class="dv">5</span>])</code></pre></div>
 <pre><code>##      task.id                 task.type data.id name status
@@ -372,14 +365,14 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 ## 442     1823 Supervised Classification      61 iris active
 ## 551     1939 Supervised Classification      61 iris active
 ## 598     1992 Supervised Classification      61 iris active
-## 4445    7306 Supervised Classification      61 iris active</code></pre>
+## 3400    7306 Supervised Classification      61 iris active</code></pre>
 </div>
 <div id="flows" class="section level3">
 <h3>List flows</h3>
 <p>A flow is the definition and implementation of a specific algorithm workflow or script, i.e., a flow is essentially the code / implementation of the algorithm.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flows =<span class="st"> </span><span class="kw">listOMLFlows</span>()
 <span class="kw">str</span>(flows)</code></pre></div>
-<pre><code>## 'data.frame':    4235 obs. of  7 variables:
+<pre><code>## 'data.frame':    3305 obs. of  7 variables:
 ##  $ flow.id         : int  1 2 3 4 5 6 7 8 9 10 ...
 ##  $ full.name       : chr  &quot;openml.evaluation.EuclideanDistance(1.0)&quot; &quot;openml.evaluation.PolynomialKernel(1.0)&quot; &quot;openml.evaluation.RBFKernel(1.0)&quot; &quot;openml.evaluation.area_under_roc_curve(1.0)&quot; ...
 ##  $ name            : chr  &quot;openml.evaluation.EuclideanDistance&quot; &quot;openml.evaluation.PolynomialKernel&quot; &quot;openml.evaluation.RBFKernel&quot; &quot;openml.evaluation.area_under_roc_curve&quot; ...
@@ -413,12 +406,15 @@ run.id =<span class="st"> </span><span class="kw">uploadOMLRun</span>(run.mlr)</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># one of the IDs (here: task.id) must be supplied</span>
 run.results =<span class="st"> </span><span class="kw">listOMLRunEvaluations</span>(<span class="dt">task.id =</span> 59L)
 <span class="kw">str</span>(run.results)</code></pre></div>
-<pre><code>## 'data.frame':    2511 obs. of  36 variables:
+<pre><code>## 'data.frame':    2458 obs. of  31 variables:
 ##  $ run.id                       : int  81 161 234 447 473 491 550 6088 6157 6158 ...
 ##  $ task.id                      : int  59 59 59 59 59 59 59 59 59 59 ...
 ##  $ setup.id                     : int  12 13 1 6 18 7 16 11 12 3 ...
 ##  $ flow.id                      : int  67 70 56 61 77 62 75 66 67 58 ...
 ##  $ flow.name                    : chr  &quot;weka.BayesNet_K2(1)&quot; &quot;weka.SMO_PolyKernel(1)&quot; &quot;weka.ZeroR(1)&quot; &quot;weka.REPTree(1)&quot; ...
+##  $ flow.version                 : chr  &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; ...
+##  $ flow.source                  : chr  &quot;weka&quot; &quot;weka&quot; &quot;weka&quot; &quot;weka&quot; ...
+##  $ learner.name                 : chr  &quot;BayesNet_K2&quot; &quot;SMO_PolyKernel&quot; &quot;ZeroR&quot; &quot;REPTree&quot; ...
 ##  $ data.name                    : chr  &quot;iris&quot; &quot;iris&quot; &quot;iris&quot; &quot;iris&quot; ...
 ##  $ upload.time                  : chr  &quot;2014-04-07 00:05:11&quot; &quot;2014-04-07 00:55:32&quot; &quot;2014-04-07 01:33:24&quot; &quot;2014-04-07 06:26:27&quot; ...
 ##  $ area.under.roc.curve         : num  0.983 0.977 0.5 0.967 0.978 ...
@@ -441,15 +437,7 @@ run.results =<span class="st"> </span><span class="kw">listOMLRunEvaluations</sp
 ##  $ total.cost                   : num  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ usercpu.time.millis          : num  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ usercpu.time.millis.testing  : num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ usercpu.time.millis.training : num  NA NA NA NA NA NA NA NA NA NA ...
-##  $ area.under.roc.curve.array   : chr  &quot;1,0.975,0.9744&quot; &quot;1,0.96,0.9704&quot; &quot;0.5,0.5,0.5&quot; &quot;1,0.9481,0.9531&quot; ...
-##  $ confusion.matrix.array       : chr  &quot;50,0,0,0,46,4,0,5,45&quot; &quot;50,0,0,0,48,2,0,4,46&quot; &quot;50,0,0,50,0,0,50,0,0&quot; &quot;50,0,0,0,44,6,0,5,45&quot; ...
-##  $ f.measure.array              : chr  &quot;1,0.910891,0.909091&quot; &quot;1,0.941176,0.938776&quot; &quot;0.5,0,0&quot; &quot;1,0.888889,0.891089&quot; ...
-##  $ number.of.instances.array    : chr  &quot;50,50,50&quot; &quot;50,50,50&quot; &quot;50,50,50&quot; &quot;50,50,50&quot; ...
-##  $ os.information.array         : chr  NA NA NA NA ...
-##  $ precision.array              : chr  &quot;1,0.901961,0.918367&quot; &quot;1,0.923077,0.958333&quot; &quot;0.333333,0,0&quot; &quot;1,0.897959,0.882353&quot; ...
-##  $ recall.array                 : chr  &quot;1,0.92,0.9&quot; &quot;1,0.96,0.92&quot; &quot;1,0,0&quot; &quot;1,0.88,0.9&quot; ...
-##  $ scimark.benchmark.array      : chr  NA NA NA NA ...</code></pre>
+##  $ usercpu.time.millis.training : num  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
 </div>
 <div id="list-evaluation-measures-and-task-types" class="section level3">
 <h3>List evaluation measures and task types</h3>
@@ -520,11 +508,11 @@ flow</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">task.list =<span class="st"> </span><span class="kw">listOMLRuns</span>(<span class="dt">task.id =</span> 59L)
 task.list[<span class="dv">281</span>:<span class="dv">285</span>, ]</code></pre></div>
 <pre><code>##     run.id task.id setup.id flow.id uploader error.message tags
-## 281  14926      59      271     185       17          &lt;NA&gt;     
-## 282  14927      59      272     185       17          &lt;NA&gt;     
-## 283  14928      59      273     185       17          &lt;NA&gt;     
-## 284  14929      59      274     185       17          &lt;NA&gt;     
-## 285  14930      59      275     185       17          &lt;NA&gt;</code></pre>
+## 281  14926      59      271     185        2          &lt;NA&gt;     
+## 282  14927      59      272     185        2          &lt;NA&gt;     
+## 283  14928      59      273     185        2          &lt;NA&gt;     
+## 284  14929      59      274     185        2          &lt;NA&gt;     
+## 285  14930      59      275     185        2          &lt;NA&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run =<span class="st"> </span><span class="kw">getOMLRun</span>(<span class="dt">run.id =</span> 524027L)
 run</code></pre></div>
 <pre><code>## 
@@ -547,8 +535,10 @@ run</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">run$input.data</code></pre></div>
 <pre><code>## 
 ## ** Data Sets **
-##   data.id name                                                         url
-## 1      61 iris http://www.openml.org/data/download/61/dataset_61_iris.arff
+##   data.id name
+## 1      61 iris
+##                                                            url
+## 1 https://www.openml.org/data/download/61/dataset_61_iris.arff
 ## 
 ## ** Files **
 ## data frame with 0 columns and 0 rows
@@ -611,15 +601,15 @@ run.mlr</code></pre></div>
 ## 
 ## $bmr
 ##   task.id    learner.id acc.test.join timetrain.test.sum
-## 1    iris classif.rpart          0.94               0.05
+## 1    iris classif.rpart          0.94               0.04
 ##   timepredict.test.sum
-## 1                 0.04
+## 1                 0.02
 ## 
 ## $flow
 ## 
 ## Flow &quot;mlr.classif.rpart&quot; :: (Version = NA, Flow ID = NA)
 ##  External Version         : R_3.3.2-v2.2b256c3
-##  Dependencies             : R_3.3.2, OpenML_1.0, mlr_2.10, rpart_4.1.10
+##  Dependencies             : R_3.3.2, OpenML_1.3, mlr_2.11, rpart_4.1.10
 ##  Number of Flow Parameters: 13
 ##  Number of Flow Components: 0
 ## 
@@ -637,15 +627,13 @@ run.mlr</code></pre></div>
 <p>The following section gives an overview on how one can contribute building blocks (i.e. data sets, flows and runs) to the OpenML server.</p>
 <div id="upload-a-data-set" class="section level3">
 <h3>Upload a data set</h3>
-<p>A data set contains information that can be stored on OpenML and used by OpenML tasks and runs. In this example, a very simple data set is taken from R, converted to an OpenML data set and afterwards uploaded to the server. The corresponding workflow of uploading a data set consists of the following three steps:</p>
+<p>A data set contains information that can be stored on OpenML and used by OpenML tasks and runs. This example shows how a very simple data set can be taken from R, converted to an OpenML data set and afterwards uploaded to the server. The corresponding workflow consists of the following three steps:</p>
 <ol style="list-style-type: decimal">
 <li><code>makeOMLDataSetDescription</code>: create the description object of an OpenML data set</li>
 <li><code>makeOMLDataSet</code>: convert the data set into an OpenML data set</li>
 <li><code>uploadOMLDataSet</code>: upload the data set to the server</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## This is simple data set, which is generally already available in R.
-## Please DO NOT upload it to the server!
-<span class="kw">data</span>(<span class="st">&quot;airquality&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;airquality&quot;</span>)
 dsc =<span class="st"> &quot;Daily air quality measurements in New York, May to September 1973.</span>
 <span class="st">  This data is taken from R.&quot;</span>
 cit =<span class="st"> &quot;Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)</span>
@@ -672,8 +660,11 @@ air.data =<span class="st"> </span><span class="kw">makeOMLDataSet</span>(<span 
   <span class="dt">target.features =</span> <span class="st">&quot;Ozone&quot;</span>)
 
 ## (3) Upload the OpenML data set to the server
-dataset.id =<span class="st"> </span><span class="kw">uploadOMLDataSet</span>(air.data)
-dataset.id</code></pre></div>
+## Because this is a simple data set which is generally already available in R
+## please do not actually upload it to the server!
+## The code would be:
+<span class="co">#dataset.id = uploadOMLDataSet(air.data)</span>
+<span class="co">#dataset.id</span></code></pre></div>
 <p>Alternatively you can enter data directly on the <a href="http://www.openml.org/new/data">OpenML website</a>.</p>
 </div>
 <div id="upload-a-flow" class="section level3">
@@ -710,9 +701,9 @@ for (lrn in learners) {
 <h2>Feedback</h2>
 <p>Now, you should have gotten an idea on how to use our package. However, as there is always room for improvement, we are more than happy to receive your feedback. So, in case</p>
 <ul>
-<li>there is anything not well documented</li>
-<li>you encounter a bug</li>
-<li>are missing functionality</li>
+<li>there is anything not well documented,</li>
+<li>you encounter a bug, or</li>
+<li>you are missing functionality</li>
 </ul>
 <p>please open an issue in the <a href="https://github.com/openml/openml-r/issues">issue tracker of our GitHub repository</a>.</p>
 </div>
