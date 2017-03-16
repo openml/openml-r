@@ -146,9 +146,9 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   number.of.classes = collapseNotScientific(assertSortedInt(number.of.classes,
     lower = 1, null.ok = TRUE), sep = "..")
   number.of.missing.values = collapseNotScientific(assertSortedInt(number.of.missing.values, 
-    lower = 1, null.ok = TRUE), sep = "..")
+    lower = 0, null.ok = TRUE), sep = "..")
 
-  tag = collapse(assertString(tag, na.ok = FALSE, null.ok = TRUE), sep = "/")
+  if (!is.null(tag)) tag = collapse(assertString(tag, na.ok = FALSE, null.ok = TRUE), sep = "/")
   data.name = assertString(data.name, na.ok = FALSE, null.ok = TRUE)
   data.tag = assertString(data.tag, na.ok = FALSE, null.ok = TRUE)
   limit = collapseNotScientific(assertIntegerish(limit, len = 1, null.ok = TRUE))
