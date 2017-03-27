@@ -10,6 +10,7 @@
     limit = limit, offset = offset, status = status)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
+  if (is.null(content)) return(data.frame())
   res = fromJSON(txt = content, simplifyVector = FALSE)$data$dataset
 
   qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))

@@ -2,7 +2,7 @@
   api.call = generateAPICall("json/flow/list", tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
-
+  if (is.null(content)) return(data.frame())
   flows = fromJSON(txt = content)$flows$flow
 
   # type conversions

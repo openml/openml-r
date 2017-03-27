@@ -29,6 +29,7 @@ lookupMeasures = function() {
 }
 
 convertOMLMeasuresToMlr = function(measures) {
+  if (measures == "") return(NULL)
   lookup = lookupMeasures()
   assertSubset(measures, names(lookup))
   mlr.measures = lookup[measures]

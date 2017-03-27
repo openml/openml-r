@@ -1,25 +1,3 @@
-with_test_cache = function(expr, envir = parent.frame()) {
-  prev = as.list(getOMLConfig())
-  on.exit(do.call(setOMLConfig, prev))
-  if (identical(Sys.getenv("TRAVIS"), "true")) {
-    cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
-  } else {
-    cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
-  }
-  setOMLConfig(cachedir = cachedir)
-  eval(expr, envir = envir)
-}
-
-with_empty_cache = function(expr, envir = parent.frame()) {
-  prev = as.list(getOMLConfig())
-  on.exit(do.call(setOMLConfig, prev))
-  dir = tempfile()
-  dir.create(dir, recursive = TRUE)
-  on.exit(unlink(dir, recursive = TRUE), add = TRUE)
-  setOMLConfig(cachedir = dir)
-  eval(expr, envir = envir)
-}
-
 reset_config = function(expr, envir = parent.frame()) {
   prev = as.list(getOMLConfig())
   on.exit({
@@ -29,15 +7,25 @@ reset_config = function(expr, envir = parent.frame()) {
   eval(expr, envir = envir)
 }
 
-with_write_access = function(expr, envir = parent.frame()) {
+with_test_cache = function(expr, envir = parent.frame()) {
   reset_config({
-    setOMLConfig(confirm.upload = FALSE)
-    # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
-    # if (identical(Sys.getenv("TRAVIS"), "true")) {
-    #   skip_on_travis()
-    # } else {
-      eval(expr, envir = envir)
-    #}
+    if (identical(Sys.getenv("TRAVIS"), "true")) {
+      cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
+    } else {
+      cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
+    }
+    setOMLConfig(cachedir = cachedir)
+    eval(expr, envir = envir)
+  })
+}
+
+with_empty_cache = function(expr, envir = parent.frame()) {
+  reset_config({
+    dir = tempfile()
+    dir.create(dir, recursive = TRUE)
+    on.exit(unlink(dir, recursive = TRUE), add = TRUE)
+    setOMLConfig(cachedir = dir)
+    eval(expr, envir = envir)
   })
 }
 
@@ -47,15 +35,3 @@ with_main_server = function(expr, envir = parent.frame()) {
     eval(expr, envir = envir)
   })
 }
-
-# with_read_only = function(expr, envir = parent.frame()) {
-#   reset_config({
-#     setOMLConfig(confirm.upload = FALSE)
-#     # FIXME: use an API call to check if apikey has write access, see https://github.com/openml/OpenML/issues/267
-#     if (identical(Sys.getenv("TRAVIS"), "true")) {
-#       eval(expr, envir = envir)
-#     } else {
-#       skip_on_os(os = c("windows", "mac", "linux", "solaris"))
-#     }
-#   })
-# }

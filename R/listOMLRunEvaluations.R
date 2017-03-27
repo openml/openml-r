@@ -10,7 +10,7 @@
     tag = tag, limit = limit, offset = offset)
   
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
-  
+  if (is.null(content)) return(data.frame())
   evals = fromJSON(txt = content, simplifyVector = FALSE)$evaluations$evaluation
   
   evals = rbindlist(lapply(evals, function(x) {
