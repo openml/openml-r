@@ -8,7 +8,10 @@ test_that("deleteOMLObject", {
   # local sanity check (account needs read-write permissions)
   with_test_cache({
     run = getOMLRun(219)
+    flow = getOMLFlow(run$flow.id)
   })
+  flow.id = uploadOMLFlow(flow)
+  run$flow.id = flow.id
   run.id = uploadOMLRun(run)
   del = deleteOMLObject(id = run.id, object = "run")
   expect_is(del, "response")

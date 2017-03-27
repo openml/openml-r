@@ -9,10 +9,12 @@ test_that("uploadOMLRun", {
     expect_is(run$run.id, "integer")
     expect_is(run$task.id, "integer")
     
-    task = getOMLTask(19L)
+    task = getOMLTask(run$task.id)
+    flow = getOMLFlow(run$flow.id)
   })
 
   maxrun = max(.listOMLRuns(task.id = run$task.id)$run.id)
+  run$flow.id = uploadOMLFlow(flow)
   run.id = uploadOMLRun(run)
   expect_is(run.id, "integer")
   expect_true(maxrun < run.id)
