@@ -39,7 +39,7 @@ convertTagListToTagString = function(l) {
 }
 
 getRVersionString = function() {
-  paste0("R_", collapse(R.Version()[c("major", "minor")], "."))
+  stri_paste("R_", collapse(R.Version()[c("major", "minor")], "."))
 }
 
 # Helper funtion to ask user for confirmation.
@@ -105,69 +105,56 @@ catfNotNA = function(text, obj) {
 
 # collapse numeric values without using scientific representation of large numbers
 collapseNotScientific = function(x, ...) {
-  assertNumeric(x)
-  x = format(x, scientific = FALSE, trim = TRUE)
-  return(collapse(x, ...))
+  assertNumeric(x, null.ok = TRUE)
+  if (!is.null(x)) 
+    collapse(format(x, scientific = FALSE, trim = TRUE), ...) else
+      return(NULL)
+}
+
+# argcheck if values are in an increasing order
+assertSortedInt = function(x, ..., .var.name = vname(x)) {
+  checkSorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
+  assertSorted = makeAssertionFunction(checkSorted)
+  
+  assertIntegerish(x, ..., .var.name = .var.name)
+  if (length(x) == 1) 
+    x = rep(x, times = 2)
+  assertSorted(x, .var.name = .var.name)
 }
 
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
   task.type = NULL, number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL,
   number.of.missing.values = NULL, tag = NULL, data.name = NULL, data.tag = NULL,
   limit = NULL, offset = NULL, status = NULL) {
-  is.sorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
-  assertSorted = makeAssertionFunction(is.sorted)
+
   assertString(api.call)
-  if (!is.null(task.id)) assertIntegerish(task.id)
-  if (!is.null(flow.id)) assertIntegerish(flow.id)
-  if (!is.null(run.id)) assertIntegerish(run.id)
-  if (!is.null(uploader.id)) assertIntegerish(uploader.id)
-  if (!is.null(number.of.instances)) {
-    if (length(number.of.instances) == 1) number.of.instances = rep(number.of.instances, 2)
-    number.of.instances = asInteger(number.of.instances, lower = 1)
-    #assertIntegerish(number.of.instances, lower = 1)
-    assertSorted(number.of.instances)
-    number.of.instances = collapseNotScientific(number.of.instances, sep = "..")
-  }
-  if (!is.null(number.of.features)) {
-    if (length(number.of.features) == 1) number.of.features = rep(number.of.features, 2)
-    number.of.features = asInteger(number.of.features, lower = 1)
-    assertSorted(number.of.features)
-    number.of.features = collapseNotScientific(number.of.features, sep = "..")
-  }
-  if (!is.null(number.of.classes)) {
-    if (length(number.of.classes) == 1) number.of.classes = rep(number.of.classes, 2)
-    number.of.classes = asInteger(number.of.classes, lower = 1)
-    assertSorted(number.of.classes)
-    number.of.classes = collapseNotScientific(number.of.classes, sep = "..")
-  }
-  if (!is.null(number.of.missing.values)) {
-    if (length(number.of.missing.values) == 1) number.of.missing.values = rep(number.of.missing.values, 2)
-    number.of.missing.values = asInteger(number.of.missing.values, lower = 0)
-    assertSorted(number.of.missing.values)
-    number.of.missing.values = collapseNotScientific(number.of.missing.values, sep = "..")
-  }
+  task.id = collapseNotScientific(assertIntegerish(task.id, null.ok = TRUE))
+  flow.id = collapseNotScientific(assertIntegerish(flow.id, null.ok = TRUE))
+  run.id = collapseNotScientific(assertIntegerish(run.id, null.ok = TRUE))
+  uploader.id = collapseNotScientific(assertIntegerish(uploader.id, null.ok = TRUE))
+  
   if (!is.null(task.type)) {
     types = listOMLTaskTypes(verbosity = 0)
     assertChoice(task.type, choices = types$name)
     task.type = types$id[types$name == task.type]
   }
-  if (!is.null(tag)) assertString(tag, na.ok = FALSE)
-  if (!is.null(data.name)) assertString(data.name, na.ok = FALSE)
-  if (!is.null(data.tag)) assertString(data.tag, na.ok = FALSE)
-  if (!is.null(limit)) limit = collapseNotScientific(assertIntegerish(limit, len = 1))
-  if (!is.null(offset)) offset = collapseNotScientific(assertIntegerish(offset, len = 1))
-  if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
+  
+  number.of.instances = collapseNotScientific(assertSortedInt(number.of.instances, 
+    lower = 1, null.ok = TRUE), sep = "..")
+  number.of.features = collapseNotScientific(assertSortedInt(number.of.features, 
+    lower = 1, null.ok = TRUE), sep = "..")
+  number.of.classes = collapseNotScientific(assertSortedInt(number.of.classes,
+    lower = 1, null.ok = TRUE), sep = "..")
+  number.of.missing.values = collapseNotScientific(assertSortedInt(number.of.missing.values, 
+    lower = 0, null.ok = TRUE), sep = "..")
 
-  if (length(run.id) > 1)
-    run.id = collapseNotScientific(run.id)
-  if (length(task.id) > 1)
-    task.id = collapseNotScientific(task.id)
-  if (length(flow.id) > 1)
-    flow.id = collapseNotScientific(flow.id)
-  if (length(uploader.id) > 1)
-    uploader.id = collapseNotScientific(uploader.id)
-  if (length(tag) > 1)
-    tag = collapse(tag, sep = "/")
+  if (!is.null(tag)) tag = collapse(assertString(tag, na.ok = FALSE, null.ok = TRUE), sep = "/")
+  data.name = assertString(data.name, na.ok = FALSE, null.ok = TRUE)
+  data.tag = assertString(data.tag, na.ok = FALSE, null.ok = TRUE)
+  limit = collapseNotScientific(assertIntegerish(limit, len = 1, null.ok = TRUE))
+  offset = collapseNotScientific(assertIntegerish(offset, len = 1, null.ok = TRUE))
+  if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
+  
   url.args = list(
     task = task.id,
     flow = flow.id,
@@ -187,7 +174,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   )
   url.args = Filter(function(x) !is.null(x), url.args)
 
-  api.call = paste0(api.call, "/", collapseNamedList(url.args, sep = "/", collapse = "/"))
+  api.call = stri_paste(api.call, "/", collapseNamedList(url.args, sep = "/", collapse = "/"))
 
   return(api.call)
 }
