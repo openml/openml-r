@@ -11,21 +11,26 @@ cache:
   - C:\RLibrary
 
 environment:
+  global:
+    R_ARCH: x64
+    USE_RTOOLS: true
+    WARNINGS_ARE_ERRORS: 1
+
   OPENMLAPIKEY:
     secure: igk310ljUkgK3lyZbLxaL1ZrNPmfIzYpsghicdMTFlJ/USVLLT+9DHZY0MYjrDbj
+
   matrix:
     - R_VERSION: devel
+
     - R_VERSION: release
+
     - R_VERSION: oldrel
-      RTOOLS_VERSION: 32
+      RTOOLS_VERSION: 33
       CRAN: http://cran.rstudio.com
 
 build_script:
-  - travis-tool.sh install_github mlr-org/farff
-  - travis-tool.sh install_github mlr-org/mlr  
-  - travis-tool.sh install_github berndbischl/BBmisc
-  - travis-tool.sh install_github berndbischl/ParamHelpers
   - travis-tool.sh install_deps
+  - travis-tool.sh github_package mlr-org/farff mlr-org/mlr berndbischl/BBmisc berndbischl/ParamHelpers
 
 test_script:
   - travis-tool.sh run_tests
