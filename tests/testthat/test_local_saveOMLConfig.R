@@ -1,7 +1,7 @@
 context("saveOMLConfig")
 
 test_that("saveOMLConfig", {
-  reset_config({
+  with_reset_config({
     # change arff.reader and check if changes were stored in config file
     saveOMLConfig(arff.reader = "RWeka", overwrite = TRUE)
     conf.RWeka = as.list(loadOMLConfig())

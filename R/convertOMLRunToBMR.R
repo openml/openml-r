@@ -42,7 +42,7 @@ convertOMLRunToBMR = function(run, measures, recompute = FALSE) {
   runtime = evals$value[evals$name == "usercpu_time_millis"]
   
   task = convertOMLTaskToMlr(task)
-  task.desc = getTaskDescription(task$mlr.task)
+  task.desc = getTaskDesc(task$mlr.task)
   
   pred = run$predictions
   if(min(pred$fold) == 0)

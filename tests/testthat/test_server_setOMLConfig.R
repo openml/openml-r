@@ -1,7 +1,7 @@
 context("setOMLConfig")
 
 test_that("setOMLConfig", {
-  reset_config({
+  with_reset_config({
     conf = getOMLConfig()
     expect_is(conf, "OMLConfig")
     checkConfig(conf)

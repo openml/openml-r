@@ -27,16 +27,16 @@ doAPICall = function(api.call, id = NULL,
   verbosity = NULL, method, ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
   assert(checkChoice(verbosity, choices = 0:2), checkNull(verbosity))
-
+  
   # get config infos
   conf = getOMLConfig()
-
+  
   # build request URL and query
   url = buildRequestURL(conf$server, api.call, id, url.args, ...)
-
+  
   if (nchar(url) > 4068)
     stopf("'%s' has %i characters, the maximum allowed url length is 4068.", url, nchar(url))
-
+  
   # some nice output to the user
   if (method == "GET") {
     showInfo(verbosity, "%s '%s' to '%s'.", "Downloading from", url,
@@ -45,20 +45,20 @@ doAPICall = function(api.call, id = NULL,
     from.url = ifelse(method == "POST", "Uploading to", "Deleting from")
     showInfo(verbosity, "%s '%s'.", from.url, url)
   }
-
+  
   # finally to the call
   content = doHTTRCall(method,
     url = url,
     query = list(api_key = conf$apikey),
     body = if (length(post.args) > 0) post.args else NULL)
-
+  
   # write response to file
   if (!is.null(file)) {
     con = file(file, open = "w")
     on.exit(close(con))
     writeLines(content, con = con)
   }
-
+  
   return(content)
 }
 
@@ -66,11 +66,16 @@ doAPICall = function(api.call, id = NULL,
 # OpenML backend.
 buildRequestURL = function(server, api.call, id, url.args, ...) {
   # occasionally we need to pass a single API arg, such as the data id, additionally
+<<<<<<< HEAD
   id = if (!is.null(id)) stri_paste("/", id) else ""
 
+=======
+  id = if (!is.null(id)) paste0("/", id) else ""
+  
+>>>>>>> master
   #url.args$api_key = conf$apikey
   url.args = collapseNamedList(url.args)
-
+  
   # create url of form
   # http://www.openml.org/apicall/id/[?key1=value1&key2=value2&...]
   if (url.args == "")
@@ -111,11 +116,18 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     if (isXMLResponse(server.response)) parseError = parseXMLError
     else if (isJSONResponse(server.response)) parseError = parseJSONError
     error = parseError(server.response)
-
+    
+    if (!is.null(error$message)) {
+      if (error$message == "No results") {
+        messagef("Server response: %s", error$message)
+        return(NULL)
+      }
+    }
+    
     stopf("ERROR (code = %s) in server response: %s\n  %s\n", as.character(error$code), error$message,
       if (!is.null(error$additional.information)) error$additional.information else "")
   }
-
+  
   # if we requested a document we need to extract the actual content
   if (method == "GET")
     server.response = rawToChar(server.response$content)
@@ -172,6 +184,7 @@ parseXMLError = function(response) {
 parseJSONError = function(response) {
   # parsed by httr (no need to call fromJSON by hand)
   error = content(response)$error
+  if (is.null(error$message)) error$message = "<NA>"
   names(error) = convertNamesOMLToR(names(error))
   return(error)
 }
