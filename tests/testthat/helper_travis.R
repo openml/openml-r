@@ -3,7 +3,7 @@ library(BBmisc)
 if (identical(Sys.getenv("TRAVIS"), "true") || identical(Sys.getenv("APPVEYOR"), "True")) {
   p = normalizePath("~/.openml/cache", mustWork = FALSE)
   dir.create(p, recursive = TRUE, showWarnings = FALSE)
-  setOMLConfig(apikey = Sys.getenv("OPENMLAPIKEY"), cachedir = p,
+  setOMLConfig(apikey = Sys.getenv("OPENMLAPIKEY"), cachedir = p, arff.reader = "farff",
     server = "http://test.openml.org/api/v1", confirm.upload = FALSE)
 }
 
