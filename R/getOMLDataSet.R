@@ -40,22 +40,13 @@ getOMLDataSet = function(data.id = NULL, data.name = NULL, data.version = NULL, 
 
 # Helper function to get data set by data name (and version number).
 # (Makes use of getOMLDataSetById)
-getOMLDataSetByName = function(data.name, data.version, cache.only = FALSE, verbosity = NULL) {
+getOMLDataSetByName = function(data.name = NULL, data.version = NULL, cache.only = FALSE, verbosity = NULL) {
   # else get list of datasets RESTRICTED to the given name
   data.sets = .listOMLDataSets(data.name = data.name, verbosity = verbosity)
 
   # match by name
   matching.ids = which(data.sets$name == data.name)
   matching.sets = data.sets[matching.ids, , drop = FALSE]
-
-  # get number of matches ...
-  n.matches = length(matching.ids)
-
-  # ... and react accordingly
-  if (n.matches == 0)
-    stopf("No dataset with name '%s' found.", data.name)
-  if (n.matches == 1)
-    return(getOMLDataSetById(data.id = matching.sets$data.id, cache.only = cache.only, verbosity = verbosity))
 
   # otherwise we have multiple matches and need to consider the version
   data.id = if (is.null(data.version)) {
@@ -71,6 +62,15 @@ getOMLDataSetByName = function(data.name, data.version, cache.only = FALSE, verb
     stopf("Version %i does not exist for dataset '%s'. Available versions: %s",
       data.version, data.name, collapse(matching.sets$version, sep = ", "))
   }
+  
+  # get number of matches ...
+  n.matches = length(matching.ids)
+  # ... and react accordingly
+  if (n.matches == 0)
+    stopf("No dataset with name '%s' found.", data.name)
+  if (n.matches == 1)
+    return(getOMLDataSetById(data.id = matching.sets$data.id, cache.only = cache.only, verbosity = verbosity))
+  
   return(getOMLDataSetById(data.id = data.id, cache.only = cache.only, verbosity = verbosity))
 }
 

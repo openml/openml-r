@@ -5,10 +5,10 @@ test_that("OMLRunParList", {
   rf = makeLearner("classif.randomForest")
   lrn.list = list(
     rf,
-    makeFilterWrapper(rf, fw.perc = 0.5),
+    makeFilterWrapper(rf, fw.perc = 0.5, fw.method = "variance"),
     makeOversampleWrapper(rf, osw.rate = 1),
     makeImputeWrapper(rf, class = imputeMedian()),
-    makeOversampleWrapper(makeFilterWrapper(rf), osw.rate = 1)
+    makeOversampleWrapper(makeFilterWrapper(rf, fw.method = "variance"), osw.rate = 1)
   )
   
   for(lrn in lrn.list) {

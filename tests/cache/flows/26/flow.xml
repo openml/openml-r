@@ -1,0 +1,89 @@
+
+<oml:flow xmlns:oml="http://openml.org/openml">
+  <oml:id>26</oml:id>
+<oml:uploader>348</oml:uploader>
+<oml:name>mlr.regr.rpart</oml:name>
+<oml:version>1</oml:version>
+<oml:external_version>R_3.3.2-v2.4703e86e</oml:external_version>
+<oml:description>Learner mlr.regr.rpart from package(s) rpart.</oml:description>
+<oml:upload_date>2017-03-24T21:47:39</oml:upload_date>
+<oml:language>English</oml:language>
+<oml:dependencies>R_3.3.2, OpenML_1.3, mlr_2.11, rpart_4.1.10</oml:dependencies>
+<oml:parameter>
+	<oml:name>cp</oml:name>
+	<oml:data_type>numeric</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>maxcompete</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>maxdepth</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>maxsurrogate</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>minbucket</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>minsplit</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.kind</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>Mersenne-Twister</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.normal.kind</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>Inversion</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>openml.seed</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value>1</oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>surrogatestyle</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>usesurrogate</oml:name>
+	<oml:data_type>discrete</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:parameter>
+	<oml:name>xval</oml:name>
+	<oml:data_type>integer</oml:data_type>
+	<oml:default_value></oml:default_value>
+	<oml:description></oml:description>
+</oml:parameter>
+<oml:tag>mlr</oml:tag>
+<oml:binary_url>https://test.openml.org/data/download/146/regr.rpart_binary.Rds</oml:binary_url>
+<oml:binary_format>Rds</oml:binary_format>
+<oml:binary_md5>d7581805457ee7728acf008e33a04cad</oml:binary_md5>
+</oml:flow>
+

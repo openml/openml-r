@@ -8,7 +8,7 @@
     run.id = run.id, uploader.id = uploader.id, tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
-
+  if (is.null(content)) return(data.frame())
   # extract data frame
   runs = fromJSON(txt = content, simplifyVector = FALSE)$runs$run
   tags = convertTagListToTagString(runs)
