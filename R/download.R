@@ -66,13 +66,7 @@ doAPICall = function(api.call, id = NULL,
 # OpenML backend.
 buildRequestURL = function(server, api.call, id, url.args, ...) {
   # occasionally we need to pass a single API arg, such as the data id, additionally
-<<<<<<< HEAD
   id = if (!is.null(id)) stri_paste("/", id) else ""
-
-=======
-  id = if (!is.null(id)) paste0("/", id) else ""
-  
->>>>>>> master
   #url.args$api_key = conf$apikey
   url.args = collapseNamedList(url.args)
   
