@@ -9,7 +9,7 @@ reset_config = function(expr, envir = parent.frame()) {
 
 with_test_cache = function(expr, envir = parent.frame()) {
   reset_config({
-    if (identical(Sys.getenv("TRAVIS"), "true")) {
+    if (identical(Sys.getenv("TRAVIS"), "true") || identical(Sys.getenv("APPVEYOR"), "True")) {
       cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
     } else {
       cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
