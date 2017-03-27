@@ -112,8 +112,13 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     else if (isJSONResponse(server.response)) parseError = parseJSONError
     error = parseError(server.response)
 
-    stopf("ERROR (code = %s) in server response: %s\n  %s\n", as.character(error$code), error$message,
-      if (!is.null(error$additional.information)) error$additional.information else "")
+    if (error$message == "No results") {
+      messagef("Server response: %s", error$message)
+      return(NULL)
+    } else {
+      stopf("ERROR (code = %s) in server response: %s\n  %s\n", as.character(error$code), error$message,
+        if (!is.null(error$additional.information)) error$additional.information else "")
+    }
   }
 
   # if we requested a document we need to extract the actual content

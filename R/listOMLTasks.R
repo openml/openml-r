@@ -24,6 +24,8 @@
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 
+  if (is.null(content)) return(data.frame())
+  
   res = fromJSON(txt = content, simplifyVector = FALSE)$tasks$task
   input = convertNameValueListToDF(extractSubList(res, "input", simplify = FALSE))
   # get rid of less interesting stuff
