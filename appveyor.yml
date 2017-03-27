@@ -17,7 +17,7 @@ environment:
     WARNINGS_ARE_ERRORS: 1
 
   OPENMLAPIKEY:
-    secure: igk310ljUkgK3lyZbLxaL1ZrNPmfIzYpsghicdMTFlJ/USVLLT+9DHZY0MYjrDbj
+    secure: kZ2t27KjMTnsE9n5nfVJz1Bz42uKHr1R3KLN+DeZpdWkSvKd5dnu2NaJt9uFC1Xd
 
   matrix:
     - R_VERSION: devel
