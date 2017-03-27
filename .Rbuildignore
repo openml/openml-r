@@ -9,6 +9,7 @@
 ^.travis.yml$
 ^.appveyor.yml$
 ^.editorconfig$
+^.coveralls.yml
 
 ^.*tar.gz$
 ^man-roxygen/

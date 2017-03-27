@@ -29,7 +29,7 @@ test_that("uploadOMLRun", {
   deleteOMLObject(run.id, object = "run")
   
   # check if we correctly overwrite the default of confirm.upload
-  reset_config({
+  with_reset_config({
     setOMLConfig(confirm.upload = TRUE)
     run.id = uploadOMLRun(res, confirm.upload = FALSE)
     expect_is(run.id, "integer")

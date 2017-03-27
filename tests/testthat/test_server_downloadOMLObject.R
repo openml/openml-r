@@ -14,7 +14,7 @@ test_that("downloadOMLObject", {
     }
     
     with_empty_cache({
-      reset_config({
+      with_reset_config({
         setOMLConfig(apikey = collapse(rep("a", 32), ""))
         for (i in 1:nrow(grid)) {
           # check if error is print when xml contains an error node
