@@ -2,7 +2,8 @@
 .Rproj.user
 .Rhistory
 .Rapp.history
-OpenML.Rcheck
+.git
+*.Rcheck
 OpenML*.tar.gz
 doc/?-*.md
 doc/?-*.html

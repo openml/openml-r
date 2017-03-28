@@ -1,5 +1,4 @@
 library(mlr)
-library(BBmisc)
 if (identical(Sys.getenv("TRAVIS"), "true") || identical(Sys.getenv("APPVEYOR"), "True")) {
   p = normalizePath("~/.openml/cache", mustWork = FALSE)
   dir.create(p, recursive = TRUE, showWarnings = FALSE)
@@ -23,8 +22,10 @@ lrn.list = list(
   makeLearner("regr.rpart"),
   makeLearner("regr.lm")
 )
-if (nrow(flows) < length(unique(vcapply(lrn.list, function(x) paste0("mlr.", getLearnerId(x)))))) {
-  flow.ids = vnapply(lrn.list, uploadOMLFlow, tag = "mlr_test_flows")
+lrn.ids = unique(unlist(lapply(lrn.list, function(x) paste0("mlr.", getLearnerId(x)))))
+
+if (nrow(flows) < length(lrn.ids)) {
+  flow.ids = lapply(lrn.list, uploadOMLFlow, tag = "mlr_test_flows")
 }
 
 Sys.setenv(NOT_CRAN = "true")

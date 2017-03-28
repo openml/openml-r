@@ -8,12 +8,11 @@
 #' @import XML
 #' @import jsonlite
 #' @import data.table
+#' @importFrom httr POST GET DELETE content upload_file status_code
 #' @importFrom memoise memoise forget
 #' @importFrom digest digest
-#' @importFrom stats setNames
-#' @importFrom httr POST GET DELETE content upload_file status_code
-#' @importFrom stats reshape sd
-#' @importFrom utils download.file packageVersion type.convert
+#' @importFrom stats setNames sd
+#' @importFrom utils packageVersion type.convert
 NULL
 
 .OpenML.config = getDefaultConfig()
@@ -30,6 +29,6 @@ NULL
 
 .onAttach = function(libname, pkgname) {
   if (getOMLConfig()$apikey == "PLEASE CHANGE ME")
-    packageStartupMessage(paste0("Please use the 'setOMLConfig' or 'saveOMLConfig' function to set the API key.\n", 
+    packageStartupMessage(paste0("Please use the 'setOMLConfig' or 'saveOMLConfig' function to set the API key.\n",
       "You can generate the API key from your OpenML account at http://www.openml.org/u#!api"))
 }

@@ -24,13 +24,11 @@ Depends:
     mlr (>= 2.11)
 Suggests: 
     testthat,
+    xml2,
     randomForest,
-    randomForestSRC,
     rpart,
     RWeka,
     farff,
-    mboost,
-    xml2,
     knitr,
     rmarkdown,
     R.rsp
