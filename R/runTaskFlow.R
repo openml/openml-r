@@ -1,6 +1,6 @@
 #' Reproduce the Run
 #'
-#' Uses the ID of the run and tries to reproduce its results by downloading the flow and appling it to the respecitve task.
+#' Uses the ID of the run and tries to reproduce its results by downloading the flow and applying it to the respective task.
 #'
 #' @template arg_task
 #' @param flow [\code{\link{OMLFlow}}]\cr
