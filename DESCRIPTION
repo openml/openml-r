@@ -24,6 +24,7 @@ Depends:
     mlr (>= 2.11)
 Suggests: 
     testthat,
+    xml2,
     randomForest,
     rpart,
     RWeka,
