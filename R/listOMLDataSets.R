@@ -29,12 +29,13 @@
   return(res)
 }
 
-#' @title List available OpenML data sets.
+#' @title List the first 5000 OpenML data sets.
 #'
 #' @description
 #' The returned \code{data.frame} contains the data set id \dQuote{data.id},
 #' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
-#' and describing data qualities.
+#' and describing data qualities. 
+#' Note that by default only the first 5000 data sets will be returned (due to the argument \dQuote{limit = 5000}).
 #'
 #' @template note_memoise
 #'

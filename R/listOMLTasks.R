@@ -66,11 +66,12 @@
   return(res[ind.estim & ind.eval, ])
 }
 
-#' @title List available OpenML tasks.
+#' @title List the first 5000 OpenML tasks.
 #'
 #' @description
-#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id},
-#' the \code{status} and some describing data qualities.
+#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id}, 
+#' the \code{status} and some describing data qualities. 
+#' Note that by default only the first 5000 data sets will be returned (due to the argument \dQuote{limit = 5000}).
 #'
 #' @template note_memoise
 #'
