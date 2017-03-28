@@ -12,7 +12,7 @@ test_that("getOMLTask", {
     expect_character(task$tags, min.len = 1L, any.missing = FALSE)
     expect_list(task$output, names = "unique")
     expect_list(task$parameters, names = "unique")
-    
+
     #print
     expect_output(print(task), "Task|Tag|Estimation Procedure|Evaluation Measure")
     expect_output(print(task$input$estimation.procedure), "Estimation")
@@ -20,5 +20,7 @@ test_that("getOMLTask", {
     task$input$estimation.procedure$type = NA
     task$tags = NA
     expect_output(print(task), "Task")
+    task$tags = c(task$tags, rep("a", 80))
+    expect_output(print(task), "...")
  })
 })

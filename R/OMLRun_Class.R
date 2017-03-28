@@ -92,8 +92,8 @@ makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, uploader.nam
 
 # show
 #' @export
-print.OMLRun = function(x, print.metrics = FALSE, ...)  {
-  assertFlag(print.metrics, na.ok = FALSE)
+print.OMLRun = function(x, ...)  {
+  #assertFlag(print.metrics, na.ok = FALSE)
 
   catNotNA = function(s, val) {
     if (!all(is.na(val)))
@@ -112,9 +112,9 @@ print.OMLRun = function(x, print.metrics = FALSE, ...)  {
     print(x$bmr$results[[1]][[1]])
   }
 
-  if (print.metrics) {
-    cat('\n\tMetrics:\n\n')
-    m = x$output.data$evaluations
-    print(m[, colnames(m) != "array.data"])
-  }
+  # if (print.metrics) {
+  #   cat('\n\tMetrics:\n\n')
+  #   m = x$output.data$evaluations
+  #   print(m[, colnames(m) != "array.data"])
+  # }
 }
