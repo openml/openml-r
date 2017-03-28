@@ -2,16 +2,20 @@
 ^attic/
 ^doc/
 ^notebooks/
+^man-roxygen/
+
 ^vingette/OpenML.Rmd$
 ^vingette/Bib.bib$
-^appveyor.yml$
+
 ^.gitignore$
 ^.ignore$
-^.travis.yml$
 ^.editorconfig$
 
+^appveyor.yml$
+^.travis.yml$
+^codecov.yml$
+
 ^.*tar.gz$
-^man-roxygen/
 ^README.md$
 
 ^src/*.o
