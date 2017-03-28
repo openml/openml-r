@@ -37,6 +37,10 @@ test_that("convertOMLDataSetToMlr", {
     expect_equal(getTaskId(convertOMLDataSetToMlr(ds, mlr.task.id = "<oml.data.version>")), as.character(ds$desc$version))
     expect_equal(getTaskId(convertOMLDataSetToMlr(ds, mlr.task.id = "<oml.task.id>")), "<oml.task.id>")
 
+    # check if conversion to regression task works
+    ds$desc$target.features = ds$desc$default.target.attribute = "no_of_nodes_in"
+    expect_equal(getTaskType(convertOMLDataSetToMlr(ds)), "regr")
+
     # check if conversion to multilabel task works
     ds$desc$target.features = ds$desc$default.target.attribute = c("bl_of_lymph_c", "bl_of_lymph_s")
     expect_error(convertOMLDataSetToMlr(ds), "logical")
@@ -44,9 +48,5 @@ test_that("convertOMLDataSetToMlr", {
     ds$data$bl_of_lymph_s = as.logical(as.numeric(ds$data$bl_of_lymph_s) - 1)
     multilab.task = convertOMLDataSetToMlr(ds)
     expect_equal(getTaskType(multilab.task), "multilabel")
-
-    # check if conversion to regression task works
-    ds$desc$target.features = ds$desc$default.target.attribute = "no_of_nodes_in"
-    expect_equal(getTaskType(convertOMLDataSetToMlr(ds)), "regr")
   })
 })
