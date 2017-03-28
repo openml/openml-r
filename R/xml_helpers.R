@@ -22,19 +22,6 @@ xmlVal = function(doc, path, optional, fun) {
   }
 }
 
-xmlValueNA = function(x, ...) {
-  val = xmlValue(x, ...)
-  setNA = ifelse(val == "", NA, val)
-  return(setNA)
-}
-
-getChildrenStringsNA = function(x, ...) {
-  val = getChildrenStrings(x, ...)
-  #if (attr.rm) attributes(val) = NULL
-  setNA = ifelse(val == "", NA, val)
-  return(setNA)
-}
-
 xmlOValS = function(doc, path) {
   xmlVal(doc, path, TRUE, as.character)
 }
@@ -64,7 +51,7 @@ xmlRValR = function(doc, path) {
 }
 
 xmlRValD = function(doc, path) {
-  xmlVal(doc, path, FALSE, function(x) as.POSIXct(x, tz="CET"))
+  xmlVal(doc, path, FALSE, function(x) as.POSIXct(x, tz = "CET"))
 }
 
 xmlREValI = function(doc, path) {
@@ -118,24 +105,12 @@ xmlOValsMultNsSPara = function(doc, path, subs = NA_character_, exp.length) {
   return(val)
 }
 
-xmlValsMultNsI = function(doc, path) {
-  xmlValsMultNs(doc, path, as.integer, integer(1L))
-}
-
-xmlValsMultNsN = function(doc, path) {
-  xmlValsMultNs(doc, path, as.numeric, numeric(1L))
-}
-
 parseXMLResponse = function(file, msg = NA_character_,
-  type = NA_character_, as.text = FALSE, return.doc = TRUE) {
+  type = NA_character_, as.text = FALSE) {
 
   doc = try(xmlParse(file, asText = as.text))
   if (is.error(doc))
     stopf("Error in parsing XML for type %s in file: %s", type, file)
 
-  r = xmlRoot(doc)
-
-  if (return.doc)
-    return(doc)
-  return(r)
+  return(doc)
 }

@@ -12,7 +12,7 @@ with_test_cache = function(expr, envir = parent.frame()) {
     #if (identical(Sys.getenv("TRAVIS"), "true")) {
     #  cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
     #} else {
-    cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
+    cachedir = normalizePath(file.path(system.file(package = "OpenML"), "tests", "cache"))
     #}
     setOMLConfig(cachedir = cachedir)
     eval(expr, envir = envir)

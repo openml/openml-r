@@ -1,5 +1,6 @@
 checkOMLDataSet = function(data) {
   expect_is(data, "OMLDataSet")
+  expect_output(print(data), "Data Set")
   expect_is(data$desc, "OMLDataSetDescription")
   expect_character(data$colnames.old, any.missing = FALSE)
   expect_character(data$colnames.new, any.missing = FALSE)

@@ -41,5 +41,5 @@ Default is \code{TRUE}.}
 [\code{OMLMlrRun}], an \code{\link{OMLRun}}.
 }
 \description{
-Uses the ID of the run and tries to reproduce its results by downloading the flow and appling it to the respecitve task.
+Uses the ID of the run and tries to reproduce its results by downloading the flow and applying it to the respective task.
 }
