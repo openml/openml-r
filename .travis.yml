@@ -27,11 +27,12 @@ before_script:
   - echo "apikey=$OPENMLAPIKEY" > "$HOME/.openml/config"
 
 after_success:
-  - Rscript -e 'library(covr);coveralls()'
+  - Rscript -e 'library(covr);codecov()'
 
 notifications:
   email:
     recipients:
+        - giuseppe.casalicchio@stat.uni-muenchen.de
         - michellang@gmail.com
         - bernd_bischl@gmx.net
         - j.bossek@gmail.com

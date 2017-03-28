@@ -9,11 +9,11 @@ with_reset_config = function(expr, envir = parent.frame()) {
 
 with_test_cache = function(expr, envir = parent.frame()) {
   with_reset_config({
-    if (identical(Sys.getenv("TRAVIS"), "true")) {
-      cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
-    } else {
-      cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
-    }
+    #if (identical(Sys.getenv("TRAVIS"), "true")) {
+    #  cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
+    #} else {
+    cachedir = normalizePath(file.path(find.package("OpenML"), "tests", "cache"))
+    #}
     setOMLConfig(cachedir = cachedir)
     eval(expr, envir = envir)
   })
