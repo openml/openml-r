@@ -6,7 +6,7 @@ test_that("tagOMLObject", {
   get.fun = setNames(c("getOMLDataSet", "getOMLTask", "getOMLFlow", "getOMLRun"), obj)
 
   for (i in obj) {
-    id = 1 
+    id = 1
     # get data/task/flow/run and its tags
     with_empty_cache({
       # tag object and check if tag exists in downloaded object
@@ -15,19 +15,19 @@ test_that("tagOMLObject", {
       down.obj = do.call(get.fun[i], list(id))
       tags = if (i == "data") down.obj$desc$tags else down.obj$tags
       expect_subset(test.tags, tags)
-      
+
       # try to tag it again
       expect_error(tagOMLObject(id = id, object = i, tags = test.tags),
         "Entity already tagged by this tag")
-      
+
       # remove tag
       expect_null(untagOMLObject(id = id, object = i, tags = test.tags))
-      
+
       # try to remove tag again
       expect_error(untagOMLObject(id = id, object = i, tags = test.tags),
         "Tag not found")
     })
-    
+
     with_empty_cache({
       # check if tag is not in downloaded object
       down.obj = do.call(get.fun[i], list(id))

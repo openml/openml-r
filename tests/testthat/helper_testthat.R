@@ -4,7 +4,6 @@ checkOMLDataSet = function(data) {
   expect_is(data$desc, "OMLDataSetDescription")
   expect_character(data$colnames.old, any.missing = FALSE)
   expect_character(data$colnames.new, any.missing = FALSE)
-  #expect_equal(data$colnames.old, data$colnames.new)
 }
 
 checkBMR = function(bmr) {
@@ -19,7 +18,7 @@ checkBMR = function(bmr) {
     expect_equal(getBMRMeasureIds(bmr)[[j]],  bmr$measures[[j]]$id)
   }
   for (j in seq_along(bmr$learners)) expect_is(bmr$learners[[j]], "Learner")
-  
+
   # check getBMRPredictions
   preds = getBMRPredictions(bmr, as.df = FALSE)
   expect_true(is.list(preds))
@@ -27,11 +26,11 @@ checkBMR = function(bmr) {
   expect_true(is.list(preds1))
   preds11 = preds1[[1L]]
   expect_is(preds11, "Prediction")
-  
+
   p = getBMRPerformances(bmr, as.df = TRUE)
   expect_is(p, "data.frame")
   expect_true(nrow(p) > 1)
-  
+
   a = getBMRAggrPerformances(bmr, as.df = TRUE)
   expect_is(a, "data.frame")
   expect_true(nrow(a) == 1)

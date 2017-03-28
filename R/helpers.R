@@ -102,7 +102,7 @@ catfNotNA = function(text, obj) {
 # collapse numeric values without using scientific representation of large numbers
 collapseNotScientific = function(x, ...) {
   assertNumeric(x, null.ok = TRUE)
-  if (!is.null(x)) 
+  if (!is.null(x))
     collapse(format(x, scientific = FALSE, trim = TRUE), ...) else
       return(NULL)
 }
@@ -111,9 +111,9 @@ collapseNotScientific = function(x, ...) {
 assertSortedInt = function(x, ..., .var.name = vname(x)) {
   checkSorted = function(x) ifelse(is.unsorted(x), "Must contain increasing values", TRUE)
   assertSorted = makeAssertionFunction(checkSorted)
-  
+
   assertIntegerish(x, ..., .var.name = .var.name)
-  if (length(x) == 1) 
+  if (length(x) == 1)
     x = rep(x, times = 2)
   assertSorted(x, .var.name = .var.name)
 }
@@ -128,20 +128,20 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   flow.id = collapseNotScientific(assertIntegerish(flow.id, null.ok = TRUE))
   run.id = collapseNotScientific(assertIntegerish(run.id, null.ok = TRUE))
   uploader.id = collapseNotScientific(assertIntegerish(uploader.id, null.ok = TRUE))
-  
+
   if (!is.null(task.type)) {
     types = listOMLTaskTypes(verbosity = 0)
     assertChoice(task.type, choices = types$name)
     task.type = types$id[types$name == task.type]
   }
-  
-  number.of.instances = collapseNotScientific(assertSortedInt(number.of.instances, 
+
+  number.of.instances = collapseNotScientific(assertSortedInt(number.of.instances,
     lower = 1, null.ok = TRUE), sep = "..")
-  number.of.features = collapseNotScientific(assertSortedInt(number.of.features, 
+  number.of.features = collapseNotScientific(assertSortedInt(number.of.features,
     lower = 1, null.ok = TRUE), sep = "..")
   number.of.classes = collapseNotScientific(assertSortedInt(number.of.classes,
     lower = 1, null.ok = TRUE), sep = "..")
-  number.of.missing.values = collapseNotScientific(assertSortedInt(number.of.missing.values, 
+  number.of.missing.values = collapseNotScientific(assertSortedInt(number.of.missing.values,
     lower = 0, null.ok = TRUE), sep = "..")
 
   if (!is.null(tag)) tag = collapse(assertString(tag, na.ok = FALSE, null.ok = TRUE), sep = "/")
@@ -150,7 +150,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   limit = collapseNotScientific(assertIntegerish(limit, len = 1, null.ok = TRUE))
   offset = collapseNotScientific(assertIntegerish(offset, len = 1, null.ok = TRUE))
   if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
-  
+
   url.args = list(
     task = task.id,
     flow = flow.id,
