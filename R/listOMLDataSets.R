@@ -17,11 +17,14 @@
   tags = convertTagListToTagString(res)
   res = rbindlist(lapply(res, function(x) x[c("did", "name", "version", "status", "format")]))
 
-  res = setDF(cbind(res, tags, qualities))
+  if (nrow(qualities) == 0L)
+    res = setDF(cbind(res, tags)) else
+      res = setDF(cbind(res, tags, qualities))
 
   # convert to integer
   i = colnames(res) %in% colnames(qualities)
-  res[i] = lapply(res[i], as.integer)
+  if (any(i))
+    res[i] = lapply(res[i], as.integer)
 
   # finally convert _ to . in col names
   names(res) = convertNamesOMLToR(names(res))
@@ -34,7 +37,7 @@
 #' @description
 #' The returned \code{data.frame} contains the data set id \dQuote{data.id},
 #' the \dQuote{status} (\dQuote{active}, \dQuote{deactivated}, \dQuote{in_preparation})
-#' and describing data qualities. 
+#' and describing data qualities.
 #' Note that by default only the first 5000 data sets will be returned (due to the argument \dQuote{limit = 5000}).
 #'
 #' @template note_memoise

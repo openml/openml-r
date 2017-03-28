@@ -62,7 +62,7 @@ getOMLDataSetByName = function(data.name = NULL, data.version = NULL, cache.only
     stopf("Version %i does not exist for dataset '%s'. Available versions: %s",
       data.version, data.name, collapse(matching.sets$version, sep = ", "))
   }
-  
+
   # get number of matches ...
   n.matches = length(matching.ids)
   # ... and react accordingly
@@ -70,7 +70,7 @@ getOMLDataSetByName = function(data.name = NULL, data.version = NULL, cache.only
     stopf("No dataset with name '%s' found.", data.name)
   if (n.matches == 1)
     return(getOMLDataSetById(data.id = matching.sets$data.id, cache.only = cache.only, verbosity = verbosity))
-  
+
   return(getOMLDataSetById(data.id = data.id, cache.only = cache.only, verbosity = verbosity))
 }
 
@@ -121,7 +121,8 @@ getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NUL
 
 parseOMLDataSetDescription = function(doc) {
   default.target.attribute = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute")
-  
+  default.target.attribute = if (!is.null(default.target.attribute)) unlist(strsplit(default.target.attribute, ",")) else ""
+
   args = filterNull(list(
     id = xmlRValI(doc, "/oml:data_set_description/oml:id"),
     name = xmlRValS(doc, "/oml:data_set_description/oml:name"),
@@ -135,7 +136,7 @@ parseOMLDataSetDescription = function(doc) {
     language = xmlOValS(doc, "/oml:data_set_description/oml:language"),
     licence = xmlOValS(doc, "/oml:data_set_description/oml:licence"),
     url = xmlRValS(doc, "/oml:data_set_description/oml:url"),
-    default.target.attribute = ifelse(!is.null(default.target.attribute), unlist(strsplit(default.target.attribute, ",")), ""),
+    default.target.attribute = default.target.attribute,
     row.id.attribute = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute"),
     ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute"),
     version.label = xmlOValS(doc, "/oml:data_set_description/oml:version_label"),

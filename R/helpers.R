@@ -166,7 +166,7 @@ convertNameValueListToRow = function(x) {
 
 convertNameValueListToDF = function(x) {
   x = lapply(x, convertNameValueListToRow)
-  cols = names(x[[1]]) #unique(unlist(lapply(x, names)))
+  cols = unique(unlist(lapply(x, names))) # names(x[[1]])
   na.ind = which(vnapply(x, length) == 0)
   x[na.ind] = lapply(seq_along(na.ind), function(x) setNames(rep(list(NA), length(cols)), cols))
   #as.list(setNames(rep(NA, length(cols)), cols)))
