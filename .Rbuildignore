@@ -1,15 +1,13 @@
 ^attic/
 ^doc/
 ^notebooks/
-^vingette/OpenML.Rmd
-^vingette/Bib.bib
+^vingette/OpenML.Rmd$
+^vingette/Bib.bib$
 ^appveyor.yml$
 ^.gitignore$
 ^.ignore$
 ^.travis.yml$
-^.appveyor.yml$
 ^.editorconfig$
-^.coveralls.yml
 
 ^.*tar.gz$
 ^man-roxygen/
@@ -20,3 +18,6 @@
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
+
+# ^tests/
+# ^inst/tests/
