@@ -8,7 +8,7 @@
 #' @import XML
 #' @import jsonlite
 #' @import data.table
-#' @import httr
+#' @importFrom httr POST GET DELETE content upload_file status_code
 #' @importFrom memoise memoise forget
 #' @importFrom digest digest
 #' @importFrom stats setNames sd
