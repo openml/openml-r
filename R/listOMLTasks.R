@@ -25,11 +25,11 @@
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 
   if (is.null(content)) return(data.frame())
-  
+
   res = fromJSON(txt = content, simplifyVector = FALSE)$tasks$task
   input = convertNameValueListToDF(extractSubList(res, "input", simplify = FALSE))
   # get rid of less interesting stuff
-  input = input[, which(colnames(input)%in%c("source_data", "target_value", "time_limit", "number_samples")):=NULL]
+  input = input[, which(colnames(input) %in% c("source_data", "target_value", "time_limit", "number_samples")) := NULL]
   qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
   tags = convertTagListToTagString(res)
   # subset according to evaluation measure and estimation procedure
@@ -63,14 +63,17 @@
   # finally convert _ to . in col names
   names(res) = convertNamesOMLToR(names(res))
 
+  if (!is.null(limit) & (nrow(res) == limit))
+    messagef("The limit to %i result(s) was achieved, you can use the 'limit' arg to increase the limit.", limit)
+
   return(res[ind.estim & ind.eval, ])
 }
 
 #' @title List the first 5000 OpenML tasks.
 #'
 #' @description
-#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id}, 
-#' the \code{status} and some describing data qualities. 
+#' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id},
+#' the \code{status} and some describing data qualities.
 #' Note that by default only the first 5000 data sets will be returned (due to the argument \dQuote{limit = 5000}).
 #'
 #' @template note_memoise

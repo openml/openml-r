@@ -112,8 +112,6 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   run.id = collapseNotScientific(assertIntegerish(run.id, null.ok = TRUE))
   uploader.id = collapseNotScientific(assertIntegerish(uploader.id, null.ok = TRUE))
 
-  if (!is.null(limit))
-    messagef("The request is limited to a maximum of %i result(s), use the 'limit' arg to change this.", limit)
   if (!is.null(task.type)) {
     types = listOMLTaskTypes(verbosity = 0)
     assertChoice(task.type, choices = types$name)
