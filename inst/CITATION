@@ -18,7 +18,7 @@ citEntry(entry="Article",
   header = "To cite the OpenML package in publications, please use:",
   textVersion = paste(
     "Casalicchio Giuseppe, Jakob Bossek, Michel Lang, Dominik Kirchhoff, Pascal Kerschke,",
-    "Benjamin Hofner, Heidi Seibold, Joaquin Vanschoren and Bernd Bischl (2017)."
+    "Benjamin Hofner, Heidi Seibold, Joaquin Vanschoren and Bernd Bischl (2017).",
     "OpenML: An R Package to Connect to the Networked Machine Learning Platform OpenML.",
     "ArXiv e-prints.",
     "URL https://arxiv.org/abs/1701.01293."
