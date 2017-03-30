@@ -9,4 +9,5 @@ doc/?-*.md
 doc/?-*.html
 
 inst/doc
+inst/tests
 .DS_Store

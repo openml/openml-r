@@ -82,8 +82,8 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id}, 
-the \code{status} and some describing data qualities. 
+The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id},
+the \code{status} and some describing data qualities.
 Note that by default only the first 5000 data sets will be returned (due to the argument \dQuote{limit = 5000}).
 }
 \note{
