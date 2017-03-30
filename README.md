@@ -9,6 +9,10 @@
 
 OpenML aims to create a frictionless, collaborative environment for exploring machine learning. This R package allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download datasets, tasks, runs and upload results (see  [Tutorial](http://openml.github.io/openml-r)).
 
+# How to cite
+
+To cite the OpenML R package in publications, please use our [paper](https://arxiv.org/abs/1701.01293).
+
 # Installation of the package
 
 - Install the stable version from [CRAN](https://cran.r-project.org/web/packages/OpenML/index.html)
