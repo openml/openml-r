@@ -4,7 +4,7 @@
 \alias{getOMLRun}
 \title{Get an OpenML run.}
 \usage{
-getOMLRun(run.id, cache.only = FALSE, verbosity = NULL)
+getOMLRun(run.id, cache.only = FALSE, only.xml = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{run.id}{[\code{integer(1)}]\cr
@@ -14,6 +14,9 @@ The run ID.}
 Only try to retrieve the object from cache.
 Will result in error if the object is not found.
 Default is \code{FALSE}.}
+
+\item{only.xml}{[\code{logical(1)}]\cr
+Should only the XML be downloaded?}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
