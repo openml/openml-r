@@ -1,3 +1,7 @@
+OpenML v1.4 (Release date: 2017-??-??):
+===========
+  - Bugfix: getOMLTask did not work for all tasks, now it should.
+
 OpenML v1.3 (Release date: 2017-04-01):
 ===========
   - Bugfixes

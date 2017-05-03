@@ -1,7 +1,7 @@
 context("tagOMLObject")
 
 test_that("tagOMLObject", {
-  obj = c("data", "task", "flow", "run")
+  obj = c("data", "task", "flow")#, "run")
   test.tags = c(collapse(sample(letters, 8), sep = ""), collapse(sample(letters, 8), sep = ""))
   get.fun = setNames(c("getOMLDataSet", "getOMLTask", "getOMLFlow", "getOMLRun"), obj)
 
