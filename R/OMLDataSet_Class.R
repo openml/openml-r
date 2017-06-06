@@ -59,3 +59,13 @@ makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.ne
 print.OMLDataSet = function(x, ...) {
   print.OMLDataSetDescription(x$desc)
 }
+
+#' @export
+as.data.frame.OMLDataSet = function(x, ...) {
+  x$data
+}
+
+#' @export
+as.data.table.OMLTask = function(x, ...) {
+  as.data.table(x$input$data.set)
+}
