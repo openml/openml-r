@@ -20,5 +20,13 @@ test_that("listOMLRunEvaluations", {
     run.evals3 = .listOMLRunEvaluations(task.id = 3832, tag = "study_1")
     run.evals4 = .listOMLRunEvaluations(task.id = c(task.id, 3832), tag = "study_1")
     expect_equal(nrow(run.evals4), nrow(run.evals2) + nrow(run.evals3))
+
+    # try evaluation.measure arg
+    run.eval.meas = listOMLRunEvaluations(task.id = task.id, evaluation.measure = "area_under_roc_curve")
+    expect_equal(run.eval.meas$area.under.roc.curve, run.evals$area.under.roc.curve)
+    expect_true(ncol(run.evals) > ncol(run.eval.meas))
+
+    # try wrong evaluation measure
+    expect_error(listOMLRunEvaluations(task.id = task.id, evaluation.measure = "m"))
   })
 })
