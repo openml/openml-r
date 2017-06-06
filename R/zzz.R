@@ -1,4 +1,3 @@
-#' @import backports
 #' @import BBmisc
 #' @import mlr
 #' @import curl
@@ -18,6 +17,7 @@ NULL
 .OpenML.config = getDefaultConfig()
 
 .onLoad = function(libname, pkgname) {
+  backports::import(pkgname)
   # set config (especially the cachedir) on package loading, otherwise the cachedir from compile-time will be used
   do.call("setOMLConfig", as.list(getDefaultConfig()))
   # if config file exist, use configuration from this file
