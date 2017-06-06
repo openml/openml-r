@@ -8,6 +8,8 @@ test_that("getOMLTask", {
     expect_equal(task$task.type, "Supervised Classification")
     expect_is(task$input$data.set, "OMLDataSet")
     expect_data_frame(task$input$data.set$data, nrows = 150, ncols = 5, any.missing = FALSE)
+    expect_data_frame(as.data.frame(task, nrows = 150, ncols = 5, any.missing = FALSE))
+    expect_data_table(as.data.table(task, nrows = 150, ncols = 5, any.missing = FALSE))
     expect_equal(task$input$data.set, getOMLDataSet(61))
     expect_character(task$tags, min.len = 1L, any.missing = FALSE)
     expect_list(task$output, names = "unique")

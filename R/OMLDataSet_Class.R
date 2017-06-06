@@ -66,6 +66,6 @@ as.data.frame.OMLDataSet = function(x, ...) {
 }
 
 #' @export
-as.data.table.OMLTask = function(x, ...) {
-  as.data.table(x$input$data.set)
+as.data.table.OMLDataSet = function(x, ...) {
+  as.data.table(x$data)
 }

@@ -171,7 +171,7 @@ stringToParam = function (par, x) {
 
 #' @export
 as.data.frame.OMLRunParList = function(x, ...) {
-  setDF(convertOMLRunParListToTable(x))[]
+  as.data.frame(convertOMLRunParListToTable(x))
 }
 
 #' @export

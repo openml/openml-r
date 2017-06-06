@@ -76,10 +76,10 @@ print.OMLTask = function(x, ...) {
 
 #' @export
 as.data.frame.OMLTask = function(x, ...) {
-  as.data.frame(x$input$data.set)
+  as.data.frame(x$input$data.set$data)
 }
 
 #' @export
 as.data.table.OMLTask = function(x, ...) {
-  as.data.table(x$input$data.set)
+  as.data.table(x$input$data.set$data)
 }
