@@ -12,7 +12,7 @@ env:
 
 r_github_packages:
     - jimhester/covr
-    - mlr-org/mlr
+    - mlr-org/farff
     - berndbischl/BBmisc
     - berndbischl/ParamHelpers
 
