@@ -11,6 +11,9 @@ cache:
   - C:\RLibrary
 
 environment:
+  OPENMLAPIKEY:
+    secure: kZ2t27KjMTnsE9n5nfVJz1Bz42uKHr1R3KLN+DeZpdWkSvKd5dnu2NaJt9uFC1Xd
+
   matrix:
     - R_VERSION: devel
     - R_VERSION: release
