@@ -15,7 +15,7 @@
 # lrn = makeLearner("classif.rpart", minsplit = 1)
 # bagging = makeBaggingWrapper(lrn, bw.iters = 500)
 #
-# lrn.par.settings = makeRunParameterList(lrn)
+# lrn.par.settings = makeOMLRunParList(lrn)
 # lrn.par.settings
 #
 # bagging.par.settings = makeRunParameterList(bagging)
@@ -65,15 +65,16 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   setClasses(par.settings, "OMLRunParList")
 }
 
-# show
+convertOMLRunParListToTable = function(x) {
+  if (length(x) == 0L)
+    return(data.table())
+  rbindlist(lapply(x, function(x) x[c("name", "value", "component")]))
+}
+
 #' @export
 print.OMLRunParList = function(x, ...)  {
-  #x = unclass(x)
   catf("This is a '%s' with the following parameters:", class(x)[1])
-  if (length(x) > 0)
-    x = rbindlist(lapply(x, function(x) x[c("name", "value", "component")])) else
-      x = data.frame()
-  print(x)
+  print(convertOMLRunParListToTable(x))
 }
 
 #' @title Extract OMLRunParList from run
@@ -164,4 +165,16 @@ stringToParam = function (par, x) {
     discreteNameToValue(par, x)
   else if (type %in% c("function", "untyped"))
     unserialize(charToRaw(x))
+}
+
+
+
+#' @export
+as.data.frame.OMLRunParList = function(x, ...) {
+  as.data.frame(convertOMLRunParListToTable(x))
+}
+
+#' @export
+as.data.table.OMLRunParList = function(x, ...) {
+  convertOMLRunParListToTable(x)
 }
