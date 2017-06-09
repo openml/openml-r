@@ -3,6 +3,7 @@ OpenML v1.4 (Release date: 2017-??-??):
   - Bugfix: getOMLTask did not work for all tasks, now it should.
   - as.data.frame methods for OMLRunParList, OMLDataSet and OMLTasks objects were added.
   - listOMLRunEvaluations now allows to get results w.r.t. a single evaluation measure ('evaluation.measure' arg) which speeds up the request.
+  - getOMLRun(run.id, only.xml = TRUE) can now be used to get the run without the predictions arff file (which is faster, especially when you are only interested in, e.g. getting the hyperparameters of a run.)
 
 OpenML v1.3 (Release date: 2017-04-01):
 ===========
