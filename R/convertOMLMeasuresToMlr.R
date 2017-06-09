@@ -11,7 +11,7 @@
 # @return [list]
 
 lookupMeasures = function() {
-  list(
+  res = list(
     "mean_absolute_error" = mlr::mae,
     "root_mean_squared_error" = mlr::rmse,
     "area_under_roc_curve" = mlr::auc,
@@ -26,6 +26,11 @@ lookupMeasures = function() {
     "usercpu_time_millis_testing" = mlr::timepredict,
     "usercpu_time_millis_training" = mlr::timetrain
   )
+  res = lapply(res, mlr::setAggregation, aggr = mlr::test.join)
+  res$usercpu_time_millis = mlr::setAggregation(res$usercpu_time_millis, aggr = mlr::test.sum)
+  res$usercpu_time_millis_testing = mlr::setAggregation(res$usercpu_time_millis_testing, aggr = mlr::test.sum)
+  res$usercpu_time_millis_training = mlr::setAggregation(res$usercpu_time_millis_testing, aggr = mlr::test.sum)
+  return(res)
 }
 
 convertOMLMeasuresToMlr = function(measures) {
@@ -33,7 +38,7 @@ convertOMLMeasuresToMlr = function(measures) {
   lookup = lookupMeasures()
   assertSubset(measures, names(lookup))
   mlr.measures = lookup[measures]
-  mlr.measures = lapply(mlr.measures, mlr::setAggregation, aggr = mlr::test.join)
+  #mlr.measures = lapply(mlr.measures, mlr::setAggregation, aggr = mlr::test.join)
   return(mlr.measures)
 }
 
