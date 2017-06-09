@@ -39,7 +39,6 @@ makeOMLTask = function(task.id, task.type, input, parameters = list(), output, t
   )
 }
 
-# show
 #' @export
 print.OMLTask = function(x, ...) {
   catNotNA = function(s, val, fun = identity, ...) {
@@ -72,4 +71,15 @@ print.OMLTask = function(x, ...) {
   }
   if (!all(x$input$evaluation.measures == ""))
     catNotNA('  Evaluation Measure(s):', x$input$evaluation.measures, fun = collapse, sep = ", ")
+}
+
+
+#' @export
+as.data.frame.OMLTask = function(x, ...) {
+  as.data.frame(x$input$data.set$data)
+}
+
+#' @export
+as.data.table.OMLTask = function(x, ...) {
+  as.data.table(x$input$data.set$data)
 }

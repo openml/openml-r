@@ -104,7 +104,7 @@ assertSortedInt = function(x, ..., .var.name = vname(x)) {
 generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
   task.type = NULL, number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL,
   number.of.missing.values = NULL, tag = NULL, data.name = NULL, data.tag = NULL,
-  limit = NULL, offset = NULL, status = NULL) {
+  evaluation.measure = NULL, limit = NULL, offset = NULL, status = NULL) {
 
   assertString(api.call)
   task.id = collapseNotScientific(assertIntegerish(task.id, null.ok = TRUE))
@@ -133,23 +133,26 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   limit = collapseNotScientific(assertIntegerish(limit, len = 1, null.ok = TRUE))
   offset = collapseNotScientific(assertIntegerish(offset, len = 1, null.ok = TRUE))
   if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
+  if (!is.null(evaluation.measure))
+    evaluation.measure = assertChoice(evaluation.measure, choices = listOMLEvaluationMeasures(verbosity = 0)$name)
 
   url.args = list(
-    task = task.id,
-    flow = flow.id,
-    run = run.id,
-    uploader = uploader.id,
-    tag = tag,
-    type = task.type,
-    number_instances = number.of.instances,
-    number_features = number.of.features,
-    number_classes = number.of.classes,
-    number_missing_values = number.of.missing.values,
-    data_name = data.name,
-    data_tag = data.tag,
-    limit = limit,
-    offset = offset,
-    status = status
+    "task" = task.id,
+    "flow" = flow.id,
+    "run" = run.id,
+    "uploader" = uploader.id,
+    "tag" = tag,
+    "type" = task.type,
+    "number_instances" = number.of.instances,
+    "number_features" = number.of.features,
+    "number_classes" = number.of.classes,
+    "number_missing_values" = number.of.missing.values,
+    "data_name" = data.name,
+    "data_tag" = data.tag,
+    "function" = evaluation.measure,
+    "limit" = limit,
+    "offset" = offset,
+    "status" = status
   )
   url.args = Filter(function(x) !is.null(x), url.args)
 

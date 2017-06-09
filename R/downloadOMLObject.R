@@ -106,7 +106,7 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
         url = stri_trim_both(url)
         showInfo(verbosity, "Downloading from '%s' to '%s'", url, f[[file.ind]]$path)
         resp = GET(url)
-        content.resp = content(resp)
+        content.resp = content(resp, as = "raw")
         if (is.vector(content.resp))
           writeBin(content.resp, f[[file.ind]]$path) else
             warningf("File not found at '%s'.", url)
