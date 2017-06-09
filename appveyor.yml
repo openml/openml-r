@@ -11,6 +11,11 @@ cache:
   - C:\RLibrary
 
 environment:
+  global:
+    R_ARCH: x64
+    USE_RTOOLS: true
+    WARNINGS_ARE_ERRORS: 1
+
   OPENMLAPIKEY:
     secure: kZ2t27KjMTnsE9n5nfVJz1Bz42uKHr1R3KLN+DeZpdWkSvKd5dnu2NaJt9uFC1Xd
 
@@ -21,6 +26,7 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh github_package mlr-org/farff mlr-org/mlr berndbischl/BBmisc berndbischl/ParamHelpers
 
 test_script:
   - travis-tool.sh run_tests
