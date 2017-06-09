@@ -13,10 +13,12 @@
 #'   Should files that are already in cache be overwritten?
 #'   Default is \code{FALSE}.
 #' @template arg_cache_only
+#' @param only.xml [\code{logical(1)}]\cr
+#'   Should only the XML be downloaded?
 #' @template arg_verbosity
 #' @keywords internal
 #' @return [list]
-downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), overwrite = FALSE, cache.only = FALSE, verbosity = NULL) {
+downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), overwrite = FALSE, cache.only = FALSE, only.xml = FALSE, verbosity = NULL) {
   id = asCount(id)
   assertChoice(object, choices = c("data", "task", "flow", "run"))
 
@@ -57,7 +59,6 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
   #   stop(doc)
   # }
 
-  ## now download files
   # get url of files
   if (object == "data") {
     url = xmlRValS(doc, "/oml:data_set_description/oml:url")
@@ -96,22 +97,25 @@ downloadOMLObject = function(id, object = c("data", "task", "flow", "run"), over
     url = url[url != ""]
   }
 
-  # download files if there is an url
-  if (!is.null(url) & length(url) != 0) {
-    if (f[[file.ind]]$found & !overwrite) {
-      showInfo(verbosity, sprintf("%s '%i' file '%s' found in cache.", cap.obj, id, basename(f[[file.ind]]$path)))
-    } else {
-      url = stri_trim_both(url)
-      showInfo(verbosity, "Downloading from '%s' to '%s'", url, f[[file.ind]]$path)
-      resp = GET(url)
-      content.resp = content(resp, as = "raw")
-      if (is.vector(content.resp))
-        writeBin(content.resp, f[[file.ind]]$path) else
-          warningf("File not found at '%s'.", url)
-      # set found = TRUE if downloaded file is in cache
-      if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
+  if (!only.xml) {
+    # download files if there is an url
+    if (!is.null(url) & length(url) != 0) {
+      if (f[[file.ind]]$found & !overwrite) {
+        showInfo(verbosity, sprintf("%s '%i' file '%s' found in cache.", cap.obj, id, basename(f[[file.ind]]$path)))
+      } else {
+        url = stri_trim_both(url)
+        showInfo(verbosity, "Downloading from '%s' to '%s'", url, f[[file.ind]]$path)
+        resp = GET(url)
+        content.resp = content(resp, as = "raw")
+        if (is.vector(content.resp))
+          writeBin(content.resp, f[[file.ind]]$path) else
+            warningf("File not found at '%s'.", url)
+        # set found = TRUE if downloaded file is in cache
+        if (file.exists(f[[file.ind]]$path)) f[[file.ind]]$found = TRUE
+      }
     }
   }
+
   return(list(doc = doc, files = f))
 }
 
