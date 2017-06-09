@@ -4,7 +4,8 @@
 \alias{convertOMLRunToBMR}
 \title{Convert an OpenML run set to a benchmark result for mlr.}
 \usage{
-convertOMLRunToBMR(run, measures, recompute = FALSE)
+convertOMLRunToBMR(run, measures = run$task.evaluation.measure,
+  recompute = FALSE)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}]\cr
