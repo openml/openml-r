@@ -75,7 +75,7 @@ getOMLRun = function(run.id, cache.only = FALSE, verbosity = NULL) {
     uploader.name = xmlOValS(doc, "/oml:run/oml:uploader.name"),
     task.id = xmlREValI(doc, "/oml:run/oml:task_id"),
     task.type = xmlOValS(doc, "/oml:run/oml:task_type"),
-    task.evaluation.measure = xmlOValS(doc, "/oml:task_evaluation_measure"),
+    task.evaluation.measure = xmlOValS(doc, "/oml:run/oml:task_evaluation_measure"),
     flow.id = xmlRValI(doc, "/oml:run/oml:flow_id"),
     flow.name = xmlOValS(doc, "/oml:run/oml:flow_name"),
     setup.id = xmlREValI(doc, "/oml:run/oml:setup_id"),

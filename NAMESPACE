@@ -3,6 +3,7 @@
 S3method(as.data.frame,OMLDataSet)
 S3method(as.data.frame,OMLRunParList)
 S3method(as.data.frame,OMLTask)
+S3method(as.data.table,OMLDataSet)
 S3method(as.data.table,OMLRunParList)
 S3method(as.data.table,OMLTask)
 S3method(print,OMLConfig)
