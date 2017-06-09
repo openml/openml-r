@@ -45,6 +45,10 @@ convertOMLRunToBMR = function(run, measures = run$task.evaluation.measure, recom
   task.desc = getTaskDesc(task$mlr.task)
 
   pred = run$predictions
+  if (is.null(pred)) {
+    run = getOMLRun(run$run.id, only.xml = FALSE) # download run again
+    pred = run$predictions
+  }
   if (min(pred$fold) == 0)
     pred$fold = (pred$fold + 1)
   if (min(pred[,"repeat"]) == 0)
