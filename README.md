@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/openml/openml-r.svg?branch=master)](https://travis-ci.org/openml/openml-r)
 [![Build status](https://ci.appveyor.com/api/projects/status/mevevtyr538faqdv/branch/master?svg=true)](https://ci.appveyor.com/project/jakobbossek/openml-r/branch/master)
 [![codecov](https://codecov.io/gh/openml/openml-r/branch/master/graph/badge.svg)](https://codecov.io/gh/openml/openml-r)
-[![Join the chat at https://gitter.im/openml/r](https://badges.gitter.im/openml/openml-r.svg)](https://gitter.im/openml/r?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Chat on slack](https://img.shields.io/badge/chat-on%20slack-yellow.svg)](https://openml.slack.com/messages/C289V36JG)
 
 OpenML aims to create a frictionless, collaborative environment for exploring machine learning. This R package allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download datasets, tasks, runs and upload results (see  [Tutorial](http://openml.github.io/openml-r)).
 
