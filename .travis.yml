@@ -16,9 +16,9 @@ r_check_args: "--as-cran --run-donttest"
 r_packages:
   - devtools
   - roxygen2
+  - covr
 
 r_github_packages:
-  - jimhester/covr
   - mlr-org/farff
   - mlr-org/mlr
   - berndbischl/BBmisc
@@ -40,8 +40,9 @@ after_success:
 notifications:
   email:
     recipients:
+        - giuseppe.casalicchio@stat.uni-muenchen.de
         - michellang@gmail.com
         - j.bossek@gmail.com
     on_success: change
-    on_failure: always
+    on_failure: change
   slack: openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
