@@ -16,7 +16,7 @@ Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
     Pascal Kerschke <kerschke@uni-muenster.de>,
     Joaquin Vanschoren <joaquin.vanschoren@gmail.com>
 Maintainer: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>
-License: BSD_2_clause + file LICENSE
+License: BSD_3_clause + file LICENSE
 URL: https://github.com/openml/openml-r
 BugReports: https://github.com/openml/openml-r/issues
 Depends:
