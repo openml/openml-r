@@ -40,12 +40,14 @@
 #'
 #' @template note_memoise
 #'
-#' @template arg_task.id
-#' @template arg_flow.id
+#' @param task.id [\code{integer}]\cr
+#'  a single ID or a vector of IDs of the task(s).
+#' @param flow.id [\code{integer}]\cr
+#'  a single ID or a vector of IDs of the flow(s).
 #' @param run.id [\code{integer}]\cr
-#'  a single ID or a vector of IDs of the runs.
+#'  a single ID or a vector of IDs of the run(s).
 #' @param uploader.id [\code{integer(1)}]\cr
-#'   ID of the uploader.
+#'  ID of the uploader.
 #' @template arg_tag
 #' @template arg_limit
 #' @template arg_offset

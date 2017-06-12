@@ -10,14 +10,14 @@ listOMLRunEvaluations(task.id = NULL, flow.id = NULL, run.id = NULL,
   show.array.measures = FALSE, extend.flow.name = TRUE)
 }
 \arguments{
-\item{task.id}{[\code{integer(1)}]\cr
-Task ID.}
+\item{task.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of the task(s).}
 
-\item{flow.id}{[\code{integer(1)}]\cr
-ID of the implementation of an OpenML flow.}
+\item{flow.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of the flow(s).}
 
 \item{run.id}{[\code{integer}]\cr
-a single ID or a vector of IDs of the runs.}
+a single ID or a vector of IDs of the run(s).}
 
 \item{uploader.id}{[\code{integer(1)}]\cr
 ID of the uploader.}
