@@ -19,8 +19,8 @@ a single ID or a vector of IDs of the flow(s).}
 \item{run.id}{[\code{integer}]\cr
 a single ID or a vector of IDs of the run(s).}
 
-\item{uploader.id}{[\code{integer(1)}]\cr
-ID of the uploader.}
+\item{uploader.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of uploader profile(s).}
 
 \item{tag}{[\code{character}]\cr
 If not \code{NULL} only entries with the corresponding \code{tag}s

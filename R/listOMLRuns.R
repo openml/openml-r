@@ -46,8 +46,8 @@
 #'  a single ID or a vector of IDs of the flow(s).
 #' @param run.id [\code{integer}]\cr
 #'  a single ID or a vector of IDs of the run(s).
-#' @param uploader.id [\code{integer(1)}]\cr
-#'  ID of the uploader.
+#' @param uploader.id [\code{integer}]\cr
+#'  a single ID or a vector of IDs of uploader profile(s).
 #' @template arg_tag
 #' @template arg_limit
 #' @template arg_offset
