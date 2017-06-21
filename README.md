@@ -12,7 +12,7 @@ OpenML aims to create a frictionless, collaborative environment for exploring ma
 
 # How to cite
 
-To cite the OpenML R package in publications, please use our [paper](https://arxiv.org/abs/1701.01293).
+To cite the OpenML R package in publications, please use our paper entitled [`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`](http://dx.doi.org/10.1007/s00180-017-0742-2). You can also [download the Bibtex file.](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation).
 
 # Installation of the package
 

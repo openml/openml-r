@@ -1,5 +1,5 @@
 citEntry(entry="Article",
-  title = "{OpenML}: An {R} Package to Connect to the Networked Machine Learning Platform {OpenML}",
+  title = "{OpenML}: An {R} Package to Connect to the Machine Learning Platform {OpenML}",
   author = personList(
     person("Giuseppe", "Casalicchio"),
     person("Jakob", "Bossek"),
@@ -11,16 +11,17 @@ citEntry(entry="Article",
     person("Joaquin", "Vanschoren"),
     person("Bernd", "Bischl")
   ),
-  journal      = "ArXiv e-prints",
-  eprint       = "1701.01293",
+  journal      = "Computational Statistics",
   year         = "2017",
-  url          = "https://arxiv.org/abs/1701.01293",
+  pages        = "1--15",
+  doi = "10.1007/s00180-017-0742-2",
+  url = "http://dx.doi.org/10.1007/s00180-017-0742-2",
   header = "To cite the OpenML package in publications, please use:",
   textVersion = paste(
     "Casalicchio Giuseppe, Jakob Bossek, Michel Lang, Dominik Kirchhoff, Pascal Kerschke,",
     "Benjamin Hofner, Heidi Seibold, Joaquin Vanschoren and Bernd Bischl (2017).",
-    "OpenML: An R Package to Connect to the Networked Machine Learning Platform OpenML.",
-    "ArXiv e-prints.",
-    "URL https://arxiv.org/abs/1701.01293."
+    "OpenML: An R Package to Connect to the Machine Learning Platform OpenML.",
+    "Computational Statistics.",
+    "URL http://dx.doi.org/10.1007/s00180-017-0742-2."
   )
 )
