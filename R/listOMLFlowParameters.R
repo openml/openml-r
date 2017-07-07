@@ -1,55 +1,53 @@
 .listOMLFlowParameters = function(flow.id = NULL, tag = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
-  # FIXME: add filter for setup.id
+  # FIXME: add filter for setup.id?
   api.call = generateAPICall(api.call = "json/setup/list", flow.id = flow.id,
     tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
   if (is.null(content)) return(data.frame())
 
-  # for each setup.id there are multiple hyperpars => returns data.frame for each setup.id
-  setups = fromJSON(txt = content)$setups$setup
-  setups = setNames(setups$parameter, setups$setup_id)
+  # Get entries, which are grouped by setup.id
+  setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
+  setups = setNames(extractSubList(setups, "parameter"), extractSubList(setups, "setup_id"))
+  # setups = lapply(names(setups), function(i) Map(c, setups[[i]], setup_id = i))
 
-  # if setup.id has only one hyperparameter then we need some postprocessing
-  not.df = unname(which(!vlapply(setups, is.data.frame)))
-  for (i in not.df) {
-    empty.cols = vnapply(setups[[i]], length) == 0
-    empty.cols = names(empty.cols[empty.cols])
-    for (j in empty.cols) setups[[i]][[j]] = NA
-    setups[[i]] = setDF(setups[[i]])
-  }
-
+  # We need to postprocess the list
+  setups = lapply(setups, function(setup) {
+    # for each setup.id check if it has one or more than one hyperparameters
+    if (is.null(names(setup))) {
+      # if there are more than two entries (hyperparameters) create a dataframe:
+      ret = rbindlist(lapply(setup, function(x) {
+        replace(x, which(vlapply(x, is.list)), NA_character_)
+      }))
+    } else {
+      # if there is only one entry (hyperparameter) do this to create a dataframe:
+      setDF(replace(x, which(vlapply(x, is.list)), NA_character_))
+    }
+  })
   # rbind the list
   setups = as.data.frame(rbindlist(setups, idcol = "setup_id"))
+
+  #   # We need to postprocess the list
+  #   setups = lapply(names(setups), function(i) {
+  #     if (is.null(names(setups[[i]]))) {
+  #       ret = Map(c, setups[[i]], setup_id = i)
+  #       lapply(ret, function(x) replace(x, which(vlapply(x, is.list)), NA_character_))
+  #     } else {
+  #       list(c(replace(x, which(vlapply(x, is.list)), NA_character_), setup_id = i))
+  #     }
+  #   })
+  #   # rbind the list
+  #   setups = rbindlist(unlist(setups, recursive = FALSE))
+
   setups$id = setups$full_name = NULL
-
-  # some columns are data.frames, we need to postprocess this
-  list.cols = vlapply(setups, is.list) #c("data.type", "default.value", "value")
-  list.cols = names(list.cols[list.cols])
-  setups[list.cols] = lapply(list.cols, function(i) {
-    col = setups[[i]]
-    ind = vlapply(col, function(x) length(x) == 0)
-    col[ind] = NA
-    col[col == "null"] = NA
-    return(unlist(col))
-  })
-  setups$value[setups$value == c("null")] = NA
-
-  #setups$data.type = as.character(lapply(setups$data.type, unlist))
-  #setups$default.value = as.character(lapply(setups$default.value, unlist))
-
-  # setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
-  # sid = extractSubList(setups, "setup_id")
-  # setups = setNames(extractSubList(setups, "parameter"), sid)
-
   names(setups) = convertNamesOMLToR(names(setups))
   return(setups)
 }
 
-#' @title List Hyperparameters of flows.
+#' @title List hyperparameters of Flows.
 #'
 #' @description
-#' DESCRIBE HERE
+#' Lists hyperparameter settings for flows.
 #'
 #' @template note_memoise
 #'
