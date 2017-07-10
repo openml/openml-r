@@ -1,8 +1,11 @@
 context("tagOMLObject")
 
 test_that("tagOMLObject", {
+  # skip test locally to avoid that users set tags here (only travis should do this otherwise they can't be removed)
+  skip_if_not(identical(Sys.getenv("TRAVIS"), "true"), message = "skip local tagging")
+
   obj = c("data", "task", "flow")#, "run")
-  test.tags = c(collapse(sample(letters, 8), sep = ""), collapse(sample(letters, 8), sep = ""))
+  test.tags = c(collapse(sample(letters, 9), sep = ""), collapse(sample(letters, 9), sep = ""))
   get.fun = setNames(c("getOMLDataSet", "getOMLTask", "getOMLFlow", "getOMLRun"), obj)
 
   for (i in obj) {
