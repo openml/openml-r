@@ -8,10 +8,10 @@
 #' @template arg_verbosity
 #' @return [\code{numeric}].
 #' @export
-getOMLBenchmarkSuite = function(name = "openml-100", verbosity = NULL) {
+getOMLBenchmarkSuite = function(name = "OpenML100", verbosity = NULL) {
   assertCharacter(name)
-  if (name != "openml-100")
-    stop("Currently, only the benchmark suite 'openml-100' is available.")
+  if (name != "OpenML100")
+    stop("Currently, only the benchmark suite 'OpenML100' is available.")
   prev = as.list(getOMLConfig())
   # reset config after exiting
   on.exit({
