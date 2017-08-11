@@ -22,13 +22,14 @@ loadOMLConfig = function(path = "~/.openml/config", assign = TRUE) {
 
   # get all lines, trimmed, and remove empty lines
   lines = Filter(nzchar, stri_trim_both(readLines(path)))
+  lines2 = lines[!grepl("apikey", lines)]
 
   # check: the format is <name> = <value>
-  pattern.check = stri_match(lines, regex = "\\s*\\S+\\s*=\\s*\\S+\\s*")
+  pattern.check = stri_match(lines2, regex = "\\s*\\S+\\s*=\\s*\\S+\\s*")
   pattern.check = !is.na(pattern.check[, 1L])
   first.err = which.first(!pattern.check)
   if (length(first.err) > 0L)
-    stopf("You have a format error in your config in line:\n%s", lines[first.err])
+    stopf("You have a format error in your config in line:\n%s", lines2[first.err])
 
   # get names and values from config, convert to named evir
   lines = stri_split_fixed(lines, "=")

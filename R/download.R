@@ -27,16 +27,20 @@ doAPICall = function(api.call, id = NULL,
   verbosity = NULL, method, ...) {
   assertChoice(method, choices = c("GET", "POST", "DELETE"))
   assert(checkChoice(verbosity, choices = 0:2), checkNull(verbosity))
-  
+
   # get config infos
   conf = getOMLConfig()
-  
+
+  if (method %in% c("POST", "DELETE") & conf$apikey == "")
+    messagef(paste0("Please use the 'setOMLConfig' or 'saveOMLConfig' function to set the API key.\n",
+      "You can generate the API key from your OpenML account at http://www.openml.org/u#!api"))
+
   # build request URL and query
   url = buildRequestURL(conf$server, api.call, id, url.args, ...)
-  
+
   if (nchar(url) > 4068)
     stopf("'%s' has %i characters, the maximum allowed url length is 4068.", url, nchar(url))
-  
+
   # some nice output to the user
   if (method == "GET") {
     showInfo(verbosity, "%s '%s' to '%s'.", "Downloading from", url,
@@ -45,20 +49,20 @@ doAPICall = function(api.call, id = NULL,
     from.url = ifelse(method == "POST", "Uploading to", "Deleting from")
     showInfo(verbosity, "%s '%s'.", from.url, url)
   }
-  
+
   # finally to the call
   content = doHTTRCall(method,
     url = url,
     query = list(api_key = conf$apikey),
     body = if (length(post.args) > 0) post.args else NULL)
-  
+
   # write response to file
   if (!is.null(file)) {
     con = file(file, open = "w")
     on.exit(close(con))
     writeLines(content, con = con)
   }
-  
+
   return(content)
 }
 
@@ -69,7 +73,7 @@ buildRequestURL = function(server, api.call, id, url.args, ...) {
   id = if (!is.null(id)) stri_paste("/", id) else ""
   #url.args$api_key = conf$apikey
   url.args = collapseNamedList(url.args)
-  
+
   # create url of form
   # http://www.openml.org/apicall/id/[?key1=value1&key2=value2&...]
   if (url.args == "")
@@ -110,18 +114,18 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     if (isXMLResponse(server.response)) parseError = parseXMLError
     else if (isJSONResponse(server.response)) parseError = parseJSONError
     error = parseError(server.response)
-    
+
     if (!is.null(error$message)) {
       if (error$message == "No results") {
         messagef("Server response: %s", error$message)
         return(NULL)
       }
     }
-    
+
     stopf("ERROR (code = %s) in server response: %s\n  %s\n", as.character(error$code), error$message,
       if (!is.null(error$additional.information)) error$additional.information else "")
   }
-  
+
   # if we requested a document we need to extract the actual content
   if (method == "GET")
     server.response = rawToChar(server.response$content)
