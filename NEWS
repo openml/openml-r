@@ -1,6 +1,7 @@
 OpenML v1.5 (Release date: 2017-08-11):
 ===========
   - New functions to list and get all information w.r.t. studies: getOMLStudy, listOMLStudies.
+  - API key not needed anymore for getOML* and listOML* functions
 
 OpenML v1.4 (Release date: 2017-06-20):
 ===========
