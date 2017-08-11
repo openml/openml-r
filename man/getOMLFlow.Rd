@@ -38,7 +38,7 @@ downloaded if not already available in cache.
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLRun}},
-  \code{\link{getOMLTask}}
+  \code{\link{getOMLStudy}}, \code{\link{getOMLTask}}
 
 Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{deleteOMLObject}},

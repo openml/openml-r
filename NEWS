@@ -1,7 +1,6 @@
-OpenML v1.5 (Release date: 2017-XX-XX):
+OpenML v1.5 (Release date: 2017-08-11):
 ===========
   - New functions to list and get all information w.r.t. studies: getOMLStudy, listOMLStudies.
-  - New functions to get the IDs of suggested datasets/tasks that can be used for bechmark experiments getOMLBenchmarkDataSetIds, getOMLBenchmarkTaskIds.
 
 OpenML v1.4 (Release date: 2017-06-20):
 ===========

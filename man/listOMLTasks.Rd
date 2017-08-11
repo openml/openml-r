@@ -104,6 +104,7 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
   \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
+  \code{\link{listOMLStudies}},
   \code{\link{listOMLTaskTypes}}
 
 Other task-related functions: \code{\link{convertOMLTaskToMlr}},

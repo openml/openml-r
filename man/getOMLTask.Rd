@@ -42,7 +42,7 @@ Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
-  \code{\link{getOMLRun}}
+  \code{\link{getOMLRun}}, \code{\link{getOMLStudy}}
 
 Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{deleteOMLObject}},
