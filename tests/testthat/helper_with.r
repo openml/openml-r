@@ -2,18 +2,14 @@ with_reset_config = function(expr, envir = parent.frame()) {
   prev = as.list(getOMLConfig())
   on.exit({
     do.call(setOMLConfig, prev)
-    do.call(saveOMLConfig, c(prev, overwrite = TRUE))
+    #do.call(saveOMLConfig, c(prev, overwrite = TRUE))
   })
   eval(expr, envir = envir)
 }
 
 with_test_cache = function(expr, envir = parent.frame()) {
   with_reset_config({
-    #if (identical(Sys.getenv("TRAVIS"), "true")) {
-    #  cachedir = normalizePath(file.path(find.package("OpenML"), "..", "tests", "cache"))
-    #} else {
     cachedir = normalizePath(file.path(system.file(package = "OpenML"), "tests", "cache"))
-    #}
     setOMLConfig(cachedir = cachedir)
     eval(expr, envir = envir)
   })
@@ -32,6 +28,13 @@ with_empty_cache = function(expr, envir = parent.frame()) {
 with_main_server = function(expr, envir = parent.frame()) {
   with_reset_config({
     setOMLConfig(server = "http://www.openml.org/api/v1")
+    eval(expr, envir = envir)
+  })
+}
+
+with_test_server = function(expr, envir = parent.frame()) {
+  with_reset_config({
+    setOMLConfig(server = "http://test.openml.org/api/v1")
     eval(expr, envir = envir)
   })
 }
