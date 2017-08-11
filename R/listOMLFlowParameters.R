@@ -1,4 +1,4 @@
-.listOMLFlowParameters = function(flow.id = NULL, tag = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
+.listOMLFlowParameters = function(flow.id = NULL, tag = NULL, limit = 5000, offset = NULL, verbosity = NULL) {
   # FIXME: add filter for setup.id?
   api.call = generateAPICall(api.call = "json/setup/list", flow.id = flow.id,
     tag = tag, limit = limit, offset = offset)
@@ -25,7 +25,9 @@
     }
   })
   # rbind the list
-  setups = as.data.frame(rbindlist(setups, idcol = "setup_id"))
+  setups = rbindlist(setups, idcol = "setup_id")
+  setups = lapply(setups, type.convert, as.is = TRUE)
+  setups = as.data.frame(setups, stringsAsFactors = FALSE)
 
   #   # We need to postprocess the list
   #   setups = lapply(names(setups), function(i) {
