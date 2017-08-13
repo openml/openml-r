@@ -42,14 +42,14 @@ checkConfig = function(conf) {
   assertString(conf$cachedir)
   assertString(conf$apikey)
   #assertFlag(conf$confirm.upload)
-  if (nchar(conf$apikey) != 32 & conf$apikey %nin% "")
+  if (nchar(conf$apikey) != 32 & conf$apikey %nin% c("", "PLEASE CHANGE ME"))
     stopf("The apikey must contain 32 characters, currently it has %i characters", nchar(conf$apikey))
   assertChoice(conf$arff.reader, c("RWeka", "farff"))
 }
 
 # get a printable string describing the config
 printableConfig = function(conf) {
-  if (conf$apikey %nin% "") {
+  if (conf$apikey %nin% c("", "PLEASE CHANGE ME")) {
     key = conf$apikey
     substr(key, 1, nchar(key) - 5) = collapse(rep("*", nchar(key) - 5), "")
   } else {
