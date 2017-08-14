@@ -31,7 +31,7 @@ doAPICall = function(api.call, id = NULL,
   # get config infos
   conf = getOMLConfig()
 
-  if (method %in% c("POST", "DELETE") & conf$apikey == "")
+  if ((method %in% c("POST", "DELETE") & conf$apikey == "") | conf$apikey == "PLEASE CHANGE ME")
     messagef(paste0("Please use the 'setOMLConfig' or 'saveOMLConfig' function to set the API key.\n",
       "You can generate the API key from your OpenML account at http://www.openml.org/u#!api"))
 
