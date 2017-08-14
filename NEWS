@@ -1,3 +1,7 @@
+OpenML v1.6 (Release date: 2017-08-14):
+===========
+  - Fixes some config issues
+
 OpenML v1.5 (Release date: 2017-08-11):
 ===========
   - New functions to list and get all information w.r.t. studies: getOMLStudy, listOMLStudies.
