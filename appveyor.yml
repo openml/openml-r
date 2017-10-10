@@ -1,6 +1,5 @@
 init:
-  - echo "apikey=" > "$HOME/.openml/config"
-  - ps: |
+  ps: |
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
@@ -24,10 +23,13 @@ environment:
     - R_VERSION: devel
     - R_VERSION: release
     - R_VERSION: oldrel
-
+  
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh github_package mlr-org/farff mlr-org/mlr berndbischl/BBmisc berndbischl/ParamHelpers
+
+after_build:
+  - Rscript -e 'dir.create(path.expand("~/topenml"));file.create(path.expand("~/topenml/config"))'
 
 test_script:
   - travis-tool.sh run_tests
