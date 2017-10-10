@@ -31,7 +31,7 @@
   # get rid of less interesting stuff
   input = input[, which(colnames(input) %in% c("source_data", "target_value", "time_limit", "number_samples")) := NULL]
   qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
-  tags = convertTagListToTagString(res)
+  # tags = convertTagListToTagString(res)
   # subset according to evaluation measure and estimation procedure
   ind.eval = ind.estim = rep(TRUE, nrow(input))
   if (!is.null(evaluation.measures))
@@ -54,7 +54,7 @@
   #res$quality = res$input = res$tags = NULL
 
   # build final dataframe
-  res = setDF(cbind(res, input, tags, qualities))
+  res = setDF(cbind(res, input, qualities))
 
   # convert to integer
   i = colnames(res) %in% c(colnames(qualities), "did", "task_id")

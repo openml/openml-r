@@ -1,7 +1,7 @@
 context("listOMLTasks")
 
 test_that("listOMLTasks", {
-  exp.names = c("task.id", "task.type", "data.id", "status", "format", "name", "target.feature", "tags",
+  exp.names = c("task.id", "task.type", "data.id", "status", "format", "name", "target.feature", 
     "estimation.procedure", "evaluation.measures", "majority.class.size",
     "max.nominal.att.distinct.values", "minority.class.size", #"num.binary.atts",
     "number.of.classes", "number.of.features", "number.of.instances",
@@ -44,7 +44,7 @@ test_that("listOMLTasks", {
     tasks = .listOMLTasks(tag = exp.tag)
     expect_true(unique(tasks$task.type) == "Subgroup Discovery")
     expect_true(sum(is.na(tasks$evaluation.measures)) == nrow(tasks))
-    expect_true(all(grepl(exp.tag, tasks$tags)))
+    #expect_true(all(grepl(exp.tag, tasks$tags)))
     #expect_set_equal(exp.names, names(tasks))
     
     # check if status works
