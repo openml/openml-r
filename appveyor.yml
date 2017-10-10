@@ -29,7 +29,7 @@ build_script:
   - travis-tool.sh github_package mlr-org/farff mlr-org/mlr berndbischl/BBmisc berndbischl/ParamHelpers
 
 after_build:
-  - Rscript -e 'dir.create(path.expand("~/topenml"));file.create(path.expand("~/topenml/config"))'
+  - Rscript -e 'dir.create(path.expand("~/.openml"));file.create(path.expand("~/.openml/config"))'
 
 test_script:
   - travis-tool.sh run_tests
