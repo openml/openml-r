@@ -1,11 +1,11 @@
 context("listOMLRuns")
 
 test_that("listOMLRuns", {
-  exp.names = c("run.id", "task.id", "setup.id", "flow.id", "uploader", "error.message", "tags")
+  exp.names = c("run.id", "task.id", "setup.id", "flow.id", "uploader", "error.message")
 
   with_main_server({
     rs = .listOMLRuns(task.id = 2L, limit = 1000)
-    expect_data_frame(rs, ncols = 7L, min.rows = 50, col.names = "unique")
+    expect_data_frame(rs, ncols = 6L, min.rows = 50, col.names = "unique")
     expect_true(all(rs$task.id == 2L))
     expect_set_equal(names(rs), exp.names)
 
