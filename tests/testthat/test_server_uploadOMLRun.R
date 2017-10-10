@@ -1,7 +1,6 @@
 context("uploadOMLRun")
 
 test_that("uploadOMLRun", {
-  # download a run and reupload it
   with_test_cache({
     run = getOMLRun(219L)
     expect_is(run, "OMLRun")
@@ -12,14 +11,14 @@ test_that("uploadOMLRun", {
     task = getOMLTask(run$task.id)
     flow = getOMLFlow(run$flow.id)
   })
-
-  maxrun = max(.listOMLRuns(task.id = run$task.id)$run.id)
+  
+  # download a run and reupload it
   run$flow.id = uploadOMLFlow(flow)
   run.id = uploadOMLRun(run)
   expect_is(run.id, "integer")
-  expect_true(maxrun < run.id)
   deleteOMLObject(run.id, object = "run")
 
+  # remove flow.id and try to upload it
   run$flow.id = NA
   expect_error(uploadOMLRun(run), "Please provide a")
 

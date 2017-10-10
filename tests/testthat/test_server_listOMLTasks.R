@@ -29,10 +29,10 @@ test_that("listOMLTasks", {
     #expect_set_equal(exp.names, names(tasks1))
     
     # check if scientific notation works
-    tasks = .listOMLTasks(number.of.instances = c(1e3, 1e7), limit = 10)
-    expect_data_frame(tasks, col.names = "unique")
-    expect_true(min(tasks$number.of.instances) >= 1e3)
-    expect_true(max(tasks$number.of.instances) <= 1e7)
+    # tasks = .listOMLTasks(number.of.instances = c(1e3, 1e7), limit = 10)
+    # expect_data_frame(tasks, col.names = "unique")
+    # expect_true(min(tasks$number.of.instances) >= 1e3)
+    # expect_true(max(tasks$number.of.instances) <= 1e7)
     
     # check if listing one tag works
     one.task = .listOMLTasks(limit = 1)

@@ -27,8 +27,3 @@ NULL
   createCacheSubDirs(verbosity = 0L)
 }
 
-.onAttach = function(libname, pkgname) {
-  if (getOMLConfig()$apikey %in% c("", "PLEASE CHANGE ME"))
-    packageStartupMessage(paste0("Please use the 'setOMLConfig' or 'saveOMLConfig' function to set the API key.\n",
-      "You can generate the API key from your OpenML account at http://www.openml.org/u#!api"))
-}
