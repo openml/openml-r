@@ -28,7 +28,7 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh github_package mlr-org/farff mlr-org/mlr berndbischl/BBmisc berndbischl/ParamHelpers
 
-after_build:
+before_test:
   - Rscript -e 'dir.create(path.expand("~/.openml"));file.create(path.expand("~/.openml/config"))'
 
 test_script:
