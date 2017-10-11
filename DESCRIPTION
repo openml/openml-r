@@ -31,7 +31,9 @@ Suggests:
     farff,
     knitr,
     rmarkdown,
-    R.rsp
+    R.rsp,
+    plotly,
+    htmlwidgets
 Imports:
     backports (>= 1.1.0),
     BBmisc (>= 1.11),

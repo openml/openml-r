@@ -31,7 +31,7 @@
 #' @example /inst/examples/runTaskMlr.R
 #' @export
 runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1, 
-  scimark.vector = NULL, models = TRUE, ...) {
+  scimark.vector = NULL, models = TRUE, pdp = FALSE, ...) {
   assert(checkString(learner), checkClass(learner, "Learner"))
   if (is.character(learner))
     learner = mlr::makeLearner(learner)
@@ -93,6 +93,12 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
   run = makeOMLRun(task.id = task$task.id,
     error.message = ifelse(length(msg) == 0, NA_character_, msg))
   run$predictions = reformatPredictions(res$pred$data, task)
+  
+  if (pdp) {
+    mod = train(learner, z$mlr.task)
+    pd = plotPartialDependence(generatePartialDependenceData(mod, z$mlr.task))
+    run$pdp = (pd + ggplot2::theme_minimal())
+  }
   
   # Add parameter settings and seed
   run$parameter.setting = append(parameter.setting, seed.setting)

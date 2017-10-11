@@ -103,6 +103,13 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
     arff.writer(run$predictions, file = predictions.file)
     post.args$predictions = upload_file(path = predictions.file)
   }
+  
+  if (!is.null(run$pdp)) {
+    pdp.file = tempfile(pattern = "pdp", fileext = ".html")
+    on.exit(unlink(pdp.file))
+    htmlwidgets::saveWidget(plotly::ggplotly(run$pdp), pdp.file)
+    post.args$pdp = upload_file(path = pdp.file)
+  }
 
   if (!is.null(bmr)) {
     # FIXME: See https://github.com/openml/OpenML/issues/276 do we always want to upload this? Or only for TuneWrapper?
