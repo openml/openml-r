@@ -1,4 +1,4 @@
-.listOMLFlowParameters = function(setup.id = NULL, flow.id = NULL, 
+.listOMLSetup = function(setup.id = NULL, flow.id = NULL, 
   limit = 1000, offset = NULL, verbosity = NULL) {
   api.call = generateAPICall(api.call = "json/setup/list",
     setup.id = setup.id, flow.id = flow.id, limit = limit, offset = offset)
@@ -8,9 +8,13 @@
 
   # Get entries, which are grouped by setup.id
   setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
-  if (is.null(setups$parameter))
-    setups = setNames(extractSubList(setups, "parameter"), extractSubList(setups, "setup_id")) else
-      setups = setNames(list(setups$parameter), setups$setup_id)
+  
+  if (is.null(setups$parameter)) {
+    par = extractSubList(setups, "parameter")
+    setups = setNames(par, extractSubList(setups, "setup_id")) 
+  } else {
+    setups = setNames(list(setups$parameter), setups$setup_id)
+  }
   # setups = lapply(names(setups), function(i) Map(c, setups[[i]], setup_id = i))
 
   # We need to postprocess the list
@@ -54,6 +58,18 @@
   return(setups)
 }
 
+listHasName = function(l, name = "parameter") {
+  if (name %in% names(l)) {
+    return(TRUE)
+  } else {
+    if (is.list(l)) {
+      any(vlapply(l, foo))
+    } else {
+      return(FALSE)
+    }
+  }
+}
+
 #' @title List hyperparameters of Flows.
 #'
 #' @description
@@ -69,5 +85,5 @@
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @export
-#' @example inst/examples/listOMLFlowParameters
-listOMLFlowParameters = memoise(.listOMLFlowParameters)
+#' @example inst/examples/listOMLSetup
+listOMLSetup = memoise(.listOMLSetup)
