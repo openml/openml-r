@@ -1,7 +1,7 @@
-.listOMLFlowParameters = function(flow.id = NULL, limit = 5000, offset = NULL, verbosity = NULL) {
-  # FIXME: add filter for setup.id?
+.listOMLFlowParameters = function(setup.id = NULL, flow.id = NULL, 
+  limit = 1000, offset = NULL, verbosity = NULL) {
   api.call = generateAPICall(api.call = "json/setup/list",
-    flow.id = flow.id, limit = limit, offset = offset)
+    setup.id = setup.id, flow.id = flow.id, limit = limit, offset = offset)
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
   if (is.null(content)) return(data.frame())
