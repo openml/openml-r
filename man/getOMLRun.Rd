@@ -42,7 +42,7 @@ and user computed metrics is downloaded if not already available in cache.
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
-  \code{\link{getOMLTask}}
+  \code{\link{getOMLStudy}}, \code{\link{getOMLTask}}
 
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{convertOMLRunToBMR}},

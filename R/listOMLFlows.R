@@ -9,7 +9,7 @@
   flows$id = as.integer(flows$id)
   flows$version = as.integer(flows$version)
   flows$uploader = as.integer(flows$uploader)
-  flows$tags = vcapply(flows$tags, function(x) collapse(x, ", "))
+  #flows$tags = vcapply(flows$tags, function(x) collapse(x, ", "))
 
   # for some reason external_version is NOT atomic
   # Unfortunately unlist() drops character(0) entries!

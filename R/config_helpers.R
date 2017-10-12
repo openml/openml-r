@@ -21,7 +21,7 @@ getDefaultConfig = function() {
     cachedir = file.path(tempdir(), "cache"),
     verbosity = 1L,
     arff.reader = "farff",
-    apikey = "PLEASE CHANGE ME",
+    apikey = "",
     confirm.upload = TRUE
   ))
   checkConfig(x)
@@ -34,7 +34,7 @@ checkConfig = function(conf) {
   ns = ls(conf, all.names = TRUE)
   ns2 = c("server", "apikey", "cachedir", "verbosity", "arff.reader", "confirm.upload")
   if (any(ns %nin% ns2))
-    stopf("You are only allowed to define the following names in your config:\n%s\nBut you also had:\n%s",
+    warningf("You are only allowed to define the following names in your config:\n%s\nBut you also had:\n%s",
       collapse(ns2, sep = ", "), collapse(setdiff(ns, ns2), sep = ", "))
   assertString(conf$server)
   assert(checkChoice(conf$verbosity, 0:2), checkChoice(conf$verbosity, as.character(0:2)))
@@ -42,16 +42,16 @@ checkConfig = function(conf) {
   assertString(conf$cachedir)
   assertString(conf$apikey)
   #assertFlag(conf$confirm.upload)
-  if (nchar(conf$apikey) != 32 & conf$apikey != "PLEASE CHANGE ME")
+  if (nchar(conf$apikey) != 32 & conf$apikey %nin% c("", "PLEASE CHANGE ME"))
     stopf("The apikey must contain 32 characters, currently it has %i characters", nchar(conf$apikey))
   assertChoice(conf$arff.reader, c("RWeka", "farff"))
 }
 
 # get a printable string describing the config
 printableConfig = function(conf) {
-  if (conf$apikey != "PLEASE CHANGE ME") {
+  if (conf$apikey %nin% c("", "PLEASE CHANGE ME")) {
     key = conf$apikey
-    substr(key, 1, nchar(key)-5) = collapse(rep("*", nchar(key)-5), "")
+    substr(key, 1, nchar(key) - 5) = collapse(rep("*", nchar(key) - 5), "")
   } else {
     key = conf$apikey
   }

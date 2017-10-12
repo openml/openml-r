@@ -29,6 +29,13 @@ test_that("tagOMLObject", {
       # try to remove tag again
       expect_error(untagOMLObject(id = id, object = i, tags = test.tags),
         "Tag not found")
+
+      # tagging should not work without APIkey
+      with_reset_config({
+        setOMLConfig(apikey = "")
+        expect_error(tagOMLObject(id = id, object = i, tags = test.tags))
+        expect_error(untagOMLObject(id = id, object = i, tags = test.tags))
+      })
     })
 
     with_empty_cache({

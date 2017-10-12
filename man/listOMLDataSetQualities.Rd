@@ -36,6 +36,7 @@ Other listing functions: \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
   \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
+  \code{\link{listOMLStudies}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 }

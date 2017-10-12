@@ -23,10 +23,13 @@ environment:
     - R_VERSION: devel
     - R_VERSION: release
     - R_VERSION: oldrel
-
+  
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh github_package mlr-org/farff mlr-org/mlr berndbischl/BBmisc berndbischl/ParamHelpers
+
+before_test:
+  - Rscript -e 'dir.create(path.expand("~/.openml"));file.create(path.expand("~/.openml/config"))'
 
 test_script:
   - travis-tool.sh run_tests
