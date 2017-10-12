@@ -3,7 +3,9 @@ context("listOMLFlowParameters")
 skip_on_cran()
 
 test_that("listOMLFlowParameters", {
-  df = .listOMLFlowParameters(limit = 10) # works
-  df = .listOMLFlowParameters(limit = 100) # works not
-  df = .listOMLFlowParameters(flow.id = 21) # works not
+  df = .listOMLFlowParameters(limit = 1)
+  df = .listOMLFlowParameters(limit = 10)
+  df = .listOMLFlowParameters(limit = 100)
+  df = .listOMLFlowParameters(flow.id = 5685, limit = 1000) # works 
+  df = .listOMLFlowParameters(flow.id = 1821, limit = 1000) # works 
 })

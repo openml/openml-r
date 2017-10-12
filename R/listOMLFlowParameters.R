@@ -8,7 +8,9 @@
 
   # Get entries, which are grouped by setup.id
   setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
-  setups = setNames(extractSubList(setups, "parameter"), extractSubList(setups, "setup_id"))
+  if (is.null(setups$parameter))
+    setups = setNames(extractSubList(setups, "parameter"), extractSubList(setups, "setup_id")) else
+      setups = setNames(list(setups$parameter), setups$setup_id)
   # setups = lapply(names(setups), function(i) Map(c, setups[[i]], setup_id = i))
 
   # We need to postprocess the list
@@ -21,11 +23,17 @@
       }))
     } else {
       # if there is only one entry (hyperparameter) do this to create a dataframe:
-      setDF(replace(x, which(vlapply(x, is.list)), NA_character_))
+      ret = setDF(replace(setup, which(vlapply(setup, is.list)), NA_character_))
     }
   })
   # rbind the list
-  setups = rbindlist(setups, idcol = "setup_id")
+  # FIXME: rbindlist does not work anymore therefore do this:
+  nrows = vnapply(setups, nrow)
+  setup.id = rep(names(nrows[nrows != 0]), nrows[nrows != 0])
+  setups = do.call(rbind, setups)
+  setups$setup.id = setup.id
+  #setups = cbind(data.frame(setup.id = setup.id, stringsAsFactors = FALSE), setups)
+  #setups = rbindlist(setups, idcol = "setup_id")
   setups = lapply(setups, type.convert, as.is = TRUE)
   setups = as.data.frame(setups, stringsAsFactors = FALSE)
 
