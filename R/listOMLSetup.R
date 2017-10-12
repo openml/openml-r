@@ -9,12 +9,7 @@
   # Get entries, which are grouped by setup.id
   setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
   
-  if (is.null(setups$parameter)) {
-    par = extractSubList(setups, "parameter")
-    setups = setNames(par, extractSubList(setups, "setup_id")) 
-  } else {
-    setups = setNames(list(setups$parameter), setups$setup_id)
-  }
+  setups = extractRecursiveList(setups)
   # setups = lapply(names(setups), function(i) Map(c, setups[[i]], setup_id = i))
 
   # We need to postprocess the list
@@ -32,12 +27,13 @@
   })
   # rbind the list
   # FIXME: rbindlist does not work anymore therefore do this:
-  nrows = vnapply(setups, nrow)
-  setup.id = rep(names(nrows[nrows != 0]), nrows[nrows != 0])
-  setups = do.call(rbind, setups)
+  #nrows = vnapply(setups, nrow)
+  #setup.id = rep(names(nrows[nrows != 0]), nrows[nrows != 0])
+  #setups = do.call(rbind, setups)
   #setups$setup.id = setup.id
-  setups = cbind(data.frame(setup.id = setup.id, stringsAsFactors = FALSE), setups)
+  #setups = cbind(data.frame(setup.id = setup.id, stringsAsFactors = FALSE), setups)
   #setups = rbindlist(setups, idcol = "setup_id")
+  setups = rbindlist(setups, fill = TRUE)
   setups = lapply(setups, type.convert, as.is = TRUE)
   setups = as.data.frame(setups, stringsAsFactors = FALSE)
 
@@ -58,14 +54,17 @@
   return(setups)
 }
 
-listHasName = function(l, name = "parameter") {
-  if (name %in% names(l)) {
-    return(TRUE)
+extractRecursiveList = function(l) {
+  if ("parameter" %in% names(l)) {
+    setupid = list(setup.id = l$setup_id)
+    lapply(l$parameter, function(x) c(setupid, x))
   } else {
     if (is.list(l)) {
-      any(vlapply(l, foo))
+      unlist(lapply(l, function(i) {
+        extractRecursiveList(i)
+      }), recursive = FALSE)
     } else {
-      return(FALSE)
+      return(data.table())
     }
   }
 }

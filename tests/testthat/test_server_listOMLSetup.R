@@ -15,7 +15,12 @@ test_that("listOMLSetup", {
   expect_true(length(unique(df$setup.id)) <= 10)
   
   with_main_server({
-    df = listOMLSetup(flow.id = 5685) # works 
+    df = listOMLSetup(limit = 10)
+    expect_data_frame(df)
+    expect_subset(exp.cols, colnames(df))
+    expect_true(length(unique(df$setup.id)) <= 10)
+    
+    df = listOMLSetup(flow.id = 5685)
     expect_data_frame(df)
     expect_subset(exp.cols, colnames(df))
     expect_true(unique(df$flow.id) == 5685)
