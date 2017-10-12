@@ -51,7 +51,12 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
       component = component #gsub(".*[.]", "", mlr.lrn$id)
     )
   }
-
+  
+  par.settings$predict.type = makeOMLRunParameter(
+    name = "predict.type",
+    value = getLearnerPredictType(mlr.lrn)
+  )
+  
   # add component
   next.learner = mlr.lrn
   while (!is.null(next.learner)) {
@@ -62,6 +67,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
     }
     next.learner = next.learner$next.learner
   }
+  
   setClasses(par.settings, "OMLRunParList")
 }
 

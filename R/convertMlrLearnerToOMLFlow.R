@@ -134,7 +134,12 @@ removeAllHyperPars = function(lrn) {
 # pars
 makeFlowParameterList = function(lrn) {
   par.list = makeFlowParameterListForMlrLearner(lrn)
-  par.list = append(par.list, makeFlowParameterListFor())
+  pt = list(makeOMLFlowParameter(
+    name = "predict.type",
+    data.type = "character", 
+    default.value = NA_character_
+  ))
+  par.list = c(par.list, makeFlowParameterListFor(), pt)
   return(par.list)
 }
 
