@@ -1,7 +1,7 @@
-.listOMLFlowParameters = function(flow.id = NULL, tag = NULL, limit = 5000, offset = NULL, verbosity = NULL) {
+.listOMLFlowParameters = function(flow.id = NULL, limit = 5000, offset = NULL, verbosity = NULL) {
   # FIXME: add filter for setup.id?
-  api.call = generateAPICall(api.call = "json/setup/list", flow.id = flow.id,
-    tag = tag, limit = limit, offset = offset)
+  api.call = generateAPICall(api.call = "json/setup/list",
+    flow.id = flow.id, limit = limit, offset = offset)
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
   if (is.null(content)) return(data.frame())
@@ -31,8 +31,8 @@
   nrows = vnapply(setups, nrow)
   setup.id = rep(names(nrows[nrows != 0]), nrows[nrows != 0])
   setups = do.call(rbind, setups)
-  setups$setup.id = setup.id
-  #setups = cbind(data.frame(setup.id = setup.id, stringsAsFactors = FALSE), setups)
+  #setups$setup.id = setup.id
+  setups = cbind(data.frame(setup.id = setup.id, stringsAsFactors = FALSE), setups)
   #setups = rbindlist(setups, idcol = "setup_id")
   setups = lapply(setups, type.convert, as.is = TRUE)
   setups = as.data.frame(setups, stringsAsFactors = FALSE)
