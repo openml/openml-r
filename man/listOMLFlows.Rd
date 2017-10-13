@@ -54,7 +54,8 @@ Other listing functions: \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLRuns}}, \code{\link{listOMLStudies}},
+  \code{\link{listOMLRuns}}, \code{\link{listOMLSetup}},
+  \code{\link{listOMLStudies}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 

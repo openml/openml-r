@@ -101,14 +101,16 @@ assertSortedInt = function(x, ..., .var.name = vname(x)) {
   assertSorted(x, .var.name = .var.name)
 }
 
-generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NULL, uploader.id = NULL,
-  task.type = NULL, number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL,
+generateAPICall = function(api.call, task.id = NULL, flow.id = NULL,
+  setup.id = NULL, run.id = NULL, uploader.id = NULL, task.type = NULL, 
+  number.of.instances = NULL, number.of.features = NULL, number.of.classes = NULL,
   number.of.missing.values = NULL, tag = NULL, data.name = NULL, data.tag = NULL,
   evaluation.measure = NULL, limit = NULL, offset = NULL, status = NULL) {
 
   assertString(api.call)
   task.id = collapseNotScientific(assertIntegerish(task.id, null.ok = TRUE))
   flow.id = collapseNotScientific(assertIntegerish(flow.id, null.ok = TRUE))
+  setup.id = collapseNotScientific(assertIntegerish(setup.id, null.ok = TRUE))
   run.id = collapseNotScientific(assertIntegerish(run.id, null.ok = TRUE))
   uploader.id = collapseNotScientific(assertIntegerish(uploader.id, null.ok = TRUE))
 
@@ -139,6 +141,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL, run.id = NU
   url.args = list(
     "task" = task.id,
     "flow" = flow.id,
+    "setup" = setup.id,
     "run" = run.id,
     "uploader" = uploader.id,
     "tag" = tag,

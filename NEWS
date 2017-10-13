@@ -1,3 +1,9 @@
+OpenML v1.7 (Release date: 2017-XX-XX):
+===========
+  - listOMLTask, listOMLFlow, listOMLRuns do not return the tag field anymore.
+  - New function listOMLSetup added, which enables extracting hyperparameter configurations of specific setups/flows.
+  - New function chunkOMLlist added in order to automatically do chunked listing requests
+  
 OpenML v1.6 (Release date: 2017-08-14):
 ===========
   - Fixes some config issues
