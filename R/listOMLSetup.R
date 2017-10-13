@@ -76,13 +76,14 @@ extractRecursiveList = function(l) {
 #'
 #' @template note_memoise
 #'
+#' @param setup.id [\code{integer(1)}]\cr
+#'   ID of the setup (which is basically an ID for the parameter configuration).
 #' @template arg_flow.id
-#' @template arg_tag
 #' @template arg_limit
 #' @template arg_offset
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
 #' @export
-#' @example inst/examples/listOMLSetup
+#' @example inst/examples/listOMLSetup.R
 listOMLSetup = memoise(.listOMLSetup)
