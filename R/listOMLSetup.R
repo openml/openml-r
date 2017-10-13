@@ -49,14 +49,15 @@
   #   # rbind the list
   #   setups = rbindlist(unlist(setups, recursive = FALSE))
 
-  setups$id = setups$full_name = NULL
+  cn = c("setup_id", "flow_id", "parameter_name", "data_type", "default_value", "value")
+  setups = setups[, cn]
   names(setups) = convertNamesOMLToR(names(setups))
   return(setups)
 }
 
 extractRecursiveList = function(l) {
   if ("parameter" %in% names(l)) {
-    setupid = list(setup.id = l$setup_id)
+    setupid = list(setup_id = l$setup_id)
     lapply(l$parameter, function(x) c(setupid, x))
   } else {
     if (is.list(l)) {
