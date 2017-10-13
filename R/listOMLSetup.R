@@ -10,6 +10,7 @@
   setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
   
   setups = extractRecursiveList(setups)
+  if (length(setups) == 0) return(data.frame())
   # setups = lapply(names(setups), function(i) Map(c, setups[[i]], setup_id = i))
 
   # We need to postprocess the list
