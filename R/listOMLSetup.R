@@ -1,4 +1,4 @@
-.listOMLSetup = function(setup.id = NULL, flow.id = NULL, 
+.listOMLSetup = function(setup.id = NULL, flow.id = NULL,
   limit = 1000, offset = NULL, verbosity = NULL) {
   api.call = generateAPICall(api.call = "json/setup/list",
     setup.id = setup.id, flow.id = flow.id, limit = limit, offset = offset)
@@ -8,7 +8,7 @@
 
   # Get entries, which are grouped by setup.id
   setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
-  
+
   setups = extractRecursiveList(setups)
   if (length(setups) == 0) return(data.frame())
   # setups = lapply(names(setups), function(i) Map(c, setups[[i]], setup_id = i))
@@ -71,10 +71,11 @@ extractRecursiveList = function(l) {
   }
 }
 
-#' @title List hyperparameters of Flows.
+#' @title List hyperparameter settings
 #'
 #' @description
-#' Lists hyperparameter settings for flows.
+#' Each run has a \code{setup.id}, i.e. an ID for the hyperparameter settings of the flow that produced the run.
+#' This function allows the listing of hyperparameter settings.
 #'
 #' @template note_memoise
 #'
