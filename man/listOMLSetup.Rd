@@ -2,7 +2,7 @@
 % Please edit documentation in R/listOMLSetup.R
 \name{listOMLSetup}
 \alias{listOMLSetup}
-\title{List hyperparameters of Flows.}
+\title{List hyperparameter settings}
 \usage{
 listOMLSetup(setup.id = NULL, flow.id = NULL, limit = 1000,
   offset = NULL, verbosity = NULL)
@@ -35,7 +35,8 @@ Default is set via \code{\link{setOMLConfig}}.}
 [\code{data.frame}].
 }
 \description{
-Lists hyperparameter settings for flows.
+Each run has a \code{setup.id}, i.e. an ID for the hyperparameter settings of the flow that produced the run.
+This function allows the listing of hyperparameter settings.
 }
 \note{
 This function is memoised. I.e., if you call this function twice in a running R session,
