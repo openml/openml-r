@@ -17,7 +17,7 @@
 chunkOMLlist = function(listfun, ..., total.limit = 100000, chunk.limit = 1000) {
   assertChoice(listfun, choices = c("listOMLFlows", "listOMLRuns", "listOMLRunEvaluations", "listOMLDataSets", "listOMLTasks", "listOMLSetup"))
   args = list(...)
-  assertSubset(names(args), names(formals(list.fun)), empty.ok = TRUE)
+  assertSubset(names(args), names(formals(listfun)), empty.ok = TRUE)
   if (!is.null(args$limit) | !is.null(args$offset))
     stopf("Changing 'limit' and/or 'offset' is not allowed. 'chunkOMLlist' sets the 'limit' and 'offset' of '%s' automatically.", listfun)
 
