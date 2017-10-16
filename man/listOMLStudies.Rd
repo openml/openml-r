@@ -21,7 +21,8 @@ Default is set via \code{\link{setOMLConfig}}.}
 Retrives a list of available studies.
 }
 \seealso{
-Other listing functions: \code{\link{listOMLDataSetQualities}},
+Other listing functions: \code{\link{chunkOMLlist}},
+  \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},

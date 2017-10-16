@@ -32,7 +32,8 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 }
 }
 \seealso{
-Other listing functions: \code{\link{listOMLDataSets}},
+Other listing functions: \code{\link{chunkOMLlist}},
+  \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
   \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
