@@ -16,12 +16,35 @@ citEntry(entry="Article",
   pages        = "1--15",
   doi = "10.1007/s00180-017-0742-2",
   url = "http://dx.doi.org/10.1007/s00180-017-0742-2",
-  header = "To cite the OpenML package in publications, please use:",
+  header = "### To cite the OpenML R package in publications, please use:",
   textVersion = paste(
     "Casalicchio Giuseppe, Jakob Bossek, Michel Lang, Dominik Kirchhoff, Pascal Kerschke,",
     "Benjamin Hofner, Heidi Seibold, Joaquin Vanschoren and Bernd Bischl (2017).",
     "OpenML: An R Package to Connect to the Machine Learning Platform OpenML.",
     "Computational Statistics.",
     "URL http://dx.doi.org/10.1007/s00180-017-0742-2."
+  )
+)
+
+citEntry(entry="Article",
+  title = "{OpenML}: Networked Science in Machine Learning",
+  author = personList(
+    person("Joaquin", "Vanschoren"),
+    person("Jan", "N. van Rijn"),
+    person("Bernd", "Bischl"),
+    person("Luis", "Torgo")
+  ),
+  journal      = "SIGKDD Explorations",
+  volume       = "15",
+  year         = "2013",
+  pages        = "49--60",
+  doi = "10.1145/2641190.2641198",
+  url = "https://dx.doi.org/10.1145/2641190.2641198",
+  header = "### We would also appreciate it, if you could cite the OpenML platform itself:",
+  textVersion = paste(
+    "Joaquin Vanschoren, Jan N. van Rijn, Bernd Bischl, and Luis Torgo.",
+    "OpenML: Networked Science in Machine Learning.",
+    "SIGKDD Explorations 15(2), pp 49-60, 2013.",
+    "URL https://dx.doi.org/10.1145/2641190.2641198."
   )
 )

@@ -16,6 +16,8 @@ This R package allows to interface the [OpenML](http://www.openml.org/frontend/p
 
 To cite the OpenML R package in publications, please use our paper entitled [`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`](http://dx.doi.org/10.1007/s00180-017-0742-2). You can also [download the Bibtex file.](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation).
 
+See also [here](https://www.openml.org/cite) for further information on how to cite the OpenML project itself.
+
 # Installation of the package
 
 - Install the stable version from [CRAN](https://cran.r-project.org/web/packages/OpenML/index.html)
