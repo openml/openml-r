@@ -1,13 +1,4 @@
-#' @title list OpenML Studies.
-#'
-#' @description
-#' Retrives a list of available studies.
-#'
-#' @template arg_verbosity
-#' @return [\code{data.frame}].
-#' @family listing functions
-#' @export
-listOMLStudies = function(verbosity = NULL) {
+.listOMLStudies = function(verbosity = NULL) {
   api.call = generateAPICall("json/study/list")
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
@@ -27,3 +18,16 @@ listOMLStudies = function(verbosity = NULL) {
 
   return(study)
 }
+
+#' @title list OpenML Studies.
+#'
+#' @description
+#' Retrives a list of available studies.
+#'
+#' @template note_memoise
+#'
+#' @template arg_verbosity
+#' @return [\code{data.frame}].
+#' @family listing functions
+#' @export
+listOMLStudies = memoise(.listOMLStudies)

@@ -1,16 +1,4 @@
-#' @title Get OpenML Study information.
-#'
-#' @description
-#' A OpenML study is a collection of OpenML objects with a specific tag defined by the user (i.e. "study_X").
-#' If you create a study through the website \url{https://www.openml.org/new/study}, you can also specify an alias which can be used to access the study.
-#'
-#' @param study [\code{numeric(1)}|\code{character(1)}]\cr
-#'   Either the id or the alias of a study.
-#' @template arg_verbosity
-#' @return [\code{OMLStudy}].
-#' @family downloading functions
-#' @export
-getOMLStudy = function(study = NULL, verbosity = NULL) {
+.getOMLStudy = function(study = NULL, verbosity = NULL) {
   #study = collapseNotScientific(assertIntegerish(study, null.ok = TRUE))
   assert(checkIntegerish(study, null.ok = TRUE), checkString(study, null.ok = TRUE))
   study = if (is.numeric(study)) collapseNotScientific(study) else study
@@ -32,6 +20,22 @@ getOMLStudy = function(study = NULL, verbosity = NULL) {
   ret = rapply(ret, type.convert, as.is = TRUE, how = "replace")
   return(setClasses(ret, "OMLStudy"))
 }
+
+#' @title Get OpenML Study information.
+#'
+#' @description
+#' A OpenML study is a collection of OpenML objects with a specific tag defined by the user (i.e. "study_X").
+#' If you create a study through the website \url{https://www.openml.org/new/study}, you can also specify an alias which can be used to access the study.
+#'
+#' @template note_memoise
+#'
+#' @param study [\code{numeric(1)}|\code{character(1)}]\cr
+#'   Either the id or the alias of a study.
+#' @template arg_verbosity
+#' @return [\code{OMLStudy}].
+#' @family downloading functions
+#' @export
+getOMLStudy = memoise(.getOMLStudy)
 
 #' @export
 print.OMLStudy = function(x, ...) {
