@@ -36,24 +36,35 @@ setOMLConfig(verbosity = 0)
 lrn1 = makeLearner("classif.ranger", num.trees = 100)
 lrn2 = makeBaggingWrapper(makeLearner("classif.rpart"), bw.iters = 100)
 lrn3 = makeBaggingWrapper(makeLearner("classif.J48"), bw.iters = 100)
-lrn4 = makeBaggingWrapper(makeLearner("classif.ctree"), bw.iters = 100)
 ```
 
 ## Query OpenML
 
-Now we search for appropriate tasks on OpenML by querying the server using `listOMLTasks()`, which returns a large data frame:
+Now we search for appropriate tasks on OpenML by querying the server using `listOMLTasks()`.
+
+For this study, we look for tasks that meet the following criteria:  
+1. Supervised classification problem  
+2. 10-fold cross-validation as resampling procedure
+3. Predictive accuracy as evaluation measure  
+4. Binary classification problem
+5. No missing values -- As Random Forest cannot handle them automatically  
+6. Less than 500 instances -- keep evaluation time low  
+5. $n < p$  
+
 ```{r get-tasks, cache=TRUE}
-all.tasks = listOMLTasks()
-dim(all.tasks)
+tasks = listOMLTasks(
+  task.type = "Supervised Classification", 
+  estimation.procedure = "10-fold Crossvalidation", 
+  evaluation.measures = "predictive_accuracy",
+  number.of.classes = 2, 
+  number.of.missing.values = 0, 
+  number.of.instances = c(100, 500),
+  number.of.features = c(1, 100)
+)
+dim(tasks)
 ```
 
-For this study the candidates are filtered to meet the following criteria:  
-1. Binary classification problem  
-2. 10-fold cross-validation as resampling procedure
-3. No missing values -- Random Forest cannot handle them automatically  
-4. Less than 500 instances -- keep evaluation time low  
-5. $n < p$  
-6. Predictive accuracy as evaluation measure  
+
 
 Although a data frame can be filtered with the `subset()` function (in R's base package), we strongly recommend the faster and more convenient alternatives provided by either **data.table** [@data.table] or **dplyr** [@dplyr].
 ```{r subset-task, seval=TRUE, cache=FALSE, warning=FALSE}
@@ -61,7 +72,7 @@ library(data.table)
 tasks = as.data.table(all.tasks)
 tasks = tasks[
   task.type == "Supervised Classification" &
-  NumberOfClasses == 2 &
+  number.of == 2 &
   estimation.procedure == "10-fold Crossvalidation" &
   NumberOfMissingValues == 0 &
   NumberOfInstances < 500 &
