@@ -44,7 +44,7 @@
     input$estimation_procedure = NA
   } else {
     row.names(estim.proc) = estim.proc$est.id
-    input$estimation_procedure = as.character(estim.proc[input$estimation_procedure , "name"])
+    input$estimation_procedure = as.character(estim.proc[input$estimation_procedure, "name"])
   }
   if (is.null(input$evaluation_measures)) input$evaluation_measures = NA_character_
 

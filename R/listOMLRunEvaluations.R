@@ -41,7 +41,7 @@
   arr.ind = stri_detect_fixed(colnames(evals), "array_data_")
   colnames(evals)[arr.ind] = paste0(stri_replace_all_fixed(colnames(evals)[arr.ind], "array_data_", ""), "_array")
   if (!show.array.measures) {
-    evals = evals[,!arr.ind]
+    evals = evals[, !arr.ind]
   }
 
   # convert types (by default all is character)

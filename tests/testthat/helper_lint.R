@@ -20,8 +20,8 @@ isLintrVersionOk = function(error.if.not = FALSE) {
 }
 
 if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", quietly = TRUE)) {
-  
-  
+
+
   # The following functions are adaptions of the corresponding functions in the `lintr` packages
   # The lintr package, and the original versions of these functions, can be found at https://github.com/jimhester/lintr
   # Copyright notice of original functions:
@@ -48,10 +48,10 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
   #
   # End copyright notice.
   # All modifications are licensed as the rest of mlr.
-  
+
   # linters that differ from the default linters
   # this is necessary because mlr's style is weird.
-  
+
   # prohibit <-
   left.assign.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "LEFT_ASSIGN"), function(id) {
@@ -62,7 +62,7 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
         linter = "assignment_linter")
     })
   }
-  
+
   # prohibit ->
   right.assign.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "RIGHT_ASSIGN"), function(id) {
@@ -73,10 +73,10 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
         linter = "assignment_linter")
     })
   }
-  
+
   `%!=%` = lintr:::`%!=%`
   `%==%` = lintr:::`%==%`
-  
+
   spaces.left.parentheses.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "'('"), function(id) {
       parsed = source_file$parsed_content[id, ]
@@ -103,18 +103,18 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
       }
     })
   }
-  
+
   function.left.parentheses.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, "'('"),
       function(id) {
-        
+
         parsed = source_file$parsed_content[id, ]
         ttb = which(source_file$parsed_content$line1 == parsed$line1 &
             source_file$parsed_content$col1 < parsed$col1 &
             source_file$parsed_content$terminal)
         ttb = tail(ttb, n = 1)
         last.type = source_file$parsed_content$token[ttb]
-        
+
         is.function = length(last.type) %!=% 0L &&
           (last.type %in% c("SYMBOL_FUNCTION_CALL", "FUNCTION", "'}'", "')'", "']'"))
         # check whether this is a lambda expression; we want to allow e.g. function(x) (x - 1)^2
@@ -125,7 +125,7 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
           parenlevelcut = parenlevel[seq_len(ttb - 1)]
           opening.paren.pos = max(which(parenlevelcut == parenlevel[ttb])) + 1
           opparsed = source_file$parsed_content[opening.paren.pos, ]
-          
+
           opttb = which(source_file$parsed_content$line1 == opparsed$line1 &
               source_file$parsed_content$col1 < opparsed$col1 &
               source_file$parsed_content$terminal)
@@ -136,13 +136,13 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
           }
         }
         if (is.function) {
-          
+
           line = source_file$lines[as.character(parsed$line1)]
-          
+
           before.operator = substr(line, parsed$col1 - 1L, parsed$col1 - 1L)
-          
+
           space.before = re_matches(before.operator, rex(space))
-          
+
           if (space.before) {
             Lint(
               filename = source_file$filename,
@@ -155,10 +155,10 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
             )
           }
         }
-        
+
       })
   }
-  
+
   infix.spaces.linter = function(source_file) {
     lapply(lintr:::ids_with_token(source_file, lintr:::infix_tokens, fun = `%in%`),
       function(id) {
@@ -194,11 +194,11 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
         }
       })
   }
-  
-  
+
+
   loweralnum = rex::rex(one_of(lower, digit))
   upperalnum = rex::rex(one_of(upper, digit))
-  
+
   style.regexes = list(
     "UpperCamelCase" = rex::rex(start, upper, zero_or_more(alnum), end),
     "lowerCamelCase" = rex::rex(start, lower, zero_or_more(alnum), end),
@@ -208,7 +208,7 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
     "ALLUPPERCASE"   = rex::rex(start, one_or_more(upperalnum), end),
     "functionCamel.case" = rex::rex(start, lower, zero_or_more(alnum), zero_or_more(dot, one_or_more(alnum)), end)
   )
-  
+
   # incorporate our own camelCase.withDots style.
   matchesStyles = function(name, styles=names(style.regexes)) {
     invalids = paste(styles[!styles %in% names(style.regexes)], collapse = ", ")
@@ -224,7 +224,7 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
       data = name
     )
   }
-  
+
   object.naming.linter = lintr:::make_object_linter(function(source_file, token) {
     sp = source_file$parsed_content
     if (tail(c("", sp$token[sp$terminal & sp$id < token$id]), n = 1) == "'$'") {
@@ -248,8 +248,8 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
         style), "object_name_linter")
     }
   })
-  
-  
+
+
   # note that this must be a *named* list (bug in lintr)
   linters = list(
     commas = lintr::commas_linter,
@@ -261,15 +261,18 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
     left.assign = left.assign.linter,
     right.assign = right.assign.linter,
     no.tab = lintr::no_tab_linter,
-    T.and.F.symbol = lintr::T_and_F_symbol_linter,
-    semicolon.terminator = lintr::semicolon_terminator_linter,
-    seq = lintr::seq_linter,
-    unneeded.concatenation = lintr::unneeded_concatenation_linter,
+
+    # T.and.F.symbol = lintr::T_and_F_symbol_linter,
+    # semicolon.terminator = lintr::semicolon_terminator_linter,
+    # seq = lintr::seq_linter,
+    # unneeded.concatenation = lintr::unneeded_concatenation_linter,
+
     trailing.whitespace = lintr::trailing_whitespace_linter,
     #todo.comment = lintr::todo_comment_linter(todo = "todo"), # is case-insensitive
     spaces.inside = lintr::spaces_inside_linter,
-    infix.spaces = infix.spaces.linter,
-    object.naming = object.naming.linter)
+    infix.spaces = infix.spaces.linter#,
+    #object.naming = object.naming.linter
+    )
 } else {
   # everything that uses `linters` should check `isLintrVersionOk` first, so the
   # following should never be used. Make sure that it is an error if it IS used.

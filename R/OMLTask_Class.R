@@ -46,18 +46,18 @@ print.OMLTask = function(x, ...) {
       catf("%s %s", s, fun(val, ...))
   }
 
-  catf('\nOpenML Task %i :: (Data ID = %i)', x$task.id, x$input$data.set$desc$id)
-  catNotNA('  Task Type            :', x$task.type)
-      catf('  Data Set             : %s :: (Version = %s, OpenML ID = %i)', x$input$data.set$desc$name,
+  catf("\nOpenML Task %i :: (Data ID = %i)", x$task.id, x$input$data.set$desc$id)
+  catNotNA("  Task Type            :", x$task.type)
+      catf("  Data Set             : %s :: (Version = %s, OpenML ID = %i)", x$input$data.set$desc$name,
        x$input$data.set$desc$version, x$input$data.set$desc$id)
-  catNotNA('  Target Feature(s)    :', x$input$data.set$target.features, fun = collapse, sep = ", ")
+  catNotNA("  Target Feature(s)    :", x$input$data.set$target.features, fun = collapse, sep = ", ")
 
   ptasks = paste(x$tags, collapse = ", ")
-  if(nchar(ptasks) > 80) {
+  if (nchar(ptasks) > 80) {
     tags_cut = BBmisc::clipString(ptasks, 80)
-    catNotNA('  Tags                 :', tags_cut)
+    catNotNA("  Tags                 :", tags_cut)
   } else {
-    catNotNA('  Tags                 :', x$tags, fun = collapse, sep = ", ")
+    catNotNA("  Tags                 :", x$tags, fun = collapse, sep = ", ")
   }
   if (!is.na(x$input$estimation.procedure$type)) {
     est.type = x$input$estimation.procedure$type
@@ -67,10 +67,10 @@ print.OMLTask = function(x, ...) {
     n.rep = ifelse(!is.null(n.rep), as.character(n.rep), "")
     n.folds = x$input$estimation.procedure$parameters$number_folds
     n.folds = ifelse(!is.null(n.folds) && !is.na(n.folds), paste(" x", n.folds, "folds"), " rep(s)")
-    catf('  Estimation Procedure : %s%s (%s%s)', strat, est.type, n.rep, n.folds)
+    catf("  Estimation Procedure : %s%s (%s%s)", strat, est.type, n.rep, n.folds)
   }
   if (!all(x$input$evaluation.measures == ""))
-    catNotNA('  Evaluation Measure(s):', x$input$evaluation.measures, fun = collapse, sep = ", ")
+    catNotNA("  Evaluation Measure(s):", x$input$evaluation.measures, fun = collapse, sep = ", ")
 }
 
 

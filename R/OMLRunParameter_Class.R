@@ -34,7 +34,7 @@ makeOMLRunParameter = function(name, value, component = NA_character_) {
 print.OMLRunParameter = function(x, ...)  {
   s = ""
   if (!is.na(x$component))
-    s = sprintf(' (parameter of component %s)', x$component)
+    s = sprintf(" (parameter of component %s)", x$component)
   # FIXME: make it better
   val = try(as.character(x$value))
   catf("%s %s = %s", s, x$name, ifelse(is.error(val), "can't print this data type", x$value))

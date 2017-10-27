@@ -12,14 +12,14 @@
 #'   Optional. See \code{\link[mlr]{setPredictType}}.
 #'   Default is "response".
 #' @param models [\code{logical(1)}]\cr
-#'   This argument is passed to \code{\link[mlr]{benchmark}}. 
+#'   This argument is passed to \code{\link[mlr]{benchmark}}.
 #'   Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
 #'   Default is \code{TRUE}.
 #' @template arg_verbosity
 #' @return [\code{OMLMlrRun}], an \code{\link{OMLRun}}.
 #' @export
 #' @family run related functions
-runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL, 
+runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL,
   verbosity = NULL, models = TRUE) {
   assertClass(task, "OMLTask")
   assertClass(flow, "OMLFlow")
@@ -49,7 +49,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL,
   if (!inherits(par.list, "OMLRunParList"))
     par.list = convertListToOMLRunParList(par.list, ps = ps)
   par.vals = convertOMLRunParListToList(par.list, ps = ps)
-  lrn.pars = par.vals[names(par.vals)%nin%seed.pars]
+  lrn.pars = par.vals[names(par.vals) %nin% seed.pars]
   lrn = do.call("setHyperPars", append(list(learner = lrn), list(par.vals = lrn.pars)))
   if (!is.null(predict.type)) lrn = mlr::setPredictType(lrn, predict.type = predict.type)
 
@@ -62,8 +62,7 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL,
       collapse(setdiff(flow.pkges, local.pkges), ", "), collapse(local.diff, ", "))
 
   # execute setup.string
-  ret = runTaskMlr(task = task, learner = lrn, verbosity = verbosity, 
-    seed = seed, models = models)
+  ret = runTaskMlr(task = task, learner = lrn, verbosity = verbosity, seed = seed, models = models)
   #ret$run.id = run$run.id
 
   return(ret)

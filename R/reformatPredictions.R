@@ -24,7 +24,7 @@ reformatPredictions = function(pred, task) {
   n = length(iter)
   folds = task$input$estimation.procedure$parameters$number_folds
   reps = task$input$estimation.procedure$parameters$number_repeats
-  rep = rep(seq_len(reps), each = n/reps)
+  rep = rep(seq_len(reps), each = n / reps)
   fold = iter %% folds
   fold[fold == 0L] = folds
   rowid = pred$id
