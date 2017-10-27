@@ -63,9 +63,6 @@
   # finally convert _ to . in col names
   names(res) = convertNamesOMLToR(names(res))
 
-  if (!is.null(limit) & (nrow(res) == limit))
-    messagef("The limit to %i result(s) was achieved, you can use the 'limit' arg to increase the limit.", limit)
-
   return(res[ind.estim & ind.eval, ])
 }
 

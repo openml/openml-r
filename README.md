@@ -8,11 +8,15 @@
 [![codecov](https://codecov.io/gh/openml/openml-r/branch/master/graph/badge.svg)](https://codecov.io/gh/openml/openml-r)
 [![Chat on slack](https://img.shields.io/badge/chat-on%20slack-yellow.svg)](https://openml.slack.com/messages/C289V36JG)
 
-OpenML aims to create a frictionless, collaborative environment for exploring machine learning. This R package allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download datasets, tasks, runs and upload results (see  [Tutorial](http://openml.github.io/openml-r)).
+[OpenML](http://www.openml.org/frontend/page/home) is an online machine learning platform where researchers can access open data, download and upload data sets, share their machine learning tasks and experiments and organize them online to work and collaborate with other researchers. 
+The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs. See [OpenML API Guide](https://www.openml.org/guide/api) for more information.
+This R package allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download data sets, tasks, runs and upload results (see [Tutorial](http://openml.github.io/openml-r) or [Cheatsheet](https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf)).
 
 # How to cite
 
 To cite the OpenML R package in publications, please use our paper entitled [`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`](http://dx.doi.org/10.1007/s00180-017-0742-2). You can also [download the Bibtex file.](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation).
+
+See also [here](https://www.openml.org/cite) for further information on how to cite the OpenML project itself.
 
 # Installation of the package
 

@@ -24,6 +24,12 @@ Default is set via \code{\link{setOMLConfig}}.}
 A OpenML study is a collection of OpenML objects with a specific tag defined by the user (i.e. "study_X").
 If you create a study through the website \url{https://www.openml.org/new/study}, you can also specify an alias which can be used to access the study.
 }
+\note{
+This function is memoised. I.e., if you call this function twice in a running R session,
+the first call will query the server and store the results in memory while the second and all subsequent calls will return
+the cached results from the first call.
+You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
+}
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},

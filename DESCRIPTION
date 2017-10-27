@@ -1,12 +1,8 @@
 Package: OpenML
-Title: Exploring Machine Learning Better, Together
-Description: 'OpenML.org' is an online machine learning platform where 
-    researchers can easily download and upload data sets, share machine learning 
-    tasks and experiments and organize them online to work and collaborate more 
-    effectively.
-    We provide an R interface to the OpenML REST API in order to download and 
-    upload data sets, tasks, flows and runs, see <http://www.openml.org/guide> 
-    for more information.
+Title: Open Machine Learning and Open Data Platform
+Description: We provide an R interface to 'OpenML.org' which is an online machine learning platform where researchers can access open data, download and upload data sets, share their machine learning tasks and experiments and organize them online to work and collaborate with other researchers. 
+    The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs. 
+    See <https://www.openml.org/guide/api> for more information.
 Author: Giuseppe Casalicchio <giuseppe.casalicchio@stat.uni-muenchen.de>,
     Bernd Bischl <bernd_bischl@gmx.net>,
     Dominik Kirchhoff <dom.kirchhoff@gmail.com>,

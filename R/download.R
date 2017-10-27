@@ -116,7 +116,7 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     error = parseError(server.response)
 
     if (!is.null(error$message)) {
-      if (error$message == "No results") {
+      if (grepl("No results", error$message)) {
         messagef("Server response: %s", error$message)
         return(NULL)
       }

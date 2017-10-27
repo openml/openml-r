@@ -20,12 +20,20 @@ Default is set via \code{\link{setOMLConfig}}.}
 \description{
 Retrives a list of available studies.
 }
+\note{
+This function is memoised. I.e., if you call this function twice in a running R session,
+the first call will query the server and store the results in memory while the second and all subsequent calls will return
+the cached results from the first call.
+You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
+}
 \seealso{
-Other listing functions: \code{\link{listOMLDataSetQualities}},
+Other listing functions: \code{\link{chunkOMLlist}},
+  \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
   \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
+  \code{\link{listOMLSetup}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 }
