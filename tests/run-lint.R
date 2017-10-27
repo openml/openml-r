@@ -1,2 +1,2 @@
 library(testthat)
-test_check("mlr", filter = "lint")
+test_check("OpenML", filter = "lint")
