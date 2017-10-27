@@ -249,6 +249,116 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
     }
   })
 
+  T_and_F_symbol_linter = function(source_file) {
+    lapply(
+      lintr:::ids_with_token(source_file, "SYMBOL"),
+      function(id) {
+        token = lintr:::with_id(source_file, id)
+        symbol = re_matches(token[["text"]], rex(start, capture(or("T", "F")), end))[1L, 1L]
+        if (!is.na(symbol)) {
+          replacement = switch(symbol, "T" = "TRUE", "F" = "FALSE")
+          line_num = token[["line2"]]
+          start_col_num = token[["col1"]]
+          end_col_num = token[["col2"]]
+          Lint(
+            filename = source_file[["filename"]],
+            line_number = line_num,
+            column_number = end_col_num + 1L,
+            type = "style",
+            message = sprintf("Use %s instead of the symbol %s.", replacement, symbol),
+            line = source_file[["lines"]][[as.character(line_num)]],
+            ranges = list(c(start_col_num, end_col_num)),
+            linter = "T_and_F_symbol_linter"
+          )
+        }
+      }
+    )
+  }
+
+  unneeded_concatenation_linter = function(source_file) {
+    get_num_concat_args = function(token_num, tokens) {
+      # Detect the sequence "c" + "(" + optional constant + ")" and return a number:
+      #   -1 if not a concatenation call
+      #    0 if a concatenation without arguments
+      #    1 if a concatenation with a single constant argument
+      #    2 if a concatenation in other cases
+      open_paren_num = token_num + 1L
+      if (tokens[token_num, "text"] == "c" &&
+          tokens[open_paren_num, "token"] == "'('") {
+        token_args = get_tokens_in_parentheses(open_paren_num, tokens)
+        num_token_args = nrow(token_args)
+        if (!num_token_args) {
+          0L
+        } else if (num_token_args == 1L) {
+          if (token_args[1L, "token"] %in% c("STR_CONST", "NUM_CONST", "NULL_CONST")) {
+            1L
+          } else {
+            2L
+          }
+        } else {
+          2L
+        }
+      } else {
+        -1L
+      }
+    }
+    get_tokens_in_parentheses = function(open_paren_line_num, tokens) {
+      # Return the tokens enclosed by the opening parenthesis/bracket at the given line, or NA.
+      open_paren_token = tokens[open_paren_line_num, ]
+      open_paren_text = open_paren_token[["text"]]
+      close_paren_token = tail(get_sibling_tokens(open_paren_token, tokens), 1L)
+      close_paren_text = close_paren_token[["text"]]
+      close_paren_line_num = which(rownames(tokens) == rownames(close_paren_token))
+      if ( (open_paren_text == "("  && close_paren_text ==  ")") ||
+          (open_paren_text == "{"  && close_paren_text ==  "}") ||
+          (open_paren_text == "["  && close_paren_text ==  "]") ||
+          (open_paren_text == "[[" && close_paren_text == "]]") ) {
+        range = if (open_paren_line_num + 1L == close_paren_line_num) {
+          integer()
+        } else {
+          (open_paren_line_num + 1L):(close_paren_line_num - 1L)
+        }
+        tokens[range, ]
+      } else {
+        NA
+      }
+    }
+    get_sibling_tokens = function(child, tokens) {
+      # Get all siblings of the given child token (i.e. that have the same parent id)
+      tokens[tokens[, "parent"] == child[["parent"]], ]
+    }
+    filter_out_token_type = function(tokens, type) {
+      tokens[tokens[["token"]] != type, ]
+    }
+    tokens = source_file[["parsed_content"]] =
+      filter_out_token_type(source_file[["parsed_content"]], "expr")
+
+    msg_empty = "Unneded concatenation without arguments. Replace the \"c\" call by NULL or vector()."
+    msg_const = "Unneded concatenation of a constant. Remove the \"c\" call."
+    lapply(
+      lintr:::ids_with_token(source_file, "SYMBOL_FUNCTION_CALL"),
+      function(token_num) {
+        num_args = get_num_concat_args(token_num, tokens)
+        if (num_args == 0L || num_args == 1L) {
+          token = lintr:::with_id(source_file, token_num)
+          start_col_num = token[["col1"]]
+          end_col_num = token[["col2"]]
+          line_num = token[["line1"]]
+          line = source_file[["lines"]][[as.character(line_num)]]
+          Lint(
+            filename = source_file[["filename"]],
+            line_number = line_num,
+            column_number = start_col_num,
+            type = "warn",
+            message = if (num_args) {msg_const} else {msg_empty},
+            line = line,
+            linter = "unneeded_concatenation_linter",
+            ranges = list(c(start_col_num, end_col_num))
+          )
+        }
+      }
+    )
+  }
 
   # note that this must be a *named* list (bug in lintr)
   linters = list(
@@ -262,10 +372,10 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
     right.assign = right.assign.linter,
     no.tab = lintr::no_tab_linter,
 
-    # T.and.F.symbol = lintr::T_and_F_symbol_linter,
+    T.and.F.symbol = T_and_F_symbol_linter,
     # semicolon.terminator = lintr::semicolon_terminator_linter,
     # seq = lintr::seq_linter,
-    # unneeded.concatenation = lintr::unneeded_concatenation_linter,
+    unneeded.concatenation = unneeded_concatenation_linter,
 
     trailing.whitespace = lintr::trailing_whitespace_linter,
     #todo.comment = lintr::todo_comment_linter(todo = "todo"), # is case-insensitive

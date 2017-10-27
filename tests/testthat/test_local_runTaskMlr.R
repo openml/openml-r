@@ -19,7 +19,7 @@ test_that("runTaskMlr", {
     checkRun(res)
     # check if additional measure is computed
     res = runTaskMlr(task, lrn, measures = ber)
-    expect_subset(c("ber"), colnames(getBMRPerformances(res$bmr)[[1]][[1]]))
+    expect_subset("ber", colnames(getBMRPerformances(res$bmr)[[1]][[1]]))
     res = runTaskMlr(task, lrn, measures = list(ber, mmce))
     expect_subset(c("ber", "mmce"), colnames(getBMRPerformances(res$bmr)[[1]][[1]]))
 

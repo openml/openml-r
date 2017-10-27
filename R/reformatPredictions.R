@@ -45,8 +45,8 @@ reformatPredictions = function(pred, task) {
     new.pred$truth = pred$truth
   }
 
-  if (task$task.type == "Supervised Classification") {
-    probs = c()
+  if (task$task.type == "Supervised Classification") { # FIXME: looks like bad code...
+    probs = c() # nolint
     for (lvl in orig.lvls) {
       if (sprintf("prob.%s", lvl) %in% colnames(pred))
         probs = cbind(probs, pred[, sprintf("prob.%s", lvl)])

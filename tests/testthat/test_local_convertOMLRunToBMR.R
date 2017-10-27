@@ -17,7 +17,7 @@ test_that("convertOMLRunToBMR", {
 
     ### Supervised Classification tasks with different estimation procedures
     run.class.list = lapply(c(219, 220), getOMLRun)
-    bmr = lapply(run.class.list, convertOMLRunToBMR, measures = c("area_under_roc_curve"))
+    bmr = lapply(run.class.list, convertOMLRunToBMR, measures = "area_under_roc_curve")
     for (i in 1:length(bmr)) {
       checkBMR(bmr[[i]])
       expect_equal(bmr[[i]]$measures[[1]]$id, "auc")
@@ -27,7 +27,7 @@ test_that("convertOMLRunToBMR", {
 
     ### Supervised Classification with predict.type = "response"
     run.class.prob.list = lapply(c(221, 222), getOMLRun)
-    bmr = lapply(run.class.prob.list, convertOMLRunToBMR, measures = c("area_under_roc_curve"))
+    bmr = lapply(run.class.prob.list, convertOMLRunToBMR, measures = "area_under_roc_curve")
     for (i in 1:length(bmr)) {
       checkBMR(bmr[[i]])
       expect_data_frame(getPredictionProbabilities(getBMRPredictions(bmr[[i]])[[1]][[1]]))
@@ -36,7 +36,7 @@ test_that("convertOMLRunToBMR", {
 
     ### Supervised Regression
     run.regr.list = lapply(c(223, 224), getOMLRun)
-    bmr = lapply(run.regr.list, convertOMLRunToBMR, measures = c("root_mean_squared_error"))
+    bmr = lapply(run.regr.list, convertOMLRunToBMR, measures = "root_mean_squared_error")
     for (i in 1:length(bmr)) {
       checkBMR(bmr[[i]])
     }
