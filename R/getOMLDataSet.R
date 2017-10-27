@@ -46,7 +46,7 @@ getOMLDataSetByName = function(data.name = NULL, data.version = NULL, cache.only
 
   # match by name
   matching.ids = which(data.sets$name == data.name)
-  matching.sets = data.sets[matching.ids, , drop = FALSE]
+  matching.sets = data.sets[matching.ids, , drop = FALSE] # nolint
 
   # otherwise we have multiple matches and need to consider the version
   data.id = if (is.null(data.version)) {

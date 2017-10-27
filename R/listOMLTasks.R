@@ -29,7 +29,7 @@
   res = fromJSON(txt = content, simplifyVector = FALSE)$tasks$task
   input = convertNameValueListToDF(extractSubList(res, "input", simplify = FALSE))
   # get rid of less interesting stuff
-  input = input[, which(colnames(input) %in% c("source_data", "target_value", "time_limit", "number_samples")) := NULL]
+  input = input[, which(colnames(input) %in% c("source_data", "target_value", "time_limit", "number_samples")) := NULL] # nolint
   qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
   # tags = convertTagListToTagString(res)
   # subset according to evaluation measure and estimation procedure
