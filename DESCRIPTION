@@ -27,7 +27,8 @@ Suggests:
     farff,
     knitr,
     rmarkdown,
-    R.rsp
+    R.rsp,
+    lintr (>= 1.0.0.9001)
 Imports:
     backports (>= 1.1.0),
     BBmisc (>= 1.11),

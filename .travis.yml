@@ -23,6 +23,7 @@ r_github_packages:
   - mlr-org/mlr
   - berndbischl/BBmisc
   - berndbischl/ParamHelpers
+  - jimhester/lintr
 
 cache:
   packages: true
