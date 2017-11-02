@@ -146,7 +146,11 @@ parseOMLDataSplits = function(task, data) {
   #data$rowid = match(ri, rns)
   # FIXME: even match() is too slow for big data sets...
   #   The unit test in getOMLTask suggests taht we can use this instead (no need to use task in function-arg):
-  rowid = if (min(data$rowid) == 0) return(data$rowid + 1) else return(data$rowid)
+  if (min(data$rowid) == 0) {
+    rowid = data$rowid + 1
+  } else {
+    rowid = data$rowid
+  }
   data$rowid = as.integer(rowid)
   data$rep = data$rep + 1
   data$fold = data$fold + 1
