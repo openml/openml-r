@@ -6,7 +6,7 @@ test_that("listOMLDataSets", {
     "number.of.classes", "number.of.features", "number.of.instances",
     "number.of.instances.with.missing.values", "number.of.missing.values",
     "number.of.numeric.features", "number.of.symbolic.features")
-  
+
   with_main_server({
     for (dsl in list(.listOMLDataSets(limit = 10L), .listOMLDataSets(tag = "study_1", limit = 10L))) {
       expect_data_frame(dsl, col.names = "unique", min.rows = 1)
@@ -24,12 +24,12 @@ test_that("listOMLDataSets", {
     expect_true(max(ds$number.of.features) <= 10)
     expect_true(unique(ds$number.of.classes) == 2)
     expect_true(unique(ds$number.of.missing.values) == 0)
-    
+
     # check if status works
     ds = .listOMLDataSets(status = "in_preparation", limit = 10)
     expect_string(unique(ds$status))
     expect_true(unique(ds$status) == "in_preparation")
-    
+
     ds = .listOMLDataSets(status = "deactivated", limit = 10)
     expect_data_frame(ds, nrows = 10L, col.names = "unique")
     expect_string(unique(ds$status))

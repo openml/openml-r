@@ -16,7 +16,7 @@ test_that("uploadOMLFlow", {
     # reupload flow
     flow$binary.md5 = flow$source.md5 = NA
     flow$external.version = paste0("R_0-v2.", collapse(sample(letters, 8), sep = ""))
-    expect_message(flow.id <- uploadOMLFlow(flow), "Flow successfully uploaded.")
+    expect_message(flow.id <- uploadOMLFlow(flow), "Flow successfully uploaded.") # nolint
     expect_message(deleteOMLObject(flow.id, object = "flow"), "succesfully deleted.")
 
     # remove binary path and try to upload
@@ -27,7 +27,7 @@ test_that("uploadOMLFlow", {
 
     # add learner object
     flow$object = readRDS(binary.path)
-    expect_message(flow.id <- uploadOMLFlow(flow), "Flow successfully uploaded.")
+    expect_message(flow.id <- uploadOMLFlow(flow), "Flow successfully uploaded.") # nolint
     expect_message(deleteOMLObject(flow.id, object = "flow"), "succesfully deleted.")
     expect_is(flow.id, "integer")
 

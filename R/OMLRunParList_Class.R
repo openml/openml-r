@@ -36,7 +36,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   # get defaults for par.vals that have been set
   par.defaults = getDefaults(ps)
   # store only par.vals that are different from default values
-  par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
+  par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]], par.vals[[x]])))
   par.vals = par.vals[par.ind]
   par.names = par.names[par.ind]
 
@@ -104,13 +104,13 @@ getOMLRunParList = function(run) {
 convertOMLRunParListToList = function(x, ps = NULL, ...) {
   assertClass(x, "OMLRunParList")
   par.list = extractSubList(x, "value", simplify = FALSE)
-  if(!testNamed(par.list)) {
+  if (!testNamed(par.list)) {
     par.names = extractSubList(x, "name")
     par.list = setNames(par.list, par.names)
   }
   # if paramset is given, convert vectors, matrices, untyped etc. properly
   if (!is.null(ps)) {
-    for(i in names(x)) {
+    for (i in names(x)) {
       par.list[[i]] = stringToParam(ps$pars[[i]], par.list[[i]])
     }
   }
@@ -123,7 +123,7 @@ convertListToOMLRunParList = function(x, ps = NULL, component = NULL) {
   assertCharacter(component, null.ok = TRUE, len = length(x))
   par.names = names(x)
   if (!is.null(ps)) {
-    for(i in names(x)) {
+    for (i in names(x)) {
       x[[i]] = paramToString(ps$pars[[i]], x[[i]])
     }
   }
@@ -138,7 +138,7 @@ convertListToOMLRunParList = function(x, ps = NULL, component = NULL) {
   setClasses(par.settings, "OMLRunParList")
 }
 
-paramToString = function (par, x) {
+paramToString = function(par, x) {
   assertClass(par, "Param")
   type = par$type
   if (type %in% c("numeric", "integer", "logical", "character"))
@@ -153,7 +153,7 @@ paramToString = function (par, x) {
     rawToChar(serialize(x, connection = NULL, ascii = TRUE))
 }
 
-stringToParam = function (par, x) {
+stringToParam = function(par, x) {
   assertClass(par, "Param")
   assertCharacter(x)
   type = par$type

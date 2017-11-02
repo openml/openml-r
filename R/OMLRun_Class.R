@@ -101,14 +101,14 @@ print.OMLRun = function(x, ...)  {
   }
 
   ## General info
-  catf('\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)', x$run.id, x$task.id, x$flow.id)
-  catNotNA('\tUser ID  :', x$uploader)
-  catNotNA('\tTags     :', x$tags)
-  catNotNA('\tLearner  :', x$flow.name)
-  catNotNA('\tTask type:', x$task.type)
+  catf("\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)", x$run.id, x$task.id, x$flow.id)
+  catNotNA("\tUser ID  :", x$uploader)
+  catNotNA("\tTags     :", x$tags)
+  catNotNA("\tLearner  :", x$flow.name)
+  catNotNA("\tTask type:", x$task.type)
 
   if (!is.null(x$bmr$results[[1]][[1]])) {
-    cat('\n')
+    cat("\n")
     print(x$bmr$results[[1]][[1]])
   }
 

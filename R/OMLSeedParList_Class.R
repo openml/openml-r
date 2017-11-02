@@ -16,7 +16,7 @@ makeOMLSeedParList = function(seed, prefix = "openml") {
   assertIntegerish(seed)
   assert(checkString(prefix), checkNull(prefix))
   seed.pars = setNames(c(seed, RNGkind()), c("seed", "kind", "normal.kind"))
-  if(!is.null(prefix))
+  if (!is.null(prefix))
     names(seed.pars) = paste0(prefix, ".", names(seed.pars))
   seed.setting = lapply(seq_along(seed.pars), function(x) {
     makeOMLRunParameter(

@@ -46,7 +46,7 @@ singleTagOMLObject = function(id, object = c("data", "task", "flow", "run"),
 
   action = ifelse(method == "add", "tag", "untag")
   api.string = collapse(c(object, action), sep = "/")
-  post.args = setNames(list(id, tag), c(paste0(object,"_id"), "tag"))
+  post.args = setNames(list(id, tag), c(paste0(object, "_id"), "tag"))
   doAPICall(api.call = api.string, method = "POST", file = NULL, verbosity = 0,
     post.args = post.args)
 

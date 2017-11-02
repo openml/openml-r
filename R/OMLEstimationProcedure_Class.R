@@ -40,10 +40,10 @@ makeOMLEstimationProcedure = function(
 # Note: The data splits and the predictions are not shown
 #' @export
 print.OMLEstimationProcedure = function(x, ...)  {
-  catf('\nEstimation Method :: %s',x$type)
-  catf('\tParameters:')
+  catf("\nEstimation Method :: %s", x$type)
+  catf("\tParameters:")
   for (i in seq_along(x$parameters)) {
     if (!is.na(x$parameters[[i]]) && x$parameters[[i]] != "")
-      catf('\t\t%s = %s', names(x$parameters)[i], x$parameters[[i]])
+      catf("\t\t%s = %s", names(x$parameters)[i], x$parameters[[i]])
   }
 }

@@ -27,7 +27,8 @@ Suggests:
     farff,
     knitr,
     rmarkdown,
-    R.rsp
+    R.rsp,
+    lintr (>= 1.0.1)
 Imports:
     backports (>= 1.1.0),
     BBmisc (>= 1.11),
@@ -44,6 +45,6 @@ Imports:
     curl
 LazyData: yes
 ByteCompile: yes
-Version: 1.7
+Version: 1.8
 RoxygenNote: 6.0.1
 VignetteBuilder: R.rsp

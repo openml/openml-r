@@ -51,8 +51,8 @@ convertOMLRunToBMR = function(run, measures = run$task.evaluation.measure, recom
   }
   if (min(pred$fold) == 0)
     pred$fold = (pred$fold + 1)
-  if (min(pred[,"repeat"]) == 0)
-    pred[,"repeat"] = (pred[,"repeat"] + 1)
+  if (min(pred[, "repeat"]) == 0)
+    pred[, "repeat"] = (pred[, "repeat"] + 1)
 
   # try to get predict.type based on "confidence." columns if values are intergish
   pred.class = ifelse(run$task.type == "Supervised Classification",
@@ -63,11 +63,11 @@ convertOMLRunToBMR = function(run, measures = run$task.evaluation.measure, recom
     predict.type = "prob"
   } else predict.type = "response"
 
-  pred.split = split(pred, as.factor(paste0(pred[,"repeat"], "-", pred$fold)))
+  pred.split = split(pred, as.factor(paste0(pred[, "repeat"], "-", pred$fold)))
   prediction = lapply(pred.split, function(pred) {
     # get predictions based on predict.type
     if (predict.type == "prob" & pred.class == "PredictionClassif") {
-      y = pred[,conf.cols]
+      y = pred[, conf.cols]
       colnames(y) = stri_replace_all_fixed(colnames(y), "confidence.", "")
     } else y = pred$prediction
 
@@ -100,9 +100,9 @@ convertOMLRunToBMR = function(run, measures = run$task.evaluation.measure, recom
   # ms.test = vnapply(measures, function(pm) performance(pred = pred.test, measures = pm))
 
   if (!recompute) {
-    aggr.eval = evals[is.na(evals$fold) & is.na(evals[,"repeat"]), ]
-    iter.eval = evals[!is.na(evals$fold) & !is.na(evals[,"repeat"]), ]
-    iter.eval$iter = as.factor(paste0(iter.eval[,"repeat"], "-", iter.eval$fold))
+    aggr.eval = evals[is.na(evals$fold) & is.na(evals[, "repeat"]), ]
+    iter.eval = evals[!is.na(evals$fold) & !is.na(evals[, "repeat"]), ]
+    iter.eval$iter = as.factor(paste0(iter.eval[, "repeat"], "-", iter.eval$fold))
     iter.eval.split = split(iter.eval, iter.eval$iter)
     getMeasureValue = function(eval, measures, as.df = TRUE) {
       eval = eval[eval$name %in% measures, ]#subset(eval, name %in% measures)

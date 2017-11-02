@@ -132,8 +132,8 @@ makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, 
 #' @export
 print.OMLDataSetDescription = function(x, ...) {
   # Wrong indentation to see alignment
-  catf('\nData Set "%s" :: (Version = %s, OpenML ID = %i)', x$name, x$version, x$id)
-  catfNotNA('  Collection Date         : %s', x$collection.date)
-  catfNotNA('  Creator(s)              : %s', x$creator)
-  catfNotNA('  Default Target Attribute: %s', x$default.target.attribute)
+  catf("\nData Set '%s' :: (Version = %s, OpenML ID = %i)", x$name, x$version, x$id)
+  catfNotNA("  Collection Date         : %s", x$collection.date)
+  catfNotNA("  Creator(s)              : %s", x$creator)
+  catfNotNA("  Default Target Attribute: %s", x$default.target.attribute)
 }

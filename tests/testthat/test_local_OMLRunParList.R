@@ -11,8 +11,8 @@ test_that("OMLRunParList", {
     makeOversampleWrapper(makeFilterWrapper(rf, fw.method = "variance"), osw.rate = 1)
   )
 
-  for(lrn in lrn.list) {
-    for(ns in nodesize) {
+  for (lrn in lrn.list) {
+    for (ns in nodesize) {
       lrn = setHyperPars(lrn, ntree = 300, nodesize = ns)
       par.defaults = getDefaults(getParamSet(lrn))
       par.vals = getHyperPars(lrn)

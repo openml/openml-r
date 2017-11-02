@@ -17,6 +17,7 @@ r_packages:
   - devtools
   - roxygen2
   - covr
+  - lintr
 
 r_github_packages:
   - mlr-org/farff

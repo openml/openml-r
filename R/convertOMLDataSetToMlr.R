@@ -67,7 +67,7 @@ convertOMLDataSetToMlr = function(
   # drop levels
   if (drop.levels)
     data = droplevels(data)
-  
+
   # fix colnames using make.names
   if (fix.colnames) {
     colnames(data) = make.names(colnames(data), unique = TRUE)

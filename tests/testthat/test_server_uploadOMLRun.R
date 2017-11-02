@@ -11,7 +11,7 @@ test_that("uploadOMLRun", {
     task = getOMLTask(run$task.id)
     flow = getOMLFlow(run$flow.id)
   })
-  
+
   # download a run and reupload it
   run$flow.id = uploadOMLFlow(flow)
   run.id = uploadOMLRun(run)

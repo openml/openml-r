@@ -45,9 +45,9 @@ getOMLRun = function(run.id, cache.only = FALSE, only.xml = FALSE, verbosity = N
   ns.pars = getNodeSet(doc, "/oml:run/oml:parameter_setting")
   run.args[["parameter.setting"]] = lapply(seq_along(ns.pars), function(i) {
     args = filterNull(list(
-      name = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:name", sep = '')),
-      value = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:value", sep = '')),
-      component = xmlOValS(doc, paste("/oml:run/oml:parameter_setting[",i,"]/oml:component", sep = ''))
+      name = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[", i, "]/oml:name", sep = "")),
+      value = xmlRValS(doc, paste("/oml:run/oml:parameter_setting[", i, "]/oml:value", sep = "")),
+      component = xmlOValS(doc, paste("/oml:run/oml:parameter_setting[", i, "]/oml:component", sep = ""))
     ))
     do.call(makeOMLRunParameter, args)
   })
@@ -76,9 +76,9 @@ parseData = function(doc, path) {
   ns.datasets = getNodeSet(doc, path.ds)
   datasets = lapply(seq_along(ns.datasets), function(i) {
     list(
-      data.id = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep = '')),
-      name = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep = '')),
-      url = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep = ''))
+      data.id = xmlRValR(doc, paste(path.ds, "[", i, "]/oml:did", sep = "")),
+      name = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:name", sep = "")),
+      url = xmlRValS(doc, paste(path.ds, "[", i, "]/oml:url", sep = ""))
     )})
   datasets = convertListOfRowsToDataFrame(datasets, strings.as.factors = FALSE)
 
@@ -87,9 +87,9 @@ parseData = function(doc, path) {
   ns.fls = getNodeSet(doc, path.fls)
   files = lapply(seq_along(ns.fls), function(i) {
     list(
-      data.id = xmlRValR(doc, paste(path.fls, "[", i, "]/oml:did", sep = '')),
-      name = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:name", sep = '')),
-      url = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:url", sep = ''))
+      data.id = xmlRValR(doc, paste(path.fls, "[", i, "]/oml:did", sep = "")),
+      name = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:name", sep = "")),
+      url = xmlRValS(doc, paste(path.fls, "[", i, "]/oml:url", sep = ""))
     )})
   files = convertListOfRowsToDataFrame(files, strings.as.factors = FALSE)
 

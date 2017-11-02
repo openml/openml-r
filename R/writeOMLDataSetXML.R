@@ -18,7 +18,7 @@ writeOMLDataSetXML = function(description, file) {
   }
 
   default.target.attribute = collapse(description$default.target.attribute)
-  
+
   addNodes = function(description, doc, parent = top) {
     mynode("name", description$name, parent)
     mynode("version", description$version, parent)

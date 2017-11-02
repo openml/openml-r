@@ -186,14 +186,14 @@ makeOMLFlow = function(
 #' @export
 print.OMLFlow = function(x, ...)  {
   ## General flow info
-  catf('\nFlow "%s" :: (Version = %s, Flow ID = %i)', x$name, x$version, x$flow.id)
-  catfNotNA('\tExternal Version         : %s', x$external.version)
-  catfNotNA('\tCreator(s)               : %s', x$creator)
-  catfNotNA('\tLicence                  : %s', x$licence)
-  catfNotNA('\tInstallation Notes       : %s', x$installation.notes)
-  catfNotNA('\tDependencies             : %s', x$dependencies)
-  catf('\tNumber of Flow Parameters: %i', length(x$parameters))
-  catf('\tNumber of Flow Components: %i', length(x$components))
+  catf("\nFlow '%s' :: (Version = %s, Flow ID = %i)", x$name, x$version, x$flow.id)
+  catfNotNA("\tExternal Version         : %s", x$external.version)
+  catfNotNA("\tCreator(s)               : %s", x$creator)
+  catfNotNA("\tLicence                  : %s", x$licence)
+  catfNotNA("\tInstallation Notes       : %s", x$installation.notes)
+  catfNotNA("\tDependencies             : %s", x$dependencies)
+  catf("\tNumber of Flow Parameters: %i", length(x$parameters))
+  catf("\tNumber of Flow Components: %i", length(x$components))
 }
 
 #' Construct OMLFlowParameter.
@@ -237,11 +237,11 @@ makeOMLFlowParameter = function(
 # show
 #' @export
 print.OMLFlowParameter = function(x, ...) {
-  catf('Parameter %s:', x$name)
-  catfNotNA('  type             : %s', x$data.type)
-  catfNotNA('  default          : %s', x$default.value)
-  catfNotNA('  recommended range: %s', x$recommended.range)
-  catfNotNA('\n%s', x$description)
+  catf("Parameter %s:", x$name)
+  catfNotNA("  type             : %s", x$data.type)
+  catfNotNA("  default          : %s", x$default.value)
+  catfNotNA("  recommended range: %s", x$recommended.range)
+  catfNotNA("\n%s", x$description)
 }
 
 # @title Construct OMLBibRef.

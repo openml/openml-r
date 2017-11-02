@@ -24,11 +24,11 @@ makeOMLIOData = function(datasets = NULL, files = NULL, evaluations = NULL) {
 
 #' @export
 print.OMLIOData = function(x, ...) {
-  catf('\n** Data Sets **')
+  catf("\n** Data Sets **")
   print(x$datasets)
-  catf('\n** Files **')
+  catf("\n** Files **")
   print(x$files)
-  catf('\n** Evaluations **')
+  catf("\n** Evaluations **")
   # Exclude column "array.data" in print to keep it readable
   eval = x$evaluations
   print(eval[, colnames(eval) != "array.data"])
