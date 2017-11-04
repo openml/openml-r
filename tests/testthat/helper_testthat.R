@@ -9,7 +9,7 @@ checkOMLDataSet = function(data) {
 checkBMR = function(bmr) {
   expect_is(bmr, "BenchmarkResult")
   res.classes = c("character", "character", "TaskDesc", "data.frame", "data.frame", "numeric",
-    "Prediction", "list", "data.frame", "list", "numeric", "Learner" )
+    "Prediction", "list", "data.frame", "list", "numeric", "Learner")
   for (j in seq_along(res.classes)) expect_is(bmr$results[[1]][[1]][[j]], res.classes[j])
   expect_equal(dim(bmr$results[[1]][[1]]$measures.train), dim(bmr$results[[1]][[1]]$measures.test))
   for (j in seq_along(bmr$measures)) {

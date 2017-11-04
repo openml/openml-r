@@ -309,10 +309,10 @@ if (isLintrVersionOk() && require("lintr", quietly = TRUE) && require("rex", qui
       close_paren_token = tail(get_sibling_tokens(open_paren_token, tokens), 1L)
       close_paren_text = close_paren_token[["text"]]
       close_paren_line_num = which(rownames(tokens) == rownames(close_paren_token))
-      if ( (open_paren_text == "("  && close_paren_text ==  ")") ||
+      if ((open_paren_text == "("  && close_paren_text ==  ")") ||
           (open_paren_text == "{"  && close_paren_text ==  "}") ||
           (open_paren_text == "["  && close_paren_text ==  "]") ||
-          (open_paren_text == "[[" && close_paren_text == "]]") ) {
+          (open_paren_text == "[[" && close_paren_text == "]]")) {
         range = if (open_paren_line_num + 1L == close_paren_line_num) {
           integer()
         } else {
