@@ -1,12 +1,12 @@
 ---
-title: "OpenML"
+title: "The OpenML R Interface"
 author: "The OpenML R Team"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{OpenML}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
 ---
 ```{r init, include=FALSE}
 # library("knitr")
