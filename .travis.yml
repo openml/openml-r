@@ -44,6 +44,6 @@ notifications:
         - giuseppe.casalicchio@stat.uni-muenchen.de
         - michellang@gmail.com
         - j.bossek@gmail.com
-    on_success: change
+    on_success: never
     on_failure: change
   slack: openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
