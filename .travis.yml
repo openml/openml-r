@@ -45,5 +45,5 @@ notifications:
         - michellang@gmail.com
         - j.bossek@gmail.com
     on_success: never
-    on_failure: change
+    on_failure: never
   slack: openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
