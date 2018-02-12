@@ -71,6 +71,35 @@ extractRecursiveList = function(l) {
   }
 }
 
+#' @export
+listOMLSetup2 = function(setup.id = NULL, flow.id = NULL,
+  limit = 1000, offset = NULL, verbosity = NULL) {
+  api.call = generateAPICall(api.call = "json/setup/list",
+    setup.id = setup.id, flow.id = flow.id, limit = limit, offset = offset)
+  
+  content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
+  if (is.null(content)) return(data.frame())
+  
+  # FIXME: setup.id is ignored here, we should keep it and replace it with the 'id' column
+  # Get entries, which are grouped by setup.id
+  setup = fromJSON(txt = content)$setups$setup$parameter
+  
+  # setups = cbind(as.data.table(setups), par.type = names(setups$parameter))
+  # setups = tidyr::spread(setups, key = "par.type", value = "parameter")
+  
+  setup = setup[!vlapply(setup, function(x) length(x) == 0)]
+  
+  if (!is.null(names(setup))) {
+    setup = as.data.table(setup)
+  } else {
+    setup = filterNull(setup)
+    setup = lapply(setup, function(x) {
+      replace(x, which(vlapply(x, function(i) length(i) == 0)), NA_character_)
+    })
+  }
+  rbindlist(setup, fill = TRUE)
+}
+
 #' @title List hyperparameter settings
 #'
 #' @description
