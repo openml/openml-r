@@ -42,7 +42,7 @@ print.OMLStudy = function(x, ...) {
   catf("\n Study '%s' (Study ID %i)", x$name, x$id)
   catf("  Description           : %s", BBmisc::clipString(x$description, 80))
   catf("  Creation Date         : %s", x$creation.date)
-  catf("  Tag                   : %s", x$tag$name)
+  catf("  Tag(s)                : %s", stri_paste(x$tag$name, collapse = ","))
   catf("  Number of Data Sets   : %s", length(x$data$data.id))
   catf("  Number of Tasks       : %s", length(x$tasks$task.id))
   catf("  Number of Flows       : %s", length(x$flows$flow.id))
