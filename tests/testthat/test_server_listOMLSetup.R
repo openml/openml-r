@@ -3,18 +3,18 @@ context("listOMLSetup")
 skip_on_cran()
 
 test_that("listOMLSetup", {
-  exp.cols = c("setup.id", "flow.id", "parameter.name", "data.type", "default.value", "value")
+  exp.cols = c("setup.id", "flow.id", "full.name", "parameter.name", "data.type", "default.value", "value")
   df = .listOMLSetup(limit = 1)
   expect_data_frame(df)
   if (nrow(df) > 0) {
-    expect_subset(exp.cols, colnames(df))
+    expect_subset(colnames(df), exp.cols)
     expect_true(length(unique(df$setup.id)) == 1)
   }
 
   df = .listOMLSetup(limit = 10)
   expect_data_frame(df)
   if (nrow(df) > 0) {
-    expect_subset(exp.cols, colnames(df))
+    expect_subset(colnames(df), exp.cols)
     expect_true(length(unique(df$setup.id)) <= 10)
   }
 
