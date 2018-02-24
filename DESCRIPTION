@@ -42,7 +42,7 @@ Imports:
     jsonlite,
     memoise (>= 1.0.0),
     stats,
-    curl
+    curl (>= 3.1)
 LazyData: yes
 ByteCompile: yes
 Version: 1.8
