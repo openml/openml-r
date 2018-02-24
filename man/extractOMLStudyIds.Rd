@@ -7,7 +7,7 @@
 extractOMLStudyIds(object, type)
 }
 \arguments{
-\item{object}{[\code{\link{OMLStudy}}] \cr
+\item{object}{[\code{OMLStudy}] \cr
 The OMLStudy object.}
 
 \item{type}{[\code{character(1)}] \cr
@@ -18,5 +18,5 @@ Can be either "data.id", "task.id", "flow.id" or "run.id".}
 [\code{numeric}].
 }
 \description{
-Extracts either all \code{data.id}s, \code{task.id}s, \code{flow.id}s or \code{run.id}s from an \code{\link{OMLStudy}} object.
+Extracts either all \code{data.id}s, \code{task.id}s, \code{flow.id}s or \code{run.id}s from an \code{OMLStudy} object.
 }

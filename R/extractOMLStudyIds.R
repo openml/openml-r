@@ -1,9 +1,9 @@
 #' @title Extract IDs of a OMLStudy object
 #'
 #' @description
-#' Extracts either all \code{data.id}s, \code{task.id}s, \code{flow.id}s or \code{run.id}s from an \code{\link{OMLStudy}} object.
+#' Extracts either all \code{data.id}s, \code{task.id}s, \code{flow.id}s or \code{run.id}s from an \code{OMLStudy} object.
 #'
-#' @param object [\code{\link{OMLStudy}}] \cr
+#' @param object [\code{OMLStudy}] \cr
 #' The OMLStudy object.
 #' @param type [\code{character(1)}] \cr
 #' A character that specifies which ids should be extracted from the study.
