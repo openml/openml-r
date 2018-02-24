@@ -1,5 +1,6 @@
 .listOMLSetup = function(setup.id = NULL, flow.id = NULL,
   limit = 1000, offset = NULL, verbosity = NULL) {
+  # FIXME: this function is very ugly due to different sturctures returned from server
   api.call = generateAPICall(api.call = "json/setup/list",
     setup.id = setup.id, flow.id = flow.id, limit = limit, offset = offset)
 
@@ -7,68 +8,43 @@
   if (is.null(content)) return(data.frame())
 
   # Get entries, which are grouped by setup.id
-  setups = fromJSON(txt = content, simplifyVector = FALSE)$setups$setup
+  setup = fromJSON(txt = content)$setups$setup
+  sid = data.frame(join_id = 1:length(setup$setup_id), setup_id = setup$setup_id)
 
-  setups = extractRecursiveList(setups)
-  if (length(setups) == 0) return(data.frame())
-  # setups = lapply(names(setups), function(i) Map(c, setups[[i]], setup_id = i))
-
-  # We need to postprocess the list
-  setups = lapply(setups, function(setup) {
-    # for each setup.id check if it has one or more than one hyperparameters
-    if (is.null(names(setup))) {
-      # if there are more than two entries (hyperparameters) create a dataframe:
-      ret = rbindlist(lapply(setup, function(x) {
-        replace(x, which(vlapply(x, is.list)), NA_character_)
-      }))
-    } else {
-      # if there is only one entry (hyperparameter) do this to create a dataframe:
-      ret = setDF(replace(setup, which(vlapply(setup, is.list)), NA_character_))
-    }
-  })
-  # rbind the list
-  # FIXME: rbindlist does not work anymore therefore do this:
-  #nrows = vnapply(setups, nrow)
-  #setup.id = rep(names(nrows[nrows != 0]), nrows[nrows != 0])
-  #setups = do.call(rbind, setups)
-  #setups$setup.id = setup.id
-  #setups = cbind(data.frame(setup.id = setup.id, stringsAsFactors = FALSE), setups)
-  #setups = rbindlist(setups, idcol = "setup_id")
-  setups = rbindlist(setups, fill = TRUE)
-  setups = lapply(setups, type.convert, as.is = TRUE)
-  setups = as.data.frame(setups, stringsAsFactors = FALSE)
-
-  #   # We need to postprocess the list
-  #   setups = lapply(names(setups), function(i) {
-  #     if (is.null(names(setups[[i]]))) {
-  #       ret = Map(c, setups[[i]], setup_id = i)
-  #       lapply(ret, function(x) replace(x, which(vlapply(x, is.list)), NA_character_))
-  #     } else {
-  #       list(c(replace(x, which(vlapply(x, is.list)), NA_character_), setup_id = i))
-  #     }
-  #   })
-  #   # rbind the list
-  #   setups = rbindlist(unlist(setups, recursive = FALSE))
-
-  cn = c("setup_id", "flow_id", "parameter_name", "data_type", "default_value", "value")
-  setups = setups[, cn]
-  names(setups) = convertNamesOMLToR(names(setups))
-  return(setups)
-}
-
-extractRecursiveList = function(l) {
-  if ("parameter" %in% names(l)) {
-    setupid = list(setup_id = l$setup_id)
-    lapply(l$parameter, function(x) c(setupid, x))
+  # Get parameters and clean them up
+  param = setup$parameter
+  if (!is.null(names(param))) {
+    # if elements have a name, it refers to parameter
+    param = param[!vlapply(param, function(x) length(x) == 0)]
+    param = as.data.frame(param, stringsAsFactors = FALSE)
+    param = cbind(param, join_id = 1, stringsAsFactors = FALSE)
   } else {
-    if (is.list(l)) {
-      unlist(lapply(l, function(i) {
-        extractRecursiveList(i)
-      }), recursive = FALSE)
-    } else {
-      return(data.table())
-    }
+    # add names
+    param = setNames(param, 1:length(param))
+    # filter out NULL or empty elements
+    param = param[!vlapply(param, function(x) length(x) == 0)]
+    # inside each element, replace empty values with NA
+    param = lapply(param, function(x) {
+      replace(x, which(vlapply(x, function(i) length(i) == 0)), NA_character_)
+    })
+    param = rbindlist(param, fill = TRUE, idcol = "join_id")
+    param = as.data.frame(param, stringsAsFactors = FALSE)
   }
+
+  list.cols = colnames(param)[vlapply(param, is.list)]
+  for (col in list.cols) {
+    ind = which(vlapply(param[[col]], function(i) length(i) == 0))
+    param[[col]][ind] = NA_character_
+    param[[col]] = unlist(param[[col]], recursive = FALSE)
+  }
+
+  ret = merge(param, sid)
+  ret$id = ret$join_id = NULL
+
+  cn = c("setup_id", "flow_id", "full_name", "parameter_name", "data_type", "default_value", "value")
+  ret = ret[, cn[cn %in% colnames(ret)]]
+  names(ret) = convertNamesOMLToR(names(ret))
+  return(ret)
 }
 
 #' @title List hyperparameter settings
