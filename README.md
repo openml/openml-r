@@ -9,15 +9,15 @@
 [OpenML.org](http://www.openml.org/frontend/page/home) is an online machine learning platform where researchers can access open data, download and upload data sets, share their machine learning tasks and experiments and organize them online to work and collaborate with other researchers. 
 The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs.
 
-For more information, see
+For more information, have a look at our
 - [R Cheatsheet](https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf)
 - [R Tutorial](http://openml.github.io/openml-r) 
-- [OpenML R Package Paper](http://dx.doi.org/10.1007/s00180-017-0742-2)
+- [OpenML R Package Publication](http://dx.doi.org/10.1007/s00180-017-0742-2)
 - [OpenML API Guide](https://www.openml.org/guide/api)
 
 # How to cite
 
-To cite the OpenML R package in publications, please use our paper entitled [`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`](http://dx.doi.org/10.1007/s00180-017-0742-2). [[bibtex](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation)].
+To cite the OpenML R package in publications, please use our paper entitled [`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`](http://dx.doi.org/10.1007/s00180-017-0742-2) [[bibtex](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation)].
 
 See also [here](https://www.openml.org/cite) for further information on how to cite the OpenML project itself.
 
