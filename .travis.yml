@@ -42,8 +42,10 @@ notifications:
   email:
     recipients:
         - giuseppe.casalicchio@stat.uni-muenchen.de
-        - michellang@gmail.com
-        - j.bossek@gmail.com
     on_success: never
     on_failure: never
-  slack: openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
+  slack:
+    rooms:
+      - openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
+    on_success: change
+    on_failure: change
