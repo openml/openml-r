@@ -3,14 +3,14 @@
   # FIXME: this function is very ugly due to different sturctures returned from server
   api.call = generateAPICall(api.call = "json/setup/list",
     setup.id = setup.id, flow.id = flow.id, limit = limit, offset = offset)
-  
+
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
   if (is.null(content)) return(data.frame())
-  
+
   # Get entries, which are grouped by setup.id
   setup = fromJSON(txt = content)$setups$setup
   sid = data.frame(join_id = 1:length(setup$setup_id), setup_id = setup$setup_id)
-  
+
   # Get parameters and clean them up
   param = setup$parameter
   if (!is.null(names(param))) {
@@ -30,17 +30,17 @@
     param = rbindlist(param, fill = TRUE, idcol = "join_id")
     param = as.data.frame(param, stringsAsFactors = FALSE)
   }
-  
+
   list.cols = colnames(param)[vlapply(param, is.list)]
   for (col in list.cols) {
     ind = which(vlapply(param[[col]], function(i) length(i) == 0))
     param[[col]][ind] = NA_character_
     param[[col]] = unlist(param[[col]], recursive = FALSE)
   }
-  
+
   ret = merge(param, sid)
   ret$id = ret$join_id = NULL
-  
+
   cn = c("setup_id", "flow_id", "full_name", "parameter_name", "data_type", "default_value", "value")
   ret = ret[, cn[cn %in% colnames(ret)]]
   names(ret) = convertNamesOMLToR(names(ret))
