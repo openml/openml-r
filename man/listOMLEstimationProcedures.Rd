@@ -28,9 +28,9 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-  listOMLEstimationProcedures()
-}
+# \dontrun{
+#   listOMLEstimationProcedures()
+# }
 }
 \seealso{
 Other listing functions: \code{\link{chunkOMLlist}},

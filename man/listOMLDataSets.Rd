@@ -71,10 +71,10 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-	datasets = listOMLDataSets()
-	tail(datasets)
-}
+# \dontrun{
+# 	datasets = listOMLDataSets()
+# 	tail(datasets)
+# }
 }
 \seealso{
 Other listing functions: \code{\link{chunkOMLlist}},

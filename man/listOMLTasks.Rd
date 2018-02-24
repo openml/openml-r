@@ -93,10 +93,10 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-	tasks = listOMLTasks()
-	head(tasks)
-}
+# \dontrun{
+# 	tasks = listOMLTasks()
+# 	head(tasks)
+# }
 }
 \seealso{
 Other listing functions: \code{\link{chunkOMLlist}},

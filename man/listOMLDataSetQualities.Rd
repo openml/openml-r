@@ -27,9 +27,9 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-	listOMLDataSetQualities()
-}
+# \dontrun{
+# 	listOMLDataSetQualities()
+# }
 }
 \seealso{
 Other listing functions: \code{\link{chunkOMLlist}},

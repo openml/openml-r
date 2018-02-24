@@ -30,10 +30,10 @@ Given an flow id, the corresponding \code{\link{OMLFlow}} is
 downloaded if not already available in cache.
 }
 \examples{
-\dontrun{
-	r_ctree = getOMLFlow(flow.id = 2569)
-	weka_bagging = getOMLFlow(flow.id = 2286)
-}
+# \dontrun{
+# 	r_ctree = getOMLFlow(flow.id = 2569)
+# 	weka_bagging = getOMLFlow(flow.id = 2286)
+# }
 }
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},

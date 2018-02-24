@@ -58,11 +58,11 @@ Default is set via \code{\link{setOMLConfig}}.}
 Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 }
 \examples{
-\dontrun{
-	library("mlr")
-	autosOML = getOMLDataSet(data.id = 9)
-	autosMlr = convertOMLDataSetToMlr(autosOML)
-}
+# \dontrun{
+# 	library("mlr")
+# 	autosOML = getOMLDataSet(data.id = 9)
+# 	autosMlr = convertOMLDataSetToMlr(autosOML)
+# }
 }
 \seealso{
 Other data set-related functions: \code{\link{OMLDataSetDescription}},

@@ -14,6 +14,9 @@ The OMLStudy object.}
 A character that specifies which ids should be extracted from the study.
 Can be either "data.id", "task.id", "flow.id" or "run.id".}
 }
+\value{
+[\code{numeric}].
+}
 \description{
 Extracts either all \code{data.id}s, \code{task.id}s, \code{flow.id}s or \code{run.id}s from an \code{\link{OMLStudy}} object.
 }

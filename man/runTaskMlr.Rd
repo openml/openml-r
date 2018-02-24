@@ -35,7 +35,7 @@ benchmark. May be computed using the \pkg{rscimark} R package.
 Default is \code{NULL}, which means no performance measurements.}
 
 \item{models}{[\code{logical(1)}]\cr
-This argument is passed to \code{\link[mlr]{benchmark}}. 
+This argument is passed to \code{\link[mlr]{benchmark}}.
 Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
 Default is \code{TRUE}.}
 
@@ -54,15 +54,15 @@ Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.}
 Run task with a specified learner from \pkg{mlr} and produce predictions.
 }
 \examples{
-\dontrun{
-  library(mlr)
-  ## run a single flow (learner) on a single task
-  task = getOMLTask(57)
-  lrn = makeLearner("classif.rpart")
-  res = runTaskMlr(task, lrn)
-  ## the result "res" is a list, storing information on the actual "run", the
-  ## corresponding benchmark result "bmr" and the applied "flow"
-}
+# \dontrun{
+#   library(mlr)
+#   ## run a single flow (learner) on a single task
+#   task = getOMLTask(57)
+#   lrn = makeLearner("classif.rpart")
+#   res = runTaskMlr(task, lrn)
+#   ## the result "res" is a list, storing information on the actual "run", the
+#   ## corresponding benchmark result "bmr" and the applied "flow"
+# }
 }
 \seealso{
 \code{\link{getOMLTask}}, \code{\link[mlr]{makeLearner}}

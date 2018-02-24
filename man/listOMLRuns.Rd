@@ -58,10 +58,10 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-  runs_ctree = listOMLRuns(flow.id = 2569)
-  head(runs_ctree)
-}
+# \dontrun{
+#   runs_ctree = listOMLRuns(flow.id = 2569)
+#   head(runs_ctree)
+# }
 }
 \seealso{
 Other listing functions: \code{\link{chunkOMLlist}},
