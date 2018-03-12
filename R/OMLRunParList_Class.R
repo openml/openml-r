@@ -33,12 +33,6 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   ps = getParamSet(mlr.lrn)
   par.vals = mlr::getHyperPars(mlr.lrn)
   par.names = names(par.vals)
-  # get defaults for par.vals that have been set
-  par.defaults = getDefaults(ps)
-  # store only par.vals that are different from default values
-  par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]], par.vals[[x]])))
-  par.vals = par.vals[par.ind]
-  par.names = par.names[par.ind]
 
   par.settings = setNames(vector("list", length(par.vals)), par.names)
   for (i in seq_along(par.vals)) {

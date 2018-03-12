@@ -13,24 +13,24 @@ test_that("OMLRunParList", {
 
   for (lrn in lrn.list) {
     for (ns in nodesize) {
-      lrn = setHyperPars(lrn, ntree = 300, nodesize = ns)
+      args = list(ntree = 300, nodesize = ns, replace = TRUE)
+      lrn = setHyperPars(lrn, par.vals = args)
       par.defaults = getDefaults(getParamSet(lrn))
       par.vals = getHyperPars(lrn)
-      # get names of parameters with values that differ from the defaults
-      ind = vlapply(names(par.vals), function(x) !isTRUE(all.equal(par.defaults[[x]], par.vals[[x]])))
-      par.diff = names(par.vals[ind])
 
       oml.par.list = makeOMLRunParList(lrn)
       expect_is(oml.par.list, "OMLRunParList")
-      expect_equal(unname(extractSubList(oml.par.list, "name")), par.diff)
-      expect_subset(unname(extractSubList(oml.par.list, "component")), unlist(strsplit(lrn$id, "[.]"))[-1])
-      for (i in seq_along(oml.par.list)) expect_is(oml.par.list[[i]], "OMLRunParameter")
+      expect_list(oml.par.list, types = "OMLRunParameter")
+
+      # check if all parameters from par.vals are included (especially default values)
+      expect_equal(names(oml.par.list), names(par.vals))
+      expect_subset(extractSubList(oml.par.list, "component", use.names = FALSE), unlist(strsplit(lrn$id, "[.]"))[-1])
 
       # check isSeedPar
       expect_true(all(!isSeedPar(oml.par.list)))
 
       # check convertOMLRunParListToList
-      expect_equal(convertOMLRunParListToList(oml.par.list), lapply(par.vals[ind], as.character))
+      expect_equal(convertOMLRunParListToList(oml.par.list), lapply(par.vals, as.character))
 
       # check convertListToOMLRunParList
       expect_equal(oml.par.list,
@@ -59,3 +59,4 @@ test_that("OMLRunParList", {
     expect_equal(names(as.data.frame(par)), c("name", "value", "component"))
   })
 })
+
