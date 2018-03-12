@@ -1,4 +1,8 @@
-OpenML 1.8 (Release date: 2018-XX-XX):
+OpenML 1.9 (Release date: 2018-XX-XX):
+===========
+  - Fixed bug: Uploaded runs now also contain default hyperparamters.
+
+OpenML 1.8 (Release date: 2018-03-02):
 ===========
   - Fixed bug in listOMLSetup.
   - Update to curl 3.1 which fixes the error 'transfer closed with outstanding read data remaining' for large files.
