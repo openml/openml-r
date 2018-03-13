@@ -24,6 +24,7 @@ chunkOMLlist = function(listfun, ..., total.limit = 100000, chunk.limit = 1000) 
   offset = seq(0, total.limit - 1, by = chunk.limit)
   res = vector("list", length(offset))
   for (i in seq_along(offset)) {
+    # use try() to get results until error occurs (we don't know how many results there are in total)
     tmp = try(do.call(listfun, args = c(list(offset = offset[i], limit = chunk.limit), args)))
     if (!(is.error(tmp) || nrow(tmp) == 0)) {
       res[[i]] = tmp

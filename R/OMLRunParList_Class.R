@@ -28,7 +28,8 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
 
-  if (testClass(mlr.lrn, "TuneWrapper")) mlr.lrn = removeAllHyperPars(mlr.lrn)
+  # FIXME: TuneWrapper contains opt.pars slot. Should we use this here?
+  # if (testClass(mlr.lrn, "TuneWrapper")) mlr.lrn = removeAllHyperPars(mlr.lrn) # looked like a bug
 
   ps = getParamSet(mlr.lrn)
   par.vals = mlr::getHyperPars(mlr.lrn)
@@ -160,8 +161,6 @@ stringToParam = function(par, x) {
   else if (type %in% c("function", "untyped"))
     unserialize(charToRaw(x))
 }
-
-
 
 #' @export
 as.data.frame.OMLRunParList = function(x, ...) {

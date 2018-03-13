@@ -21,7 +21,7 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
   assertClass(lrn, "Learner")
   assertString(name)
 
-  #lrn = removeDefaultsFromParamValues(lrn)
+  # FIXME: for preproc wrappers not all par.vals are deleted due to a mlr bug, see https://github.com/mlr-org/mlr/issues/2218 . However, this is good for us as the uploaded learner at least contains this info.
   lrn = removeAllHyperPars(lrn)
 
   if (is.null(description))
@@ -134,7 +134,7 @@ removeAllHyperPars = function(lrn) {
 # pars
 makeFlowParameterList = function(lrn) {
   par.list = makeFlowParameterListForMlrLearner(lrn)
-  par.list = append(par.list, makeFlowParameterListFor())
+  par.list = append(par.list, makeFlowParameterListForSeed())
   return(par.list)
 }
 
@@ -157,7 +157,7 @@ makeFlowParameterListForMlrLearner = function(lrn) {
 # @title Helper to create parameters for random numbers generator.
 #
 # @return [list] of OMLFlowParameter objects.
-makeFlowParameterListFor = function() {
+makeFlowParameterListForSeed = function() {
   # now handle random numbers generator seeding
   seed.pars = setNames(c(1, RNGkind()), c("openml.seed", "openml.kind", "openml.normal.kind"))
   lapply(seq_along(seed.pars), function(x) {
@@ -167,15 +167,3 @@ makeFlowParameterListFor = function() {
       default.value = seed.pars[x]
   )})
 }
-
-# removeDefaultsFromParamValues = function(lrn) {
-#   par.defaults = getDefaults(getParamSet(lrn))
-#   par.vals = lrn$par.vals
-#   par.ind = vlapply(names(par.vals), function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
-#   lrn$par.vals = par.vals[par.ind]
-#
-#   if (!is.null(lrn$next.learner))
-#     lrn$next.learner = removeDefaultsFromParamValues(lrn$next.learner)
-#
-#   return(lrn)
-# }
