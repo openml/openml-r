@@ -99,7 +99,7 @@ getOMLRunParList = function(run) {
 convertOMLRunParListToList = function(x, ps = NULL, ...) {
   assertClass(x, "OMLRunParList")
   par.list = extractSubList(x, "value", simplify = FALSE)
-  if (!testNamed(par.list)) {
+  if (!testNames(names(par.list))) {
     par.names = extractSubList(x, "name")
     par.list = setNames(par.list, par.names)
   }
