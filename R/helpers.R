@@ -74,7 +74,7 @@ arff.writer = function(x, file){
 }
 
 getValidOMLDataSetStatusLevels = function() {
-  c("active", "deactivated", "in_preparation")
+  c("active", "deactivated", "in_preparation", "all")
 }
 
 catfNotNA = function(text, obj) {

@@ -57,6 +57,10 @@ test_that("listOMLTasks", {
     expect_string(unique(tasks$status))
     expect_true(unique(tasks$status) == "deactivated")
 
+    tasks = .listOMLTasks(status = "all", limit = 10)
+    expect_data_frame(tasks, nrows = 10L, col.names = "unique")
+    expect_subset(unique(tasks$status), getValidOMLDataSetStatusLevels())
+
     # check if task type works
     types = listOMLTaskTypes()$name
     for (t in types) {

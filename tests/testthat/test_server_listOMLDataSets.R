@@ -34,6 +34,10 @@ test_that("listOMLDataSets", {
     expect_data_frame(ds, nrows = 10L, col.names = "unique")
     expect_string(unique(ds$status))
     expect_true(unique(ds$status) == "deactivated")
+
+    ds = .listOMLTasks(status = "all", limit = 10)
+    expect_data_frame(ds, nrows = 10L, col.names = "unique")
+    expect_subset(unique(ds$status), getValidOMLDataSetStatusLevels())
   })
 })
 
