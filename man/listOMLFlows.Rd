@@ -4,7 +4,8 @@
 \alias{listOMLFlows}
 \title{List all registered OpenML flows.}
 \usage{
-listOMLFlows(tag = NULL, limit = NULL, offset = NULL, verbosity = NULL)
+listOMLFlows(tag = NULL, limit = NULL, offset = NULL,
+  verbosity = NULL)
 }
 \arguments{
 \item{tag}{[\code{character}]\cr
@@ -65,3 +66,5 @@ Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }
+\concept{flow-related functions}
+\concept{listing functions}

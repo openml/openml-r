@@ -68,7 +68,7 @@ Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
 Subsets the results according to the status. Possible values are 
-\code{{"active", "deactivated", "in_preparation"}}.
+\code{{"active", "deactivated", "in_preparation", "all"}}.
 Default is \code{"active"}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -113,3 +113,5 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{makeOMLTask}}, \code{\link{tagOMLObject}}
 }
+\concept{listing functions}
+\concept{task-related functions}

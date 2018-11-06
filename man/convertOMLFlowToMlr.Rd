@@ -23,3 +23,4 @@ Other flow-related functions: \code{\link{deleteOMLObject}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }
+\concept{flow-related functions}

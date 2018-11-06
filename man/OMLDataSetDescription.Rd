@@ -6,9 +6,10 @@
 \title{Construct OMLDataSetDescription.}
 \usage{
 makeOMLDataSetDescription(id = 0L, name, version = "0", description,
-  format = "ARFF", creator = NA_character_, contributor = NA_character_,
-  collection.date = NA_character_, upload.date = as.POSIXct(Sys.time()),
-  language = NA_character_, licence = NA_character_, url = NA_character_,
+  format = "ARFF", creator = NA_character_,
+  contributor = NA_character_, collection.date = NA_character_,
+  upload.date = as.POSIXct(Sys.time()), language = NA_character_,
+  licence = NA_character_, url = NA_character_,
   default.target.attribute = NA_character_,
   row.id.attribute = NA_character_, ignore.attribute = NA_character_,
   version.label = NA_character_, citation = NA_character_,
@@ -62,7 +63,7 @@ another attribute as target.}
 \item{row.id.attribute}{[\code{character(1)}]\cr
 The attribute that represents the row-id column, if present in the data set. Else \code{NA}.}
 
-\item{ignore.attribute}{[\code{character(1)}]\cr
+\item{ignore.attribute}{[\code{character}]\cr
 Attributes that should be excluded in modelling, such as identifiers and indexes. Optional.}
 
 \item{version.label}{[\code{character(1)}]\cr
@@ -135,3 +136,4 @@ Other data set-related functions: \code{\link{OMLDataSet}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
+\concept{data set-related functions}

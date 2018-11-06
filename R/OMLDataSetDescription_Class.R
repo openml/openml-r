@@ -36,7 +36,7 @@
 #'   another attribute as target.
 #' @param row.id.attribute [\code{character(1)}]\cr
 #'   The attribute that represents the row-id column, if present in the data set. Else \code{NA}.
-#' @param ignore.attribute [\code{character(1)}]\cr
+#' @param ignore.attribute [\code{character}]\cr
 #'   Attributes that should be excluded in modelling, such as identifiers and indexes. Optional.
 #' @param version.label [\code{character(1)}]\cr
 #'   Version label provided by user, something relevant to the user. Can also be a date,

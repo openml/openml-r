@@ -50,3 +50,5 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}
 }
+\concept{downloading functions}
+\concept{task-related functions}

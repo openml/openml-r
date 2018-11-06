@@ -4,7 +4,8 @@
 \alias{getOMLRun}
 \title{Get an OpenML run.}
 \usage{
-getOMLRun(run.id, cache.only = FALSE, only.xml = FALSE, verbosity = NULL)
+getOMLRun(run.id, cache.only = FALSE, only.xml = FALSE,
+  verbosity = NULL)
 }
 \arguments{
 \item{run.id}{[\code{integer(1)}]\cr
@@ -51,3 +52,5 @@ Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}
 }
+\concept{downloading functions}
+\concept{run-related functions}

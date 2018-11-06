@@ -4,8 +4,8 @@
 \alias{uploadOMLRun}
 \title{Upload an OpenML run.}
 \usage{
-uploadOMLRun(run, upload.bmr = FALSE, tags = NULL, confirm.upload = NULL,
-  verbosity = NULL, ...)
+uploadOMLRun(run, upload.bmr = FALSE, tags = NULL,
+  confirm.upload = NULL, verbosity = NULL, ...)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}|\code{\link{OMLMlrRun}}]\cr
@@ -58,3 +58,5 @@ Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}}
 }
+\concept{run-related functions}
+\concept{uploading functions}

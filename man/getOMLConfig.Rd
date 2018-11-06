@@ -20,3 +20,4 @@ Other config: \code{\link{configuration}},
   \code{\link{loadOMLConfig}}, \code{\link{saveOMLConfig}},
   \code{\link{setOMLConfig}}
 }
+\concept{config}

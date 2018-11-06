@@ -46,5 +46,6 @@ Imports:
 LazyData: yes
 ByteCompile: yes
 Version: 1.9
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: R.rsp
+Encoding: UTF-8

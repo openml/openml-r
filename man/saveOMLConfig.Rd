@@ -43,3 +43,4 @@ Other config: \code{\link{configuration}},
   \code{\link{getOMLConfig}}, \code{\link{loadOMLConfig}},
   \code{\link{setOMLConfig}}
 }
+\concept{config}

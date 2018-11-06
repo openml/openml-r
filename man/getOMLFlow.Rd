@@ -46,3 +46,5 @@ Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }
+\concept{downloading functions}
+\concept{flow-related functions}

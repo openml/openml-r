@@ -6,8 +6,8 @@
 \title{Construct OMLFlow.}
 \usage{
 makeOMLFlow(flow.id = NA_integer_, uploader = NA_integer_, name,
-  version = NA_character_, external.version = NA_character_, description,
-  creator = NA_character_, contributor = NA_character_,
+  version = NA_character_, external.version = NA_character_,
+  description, creator = NA_character_, contributor = NA_character_,
   upload.date = NA_character_, licence = NA_character_,
   language = "English", full.description = NA_character_,
   installation.notes = NA_character_, dependencies = NA_character_,
@@ -127,3 +127,4 @@ Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{tagOMLObject}}
 }
+\concept{flow-related functions}

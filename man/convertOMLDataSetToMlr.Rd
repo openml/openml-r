@@ -74,3 +74,4 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
+\concept{data set-related functions}

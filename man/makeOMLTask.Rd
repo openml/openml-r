@@ -38,3 +38,4 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}, \code{\link{tagOMLObject}}
 }
+\concept{task-related functions}

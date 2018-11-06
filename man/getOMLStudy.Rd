@@ -35,3 +35,4 @@ Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
   \code{\link{getOMLRun}}, \code{\link{getOMLTask}}
 }
+\concept{downloading functions}

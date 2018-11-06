@@ -93,10 +93,8 @@ getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NUL
   data = arff.reader(f$dataset.arff$path)
 
   if (!is.na(data.desc$row.id.attribute)) {
-    if (is.na(data.desc$ignore.attribute))
-      data.desc$ignore.attribute = data.desc$row.id.attribute
-    else
-      data.desc$ignore.attribute = c(data.desc$ignore.attribute, data.desc$row.id.attribute)
+    # add row.id.attribute also to ignore list if not already there
+    data.desc$ignore.attribute = union(data.desc$ignore.attribute, data.desc$row.id.attribute)
   }
   data = setRowNames(data, as.character(seq_row(data) - 1L))
 
@@ -123,6 +121,9 @@ parseOMLDataSetDescription = function(doc) {
   default.target.attribute = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute")
   default.target.attribute = if (!is.null(default.target.attribute)) unlist(strsplit(default.target.attribute, ",")) else ""
 
+  ignore.attribute = xmlOValS(doc, "/oml:data_set_description/oml:ignore_attribute")
+  ignore.attribute = if (!is.null(ignore.attribute)) unlist(strsplit(ignore.attribute, ",")) else ""
+
   args = filterNull(list(
     id = xmlRValI(doc, "/oml:data_set_description/oml:id"),
     name = xmlRValS(doc, "/oml:data_set_description/oml:name"),
@@ -138,7 +139,7 @@ parseOMLDataSetDescription = function(doc) {
     url = xmlRValS(doc, "/oml:data_set_description/oml:url"),
     default.target.attribute = default.target.attribute,
     row.id.attribute = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute"),
-    ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute"),
+    ignore.attribute = ignore.attribute,
     version.label = xmlOValS(doc, "/oml:data_set_description/oml:version_label"),
     citation = xmlOValS(doc, "/oml:data_set_description/oml:citation"),
     visibility = xmlOValS(doc, "/oml:data_set_description/oml:visibility"),

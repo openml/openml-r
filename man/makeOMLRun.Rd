@@ -10,8 +10,9 @@ makeOMLRun(run.id = NA_integer_, uploader = NA_integer_,
   task.evaluation.measure = NA_character_, flow.id = NA_integer_,
   flow.name = NA_character_, setup.id = NA_integer_,
   setup.string = NA_character_, error.message = NA_character_,
-  parameter.setting = list(), tags = NA_character_, predictions = NULL,
-  input.data = makeOMLIOData(), output.data = makeOMLIOData())
+  parameter.setting = list(), tags = NA_character_,
+  predictions = NULL, input.data = makeOMLIOData(),
+  output.data = makeOMLIOData())
 }
 \arguments{
 \item{run.id}{[\code{numeric(1)}]\cr
@@ -80,3 +81,4 @@ Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{makeOMLRunParameter}},
   \code{\link{tagOMLObject}}, \code{\link{uploadOMLRun}}
 }
+\concept{run-related functions}

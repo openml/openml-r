@@ -40,3 +40,4 @@ Other downloading functions: \code{\link{getOMLDataSet}},
   \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
   \code{\link{getOMLStudy}}, \code{\link{getOMLTask}}
 }
+\concept{downloading functions}

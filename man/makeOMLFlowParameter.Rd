@@ -34,4 +34,5 @@ Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{listOMLFlows}}, \code{\link{makeOMLFlow}},
   \code{\link{tagOMLObject}}
 }
+\concept{flow-related functions}
 \keyword{internal}

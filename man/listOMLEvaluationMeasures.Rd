@@ -42,3 +42,4 @@ Other listing functions: \code{\link{chunkOMLlist}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 }
+\concept{listing functions}

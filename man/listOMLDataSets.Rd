@@ -5,9 +5,9 @@
 \title{List the first 5000 OpenML data sets.}
 \usage{
 listOMLDataSets(number.of.instances = NULL, number.of.features = NULL,
-  number.of.classes = NULL, number.of.missing.values = NULL, tag = NULL,
-  data.name = NULL, limit = 5000, offset = NULL, status = "active",
-  verbosity = NULL)
+  number.of.classes = NULL, number.of.missing.values = NULL,
+  tag = NULL, data.name = NULL, limit = 5000, offset = NULL,
+  status = "active", verbosity = NULL)
 }
 \arguments{
 \item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr
@@ -45,7 +45,7 @@ Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
 Subsets the results according to the status. Possible values are 
-\code{{"active", "deactivated", "in_preparation"}}.
+\code{{"active", "deactivated", "in_preparation", "all"}}.
 Default is \code{"active"}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -94,3 +94,5 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{getOMLDataSet}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
+\concept{data set-related functions}
+\concept{listing functions}
