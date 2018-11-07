@@ -38,9 +38,9 @@
 makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.new = colnames(data), target.features = NULL) {
   # sanity check for desc
   assertClass(desc, "OMLDataSetDescription")
-  #assertSubset(desc$default.target.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
-  #assertSubset(desc$ignore.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
-  #assertSubset(desc$row.id.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
+  assertSubset(desc$default.target.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
+  assertSubset(desc$ignore.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
+  assertSubset(desc$row.id.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
   assertDataFrame(data)
   assertCharacter(colnames.old, len = ncol(data), any.missing = FALSE, all.missing = FALSE)
   assertCharacter(colnames.new, len = ncol(data), any.missing = FALSE, all.missing = FALSE)

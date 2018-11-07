@@ -34,6 +34,5 @@ test_that("uploadOMLDataSet", {
     did = uploadOMLDataSet(d)
     d2 = getOMLDataSet(did)
     expect_is(convertOMLDataSetToMlr(d2), "Task")
-
   })
 })

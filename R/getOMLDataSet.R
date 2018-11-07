@@ -121,8 +121,8 @@ parseOMLDataSetDescription = function(doc) {
   default.target.attribute = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute")
   default.target.attribute = if (!is.null(default.target.attribute)) unlist(strsplit(default.target.attribute, ",")) else ""
 
-  ignore.attribute = xmlOValS(doc, "/oml:data_set_description/oml:ignore_attribute")
-  ignore.attribute = if (!is.null(ignore.attribute)) unlist(strsplit(ignore.attribute, ",")) else ""
+  ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute")
+  ignore.attribute = if (!is.null(ignore.attribute)) unlist(strsplit(ignore.attribute, ","))
 
   args = filterNull(list(
     id = xmlRValI(doc, "/oml:data_set_description/oml:id"),
