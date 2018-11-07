@@ -28,22 +28,32 @@
 #'   Names of the features that are displayed.
 #' @param target.features [\code{character}]\cr
 #'   Name(s) of the target feature(s).
+#'   If set, this will replace the default target in \code{desc}.
 #' @return [\code{OMLDataSet}]
 #' @name OMLDataSet
 #' @export
 #' @family data set-related functions
 #' @aliases OMLDataSet
 #' @example inst/examples/makeOMLDataSet.R
-makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.new = colnames(data), target.features) {
+makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.new = colnames(data), target.features = NULL) {
+  # sanity check for desc
   assertClass(desc, "OMLDataSetDescription")
+  assertSubset(desc$default.target.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
+  assertSubset(desc$ignore.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
+  assertSubset(desc$row.id.attribute, choices = c(colnames(data), NA), empty.ok = TRUE)
   assertDataFrame(data)
-  n.col = ncol(data)
-  assertCharacter(colnames.old, len = n.col, any.missing = FALSE, all.missing = FALSE)
-  assertCharacter(colnames.new, len = n.col, any.missing = FALSE, all.missing = FALSE)
-  assertCharacter(target.features, min.len = 0L, max.len = n.col, any.missing = TRUE, all.missing = TRUE)
-
-  if (!isSubset(target.features, colnames(data))) {
-    stopf("Data has no column(s) named '%s'.", collapse(setdiff(target.features, colnames(data)), sep = ", "))
+  assertCharacter(colnames.old, len = ncol(data), any.missing = FALSE, all.missing = FALSE)
+  assertCharacter(colnames.new, len = ncol(data), any.missing = FALSE, all.missing = FALSE)
+  assertSubset(target.features, choices = colnames(data), empty.ok = TRUE)
+  # use default target if no target is passed, else replace default target with passed target
+  if (is.null(target.features)) {
+    target.features = desc$default.target.attribute
+  } else {
+    if (any(desc$default.target.attribute != target.features)) {
+      verbosity = getOMLConfig()$verbosity
+      showInfo(verbosity, sprintf("Default target will be replaced with '%s'.", collapse(target.features)))
+    }
+    desc$default.target.attribute = target.features
   }
 
   makeS3Obj("OMLDataSet",

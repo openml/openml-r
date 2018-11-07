@@ -135,5 +135,7 @@ print.OMLDataSetDescription = function(x, ...) {
   catf("\nData Set '%s' :: (Version = %s, OpenML ID = %i)", x$name, x$version, x$id)
   catfNotNA("  Collection Date         : %s", x$collection.date)
   catfNotNA("  Creator(s)              : %s", x$creator)
+  catfNotNA("  Ignore Attributes       : %s", x$ignore.attribute)
+  catfNotNA("  Row ID Attribute        : %s", x$row.id.attribute)
   catfNotNA("  Default Target Attribute: %s", x$default.target.attribute)
 }
