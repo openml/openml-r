@@ -7,7 +7,7 @@
 #'
 #' The \code{\link{OMLDataSetDescription}} provides information on the data set,
 #' like the ID, name, version, etc. To see a full list of all elements, please see the
-#' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.data.upload.xsd}{XSD}.
+#' \href{https://www.openml.org/api/v1/xsd/openml.data.upload}{XSD}.
 #'
 #' The slot \code{colnames.old} contains the original names, i.e., the column names that were
 #' uploaded to the server, while \code{colnames.new} contains the names that you will see when

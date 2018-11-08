@@ -32,7 +32,7 @@ test_that("uploadOMLDataSet", {
     )
     d = makeOMLDataSet(desc, data = iris)
     did = uploadOMLDataSet(d)
-    expect_warning(d2 <- getOMLDataSet(did), "preparation")
+    expect_warning(d2 <- getOMLDataSet(did), "preparation") # nolint
     expect_is(convertOMLDataSetToMlr(d2), "Task")
   })
 })

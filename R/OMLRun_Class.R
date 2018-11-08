@@ -2,7 +2,7 @@
 #'
 #' @description
 #' More details about the elements of a \code{OMLRun} can be found in the
-#' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
+#' \href{https://github.com/openml/OpenML/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
 #'
 #' @param run.id [\code{numeric(1)}]\cr
 #'   ID of the run. Added by server. Ignored when uploading a run.
