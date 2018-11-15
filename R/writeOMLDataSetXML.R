@@ -18,7 +18,8 @@ writeOMLDataSetXML = function(description, file) {
   }
 
   default.target.attribute = collapse(description$default.target.attribute)
-  ignore.attribute = collapse(description$ignore.attribute)
+  ignore.attribute = collapse(na.omit(description$ignore.attribute))
+  ignore.attribute = ifelse(ignore.attribute == "", NA_character_, ignore.attribute)
 
   addNodes = function(description, doc, parent = top) {
     mynode("name", description$name, parent)
