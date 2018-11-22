@@ -27,10 +27,10 @@ uploadOMLDataSet.OMLDataSet = function(x, tags = NULL, description = NULL, confi
     return(invisible())
   }
 
-  if (length(x$desc$default.target.attribute) > 1) {
-    target.df = x$data[, x$desc$default.target.attribute]
-    assertDataFrame(target.df, types = "logical")
-  }
+  # if (length(x$desc$default.target.attribute) > 1) {
+  #   target.df = x$data[, x$desc$default.target.attribute]
+  #   assertDataFrame(target.df, types = "logical")
+  # }
 
   desc.file = tempfile(fileext = ".xml")
   on.exit(unlink(desc.file))

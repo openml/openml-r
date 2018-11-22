@@ -22,6 +22,17 @@ test_that("uploadOMLDataSet", {
     expect_is(data.id, "integer")
     deleteOMLObject(data.id, object = "data")
 
+    # upload multivariate regression data
+    iris = getTaskData(iris.task)
+    desc = makeOMLDataSetDescription(
+      name = "iris",
+      description = "iris with ignored features Sepal.Width and Petal.Length",
+      default.target.attribute = c("Sepal.Width", "Petal.Length")
+    )
+    d = makeOMLDataSet(desc, data = iris)
+    did = uploadOMLDataSet(d)
+    expect_warning(d2 <- getOMLDataSet(did), "preparation") # nolint
+
     # upload data with multiple ignore attributes
     iris = getTaskData(iris.task)
     desc = makeOMLDataSetDescription(
