@@ -2,16 +2,15 @@
 
 writeOMLTaskXML = function(task_type_id, source_data, target_feature, estimation_procedure,
                            file, evaluation_measures = NULL) {
-  
-  assertClass(task_type_id, "integer")
-  assertClass(source_data, "integer")
-  assertClass(target_feature, "character")
-  assertClass(estimation_procedure, "integer")
+  assertInt(task_type_id)
+  assertInt(source_data)
+  assertCharacter(target_feature)
+  assertInt(estimation_procedure)
   assertPathForOutput(file, overwrite = TRUE)
-  
+
   doc = newXMLDoc()
   top = newXMLNode("oml:task_inputs", parent = doc, namespace = c(oml = "http://openml.org/openml"))
-  
+
   mynode = function(name, val, parent = top, attrs = NULL){
     if (!is.na(val))
       newXMLNode(name, as.character(val), parent = parent, namespace = "oml", attrs = attrs)
@@ -20,11 +19,10 @@ writeOMLTaskXML = function(task_type_id, source_data, target_feature, estimation
   mynode(name = "input", val = source_data, parent = top, attrs = list(name = "source_data"))
   mynode(name = "input", val = target_feature, parent = top, attrs = list(name = "target_feature"))
   mynode(name = "input", val = estimation_procedure, parent = top, attrs = list(name = "estimation_procedure"))
-  
-  if(!is.null(evaluation_measures)) {
+
+  if (!is.null(evaluation_measures)) {
     assertClass(evaluation_measures, "character")
     mynode("evaluation_measures", evaluation_measures, top)
   }
-  
   saveXML(top, file = file)
 }
