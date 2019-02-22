@@ -21,4 +21,14 @@ test_that("convertOMLTaskToMlr", {
   expect_equal(getTaskId(convertOMLTaskToMlr(task, mlr.task.id = "<oml.data.name>")$mlr.task), as.character(ds$desc$name))
   expect_equal(getTaskId(convertOMLTaskToMlr(task, mlr.task.id = "<oml.data.version>")$mlr.task), as.character(ds$desc$version))
   expect_equal(getTaskId(convertOMLTaskToMlr(task, mlr.task.id = "<oml.task.id>")$mlr.task), as.character(task$task.id))
+
+  with_main_server({
+    task = getOMLTask(3)
+    mlr.task = convertOMLTaskToMlr(task)$mlr.rin
+    task.stratify = task$input$estimation.procedure$parameters$stratified_sampling
+    task.stratify = ifelse(is.null(task.stratify), FALSE, task.stratify == "true")
+    mlr.task.stratify = mlr.task$desc$stratify
+    expect_equal(task.stratify, mlr.task.stratify)
+  })
+
 })

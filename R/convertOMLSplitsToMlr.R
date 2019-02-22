@@ -4,18 +4,20 @@ convertOMLSplitsToMlr = function(estim.proc, mlr.task, predict = "both") {
   n.folds = estim.proc$parameters[["number_folds"]]
   percentage = as.numeric(estim.proc$parameters[["percentage"]])
   data.splits = estim.proc$data.splits
+  stratified = estim.proc$parameters[["stratified_sampling"]]
+  stratified = ifelse(is.null(stratified), FALSE, stratified == "true")
   #FIXME: I think the server always prdoced stratified resampling for classif? we need to check this.
   # if so, we need to set that property, but only after the split sets for mlr have been overwritten.
   # otherwise in some case some mlr sanity check apparently gets triggered.
   # FIXME: more resampling
   if (type == "crossvalidation") {
     if (n.repeats == 1L)
-      mlr.rdesc = mlr::makeResampleDesc("CV", iters = n.folds, predict = predict)
+      mlr.rdesc = mlr::makeResampleDesc("CV", iters = n.folds, predict = predict, stratify = stratified)
     else
-      mlr.rdesc = mlr::makeResampleDesc("RepCV", reps = n.repeats, folds = n.folds, predict = predict)
+      mlr.rdesc = mlr::makeResampleDesc("RepCV", reps = n.repeats, folds = n.folds, predict = predict, stratify = stratified)
     mlr.rin = mlr::makeResampleInstance(mlr.rdesc, task = mlr.task)
   } else if (type == "holdout") {
-    mlr.rdesc = mlr::makeResampleDesc("Holdout", split = 1 - percentage / 100, predict = predict)
+    mlr.rdesc = mlr::makeResampleDesc("Holdout", split = 1 - percentage / 100, predict = predict, stratify = stratified)
     mlr.rin = mlr::makeResampleInstance(mlr.rdesc, task = mlr.task)
     n.folds = 1
   } else if (type == "leaveoneout") {
