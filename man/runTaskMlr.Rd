@@ -52,6 +52,7 @@ Further arguments that are passed to \code{\link{convertOMLTaskToMlr}}.}
 }
 \description{
 Run task with a specified learner from \pkg{mlr} and produce predictions.
+By default, the evaluation measure contained in the task is used.
 }
 \examples{
 # \dontrun{
