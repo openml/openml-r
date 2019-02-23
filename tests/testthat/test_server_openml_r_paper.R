@@ -12,7 +12,7 @@ test_that("openml r paper", {
       expect_subset(c("diabetes", "tic-tac-toe"), tasks$name)
 
       # listing run evaluations
-      res = listOMLRunEvaluations(task.id = 37, tag = "openml_r_paper")
+      res = listOMLRunEvaluations(task.id = 37, tag = "openml_r_paper", evaluation.measure = "predictive_accuracy")
       expect_data_frame(res, min.rows = 19)
       expect_gt(max(res$predictive.accuracy), 0.77)
       expect_lt(min(res$predictive.accuracy), 0.74)
@@ -51,7 +51,7 @@ test_that("openml r paper", {
       expect_subset(c("task.id", "name", "number.of.instances", "number.of.features"), colnames(tasks))
       expect_subset(c("diabetes", "sonar", "haberman", "tic-tac-toe", "heart-statlog", "ionosphere"), tasks$name)
 
-      evals = listOMLRunEvaluations(tag = "study_30")
+      evals = listOMLRunEvaluations(tag = "study_30", evaluation.measure = "predictive_accuracy")
       tasks = listOMLTasks(tag = "study_30")
       flows = listOMLFlows(tag = "study_30")
       ds = listOMLDataSets(tag = "study_30")
