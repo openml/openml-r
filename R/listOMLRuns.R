@@ -1,5 +1,5 @@
 .listOMLRuns = function(task.id = NULL, flow.id = NULL, run.id = NULL,
-  uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
+  uploader.id = NULL, tag = NULL, limit = 5000, offset = NULL, verbosity = NULL) {
 
   if (is.null(task.id) && is.null(flow.id) && is.null(run.id) && is.null(uploader.id) && is.null(tag))
     stop("Please hand over at least one of the following: task.id, flow.id, run.id, uploader.id, tag")
@@ -30,13 +30,14 @@
   return(runs)
 }
 
-#' @title List OpenML runs.
+#' @title List the first 5000 OpenML runs.
 #'
 #' @description
 #' This function returns information on all OpenML runs that match certain
 #' \code{task.id}(s), \code{run.id}(s), flow ID \code{flow.id} and/or
 #' \code{uploader.id}(s). Alternatively the function can be passed a single
 #' \code{tag} to list only runs with the corresponding tag associated.
+#' Note that by default only the first 5000 runs will be returned (due to the argument \dQuote{limit = 5000}).
 #'
 #' @template note_memoise
 #'

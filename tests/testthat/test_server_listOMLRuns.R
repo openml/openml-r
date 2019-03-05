@@ -17,7 +17,7 @@ test_that("listOMLRuns", {
 
     # check that all returns runs have the desired tag (github issue 270)
     test.tag = "myspecialtag"
-    rs = .listOMLRuns(tag = test.tag)
+    rs = .listOMLRuns(tag = test.tag, limit = 1000)
     expect_data_frame(rs, col.names = "unique")
     expect_true(all(grepl(test.tag, rs$tags)))
   })
