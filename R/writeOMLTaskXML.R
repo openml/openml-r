@@ -1,11 +1,11 @@
 # Generate an XML file for an OpenMLTask object.
 
-writeOMLTaskXML = function(task_type_id, source_data, target_feature, estimation_procedure,
-                           file, evaluation_measures = NULL) {
-  assertInt(task_type_id)
-  assertInt(source_data)
-  assertCharacter(target_feature)
-  assertInt(estimation_procedure)
+writeOMLTaskXML = function(task.type.id, source.data, target.feature, estimation.procedure,
+                           file, evaluation.measures = NULL) {
+  assertInt(task.type.id)
+  assertInt(source.data)
+  assertCharacter(target.feature)
+  assertInt(estimation.procedure)
   assertPathForOutput(file, overwrite = TRUE)
 
   doc = newXMLDoc()
@@ -15,14 +15,14 @@ writeOMLTaskXML = function(task_type_id, source_data, target_feature, estimation
     if (!is.na(val))
       newXMLNode(name, as.character(val), parent = parent, namespace = "oml", attrs = attrs)
   }
-  mynode(name = "task_type_id", val = task_type_id, parent = top)
-  mynode(name = "input", val = source_data, parent = top, attrs = list(name = "source_data"))
-  mynode(name = "input", val = target_feature, parent = top, attrs = list(name = "target_feature"))
-  mynode(name = "input", val = estimation_procedure, parent = top, attrs = list(name = "estimation_procedure"))
+  mynode(name = "task_type_id", val = task.type.id, parent = top)
+  mynode(name = "input", val = source.data, parent = top, attrs = list(name = "source_data"))
+  mynode(name = "input", val = target.feature, parent = top, attrs = list(name = "target_feature"))
+  mynode(name = "input", val = estimation.procedure, parent = top, attrs = list(name = "estimation_procedure"))
 
   if (!is.null(evaluation_measures)) {
     assertClass(evaluation_measures, "character")
-    mynode("evaluation_measures", evaluation_measures, top)
+    mynode("evaluation_measures", val = evaluation.measures, parent = top)
   }
   saveXML(top, file = file)
 }
