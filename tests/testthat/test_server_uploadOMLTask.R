@@ -9,12 +9,12 @@ test_that("uploadOMLTask throws an error if task already exists", {
   })
 })
 
-test_that("uploadOMLTask returns an integer if task was created", {
+test_that("uploadOMLTask returns an task.id if task successfully created", {
   with_test_cache({
     # test on gina dataset (id = 41158)
     ds = getOMLDataSet(41158L)
-    task_id = uploadOMLTask(1L, ds$desc$id, ds$target.features, 2L)
-    expect_is(task_id, "integer")
-    deleteOMLObject(task_id, object = "task")
+    task.id = uploadOMLTask(1L, ds$desc$id, ds$target.features, 2L)
+    expect_is(task.id, "integer")
+    deleteOMLObject(task.id, object = "task")
   })
 })
