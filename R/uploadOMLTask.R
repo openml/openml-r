@@ -32,18 +32,22 @@ uploadOMLTask = function(task.type, source.data, target.feature, estimation.proc
     stopf("Unknown task.type: %s. Please use listOMLTaskTypes() to list all possible task types.", task.type)
   }
 
-  # check if the estimation.procedure exists for the given task.type
+  # check if the estimation.procedure corresponds to the given task.type
   est.procedures = listOMLEstimationProcedures()
-  if (!(est.procedures[est.procedures$est.id == estimation.procedure, ]$task.type == task.type)) {
-    stopf("Invalid estimation.procedure: %d for the given task.type: %s.
+  est.name = est.procedures[est.procedures$est.id == estimation.procedure, ]$name
+  if (!(est.name %in% est.procedures[est.procedures$task.type == task.type, ]$name)) {
+    stopf("Invalid estimation.procedure: '%s' for the given task.type: '%s'.
           Please use listOMLEstimationProcedures() to list all possible estimation procedures.",
-          estimation.procedure, task.type)
+      est.name, task.type)
   }
+
+  est.id = est.procedures[est.procedures$task.type == task.type &
+                          est.procedures$name == est.name, ]$est.id
 
   desc.file = tempfile(fileext = ".xml")
   on.exit(unlink(desc.file))
 
-  writeOMLTaskXML(task.type.id, source.data, target.feature, estimation.procedure,
+  writeOMLTaskXML(task.type.id, source.data, target.feature, est.id,
                   desc.file, evaluation.measures)
   showInfo(verbosity, "Uploading task to server.")
   response = doAPICall(api.call = "task", method = "POST", file = NULL, verbosity = verbosity,
