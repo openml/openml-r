@@ -20,8 +20,8 @@ writeOMLTaskXML = function(task.type.id, source.data, target.feature, estimation
   mynode(name = "input", val = target.feature, parent = top, attrs = list(name = "target_feature"))
   mynode(name = "input", val = estimation.procedure, parent = top, attrs = list(name = "estimation_procedure"))
 
-  if (!is.null(evaluation_measures)) {
-    assertClass(evaluation_measures, "character")
+  if (!is.null(evaluation.measures)) {
+    assertClass(evaluation.measures, "character")
     mynode("evaluation_measures", val = evaluation.measures, parent = top)
   }
   saveXML(top, file = file)
