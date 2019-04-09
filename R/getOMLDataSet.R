@@ -94,7 +94,9 @@ getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NUL
 
   if (!is.na(data.desc$row.id.attribute)) {
     # add row.id.attribute also to ignore list if not already there
-    data.desc$ignore.attribute = union(data.desc$ignore.attribute, data.desc$row.id.attribute)
+    if (is.na(data.desc$ignore.attribute))
+      data.desc$ignore.attribute = data.desc$row.id.attribute else
+        data.desc$ignore.attribute = union(data.desc$ignore.attribute, data.desc$row.id.attribute)
   }
   data = setRowNames(data, as.character(seq_row(data) - 1L))
 

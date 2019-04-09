@@ -31,4 +31,13 @@ test_that("convertOMLTaskToMlr", {
     expect_equal(task.stratify, mlr.task.stratify)
   })
 
+  # check if ignore.attribute works
+  with_main_server({
+    task = getOMLTask(3954)
+    ignore = task$input$data.set$desc$ignore.attribute
+    row = task$input$data.set$desc$row.id.attribute
+    mlrTaskCols = colnames(getTaskData(convertOMLTaskToMlr(task)$mlr.task))
+    expect_false(ignore %in% mlrTaskCols)
+    expect_false(row %in% mlrTaskCols)
+  })
 })
