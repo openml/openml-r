@@ -1,0 +1,73 @@
+<oml:run xmlns:oml="http://openml.org/openml">
+  <oml:run_id>26936</oml:run_id>
+  <oml:uploader>348</oml:uploader>
+  <oml:uploader_name>Giuseppe Casalicchio</oml:uploader_name>
+  <oml:task_id>59</oml:task_id>
+  <oml:task_type>Supervised Classification</oml:task_type>
+    <oml:flow_id>75243</oml:flow_id>
+  <oml:flow_name>mlr.classif.randomForest.filtered(1)</oml:flow_name>
+  <oml:setup_id>23161</oml:setup_id>
+   <oml:error>Attribute confidence.1 not found among predictions. </oml:error>       <oml:setup_string></oml:setup_string>
+      <oml:parameter_setting>
+      <oml:name>fw.method</oml:name>
+      <oml:value>variance</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>fw.perc</oml:name>
+      <oml:value>0.5</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>ntree</oml:name>
+      <oml:value>5</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>mtry</oml:name>
+      <oml:value>2</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>openml.seed</oml:name>
+      <oml:value>1</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>openml.kind</oml:name>
+      <oml:value>Mersenne-Twister</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>openml.normal.kind</oml:name>
+      <oml:value>Inversion</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>openml.sample.kind</oml:name>
+      <oml:value>Rejection</oml:value>
+      <oml:component>75243</oml:component>
+    </oml:parameter_setting>
+          <oml:input_data>
+          <oml:dataset>
+        <oml:did>10</oml:did>
+        <oml:name>mfeat-pixel</oml:name>
+        <oml:url>https://www.openml.org/data/download/20/dataset_20_mfeat-pixel.arff</oml:url>
+      </oml:dataset>
+        </oml:input_data>
+        <oml:output_data>
+                <oml:file>
+        <oml:did>-1</oml:did> <!-- Deprecated field, will be removed during next upgrade. -->
+        <oml:file_id>80553</oml:file_id>
+        <oml:name>description</oml:name>
+        <oml:url>https://test.openml.org/data/download/80553/description194c71024c09.xml</oml:url>
+      </oml:file>
+            <oml:file>
+        <oml:did>-1</oml:did> <!-- Deprecated field, will be removed during next upgrade. -->
+        <oml:file_id>80554</oml:file_id>
+        <oml:name>predictions</oml:name>
+        <oml:url>https://test.openml.org/data/download/80554/predictions194c239b2cba.arff</oml:url>
+      </oml:file>
+            </oml:output_data>
+  </oml:run>
+

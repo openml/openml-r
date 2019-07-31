@@ -33,7 +33,7 @@ test_that("getOMLDataSet by name", {
       # check multilabel
       multilab.ds = listOMLDataSets(tag = "2016_multilabel_r_benchmark_paper", limit = 1)
       ds = getOMLDataSet(data.id = multilab.ds$data.id)
-      expect_vector(ds$target.features, min.len = 2)
+      expect_atomic_vector(ds$target.features, min.len = 2)
     })
   })
 })

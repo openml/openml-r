@@ -52,7 +52,7 @@ test_that("OMLRunParList", {
     expect_is(par, "OMLRunParList")
     expect_character(extractSubList(par, "name"))
     expect_character(extractSubList(par, "value"))
-    expect_vector(extractSubList(par, "component"))
+    expect_atomic_vector(extractSubList(par, "component"))
     for (i in seq_along(par)) expect_is(par[[i]], "OMLRunParameter")
     expect_data_frame(as.data.frame(par), nrow = 6, ncol = 3)
     expect_data_table(as.data.table(par), nrow = 6, ncol = 3)
