@@ -4,9 +4,34 @@
 \alias{listOMLStudies}
 \title{list OpenML Studies.}
 \usage{
-listOMLStudies(verbosity = NULL)
+listOMLStudies(main.entity.type = NULL, status = "all",
+  uploader.id = NULL, limit = NULL, offset = NULL,
+  verbosity = NULL)
 }
 \arguments{
+\item{main.entity.type}{[\code{character}]\cr
+Subsets the results according to the entity type.
+Possible values are  \code{{NULL, "task", "run"}}.
+Default is \code{NULL} which means that no subsetting is done.}
+
+\item{status}{[\code{character}]\cr
+Subsets the results according to the status. Possible values are 
+\code{{"active", "deactivated", "in_preparation", "all"}}.
+Default is \code{"active"}.}
+
+\item{uploader.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of uploader profile(s).}
+
+\item{limit}{[\code{numeric(1)}]\cr
+Optional. The maximum number of entries to return. 
+Without specifying \code{offset}, it returns the first '\code{limit}' entries.
+Setting \code{limit = NULL} returns all available entries.}
+
+\item{offset}{[\code{numeric(1)}]\cr
+Optional. The offset to start from. 
+Should be indices starting from 0, which do not refer to IDs. 
+Is ignored when no \code{limit} is given.}
+
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
 \code{0}: normal output,\cr

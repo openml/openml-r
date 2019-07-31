@@ -1,6 +1,7 @@
-.listOMLStudies = function(alias = TRUE, status = "all", limit = NULL, offset = NULL,
-  main.entity.type = NULL, uploader.id = NULL, verbosity = NULL) {
+.listOMLStudies = function(main.entity.type = NULL, status = "all",
+  uploader.id = NULL, limit = NULL, offset = NULL, verbosity = NULL) {
 
+  assertChoice(main.entity.type, choices = c("task", "run"), null.ok = TRUE)
   api.call = generateAPICall("xml/study/list",
     uploader.id = uploader.id, limit = limit, offset = offset,
     status = status)
@@ -10,10 +11,9 @@
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
   if (is.null(content)) return(data.table())
 
-  doc = read_xml(paste(content, collapse = " "))
+  doc = xml2::read_xml(paste(content, collapse = " "))
 
-  args_names = c("name", "id")
-  if (alias) args_names = c(args_names, "alias") # See https://docs.openml.org/benchmark/ , Listing the Benchmark Suites
+  args_names = c("name", "id", "alias") # See https://docs.openml.org/benchmark/ , Listing the Benchmark Suites
 
   #   ** Might suffice to just use this commented block instead of remaining part. It suffices,
   #   if each study ALWAYS has at least the nodes/elements (which can be empty) "name", "id", "alias" **
@@ -25,9 +25,9 @@
   #   res = setDT(args)
   #   res[]
 
-  ns = xml_children(doc)
+  ns = xml2::xml_children(doc)
   get_text = function(node, xpQ) {
-    txt = xml_text(xml_contents(xml_child(node, xpQ)))
+    txt = xml2::xml_text(xml2::xml_contents(xml2::xml_child(node, xpQ)))
     if (length(txt) == 0) txt = ""
     return(txt)
   }
@@ -50,6 +50,15 @@
 #'
 #' @template note_memoise
 #'
+#' @param main.entity.type [\code{character}]\cr
+#'   Subsets the results according to the entity type.
+#'   Possible values are  \code{{NULL, "task", "run"}}.
+#'   Default is \code{NULL} which means that no subsetting is done.
+#' @param uploader.id [\code{integer}]\cr
+#'  a single ID or a vector of IDs of uploader profile(s).
+#' @template arg_status
+#' @template arg_limit
+#' @template arg_offset
 #' @template arg_verbosity
 #' @return [\code{data.frame}].
 #' @family listing functions
