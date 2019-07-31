@@ -137,6 +137,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL,
   if (!is.null(status)) assertChoice(status, choices = getValidOMLDataSetStatusLevels())
   if (!is.null(evaluation.measure))
     evaluation.measure = assertChoice(evaluation.measure, choices = listOMLEvaluationMeasures(verbosity = 0)$name)
+  #if (!is.null(main_entity_type)) assertChoice(main_entity_type, choices = c("task", "run"))
 
   url.args = list(
     "task" = task.id,
@@ -155,6 +156,7 @@ generateAPICall = function(api.call, task.id = NULL, flow.id = NULL,
     "function" = evaluation.measure,
     "limit" = limit,
     "offset" = offset,
+    #"main_entity_type" = main_entity_type,
     "status" = status
   )
   url.args = Filter(function(x) !is.null(x), url.args)

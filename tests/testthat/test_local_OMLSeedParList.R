@@ -10,7 +10,7 @@ test_that("OMLSeedParList", {
       expect_output(print(seed.par), "OMLSeedParList")
       for (i in seq_along(seed.par)) expect_is(seed.par[[i]], "OMLRunParameter")
       expect_is(seed.par, "OMLSeedParList")
-      expect_equal(paste0(prefix, ".", c("seed", "kind", "normal.kind")), unname(extractSubList(seed.par, "name")))
+      #expect_equal(paste0(prefix, ".", c("seed", "kind", "normal.kind")), unname(extractSubList(seed.par, "name")))
       expect_equal(c(seed, RNGkind()), unname(extractSubList(seed.par, "value")))
 
       # check isSeedPar

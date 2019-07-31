@@ -2,7 +2,7 @@
 % Please edit documentation in R/runTaskFlow.R
 \name{runTaskFlow}
 \alias{runTaskFlow}
-\title{Reproduce the Run}
+\title{Deprecated, use `runTaskMlr` instead.}
 \usage{
 runTaskFlow(task, flow, par.list, seed = 1, predict.type = NULL,
   verbosity = NULL, models = TRUE)
@@ -42,5 +42,6 @@ Default is \code{TRUE}.}
 }
 \description{
 Uses the ID of the run and tries to reproduce its results by downloading the flow and applying it to the respective task.
+`runTaskFlow` is deprecated. Please use \code{\link{runTaskMlr}}.
 }
 \concept{run related functions}

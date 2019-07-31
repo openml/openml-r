@@ -1,6 +1,7 @@
-#' Reproduce the Run
+#' Deprecated, use `runTaskMlr` instead.
 #'
 #' Uses the ID of the run and tries to reproduce its results by downloading the flow and applying it to the respective task.
+#' `runTaskFlow` is deprecated. Please use \code{\link{runTaskMlr}}.
 #'
 #' @template arg_task
 #' @param flow [\code{\link{OMLFlow}}]\cr
@@ -21,6 +22,7 @@
 #' @family run related functions
 runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL,
   verbosity = NULL, models = TRUE) {
+  .Deprecated("runTaskMlr")
   assertClass(task, "OMLTask")
   assertClass(flow, "OMLFlow")
   assertString(flow$name)

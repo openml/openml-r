@@ -159,7 +159,12 @@ makeFlowParameterListForMlrLearner = function(lrn) {
 # @return [list] of OMLFlowParameter objects.
 makeFlowParameterListForSeed = function() {
   # now handle random numbers generator seeding
-  seed.pars = setNames(c(1, RNGkind()), c("openml.seed", "openml.kind", "openml.normal.kind"))
+  rng.kind = RNGkind()
+  if (length(rng.kind) == 2)
+    rng.kind = setNames(rng.kind, c("openml.kind", "openml.normal.kind"))
+  if (length(rng.kind) == 3)
+    rng.kind = setNames(rng.kind, c("openml.kind", "openml.normal.kind", "openml.sample.kind"))
+  seed.pars = c("openml.seed" = 1, rng.kind)
   lapply(seq_along(seed.pars), function(x) {
     makeOMLFlowParameter(
       name = names(seed.pars[x]),

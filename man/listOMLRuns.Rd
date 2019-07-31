@@ -2,10 +2,10 @@
 % Please edit documentation in R/listOMLRuns.R
 \name{listOMLRuns}
 \alias{listOMLRuns}
-\title{List OpenML runs.}
+\title{List the first 5000 OpenML runs.}
 \usage{
 listOMLRuns(task.id = NULL, flow.id = NULL, run.id = NULL,
-  uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
+  uploader.id = NULL, tag = NULL, limit = 5000, offset = NULL,
   verbosity = NULL)
 }
 \arguments{
@@ -50,6 +50,7 @@ This function returns information on all OpenML runs that match certain
 \code{task.id}(s), \code{run.id}(s), flow ID \code{flow.id} and/or
 \code{uploader.id}(s). Alternatively the function can be passed a single
 \code{tag} to list only runs with the corresponding tag associated.
+Note that by default only the first 5000 runs will be returned (due to the argument \dQuote{limit = 5000}).
 }
 \note{
 This function is memoised. I.e., if you call this function twice in a running R session,

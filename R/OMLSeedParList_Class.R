@@ -15,7 +15,12 @@
 makeOMLSeedParList = function(seed, prefix = "openml") {
   assertIntegerish(seed)
   assert(checkString(prefix), checkNull(prefix))
-  seed.pars = setNames(c(seed, RNGkind()), c("seed", "kind", "normal.kind"))
+  rng.kind = RNGkind()
+  if (length(rng.kind) == 2)
+    seed.pars = setNames(c(seed, rng.kind), c("seed", "kind", "normal.kind"))
+  if (length(rng.kind) == 3)
+    seed.pars = setNames(c(seed, rng.kind), c("seed", "kind", "normal.kind", "sample.kind"))
+
   if (!is.null(prefix))
     names(seed.pars) = paste0(prefix, ".", names(seed.pars))
   seed.setting = lapply(seq_along(seed.pars), function(x) {
@@ -70,9 +75,9 @@ isSeedPar = function(par) {
 setOMLSeedParList = function(x, flow = NULL) {
   assertClass(x, "OMLSeedParList")
   seed.pars = vcapply(x, function(x) x$value)
-  prefix = unique(gsub("seed|kind|normal.kind", "", names(seed.pars)))
+  prefix = unique(gsub("seed|kind|normal.kind|sample.kind", "", names(seed.pars)))
   names(seed.pars) = gsub(prefix, "", names(seed.pars)) #c("seed", "kind", "normal.kind")
-  xRNG = seed.pars[c("kind", "normal.kind")]
+  xRNG = seed.pars[names(seed.pars) %nin% "seed"]
 
   currentRNG = RNGkind()
   if (!identical(currentRNG, unname(xRNG)))

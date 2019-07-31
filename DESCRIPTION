@@ -20,7 +20,6 @@ Depends:
     mlr (>= 2.11)
 Suggests: 
     testthat,
-    xml2,
     randomForest,
     rpart,
     RWeka,
@@ -28,7 +27,8 @@ Suggests:
     knitr,
     rmarkdown,
     R.rsp,
-    lintr (>= 1.0.1)
+    lintr (>= 1.0.1),
+    rex
 Imports:
     backports (>= 1.1.0),
     BBmisc (>= 1.11),
@@ -39,6 +39,7 @@ Imports:
     httr,
     stringi,
     XML,
+    xml2,
     jsonlite,
     memoise (>= 1.0.0),
     stats,
