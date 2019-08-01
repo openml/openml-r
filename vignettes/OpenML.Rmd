@@ -37,7 +37,7 @@ Afterwards, there are different basic stages when using this package or OpenML, 
     * result is an object of a specific OpenML class
 * [Running models on tasks](#running)
     * function `runTaskMlr`
-    * input: `OMLTask` and [`Learner`](https://mlr-org.github.io/mlr-tutorial/release/html/learner/index.html)
+    * input: `OMLTask` and [`Learner`](https://mlr.mlr-org.com/articles/tutorial/learner.html)
     * output: `OMLMlrRun`, `OMLRun`
 * [Uploading](#upload)
     * function `uploadOMLRun`
@@ -363,7 +363,7 @@ Note that locally created runs don't have a run ID or flow ID yet. These are ass
 
 ### Run a task without using mlr
 If you are not using `mlr`, you will have to invest some more time and effort to get things done since this is not supported yet. So, unless you have good reasons to do otherwise, we strongly encourage to use `mlr`.
-If the algorithm you want to use is not integrated in `mlr` yet, you can integrate it yourself (see the [tutorial](http://mlr-org.github.io/mlr-tutorial/devel/html/create_learner/index.html)) or open an [issue on mlr GitHub repository](https://github.com/mlr-org/mlr/issues) and hope someone else will do it for you.
+If the algorithm you want to use is not integrated in `mlr` yet, you can integrate it yourself (see the [tutorial](https://mlr.mlr-org.com/articles/tutorial/create_learner.html)) or open an [issue on mlr GitHub repository](https://github.com/mlr-org/mlr/issues) and hope someone else will do it for you.
 
 ## Uploading {#upload}
 The following section gives an overview on how one can contribute building blocks (i.e. data sets, flows and runs) to the OpenML server.
@@ -416,7 +416,7 @@ Alternatively you can enter data directly on the [OpenML website](http://www.ope
 
 ### Upload a flow
 
-A [flow](#flows) is an implementation of a single algorithm or a script. Each [`mlr` learner](http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/) can be considered an implementation of a flow, which can be uploaded to the server with the function `uploadOMLFlow`.
+A [flow](#flows) is an implementation of a single algorithm or a script. Each [`mlr` learner](https://mlr.mlr-org.com/articles/tutorial/integrated_learners.html) can be considered an implementation of a flow, which can be uploaded to the server with the function `uploadOMLFlow`.
 If the flow has already been uploaded to the server (either by you or someone else), one receives a message that the flow already exists and the `flow.id` is returned from the function. Otherwise, the flow will be uploaded, receive its own `flow.id` and return that ID.
 
 ```{r eval = FALSE, warning = FALSE, message = TRUE}
