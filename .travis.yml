@@ -20,6 +20,7 @@ r_github_packages:
   - mlr-org/mlr
   - berndbischl/BBmisc
   - berndbischl/ParamHelpers
+  - r-lib/httr
 
 cache:
   packages: true
