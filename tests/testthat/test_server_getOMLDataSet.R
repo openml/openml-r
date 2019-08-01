@@ -34,6 +34,9 @@ test_that("getOMLDataSet by name", {
       multilab.ds = listOMLDataSets(tag = "2016_multilabel_r_benchmark_paper", limit = 1)
       ds = getOMLDataSet(data.id = multilab.ds$data.id)
       expect_atomic_vector(ds$target.features, min.len = 2)
+
+      # check if there are no warnings in case of multiple elements in ignore.attributes (see issue #439)
+      expect_silent(getOMLTask(146800, verbosity = 0))
     })
   })
 })
