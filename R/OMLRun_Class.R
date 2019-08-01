@@ -2,7 +2,7 @@
 #'
 #' @description
 #' More details about the elements of a \code{OMLRun} can be found in the
-#' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
+#' \href{https://github.com/openml/OpenML/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
 #'
 #' @param run.id [\code{numeric(1)}]\cr
 #'   ID of the run. Added by server. Ignored when uploading a run.
@@ -92,8 +92,8 @@ makeOMLRun = function(run.id = NA_integer_, uploader = NA_integer_, uploader.nam
 
 # show
 #' @export
-print.OMLRun = function(x, print.metrics = FALSE, ...)  {
-  assertFlag(print.metrics, na.ok = FALSE)
+print.OMLRun = function(x, ...)  {
+  #assertFlag(print.metrics, na.ok = FALSE)
 
   catNotNA = function(s, val) {
     if (!all(is.na(val)))
@@ -101,20 +101,20 @@ print.OMLRun = function(x, print.metrics = FALSE, ...)  {
   }
 
   ## General info
-  catf('\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)', x$run.id, x$task.id, x$flow.id)
-  catNotNA('\tUser ID  :', x$uploader)
-  catNotNA('\tTags     :', x$tags)
-  catNotNA('\tLearner  :', x$flow.name)
-  catNotNA('\tTask type:', x$task.type)
+  catf("\nOpenML Run %i :: (Task ID = %i, Flow ID = %i)", x$run.id, x$task.id, x$flow.id)
+  catNotNA("\tUser ID  :", x$uploader)
+  catNotNA("\tTags     :", x$tags)
+  catNotNA("\tLearner  :", x$flow.name)
+  catNotNA("\tTask type:", x$task.type)
 
   if (!is.null(x$bmr$results[[1]][[1]])) {
-    cat('\n')
+    cat("\n")
     print(x$bmr$results[[1]][[1]])
   }
 
-  if (print.metrics) {
-    cat('\n\tMetrics:\n\n')
-    m = x$output.data$evaluations
-    print(m[, colnames(m) != "array.data"])
-  }
+  # if (print.metrics) {
+  #   cat('\n\tMetrics:\n\n')
+  #   m = x$output.data$evaluations
+  #   print(m[, colnames(m) != "array.data"])
+  # }
 }

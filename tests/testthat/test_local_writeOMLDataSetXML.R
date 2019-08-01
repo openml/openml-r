@@ -6,7 +6,7 @@ test_that("writeOMLDataSetXML", {
     xml.file = tempfile()
     data.xml = writeOMLDataSetXML(data$desc, xml.file)
     expect_true(file.exists(xml.file))
-    
+
     # compare with local xml
     doc = xmlParse(xml.file)
     prev = as.list(getOMLConfig())

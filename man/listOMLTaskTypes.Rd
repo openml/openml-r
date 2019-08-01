@@ -28,16 +28,18 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-  listOMLTaskTypes()
-}
+# \dontrun{
+#   listOMLTaskTypes()
+# }
 }
 \seealso{
-Other listing functions: \code{\link{listOMLDataSetQualities}},
+Other listing functions: \code{\link{chunkOMLlist}},
+  \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
   \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
+  \code{\link{listOMLSetup}}, \code{\link{listOMLStudies}},
   \code{\link{listOMLTasks}}
 
 Other task-related functions: \code{\link{convertOMLTaskToMlr}},
@@ -45,3 +47,5 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}
 }
+\concept{listing functions}
+\concept{task-related functions}

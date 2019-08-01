@@ -1,0 +1,611 @@
+<oml:run xmlns:oml="http://openml.org/openml">
+  <oml:run_id>219</oml:run_id>
+  <oml:uploader>348</oml:uploader>
+  <oml:uploader_name>Giuseppe C.</oml:uploader_name>
+  <oml:task_id>19</oml:task_id>
+  <oml:task_type>Supervised Classification</oml:task_type>
+    <oml:flow_id>16</oml:flow_id>
+  <oml:flow_name>mlr.classif.rpart(1)</oml:flow_name>
+  <oml:setup_id>23</oml:setup_id>
+   <oml:error></oml:error>       <oml:setup_string></oml:setup_string>
+      <oml:parameter_setting>
+      <oml:name>xval</oml:name>
+      <oml:value>0</oml:value>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>openml.seed</oml:name>
+      <oml:value>1</oml:value>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>openml.kind</oml:name>
+      <oml:value>Mersenne-Twister</oml:value>
+    </oml:parameter_setting>
+      <oml:parameter_setting>
+      <oml:name>openml.normal.kind</oml:name>
+      <oml:value>Inversion</oml:value>
+    </oml:parameter_setting>
+        <oml:tag>convertBMR</oml:tag>
+        <oml:input_data>
+          <oml:dataset>
+        <oml:did>4</oml:did>
+        <oml:name>balance-scale</oml:name>
+        <oml:url>https://www.openml.org/data/download/11/dataset_11_balance-scale.arff</oml:url>
+      </oml:dataset>
+        </oml:input_data>
+        <oml:output_data>
+                <oml:file>
+        <oml:did>-1</oml:did> <!-- Deprecated field, will be removed during next upgrade. -->
+        <oml:file_id>747</oml:file_id>
+        <oml:name>description</oml:name>
+        <oml:url>https://test.openml.org/data/download/747/description3a7861141eb1.xml</oml:url>
+      </oml:file>
+            <oml:file>
+        <oml:did>-1</oml:did> <!-- Deprecated field, will be removed during next upgrade. -->
+        <oml:file_id>748</oml:file_id>
+        <oml:name>predictions</oml:name>
+        <oml:url>https://test.openml.org/data/download/748/predictions3a78517a34ca.arff</oml:url>
+      </oml:file>
+                        <oml:evaluation>
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.801187</oml:value>          <oml:array_data>[0.825719,0.5,0.827898]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.753537</oml:value>          <oml:array_data>[0.818331,0,0.816949]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>kappa</oml:name>
+          <oml:value>0.602374</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>354.446528</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.142933</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.379764</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>625</oml:value>          <oml:array_data>[288,49,288]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>precision</oml:name>
+          <oml:value>0.724381</oml:value>          <oml:array_data>[0.773994,0,0.798013]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.7856</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>recall</oml:name>
+          <oml:value>0.7856</oml:value>          <oml:array_data>[0.868056,0,0.836806]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.376374</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.435577</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.378065</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.867964</oml:value>                  </oml:evaluation>
+              <oml:evaluation>
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+                        <oml:evaluation repeat="0" fold="0">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.808824</oml:value>          <oml:array_data>[0.828093,0.5,0.842799]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.794118</oml:value>          <oml:array_data>[0.798682,0.5,0.840264]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.808824</oml:value>          <oml:array_data>[0.877282,0.5,0.793611]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.808824</oml:value>          <oml:array_data>[0.840264,0.5,0.830629]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.779412</oml:value>          <oml:array_data>[0.798682,0.5,0.808316]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.848485</oml:value>          <oml:array_data>[0.842215,0.5,0.902821]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.836007</oml:value>          <oml:array_data>[0.855277,0.5,0.87605]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.760695</oml:value>          <oml:array_data>[0.794671,0.5,0.772059]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.761141</oml:value>          <oml:array_data>[0.793067,0.5,0.77534]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>area_under_roc_curve</oml:name>
+          <oml:value>0.806595</oml:value>          <oml:array_data>[0.828782,0.5,0.838036]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>average_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.760907</oml:value>          <oml:array_data>[0.819672,0,0.833333]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.746284</oml:value>          <oml:array_data>[0.793651,0,0.827586]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.759813</oml:value>          <oml:array_data>[0.870968,0,0.779661]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.760897</oml:value>          <oml:array_data>[0.827586,0,0.825397]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.730411</oml:value>          <oml:array_data>[0.793651,0,0.793103]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.811655</oml:value>          <oml:array_data>[0.83871,0,0.896552]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.787789</oml:value>          <oml:array_data>[0.847458,0,0.866667]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.709933</oml:value>          <oml:array_data>[0.793651,0,0.75]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.710707</oml:value>          <oml:array_data>[0.779661,0,0.766667]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>f_measure</oml:name>
+          <oml:value>0.757271</oml:value>          <oml:array_data>[0.819672,0,0.827586]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.617647</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.588235</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.617647</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.617647</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.558824</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.69697</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.6718</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.521697</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.522388</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>kappa</oml:name>
+          <oml:value>0.612314</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>36.534935</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>35.014231</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>36.534935</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>36.534935</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>33.493527</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>39.666938</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>38.728868</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>31.125348</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>31.125348</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>kb_relative_information_score</oml:name>
+          <oml:value>35.68746</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.137566</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.148148</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.137566</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.137566</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.15873</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.107527</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.11828</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.172043</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.172043</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>mean_absolute_error</oml:name>
+          <oml:value>0.139785</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380009</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380009</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380009</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380009</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380009</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.376241</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380334</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380334</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380334</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>mean_prior_absolute_error</oml:name>
+          <oml:value>0.380334</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>63</oml:value>          <oml:array_data>[29,5,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>63</oml:value>          <oml:array_data>[29,5,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>63</oml:value>          <oml:array_data>[29,5,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>63</oml:value>          <oml:array_data>[29,5,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>63</oml:value>          <oml:array_data>[29,5,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>62</oml:value>          <oml:array_data>[29,4,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>62</oml:value>          <oml:array_data>[29,5,28]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>62</oml:value>          <oml:array_data>[29,5,28]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>62</oml:value>          <oml:array_data>[28,5,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>number_of_instances</oml:name>
+          <oml:value>62</oml:value>          <oml:array_data>[28,5,29]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>precision</oml:name>
+          <oml:value>0.730847</oml:value>          <oml:array_data>[0.78125,0,0.806452]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>precision</oml:name>
+          <oml:value>0.719421</oml:value>          <oml:array_data>[0.735294,0,0.827586]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>precision</oml:name>
+          <oml:value>0.729533</oml:value>          <oml:array_data>[0.818182,0,0.766667]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>precision</oml:name>
+          <oml:value>0.73296</oml:value>          <oml:array_data>[0.827586,0,0.764706]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>precision</oml:name>
+          <oml:value>0.703548</oml:value>          <oml:array_data>[0.735294,0,0.793103]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>precision</oml:name>
+          <oml:value>0.787879</oml:value>          <oml:array_data>[0.787879,0,0.896552]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>precision</oml:name>
+          <oml:value>0.75672</oml:value>          <oml:array_data>[0.833333,0,0.8125]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>precision</oml:name>
+          <oml:value>0.682638</oml:value>          <oml:array_data>[0.735294,0,0.75]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>precision</oml:name>
+          <oml:value>0.682102</oml:value>          <oml:array_data>[0.741935,0,0.741935]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>precision</oml:name>
+          <oml:value>0.729228</oml:value>          <oml:array_data>[0.757576,0,0.827586]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.793651</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.777778</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.793651</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.793651</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.761905</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.83871</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.822581</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.741935</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.741935</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>predictive_accuracy</oml:name>
+          <oml:value>0.790323</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>prior_entropy</oml:name>
+          <oml:value>1.321213</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>recall</oml:name>
+          <oml:value>0.793651</oml:value>          <oml:array_data>[0.862069,0,0.862069]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>recall</oml:name>
+          <oml:value>0.777778</oml:value>          <oml:array_data>[0.862069,0,0.827586]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>recall</oml:name>
+          <oml:value>0.793651</oml:value>          <oml:array_data>[0.931034,0,0.793103]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>recall</oml:name>
+          <oml:value>0.793651</oml:value>          <oml:array_data>[0.827586,0,0.896552]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>recall</oml:name>
+          <oml:value>0.761905</oml:value>          <oml:array_data>[0.862069,0,0.793103]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>recall</oml:name>
+          <oml:value>0.83871</oml:value>          <oml:array_data>[0.896552,0,0.896552]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>recall</oml:name>
+          <oml:value>0.822581</oml:value>          <oml:array_data>[0.862069,0,0.928571]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>recall</oml:name>
+          <oml:value>0.741935</oml:value>          <oml:array_data>[0.862069,0,0.75]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>recall</oml:name>
+          <oml:value>0.741935</oml:value>          <oml:array_data>[0.821429,0,0.793103]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>recall</oml:name>
+          <oml:value>0.790323</oml:value>          <oml:array_data>[0.892857,0,0.827586]</oml:array_data>        </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.362008</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.389855</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.362008</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.362008</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.417701</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.285792</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.310989</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.452348</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.452348</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>relative_absolute_error</oml:name>
+          <oml:value>0.367533</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.435858</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.435858</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.435858</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.435858</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.435858</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.431515</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.436231</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.436231</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.436231</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>root_mean_prior_squared_error</oml:name>
+          <oml:value>0.436231</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.370899</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.3849</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.370899</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.370899</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.39841</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.327913</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.343918</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.414781</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.414781</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>root_mean_squared_error</oml:name>
+          <oml:value>0.373878</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.850963</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.883086</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.850963</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.850963</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.914081</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.759911</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.788386</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.950829</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.950829</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>root_relative_squared_error</oml:name>
+          <oml:value>0.857066</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="0">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="1">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="2">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="3">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="4">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="5">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="6">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="7">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="8">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+              <oml:evaluation repeat="0" fold="9">
+          <oml:name>total_cost</oml:name>
+          <oml:value>0</oml:value>                  </oml:evaluation>
+            </oml:output_data>
+  </oml:run>
+

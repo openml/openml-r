@@ -6,7 +6,7 @@
 \title{OMLDataSet.}
 \usage{
 makeOMLDataSet(desc, data, colnames.old = colnames(data),
-  colnames.new = colnames(data), target.features)
+  colnames.new = colnames(data), target.features = NULL)
 }
 \arguments{
 \item{desc}{[\code{OMLDataSetDescription}]\cr
@@ -22,7 +22,8 @@ Names of the features that were uploaded to the server.}
 Names of the features that are displayed.}
 
 \item{target.features}{[\code{character}]\cr
-Name(s) of the target feature(s).}
+Name(s) of the target feature(s).
+If set, this will replace the default target in \code{desc}.}
 }
 \value{
 [\code{OMLDataSet}]
@@ -34,7 +35,7 @@ finally, the target features.
 
 The \code{\link{OMLDataSetDescription}} provides information on the data set,
 like the ID, name, version, etc. To see a full list of all elements, please see the
-\href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.data.upload.xsd}{XSD}.
+\href{https://www.openml.org/api/v1/xsd/openml.data.upload}{XSD}.
 
 The slot \code{colnames.old} contains the original names, i.e., the column names that were
 uploaded to the server, while \code{colnames.new} contains the names that you will see when
@@ -79,3 +80,4 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{tagOMLObject}},
   \code{\link{uploadOMLDataSet}}
 }
+\concept{data set-related functions}

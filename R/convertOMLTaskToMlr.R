@@ -49,6 +49,7 @@ convertOMLTaskToMlr = function(
     usercpu_time_millis_training = mlr::setAggregation(mlr::timetrain, mlr::test.sum),
     usercpu_time_millis_testing = mlr::setAggregation(mlr::timepredict, mlr::test.sum)
   )
-  mlr.measures = c(convertOMLMeasuresToMlr(obj$input$evaluation.measures), time.measures, measures)
+  task.measures = convertOMLMeasuresToMlr(obj$input$evaluation.measures)
+  mlr.measures = c(task.measures, time.measures, measures)
   list(mlr.task = mlr.task, mlr.rin = mlr.rin, mlr.measures = mlr.measures)
 }

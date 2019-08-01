@@ -4,12 +4,12 @@
   res = fromJSON(txt = content)$estimationprocedures$estimationprocedure
   task.types = .listOMLTaskTypes(verbosity = 0)
   row.names(task.types) = task.types$id
-  data.frame(
-    est.id = as.integer(res$id),
-    task.type = as.character(task.types[as.character(res$ttid), "name"]),
-    name = res$name,
-    stringsAsFactors = TRUE
-  )
+  est.id = as.integer(res$id)
+  task.type = as.character(task.types[as.character(res$ttid), "name"])
+  res$id = res$ttid = NULL
+  ret = cbind(est.id = est.id, task.type = task.type, res, stringsAsFactors = FALSE)
+  names(ret) = convertNamesOMLToR(names(ret))
+  type.convert(ret, as.is = TRUE, how = "replace")
 }
 
 #' @title List available estimation procedures.

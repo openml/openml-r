@@ -6,20 +6,21 @@
 \usage{
 listOMLRunEvaluations(task.id = NULL, flow.id = NULL, run.id = NULL,
   uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
-  verbosity = NULL, show.array.measures = FALSE, extend.flow.name = TRUE)
+  verbosity = NULL, evaluation.measure = NULL,
+  show.array.measures = FALSE, extend.flow.name = TRUE)
 }
 \arguments{
-\item{task.id}{[\code{integer(1)}]\cr
-Task ID.}
+\item{task.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of the task(s).}
 
-\item{flow.id}{[\code{integer(1)}]\cr
-ID of the implementation of an OpenML flow.}
+\item{flow.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of the flow(s).}
 
 \item{run.id}{[\code{integer}]\cr
-a single ID or a vector of IDs of the runs.}
+a single ID or a vector of IDs of the run(s).}
 
-\item{uploader.id}{[\code{integer(1)}]\cr
-ID of the uploader.}
+\item{uploader.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of uploader profile(s).}
 
 \item{tag}{[\code{character}]\cr
 If not \code{NULL} only entries with the corresponding \code{tag}s
@@ -42,10 +43,18 @@ Print verbose output on console? Possible values are:\cr
 \code{2}: debug output.\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
-\item{show.array.measures}{Should measures that return an array (i.e. confusion matrix, predictive accuracy per cv-fold) instead of a single skalar value be shown?
+\item{evaluation.measure}{[\code{character(1)}]\cr
+Use this to speedup your request.
+It restricts the results to only one evaluation measure (see \code{\link{listOMLEvaluationMeasures}} for possible values).
+Default is \code{NULL}, which means that no restriction is going to happen and all possible evaluation measures will be returned.}
+
+\item{show.array.measures}{[\code{logical(1)}]\cr
+Should measures that return an array instead of a single skalar value be shown (e.g. confusion matrix, predictive accuracy within each class)?
 Default is \code{FALSE}.}
 
-\item{extend.flow.name}{Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner. Default is \code{TRUE}.}
+\item{extend.flow.name}{[\code{logical(1)}]\cr
+Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner.
+Default is \code{TRUE}.}
 }
 \value{
 [\code{data.frame}].
@@ -64,13 +73,14 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-	# get run results of task 6 (as many rows as runs for this task)
-	rev_tid6 = listOMLRunEvaluations(task.id = 6L)
-	str(rev_tid6)
-
-	# get run results of run 8 (one row)
-	rev_rid8 = listOMLRunEvaluations(run.id = 8)
-	str(rev_rid8)
+# \dontrun{
+# 	# get run results of task 6 (as many rows as runs for this task)
+# 	rev_tid6 = listOMLRunEvaluations(task.id = 6L)
+# 	str(rev_tid6)
+#
+# 	# get run results of run 8 (one row)
+# 	rev_rid8 = listOMLRunEvaluations(run.id = 8)
+# 	str(rev_rid8)
+# }
 }
-}
+\concept{list}

@@ -25,14 +25,15 @@ If there is no API key in the configuration file, the key is retrieved from the
 environment variable \dQuote{OPENMLAPIKEY} (if defined).
 }
 \examples{
-# if assign = FALSE nothing is changed
-# usually one would want assign = TRUE
-\dontrun{
-  loadOMLConfig(assign = FALSE)
-}
+# # if assign = FALSE nothing is changed
+# # usually one would want assign = TRUE
+# \dontrun{
+#   loadOMLConfig(assign = FALSE)
+# }
 }
 \seealso{
 Other config: \code{\link{configuration}},
   \code{\link{getOMLConfig}}, \code{\link{saveOMLConfig}},
   \code{\link{setOMLConfig}}
 }
+\concept{config}

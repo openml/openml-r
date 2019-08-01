@@ -7,7 +7,7 @@
 #'
 #' The \code{\link{OMLDataSetDescription}} provides information on the data set,
 #' like the ID, name, version, etc. To see a full list of all elements, please see the
-#' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.data.upload.xsd}{XSD}.
+#' \href{https://www.openml.org/api/v1/xsd/openml.data.upload}{XSD}.
 #'
 #' The slot \code{colnames.old} contains the original names, i.e., the column names that were
 #' uploaded to the server, while \code{colnames.new} contains the names that you will see when
@@ -28,22 +28,32 @@
 #'   Names of the features that are displayed.
 #' @param target.features [\code{character}]\cr
 #'   Name(s) of the target feature(s).
+#'   If set, this will replace the default target in \code{desc}.
 #' @return [\code{OMLDataSet}]
 #' @name OMLDataSet
 #' @export
 #' @family data set-related functions
 #' @aliases OMLDataSet
 #' @example inst/examples/makeOMLDataSet.R
-makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.new = colnames(data), target.features) {
+makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.new = colnames(data), target.features = NULL) {
+  # sanity check for desc
   assertClass(desc, "OMLDataSetDescription")
+  assertCharacter(desc$default.target.attribute, null.ok = TRUE)
+  assertCharacter(desc$ignore.attribute, null.ok = TRUE)
+  assertCharacter(desc$row.id.attribute, null.ok = TRUE)
   assertDataFrame(data)
-  n.col = ncol(data)
-  assertCharacter(colnames.old, len = n.col, any.missing = FALSE, all.missing = FALSE)
-  assertCharacter(colnames.new, len = n.col, any.missing = FALSE, all.missing = FALSE)
-  assertCharacter(target.features, min.len = 0L, max.len = n.col, any.missing = TRUE, all.missing = TRUE)
-
-  if (!isSubset(target.features, colnames(data))) {
-    stopf("Data has no column(s) named '%s'.", collapse(setdiff(target.features, colnames(data)), sep = ", "))
+  assertCharacter(colnames.old, len = ncol(data), any.missing = FALSE, all.missing = FALSE)
+  assertCharacter(colnames.new, len = ncol(data), any.missing = FALSE, all.missing = FALSE)
+  assertSubset(target.features, choices = colnames(data), empty.ok = TRUE)
+  # use default target if no target is passed, else replace default target with passed target
+  if (is.null(target.features)) {
+    target.features = desc$default.target.attribute
+  } else {
+    if (any(desc$default.target.attribute != target.features)) {
+      verbosity = getOMLConfig()$verbosity
+      showInfo(verbosity, sprintf("Default target will be replaced with '%s'.", collapse(target.features)))
+    }
+    desc$default.target.attribute = target.features
   }
 
   makeS3Obj("OMLDataSet",
@@ -58,4 +68,14 @@ makeOMLDataSet = function(desc, data, colnames.old = colnames(data), colnames.ne
 #' @export
 print.OMLDataSet = function(x, ...) {
   print.OMLDataSetDescription(x$desc)
+}
+
+#' @export
+as.data.frame.OMLDataSet = function(x, ...) {
+  x$data
+}
+
+#' @export
+as.data.table.OMLDataSet = function(x, ...) {
+  as.data.table(x$data)
 }

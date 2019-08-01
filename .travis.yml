@@ -1,22 +1,26 @@
 language: r
 sudo: false
-r_check_args: "--as-cran --run-donttest"
+
+r:
+  - release
 
 os:
   - linux
-  - osx
 
-env:
-  global:
-  - secure: oBSw3lt+e3/iEEhYHXEAJpZWmITbC6HtqRVXIKQsVpaGfQ6zxxoIKeUOpSUGSGvG+CLBqie97a7eWDq2Z21md6wr+jBnmAoHlrUckQdw7GF8aT3aOmZzQ6cZbQniTn5nRJ8GlfYi/nkhxIDQ0bUY3KBBUak27uHvNEY4wqSdCxE=
-  - secure: "UOXrFQRyK/l9AUBxpoEq3DkOaBGmml+gChxwla8Y9Z5xacCM46DhY2yob5BSqtD1EI+aKGe/1WwN/dqPeuJhwSSPFggP+RJ26Kyf8jWSxHPbZSOsULGVcfgtl/kgozlrj8alG26WUjcbA+c7GlvbSZXu3OWRZHW0aTnx9IIda+A="
+r_check_args: "--as-cran --run-donttest"
+
+r_packages:
+  - devtools
+  - roxygen2
+  - covr
+  - lintr
 
 r_github_packages:
-    - jimhester/covr
-    - mlr-org/farff
-    - mlr-org/mlr
-    - berndbischl/BBmisc
-    - berndbischl/ParamHelpers
+  - mlr-org/farff
+  - mlr-org/mlr
+  - berndbischl/BBmisc
+  - berndbischl/ParamHelpers
+  - r-lib/httr
 
 cache:
   packages: true
@@ -26,16 +30,19 @@ cache:
 before_script:
   - mkdir -p "$HOME/.openml/cache" && find "$HOME/.openml/cache"
   - echo "apikey=$OPENMLAPIKEY" > "$HOME/.openml/config"
+  - R --no-save <<< 'library("devtools"); document()'
 
 after_success:
-  - Rscript -e 'library(covr);coveralls()'
+  - Rscript -e 'library(covr);codecov()'
 
 notifications:
   email:
     recipients:
-        - michellang@gmail.com
-        - bernd_bischl@gmx.net
-        - j.bossek@gmail.com
+        - giuseppe.casalicchio@stat.uni-muenchen.de
+    on_success: never
+    on_failure: never
+  slack:
+    rooms:
+      - openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
     on_success: change
-    on_failure: always
-  slack: openml:sHBAXvEJBWpSluiYfzSogNFT#buildnotifications
+    on_failure: change

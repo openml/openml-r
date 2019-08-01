@@ -33,7 +33,7 @@ Print verbose output on console? Possible values are:\cr
 Default is set via \code{\link{setOMLConfig}}.}
 
 \item{models}{[\code{logical(1)}]\cr
-This argument is passed to \code{\link[mlr]{benchmark}}. 
+This argument is passed to \code{\link[mlr]{benchmark}}.
 Should all fitted models be stored in the \code{\link[mlr]{ResampleResult}}?
 Default is \code{TRUE}.}
 }
@@ -41,5 +41,6 @@ Default is \code{TRUE}.}
 [\code{OMLMlrRun}], an \code{\link{OMLRun}}.
 }
 \description{
-Uses the ID of the run and tries to reproduce its results by downloading the flow and appling it to the respecitve task.
+Uses the ID of the run and tries to reproduce its results by downloading the flow and applying it to the respective task.
 }
+\concept{run related functions}

@@ -51,3 +51,5 @@ Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{getOMLDataSet}},
   \code{\link{listOMLDataSets}}, \code{\link{tagOMLObject}}
 }
+\concept{data set-related functions}
+\concept{uploading functions}

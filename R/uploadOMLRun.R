@@ -156,7 +156,7 @@ getBMRTuneTrace = function(bmr) {
   cv.iter = tune.res$iter
   folds = resample.info$folds
   reps = resample.info$reps
-  rep = rep(seq_len(reps), each = length(cv.iter)/reps)
+  rep = rep(seq_len(reps), each = length(cv.iter) / reps)
   fold = cv.iter %% folds
   fold[fold == 0L] = folds
 
@@ -165,14 +165,14 @@ getBMRTuneTrace = function(bmr) {
     rep = rep - 1L,
     fold = fold - 1L,
     iteration = as.numeric(tune.res$dob) - 1L,
-    tune.res[,tune.par, drop = FALSE],
+    tune.res[, tune.par, drop = FALSE],
     evaluation = tune.res[evaluation]
   )
 
-  par = apply(tune.res[,tune.par, drop = FALSE], 1, function(x) collapse(x))
+  par = apply(tune.res[, tune.par, drop = FALSE], 1, function(x) collapse(x))
   par = chunk(par, chunk.size = length(unique(tune.res$dob)))
   tune.x.vec = apply(tune.x, 1, function(x) collapse(x))
-  tune.trace$selected = unlist(lapply(seq_along(par), function(i) par[[i]]%in%tune.x.vec[i]))
+  tune.trace$selected = unlist(lapply(seq_along(par), function(i) par[[i]] %in% tune.x.vec[i]))
 
   # tune.x2 = data.frame(unique(tune.trace[,c("rep", "fold")]), tune.x)
   # tune.trace = plyr::ddply(tune.trace, .variables = c("rep", "fold"), function(d) {
@@ -182,6 +182,6 @@ getBMRTuneTrace = function(bmr) {
   #   return(d)
   # })
 
-  tune.trace = tune.trace[order(tune.trace$rep, tune.trace$fold, tune.trace$iteration),]
+  tune.trace = tune.trace[order(tune.trace$rep, tune.trace$fold, tune.trace$iteration), ]
   return(tune.trace)
 }

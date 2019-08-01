@@ -6,8 +6,8 @@
 \title{Construct OMLFlow.}
 \usage{
 makeOMLFlow(flow.id = NA_integer_, uploader = NA_integer_, name,
-  version = NA_character_, external.version = NA_character_, description,
-  creator = NA_character_, contributor = NA_character_,
+  version = NA_character_, external.version = NA_character_,
+  description, creator = NA_character_, contributor = NA_character_,
   upload.date = NA_character_, licence = NA_character_,
   language = "English", full.description = NA_character_,
   installation.notes = NA_character_, dependencies = NA_character_,
@@ -118,7 +118,7 @@ The path to the cached binary file, once \code{\link{getOMLFlow}} was run.}
 }
 \description{
 More details about the elements of a \code{OMLFlow} can be found in the
-\href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.implementation.upload.xsd}{XSD scheme}.
+\href{https://www.openml.org/api/v1/xsd/openml.implementation.upload}{XSD scheme}.
 }
 \seealso{
 Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
@@ -127,3 +127,4 @@ Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{tagOMLObject}}
 }
+\concept{flow-related functions}

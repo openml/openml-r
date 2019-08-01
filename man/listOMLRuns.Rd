@@ -2,24 +2,24 @@
 % Please edit documentation in R/listOMLRuns.R
 \name{listOMLRuns}
 \alias{listOMLRuns}
-\title{List OpenML runs.}
+\title{List the first 5000 OpenML runs.}
 \usage{
 listOMLRuns(task.id = NULL, flow.id = NULL, run.id = NULL,
-  uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
+  uploader.id = NULL, tag = NULL, limit = 5000, offset = NULL,
   verbosity = NULL)
 }
 \arguments{
-\item{task.id}{[\code{integer(1)}]\cr
-Task ID.}
+\item{task.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of the task(s).}
 
-\item{flow.id}{[\code{integer(1)}]\cr
-ID of the implementation of an OpenML flow.}
+\item{flow.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of the flow(s).}
 
 \item{run.id}{[\code{integer}]\cr
-a single ID or a vector of IDs of the runs.}
+a single ID or a vector of IDs of the run(s).}
 
-\item{uploader.id}{[\code{integer(1)}]\cr
-ID of the uploader.}
+\item{uploader.id}{[\code{integer}]\cr
+a single ID or a vector of IDs of uploader profile(s).}
 
 \item{tag}{[\code{character}]\cr
 If not \code{NULL} only entries with the corresponding \code{tag}s
@@ -50,6 +50,7 @@ This function returns information on all OpenML runs that match certain
 \code{task.id}(s), \code{run.id}(s), flow ID \code{flow.id} and/or
 \code{uploader.id}(s). Alternatively the function can be passed a single
 \code{tag} to list only runs with the corresponding tag associated.
+Note that by default only the first 5000 runs will be returned (due to the argument \dQuote{limit = 5000}).
 }
 \note{
 This function is memoised. I.e., if you call this function twice in a running R session,
@@ -58,17 +59,19 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-  runs_ctree = listOMLRuns(flow.id = 2569)
-  head(runs_ctree)
-}
+# \dontrun{
+#   runs_ctree = listOMLRuns(flow.id = 2569)
+#   head(runs_ctree)
+# }
 }
 \seealso{
-Other listing functions: \code{\link{listOMLDataSetQualities}},
+Other listing functions: \code{\link{chunkOMLlist}},
+  \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}},
+  \code{\link{listOMLFlows}}, \code{\link{listOMLSetup}},
+  \code{\link{listOMLStudies}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 
@@ -79,3 +82,5 @@ Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}
 }
+\concept{listing functions}
+\concept{run-related functions}

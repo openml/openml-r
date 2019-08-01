@@ -24,12 +24,14 @@
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
 
+  if (is.null(content)) return(data.frame())
+
   res = fromJSON(txt = content, simplifyVector = FALSE)$tasks$task
   input = convertNameValueListToDF(extractSubList(res, "input", simplify = FALSE))
   # get rid of less interesting stuff
-  input = input[, which(colnames(input)%in%c("source_data", "target_value", "time_limit", "number_samples")):=NULL]
+  input = input[, which(colnames(input) %in% c("source_data", "target_value", "time_limit", "number_samples")) := NULL] # nolint
   qualities = convertNameValueListToDF(extractSubList(res, "quality", simplify = FALSE))
-  tags = convertTagListToTagString(res)
+  # tags = convertTagListToTagString(res)
   # subset according to evaluation measure and estimation procedure
   ind.eval = ind.estim = rep(TRUE, nrow(input))
   if (!is.null(evaluation.measures))
@@ -42,7 +44,7 @@
     input$estimation_procedure = NA
   } else {
     row.names(estim.proc) = estim.proc$est.id
-    input$estimation_procedure = as.character(estim.proc[input$estimation_procedure , "name"])
+    input$estimation_procedure = as.character(estim.proc[input$estimation_procedure, "name"])
   }
   if (is.null(input$evaluation_measures)) input$evaluation_measures = NA_character_
 
@@ -52,7 +54,7 @@
   #res$quality = res$input = res$tags = NULL
 
   # build final dataframe
-  res = setDF(cbind(res, input, tags, qualities))
+  res = setDF(cbind(res, input, qualities))
 
   # convert to integer
   i = colnames(res) %in% c(colnames(qualities), "did", "task_id")
@@ -64,11 +66,12 @@
   return(res[ind.estim & ind.eval, ])
 }
 
-#' @title List available OpenML tasks.
+#' @title List the first 5000 OpenML tasks.
 #'
 #' @description
 #' The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id},
 #' the \code{status} and some describing data qualities.
+#' Note that by default only the first 5000 data sets will be returned (due to the argument \dQuote{limit = 5000}).
 #'
 #' @template note_memoise
 #'

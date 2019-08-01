@@ -30,7 +30,7 @@ Optional tags describing the (data of the) task.}
 }
 \description{
 More details about the elements of a \code{OMLTask} can be found in the
-\href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.task.search.xsd}{XSD scheme}.
+\href{https://github.com/openml/OpenML/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.task.search.xsd}{XSD scheme}.
 }
 \seealso{
 Other task-related functions: \code{\link{convertOMLTaskToMlr}},
@@ -38,3 +38,4 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}, \code{\link{tagOMLObject}}
 }
+\concept{task-related functions}

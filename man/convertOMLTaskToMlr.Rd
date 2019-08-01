@@ -4,8 +4,9 @@
 \alias{convertOMLTaskToMlr}
 \title{Convert an OpenML task to mlr.}
 \usage{
-convertOMLTaskToMlr(obj, measures = NULL, mlr.task.id = "<oml.data.name>",
-  ignore.flagged.attributes = TRUE, drop.levels = TRUE, verbosity = NULL)
+convertOMLTaskToMlr(obj, measures = NULL,
+  mlr.task.id = "<oml.data.name>", ignore.flagged.attributes = TRUE,
+  drop.levels = TRUE, verbosity = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLTask}}]\cr
@@ -50,11 +51,11 @@ Converts an \code{\link{OMLTask}} to a list of \code{\link[mlr]{Task}},
 \code{\link[mlr]{ResampleInstance}} and \code{\link[mlr]{Measure}}.
 }
 \examples{
-\dontrun{
-	library("mlr")
-	vinnieOML = getOMLTask(task.id = 4845)
-	vinnieMlr = convertOMLTaskToMlr(vinnieOML)
-}
+# \dontrun{
+# 	library("mlr")
+# 	vinnieOML = getOMLTask(task.id = 4845)
+# 	vinnieMlr = convertOMLTaskToMlr(vinnieOML)
+# }
 }
 \seealso{
 Other task-related functions: \code{\link{deleteOMLObject}},
@@ -62,3 +63,4 @@ Other task-related functions: \code{\link{deleteOMLObject}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}
 }
+\concept{task-related functions}

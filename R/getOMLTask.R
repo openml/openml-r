@@ -16,7 +16,6 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
   id = asCount(task.id)
   assertFlag(cache.only)
   #showInfo(verbosity, "Downloading task '%i' from OpenML repository.", id)
-
   # get XML description
   down = downloadOMLObject(id, object = "task", cache.only = cache.only, verbosity = verbosity)
   doc = down$doc
@@ -33,8 +32,8 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
       return(string)
     }
     targets = c(notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_left")),
-                notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_right")),
-                notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_event")))
+      notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_right")),
+      notEmpty(xmlOValS(doc, "/oml:task/oml:input/oml:data_set/oml:target_feature_event")))
   }
 
   # convert estim params to correct types
@@ -64,7 +63,7 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
   if (url.dsplits != "No URL") {
     # FIXME: see https://github.com/openml/website/issues/25 when this is solved, we might change this line:
     data = suppressWarnings(arff.reader(f$datasplits.arff$path))
-      #tryCatch(suppressWarnings(arff.reader(f$datasplits.arff$path)), error = function(e) NULL)
+    #tryCatch(suppressWarnings(arff.reader(f$datasplits.arff$path)), error = function(e) NULL)
     #if (!is.null(data))
     task$input$estimation.procedure$data.splits = parseOMLDataSplits(task, data)
   } #else warning("Task not providing datasplits.")
@@ -74,7 +73,7 @@ getOMLTask = function(task.id, cache.only = FALSE, verbosity = NULL) {
 
 parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   getParams = function(path) {
-    ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep ="/"))
+    ns.parameters = getNodeSet(doc, paste(path, "oml:parameter", sep = "/"))
     parameters = lapply(ns.parameters, function(x) xmlValue(x))
     names(parameters) = vcapply(ns.parameters, function(x) xmlGetAttr(x, "name"))
     parameters
@@ -86,7 +85,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
   parameters = getParams("oml:task")
   tags = xmlOValsMultNsS(doc, "/oml:task/oml:tag", NA_character_)
   data.set.output = filterNull(list(data.set.id = xmlOValI(doc, "/oml:task/oml:output/oml:data_set/oml:data_set_id"),
-                                    target.features = xmlOValsMultNsS(doc, "/oml:task/oml:output/oml:data_set/oml:target_feature")))
+    target.features = xmlOValsMultNsS(doc, "/oml:task/oml:output/oml:data_set/oml:target_feature")))
   if (length(data.set.output) == 0)
     data.set.output = NULL
   # parse estimation procedure
@@ -103,7 +102,7 @@ parseOMLTask = function(doc, verbosity = NULL, cache.only = FALSE) {
 
   # get the data set
   data.set.input = getOMLDataSet(xmlRValI(doc, "/oml:task/oml:input/oml:data_set/oml:data_set_id"),
-                                 verbosity = verbosity, cache.only = cache.only)
+    verbosity = verbosity, cache.only = cache.only)
 
   input = list(
     data.set = data.set.input,
@@ -147,7 +146,11 @@ parseOMLDataSplits = function(task, data) {
   #data$rowid = match(ri, rns)
   # FIXME: even match() is too slow for big data sets...
   #   The unit test in getOMLTask suggests taht we can use this instead (no need to use task in function-arg):
-  rowid = if (min(data$rowid) == 0) (data$rowid+1) else data$rowid
+  if (min(data$rowid) == 0) {
+    rowid = data$rowid + 1
+  } else {
+    rowid = data$rowid
+  }
   data$rowid = as.integer(rowid)
   data$rep = data$rep + 1
   data$fold = data$fold + 1

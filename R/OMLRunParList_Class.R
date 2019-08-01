@@ -15,7 +15,7 @@
 # lrn = makeLearner("classif.rpart", minsplit = 1)
 # bagging = makeBaggingWrapper(lrn, bw.iters = 500)
 #
-# lrn.par.settings = makeRunParameterList(lrn)
+# lrn.par.settings = makeOMLRunParList(lrn)
 # lrn.par.settings
 #
 # bagging.par.settings = makeRunParameterList(bagging)
@@ -28,17 +28,12 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   assertClass(mlr.lrn, "Learner")
   assertString(component, na.ok = TRUE)
 
-  if (testClass(mlr.lrn, "TuneWrapper")) mlr.lrn = removeAllHyperPars(mlr.lrn)
+  # FIXME: TuneWrapper contains opt.pars slot. Should we use this here?
+  # if (testClass(mlr.lrn, "TuneWrapper")) mlr.lrn = removeAllHyperPars(mlr.lrn) # looked like a bug
 
   ps = getParamSet(mlr.lrn)
   par.vals = mlr::getHyperPars(mlr.lrn)
   par.names = names(par.vals)
-  # get defaults for par.vals that have been set
-  par.defaults = getDefaults(ps)
-  # store only par.vals that are different from default values
-  par.ind = vlapply(par.names, function(x) !isTRUE(all.equal(par.defaults[[x]] , par.vals[[x]])))
-  par.vals = par.vals[par.ind]
-  par.names = par.names[par.ind]
 
   par.settings = setNames(vector("list", length(par.vals)), par.names)
   for (i in seq_along(par.vals)) {
@@ -65,15 +60,16 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   setClasses(par.settings, "OMLRunParList")
 }
 
-# show
+convertOMLRunParListToTable = function(x) {
+  if (length(x) == 0L)
+    return(data.table())
+  rbindlist(lapply(x, function(x) x[c("name", "value", "component")]))
+}
+
 #' @export
 print.OMLRunParList = function(x, ...)  {
-  #x = unclass(x)
   catf("This is a '%s' with the following parameters:", class(x)[1])
-  if (length(x) > 0)
-    x = rbindlist(lapply(x, function(x) x[c("name", "value", "component")])) else
-      x = data.frame()
-  print(x)
+  print(convertOMLRunParListToTable(x))
 }
 
 #' @title Extract OMLRunParList from run
@@ -103,13 +99,13 @@ getOMLRunParList = function(run) {
 convertOMLRunParListToList = function(x, ps = NULL, ...) {
   assertClass(x, "OMLRunParList")
   par.list = extractSubList(x, "value", simplify = FALSE)
-  if(!testNamed(par.list)) {
+  if (!testNames(names(par.list))) {
     par.names = extractSubList(x, "name")
     par.list = setNames(par.list, par.names)
   }
   # if paramset is given, convert vectors, matrices, untyped etc. properly
   if (!is.null(ps)) {
-    for(i in names(x)) {
+    for (i in names(x)) {
       par.list[[i]] = stringToParam(ps$pars[[i]], par.list[[i]])
     }
   }
@@ -122,7 +118,7 @@ convertListToOMLRunParList = function(x, ps = NULL, component = NULL) {
   assertCharacter(component, null.ok = TRUE, len = length(x))
   par.names = names(x)
   if (!is.null(ps)) {
-    for(i in names(x)) {
+    for (i in names(x)) {
       x[[i]] = paramToString(ps$pars[[i]], x[[i]])
     }
   }
@@ -137,7 +133,7 @@ convertListToOMLRunParList = function(x, ps = NULL, component = NULL) {
   setClasses(par.settings, "OMLRunParList")
 }
 
-paramToString = function (par, x) {
+paramToString = function(par, x) {
   assertClass(par, "Param")
   type = par$type
   if (type %in% c("numeric", "integer", "logical", "character"))
@@ -152,7 +148,7 @@ paramToString = function (par, x) {
     rawToChar(serialize(x, connection = NULL, ascii = TRUE))
 }
 
-stringToParam = function (par, x) {
+stringToParam = function(par, x) {
   assertClass(par, "Param")
   assertCharacter(x)
   type = par$type
@@ -164,4 +160,14 @@ stringToParam = function (par, x) {
     discreteNameToValue(par, x)
   else if (type %in% c("function", "untyped"))
     unserialize(charToRaw(x))
+}
+
+#' @export
+as.data.frame.OMLRunParList = function(x, ...) {
+  as.data.frame(convertOMLRunParListToTable(x))
+}
+
+#' @export
+as.data.table.OMLRunParList = function(x, ...) {
+  convertOMLRunParListToTable(x)
 }

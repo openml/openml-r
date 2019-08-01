@@ -41,7 +41,7 @@ populateOMLCache = function(data.ids = integer(0L), task.ids = integer(0L),
     }
   }
 
-  downloadStuff("datsets", downloadOMLObject, data.ids, object = "data")
+  downloadStuff("datasets", downloadOMLObject, data.ids, object = "data")
   downloadStuff("tasks", downloadOMLObject, task.ids, object = "task")
   downloadStuff("flows", downloadOMLObject, flow.ids, object = "flow")
   downloadStuff("runs", downloadOMLObject, run.ids, object = "run")

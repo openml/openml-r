@@ -4,7 +4,8 @@
 \alias{listOMLFlows}
 \title{List all registered OpenML flows.}
 \usage{
-listOMLFlows(tag = NULL, limit = NULL, offset = NULL, verbosity = NULL)
+listOMLFlows(tag = NULL, limit = NULL, offset = NULL,
+  verbosity = NULL)
 }
 \arguments{
 \item{tag}{[\code{character}]\cr
@@ -44,17 +45,19 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-	flows = listOMLFlows()
-	tail(flows)
-}
+# \dontrun{
+# 	flows = listOMLFlows()
+# 	tail(flows)
+# }
 }
 \seealso{
-Other listing functions: \code{\link{listOMLDataSetQualities}},
+Other listing functions: \code{\link{chunkOMLlist}},
+  \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLRuns}},
+  \code{\link{listOMLRuns}}, \code{\link{listOMLSetup}},
+  \code{\link{listOMLStudies}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{listOMLTasks}}
 
@@ -63,3 +66,5 @@ Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
   \code{\link{makeOMLFlowParameter}},
   \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
 }
+\concept{flow-related functions}
+\concept{listing functions}

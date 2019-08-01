@@ -9,7 +9,7 @@ directory. The R command \code{path.expand("~/.openml/config")} gives you the
 full path to the configuration file on your operating system.
 
 For further information please read the
-\href{https://github.com/openml/openml-r/blob/master/todo/OpenML.Rmd}{vignette}.
+\href{http://openml.github.io/openml-r}{vignette}.
 }
 \note{
 By default the cache directory is located in a temporary directory and
@@ -21,3 +21,4 @@ Other config: \code{\link{getOMLConfig}},
   \code{\link{loadOMLConfig}}, \code{\link{saveOMLConfig}},
   \code{\link{setOMLConfig}}
 }
+\concept{config}

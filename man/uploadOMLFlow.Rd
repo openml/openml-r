@@ -4,8 +4,8 @@
 \alias{uploadOMLFlow}
 \title{Upload an OpenML.}
 \usage{
-uploadOMLFlow(x, tags = NULL, verbosity = NULL, confirm.upload = NULL,
-  sourcefile = NULL, binaryfile = NULL)
+uploadOMLFlow(x, tags = NULL, verbosity = NULL,
+  confirm.upload = NULL, sourcefile = NULL, binaryfile = NULL)
 }
 \arguments{
 \item{x}{[\code{\link{OMLFlow}}|\code{\link[mlr]{Learner}}]\cr
@@ -45,3 +45,4 @@ This function will reset the cache of \code{\link{listOMLFlows}} on success.
 Other uploading functions: \code{\link{uploadOMLDataSet}},
   \code{\link{uploadOMLRun}}
 }
+\concept{uploading functions}

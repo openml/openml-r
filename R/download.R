@@ -31,6 +31,10 @@ doAPICall = function(api.call, id = NULL,
   # get config infos
   conf = getOMLConfig()
 
+  if ((method %in% c("POST", "DELETE") & conf$apikey == "") | conf$apikey == "PLEASE CHANGE ME")
+    messagef(paste0("Please use the 'setOMLConfig' or 'saveOMLConfig' function to set the API key.\n",
+      "You can generate the API key from your OpenML account at http://www.openml.org/u#!api"))
+
   # build request URL and query
   url = buildRequestURL(conf$server, api.call, id, url.args, ...)
 
@@ -66,8 +70,7 @@ doAPICall = function(api.call, id = NULL,
 # OpenML backend.
 buildRequestURL = function(server, api.call, id, url.args, ...) {
   # occasionally we need to pass a single API arg, such as the data id, additionally
-  id = if (!is.null(id)) paste0("/", id) else ""
-
+  id = if (!is.null(id)) stri_paste("/", id) else ""
   #url.args$api_key = conf$apikey
   url.args = collapseNamedList(url.args)
 
@@ -83,7 +86,7 @@ buildRequestURL = function(server, api.call, id, url.args, ...) {
 # Helper function to transform named list to HTTP query string.
 # E.g. list(x = 123, y = openml) to x=123&y=openml.
 collapseNamedList = function(args, sep = "=", collapse = "&") {
-  collapse(paste(names(args), args, sep = sep), collapse)
+  collapse(stri_paste(names(args), args, sep = sep), collapse)
 }
 
 # Helper function to do HTTP request.
@@ -111,6 +114,13 @@ doHTTRCall = function(method = "GET", url, query, body = NULL) {
     if (isXMLResponse(server.response)) parseError = parseXMLError
     else if (isJSONResponse(server.response)) parseError = parseJSONError
     error = parseError(server.response)
+
+    if (!is.null(error$message)) {
+      if (grepl("No results", error$message)) {
+        messagef("Server response: %s", error$message)
+        return(NULL)
+      }
+    }
 
     stopf("ERROR (code = %s) in server response: %s\n  %s\n", as.character(error$code), error$message,
       if (!is.null(error$additional.information)) error$additional.information else "")
@@ -172,6 +182,7 @@ parseXMLError = function(response) {
 parseJSONError = function(response) {
   # parsed by httr (no need to call fromJSON by hand)
   error = content(response)$error
+  if (is.null(error$message)) error$message = "<NA>"
   names(error) = convertNamesOMLToR(names(error))
   return(error)
 }

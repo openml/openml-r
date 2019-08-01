@@ -2,12 +2,12 @@
 .Rproj.user
 .Rhistory
 .Rapp.history
-OpenML.Rcheck
-OpenML/tests/downloadUploadTest/downloadAllImplementations/Downloads/
+.git
+*.Rcheck
 OpenML*.tar.gz
-OPENMLAPIKEY.R
 doc/?-*.md
 doc/?-*.html
 
 inst/doc
+inst/tests
 .DS_Store

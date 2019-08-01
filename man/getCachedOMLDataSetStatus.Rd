@@ -23,7 +23,7 @@ meanwhile. This function can be used to determine the status of all cached
 datasets.
 }
 \examples{
-\dontrun{
-	getCachedOMLDataSetStatus()
-}
+# \dontrun{
+# 	getCachedOMLDataSetStatus()
+# }
 }

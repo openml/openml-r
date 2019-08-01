@@ -5,7 +5,8 @@
 \title{Download an OpenML Object.}
 \usage{
 downloadOMLObject(id, object = c("data", "task", "flow", "run"),
-  overwrite = FALSE, cache.only = FALSE, verbosity = NULL)
+  overwrite = FALSE, cache.only = FALSE, only.xml = FALSE,
+  verbosity = NULL)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -23,6 +24,9 @@ Default is \code{FALSE}.}
 Only try to retrieve the object from cache.
 Will result in error if the object is not found.
 Default is \code{FALSE}.}
+
+\item{only.xml}{[\code{logical(1)}]\cr
+Should only the XML be downloaded?}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr

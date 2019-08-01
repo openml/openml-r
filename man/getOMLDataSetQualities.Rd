@@ -29,14 +29,15 @@ The returned \code{data.frame} contains data set quality
 \dQuote{name}s and values \dQuote{value}.
 }
 \examples{
-\dontrun{
-  a = getOMLDataSetQualities(data.id = 9)
-  a[a$name == "number.of.missing.values", ]
-  getOMLDataSetQualities(data.id = 9, name = "number.of.missing.values")
-}
+# \dontrun{
+#   a = getOMLDataSetQualities(data.id = 9)
+#   a[a$name == "number.of.missing.values", ]
+#   getOMLDataSetQualities(data.id = 9, name = "number.of.missing.values")
+# }
 }
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSet}},
   \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
-  \code{\link{getOMLTask}}
+  \code{\link{getOMLStudy}}, \code{\link{getOMLTask}}
 }
+\concept{downloading functions}

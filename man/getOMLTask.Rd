@@ -30,19 +30,19 @@ Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded
 (if not in cache) and returned.
 }
 \examples{
-# Download task and access relevant information to start running experiments
-\dontrun{
-  task = getOMLTask(1)
-  task
-  task$task.type
-  task$input$data.set
-  head(task$input$data.set$data)
-}
+# # Download task and access relevant information to start running experiments
+# \dontrun{
+#   task = getOMLTask(1)
+#   task
+#   task$task.type
+#   task$input$data.set
+#   head(task$input$data.set$data)
+# }
 }
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
-  \code{\link{getOMLRun}}
+  \code{\link{getOMLRun}}, \code{\link{getOMLStudy}}
 
 Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{deleteOMLObject}},
@@ -50,3 +50,5 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
   \code{\link{tagOMLObject}}
 }
+\concept{downloading functions}
+\concept{task-related functions}

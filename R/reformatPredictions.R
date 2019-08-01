@@ -24,7 +24,7 @@ reformatPredictions = function(pred, task) {
   n = length(iter)
   folds = task$input$estimation.procedure$parameters$number_folds
   reps = task$input$estimation.procedure$parameters$number_repeats
-  rep = rep(seq_len(reps), each = n/reps)
+  rep = rep(seq_len(reps), each = n / reps)
   fold = iter %% folds
   fold[fold == 0L] = folds
   rowid = pred$id
@@ -45,8 +45,8 @@ reformatPredictions = function(pred, task) {
     new.pred$truth = pred$truth
   }
 
-  if (task$task.type == "Supervised Classification") {
-    probs = c()
+  if (task$task.type == "Supervised Classification") { # FIXME: looks like bad code...
+    probs = c() # nolint
     for (lvl in orig.lvls) {
       if (sprintf("prob.%s", lvl) %in% colnames(pred))
         probs = cbind(probs, pred[, sprintf("prob.%s", lvl)])

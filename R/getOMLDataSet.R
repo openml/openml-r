@@ -40,22 +40,13 @@ getOMLDataSet = function(data.id = NULL, data.name = NULL, data.version = NULL, 
 
 # Helper function to get data set by data name (and version number).
 # (Makes use of getOMLDataSetById)
-getOMLDataSetByName = function(data.name, data.version, cache.only = FALSE, verbosity = NULL) {
+getOMLDataSetByName = function(data.name = NULL, data.version = NULL, cache.only = FALSE, verbosity = NULL) {
   # else get list of datasets RESTRICTED to the given name
   data.sets = .listOMLDataSets(data.name = data.name, verbosity = verbosity)
 
   # match by name
   matching.ids = which(data.sets$name == data.name)
-  matching.sets = data.sets[matching.ids, , drop = FALSE]
-
-  # get number of matches ...
-  n.matches = length(matching.ids)
-
-  # ... and react accordingly
-  if (n.matches == 0)
-    stopf("No dataset with name '%s' found.", data.name)
-  if (n.matches == 1)
-    return(getOMLDataSetById(data.id = matching.sets$data.id, cache.only = cache.only, verbosity = verbosity))
+  matching.sets = data.sets[matching.ids, , drop = FALSE] # nolint
 
   # otherwise we have multiple matches and need to consider the version
   data.id = if (is.null(data.version)) {
@@ -71,6 +62,15 @@ getOMLDataSetByName = function(data.name, data.version, cache.only = FALSE, verb
     stopf("Version %i does not exist for dataset '%s'. Available versions: %s",
       data.version, data.name, collapse(matching.sets$version, sep = ", "))
   }
+
+  # get number of matches ...
+  n.matches = length(matching.ids)
+  # ... and react accordingly
+  if (n.matches == 0)
+    stopf("No dataset with name '%s' found.", data.name)
+  if (n.matches == 1)
+    return(getOMLDataSetById(data.id = matching.sets$data.id, cache.only = cache.only, verbosity = verbosity))
+
   return(getOMLDataSetById(data.id = data.id, cache.only = cache.only, verbosity = verbosity))
 }
 
@@ -93,10 +93,8 @@ getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NUL
   data = arff.reader(f$dataset.arff$path)
 
   if (!is.na(data.desc$row.id.attribute)) {
-    if (is.na(data.desc$ignore.attribute))
-      data.desc$ignore.attribute = data.desc$row.id.attribute
-    else
-      data.desc$ignore.attribute = c(data.desc$ignore.attribute, data.desc$row.id.attribute)
+    # add row.id.attribute also to ignore list if not already there
+    data.desc$ignore.attribute = na.omit(union(data.desc$ignore.attribute, data.desc$row.id.attribute))
   }
   data = setRowNames(data, as.character(seq_row(data) - 1L))
 
@@ -121,7 +119,11 @@ getOMLDataSetById = function(data.id = NULL, cache.only = FALSE, verbosity = NUL
 
 parseOMLDataSetDescription = function(doc) {
   default.target.attribute = xmlOValS(doc, "/oml:data_set_description/oml:default_target_attribute")
-  
+  default.target.attribute = if (!is.null(default.target.attribute)) unlist(strsplit(default.target.attribute, ",")) else ""
+
+  ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute")
+  ignore.attribute = if (!is.null(ignore.attribute)) unlist(strsplit(ignore.attribute, ","))
+
   args = filterNull(list(
     id = xmlRValI(doc, "/oml:data_set_description/oml:id"),
     name = xmlRValS(doc, "/oml:data_set_description/oml:name"),
@@ -135,9 +137,9 @@ parseOMLDataSetDescription = function(doc) {
     language = xmlOValS(doc, "/oml:data_set_description/oml:language"),
     licence = xmlOValS(doc, "/oml:data_set_description/oml:licence"),
     url = xmlRValS(doc, "/oml:data_set_description/oml:url"),
-    default.target.attribute = ifelse(!is.null(default.target.attribute), unlist(strsplit(default.target.attribute, ",")), ""),
+    default.target.attribute = default.target.attribute,
     row.id.attribute = xmlOValS(doc, "/oml:data_set_description/oml:row_id_attribute"),
-    ignore.attribute = xmlOValsMultNsS(doc, "/oml:data_set_description/oml:ignore_attribute"),
+    ignore.attribute = ignore.attribute,
     version.label = xmlOValS(doc, "/oml:data_set_description/oml:version_label"),
     citation = xmlOValS(doc, "/oml:data_set_description/oml:citation"),
     visibility = xmlOValS(doc, "/oml:data_set_description/oml:visibility"),

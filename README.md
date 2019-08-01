@@ -1,14 +1,26 @@
-# R interface to [OpenML](http://www.openml.org/) 
+# R interface to [OpenML.org](http://www.openml.org/) 
 
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Rdoc](http://www.rdocumentation.org/badges/version/OpenML)](http://www.rdocumentation.org/packages/OpenML)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
 [![Build Status](https://travis-ci.org/openml/openml-r.svg?branch=master)](https://travis-ci.org/openml/openml-r)
-[![Build status](https://ci.appveyor.com/api/projects/status/mevevtyr538faqdv/branch/master?svg=true)](https://ci.appveyor.com/project/jakobbossek/openml-r/branch/master)
-[![Coverage Status](https://coveralls.io/repos/github/openml/openml-r/badge.svg?branch=master)](https://coveralls.io/github/openml/openml-r?branch=master)
-[![Issues in TODOs](https://badge.waffle.io/openml/openml-r.png?label=TODO&title=TODOs)](https://waffle.io/openml/openml-r)
-[![Join the chat at https://gitter.im/openml/r](https://badges.gitter.im/openml/openml-r.svg)](https://gitter.im/openml/r?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
+[![codecov](https://codecov.io/gh/openml/openml-r/branch/master/graph/badge.svg)](https://codecov.io/gh/openml/openml-r)
 
-OpenML aims to create a frictionless, collaborative environment for exploring machine learning. This R package allows to interface the [OpenML](http://www.openml.org/frontend/page/home) server to download datasets, tasks, runs and upload results (see  [Tutorial](http://openml.github.io/openml-r)).
+[OpenML.org](http://www.openml.org/frontend/page/home) is an online machine learning platform where researchers can access open data, download and upload data sets, share their machine learning tasks and experiments and organize them online to work and collaborate with other researchers. 
+The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs.
+
+For more information, have a look at our
+- [R Cheatsheet](https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf)
+- [R Tutorial](http://openml.github.io/openml-r) 
+- [OpenML R Package Publication](http://dx.doi.org/10.1007/s00180-017-0742-2)
+- [OpenML API Guide](https://www.openml.org/guide/api)
+
+# How to cite
+
+To cite the OpenML R package in publications, please use our paper entitled [`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`](http://dx.doi.org/10.1007/s00180-017-0742-2) [[bibtex](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation)].
+
+See also [here](https://www.openml.org/cite) for further information on how to cite the OpenML project itself.
 
 # Installation of the package
 
@@ -23,7 +35,7 @@ or
 devtools::install_github("openml/openml-r")
 ```
 
-Furthermore,  you need [farff](https://github.com/mlr-org/farff) installed to process [ARFF](http://www.cs.waikato.ac.nz/ml/weka/arff.html) files:
+Furthermore, you need [farff](https://github.com/mlr-org/farff) installed to process [ARFF](http://www.cs.waikato.ac.nz/ml/weka/arff.html) files:
 ```r
 install.packages("farff")
 ```

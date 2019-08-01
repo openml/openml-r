@@ -36,6 +36,6 @@ getOMLDataSetQualities = function(data.id, verbosity = NULL, name = NULL) {
   if (is.null(name))
     return(ret)
   if (any(ret$name %in% name))
-    return(ret[ret$name %in% name, , drop = FALSE])
+    return(ret[ret$name %in% name, , drop = FALSE]) # nolint
   stop("Data quality in 'name' not found.")
 }

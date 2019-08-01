@@ -4,7 +4,8 @@
 \alias{getOMLRun}
 \title{Get an OpenML run.}
 \usage{
-getOMLRun(run.id, cache.only = FALSE, verbosity = NULL)
+getOMLRun(run.id, cache.only = FALSE, only.xml = FALSE,
+  verbosity = NULL)
 }
 \arguments{
 \item{run.id}{[\code{integer(1)}]\cr
@@ -14,6 +15,9 @@ The run ID.}
 Only try to retrieve the object from cache.
 Will result in error if the object is not found.
 Default is \code{FALSE}.}
+
+\item{only.xml}{[\code{logical(1)}]\cr
+Should only the XML be downloaded?}
 
 \item{verbosity}{[\code{integer(1)}]\cr
 Print verbose output on console? Possible values are:\cr
@@ -30,16 +34,16 @@ Given an run id, the corresponding \code{\link{OMLRun}} including all server
 and user computed metrics is downloaded if not already available in cache.
 }
 \examples{
-\dontrun{
-	runs_ctree = listOMLRuns(flow.id = 2569)
-	run1 = getOMLRun(run.id = runs_ctree$run.id[1])
-	str(run1, 1)
-}
+# \dontrun{
+# 	runs_ctree = listOMLRuns(flow.id = 2569)
+# 	run1 = getOMLRun(run.id = runs_ctree$run.id[1])
+# 	str(run1, 1)
+# }
 }
 \seealso{
 Other downloading functions: \code{\link{getOMLDataSetQualities}},
   \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
-  \code{\link{getOMLTask}}
+  \code{\link{getOMLStudy}}, \code{\link{getOMLTask}}
 
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{convertOMLRunToBMR}},
@@ -48,3 +52,5 @@ Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
   \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
   \code{\link{uploadOMLRun}}
 }
+\concept{downloading functions}
+\concept{run-related functions}

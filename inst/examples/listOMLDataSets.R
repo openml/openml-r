@@ -1,4 +1,4 @@
-\dontrun{
-	datasets = listOMLDataSets()
-	tail(datasets)
-}
+# \dontrun{
+# 	datasets = listOMLDataSets()
+# 	tail(datasets)
+# }

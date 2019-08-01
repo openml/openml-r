@@ -2,7 +2,7 @@
 % Please edit documentation in R/listOMLTasks.R
 \name{listOMLTasks}
 \alias{listOMLTasks}
-\title{List available OpenML tasks.}
+\title{List the first 5000 OpenML tasks.}
 \usage{
 listOMLTasks(task.type = NULL, estimation.procedure = NULL,
   evaluation.measures = NULL, number.of.instances = NULL,
@@ -68,7 +68,7 @@ Is ignored when no \code{limit} is given.}
 
 \item{status}{[\code{character}]\cr
 Subsets the results according to the status. Possible values are 
-\code{{"active", "deactivated", "in_preparation"}}.
+\code{{"active", "deactivated", "in_preparation", "all"}}.
 Default is \code{"active"}.}
 
 \item{verbosity}{[\code{integer(1)}]\cr
@@ -84,6 +84,7 @@ Default is set via \code{\link{setOMLConfig}}.}
 \description{
 The returned \code{data.frame} contains the \code{task_id}, the data set id \code{data.id},
 the \code{status} and some describing data qualities.
+Note that by default only the first 5000 data sets will be returned (due to the argument \dQuote{limit = 5000}).
 }
 \note{
 This function is memoised. I.e., if you call this function twice in a running R session,
@@ -92,17 +93,19 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \examples{
-\dontrun{
-	tasks = listOMLTasks()
-	head(tasks)
-}
+# \dontrun{
+# 	tasks = listOMLTasks()
+# 	head(tasks)
+# }
 }
 \seealso{
-Other listing functions: \code{\link{listOMLDataSetQualities}},
+Other listing functions: \code{\link{chunkOMLlist}},
+  \code{\link{listOMLDataSetQualities}},
   \code{\link{listOMLDataSets}},
   \code{\link{listOMLEstimationProcedures}},
   \code{\link{listOMLEvaluationMeasures}},
   \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
+  \code{\link{listOMLSetup}}, \code{\link{listOMLStudies}},
   \code{\link{listOMLTaskTypes}}
 
 Other task-related functions: \code{\link{convertOMLTaskToMlr}},
@@ -110,3 +113,5 @@ Other task-related functions: \code{\link{convertOMLTaskToMlr}},
   \code{\link{listOMLTaskTypes}},
   \code{\link{makeOMLTask}}, \code{\link{tagOMLObject}}
 }
+\concept{listing functions}
+\concept{task-related functions}

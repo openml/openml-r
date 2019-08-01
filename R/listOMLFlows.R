@@ -2,14 +2,14 @@
   api.call = generateAPICall("json/flow/list", tag = tag, limit = limit, offset = offset)
 
   content = doAPICall(api.call = api.call, file = NULL, verbosity = verbosity, method = "GET")
-
+  if (is.null(content)) return(data.frame())
   flows = fromJSON(txt = content)$flows$flow
 
   # type conversions
   flows$id = as.integer(flows$id)
   flows$version = as.integer(flows$version)
   flows$uploader = as.integer(flows$uploader)
-  flows$tags = vcapply(flows$tags, function(x) collapse(x, ", "))
+  #flows$tags = vcapply(flows$tags, function(x) collapse(x, ", "))
 
   # for some reason external_version is NOT atomic
   # Unfortunately unlist() drops character(0) entries!

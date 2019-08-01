@@ -1,20 +1,57 @@
-OpenML v1.3 (Release date: 2017-03-09):
+OpenML 1.9 (Release date: 2018-XX-XX):
 ===========
-  - Bugfixes
-  - listOMLRunEvaluations now returns additional columns for the flow
-  - runTask now allows to set the 'models' option to FALSE so that resulting objects will be smaller
+  - Fixed bug: Uploaded runs now also contain default hyperparamters.
 
-OpenML v1.2 (Release date: 2017-02-07):
+OpenML 1.8 (Release date: 2018-03-02):
+===========
+  - Fixed bug in listOMLSetup.
+  - Update to curl 3.1 which fixes the error 'transfer closed with outstanding read data remaining' for large files.
+  - New function extractOMLStudyIds added, which directly extracts ids of data sets, tasks, flows and runs.
+
+OpenML 1.7 (Release date: 2017-10-17):
+===========
+  - listOMLTask, listOMLFlow, listOMLRuns do not return the tag field anymore.
+  - New function listOMLSetup added, which enables extracting hyperparameter configurations of specific setups/flows.
+  - New function chunkOMLlist added in order to automatically do chunked listing requests.
+
+OpenML 1.6 (Release date: 2017-08-14):
+===========
+  - Fixes some config issues.
+
+OpenML 1.5 (Release date: 2017-08-11):
+===========
+  - New functions to list and get all information w.r.t. studies: getOMLStudy, listOMLStudies.
+  - API key not needed anymore for getOML* and listOML* functions.
+
+OpenML 1.4 (Release date: 2017-06-20):
+===========
+  - Bugfix: Error message "Start tag expected, '<' not found" for getOMLTask and getOMLDataSet was fixed.
+  - as.data.frame methods for OMLRunParList, OMLDataSet and OMLTasks objects were added.
+  - listOMLRunEvaluations now allows to get results w.r.t. a single evaluation measure ('evaluation.measure' arg) which speeds up the request.
+  - listOMLRuns and listOMLRunEvaluations now also supports a vector of ids for task.id, flow.id and uploader.id.
+  - getOMLRun(run.id, only.xml = TRUE) can now be used to get the run without the predictions arff file (which is faster, especially when you are only interested in, e.g. getting the hyperparameters of a run).
+
+OpenML 1.3 (Release date: 2017-04-01):
+===========
+  - Bugfixes.
+  - Updated citation.
+  - Add html vignette and update its content.
+  - listOMLTasks and listOMLDataSets now additionally show a message when the limit of results is reached.
+  - listOML* functions return an empty data frame when no results are available.
+  - listOMLRunEvaluations now returns additional columns for the flow (flow version, flow source and learner name).
+  - runTask now allows to set the 'models' option to FALSE so that resulting objects will be smaller.
+
+OpenML 1.2 (Release date: 2017-02-07):
 ===========
   - Add support for multilabel datasets and tasks.
   - Replace download.file with httr::GET.
   - Add mlr 2.10 dependency (we internally use mlr::mergeBenchmarkResults and mlr::makePrediction now).
-  
-OpenML v1.1 (Release date: 2016-11-22):
+
+OpenML 1.1 (Release date: 2016-11-22):
 ===========
   - Setting default cache directory on package loading (fixes winbuilder).
   - Replace internal regexps with stringi functions.
 
-OpenML v1.0 (Release date: 2016-11-12):
+OpenML1.0 (Release date: 2016-11-12):
 ===========
   - First submission to CRAN.

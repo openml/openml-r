@@ -3,7 +3,7 @@
 #' @description
 #' Creates a description for an OMLDataSet.
 #' To see a full list of all elements, please see the
-#' \href{https://github.com/openml/website/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.data.upload.xsd}{XSD}.
+#' \href{https://www.openml.org/api/v1/xsd/openml.data.upload}{XSD}.
 #'
 #'
 #' @param id [\code{integer(1)}]\cr
@@ -36,7 +36,7 @@
 #'   another attribute as target.
 #' @param row.id.attribute [\code{character(1)}]\cr
 #'   The attribute that represents the row-id column, if present in the data set. Else \code{NA}.
-#' @param ignore.attribute [\code{character(1)}]\cr
+#' @param ignore.attribute [\code{character}]\cr
 #'   Attributes that should be excluded in modelling, such as identifiers and indexes. Optional.
 #' @param version.label [\code{character(1)}]\cr
 #'   Version label provided by user, something relevant to the user. Can also be a date,
@@ -132,8 +132,10 @@ makeOMLDataSetDescription = function(id = 0L, name, version = "0", description, 
 #' @export
 print.OMLDataSetDescription = function(x, ...) {
   # Wrong indentation to see alignment
-  catf('\nData Set "%s" :: (Version = %s, OpenML ID = %i)', x$name, x$version, x$id)
-  catfNotNA('  Collection Date         : %s', x$collection.date)
-  catfNotNA('  Creator(s)              : %s', x$creator)
-  catfNotNA('  Default Target Attribute: %s', x$default.target.attribute)
+  catf("\nData Set '%s' :: (Version = %s, OpenML ID = %i)", x$name, x$version, x$id)
+  catfNotNA("  Collection Date         : %s", x$collection.date)
+  catfNotNA("  Creator(s)              : %s", x$creator)
+  catfNotNA("  Ignore Attributes       : %s", x$ignore.attribute)
+  catfNotNA("  Row ID Attribute        : %s", x$row.id.attribute)
+  catfNotNA("  Default Target Attribute: %s", x$default.target.attribute)
 }
