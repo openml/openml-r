@@ -1,4 +1,3 @@
-
 #' @title OMLStudy.
 #'
 #' @description
@@ -21,6 +20,7 @@
 #' @param run.id [\code{integer}]\cr
 #'   A vector of IDs of the runs to be included in the study.
 #' @return [\code{OMLStudy}].
+#' @aliases OMLStudy
 #' @family uploading functions
 #' @export
 makeOMLStudy = function(alias, name, description,
