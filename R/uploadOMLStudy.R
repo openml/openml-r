@@ -23,8 +23,8 @@ uploadOMLStudy = function(x, confirm.upload = NULL, verbosity = NULL) {
 
   response = doAPICall(api.call = "study", method = "POST", file = NULL, verbosity = verbosity,
     post.args = list(description = upload_file(path = desc.file)))
-  doc = parseXMLResponse(response, "Uploading dataset", c("upload_study", "response"), as.text = TRUE)
-  id = xmlOValI(doc, "/oml:upload_study/oml:id")
+  doc = parseXMLResponse(response, "Uploading study", c("study_upload", "response"), as.text = TRUE)
+  id = xmlOValI(doc, "/oml:study_upload/oml:id")
   # if (!is.null(tags)) tagOMLObject(data.id, object = "data", tags = tags)
   return(invisible(id))
 }

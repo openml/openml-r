@@ -8,9 +8,6 @@
 #'
 #' @param alias [\code{character}]\cr
 #'   The alias of the study.
-#' @param main.entity.type [\code{character}]\cr
-#'   Whether it is a collection of runs (study) or collection of tasks (benchmark suite).
-#'   Possible values are  \code{{"task", "run"}}.
 #' @param name [\code{character}]\cr
 #'   The name of the study.
 #' @param description [\code{character}]\cr
@@ -26,10 +23,10 @@
 #' @return [\code{OMLStudy}].
 #' @family uploading functions
 #' @export
-makeOMLStudy = function(alias, main.entity.type, name, description,
+makeOMLStudy = function(alias, name, description,
   data.id = NULL, task.id = NULL, flow.id = NULL, run.id = NULL) {
   assertString(alias)
-  assertChoice(main.entity.type, choices = c("task", "run"), null.ok = TRUE)
+  #assertChoice(main.entity.type, choices = c("task", "run"), null.ok = TRUE)
   assertString(name)
   assertString(description)
   assertIntegerish(data.id, null.ok = TRUE)
@@ -37,10 +34,19 @@ makeOMLStudy = function(alias, main.entity.type, name, description,
   assertIntegerish(flow.id, null.ok = TRUE)
   assertIntegerish(run.id, null.ok = TRUE)
 
+  # @param main.entity.type [\code{character}]\cr
+  #   Whether it is a collection of runs (study) or collection of tasks (benchmark suite).
+  #   Possible values are  \code{{"task", "run"}}.
+
+  if (!is.null(flow.id) | !is.null(run.id))
+    main.entity.type = "run" else
+      main.entity.type = "task"
+
   makeS3Obj("OMLStudy",
     alias = alias,
     main.entity.type = main.entity.type,
     name = name,
+    creation.date = "Will be added by the server after uploading the study.",
     description = description,
     data = list(data.id = data.id),
     tasks = list(task.id = task.id),
