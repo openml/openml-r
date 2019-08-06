@@ -72,7 +72,7 @@ runTaskMlr = function(task, learner, measures = NULL, verbosity = NULL, seed = 1
   # Create OMLRun
   setOMLSeedParList(seed.setting, flow = flow)
   bmr = mlr::benchmark(learner, z$mlr.task, z$mlr.rin, measures = z$mlr.measures,
-    models = models, show.info = show.info)
+    models = models, show.info = show.info, keep.extract = TRUE)
   res = bmr$results[[1]][[1]]
 
   # add error message

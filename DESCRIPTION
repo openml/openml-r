@@ -19,7 +19,7 @@ Depends:
     R (>= 3.0.2)
 Suggests: 
     testthat,
-    mlr (>= 2.11),
+    mlr (>= 2.15),
     randomForest,
     rpart,
     RWeka,
