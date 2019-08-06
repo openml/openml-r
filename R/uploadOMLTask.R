@@ -3,60 +3,56 @@
 #' @description
 #' Share a task by uploading it to the OpenML server.
 #'
-#' @param task.type [character]\cr
-#'   The type of the task to upload. See listOMLTask() to list all valid task types.
-#' @param source.data [integer]\cr
-#'   The ID of the data set on which the task should be executed.
-#' @param target.feature [character]\cr
+#' @param task.type [character(1)]\cr
+#'   The type of the task to upload. See listOMLTaskTypes() to list all valid task types.
+#' @template arg_data.id
+#' @param target.feature [character(1)]\cr
 #'   The target feature of the dataset.
-#' @param estimation.procedure [integer]\cr
+#' @param estimation.procedure [character(1)]\cr
 #'   The estimation procedure for the evaluation. See listOMLEstimationProcedures() to list all procedures.
+#' @param evaluation.measure [character(1)]\cr
+#'   The evaluation measure for the evaluation. See listOMLEvaluationMeasures() to list all possible measures.
 #' @template arg_upload_tags
 #' @template arg_description
 #' @template arg_confirm.upload
 #' @template arg_verbosity
 #' @export
-uploadOMLTask = function(task.type, source.data, target.feature, estimation.procedure,
-                         evaluation.measures = NULL, tags = NULL, description = NULL,
-                         confirm.upload = NULL, verbosity = NULL) {
-  assertCharacter(task.type)
-  assertInt(source.data)
+uploadOMLTask = function(task.type, data.id, target.feature, estimation.procedure,
+  evaluation.measure = NULL, tags = NULL, description = NULL,
+  confirm.upload = NULL, verbosity = NULL) {
+  assertIntegerish(data.id)
   assertCharacter(target.feature)
-  assertInt(estimation.procedure)
+  # check if task type is valid
+  tt = listOMLTaskTypes()
+  assertChoice(task.type, choices = tt$name)
+  # check if the estimation.procedure of the given task.type is valid
+  ep.df = listOMLEstimationProcedures()
+  ep.df = ep.df[ep.df$task.type == task.type, ]
+  assertChoice(estimation.procedure, choices = ep.df$name)
+  assertChoice(evaluation.measure, choices = listOMLEvaluationMeasures()$name, null.ok = TRUE)
 
-  # check if task type exists and get the corresponding task.type.id
-  task.types = listOMLTaskTypes()
-  if (task.type %in% task.types$name) {
-    task.type.id = task.types[task.types$name == task.type, ]$id
-  } else {
-    stopf("Unknown task.type: %s. Please use listOMLTaskTypes() to list all possible task types.", task.type)
+  if (!checkUserConfirmation(type = "task", confirm.upload = confirm.upload)) {
+    return(invisible())
   }
-
-  # check if the estimation.procedure corresponds to the given task.type
-  est.procedures = listOMLEstimationProcedures()
-  est.name = est.procedures[est.procedures$est.id == estimation.procedure, ]$name
-  if (!(est.name %in% est.procedures[est.procedures$task.type == task.type, ]$name)) {
-    stopf("Invalid estimation.procedure: '%s' for the given task.type: '%s'.
-          Please use listOMLEstimationProcedures() to list all possible estimation procedures.",
-      est.name, task.type)
-  }
-
-  est.id = est.procedures[est.procedures$task.type == task.type &
-                          est.procedures$name == est.name, ]$est.id
 
   desc.file = tempfile(fileext = ".xml")
   on.exit(unlink(desc.file))
 
-  writeOMLTaskXML(task.type.id, source.data, target.feature, est.id,
-                  desc.file, evaluation.measures)
+  task.type.id = tt[tt$name == task.type, "id"]
+  est.id = ep.df[ep.df$name == estimation.procedure, "est.id"]
+
+  writeOMLTaskXML(task.type.id, data.id, target.feature, est.id,
+    desc.file, evaluation.measure)
   showInfo(verbosity, "Uploading task to server.")
   response = doAPICall(api.call = "task", method = "POST", file = NULL, verbosity = verbosity,
-                 post.args = list(description = upload_file(path = desc.file)))
+    post.args = list(description = upload_file(path = desc.file)))
 
   # extract task ID from response
   doc = parseXMLResponse(response, "Uploading task", c("upload_task", "response"), as.text = TRUE)
   task.id = xmlOValI(doc, "/oml:upload_task/oml:id")
   showInfo(verbosity, "Task successfully uploaded. Task ID: %i", task.id)
+
+  if (!is.null(tags)) tagOMLObject(task.id, object = "task", tags = tags)
 
   return(invisible(task.id))
 }

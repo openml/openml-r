@@ -1,7 +1,7 @@
 # Generate an XML file for an OpenMLTask object.
 
 writeOMLTaskXML = function(task.type.id, source.data, target.feature, estimation.procedure,
-                           file, evaluation.measures = NULL) {
+  file, evaluation.measures = NULL) {
   assertInt(task.type.id)
   assertInt(source.data)
   assertCharacter(target.feature)

@@ -1,21 +1,17 @@
 context("uploadOMLTask")
 
-test_that("uploadOMLTask throws an error if task already exists", {
-  with_test_cache({
-    # test on gina dataset (id = 41158)
-    ds = getOMLDataSet(41158L)
-    gettask = function() { uploadOMLTask("Supervised Classification", ds$desc$id,
-                            ds$target.features, 2L, verbosity = 1) }
-    expect_error(gettask())
-  })
-})
-
 test_that("uploadOMLTask returns an task.id if task successfully created", {
-  with_test_cache({
-    # test on gina dataset (id = 41158)
-    ds = getOMLDataSet(41158L)
-    task.id = uploadOMLTask("Supervised Classification", ds$desc$id, ds$target.features, 1L)
+  with_test_server({
+    ds = getOMLDataSet(20)
+    task.id = uploadOMLTask("Supervised Classification", data.id = ds$desc$id,
+      target.feature = ds$target.features,
+      estimation.procedure = "4-fold Crossvalidation")
     expect_is(task.id, "integer")
+    expect_class(getOMLTask(task.id), "OMLTask")
+    # error if it is uploaded again
+    expect_error(uploadOMLTask("Supervised Classification", data.id = ds$desc$id,
+      target.feature = ds$target.features,
+      estimation.procedure = "4-fold Crossvalidation"))
     deleteOMLObject(task.id, object = "task")
   })
 })
