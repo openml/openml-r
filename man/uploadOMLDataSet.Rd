@@ -40,8 +40,9 @@ Share a data set by uploading it to the OpenML server.
 This function will reset the cache of \code{\link{listOMLDataSets}} on success.
 }
 \seealso{
-Other uploading functions: \code{\link{uploadOMLFlow}},
-  \code{\link{uploadOMLRun}}
+Other uploading functions: \code{\link{makeOMLStudy}},
+  \code{\link{uploadOMLFlow}}, \code{\link{uploadOMLRun}},
+  \code{\link{uploadOMLStudy}}
 
 Other data set-related functions: \code{\link{OMLDataSetDescription}},
   \code{\link{OMLDataSet}},

@@ -4,7 +4,7 @@
 \alias{extractOMLStudyIds}
 \title{Extract IDs of a OMLStudy object}
 \usage{
-extractOMLStudyIds(object, type)
+extractOMLStudyIds(object, type, chunk.size = 400)
 }
 \arguments{
 \item{object}{[\code{OMLStudy}] \cr
@@ -13,6 +13,11 @@ The OMLStudy object.}
 \item{type}{[\code{character(1)}] \cr
 A character that specifies which ids should be extracted from the study.
 Can be either "data.id", "task.id", "flow.id" or "run.id".}
+
+\item{chunk.size}{[\code{integer(1)}] \cr
+If the number of ids to be returned exceeds "chunk.size", a list of ids is returned.
+Each list element contains not more than "chunk.size" elements.
+Default is 400.}
 }
 \value{
 [\code{numeric}].

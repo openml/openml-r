@@ -42,7 +42,8 @@ Share a flow by uploading it to the OpenML server.
 This function will reset the cache of \code{\link{listOMLFlows}} on success.
 }
 \seealso{
-Other uploading functions: \code{\link{uploadOMLDataSet}},
-  \code{\link{uploadOMLRun}}
+Other uploading functions: \code{\link{makeOMLStudy}},
+  \code{\link{uploadOMLDataSet}},
+  \code{\link{uploadOMLRun}}, \code{\link{uploadOMLStudy}}
 }
 \concept{uploading functions}

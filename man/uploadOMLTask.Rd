@@ -4,22 +4,25 @@
 \alias{uploadOMLTask}
 \title{Upload a task to the OpenML server.}
 \usage{
-uploadOMLTask(task.type, source.data, target.feature, estimation.procedure,
-  evaluation.measures = NULL, tags = NULL, description = NULL,
+uploadOMLTask(task.type, data.id, target.feature, estimation.procedure,
+  evaluation.measure = NULL, tags = NULL, description = NULL,
   confirm.upload = NULL, verbosity = NULL)
 }
 \arguments{
-\item{task.type}{[character]\cr
-The type of the task to upload. See listOMLTask() to list all valid task types.}
+\item{task.type}{[character(1)]\cr
+The type of the task to upload. See listOMLTaskTypes() to list all valid task types.}
 
-\item{source.data}{[integer]\cr
-The ID of the data set on which the task should be executed.}
+\item{data.id}{[\code{integer(1)}]\cr
+ID of the data set.}
 
-\item{target.feature}{[character]\cr
+\item{target.feature}{[character(1)]\cr
 The target feature of the dataset.}
 
-\item{estimation.procedure}{[integer]\cr
+\item{estimation.procedure}{[character(1)]\cr
 The estimation procedure for the evaluation. See listOMLEstimationProcedures() to list all procedures.}
+
+\item{evaluation.measure}{[character(1)]\cr
+The evaluation measure for the evaluation. See listOMLEvaluationMeasures() to list all possible measures.}
 
 \item{tags}{[\code{character}]\cr
 The tags that should be added after uploading.}

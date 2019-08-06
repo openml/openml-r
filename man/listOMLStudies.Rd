@@ -10,6 +10,7 @@ listOMLStudies(main.entity.type = NULL, status = "all",
 }
 \arguments{
 \item{main.entity.type}{[\code{character}]\cr
+Whether a collection of runs (study) or collection of tasks (benchmark suite) should be returned.
 Subsets the results according to the entity type.
 Possible values are  \code{{NULL, "task", "run"}}.
 Default is \code{NULL} which means that no subsetting is done.}
