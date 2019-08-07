@@ -1,8 +1,12 @@
 ---
-title: "OpenML"
+title: "The OpenML R Interface"
 author: "The OpenML R Team"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
 vignette: >
   %\VignetteIndexEntry{OpenML}
   %\VignetteEngine{knitr::rmarkdown}
@@ -37,7 +41,7 @@ Afterwards, there are different basic stages when using this package or OpenML, 
     * result is an object of a specific OpenML class
 * [Running models on tasks](#running)
     * function `runTaskMlr`
-    * input: `OMLTask` and [`Learner`](https://mlr-org.github.io/mlr-tutorial/release/html/learner/index.html)
+    * input: `OMLTask` and [`Learner`](https://mlr.mlr-org.com/articles/tutorial/learner.html)
     * output: `OMLMlrRun`, `OMLRun`
 * [Uploading](#upload)
     * function `uploadOMLRun`
@@ -74,7 +78,6 @@ In this paragraph you can find an example on how to download a task from the ser
 library("OpenML")
 ## temporarily set API key to read only key
 setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
-
 # download a task (whose ID is 1L)
 task = getOMLTask(task.id = 1L)
 task
@@ -94,12 +97,10 @@ In the next line, `randomForest` is used as a classifier and run with the help o
 # define the classifier (usually called "flow" within OpenML)
 library("mlr")
 lrn = makeLearner("classif.randomForest")
-
 # upload the new flow (with information about the algorithm and settings);
 # if this algorithm already exists on the server, one will receive a message
 # with the ID of the existing flow
 flow.id = uploadOMLFlow(lrn)
-
 # the last step is to perform a run and upload the results
 run.mlr = runTaskMlr(task, lrn)
 run.id = uploadOMLRun(run.mlr)
@@ -261,7 +262,6 @@ For instance, listing all runs for [task 59](http://www.openml.org/t/59) (superv
 ```{r eval=TRUE}
 runs = listOMLRuns(task.id = 59L)  # must be specified with the task, setup and/or implementation ID
 head(runs)
-
 # one of the IDs (here: task.id) must be supplied
 run.results = listOMLRunEvaluations(task.id = 59L)
 str(run.results)
@@ -353,7 +353,6 @@ If one is working with [**mlr**](https://github.com/mlr-org/mlr), one can specif
 The `task` is created the same way as in the previous sections:
 ```{r, warning = FALSE, message = FALSE}
 task = getOMLTask(task.id = 59L)
-
 library("mlr")
 lrn = makeLearner("classif.rpart")
 run.mlr = runTaskMlr(task, lrn)
@@ -363,7 +362,7 @@ Note that locally created runs don't have a run ID or flow ID yet. These are ass
 
 ### Run a task without using mlr
 If you are not using `mlr`, you will have to invest some more time and effort to get things done since this is not supported yet. So, unless you have good reasons to do otherwise, we strongly encourage to use `mlr`.
-If the algorithm you want to use is not integrated in `mlr` yet, you can integrate it yourself (see the [tutorial](http://mlr-org.github.io/mlr-tutorial/devel/html/create_learner/index.html)) or open an [issue on mlr GitHub repository](https://github.com/mlr-org/mlr/issues) and hope someone else will do it for you.
+If the algorithm you want to use is not integrated in `mlr` yet, you can integrate it yourself (see the [tutorial](https://mlr.mlr-org.com/articles/tutorial/create_learner.html)) or open an [issue on mlr GitHub repository](https://github.com/mlr-org/mlr/issues) and hope someone else will do it for you.
 
 ## Uploading {#upload}
 The following section gives an overview on how one can contribute building blocks (i.e. data sets, flows and runs) to the OpenML server.
@@ -382,7 +381,6 @@ dsc = "Daily air quality measurements in New York, May to September 1973.
   This data is taken from R."
 cit = "Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
   Graphical Methods for Data Analysis. Belmont, CA: Wadsworth."
-
 ## (1) Create the description object
 desc = makeOMLDataSetDescription(name = "airquality",
   description = dsc,
@@ -395,14 +393,12 @@ desc = makeOMLDataSetDescription(name = "airquality",
   default.target.attribute = "Ozone",
   citation = cit,
   tags = "R")
-
 ## (2) Create the OpenML data set
 air.data = makeOMLDataSet(desc = desc,
   data = airquality,
   colnames.old = colnames(airquality),
   colnames.new = colnames(airquality),
   target.features = "Ozone")
-
 ## (3) Upload the OpenML data set to the server
 ## Because this is a simple data set which is generally already available in R
 ## please do not actually upload it to the server!
@@ -416,7 +412,7 @@ Alternatively you can enter data directly on the [OpenML website](http://www.ope
 
 ### Upload a flow
 
-A [flow](#flows) is an implementation of a single algorithm or a script. Each [`mlr` learner](http://mlr-org.github.io/mlr-tutorial/release/html/integrated_learners/) can be considered an implementation of a flow, which can be uploaded to the server with the function `uploadOMLFlow`.
+A [flow](#flows) is an implementation of a single algorithm or a script. Each [`mlr` learner](https://mlr.mlr-org.com/articles/tutorial/integrated_learners.html) can be considered an implementation of a flow, which can be uploaded to the server with the function `uploadOMLFlow`.
 If the flow has already been uploaded to the server (either by you or someone else), one receives a message that the flow already exists and the `flow.id` is returned from the function. Otherwise, the flow will be uploaded, receive its own `flow.id` and return that ID.
 
 ```{r eval = FALSE, warning = FALSE, message = TRUE}
@@ -437,10 +433,8 @@ learners = list(
   makeLearner("classif.kknn"),
   makeLearner("classif.randomForest")
 )
-
 ## pick 3 random tasks
 task.ids = c(57, 59, 2382)
-
 for (lrn in learners) {
   for (id in task.ids) {
     task = getOMLTask(id)
