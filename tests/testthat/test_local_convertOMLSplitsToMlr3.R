@@ -9,7 +9,7 @@ test_that("convertOMLSplitsToMlr3", {
     mlr.types = c("cv", "holdout")
 
     for (i in seq_along(oml.types)) {
-      task$input$estimation.procedure[['type']]= oml.types[i]
+      task$input$estimation.procedure$type = oml.types[i]
       if (oml.types[i] == "holdout") {
         task$input$estimation.procedure$parameters$percentage = "50"
       }
