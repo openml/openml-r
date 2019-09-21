@@ -20,6 +20,7 @@ Depends:
 Suggests: 
     testthat,
     mlr (>= 2.15),
+    ParamHelpers (>= 1.10),
     randomForest,
     rpart,
     RWeka,
@@ -34,7 +35,6 @@ Imports:
     backports (>= 1.1.0),
     BBmisc (>= 1.11),
     checkmate (>= 1.8.2),
-    ParamHelpers (>= 1.10),
     data.table,
     digest,
     httr,

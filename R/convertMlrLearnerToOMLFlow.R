@@ -145,7 +145,7 @@ makeFlowParameterList = function(lrn) {
 # @return [list] of OMLFlowParameter objects.
 makeFlowParameterListForMlrLearner = function(lrn) {
   # create list of OpenMLFlowParameters
-  lapply(getParamSet(lrn)$pars, function(par) {
+  lapply(ParamHelpers::getParamSet(lrn)$pars, function(par) {
     makeOMLFlowParameter(
       name = par$id,
       data.type = par$type,
