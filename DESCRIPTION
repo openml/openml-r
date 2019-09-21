@@ -37,13 +37,13 @@ Imports:
     checkmate (>= 1.8.2),
     data.table,
     digest,
-    httr,
+    httr (>= 1.4.1),
     stringi,
     XML,
     jsonlite,
     memoise (>= 1.0.0),
     stats,
-    curl (>= 3.1)
+    curl (>= 4.1)
 LazyData: yes
 ByteCompile: yes
 Version: 1.9
