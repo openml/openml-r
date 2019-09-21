@@ -46,7 +46,7 @@ Imports:
     curl (>= 4.1)
 LazyData: yes
 ByteCompile: yes
-Version: 1.9
+Version: 1.10
 RoxygenNote: 6.1.1
 VignetteBuilder: R.rsp
 Encoding: UTF-8
