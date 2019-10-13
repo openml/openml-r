@@ -30,7 +30,7 @@ makeOMLStudy = function(alias, name, description,
   assertString(name)
   assertString(description)
   assertIntegerish(data.id, null.ok = TRUE)
-  assertIntegerish(task.id, null.ok = TRUE)
+  assertIntegerish(task.id, null.ok = FALSE)
   assertIntegerish(flow.id, null.ok = TRUE)
   assertIntegerish(run.id, null.ok = TRUE)
 

@@ -1,7 +1,7 @@
 context("uploadOMLStudy")
 
 test_that("uploadOMLStudy", {
-  study = makeOMLStudy(alias = "test_alias", name = "Test Upload from R", description = "Just testing")
+  study = makeOMLStudy(alias = "test_alias", name = "Test Upload from R", description = "Just testing", task.id = 1)
   expect_class(study, "OMLStudy")
   id = uploadOMLStudy(study)
   expect_is(id, "integer")
