@@ -1,9 +1,6 @@
 language: r
 sudo: false
 
-r_packages:
-  - pkgdown
-
 cache:
   packages: true
   directories:
@@ -16,7 +13,6 @@ before_script:
 
 after_success:
   - Rscript -e 'library(covr);codecov()'
-  - test $TRAVIS_BRANCH = "master" && Rscript -e 'pkgdown::build_site()'
 
 notifications:
   email:
