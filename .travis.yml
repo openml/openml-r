@@ -1,12 +1,8 @@
 language: r
 sudo: false
 
-r_github_packages:
-  - mlr-org/farff
-  - mlr-org/mlr
-  - berndbischl/BBmisc
-  - berndbischl/ParamHelpers
-  - r-lib/httr
+r_packages:
+  - pkgdown
 
 cache:
   packages: true
