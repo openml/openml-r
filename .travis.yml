@@ -20,7 +20,7 @@ before_script:
 
 after_success:
   - Rscript -e 'library(covr);codecov()'
-  - Rscript -e 'pkgdown::build_site()'
+  - test $TRAVIS_BRANCH = "master" && Rscript -e 'pkgdown::build_site()'
 
 notifications:
   email:
