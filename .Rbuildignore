@@ -10,6 +10,8 @@
 ^.gitignore$
 ^.ignore$
 ^.editorconfig$
+^_pkgdown.yml$
+^docs$
 
 ^appveyor.yml$
 ^.travis.yml$

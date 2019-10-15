@@ -1,0 +1,34 @@
+reference:
+  - title: List Functions
+    contents:
+      - starts_with("list")
+  - title: Retrieve Objects
+    contents:
+      - starts_with("get")
+  - title: Create Objects
+    contents:
+      - starts_with("make")
+  - title: Converters
+    contents:
+      - starts_with("convert")
+  - title: Uploaders
+    contents:
+      - starts_with("upload")
+  - title: Configuration
+    contents:
+      - configuration
+      - loadOMLConfig
+      - saveOMLConfig
+      - setOMLConfig
+  - title: Cache
+    contents:
+      - clearOMLCache
+      - populateOMLCache
+  - title: Misc
+    contents:
+      - chunkOMLlist
+      - deleteOMLObject
+      - extractOMLStudyIds 
+      - runTaskFlow
+      - runTaskMlr
+      - tagOMLObject
