@@ -11,8 +11,9 @@
 The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs.
 
 For more information, have a look at our
+- [R Tutorial](https://openml.github.io/openml-r/articles/OpenML.html) 
 - [R Cheatsheet](https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf)
-- [R Tutorial](http://openml.github.io/openml-r) 
+- [Function Reference](https://openml.github.io/openml-r/reference)
 - [OpenML R Package Publication](http://dx.doi.org/10.1007/s00180-017-0742-2)
 - [OpenML API Guide](https://www.openml.org/guide/api)
 
