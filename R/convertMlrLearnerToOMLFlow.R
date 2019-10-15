@@ -38,7 +38,7 @@ convertMlrLearnerToOMLFlow = function(lrn, name = paste0("mlr.", lrn$id), descri
 
   # save learner object to RDS file
   binary.path = file.path(tempdir(), sprintf("%s_binary.Rds", lrn$id))
-  saveRDS(lrn, file = binary.path)
+  saveRDS(lrn, file = binary.path, version = 2)
 
   # FIXME: use only hash when OpenML is on CRAN!
   external.version = paste0(getRVersionString(), "-v2.", digest(algo = "crc32", file = binary.path))

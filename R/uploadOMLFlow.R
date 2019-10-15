@@ -61,7 +61,7 @@ uploadOMLFlow.OMLFlow = function(x, tags = NULL, verbosity = NULL,
   if (!is.null(x$object) & !testFile(binaryfile)) {
     lrn = x$object
     binaryfile = file.path(tempdir(), sprintf("%s_binary.Rds", lrn$id))
-    saveRDS(lrn, file = binaryfile)
+    saveRDS(lrn, file = binaryfile, version = 2)
   }
   if (testFile(binaryfile)) {
     x$binary.md5 = digest(file = binaryfile)
