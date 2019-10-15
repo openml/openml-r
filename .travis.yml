@@ -1,26 +1,8 @@
 language: r
 sudo: false
 
-r:
-  - release
-
-os:
-  - linux
-
-r_check_args: "--as-cran --run-donttest"
-
 r_packages:
-  - devtools
-  - roxygen2
-  - covr
-  - lintr
-
-r_github_packages:
-  - mlr-org/farff
-  - mlr-org/mlr
-  - berndbischl/BBmisc
-  - berndbischl/ParamHelpers
-  - r-lib/httr
+  - pkgdown
 
 cache:
   packages: true
@@ -34,6 +16,7 @@ before_script:
 
 after_success:
   - Rscript -e 'library(covr);codecov()'
+  - test $TRAVIS_BRANCH = "master" && Rscript -e 'pkgdown::build_site()'
 
 notifications:
   email:
