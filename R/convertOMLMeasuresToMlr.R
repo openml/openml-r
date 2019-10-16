@@ -24,7 +24,8 @@ lookupMeasures = function() {
     "c_index" = mlr::cindex,
     "usercpu_time_millis" = mlr::timeboth,
     "usercpu_time_millis_testing" = mlr::timepredict,
-    "usercpu_time_millis_training" = mlr::timetrain
+    "usercpu_time_millis_training" = mlr::timetrain,
+    "mean_class_complexity" = mlr::logloss
   )
   res = lapply(res, mlr::setAggregation, aggr = mlr::test.join)
   res$usercpu_time_millis = mlr::setAggregation(res$usercpu_time_millis, aggr = mlr::test.sum)
