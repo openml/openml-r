@@ -18,6 +18,7 @@ r_packages:
 r_github_packages:
   - mlr-org/farff
   - mlr-org/mlr
+  - mlr-org/mlr3survival
   - berndbischl/BBmisc
   - berndbischl/ParamHelpers
   - r-lib/httr
