@@ -1,3 +1,8 @@
+OpenML 1.10 (Release date: 2019-09-22):
+===========
+  - Avoid nameclashes with mlr3 by moving ParamHelpers to Suggests
+  - Force using httr 1.4.1 and curl 4.1
+
 OpenML 1.9 (Release date: 2019-08-06):
 ===========
   - Fixed bug: Uploaded runs now also contain default hyperparamters.

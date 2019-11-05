@@ -115,7 +115,7 @@ uploadOMLRun.OMLRun = function(run, upload.bmr = FALSE, tags = NULL, confirm.upl
     if (upload.bmr) {
       bmr.file = tempfile(pattern = "bmr", fileext = ".rds")
       on.exit(unlink(bmr.file), add = TRUE)
-      saveRDS(bmr, file = bmr.file)
+      saveRDS(bmr, file = bmr.file, version = 2)
       post.args$BenchmarkResult = upload_file(path = bmr.file)
     }
   }
