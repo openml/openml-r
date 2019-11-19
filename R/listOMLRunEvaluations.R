@@ -1,19 +1,23 @@
 .listOMLRunEvaluations = function(task.id = NULL, flow.id = NULL, run.id = NULL,
   uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL, verbosity = NULL,
-  evaluation.measure = NULL, show.array.measures = FALSE, extend.flow.name = TRUE) {
+  evaluation.measure = NULL, show.array.measures = FALSE, extend.flow.name = TRUE,
+  setup = FALSE) {
 
   if (is.null(task.id) && is.null(flow.id) && is.null(run.id) && is.null(uploader.id) && is.null(tag))
     stop("Please hand over at least one of the following: task.id, flow.id, run.id, uploader.id, tag")
   if (is.null(evaluation.measure))
     showInfo(verbosity, "Suggestion: Use the 'evaluation.measure' argument to restrict the results to only one measure.")
 
-  api.call = generateAPICall(api.call = "json/evaluation/list", task.id = task.id,
+  if (!setup) api.call = "json/evaluation/list" else api.call = "json/evaluation/setup/list"
+  api.call = generateAPICall(api.call = api.call, task.id = task.id,
     flow.id = flow.id, run.id = run.id, uploader.id = uploader.id,
     tag = tag, evaluation.measure = evaluation.measure, limit = limit, offset = offset)
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
   if (is.null(content)) return(data.frame())
-  evals = fromJSON(txt = content, simplifyVector = FALSE)$evaluations$evaluation
+  browser()
+  lst_content = fromJSON(txt = content, simplifyVector = FALSE)
+  evals = lst_content$evaluations$evaluation
 
   evals = rbindlist(lapply(evals, function(x) {
     if (is.null(x$value)) x$value = NA
