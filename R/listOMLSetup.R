@@ -11,32 +11,7 @@
   setup = fromJSON(txt = content)$setups$setup
   sid = data.frame(join_id = 1:length(setup$setup_id), setup_id = setup$setup_id)
 
-  # Get parameters and clean them up
-  param = setup$parameter
-  if (!is.null(names(param))) {
-    # if elements have a name, it refers to parameter
-    param = param[!vlapply(param, function(x) length(x) == 0)]
-    param = as.data.frame(param, stringsAsFactors = FALSE)
-    param = cbind(param, join_id = 1, stringsAsFactors = FALSE)
-  } else {
-    # add names
-    param = setNames(param, 1:length(param))
-    # filter out NULL or empty elements
-    param = param[!vlapply(param, function(x) length(x) == 0)]
-    # inside each element, replace empty values with NA
-    param = lapply(param, function(x) {
-      replace(x, which(vlapply(x, function(i) length(i) == 0)), NA_character_)
-    })
-    param = rbindlist(param, fill = TRUE, idcol = "join_id")
-    param = as.data.frame(param, stringsAsFactors = FALSE)
-  }
-
-  list.cols = colnames(param)[vlapply(param, is.list)]
-  for (col in list.cols) {
-    ind = which(vlapply(param[[col]], function(i) length(i) == 0))
-    param[[col]][ind] = NA_character_
-    param[[col]] = unlist(param[[col]], recursive = FALSE)
-  }
+  param = cleanupSetupParameters(setup$parameter)
 
   ret = merge(param, sid)
   ret$id = ret$join_id = NULL
@@ -66,3 +41,33 @@
 #' @export
 #' @example inst/examples/listOMLSetup.R
 listOMLSetup = memoise(.listOMLSetup)
+
+
+# Get parameters and clean them up
+cleanupSetupParameters = function(param) {
+  if (!is.null(names(param))) {
+    # if elements have a name, it refers to parameter
+    param = param[!vlapply(param, function(x) length(x) == 0)]
+    param = as.data.frame(param, stringsAsFactors = FALSE)
+    param = cbind(param, join_id = 1, stringsAsFactors = FALSE)
+  } else {
+    # add names
+    param = setNames(param, 1:length(param))
+    # filter out NULL or empty elements
+    param = param[!vlapply(param, function(x) length(x) == 0)]
+    # inside each element, replace empty values with NA
+    param = lapply(param, function(x) {
+      replace(x, which(vlapply(x, function(i) length(i) == 0)), NA_character_)
+    })
+    param = rbindlist(param, fill = TRUE, idcol = "join_id")
+    param = as.data.frame(param, stringsAsFactors = FALSE)
+  }
+
+  list.cols = colnames(param)[vlapply(param, is.list)]
+  for (col in list.cols) {
+    ind = which(vlapply(param[[col]], function(i) length(i) == 0))
+    param[[col]][ind] = NA_character_
+    param[[col]] = unlist(param[[col]], recursive = FALSE)
+  }
+  return(param)
+}

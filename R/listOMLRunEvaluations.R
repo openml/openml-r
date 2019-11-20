@@ -15,9 +15,14 @@
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
   if (is.null(content)) return(data.frame())
-  browser()
   lst_content = fromJSON(txt = content, simplifyVector = FALSE)
   evals = lst_content$evaluations$evaluation
+
+  if (setup) {
+    param_list = lapply(evals, function(x) {
+      parameters = as.data.table(cleanupSetupParameters(x$parameters))[-25,]
+    })
+  }
 
   evals = rbindlist(lapply(evals, function(x) {
     if (is.null(x$value)) x$value = NA
@@ -79,7 +84,7 @@
       values = list(flow.version = flow.version, flow.source = flow.source, learner.name = learner.name)),
       stringsAsFactors = FALSE)
   }
-
+  if (setup) evals$setup_parameters = param_list
   return(evals)
 }
 
