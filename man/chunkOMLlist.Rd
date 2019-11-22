@@ -4,7 +4,7 @@
 \alias{chunkOMLlist}
 \title{Do chunked listings}
 \usage{
-chunkOMLlist(listfun, ..., total.limit = 1e+05, chunk.limit = 1000)
+chunkOMLlist(listfun, ..., total.limit = 100000, chunk.limit = 1000)
 }
 \arguments{
 \item{listfun}{[\code{character(1)}]\cr

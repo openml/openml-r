@@ -27,6 +27,7 @@ Converts an \code{\link{OMLRun}} to a \code{\link[mlr]{BenchmarkResult}}.
 }
 \seealso{
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunEvalsToDT}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}},
   \code{\link{makeOMLRunParameter}},

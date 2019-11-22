@@ -53,6 +53,7 @@ Other uploading functions: \code{\link{makeOMLStudy}},
   \code{\link{uploadOMLFlow}}, \code{\link{uploadOMLStudy}}
 
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunEvalsToDT}},
   \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}},

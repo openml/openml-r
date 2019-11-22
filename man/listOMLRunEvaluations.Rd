@@ -7,7 +7,8 @@
 listOMLRunEvaluations(task.id = NULL, flow.id = NULL, run.id = NULL,
   uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
   verbosity = NULL, evaluation.measure = NULL,
-  show.array.measures = FALSE, extend.flow.name = TRUE)
+  show.array.measures = FALSE, extend.flow.name = TRUE,
+  setup = FALSE)
 }
 \arguments{
 \item{task.id}{[\code{integer}]\cr
@@ -55,6 +56,10 @@ Default is \code{FALSE}.}
 \item{extend.flow.name}{[\code{logical(1)}]\cr
 Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner.
 Default is \code{TRUE}.}
+
+\item{setup}{[\code{logical(1)}]\cr
+Adds a column \code{setup_parameters} that contains the runs setup, i.e. the hyperparameters set
+for the run.}
 }
 \value{
 [\code{data.frame}].

@@ -75,6 +75,7 @@ More details about the elements of a \code{OMLRun} can be found in the
 }
 \seealso{
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunEvalsToDT}},
   \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}},

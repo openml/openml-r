@@ -20,7 +20,7 @@
 
   if (setup) {
     param_list = lapply(evals, function(x) {
-      parameters = as.data.table(cleanupSetupParameters(x$parameters))[-25,]
+      parameters = as.data.table(cleanupSetupParameters(x$parameters))
     })
   }
 
@@ -110,6 +110,9 @@
 #' @param extend.flow.name [\code{logical(1)}]\cr
 #'  Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner.
 #'  Default is \code{TRUE}.
+#' @param setup [\code{logical(1)}]\cr
+#'  Adds a column \code{setup_parameters} that contains the runs setup, i.e. the hyperparameters set
+#'  for the run.
 #'
 #' @return [\code{data.frame}].
 #' @family list

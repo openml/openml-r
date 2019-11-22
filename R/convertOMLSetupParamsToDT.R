@@ -9,7 +9,7 @@
 #'
 #' @param run.evals [\code{data.frame}]\cr
 #'   Result of caling listOMLRunEvaluations(..., setup = TRUE).
-#' @param drop.constant [\code{logical(1)]\cr
+#' @param drop.constant [\code{logical(1)]\cr
 #'  Should constant columns be dropped before returning the result?
 #'
 #' @return [\code{\link{data.table}}].
@@ -21,11 +21,11 @@ convertOMLRunEvalsToDT = function(run.evals, drop.constant = TRUE) {
   assert_flag(drop.constant)
   setup_params = run.evals$setup_parameters
   out = lapply(setup_params, function(params) {
-    params[!(parameter_name == "verbose" & data_type == "boolean"), ]
-    params[, convertValueByType(parameter_name, value, data_type)]
+    params[!(params$parameter_name == "verbose" & params$data_type == "boolean"), ]
+    params[, convertValueByType(params$parameter_name, params$value, params$data_type)]
   })
   dt = rbindlist(out, fill = TRUE)
-  if (drop.constant) dt = dt[, vlapply(dt, function(x) length(unique(x)) > 1), with =FALSE]
+  if (drop.constant) dt = dt[, vlapply(dt, function(x) length(unique(x)) > 1), with = FALSE]
   run.evals$setup_parameters = NULL
   return(cbind(run.evals, dt))
 }
