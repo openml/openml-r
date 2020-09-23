@@ -11,17 +11,17 @@
 The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs.
 
 For more information, have a look at our
-- [R Tutorial](https://openml.github.io/openml-r/articles/OpenML.html) 
-- [R Cheatsheet](https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf)
-- [Function Reference](https://openml.github.io/openml-r/reference)
-- [OpenML R Package Publication](http://dx.doi.org/10.1007/s00180-017-0742-2)
-- [OpenML API Guide](https://www.openml.org/guide/api)
+- <a href="https://openml.github.io/openml-r/articles/OpenML.html" target="_blank">R Tutorial</a>
+- <a href="https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf" target="_blank">R Cheatsheet</a>
+- <a href="https://openml.github.io/openml-r/reference" target="_blank">Function Reference</a>
+- <a href="http://dx.doi.org/10.1007/s00180-017-0742-2" target="_blank">OpenML R Package Publication</a>
+- <a href="https://www.openml.org/api_docs" target="_blank">OpenML API Guide</a>
 
 # How to cite
 
-To cite the OpenML R package in publications, please use our paper entitled [`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`](http://dx.doi.org/10.1007/s00180-017-0742-2) [[bibtex](https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation)].
+To cite the OpenML R package in publications, please use our paper entitled <a href="http://dx.doi.org/10.1007/s00180-017-0742-2" target="_blank">`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`</a> [<a href="https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation" target="_blank">BibTex</a>]
 
-See also [here](https://www.openml.org/cite) for further information on how to cite the OpenML project itself.
+See also <a href="https://www.openml.org/cite" target="_blank">here</a>
 
 # Installation of the package
 
