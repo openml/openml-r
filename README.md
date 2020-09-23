@@ -21,7 +21,7 @@ For more information, have a look at our
 
 To cite the OpenML R package in publications, please use our paper entitled <a href="http://dx.doi.org/10.1007/s00180-017-0742-2" target="_blank">`OpenML`: An `R` Package to Connect to the Machine Learning Platform `OpenML`</a> [<a href="https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&flavour=citation" target="_blank">BibTex</a>]
 
-See also <a href="https://www.openml.org/cite" target="_blank">here</a>
+See also <a href="https://www.openml.org/cite" target="_blank">here</a> how to cite the OpenML project itself.
 
 # Installation of the package
 
