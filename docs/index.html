@@ -6,21 +6,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Open Machine Learning and Open Data Platform • OpenML</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Open Machine Learning and Open Data Platform">
 <meta property="og:description" content="We provide an R interface to OpenML.org which is an online machine learning platform where researchers can access open data, download and upload data sets, share their machine learning tasks and experiments and organize them online to work and collaborate with other researchers. 
     The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs. 
     See &lt;https://www.openml.org/guide/api&gt; for more information.">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -54,7 +54,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/openml/openml-r">
+  <a href="https://github.com/openml/openml-r/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -80,17 +80,18 @@
 <p><a href="http://www.openml.org/frontend/page/home">OpenML.org</a> is an online machine learning platform where researchers can access open data, download and upload data sets, share their machine learning tasks and experiments and organize them online to work and collaborate with other researchers. The R interface allows to query for data sets with specific properties, and allows the downloading and uploading of data sets, tasks, flows and runs.</p>
 <p>For more information, have a look at our</p>
 <ul>
-<li><a href="https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf">R Cheatsheet</a></li>
-<li><a href="http://openml.github.io/openml-r">R Tutorial</a></li>
-<li><a href="http://dx.doi.org/10.1007/s00180-017-0742-2">OpenML R Package Publication</a></li>
-<li><a href="https://www.openml.org/guide/api">OpenML API Guide</a></li>
+<li><a href="https://openml.github.io/openml-r/articles/OpenML.html" target="_blank">R Tutorial</a></li>
+<li><a href="https://github.com/openml/openml-r/blob/master/vignettes/openml-cheatsheet.pdf" target="_blank">R Cheatsheet</a></li>
+<li><a href="https://openml.github.io/openml-r/reference" target="_blank">Function Reference</a></li>
+<li><a href="http://dx.doi.org/10.1007/s00180-017-0742-2" target="_blank">OpenML R Package Publication</a></li>
+<li><a href="https://www.openml.org/api_docs" target="_blank">OpenML API Guide</a></li>
 </ul>
 </div>
 <div id="how-to-cite" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-to-cite" class="anchor"></a>How to cite</h1>
-<p>To cite the OpenML R package in publications, please use our paper entitled <a href="http://dx.doi.org/10.1007/s00180-017-0742-2"><code>OpenML</code>: An <code>R</code> Package to Connect to the Machine Learning Platform <code>OpenML</code></a> [<a href="https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&amp;flavour=citation">bibtex</a>].</p>
-<p>See also <a href="https://www.openml.org/cite">here</a> for further information on how to cite the OpenML project itself.</p>
+<p>To cite the OpenML R package in publications, please use our paper entitled <a href="http://dx.doi.org/10.1007/s00180-017-0742-2" target="_blank"><code>OpenML</code>: An <code>R</code> Package to Connect to the Machine Learning Platform <code>OpenML</code></a> [<a href="https://citation-needed.springer.com/v2/references/10.1007/s00180-017-0742-2?format=bibtex&amp;flavour=citation" target="_blank">BibTex</a>]</p>
+<p>See also <a href="https://www.openml.org/cite" target="_blank">here</a> how to cite the OpenML project itself.</p>
 </div>
 <div id="installation-of-the-package" class="section level1">
 <h1 class="hasAnchor">
@@ -99,14 +100,20 @@
 <li>Install the stable version from <a href="https://cran.r-project.org/web/packages/OpenML/index.html">CRAN</a>
 </li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"OpenML"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"OpenML"</span>)
+</pre></div>
 <p>or</p>
 <ul>
 <li>Install the development version from GitHub (using <code>devtools</code>)</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"openml/openml-r"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">devtools</span>::<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"openml/openml-r"</span>)
+</pre></div>
 <p>Furthermore, you need <a href="https://github.com/mlr-org/farff">farff</a> installed to process <a href="http://www.cs.waikato.ac.nz/ml/weka/arff.html">ARFF</a> files:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"farff"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"farff"</span>)
+</pre></div>
 <p>Alternatively you can make use of the <a href="https://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a> R package to process ARFF files. However, in particular for larger ARFF files, <a href="https://github.com/mlr-org/farff">farff</a> is considerably faster than RWeka.</p>
 </div>
 <div id="contact" class="section level1">
@@ -117,13 +124,13 @@
 
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=OpenML">https://​cloud.r-project.org/​package=OpenML</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/openml/openml-r">https://​github.com/​openml/​openml-r</a>
+<li>Browse source code at <br><a href="https://github.com/openml/openml-r/">https://​github.com/​openml/​openml-r/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/openml/openml-r/issues">https://​github.com/​openml/​openml-r/​issues</a>
 </li>
@@ -170,7 +177,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
