@@ -15,7 +15,6 @@ before_install:
 before_script:
   - mkdir -p "$HOME/.openml/cache" && find "$HOME/.openml/cache"
   - echo "apikey=$OPENMLAPIKEY" > "$HOME/.openml/config"
-  - R --no-save <<< 'library("devtools"); document()'
 
 after_success:
   - Rscript -e 'library(covr);codecov()'
