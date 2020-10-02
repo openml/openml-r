@@ -39,7 +39,7 @@ doAPICall = function(api.call, id = NULL,
   url = buildRequestURL(conf$server, api.call, id, url.args, ...)
 
   if (nchar(url) > 4068)
-    stopf("'%s' has %i characters, the maximum allowed url length is 4068.", url, nchar(url))
+    stopf("URL too long : \n'%s...' has %i characters, but the maximum allowed url length is 4068.", substr(url, 1, 1000), nchar(url))
 
   # some nice output to the user
   if (method == "GET") {

@@ -7,6 +7,10 @@ output:
     toc: true
     toc_float: true
     theme: flatly
+vignette: >
+  %\VignetteIndexEntry{OpenML}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 ```{r init, include=FALSE}
 # library("knitr")
@@ -74,7 +78,6 @@ In this paragraph you can find an example on how to download a task from the ser
 library("OpenML")
 ## temporarily set API key to read only key
 setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f")
-
 # download a task (whose ID is 1L)
 task = getOMLTask(task.id = 1L)
 task
@@ -94,12 +97,10 @@ In the next line, `randomForest` is used as a classifier and run with the help o
 # define the classifier (usually called "flow" within OpenML)
 library("mlr")
 lrn = makeLearner("classif.randomForest")
-
 # upload the new flow (with information about the algorithm and settings);
 # if this algorithm already exists on the server, one will receive a message
 # with the ID of the existing flow
 flow.id = uploadOMLFlow(lrn)
-
 # the last step is to perform a run and upload the results
 run.mlr = runTaskMlr(task, lrn)
 run.id = uploadOMLRun(run.mlr)
@@ -261,7 +262,6 @@ For instance, listing all runs for [task 59](http://www.openml.org/t/59) (superv
 ```{r eval=TRUE}
 runs = listOMLRuns(task.id = 59L)  # must be specified with the task, setup and/or implementation ID
 head(runs)
-
 # one of the IDs (here: task.id) must be supplied
 run.results = listOMLRunEvaluations(task.id = 59L)
 str(run.results)
@@ -353,7 +353,6 @@ If one is working with [**mlr**](https://github.com/mlr-org/mlr), one can specif
 The `task` is created the same way as in the previous sections:
 ```{r, warning = FALSE, message = FALSE}
 task = getOMLTask(task.id = 59L)
-
 library("mlr")
 lrn = makeLearner("classif.rpart")
 run.mlr = runTaskMlr(task, lrn)
@@ -382,7 +381,6 @@ dsc = "Daily air quality measurements in New York, May to September 1973.
   This data is taken from R."
 cit = "Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
   Graphical Methods for Data Analysis. Belmont, CA: Wadsworth."
-
 ## (1) Create the description object
 desc = makeOMLDataSetDescription(name = "airquality",
   description = dsc,
@@ -395,14 +393,12 @@ desc = makeOMLDataSetDescription(name = "airquality",
   default.target.attribute = "Ozone",
   citation = cit,
   tags = "R")
-
 ## (2) Create the OpenML data set
 air.data = makeOMLDataSet(desc = desc,
   data = airquality,
   colnames.old = colnames(airquality),
   colnames.new = colnames(airquality),
   target.features = "Ozone")
-
 ## (3) Upload the OpenML data set to the server
 ## Because this is a simple data set which is generally already available in R
 ## please do not actually upload it to the server!
@@ -437,10 +433,8 @@ learners = list(
   makeLearner("classif.kknn"),
   makeLearner("classif.randomForest")
 )
-
 ## pick 3 random tasks
 task.ids = c(57, 59, 2382)
-
 for (lrn in learners) {
   for (id in task.ids) {
     task = getOMLTask(id)

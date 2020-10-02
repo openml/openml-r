@@ -36,21 +36,3 @@
 #' @family downloading functions
 #' @export
 getOMLStudy = memoise(.getOMLStudy)
-
-#' @export
-print.OMLStudy = function(x, ...) {
-  catf("\n Study '%s' (Study ID %i)", x$name, x$id)
-  catf("  Description           : %s", BBmisc::clipString(x$description, 80))
-  catf("  Creation Date         : %s", x$creation.date)
-  catf("  Tag(s)                : %s", stri_paste(x$tag$name, collapse = ","))
-  catf("  Number of Data Sets   : %s", length(x$data$data.id))
-  catf("  Number of Tasks       : %s", length(x$tasks$task.id))
-  catf("  Number of Flows       : %s", length(x$flows$flow.id))
-  # catf("  Number of Setups      : %s", length(x$setups$setup.id))
-  catf("  Number of Runs        : %s", length(x$runs$run.id))
-  # catf("  Data IDs         : %s", BBmisc::clipString(BBmisc::collapse(x$data$data.id), 80))
-  # catf("  Task IDs         : %s", BBmisc::clipString(BBmisc::collapse(x$tasks$task.id), 80))
-  # catf("  Flow IDs         : %s", BBmisc::clipString(BBmisc::collapse(x$flows$flow.id), 80))
-  # catf("  Setup IDs        : %s", BBmisc::clipString(BBmisc::collapse(x$setups$setup.id), 80))
-  # catf("  Run IDs          : %s", BBmisc::clipString(BBmisc::collapse(x$runs$run.id), 80))
-}

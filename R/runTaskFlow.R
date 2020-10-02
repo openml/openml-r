@@ -42,10 +42,10 @@ runTaskFlow = function(task, flow, par.list, seed = 1, predict.type = NULL,
 
   # make learner with parameters
   lrn = convertOMLFlowToMlr(flow)
-  lrn = mlr::setHyperPars(lrn, par.vals = getDefaults(getParamSet(lrn)))
+  lrn = mlr::setHyperPars(lrn, par.vals = ParamHelpers::getDefaults(ParamHelpers::getParamSet(lrn)))
 
   # assign data type to learner parameters
-  ps = getParamSet(lrn)
+  ps = ParamHelpers::getParamSet(lrn)
   if (!inherits(par.list, "OMLRunParList"))
     par.list = convertListToOMLRunParList(par.list, ps = ps)
   par.vals = convertOMLRunParListToList(par.list, ps = ps)

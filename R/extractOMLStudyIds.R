@@ -8,9 +8,13 @@
 #' @param type [\code{character(1)}] \cr
 #' A character that specifies which ids should be extracted from the study.
 #' Can be either "data.id", "task.id", "flow.id" or "run.id".
+#' @param chunk.size [\code{integer(1)}] \cr
+#' If the number of ids to be returned exceeds "chunk.size", a list of ids is returned.
+#' Each list element contains not more than "chunk.size" elements.
+#' Default is 400.
 #' @return [\code{numeric}].
 #' @export
-extractOMLStudyIds = function(object, type) {
+extractOMLStudyIds = function(object, type, chunk.size = 400) {
   assertClass(object, "OMLStudy")
   assertChoice(type, choices = c("data.id", "task.id", "flow.id", "run.id"))
 
@@ -22,5 +26,10 @@ extractOMLStudyIds = function(object, type) {
   )
   if (is.null(ret))
     messagef("No '%s's found in this study.", type)
+
+  if (length(ret) > chunk.size) {
+    messagef("More than '%s' ids found. Returning a list of ids.", chunk.size)
+    ret = BBmisc::chunk(ret, chunk.size = chunk.size)
+  }
   return(ret)
 }

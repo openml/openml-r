@@ -47,7 +47,7 @@ getRVersionString = function() {
 #   Default is the config setting.
 # @return [logical(1)]
 checkUserConfirmation = function(type, confirm.upload = NULL) {
-  assertChoice(type, choices = c("dataset", "flow", "task", "run"))
+  assertChoice(type, choices = c("dataset", "flow", "task", "run", "study"))
   if (is.null(confirm.upload)) {
     confirm.upload = as.logical(getOMLConfig()$confirm.upload)
   }

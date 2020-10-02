@@ -4,7 +4,7 @@
 \alias{deleteOMLObject}
 \title{Delete an OpenML object.}
 \usage{
-deleteOMLObject(id, object = c("data", "task", "flow", "run"),
+deleteOMLObject(id, object = c("data", "task", "flow", "run", "study"),
   verbosity = NULL)
 }
 \arguments{

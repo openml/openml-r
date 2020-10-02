@@ -15,7 +15,7 @@ test_that("OMLRunParList", {
     for (ns in nodesize) {
       args = list(ntree = 300, nodesize = ns, replace = TRUE)
       lrn = setHyperPars(lrn, par.vals = args)
-      par.defaults = getDefaults(getParamSet(lrn))
+      par.defaults = ParamHelpers::getDefaults(ParamHelpers::getParamSet(lrn))
       par.vals = getHyperPars(lrn)
 
       oml.par.list = makeOMLRunParList(lrn)

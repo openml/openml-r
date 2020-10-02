@@ -31,7 +31,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   # FIXME: TuneWrapper contains opt.pars slot. Should we use this here?
   # if (testClass(mlr.lrn, "TuneWrapper")) mlr.lrn = removeAllHyperPars(mlr.lrn) # looked like a bug
 
-  ps = getParamSet(mlr.lrn)
+  ps = ParamHelpers::getParamSet(mlr.lrn)
   par.vals = mlr::getHyperPars(mlr.lrn)
   par.names = names(par.vals)
 
@@ -51,7 +51,7 @@ makeOMLRunParList = function(mlr.lrn, component = NA_character_) {
   next.learner = mlr.lrn
   while (!is.null(next.learner)) {
     component = gsub(".*[.]", "", next.learner$id)
-    par.component = intersect(names(getParamSet(next.learner)$pars), names(par.settings))
+    par.component = intersect(names(ParamHelpers::getParamSet(next.learner)$pars), names(par.settings))
     for (comp in par.component) {
       par.settings[[comp]]$component = component
     }
@@ -141,9 +141,9 @@ paramToString = function(par, x) {
   else if (type %in% c("numericvector", "integervector", "logicalvector", "charactervector"))
     collapse(x)
   else if (type == "discrete")
-    discreteValueToName(par, x)
+    ParamHelpers::discreteValueToName(par, x)
   else if (type == "discretevector")
-    collapse(discreteValueToName(par, x))
+    collapse(ParamHelpers::discreteValueToName(par, x))
   else if (type %in% c("function", "untyped"))
     rawToChar(serialize(x, connection = NULL, ascii = TRUE))
 }
@@ -157,7 +157,7 @@ stringToParam = function(par, x) {
   else if (type %in% c("numericvector", "integervector", "logicalvector", "charactervector", "discretevector"))
     do.call(paste0("as.", stri_replace_all_fixed(type, "vector", "")), list(strsplit(x, ",")[[1L]]))
   else if (type == "discrete")
-    discreteNameToValue(par, x)
+    ParamHelpers::discreteNameToValue(par, x)
   else if (type %in% c("function", "untyped"))
     unserialize(charToRaw(x))
 }

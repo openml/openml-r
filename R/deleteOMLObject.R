@@ -12,9 +12,9 @@
 #' @family flow-related functions
 #' @family run-related functions
 #' @export
-deleteOMLObject = function(id, object = c("data", "task", "flow", "run"), verbosity = NULL) {
+deleteOMLObject = function(id, object = c("data", "task", "flow", "run", "study"), verbosity = NULL) {
   id = asCount(id)
-  assertChoice(object, choices = c("data", "task", "flow", "run"))
+  assertChoice(object, choices = c("data", "task", "flow", "run", "study"))
 
   response = doAPICall(api.call = object, method = "DELETE", id = id)
 

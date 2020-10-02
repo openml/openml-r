@@ -1,36 +1,20 @@
 language: r
-sudo: false
-
-r:
-  - release
-
-os:
-  - linux
-
-r_check_args: "--as-cran --run-donttest"
-
-r_packages:
-  - devtools
-  - roxygen2
-  - covr
-  - lintr
-
-r_github_packages:
-  - mlr-org/farff
-  - mlr-org/mlr
-  - berndbischl/BBmisc
-  - berndbischl/ParamHelpers
-  - r-lib/httr
+sudo: required
 
 cache:
   packages: true
   directories:
     - $HOME/.openml/cache
 
+apt_packages:
+  - r-cran-rjava
+
+before_install:
+  - sudo $(which R) CMD javareconf
+
 before_script:
   - mkdir -p "$HOME/.openml/cache" && find "$HOME/.openml/cache"
   - echo "apikey=$OPENMLAPIKEY" > "$HOME/.openml/config"
-  - R --no-save <<< 'library("devtools"); document()'
 
 after_success:
   - Rscript -e 'library(covr);codecov()'

@@ -1,7 +1,6 @@
 #' @import BBmisc
 #' @import curl
 #' @import checkmate
-#' @import ParamHelpers
 #' @import stringi
 #' @import XML
 #' @import jsonlite
