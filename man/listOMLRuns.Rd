@@ -76,6 +76,7 @@ Other listing functions: \code{\link{chunkOMLlist}},
   \code{\link{listOMLTasks}}
 
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunEvalsToDT}},
   \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{makeOMLRunParameter}},

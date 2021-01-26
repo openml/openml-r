@@ -23,6 +23,7 @@ Construct a run parameter object for a run.
 }
 \seealso{
 Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
+  \code{\link{convertOMLRunEvalsToDT}},
   \code{\link{convertOMLRunToBMR}},
   \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
   \code{\link{listOMLRuns}}, \code{\link{makeOMLRun}},

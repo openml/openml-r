@@ -1,19 +1,28 @@
 .listOMLRunEvaluations = function(task.id = NULL, flow.id = NULL, run.id = NULL,
   uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL, verbosity = NULL,
-  evaluation.measure = NULL, show.array.measures = FALSE, extend.flow.name = TRUE) {
+  evaluation.measure = NULL, show.array.measures = FALSE, extend.flow.name = TRUE,
+  setup = FALSE) {
 
   if (is.null(task.id) && is.null(flow.id) && is.null(run.id) && is.null(uploader.id) && is.null(tag))
     stop("Please hand over at least one of the following: task.id, flow.id, run.id, uploader.id, tag")
   if (is.null(evaluation.measure))
     showInfo(verbosity, "Suggestion: Use the 'evaluation.measure' argument to restrict the results to only one measure.")
 
-  api.call = generateAPICall(api.call = "json/evaluation/list", task.id = task.id,
+  if (!setup) api.call = "json/evaluation/list" else api.call = "json/evaluation/setup/list"
+  api.call = generateAPICall(api.call = api.call, task.id = task.id,
     flow.id = flow.id, run.id = run.id, uploader.id = uploader.id,
     tag = tag, evaluation.measure = evaluation.measure, limit = limit, offset = offset)
 
   content = doAPICall(api.call, file = NULL, method = "GET", verbosity = verbosity)
   if (is.null(content)) return(data.frame())
-  evals = fromJSON(txt = content, simplifyVector = FALSE)$evaluations$evaluation
+  lst_content = fromJSON(txt = content, simplifyVector = FALSE)
+  evals = lst_content$evaluations$evaluation
+
+  if (setup) {
+    param_list = lapply(evals, function(x) {
+      parameters = as.data.table(cleanupSetupParameters(x$parameters))
+    })
+  }
 
   evals = rbindlist(lapply(evals, function(x) {
     if (is.null(x$value)) x$value = NA
@@ -75,7 +84,7 @@
       values = list(flow.version = flow.version, flow.source = flow.source, learner.name = learner.name)),
       stringsAsFactors = FALSE)
   }
-
+  if (setup) evals$setup_parameters = param_list
   return(evals)
 }
 
@@ -101,6 +110,9 @@
 #' @param extend.flow.name [\code{logical(1)}]\cr
 #'  Adds a column \code{flow.version} that refers to the version number of the flow and a column \code{flow.source} containing the prefix of the flow that specifies the source of the flow (i.e. weka, R) and a column \code{learner.name} that refers to the learner.
 #'  Default is \code{TRUE}.
+#' @param setup [\code{logical(1)}]\cr
+#'  Adds a column \code{setup_parameters} that contains the runs setup, i.e. the hyperparameters set
+#'  for the run.
 #'
 #' @return [\code{data.frame}].
 #' @family list

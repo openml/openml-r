@@ -30,3 +30,16 @@ test_that("listOMLRunEvaluations", {
     expect_error(listOMLRunEvaluations(task.id = task.id, evaluation.measure = "m"))
   })
 })
+
+test_that("listOMLRunEvaluations", {
+  with_main_server({
+    setOMLConfig(server = "https://test.openml.org/api/v1")
+    task.id = 6L
+
+    # filter only successful runs
+    run.evals = .listOMLRunEvaluations(task.id = task.id, evaluation.measure = "area_under_roc_curve", setup = TRUE, limit = 20)
+    expect_data_frame(run.evals, min.rows = 1L, col.names = "unique")
+    expect_subset(c("run.id", "task.id", "setup.id", "flow.id", "flow.name", "flow.source", "data.name", "setup_parameters"),
+      names(run.evals))
+  })
+})
