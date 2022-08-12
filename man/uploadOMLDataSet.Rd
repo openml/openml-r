@@ -4,8 +4,13 @@
 \alias{uploadOMLDataSet}
 \title{Upload a data set to the OpenML server.}
 \usage{
-uploadOMLDataSet(x, tags = NULL, description = NULL,
-  confirm.upload = NULL, verbosity = NULL)
+uploadOMLDataSet(
+  x,
+  tags = NULL,
+  description = NULL,
+  confirm.upload = NULL,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{x}{[\code{\link[mlr]{Task}}|[\code{\link{OMLDataSet}}]\cr
@@ -40,17 +45,21 @@ Share a data set by uploading it to the OpenML server.
 This function will reset the cache of \code{\link{listOMLDataSets}} on success.
 }
 \seealso{
-Other uploading functions: \code{\link{makeOMLStudy}},
-  \code{\link{uploadOMLFlow}}, \code{\link{uploadOMLRun}},
-  \code{\link{uploadOMLStudy}}
+Other uploading functions: 
+\code{\link{makeOMLStudy}()},
+\code{\link{uploadOMLFlow}()},
+\code{\link{uploadOMLRun}()},
+\code{\link{uploadOMLStudy}()}
 
-Other data set-related functions: \code{\link{OMLDataSetDescription}},
-  \code{\link{OMLDataSet}},
-  \code{\link{convertMlrTaskToOMLDataSet}},
-  \code{\link{convertOMLDataSetToMlr}},
-  \code{\link{deleteOMLObject}},
-  \code{\link{getOMLDataSet}},
-  \code{\link{listOMLDataSets}}, \code{\link{tagOMLObject}}
+Other data set-related functions: 
+\code{\link{OMLDataSetDescription}},
+\code{\link{OMLDataSet}},
+\code{\link{convertMlrTaskToOMLDataSet}()},
+\code{\link{convertOMLDataSetToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{data set-related functions}
 \concept{uploading functions}

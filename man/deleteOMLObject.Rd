@@ -4,8 +4,11 @@
 \alias{deleteOMLObject}
 \title{Delete an OpenML object.}
 \usage{
-deleteOMLObject(id, object = c("data", "task", "flow", "run", "study"),
-  verbosity = NULL)
+deleteOMLObject(
+  id,
+  object = c("data", "task", "flow", "run", "study"),
+  verbosity = NULL
+)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -27,31 +30,41 @@ This will delete one of your uploaded datasets, tasks, flows or runs.
 Note that you can only delete the objects you uploaded.
 }
 \seealso{
-Other data set-related functions: \code{\link{OMLDataSetDescription}},
-  \code{\link{OMLDataSet}},
-  \code{\link{convertMlrTaskToOMLDataSet}},
-  \code{\link{convertOMLDataSetToMlr}},
-  \code{\link{getOMLDataSet}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLDataSet}}
+Other data set-related functions: 
+\code{\link{OMLDataSetDescription}},
+\code{\link{OMLDataSet}},
+\code{\link{convertMlrTaskToOMLDataSet}()},
+\code{\link{convertOMLDataSetToMlr}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLDataSet}()}
 
-Other task-related functions: \code{\link{convertOMLTaskToMlr}},
-  \code{\link{getOMLTask}}, \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
-  \code{\link{tagOMLObject}}
+Other task-related functions: 
+\code{\link{convertOMLTaskToMlr}()},
+\code{\link{getOMLTask}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()},
+\code{\link{makeOMLTask}()},
+\code{\link{tagOMLObject}()}
 
-Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
-  \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
-  \code{\link{makeOMLFlowParameter}},
-  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
+Other flow-related functions: 
+\code{\link{convertOMLFlowToMlr}()},
+\code{\link{getOMLFlow}()},
+\code{\link{listOMLFlows}()},
+\code{\link{makeOMLFlowParameter}()},
+\code{\link{makeOMLFlow}()},
+\code{\link{tagOMLObject}()}
 
-Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
-  \code{\link{convertOMLRunToBMR}},
-  \code{\link{getOMLRun}}, \code{\link{listOMLRuns}},
-  \code{\link{makeOMLRunParameter}},
-  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLRun}}
+Other run-related functions: 
+\code{\link{convertOMLMlrRunToBMR}()},
+\code{\link{convertOMLRunToBMR}()},
+\code{\link{getOMLRun}()},
+\code{\link{listOMLRuns}()},
+\code{\link{makeOMLRunParameter}()},
+\code{\link{makeOMLRun}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{data set-related functions}
 \concept{flow-related functions}

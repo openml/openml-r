@@ -5,18 +5,32 @@
 \alias{makeOMLDataSetDescription}
 \title{Construct OMLDataSetDescription.}
 \usage{
-makeOMLDataSetDescription(id = 0L, name, version = "0", description,
-  format = "ARFF", creator = NA_character_,
-  contributor = NA_character_, collection.date = NA_character_,
-  upload.date = as.POSIXct(Sys.time()), language = NA_character_,
-  licence = NA_character_, url = NA_character_,
+makeOMLDataSetDescription(
+  id = 0L,
+  name,
+  version = "0",
+  description,
+  format = "ARFF",
+  creator = NA_character_,
+  contributor = NA_character_,
+  collection.date = NA_character_,
+  upload.date = as.POSIXct(Sys.time()),
+  language = NA_character_,
+  licence = NA_character_,
+  url = NA_character_,
   default.target.attribute = NA_character_,
-  row.id.attribute = NA_character_, ignore.attribute = NA_character_,
-  version.label = NA_character_, citation = NA_character_,
-  visibility = NA_character_, original.data.url = NA_character_,
-  paper.url = NA_character_, update.comment = NA_character_,
-  md5.checksum = NA_character_, status = NA_character_,
-  tags = NA_character_)
+  row.id.attribute = NA_character_,
+  ignore.attribute = NA_character_,
+  version.label = NA_character_,
+  citation = NA_character_,
+  visibility = NA_character_,
+  original.data.url = NA_character_,
+  paper.url = NA_character_,
+  update.comment = NA_character_,
+  md5.checksum = NA_character_,
+  status = NA_character_,
+  tags = NA_character_
+)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr
@@ -127,13 +141,14 @@ airquality_oml = makeOMLDataSet(desc = desc_airquality,
   target.features = "Ozone")
 }
 \seealso{
-Other data set-related functions: \code{\link{OMLDataSet}},
-  \code{\link{convertMlrTaskToOMLDataSet}},
-  \code{\link{convertOMLDataSetToMlr}},
-  \code{\link{deleteOMLObject}},
-  \code{\link{getOMLDataSet}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLDataSet}}
+Other data set-related functions: 
+\code{\link{OMLDataSet}},
+\code{\link{convertMlrTaskToOMLDataSet}()},
+\code{\link{convertOMLDataSetToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLDataSet}()}
 }
 \concept{data set-related functions}

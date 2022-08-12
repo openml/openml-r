@@ -4,9 +4,15 @@
 \alias{saveOMLConfig}
 \title{Saves a list of OpenML configuration settings to file.}
 \usage{
-saveOMLConfig(server = NULL, verbosity = NULL, apikey = NULL,
-  cachedir = NULL, arff.reader = NULL, confirm.upload = NULL,
-  overwrite = FALSE)
+saveOMLConfig(
+  server = NULL,
+  verbosity = NULL,
+  apikey = NULL,
+  cachedir = NULL,
+  arff.reader = NULL,
+  confirm.upload = NULL,
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{server}{[\code{character(1)}]\cr
@@ -39,8 +45,10 @@ The new configuration is automatically assigned via
 package defaults will be inserted into the file.
 }
 \seealso{
-Other config: \code{\link{configuration}},
-  \code{\link{getOMLConfig}}, \code{\link{loadOMLConfig}},
-  \code{\link{setOMLConfig}}
+Other config: 
+\code{\link{configuration}},
+\code{\link{getOMLConfig}()},
+\code{\link{loadOMLConfig}()},
+\code{\link{setOMLConfig}()}
 }
 \concept{config}

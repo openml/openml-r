@@ -4,9 +4,14 @@
 \alias{listOMLStudies}
 \title{list OpenML Studies.}
 \usage{
-listOMLStudies(main.entity.type = NULL, status = "all",
-  uploader.id = NULL, limit = NULL, offset = NULL,
-  verbosity = NULL)
+listOMLStudies(
+  main.entity.type = NULL,
+  status = "all",
+  uploader.id = NULL,
+  limit = NULL,
+  offset = NULL,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{main.entity.type}{[\code{character}]\cr
@@ -53,14 +58,16 @@ the cached results from the first call.
 You can reset the cache by calling \code{\link[memoise]{forget}} on the function manually.
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLSetup}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()}
 }
 \concept{listing functions}

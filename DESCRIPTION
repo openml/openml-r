@@ -16,7 +16,7 @@ License: BSD_3_clause + file LICENSE
 URL: https://github.com/openml/openml-r
 BugReports: https://github.com/openml/openml-r/issues
 Depends:
-    R (>= 3.0.2)
+    R (>= 3.5.0)
 Suggests: 
     testthat,
     mlr (>= 2.15),
@@ -29,7 +29,6 @@ Suggests:
     knitr,
     rmarkdown,
     R.rsp,
-    lintr (>= 1.0.1),
     rex
 Imports:
     backports (>= 1.1.0),
@@ -44,9 +43,8 @@ Imports:
     memoise (>= 1.0.0),
     stats,
     curl (>= 4.1)
-LazyData: yes
 ByteCompile: yes
-Version: 1.10
-RoxygenNote: 6.1.1
+Version: 1.11
+RoxygenNote: 7.2.0
 VignetteBuilder: R.rsp
 Encoding: UTF-8

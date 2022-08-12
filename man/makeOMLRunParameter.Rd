@@ -22,11 +22,15 @@ This name must match a component of the implementation.}
 Construct a run parameter object for a run.
 }
 \seealso{
-Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
-  \code{\link{convertOMLRunToBMR}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
-  \code{\link{listOMLRuns}}, \code{\link{makeOMLRun}},
-  \code{\link{tagOMLObject}}, \code{\link{uploadOMLRun}}
+Other run-related functions: 
+\code{\link{convertOMLMlrRunToBMR}()},
+\code{\link{convertOMLRunToBMR}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLRun}()},
+\code{\link{listOMLRuns}()},
+\code{\link{makeOMLRun}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{run-related functions}
 \keyword{internal}

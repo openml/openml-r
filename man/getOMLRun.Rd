@@ -4,8 +4,7 @@
 \alias{getOMLRun}
 \title{Get an OpenML run.}
 \usage{
-getOMLRun(run.id, cache.only = FALSE, only.xml = FALSE,
-  verbosity = NULL)
+getOMLRun(run.id, cache.only = FALSE, only.xml = FALSE, verbosity = NULL)
 }
 \arguments{
 \item{run.id}{[\code{integer(1)}]\cr
@@ -41,16 +40,22 @@ and user computed metrics is downloaded if not already available in cache.
 # }
 }
 \seealso{
-Other downloading functions: \code{\link{getOMLDataSetQualities}},
-  \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
-  \code{\link{getOMLStudy}}, \code{\link{getOMLTask}}
+Other downloading functions: 
+\code{\link{getOMLDataSetQualities}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{getOMLFlow}()},
+\code{\link{getOMLStudy}()},
+\code{\link{getOMLTask}()}
 
-Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
-  \code{\link{convertOMLRunToBMR}},
-  \code{\link{deleteOMLObject}}, \code{\link{listOMLRuns}},
-  \code{\link{makeOMLRunParameter}},
-  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLRun}}
+Other run-related functions: 
+\code{\link{convertOMLMlrRunToBMR}()},
+\code{\link{convertOMLRunToBMR}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{listOMLRuns}()},
+\code{\link{makeOMLRunParameter}()},
+\code{\link{makeOMLRun}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{downloading functions}
 \concept{run-related functions}

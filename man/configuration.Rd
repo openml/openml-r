@@ -17,8 +17,10 @@ the cache will be deleted in between R sessions. We thus recommend to set
 the cache directory by hand.
 }
 \seealso{
-Other config: \code{\link{getOMLConfig}},
-  \code{\link{loadOMLConfig}}, \code{\link{saveOMLConfig}},
-  \code{\link{setOMLConfig}}
+Other config: 
+\code{\link{getOMLConfig}()},
+\code{\link{loadOMLConfig}()},
+\code{\link{saveOMLConfig}()},
+\code{\link{setOMLConfig}()}
 }
 \concept{config}

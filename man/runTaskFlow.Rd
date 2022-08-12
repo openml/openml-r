@@ -4,8 +4,15 @@
 \alias{runTaskFlow}
 \title{Reproduce the Run}
 \usage{
-runTaskFlow(task, flow, par.list, seed = 1, predict.type = NULL,
-  verbosity = NULL, models = TRUE)
+runTaskFlow(
+  task,
+  flow,
+  par.list,
+  seed = 1,
+  predict.type = NULL,
+  verbosity = NULL,
+  models = TRUE
+)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr

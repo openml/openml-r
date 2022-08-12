@@ -40,15 +40,20 @@ Given a task ID, the corresponding \code{\link{OMLTask}} will be downloaded
 # }
 }
 \seealso{
-Other downloading functions: \code{\link{getOMLDataSetQualities}},
-  \code{\link{getOMLDataSet}}, \code{\link{getOMLFlow}},
-  \code{\link{getOMLRun}}, \code{\link{getOMLStudy}}
+Other downloading functions: 
+\code{\link{getOMLDataSetQualities}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{getOMLFlow}()},
+\code{\link{getOMLRun}()},
+\code{\link{getOMLStudy}()}
 
-Other task-related functions: \code{\link{convertOMLTaskToMlr}},
-  \code{\link{deleteOMLObject}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
-  \code{\link{tagOMLObject}}
+Other task-related functions: 
+\code{\link{convertOMLTaskToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()},
+\code{\link{makeOMLTask}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{downloading functions}
 \concept{task-related functions}

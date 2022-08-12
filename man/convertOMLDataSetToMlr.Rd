@@ -4,10 +4,16 @@
 \alias{convertOMLDataSetToMlr}
 \title{Convert an OpenML data set to mlr task.}
 \usage{
-convertOMLDataSetToMlr(obj, mlr.task.id = "<oml.data.name>",
-  task.type = NULL, target = obj$desc$default.target.attribute,
-  ignore.flagged.attributes = TRUE, drop.levels = TRUE,
-  fix.colnames = TRUE, verbosity = NULL)
+convertOMLDataSetToMlr(
+  obj,
+  mlr.task.id = "<oml.data.name>",
+  task.type = NULL,
+  target = obj$desc$default.target.attribute,
+  ignore.flagged.attributes = TRUE,
+  drop.levels = TRUE,
+  fix.colnames = TRUE,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{obj}{[\code{\link{OMLDataSet}}]\cr
@@ -65,13 +71,14 @@ Converts an \code{\link{OMLDataSet}} to a \code{\link[mlr]{Task}}.
 # }
 }
 \seealso{
-Other data set-related functions: \code{\link{OMLDataSetDescription}},
-  \code{\link{OMLDataSet}},
-  \code{\link{convertMlrTaskToOMLDataSet}},
-  \code{\link{deleteOMLObject}},
-  \code{\link{getOMLDataSet}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLDataSet}}
+Other data set-related functions: 
+\code{\link{OMLDataSetDescription}},
+\code{\link{OMLDataSet}},
+\code{\link{convertMlrTaskToOMLDataSet}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLDataSet}()}
 }
 \concept{data set-related functions}

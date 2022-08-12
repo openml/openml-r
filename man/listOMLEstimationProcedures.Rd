@@ -33,13 +33,16 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 # }
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLSetup}}, \code{\link{listOMLStudies}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()}
 }
 \concept{listing functions}

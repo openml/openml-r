@@ -5,19 +5,37 @@
 \alias{OMLFlow}
 \title{Construct OMLFlow.}
 \usage{
-makeOMLFlow(flow.id = NA_integer_, uploader = NA_integer_, name,
-  version = NA_character_, external.version = NA_character_,
-  description, creator = NA_character_, contributor = NA_character_,
-  upload.date = NA_character_, licence = NA_character_,
-  language = "English", full.description = NA_character_,
-  installation.notes = NA_character_, dependencies = NA_character_,
-  bibliographical.reference = NULL, implements = NA_character_,
-  parameters = NULL, components = NULL, qualities = NULL,
-  tags = NA_character_, source.url = NA_character_,
-  binary.url = NA_character_, source.format = NA_character_,
-  binary.format = NA_character_, source.md5 = NA_character_,
-  binary.md5 = NA_character_, source.path = NA_character_,
-  binary.path = NA_character_, object = NULL)
+makeOMLFlow(
+  flow.id = NA_integer_,
+  uploader = NA_integer_,
+  name,
+  version = NA_character_,
+  external.version = NA_character_,
+  description,
+  creator = NA_character_,
+  contributor = NA_character_,
+  upload.date = NA_character_,
+  licence = NA_character_,
+  language = "English",
+  full.description = NA_character_,
+  installation.notes = NA_character_,
+  dependencies = NA_character_,
+  bibliographical.reference = NULL,
+  implements = NA_character_,
+  parameters = NULL,
+  components = NULL,
+  qualities = NULL,
+  tags = NA_character_,
+  source.url = NA_character_,
+  binary.url = NA_character_,
+  source.format = NA_character_,
+  binary.format = NA_character_,
+  source.md5 = NA_character_,
+  binary.md5 = NA_character_,
+  source.path = NA_character_,
+  binary.path = NA_character_,
+  object = NULL
+)
 }
 \arguments{
 \item{flow.id}{[\code{integer(1)}]\cr
@@ -121,10 +139,12 @@ More details about the elements of a \code{OMLFlow} can be found in the
 \href{https://www.openml.org/api/v1/xsd/openml.implementation.upload}{XSD scheme}.
 }
 \seealso{
-Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
-  \code{\link{listOMLFlows}},
-  \code{\link{makeOMLFlowParameter}},
-  \code{\link{tagOMLObject}}
+Other flow-related functions: 
+\code{\link{convertOMLFlowToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLFlow}()},
+\code{\link{listOMLFlows}()},
+\code{\link{makeOMLFlowParameter}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{flow-related functions}

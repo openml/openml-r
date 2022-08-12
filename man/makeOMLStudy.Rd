@@ -5,8 +5,15 @@
 \alias{OMLStudy}
 \title{OMLStudy.}
 \usage{
-makeOMLStudy(alias, name, description, data.id = NULL, task.id = NULL,
-  flow.id = NULL, run.id = NULL)
+makeOMLStudy(
+  alias,
+  name,
+  description,
+  data.id = NULL,
+  task.id = NULL,
+  flow.id = NULL,
+  run.id = NULL
+)
 }
 \arguments{
 \item{alias}{[\code{character}]\cr
@@ -39,8 +46,10 @@ To see a full list of all elements, please see the
 \href{https://www.openml.org/api/v1/xsd/openml.study.upload}{XSD}.
 }
 \seealso{
-Other uploading functions: \code{\link{uploadOMLDataSet}},
-  \code{\link{uploadOMLFlow}}, \code{\link{uploadOMLRun}},
-  \code{\link{uploadOMLStudy}}
+Other uploading functions: 
+\code{\link{uploadOMLDataSet}()},
+\code{\link{uploadOMLFlow}()},
+\code{\link{uploadOMLRun}()},
+\code{\link{uploadOMLStudy}()}
 }
 \concept{uploading functions}

@@ -24,13 +24,16 @@ Allows you to do multiple chunked requests with the listOML* functions.
 The request will be repeated until \code{total.limit} is reached or until there are no more results available on the server.
 }
 \seealso{
-Other listing functions: \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLSetup}}, \code{\link{listOMLStudies}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()}
 }
 \concept{listing functions}

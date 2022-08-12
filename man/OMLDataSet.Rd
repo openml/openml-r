@@ -5,8 +5,13 @@
 \alias{makeOMLDataSet}
 \title{OMLDataSet.}
 \usage{
-makeOMLDataSet(desc, data, colnames.old = colnames(data),
-  colnames.new = colnames(data), target.features = NULL)
+makeOMLDataSet(
+  desc,
+  data,
+  colnames.old = colnames(data),
+  colnames.new = colnames(data),
+  target.features = NULL
+)
 }
 \arguments{
 \item{desc}{[\code{OMLDataSetDescription}]\cr
@@ -71,13 +76,14 @@ airquality_oml = makeOMLDataSet(desc = desc_airquality,
   target.features = "Ozone")
 }
 \seealso{
-Other data set-related functions: \code{\link{OMLDataSetDescription}},
-  \code{\link{convertMlrTaskToOMLDataSet}},
-  \code{\link{convertOMLDataSetToMlr}},
-  \code{\link{deleteOMLObject}},
-  \code{\link{getOMLDataSet}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLDataSet}}
+Other data set-related functions: 
+\code{\link{OMLDataSetDescription}},
+\code{\link{convertMlrTaskToOMLDataSet}()},
+\code{\link{convertOMLDataSetToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLDataSet}()}
 }
 \concept{data set-related functions}

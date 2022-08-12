@@ -4,8 +4,14 @@
 \alias{setOMLConfig}
 \title{Settter for configuration settings.}
 \usage{
-setOMLConfig(server = NULL, verbosity = NULL, apikey = NULL,
-  cachedir = NULL, arff.reader = NULL, confirm.upload = NULL)
+setOMLConfig(
+  server = NULL,
+  verbosity = NULL,
+  apikey = NULL,
+  cachedir = NULL,
+  arff.reader = NULL,
+  confirm.upload = NULL
+)
 }
 \arguments{
 \item{server}{[\code{character(1)}]\cr
@@ -35,8 +41,10 @@ Invisibly returns a list of configuration settings.
 Set and overwrite configuration settings.
 }
 \seealso{
-Other config: \code{\link{configuration}},
-  \code{\link{getOMLConfig}}, \code{\link{loadOMLConfig}},
-  \code{\link{saveOMLConfig}}
+Other config: 
+\code{\link{configuration}},
+\code{\link{getOMLConfig}()},
+\code{\link{loadOMLConfig}()},
+\code{\link{saveOMLConfig}()}
 }
 \concept{config}

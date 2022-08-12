@@ -33,19 +33,25 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 # }
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLSetup}}, \code{\link{listOMLStudies}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTasks}()}
 
-Other task-related functions: \code{\link{convertOMLTaskToMlr}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLTask}},
-  \code{\link{listOMLTasks}}, \code{\link{makeOMLTask}},
-  \code{\link{tagOMLObject}}
+Other task-related functions: 
+\code{\link{convertOMLTaskToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLTask}()},
+\code{\link{listOMLTasks}()},
+\code{\link{makeOMLTask}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{listing functions}
 \concept{task-related functions}

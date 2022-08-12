@@ -4,9 +4,14 @@
 \alias{downloadOMLObject}
 \title{Download an OpenML Object.}
 \usage{
-downloadOMLObject(id, object = c("data", "task", "flow", "run"),
-  overwrite = FALSE, cache.only = FALSE, only.xml = FALSE,
-  verbosity = NULL)
+downloadOMLObject(
+  id,
+  object = c("data", "task", "flow", "run"),
+  overwrite = FALSE,
+  cache.only = FALSE,
+  only.xml = FALSE,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{id}{[\code{integer(1)}]\cr

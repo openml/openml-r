@@ -4,8 +4,12 @@
 \alias{convertMlrLearnerToOMLFlow}
 \title{Converts an OMLFlow to an mlr learner.}
 \usage{
-convertMlrLearnerToOMLFlow(lrn, name = paste0("mlr.", lrn$id),
-  description = NULL, ...)
+convertMlrLearnerToOMLFlow(
+  lrn,
+  name = paste0("mlr.", lrn$id),
+  description = NULL,
+  ...
+)
 }
 \arguments{
 \item{lrn}{[\code{\link[mlr]{Learner}}]\cr

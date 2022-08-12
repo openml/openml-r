@@ -4,9 +4,16 @@
 \alias{listOMLRuns}
 \title{List the first 5000 OpenML runs.}
 \usage{
-listOMLRuns(task.id = NULL, flow.id = NULL, run.id = NULL,
-  uploader.id = NULL, tag = NULL, limit = 5000, offset = NULL,
-  verbosity = NULL)
+listOMLRuns(
+  task.id = NULL,
+  flow.id = NULL,
+  run.id = NULL,
+  uploader.id = NULL,
+  tag = NULL,
+  limit = 5000,
+  offset = NULL,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{task.id}{[\code{integer}]\cr
@@ -65,22 +72,27 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 # }
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLSetup}},
-  \code{\link{listOMLStudies}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()}
 
-Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
-  \code{\link{convertOMLRunToBMR}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
-  \code{\link{makeOMLRunParameter}},
-  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLRun}}
+Other run-related functions: 
+\code{\link{convertOMLMlrRunToBMR}()},
+\code{\link{convertOMLRunToBMR}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLRun}()},
+\code{\link{makeOMLRunParameter}()},
+\code{\link{makeOMLRun}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{listing functions}
 \concept{run-related functions}

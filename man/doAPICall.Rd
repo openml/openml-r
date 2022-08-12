@@ -4,8 +4,16 @@
 \alias{doAPICall}
 \title{Perform an API call to the OpenML server.}
 \usage{
-doAPICall(api.call, id = NULL, url.args = list(), post.args = list(),
-  file = NULL, verbosity = NULL, method, ...)
+doAPICall(
+  api.call,
+  id = NULL,
+  url.args = list(),
+  post.args = list(),
+  file = NULL,
+  verbosity = NULL,
+  method,
+  ...
+)
 }
 \arguments{
 \item{api.call}{[\code{character(1)}]\cr

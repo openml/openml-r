@@ -4,12 +4,22 @@
 \alias{listOMLTasks}
 \title{List the first 5000 OpenML tasks.}
 \usage{
-listOMLTasks(task.type = NULL, estimation.procedure = NULL,
-  evaluation.measures = NULL, number.of.instances = NULL,
-  number.of.features = NULL, number.of.classes = NULL,
-  number.of.missing.values = NULL, tag = NULL, data.name = NULL,
-  data.tag = NULL, limit = 5000, offset = NULL, status = "active",
-  verbosity = NULL)
+listOMLTasks(
+  task.type = NULL,
+  estimation.procedure = NULL,
+  evaluation.measures = NULL,
+  number.of.instances = NULL,
+  number.of.features = NULL,
+  number.of.classes = NULL,
+  number.of.missing.values = NULL,
+  tag = NULL,
+  data.name = NULL,
+  data.tag = NULL,
+  limit = 5000,
+  offset = NULL,
+  status = "active",
+  verbosity = NULL
+)
 }
 \arguments{
 \item{task.type}{[\code{character(1)}]\cr
@@ -99,19 +109,25 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 # }
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLSetup}}, \code{\link{listOMLStudies}},
-  \code{\link{listOMLTaskTypes}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTaskTypes}()}
 
-Other task-related functions: \code{\link{convertOMLTaskToMlr}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLTask}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{makeOMLTask}}, \code{\link{tagOMLObject}}
+Other task-related functions: 
+\code{\link{convertOMLTaskToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLTask}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{makeOMLTask}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{listing functions}
 \concept{task-related functions}

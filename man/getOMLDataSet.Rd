@@ -4,8 +4,13 @@
 \alias{getOMLDataSet}
 \title{Get an OpenML data set.}
 \usage{
-getOMLDataSet(data.id = NULL, data.name = NULL, data.version = NULL,
-  cache.only = FALSE, verbosity = NULL)
+getOMLDataSet(
+  data.id = NULL,
+  data.name = NULL,
+  data.version = NULL,
+  cache.only = FALSE,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{data.id}{[\code{integer(1)}]\cr
@@ -57,18 +62,22 @@ One of \code{data.id} or \code{data.name} must be passed.
 # }
 }
 \seealso{
-Other downloading functions: \code{\link{getOMLDataSetQualities}},
-  \code{\link{getOMLFlow}}, \code{\link{getOMLRun}},
-  \code{\link{getOMLStudy}}, \code{\link{getOMLTask}}
+Other downloading functions: 
+\code{\link{getOMLDataSetQualities}()},
+\code{\link{getOMLFlow}()},
+\code{\link{getOMLRun}()},
+\code{\link{getOMLStudy}()},
+\code{\link{getOMLTask}()}
 
-Other data set-related functions: \code{\link{OMLDataSetDescription}},
-  \code{\link{OMLDataSet}},
-  \code{\link{convertMlrTaskToOMLDataSet}},
-  \code{\link{convertOMLDataSetToMlr}},
-  \code{\link{deleteOMLObject}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLDataSet}}
+Other data set-related functions: 
+\code{\link{OMLDataSetDescription}},
+\code{\link{OMLDataSet}},
+\code{\link{convertMlrTaskToOMLDataSet}()},
+\code{\link{convertOMLDataSetToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLDataSet}()}
 }
 \concept{data set-related functions}
 \concept{downloading functions}

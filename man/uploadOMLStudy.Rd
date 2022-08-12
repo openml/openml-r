@@ -29,8 +29,10 @@ A OpenML study is a collection of OpenML objects.
 If you create a study through the website \url{https://www.openml.org/new/study}, you can also specify an alias which can be used to access the study.
 }
 \seealso{
-Other uploading functions: \code{\link{makeOMLStudy}},
-  \code{\link{uploadOMLDataSet}},
-  \code{\link{uploadOMLFlow}}, \code{\link{uploadOMLRun}}
+Other uploading functions: 
+\code{\link{makeOMLStudy}()},
+\code{\link{uploadOMLDataSet}()},
+\code{\link{uploadOMLFlow}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{uploading functions}

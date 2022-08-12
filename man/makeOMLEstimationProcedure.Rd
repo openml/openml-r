@@ -5,8 +5,12 @@
 \alias{OMLEstimationProcedure}
 \title{Construct OMLEstimationProcedure.}
 \usage{
-makeOMLEstimationProcedure(type, data.splits.url = NA_character_,
-  data.splits = NULL, parameters = NULL)
+makeOMLEstimationProcedure(
+  type,
+  data.splits.url = NA_character_,
+  data.splits = NULL,
+  parameters = NULL
+)
 }
 \arguments{
 \item{type}{[\code{character(1)}]\cr

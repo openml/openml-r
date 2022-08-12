@@ -4,10 +4,19 @@
 \alias{listOMLRunEvaluations}
 \title{List run results of a task.}
 \usage{
-listOMLRunEvaluations(task.id = NULL, flow.id = NULL, run.id = NULL,
-  uploader.id = NULL, tag = NULL, limit = NULL, offset = NULL,
-  verbosity = NULL, evaluation.measure = NULL,
-  show.array.measures = FALSE, extend.flow.name = TRUE)
+listOMLRunEvaluations(
+  task.id = NULL,
+  flow.id = NULL,
+  run.id = NULL,
+  uploader.id = NULL,
+  tag = NULL,
+  limit = NULL,
+  offset = NULL,
+  verbosity = NULL,
+  evaluation.measure = NULL,
+  show.array.measures = FALSE,
+  extend.flow.name = TRUE
+)
 }
 \arguments{
 \item{task.id}{[\code{integer}]\cr

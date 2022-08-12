@@ -18,9 +18,12 @@ Converts an \code{\link{OMLFlow}} that was originally created with the OpenML
 R-package to a \code{\link[mlr]{Learner}}.
 }
 \seealso{
-Other flow-related functions: \code{\link{deleteOMLObject}},
-  \code{\link{getOMLFlow}}, \code{\link{listOMLFlows}},
-  \code{\link{makeOMLFlowParameter}},
-  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
+Other flow-related functions: 
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLFlow}()},
+\code{\link{listOMLFlows}()},
+\code{\link{makeOMLFlowParameter}()},
+\code{\link{makeOMLFlow}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{flow-related functions}

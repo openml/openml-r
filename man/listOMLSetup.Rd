@@ -4,8 +4,13 @@
 \alias{listOMLSetup}
 \title{List hyperparameter settings}
 \usage{
-listOMLSetup(setup.id = NULL, flow.id = NULL, limit = 1000,
-  offset = NULL, verbosity = NULL)
+listOMLSetup(
+  setup.id = NULL,
+  flow.id = NULL,
+  limit = 1000,
+  offset = NULL,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{setup.id}{[\code{integer(1)}]\cr
@@ -50,14 +55,16 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 # }
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLStudies}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()}
 }
 \concept{listing functions}

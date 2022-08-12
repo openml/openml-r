@@ -4,8 +4,11 @@
 \alias{convertOMLRunToBMR}
 \title{Convert an OpenML run set to a benchmark result for mlr.}
 \usage{
-convertOMLRunToBMR(run, measures = run$task.evaluation.measure,
-  recompute = FALSE)
+convertOMLRunToBMR(
+  run,
+  measures = run$task.evaluation.measure,
+  recompute = FALSE
+)
 }
 \arguments{
 \item{run}{[\code{\link{OMLRun}}]\cr
@@ -26,11 +29,14 @@ Should the measures be recomputed with mlr using the predictions? Currently reco
 Converts an \code{\link{OMLRun}} to a \code{\link[mlr]{BenchmarkResult}}.
 }
 \seealso{
-Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
-  \code{\link{listOMLRuns}},
-  \code{\link{makeOMLRunParameter}},
-  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLRun}}
+Other run-related functions: 
+\code{\link{convertOMLMlrRunToBMR}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLRun}()},
+\code{\link{listOMLRuns}()},
+\code{\link{makeOMLRunParameter}()},
+\code{\link{makeOMLRun}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{run-related functions}

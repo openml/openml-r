@@ -17,11 +17,14 @@ One or more \code{\link{OMLMlrRun}s}}
 Converts one or more \code{\link{OMLMlrRun}}s to a \code{\link[mlr]{BenchmarkResult}}.
 }
 \seealso{
-Other run-related functions: \code{\link{convertOMLRunToBMR}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
-  \code{\link{listOMLRuns}},
-  \code{\link{makeOMLRunParameter}},
-  \code{\link{makeOMLRun}}, \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLRun}}
+Other run-related functions: 
+\code{\link{convertOMLRunToBMR}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLRun}()},
+\code{\link{listOMLRuns}()},
+\code{\link{makeOMLRunParameter}()},
+\code{\link{makeOMLRun}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{run-related functions}

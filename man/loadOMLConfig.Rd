@@ -32,8 +32,10 @@ environment variable \dQuote{OPENMLAPIKEY} (if defined).
 # }
 }
 \seealso{
-Other config: \code{\link{configuration}},
-  \code{\link{getOMLConfig}}, \code{\link{saveOMLConfig}},
-  \code{\link{setOMLConfig}}
+Other config: 
+\code{\link{configuration}},
+\code{\link{getOMLConfig}()},
+\code{\link{saveOMLConfig}()},
+\code{\link{setOMLConfig}()}
 }
 \concept{config}

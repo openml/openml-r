@@ -4,10 +4,18 @@
 \alias{listOMLDataSets}
 \title{List the first 5000 OpenML data sets.}
 \usage{
-listOMLDataSets(number.of.instances = NULL, number.of.features = NULL,
-  number.of.classes = NULL, number.of.missing.values = NULL,
-  tag = NULL, data.name = NULL, limit = 5000, offset = NULL,
-  status = "active", verbosity = NULL)
+listOMLDataSets(
+  number.of.instances = NULL,
+  number.of.features = NULL,
+  number.of.classes = NULL,
+  number.of.missing.values = NULL,
+  tag = NULL,
+  data.name = NULL,
+  limit = 5000,
+  offset = NULL,
+  status = "active",
+  verbosity = NULL
+)
 }
 \arguments{
 \item{number.of.instances}{[\code{numeric(1) | numeric(2)}]\cr
@@ -79,22 +87,27 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 # }
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLFlows}}, \code{\link{listOMLRuns}},
-  \code{\link{listOMLSetup}}, \code{\link{listOMLStudies}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLFlows}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()}
 
-Other data set-related functions: \code{\link{OMLDataSetDescription}},
-  \code{\link{OMLDataSet}},
-  \code{\link{convertMlrTaskToOMLDataSet}},
-  \code{\link{convertOMLDataSetToMlr}},
-  \code{\link{deleteOMLObject}},
-  \code{\link{getOMLDataSet}}, \code{\link{tagOMLObject}},
-  \code{\link{uploadOMLDataSet}}
+Other data set-related functions: 
+\code{\link{OMLDataSetDescription}},
+\code{\link{OMLDataSet}},
+\code{\link{convertMlrTaskToOMLDataSet}()},
+\code{\link{convertOMLDataSetToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLDataSet}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLDataSet}()}
 }
 \concept{data set-related functions}
 \concept{listing functions}

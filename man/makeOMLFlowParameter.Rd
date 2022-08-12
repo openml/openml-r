@@ -5,9 +5,13 @@
 \alias{OMLFlowParameter}
 \title{Construct OMLFlowParameter.}
 \usage{
-makeOMLFlowParameter(name, data.type = NA_character_,
-  default.value = NA_character_, description = NA_character_,
-  recommended.range = NA_character_)
+makeOMLFlowParameter(
+  name,
+  data.type = NA_character_,
+  default.value = NA_character_,
+  description = NA_character_,
+  recommended.range = NA_character_
+)
 }
 \arguments{
 \item{name}{[\code{character(1)}]\cr
@@ -29,10 +33,13 @@ Minimal/maximal value and/or a recommended range of values.}
 Construct OMLFlowParameter.
 }
 \seealso{
-Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
-  \code{\link{listOMLFlows}}, \code{\link{makeOMLFlow}},
-  \code{\link{tagOMLObject}}
+Other flow-related functions: 
+\code{\link{convertOMLFlowToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLFlow}()},
+\code{\link{listOMLFlows}()},
+\code{\link{makeOMLFlow}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{flow-related functions}
 \keyword{internal}

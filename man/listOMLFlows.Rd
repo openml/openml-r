@@ -4,8 +4,7 @@
 \alias{listOMLFlows}
 \title{List all registered OpenML flows.}
 \usage{
-listOMLFlows(tag = NULL, limit = NULL, offset = NULL,
-  verbosity = NULL)
+listOMLFlows(tag = NULL, limit = NULL, offset = NULL, verbosity = NULL)
 }
 \arguments{
 \item{tag}{[\code{character}]\cr
@@ -51,20 +50,25 @@ You can reset the cache by calling \code{\link[memoise]{forget}} on the function
 # }
 }
 \seealso{
-Other listing functions: \code{\link{chunkOMLlist}},
-  \code{\link{listOMLDataSetQualities}},
-  \code{\link{listOMLDataSets}},
-  \code{\link{listOMLEstimationProcedures}},
-  \code{\link{listOMLEvaluationMeasures}},
-  \code{\link{listOMLRuns}}, \code{\link{listOMLSetup}},
-  \code{\link{listOMLStudies}},
-  \code{\link{listOMLTaskTypes}},
-  \code{\link{listOMLTasks}}
+Other listing functions: 
+\code{\link{chunkOMLlist}()},
+\code{\link{listOMLDataSetQualities}()},
+\code{\link{listOMLDataSets}()},
+\code{\link{listOMLEstimationProcedures}()},
+\code{\link{listOMLEvaluationMeasures}()},
+\code{\link{listOMLRuns}()},
+\code{\link{listOMLSetup}()},
+\code{\link{listOMLStudies}()},
+\code{\link{listOMLTaskTypes}()},
+\code{\link{listOMLTasks}()}
 
-Other flow-related functions: \code{\link{convertOMLFlowToMlr}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLFlow}},
-  \code{\link{makeOMLFlowParameter}},
-  \code{\link{makeOMLFlow}}, \code{\link{tagOMLObject}}
+Other flow-related functions: 
+\code{\link{convertOMLFlowToMlr}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLFlow}()},
+\code{\link{makeOMLFlowParameter}()},
+\code{\link{makeOMLFlow}()},
+\code{\link{tagOMLObject}()}
 }
 \concept{flow-related functions}
 \concept{listing functions}

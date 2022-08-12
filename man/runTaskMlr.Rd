@@ -5,8 +5,16 @@
 \alias{OMLMlrRun}
 \title{Run mlr learner on OpenML task.}
 \usage{
-runTaskMlr(task, learner, measures = NULL, verbosity = NULL,
-  seed = 1, scimark.vector = NULL, models = TRUE, ...)
+runTaskMlr(
+  task,
+  learner,
+  measures = NULL,
+  verbosity = NULL,
+  seed = 1,
+  scimark.vector = NULL,
+  models = TRUE,
+  ...
+)
 }
 \arguments{
 \item{task}{[\code{\link{OMLTask}}]\cr

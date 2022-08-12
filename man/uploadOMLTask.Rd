@@ -4,9 +4,17 @@
 \alias{uploadOMLTask}
 \title{Upload a task to the OpenML server.}
 \usage{
-uploadOMLTask(task.type, data.id, target.feature, estimation.procedure,
-  evaluation.measure = NULL, tags = NULL, description = NULL,
-  confirm.upload = NULL, verbosity = NULL)
+uploadOMLTask(
+  task.type,
+  data.id,
+  target.feature,
+  estimation.procedure,
+  evaluation.measure = NULL,
+  tags = NULL,
+  description = NULL,
+  confirm.upload = NULL,
+  verbosity = NULL
+)
 }
 \arguments{
 \item{task.type}{[character(1)]\cr

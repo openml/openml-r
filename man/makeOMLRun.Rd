@@ -5,14 +5,24 @@
 \alias{OMLRun}
 \title{Construct OMLRun.}
 \usage{
-makeOMLRun(run.id = NA_integer_, uploader = NA_integer_,
-  uploader.name = NA_character_, task.id, task.type = NA_character_,
-  task.evaluation.measure = NA_character_, flow.id = NA_integer_,
-  flow.name = NA_character_, setup.id = NA_integer_,
-  setup.string = NA_character_, error.message = NA_character_,
-  parameter.setting = list(), tags = NA_character_,
-  predictions = NULL, input.data = makeOMLIOData(),
-  output.data = makeOMLIOData())
+makeOMLRun(
+  run.id = NA_integer_,
+  uploader = NA_integer_,
+  uploader.name = NA_character_,
+  task.id,
+  task.type = NA_character_,
+  task.evaluation.measure = NA_character_,
+  flow.id = NA_integer_,
+  flow.name = NA_character_,
+  setup.id = NA_integer_,
+  setup.string = NA_character_,
+  error.message = NA_character_,
+  parameter.setting = list(),
+  tags = NA_character_,
+  predictions = NULL,
+  input.data = makeOMLIOData(),
+  output.data = makeOMLIOData()
+)
 }
 \arguments{
 \item{run.id}{[\code{numeric(1)}]\cr
@@ -74,11 +84,14 @@ More details about the elements of a \code{OMLRun} can be found in the
 \href{https://github.com/openml/OpenML/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
 }
 \seealso{
-Other run-related functions: \code{\link{convertOMLMlrRunToBMR}},
-  \code{\link{convertOMLRunToBMR}},
-  \code{\link{deleteOMLObject}}, \code{\link{getOMLRun}},
-  \code{\link{listOMLRuns}},
-  \code{\link{makeOMLRunParameter}},
-  \code{\link{tagOMLObject}}, \code{\link{uploadOMLRun}}
+Other run-related functions: 
+\code{\link{convertOMLMlrRunToBMR}()},
+\code{\link{convertOMLRunToBMR}()},
+\code{\link{deleteOMLObject}()},
+\code{\link{getOMLRun}()},
+\code{\link{listOMLRuns}()},
+\code{\link{makeOMLRunParameter}()},
+\code{\link{tagOMLObject}()},
+\code{\link{uploadOMLRun}()}
 }
 \concept{run-related functions}
