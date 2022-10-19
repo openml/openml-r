@@ -148,7 +148,7 @@ The `config` file may contain the following information:
     * `2`: debug output
 * `arff.reader`:
     * `RWeka`: this is the standard Java parser used in Weka
-    * `farff`: the [farff package](https://www.github.com/mlr-org/farff) provides a newer, faster parser without any Java requirements
+    * `farff`: the [farff package](https://github.com/mlr-org/farff) provides a newer, faster parser without any Java requirements
 * `confirm.upload`:
     * default decision w.r.t. confirming uploads
     * per default (`FALSE`) one does not need to confirm the upload decision
