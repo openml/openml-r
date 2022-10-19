@@ -3,7 +3,9 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Rdoc](http://www.rdocumentation.org/badges/version/OpenML)](http://www.rdocumentation.org/packages/OpenML)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
-[![Build Status](https://travis-ci.org/openml/openml-r.svg?branch=master)](https://travis-ci.org/openml/openml-r)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/openml/openml-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/openml/openml-r/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/OpenML)](http://cran.rstudio.com/web/packages/OpenML/index.html)
 [![codecov](https://codecov.io/gh/openml/openml-r/branch/master/graph/badge.svg)](https://codecov.io/gh/openml/openml-r)
 

@@ -114,7 +114,7 @@ Optional tags for the data set.}
 \description{
 Creates a description for an OMLDataSet.
 To see a full list of all elements, please see the
-\href{https://www.openml.org/api/v1/xsd/openml.data.upload}{XSD}.
+\href{https://docs.openml.org/}{documentation}.
 }
 \examples{
 data("airquality")

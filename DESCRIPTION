@@ -45,6 +45,6 @@ Imports:
     curl (>= 4.1)
 ByteCompile: yes
 Version: 1.11
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 VignetteBuilder: R.rsp
 Encoding: UTF-8

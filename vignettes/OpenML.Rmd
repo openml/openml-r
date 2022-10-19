@@ -22,11 +22,11 @@ setOMLConfig(apikey = "c1994bdb7ecb3c6f3c8f3b35f4b47f1f",
 ```
 
 ## Introduction {#intro}
-The R package OpenML is an interface to make interactions with the [OpenML](http://openml.org/) server as comfortable as possible.
+The R package OpenML is an interface to make interactions with the [OpenML](https://openml.org/) server as comfortable as possible.
 For example, the users can download and upload files, run their implementations on specific tasks and get predictions in the correct form directly via R commands.
 In this tutorial, we will show the most important functions of this package and give examples on standard workflows.
 
-For general information on what OpenML is, please have a look at the [README file](https://github.com/openml/OpenML/blob/master/README.md) or visit the [official OpenML website](http://openml.org/).
+For general information on what OpenML is, please have a look at the [README file](https://github.com/openml/OpenML/blob/master/README.md) or visit the [official OpenML website](https://openml.org/).
 
 After installation and before making practical use of the package, in most cases it is desirable to [setup a configuration file](#config) to simplify further steps.
 Afterwards, there are different basic stages when using this package or OpenML, respectively:
@@ -72,7 +72,7 @@ With this key you can **read** all the information from the server but not **wri
 
 ### Basic example {#basicexample}
 
-In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server. For detailed information on OpenML terminology (task, run, etc.) see the [OpenML guide](http://www.openml.org/guide).
+In this paragraph you can find an example on how to download a task from the server, print some information about it to the console, and produce a run which is then uploaded to the server. For detailed information on OpenML terminology (task, run, etc.) see the [OpenML guide](https://www.openml.org/guide).
 
 ```{r eval=TRUE, message=FALSE}
 library("OpenML")
@@ -116,8 +116,8 @@ For *demonstration purposes*, we have created a *public read-only API key* (`"c1
 ### Generating your own personal API key {#personalapikey}
 In order to receive your own API key
 
-* register a (free) account at the [OpenML website](http://www.openml.org),
-* log in and go to <http://www.openml.org/u#!api>.
+* register a (free) account at the [OpenML website](https://www.openml.org),
+* log in and go to <https://www.openml.org/u#!api>.
 
 ### Setting your configuration {#settingconfig}
 
@@ -148,7 +148,7 @@ The `config` file may contain the following information:
     * `2`: debug output
 * `arff.reader`:
     * `RWeka`: this is the standard Java parser used in Weka
-    * `farff`: the [farff package](http://www.github.com/mlr-org/farff) provides a newer, faster parser without any Java requirements
+    * `farff`: the [farff package](https://www.github.com/mlr-org/farff) provides a newer, faster parser without any Java requirements
 * `confirm.upload`:
     * default decision w.r.t. confirming uploads
     * per default (`FALSE`) one does not need to confirm the upload decision
@@ -166,7 +166,7 @@ The configuration file and some related things are also explained in the [OpenML
 Once the config file is set up, you are **ready to go**!
 
 ## Listing {#listing}
-In this stage, we want to list basic information about the various [OpenML objects](http://openml.org/guide):
+In this stage, we want to list basic information about the various [OpenML objects](https://openml.org/guide):
 
 * data sets
 * tasks
@@ -209,12 +209,12 @@ subset(datasets, name == "iris")
 ```
 
 As you can see, there are two data sets called `iris`. We want to use the *original* data set with three classes, which is stored under the data set ID (`data.id`) `r subset(datasets, name == "iris" & number.of.classes == 3)$data.id`.
-You can also have a closer look at the data set on the corresponding OpenML web page (http://openml.org/d/`r subset(datasets, name == "iris" & number.of.classes == 3)$data.id`).
+You can also have a closer look at the data set on the corresponding OpenML web page (https://openml.org/d/`r subset(datasets, name == "iris" & number.of.classes == 3)$data.id`).
 
 ### List tasks
 Each OpenML task is a bundle that encapsulates information on various objects:
 
-* a specific [type](http://www.openml.org/search?type=task_type), e.g., `"Supervised Classification"` or `"Supervised Regression"`
+* a specific [type](https://www.openml.org/search?type=task_type), e.g., `"Supervised Classification"` or `"Supervised Regression"`
 * a data set
 * a target feature (which might differ from the data set's default target)
 * an estimation/resampling procedure, e.g., a 10-fold cross-validation
@@ -258,7 +258,7 @@ flows[56:63, 1:4]
 A run is an experiment, which is executed on a given combination of task, flow and setup (i.e., the explicit parameter configuration of a flow). The corresponding results are stored as a run result.
 Both objects, i.e., runs and run results, can be listed via `listOMLRuns` or `listOMLRunEvaluations`, respectively.
 As each of those objects is defined with a task, setup and flow, you can extract runs and run results with specific combinations of `task.id`, `setup.id` and/or `flow.id`.
-For instance, listing all runs for [task 59](http://www.openml.org/t/59) (supervised classification on iris) can be done with
+For instance, listing all runs for [task 59](https://www.openml.org/t/59) (supervised classification on iris) can be done with
 ```{r eval=TRUE}
 runs = listOMLRuns(task.id = 59L)  # must be specified with the task, setup and/or implementation ID
 head(runs)
@@ -407,7 +407,7 @@ air.data = makeOMLDataSet(desc = desc,
 #dataset.id
 ```
 
-Alternatively you can enter data directly on the [OpenML website](http://www.openml.org/new/data).
+Alternatively you can enter data directly on the [OpenML website](https://www.openml.org/new/data).
 
 
 ### Upload a flow

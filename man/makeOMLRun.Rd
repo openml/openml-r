@@ -81,7 +81,7 @@ provide evaluation scores for their own evaluation measures.}
 }
 \description{
 More details about the elements of a \code{OMLRun} can be found in the
-\href{https://github.com/openml/OpenML/blob/master/openml_OS/views/pages/api_new/v1/xsd/openml.run.upload.xsd}{XSD scheme}.
+\href{https://docs.openml.org/}{documentation}.
 }
 \seealso{
 Other run-related functions: 

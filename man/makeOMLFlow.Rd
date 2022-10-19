@@ -136,7 +136,7 @@ The path to the cached binary file, once \code{\link{getOMLFlow}} was run.}
 }
 \description{
 More details about the elements of a \code{OMLFlow} can be found in the
-\href{https://www.openml.org/api/v1/xsd/openml.implementation.upload}{XSD scheme}.
+\href{https://docs.openml.org/}{documentation}.
 }
 \seealso{
 Other flow-related functions: 
