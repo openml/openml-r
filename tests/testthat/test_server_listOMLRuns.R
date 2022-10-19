@@ -1,5 +1,3 @@
-context("listOMLRuns")
-
 test_that("listOMLRuns", {
   exp.names = c("run.id", "task.id", "setup.id", "flow.id", "uploader", "error.message")
 

@@ -1,5 +1,3 @@
-context("openml r paper")
-
 test_that("openml r paper", {
   with_empty_cache({
     with_main_server({
@@ -22,24 +20,24 @@ test_that("openml r paper", {
 
       # get flows
       flow = getOMLFlow(4782)
-      expect_is(flow, "OMLFlow")
-      expect_is(convertOMLFlowToMlr(flow), "Learner")
+      expect_s3_class(flow, "OMLFlow")
+      expect_s3_class(convertOMLFlowToMlr(flow), "Learner")
 
       # get runs
       run = getOMLRun(run.id = 1816245)
-      expect_is(run, "OMLRun")
+      expect_s3_class(run, "OMLRun")
 
       # create runs with mlr learners
       lrn = makeLearner("classif.randomForest", mtry = 2)
       task = getOMLTask(task.id = 37)
-      expect_is(task, "OMLTask")
+      expect_s3_class(task, "OMLTask")
       run.mlr = runTaskMlr(task, lrn)
-      expect_is(run.mlr, "OMLMlrRun")
+      expect_s3_class(run.mlr, "OMLMlrRun")
 
       # create runs with downloaded flows
       flow = getOMLFlow(4782)
       run.flow = runTaskFlow(task, flow, par.list = list(mtry = 2))
-      expect_is(run.flow, "OMLMlrRun")
+      expect_s3_class(run.flow, "OMLMlrRun")
 
       ## ----05-case-study, child="05-case-study.Rnw",cache=FALSE----------------
       tasks = listOMLTasks(data.tag = "uci",

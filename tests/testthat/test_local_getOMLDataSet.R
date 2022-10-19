@@ -1,5 +1,3 @@
-context("getOMLDataSet")
-
 test_that("getOMLDataSet", {
   with_test_cache({
     data = getOMLDataSet(61)

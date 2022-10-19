@@ -1,5 +1,3 @@
-context("generateAPICall")
-
 test_that("generateAPICall produces valid call for large integer values", {
   # github issue #254 (large integer bounds)
   api.call = generateAPICall("www.test.com", number.of.instances = c(100, 100000000))

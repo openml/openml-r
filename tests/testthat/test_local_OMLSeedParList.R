@@ -1,5 +1,3 @@
-context("OMLSeedParList")
-
 test_that("OMLSeedParList", {
   prefixes = c("openml", "bla")
   seeds = 1:2
@@ -8,8 +6,8 @@ test_that("OMLSeedParList", {
     for (prefix in prefixes) {
       seed.par = makeOMLSeedParList(seed, prefix = prefix)
       expect_output(print(seed.par), "OMLSeedParList")
-      for (i in seq_along(seed.par)) expect_is(seed.par[[i]], "OMLRunParameter")
-      expect_is(seed.par, "OMLSeedParList")
+      for (i in seq_along(seed.par)) expect_s3_class(seed.par[[i]], "OMLRunParameter")
+      expect_s3_class(seed.par, "OMLSeedParList")
       #expect_equal(paste0(prefix, ".", c("seed", "kind", "normal.kind")), unname(extractSubList(seed.par, "name")))
       expect_equal(c(seed, RNGkind()), unname(extractSubList(seed.par, "value")))
 
@@ -31,7 +29,7 @@ test_that("OMLSeedParList", {
     # get run without seed parameter
     run = getOMLRun(1L)
     par = getOMLSeedParList(run)
-    expect_is(par, "OMLSeedParList")
+    expect_s3_class(par, "OMLSeedParList")
     expect_equal(unclass(unname(par)), list())
   })
 })

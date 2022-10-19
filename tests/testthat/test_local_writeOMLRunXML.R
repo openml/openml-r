@@ -1,5 +1,3 @@
-context("writeOMLRunXML")
-
 test_that("writeOMLRunXML", {
   with_test_cache({
     run = getOMLRun(1)

@@ -1,5 +1,3 @@
-context("OMLRunParList")
-
 test_that("OMLRunParList", {
   nodesize = 1:2
   rf = makeLearner("classif.randomForest")
@@ -19,7 +17,7 @@ test_that("OMLRunParList", {
       par.vals = getHyperPars(lrn)
 
       oml.par.list = makeOMLRunParList(lrn)
-      expect_is(oml.par.list, "OMLRunParList")
+      expect_s3_class(oml.par.list, "OMLRunParList")
       expect_list(oml.par.list, types = "OMLRunParameter")
 
       # check if all parameters from par.vals are included (especially default values)
@@ -49,11 +47,11 @@ test_that("OMLRunParList", {
   with_test_cache({
     run = getOMLRun(1L)
     par = getOMLRunParList(run)
-    expect_is(par, "OMLRunParList")
+    expect_s3_class(par, "OMLRunParList")
     expect_character(extractSubList(par, "name"))
     expect_character(extractSubList(par, "value"))
     expect_atomic_vector(extractSubList(par, "component"))
-    for (i in seq_along(par)) expect_is(par[[i]], "OMLRunParameter")
+    for (i in seq_along(par)) expect_s3_class(par[[i]], "OMLRunParameter")
     expect_data_frame(as.data.frame(par), nrow = 6, ncol = 3)
     expect_data_table(as.data.table(par), nrow = 6, ncol = 3)
     expect_equal(names(as.data.frame(par)), c("name", "value", "component"))

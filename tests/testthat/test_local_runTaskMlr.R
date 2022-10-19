@@ -1,13 +1,11 @@
-context("runTaskMlr")
-
 test_that("runTaskMlr", {
   with_test_cache({
     checkRun = function(res) {
-      expect_is(res, "OMLMlrRun")
+      expect_s3_class(res, "OMLMlrRun")
       expect_equal(length(res), 3L)
-      expect_is(res$run$predictions, "data.frame")
-      expect_is(res$bmr, "BenchmarkResult")
-      expect_is(res$flow, "OMLFlow")
+      expect_s3_class(res$run$predictions, "data.frame")
+      expect_s3_class(res$bmr, "BenchmarkResult")
+      expect_s3_class(res$flow, "OMLFlow")
     }
 
     lrn = makeLearner("classif.rpart")
@@ -35,11 +33,11 @@ test_that("runTaskMlr", {
 
     # check converting datasets to mlr Tasks
     mlr.task = convertOMLDataSetToMlr(task$input$data.set, task$task.type)
-    expect_is(mlr.task, "Task")
+    expect_s3_class(mlr.task, "Task")
 
     # check if data splits are converted properly
     rin = convertOMLSplitsToMlr(task$input$estimation.procedure, mlr.task)
-    expect_is(rin, "ResampleInstance")
+    expect_s3_class(rin, "ResampleInstance")
     ds = task$input$estimation.procedure$data.splits
     splits = lapply(split(ds, ds$type), function(X) split(X$rowid, X$fold))
     expect_identical(rin$train.inds, unname(splits[[1]]))

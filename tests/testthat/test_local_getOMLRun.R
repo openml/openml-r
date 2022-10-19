@@ -1,5 +1,3 @@
-context("getOMLRun")
-
 test_that("getOMLRun", {
   with_test_cache({
     # check invalid input
@@ -12,13 +10,13 @@ test_that("getOMLRun", {
 
     # check IO data
     run.IOdata = run$output.data
-    expect_is(run.IOdata, "OMLIOData")
+    expect_s3_class(run.IOdata, "OMLIOData")
     expect_output(print(run.IOdata), "Data Sets")
 
     # check parameter settings (get first parameter only)
     for (param.setting in run$parameter.setting) {
       param.setting$component = "Component" # just to trigger the codeblock
-      expect_is(param.setting, "OMLRunParameter")
+      expect_s3_class(param.setting, "OMLRunParameter")
       expect_output(print(param.setting), "Component")
     }
 

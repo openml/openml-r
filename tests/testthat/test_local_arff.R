@@ -1,5 +1,3 @@
-context("check arff files")
-
 test_that("check arff files", {
   with_test_cache({
     lrn = makeLearner("classif.rpart")

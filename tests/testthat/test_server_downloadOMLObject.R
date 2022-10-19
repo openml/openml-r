@@ -1,5 +1,3 @@
-context("downloadOMLObject")
-
 test_that("downloadOMLObject", {
   with_empty_cache({
     with_main_server({

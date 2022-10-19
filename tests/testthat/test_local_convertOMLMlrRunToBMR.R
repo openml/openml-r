@@ -1,5 +1,3 @@
-context("convertOMLMlrRunToBMR")
-
 test_that("convertOMLMlrRunToBMR", {
   with_test_cache({
     task = getOMLTask(59)
@@ -7,7 +5,7 @@ test_that("convertOMLMlrRunToBMR", {
     run2 = runTaskMlr(task, makeLearner("classif.lda"))
 
     bmr = convertOMLMlrRunToBMR(run1, run2)
-    expect_is(bmr, "BenchmarkResult")
+    expect_s3_class(bmr, "BenchmarkResult")
     expect_equal(getBMRLearnerIds(bmr), c("classif.rpart", "classif.lda"))
   })
 })

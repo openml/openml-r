@@ -1,5 +1,3 @@
-context("checkUserConfirmation")
-
 test_that("checkUserConfirmation", {
   with_reset_config({
     setOMLConfig(confirm.upload = FALSE)

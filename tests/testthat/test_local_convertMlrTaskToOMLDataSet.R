@@ -1,5 +1,3 @@
-context("convertMlrTaskToOMLDataSet")
-
 test_that("convertMlrTaskToOMLDataSet", {
   oml.iris = convertMlrTaskToOMLDataSet(iris.task)
   expect_equal(oml.iris$colnames.old, oml.iris$colnames.new)

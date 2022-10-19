@@ -1,5 +1,3 @@
-context("saveOMLConfig")
-
 test_that("saveOMLConfig", {
   with_reset_config({
     # change arff.reader and check if changes were stored in config file

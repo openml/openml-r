@@ -1,5 +1,3 @@
-context("getOMLDataSet")
-
 test_that("getOMLDataSet by name", {
   # Note: this is a server test, since querying a data set by name requires a
   # call to listOMLDataSets

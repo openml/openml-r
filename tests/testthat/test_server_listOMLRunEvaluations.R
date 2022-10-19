@@ -1,5 +1,3 @@
-context("listOMLRunEvaluations")
-
 test_that("listOMLRunEvaluations", {
   with_main_server({
     task.id = 3832L

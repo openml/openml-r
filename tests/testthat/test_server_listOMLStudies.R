@@ -1,5 +1,3 @@
-context("listOMLStudies")
-
 test_that("listOMLStudies", {
   with_main_server({
     studies = .listOMLStudies()

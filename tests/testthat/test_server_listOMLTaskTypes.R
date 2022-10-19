@@ -1,5 +1,3 @@
-context("listOMLTaskTypes")
-
 skip_on_cran()
 
 test_that("listTaskTypes", {

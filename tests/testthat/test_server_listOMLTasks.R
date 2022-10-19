@@ -1,5 +1,3 @@
-context("listOMLTasks")
-
 test_that("listOMLTasks", {
   exp.names = c("task.id", "task.type", "data.id", "status", "format", "name", "target.feature",
     "estimation.procedure", "evaluation.measures", "majority.class.size",

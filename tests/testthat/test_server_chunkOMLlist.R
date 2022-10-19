@@ -1,5 +1,3 @@
-context("chunkOMLlist")
-
 test_that("chunkOMLlist", {
   expect_chunk = function(listfun, ..., total.limit = 100, chunk.limit = 50) {
     d1 = do.call(listfun, args = c(list(...), list(limit = total.limit)))

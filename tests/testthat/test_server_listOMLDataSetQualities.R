@@ -1,5 +1,3 @@
-context("listOMLDataSetQualities")
-
 test_that("listOMLDataSetQualities", {
   with_main_server({
     dsqs = .listOMLDataSetQualities()

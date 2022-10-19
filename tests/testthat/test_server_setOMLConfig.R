@@ -1,10 +1,8 @@
-context("setOMLConfig")
-
 test_that("setOMLConfig", {
   with_test_server({
     with_reset_config({
       conf = getOMLConfig()
-      expect_is(conf, "OMLConfig")
+      expect_s3_class(conf, "OMLConfig")
       checkConfig(conf)
       conf.list = as.list(conf)
       conf.list$verbosity = 0L
@@ -31,7 +29,7 @@ test_that("setOMLConfig", {
 
         setOMLConfig(apikey = key)
         ds = getOMLDataSet(1) # should work again
-        expect_is(ds, "OMLDataSet")
+        expect_s3_class(ds, "OMLDataSet")
         expect_true(ds$desc$id == 1L)
       })
     })

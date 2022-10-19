@@ -1,5 +1,3 @@
-context("listOMLFlows")
-
 test_that("listOMLFlows", {
   with_main_server({
     fls = .listOMLFlows(limit = 100L)

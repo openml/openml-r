@@ -1,5 +1,3 @@
-context("getOMLDataSetQualities")
-
 test_that("getOMLDataSetQualities", {
   with_test_server({
     qual = getOMLDataSetQualities(1)

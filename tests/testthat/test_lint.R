@@ -1,4 +1,3 @@
-# context("lint")
 # if (isLintrVersionOk(identical(Sys.getenv("TRAVIS"), "true"))) {
 #   test_that("lint check", {
 #     library("lintr")

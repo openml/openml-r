@@ -1,5 +1,3 @@
-context("clearOMLCache")
-
 test_that("clearOMLCache", {
   with_test_server({
     with_empty_cache({

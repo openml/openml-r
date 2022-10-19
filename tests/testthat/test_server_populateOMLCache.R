@@ -1,5 +1,3 @@
-context("populateOMLCache")
-
 test_that("populateOMLCache", {
   with_test_server({
     with_empty_cache({

@@ -1,5 +1,3 @@
-context("convertOMLDataSetToMlr")
-
 test_that("convertOMLDataSetToMlr", {
   with_test_cache({
     ds = getOMLDataSet(10)
