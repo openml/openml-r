@@ -44,7 +44,7 @@ Imports:
     stats,
     curl (>= 4.1)
 ByteCompile: yes
-Version: 1.11
+Version: 1.12
 RoxygenNote: 7.2.1
 VignetteBuilder: R.rsp
 Encoding: UTF-8
