@@ -19,10 +19,10 @@ For more information, have a look at our
 - <a href="http://dx.doi.org/10.1007/s00180-017-0742-2" target="_blank">OpenML R Package Publication</a>
 - <a href="https://www.openml.org/api_docs" target="_blank">OpenML API Guide</a>
 
-# [!important]
+# Deprecated
 
 This package is based on [mlr](https://github.com/mlr-org/mlr) which itself is considered retired due to the newer [mlr3](https://mlr3.mlr-org.com/) package. 
-We suggest to use the new mlr3 framework from now on and the related package [mlr3oml](https://github.com/mlr-org/mlr3oml) to access information from OpenML.
+You can continue using this package with mlr or to access information from OpenML but we suggest to use the new mlr3 framework from now on and the related package [mlr3oml](https://github.com/mlr-org/mlr3oml) to access information from OpenML.
 
 # How to cite
 
