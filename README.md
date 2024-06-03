@@ -21,8 +21,7 @@ For more information, have a look at our
 
 # Deprecated
 
-This package is based on [mlr](https://github.com/mlr-org/mlr) which itself is considered retired due to the newer [mlr3](https://mlr3.mlr-org.com/) package. 
-You can continue using this package with mlr or to access information from OpenML but we suggest to use the new mlr3 framework from now on and the related package [mlr3oml](https://github.com/mlr-org/mlr3oml) to access information from OpenML.
+This package relies on the [mlr](https://github.com/mlr-org/mlr) framework, which is now retired in favor of the newer [mlr3](https://mlr3.mlr-org.com/) framework. While you can still use this package with mlr or to access information from OpenML, we recommend transitioning to the mlr3 framework and use the related [mlr3oml](https://github.com/mlr-org/mlr3oml) package.
 
 # How to cite
 
