@@ -1,5 +1,9 @@
 # R interface to [OpenML.org](http://www.openml.org/) 
 
+
+> [!IMPORTANT]  
+> This package is superseded by [mlr3oml](https://github.com/mlr-org/mlr3oml).
+
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Rdoc](http://www.rdocumentation.org/badges/version/OpenML)](http://www.rdocumentation.org/packages/OpenML)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/OpenML)](http://cran.r-project.org/web/packages/OpenML)
